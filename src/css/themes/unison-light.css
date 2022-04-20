@@ -100,6 +100,13 @@
   --u-color_info_text: var(--color-blue-2);
 
   --u-color_positive_text: var(--color-green-2);
+  --u-color_positive_icon: var(--color-green-3);
+  --u-color_positive_action: var(--color-green-1);
+  --u-color_positive_text-on-action: var(--color-gray-lighten-100);
+  --u-color_positive_icon-on-action: var(--color-green-4);
+  --u-color_positive_action_hovered: var(--color-green-2);
+  --u-color_positive_text-on-action_hovered: var(--color-gray-lighten-100);
+  --u-color_positive_icon-on-action_hovered: var(--color-green-4);
 
   /* Syntax */
   --color-syntax-plain: var(--u-color_text);

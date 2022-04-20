@@ -1,0 +1,27 @@
+{
+  "name": "ui-core",
+  "version": "1.0.0",
+  "description": "Shared design system and core components for Unison Local and Unison Share",
+  "scripts": {
+    "test": "elm-test",
+    "review": "elm-review",
+    "build": "elm make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unisonweb/ui-core.git"
+  },
+  "author": "Unison Computing",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unisonweb/ui-core/issues"
+  },
+  "homepage": "https://github.com/unisonweb/ui-core#readme",
+  "devDependencies": {
+    "elm": "^0.19.1-5",
+    "elm-format": "^0.8.5",
+    "elm-review": "^2.7.1",
+    "elm-test": "^0.19.1-revision7",
+    "prettier": "^2.6.2"
+  }
+}

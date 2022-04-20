@@ -14,6 +14,7 @@ module UI.Button exposing
     , linkIcon
     , linkIconThenLabel
     , medium
+    , positive
     , preventDefault
     , primary
     , share
@@ -231,6 +232,7 @@ type Color
     | Primary
     | Share
     | Danger
+    | Positive
 
 
 contained : Button clickMsg -> Button clickMsg
@@ -266,6 +268,11 @@ share =
 danger : Button clickMsg -> Button clickMsg
 danger =
     withColor Danger
+
+
+positive : Button clickMsg -> Button clickMsg
+positive =
+    withColor Positive
 
 
 withColor : Color -> Button clickMsg -> Button clickMsg
@@ -355,3 +362,6 @@ colorToClassName color =
 
         Danger ->
             "danger"
+
+        Positive ->
+            "positive"

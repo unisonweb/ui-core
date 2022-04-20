@@ -28,6 +28,17 @@
   );
   --color-button-danger-hover-bg: var(--u-color_critical_action_hovered);
 
+  --color-button-positive-text: var(--u-color_positive_text-on-action);
+  --color-button-positive-icon: var(--u-color_positive_icon-on-action);
+  --color-button-positive-bg: var(--u-color_positive_action);
+  --color-button-positive-hover-text: var(
+    --u-color_positive_text-on-action_hovered
+  );
+  --color-button-positive-hover-icon: var(
+    --u-color_positive_icon-on-action_hovered
+  );
+  --color-button-positive-hover-bg: var(--u-color_positive_action_hovered);
+
   /* @color-todo */
   /* @decorative */
   --color-button-decorative-blue-text: var(--color-gray-lighten-60);
@@ -142,6 +153,7 @@ a.button:hover {
   color: var(--color-button-primary-hover-text);
   background: var(--color-button-primary-hover-bg);
 }
+
 .button.contained.primary:hover .icon {
   color: var(--color-button-primary-hover-icon);
 }
@@ -161,6 +173,23 @@ a.button:hover {
 }
 .button.contained.danger:hover .icon {
   color: var(--color-button-danger-icon);
+}
+
+.button.contained.positive {
+  color: var(--color-button-positive-text);
+  background: var(--color-button-positive-bg);
+}
+
+.button.contained.positive .icon {
+  color: var(--color-button-positive-icon);
+}
+
+.button.contained.positive:hover {
+  color: var(--color-button-positive-text);
+  background: var(--color-button-positive-bg);
+}
+.button.contained.positive:hover .icon {
+  color: var(--color-button-positive-icon);
 }
 
 .button.contained.share {
