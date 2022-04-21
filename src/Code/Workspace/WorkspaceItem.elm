@@ -24,7 +24,7 @@ import Maybe.Extra as MaybeE
 import String.Extra exposing (pluralize)
 import UI
 import UI.Button as Button
-import UI.Click exposing (Click(..))
+import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
 import UI.Tooltip as Tooltip
@@ -373,8 +373,8 @@ viewInfoItems hash_ info =
 
                         namespaceMenu =
                             Tooltip.menu
-                                [ ( Icon.browse, "Find within " ++ ns, OnClick (FindWithinNamespace fqn) )
-                                , ( Icon.intoFolder, "Change perspective to " ++ ns, OnClick (ChangePerspectiveToNamespace fqn) )
+                                [ ( Icon.browse, "Find within " ++ ns, Click.onClick (FindWithinNamespace fqn) )
+                                , ( Icon.intoFolder, "Change perspective to " ++ ns, Click.onClick (ChangePerspectiveToNamespace fqn) )
                                 ]
                     in
                     Tooltip.tooltip (viewInfoItem Icon.folderOutlined ns) namespaceMenu

@@ -3,16 +3,16 @@ module UI.Button exposing
     , Size(..)
     , Type(..)
     , button
+    , button_
     , contained
     , danger
     , default
     , github
     , icon
     , iconThenLabel
+    , iconThenLabel_
+    , icon_
     , large
-    , link
-    , linkIcon
-    , linkIconThenLabel
     , medium
     , positive
     , preventDefault
@@ -22,23 +22,15 @@ module UI.Button exposing
     , stopPropagation
     , uncontained
     , view
-    , withOnClickSettings
+    , withClick
     , withSize
     , withType
     )
 
 import Html exposing (Html, a, text)
-import Html.Attributes exposing (class, href, rel, target)
-import Html.Events exposing (onClick)
-import Html.Events.Extra exposing (onClickPreventDefault, onClickPreventDefaultAndStopPropagation, onClickStopPropagation)
+import Html.Attributes exposing (class)
+import UI.Click as Click exposing (Click(..))
 import UI.Icon as I
-
-
-{-| TODO: Merge with UI.Click
--}
-type Action clickMsg
-    = OnClick clickMsg OnClickSettings
-    | Href String
 
 
 type Content msg
@@ -48,7 +40,7 @@ type Content msg
 
 
 type alias Button msg =
-    { action : Action msg
+    { click : Click msg
     , content : Content msg
     , type_ : Type
     , color : Color
@@ -60,9 +52,14 @@ type alias Button msg =
 -- BASE
 
 
-button : clickMsg -> String -> Button clickMsg
-button clickMsg label =
-    { action = OnClick clickMsg defaultOnClickSettings
+button : msg -> String -> Button msg
+button msg label =
+    button_ (Click.onClick msg) label
+
+
+button_ : Click msg -> String -> Button msg
+button_ click label =
+    { click = click
     , content = Label label
     , type_ = Contained
     , color = Default
@@ -71,9 +68,14 @@ button clickMsg label =
 
 
 icon : msg -> I.Icon msg -> Button msg
-icon msg icon_ =
-    { action = OnClick msg defaultOnClickSettings
-    , content = Icon icon_
+icon msg icon__ =
+    icon_ (Click.onClick msg) icon__
+
+
+icon_ : Click msg -> I.Icon msg -> Button msg
+icon_ click icon__ =
+    { click = click
+    , content = Icon icon__
     , type_ = Contained
     , color = Default
     , size = Medium
@@ -81,101 +83,40 @@ icon msg icon_ =
 
 
 iconThenLabel : msg -> I.Icon msg -> String -> Button msg
-iconThenLabel msg icon_ label =
-    { action = OnClick msg defaultOnClickSettings
-    , content = IconThenLabel icon_ label
+iconThenLabel msg icon__ label =
+    iconThenLabel_ (Click.onClick msg) icon__ label
+
+
+iconThenLabel_ : Click msg -> I.Icon msg -> String -> Button msg
+iconThenLabel_ click icon__ label =
+    { click = click
+    , content = IconThenLabel icon__ label
     , type_ = Contained
     , color = Default
     , size = Medium
     }
 
 
-{-| Generally avoid using Button links as it is not semantically correct, but
-useful in some cases for external links
--}
-link : String -> String -> Button clickMsg
-link url label =
-    { action = Href url
-    , content = Label label
-    , type_ = Uncontained
-    , color = Default
-    , size = Medium
-    }
 
-
-linkIcon : String -> I.Icon msg -> Button msg
-linkIcon url icon_ =
-    { action = Href url
-    , content = Icon icon_
-    , type_ = Uncontained
-    , color = Default
-    , size = Medium
-    }
-
-
-linkIconThenLabel : String -> I.Icon msg -> String -> Button msg
-linkIconThenLabel url icon_ label =
-    { action = Href url
-    , content = IconThenLabel icon_ label
-    , type_ = Uncontained
-    , color = Default
-    , size = Medium
-    }
-
-
-
--- OnClick
-
-
-type alias OnClickSettings =
-    { stopPropagation : Bool, preventDefault : Bool }
-
-
-defaultOnClickSettings : OnClickSettings
-defaultOnClickSettings =
-    { stopPropagation = False, preventDefault = False }
+-- Click Settings
 
 
 stopPropagation : Button msg -> Button msg
-stopPropagation button_ =
-    case button_.action of
-        OnClick msg settings ->
-            let
-                newSettings =
-                    { settings | stopPropagation = True }
-            in
-            { button_ | action = OnClick msg newSettings }
-
-        _ ->
-            button_
+stopPropagation button__ =
+    { button__ | click = Click.stopPropagation button__.click }
 
 
 preventDefault : Button msg -> Button msg
-preventDefault button_ =
-    case button_.action of
-        OnClick msg settings ->
-            let
-                newSettings =
-                    { settings | preventDefault = True }
-            in
-            { button_ | action = OnClick msg newSettings }
-
-        _ ->
-            button_
+preventDefault button__ =
+    { button__ | click = Click.preventDefault button__.click }
 
 
-withOnClickSettings : OnClickSettings -> Button msg -> Button msg
-withOnClickSettings settings button_ =
-    case button_.action of
-        OnClick msg _ ->
-            { button_ | action = OnClick msg settings }
 
-        _ ->
-            button_
+-- VIEW
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, type_, color, action, size } =
+view { content, type_, color, click, size } =
     let
         ( contentType, content_ ) =
             case content of
@@ -196,26 +137,18 @@ view { content, type_, color, action, size } =
             , class contentType
             ]
     in
-    case action of
-        OnClick clickMsg settings ->
-            let
-                click =
-                    if settings.stopPropagation && settings.preventDefault then
-                        onClickPreventDefaultAndStopPropagation
+    case click of
+        OnClick _ _ ->
+            Html.button (Click.attrs click ++ attrs) content_
 
-                    else if settings.stopPropagation then
-                        onClickStopPropagation
+        ExternalHref _ ->
+            a (attrs ++ Click.attrs click) content_
 
-                    else if settings.preventDefault then
-                        onClickPreventDefault
+        Href _ ->
+            a (attrs ++ Click.attrs click) content_
 
-                    else
-                        onClick
-            in
-            Html.button (click clickMsg :: attrs) content_
-
-        Href url ->
-            a (attrs ++ [ href url, rel "noopener", target "_blank" ]) content_
+        Disabled ->
+            Html.button attrs content_
 
 
 
@@ -236,18 +169,23 @@ type Color
 
 
 contained : Button clickMsg -> Button clickMsg
-contained button_ =
-    { button_ | type_ = Contained }
+contained button__ =
+    { button__ | type_ = Contained }
 
 
 uncontained : Button clickMsg -> Button clickMsg
-uncontained button_ =
-    { button_ | type_ = Uncontained }
+uncontained button__ =
+    { button__ | type_ = Uncontained }
 
 
 withType : Type -> Button clickMsg -> Button clickMsg
-withType type_ button_ =
-    { button_ | type_ = type_ }
+withType type_ button__ =
+    { button__ | type_ = type_ }
+
+
+withClick : Click msg -> Button msg -> Button msg
+withClick click button__ =
+    { button__ | click = click }
 
 
 default : Button clickMsg -> Button clickMsg
@@ -276,8 +214,8 @@ positive =
 
 
 withColor : Color -> Button clickMsg -> Button clickMsg
-withColor color_ button_ =
-    { button_ | color = color_ }
+withColor color_ button__ =
+    { button__ | color = color_ }
 
 
 
@@ -306,8 +244,8 @@ large =
 
 
 withSize : Size -> Button clickMsg -> Button clickMsg
-withSize size button_ =
-    { button_ | size = size }
+withSize size button__ =
+    { button__ | size = size }
 
 
 
@@ -316,9 +254,8 @@ withSize size button_ =
 
 github : String -> Button msg
 github repo =
-    linkIconThenLabel ("https://github.com/" ++ repo) I.github repo
+    iconThenLabel_ (Click.externalHref ("https://github.com/" ++ repo)) I.github repo
         |> small
-        |> contained
 
 
 
