@@ -62,6 +62,8 @@
   transition: all 0.1s ease-in;
   justify-content: center;
   align-items: center;
+  /* avoid stretching the width of the button */
+  align-self: start;
 }
 
 a.button,
