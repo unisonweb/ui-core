@@ -3,7 +3,7 @@
   --color-button-default-icon: var(--u-color_icon-on-action);
   --color-button-default-bg: var(--u-color_action);
   --color-button-default-hover-text: var(--u-color_text-on-action_hovered);
-  --color-button-default-hover-icon: var(--u-color_text-on-action_hovered);
+  --color-button-default-hover-icon: var(--u-color_icon-on-action_hovered);
   --color-button-default-hover-bg: var(--u-color_action_hovered);
 
   --color-button-primary-text: var(--u-color_text-on-action-emphasized);

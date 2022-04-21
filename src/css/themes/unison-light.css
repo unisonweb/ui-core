@@ -51,7 +51,7 @@
   --u-color_action: var(--color-gray-lighten-50);
   --u-color_text-on-action: var(--color-gray-darken-30);
   --u-color_icon-on-action: var(--color-gray-lighten-20);
-  --u-color_action_hovered: var(--color-gray-lighten-40);
+  --u-color_action_hovered: var(--color-gray-lighten-45);
   --u-color_text-on-action_hovered: var(--color-gray-darken-30);
   --u-color_icon-on-action_hovered: var(--color-gray-lighten-20);
   --u-color_action_subdued: var(--color-transparent);
