@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: center;
   height: 2rem;
-  padding: 0 0.25rem;
+  padding: 0 0.5rem 0 0.25rem;
   border-radius: var(--border-radius-base);
 }
 
@@ -15,4 +15,3 @@
 .project-listing .hashvatar {
   margin-right: 0.5rem;
 }
-
