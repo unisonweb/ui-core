@@ -35,8 +35,8 @@ type PageLayout msg
         , sidebarToggled : Bool
         , content : PageContent msg
         }
-    | Centered { content : PageContent msg }
-    | EdgeToEdge { content : PageContent msg }
+    | CenteredLayout { content : PageContent msg }
+    | EdgeToEdgeLayout { content : PageContent msg }
 
 
 
