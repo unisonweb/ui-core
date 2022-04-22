@@ -111,12 +111,12 @@ view page =
                 , viewContent content
                 ]
 
-        Centered { content } ->
+        CenteredLayout { content } ->
             div [ class "page centered-layout" ]
                 [ viewContent content
                 ]
 
-        EdgeToEdge { content } ->
+        EdgeToEdgeLayout { content } ->
             div [ class "page edge-to-edge-layout" ]
                 [ viewContent content
                 ]
