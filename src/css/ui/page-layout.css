@@ -78,12 +78,13 @@
 }
 
 .page-content .page-heading .icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 1.75rem;
   width: 1.75rem;
   border-radius: calc(1.75rem / 2);
   background: var(--u-color_container_subdued);
-  align-items: center;
-  justify-content: center;
 }
 
 .page-content .page-heading .icon {
