@@ -1,7 +1,8 @@
 module UI.PageLayout exposing (..)
 
-import Html exposing (Html, div, header, section)
+import Html exposing (Html, div, h1, header, p, section, text)
 import Html.Attributes exposing (class, classList)
+import UI.Icon as Icon exposing (Icon)
 import UI.Sidebar as Sidebar
 
 
@@ -9,8 +10,18 @@ type PageHero msg
     = PageHero (Html msg)
 
 
+type alias PageHeading msg =
+    { icon : Maybe (Icon msg)
+    , heading : String
+    , description : Maybe String
+    }
+
+
 type PageContent msg
-    = PageContent (List (Html msg))
+    = PageContent
+        { heading : Maybe (PageHeading msg)
+        , content : List (Html msg)
+        }
 
 
 type PageLayout msg
@@ -24,7 +35,8 @@ type PageLayout msg
         , sidebarToggled : Bool
         , content : PageContent msg
         }
-    | FullLayout { content : PageContent msg }
+    | Centered { content : PageContent msg }
+    | EdgeToEdge { content : PageContent msg }
 
 
 
@@ -36,9 +48,49 @@ viewHero (PageHero content) =
     header [ class "page-hero" ] [ content ]
 
 
+viewHeading : PageHeading msg -> Html msg
+viewHeading { icon, heading, description } =
+    let
+        items =
+            case ( icon, description ) of
+                ( Nothing, Nothing ) ->
+                    [ h1 [] [ text heading ] ]
+
+                ( Nothing, Just d ) ->
+                    [ div [ class "text" ]
+                        [ h1 [] [ text heading ]
+                        , p [ class "description" ] [ text d ]
+                        ]
+                    ]
+
+                ( Just i, Nothing ) ->
+                    [ Icon.view i
+                    , h1 [] [ text heading ]
+                    ]
+
+                ( Just i, Just d ) ->
+                    [ Icon.view i
+                    , div [ class "text" ]
+                        [ h1 [] [ text heading ]
+                        , p [ class "description" ] [ text d ]
+                        ]
+                    ]
+    in
+    header [ class "page-heading" ] items
+
+
 viewContent : PageContent msg -> Html msg
-viewContent (PageContent content) =
-    section [ class "page-content" ] content
+viewContent (PageContent { heading, content }) =
+    let
+        items =
+            case heading of
+                Just h ->
+                    viewHeading h :: content
+
+                Nothing ->
+                    content
+    in
+    section [ class "page-content" ] items
 
 
 view : PageLayout msg -> Html msg
@@ -59,7 +111,12 @@ view page =
                 , viewContent content
                 ]
 
-        FullLayout { content } ->
-            div [ class "page full-layout" ]
+        Centered { content } ->
+            div [ class "page centered-layout" ]
+                [ viewContent content
+                ]
+
+        EdgeToEdge { content } ->
+            div [ class "page edge-to-edge-layout" ]
                 [ viewContent content
                 ]
