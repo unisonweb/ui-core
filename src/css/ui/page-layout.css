@@ -77,14 +77,18 @@
   gap: 0.125rem;
 }
 
-.page-content .page-heading .icon {
+.page-content .page-heading .icon-badge {
   height: 1.75rem;
   width: 1.75rem;
   border-radius: calc(1.75rem / 2);
   background: var(--u-color_container_subdued);
+  align-items: center;
+  justify-content: center;
+}
+
+.page-content .page-heading .icon {
   color: var(--u-color_icon_subdued);
   font-size: 1.125rem;
-  align-items: center;
 }
 
 .page-content .page-heading h1 {

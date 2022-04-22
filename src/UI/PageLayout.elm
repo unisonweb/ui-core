@@ -48,8 +48,8 @@ viewHero (PageHero content) =
     header [ class "page-hero" ] [ content ]
 
 
-viewHeading : PageHeading msg -> Html msg
-viewHeading { icon, heading, description } =
+viewPageHeading : PageHeading msg -> Html msg
+viewPageHeading { icon, heading, description } =
     let
         items =
             case ( icon, description ) of
@@ -64,12 +64,12 @@ viewHeading { icon, heading, description } =
                     ]
 
                 ( Just i, Nothing ) ->
-                    [ Icon.view i
+                    [ div [ class "icon-badge" ] [ Icon.view i ]
                     , h1 [] [ text heading ]
                     ]
 
                 ( Just i, Just d ) ->
-                    [ Icon.view i
+                    [ div [ class "icon-badge" ] [ Icon.view i ]
                     , div [ class "text" ]
                         [ h1 [] [ text heading ]
                         , p [ class "description" ] [ text d ]
@@ -85,7 +85,7 @@ viewContent (PageContent { heading, content }) =
         items =
             case heading of
                 Just h ->
-                    viewHeading h :: content
+                    viewPageHeading h :: content
 
                 Nothing ->
                     content
