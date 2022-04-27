@@ -48,6 +48,7 @@
   flex-direction: row;
   align-items: center;
   color: var(--color-app-header-text);
+  margin-right: 2.5rem;
 }
 
 #app-header .app-title h1 {
@@ -81,6 +82,7 @@
   border-radius: 1rem;
   height: 2rem;
   font-size: var(--font-size-medium);
+  padding: 0 1rem;
 }
 
 #app-header .navigation .nav-item.selected,
