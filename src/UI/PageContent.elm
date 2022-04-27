@@ -1,5 +1,6 @@
 module UI.PageContent exposing
     ( PageContent
+    , PageHeading
     , oneColumn
     , threeColumns
     , twoColumns
