@@ -3,11 +3,13 @@ module UI.AppHeader exposing (..)
 import Html exposing (Html, a, header, section)
 import Html.Attributes exposing (class, id)
 import Html.Events exposing (onClick)
+import Maybe.Extra as MaybeE
 import UI
 import UI.Banner as Banner exposing (Banner)
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
+import UI.Navigation as Navigation exposing (Navigation)
 
 
 type AppTitle msg
@@ -21,6 +23,7 @@ type alias MenuToggle msg =
 type alias AppHeader msg =
     { menuToggle : Maybe msg
     , appTitle : AppTitle msg
+    , navigation : Maybe (Navigation msg)
     , banner : Maybe (Banner msg)
     , rightButton : Maybe (Button msg)
     }
@@ -30,9 +33,29 @@ appHeader : AppTitle msg -> AppHeader msg
 appHeader appTitle =
     { menuToggle = Nothing
     , appTitle = appTitle
+    , navigation = Nothing
     , banner = Nothing
     , rightButton = Nothing
     }
+
+
+withNavigation : Navigation msg -> AppHeader msg -> AppHeader msg
+withNavigation navigation appHeader_ =
+    { appHeader_ | navigation = Just navigation }
+
+
+
+-- VIEW
+
+
+viewAppTitle : AppTitle msg -> Html msg
+viewAppTitle (AppTitle click content) =
+    Click.view [ class "app-title" ] [ content ] click
+
+
+view_ : List (Html msg) -> Html msg
+view_ content =
+    header [ id "app-header" ] content
 
 
 view : AppHeader msg -> Html msg
@@ -65,15 +88,6 @@ view appHeader_ =
     view_
         [ menuToggle
         , viewAppTitle appHeader_.appTitle
+        , MaybeE.unwrap UI.nothing Navigation.view appHeader_.navigation
         , section [ class "right" ] [ banner, rightButton ]
         ]
-
-
-viewAppTitle : AppTitle msg -> Html msg
-viewAppTitle (AppTitle click content) =
-    Click.view [ class "app-title" ] [ content ] click
-
-
-view_ : List (Html msg) -> Html msg
-view_ content =
-    header [ id "app-header" ] content

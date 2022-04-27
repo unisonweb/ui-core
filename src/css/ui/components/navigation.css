@@ -1,0 +1,30 @@
+.navigation {
+  --u-color_c_navigation-item: var(--color-transparent);
+  --u-color_c_navigation-item_hovered: var(--color-gray-base);
+  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-lighten-60);
+  --u-color_c_navigation-item: var(--color-transparent);
+  --u-color_c_navigation-item_selected: var(--color-gray-darken-20);
+  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
+
+  display: flex;
+}
+
+.navigation .nav-item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--u-color_c_text-on-navigation-item);
+  background: var(--u-color_c_navigation-item);
+}
+
+.navigation .nav-item.selected {
+  color: var(--u-color_c_text-on-navigation-item_selected);
+  background: var(--u-color_c_navigation-item_selected);
+}
+
+.navigation .nav-item:hover {
+  color: var(--u-color_c_text-on-navigation-item_hovered);
+  background: var(--u-color_c_navigation-item_hovered);
+}

@@ -1,7 +1,7 @@
 module UI.Click exposing (..)
 
 import Html exposing (Attribute, Html, a)
-import Html.Attributes as Attrs exposing (rel, target)
+import Html.Attributes as Attrs exposing (class, rel, target)
 import Html.Events as Events
 import Html.Events.Extra exposing (onClickPreventDefault, onClickPreventDefaultAndStopPropagation, onClickStopPropagation)
 
@@ -119,7 +119,7 @@ attrs click =
             [ click_ msg ]
 
         Disabled ->
-            []
+            [ class "disabled" ]
 
 
 view : List (Attribute msg) -> List (Html msg) -> Click msg -> Html msg
