@@ -26,6 +26,10 @@
 .page.centered-layout .page-content {
   width: 64rem;
   margin: auto;
+  padding: 3rem 1.5rem 1.5rem 1.5rem;
+}
+.page.centered-layout .page-content .page-heading {
+  margin-left: -0.75rem;
 }
 
 .page.hero-layout {
@@ -107,9 +111,21 @@
 
 /* -- Sidebar -------------------------------------------------------------- */
 
-.page.sidebar-layout .page-content {
+.page.sidebar-edge-to-edge-layout .page-content {
   height: calc(100vh - var(--app-header-height));
   overflow: auto;
+  width: 100vw;
+}
+
+.page.sidebar-left-content-layout .page-content {
+  height: calc(100vh - var(--app-header-height));
+  overflow: auto;
+  width: 64rem;
+  padding: 3rem 0 1.5rem 2.25rem;
+  margin-left: 0;
+}
+.page.sidebar-left-content-layout .page-content .page-heading {
+  margin-left: -0.75rem;
 }
 
 #main-sidebar {
@@ -554,7 +570,8 @@
     display: none;
   }
 
-  .page.sidebar-layout .page-content,
+  .page.sidebar-edge-to-edge-layout .page-content,
+  .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.edge-to-edge-layout .page-content,
   .page.centered-layout .page-content {

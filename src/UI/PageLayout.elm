@@ -1,27 +1,13 @@
 module UI.PageLayout exposing (..)
 
-import Html exposing (Html, div, h1, header, p, section, text)
+import Html exposing (Html, div, header)
 import Html.Attributes exposing (class, classList)
-import UI.Icon as Icon exposing (Icon)
+import UI.PageContent as PageContent exposing (PageContent)
 import UI.Sidebar as Sidebar
 
 
 type PageHero msg
     = PageHero (Html msg)
-
-
-type alias PageHeading msg =
-    { icon : Maybe (Icon msg)
-    , heading : String
-    , description : Maybe String
-    }
-
-
-type PageContent msg
-    = PageContent
-        { heading : Maybe (PageHeading msg)
-        , content : List (Html msg)
-        }
 
 
 type PageLayout msg
@@ -30,13 +16,17 @@ type PageLayout msg
         , content :
             PageContent msg
         }
-    | SidebarLayout
+    | SidebarEdgeToEdgeLayout
+        { sidebar : List (Html msg)
+        , sidebarToggled : Bool
+        , content : PageContent msg
+        }
+    | SidebarLeftContentLayout
         { sidebar : List (Html msg)
         , sidebarToggled : Bool
         , content : PageContent msg
         }
     | CenteredLayout { content : PageContent msg }
-    | EdgeToEdgeLayout { content : PageContent msg }
 
 
 
@@ -48,75 +38,34 @@ viewHero (PageHero content) =
     header [ class "page-hero" ] [ content ]
 
 
-viewPageHeading : PageHeading msg -> Html msg
-viewPageHeading { icon, heading, description } =
-    let
-        items =
-            case ( icon, description ) of
-                ( Nothing, Nothing ) ->
-                    [ h1 [] [ text heading ] ]
-
-                ( Nothing, Just d ) ->
-                    [ div [ class "text" ]
-                        [ h1 [] [ text heading ]
-                        , p [ class "description" ] [ text d ]
-                        ]
-                    ]
-
-                ( Just i, Nothing ) ->
-                    [ div [ class "icon-badge" ] [ Icon.view i ]
-                    , h1 [] [ text heading ]
-                    ]
-
-                ( Just i, Just d ) ->
-                    [ div [ class "icon-badge" ] [ Icon.view i ]
-                    , div [ class "text" ]
-                        [ h1 [] [ text heading ]
-                        , p [ class "description" ] [ text d ]
-                        ]
-                    ]
-    in
-    header [ class "page-heading" ] items
-
-
-viewContent : PageContent msg -> Html msg
-viewContent (PageContent { heading, content }) =
-    let
-        items =
-            case heading of
-                Just h ->
-                    viewPageHeading h :: content
-
-                Nothing ->
-                    content
-    in
-    section [ class "page-content" ] items
-
-
 view : PageLayout msg -> Html msg
 view page =
     case page of
         HeroLayout { hero, content } ->
             div [ class "page hero-layout" ]
                 [ viewHero hero
-                , viewContent content
+                , PageContent.view content
                 ]
 
-        SidebarLayout { sidebar, sidebarToggled, content } ->
+        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, content } ->
             div
-                [ class "page sidebar-layout"
+                [ class "page sidebar-edge-to-edge-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
                 [ Sidebar.view sidebar
-                , viewContent content
+                , PageContent.view content
+                ]
+
+        SidebarLeftContentLayout { sidebar, sidebarToggled, content } ->
+            div
+                [ class "page sidebar-left-content-layout"
+                , classList [ ( "sidebar-toggled", sidebarToggled ) ]
+                ]
+                [ Sidebar.view sidebar
+                , PageContent.view content
                 ]
 
         CenteredLayout { content } ->
             div [ class "page centered-layout" ]
-                [ viewContent content
-                ]
-
-        EdgeToEdgeLayout { content } ->
-            div [ class "page edge-to-edge-layout" ]
-                [ viewContent content
+                [ PageContent.view content
                 ]
