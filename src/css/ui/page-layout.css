@@ -115,7 +115,7 @@
 .page.sidebar-edge-to-edge-layout .page-content {
   height: calc(100vh - var(--app-header-height));
   overflow: auto;
-  width: 100vw;
+  width: 100%;
 }
 
 .page.sidebar-left-content-layout .page-content {
