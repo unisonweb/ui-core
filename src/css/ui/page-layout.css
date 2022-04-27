@@ -5,7 +5,8 @@
   --transition-sidebar-collapse-time: 0.3s;
 }
 
-.page.sidebar-layout {
+.page.sidebar-left-content-layout,
+.page.sidebar-edge-to-edge-layout {
   grid-template-rows: auto;
   grid-template-columns: var(--main-sidebar-width) auto;
   grid-template-areas: "main-sidebar page-content";
@@ -560,7 +561,8 @@
 }
 
 @media only screen and (max-width: 1024px) {
-  .page.sidebar-layout {
+  .page.sidebar-edge-to-edge-layout,
+  .page.sidebar-left-content-layout {
     grid-template-rows: auto;
     grid-template-columns: auto;
     grid-template-areas: "page-content";
@@ -578,7 +580,8 @@
     width: 100vw;
   }
 
-  .page.sidebar-layout.sidebar-toggled {
+  .page.sidebar-edge-to-edge-layout.sidebar-toggled,
+  .page.sidebar-left-content-layout.sidebar-toggled {
     grid-template-rows: auto;
     grid-template-columns: auto auto;
     grid-template-areas: "main-sidebar main-sidebar";
