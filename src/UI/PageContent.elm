@@ -1,6 +1,7 @@
 module UI.PageContent exposing
     ( PageContent
     , PageHeading
+    , empty
     , oneColumn
     , threeColumns
     , twoColumns
@@ -29,6 +30,11 @@ type PageContent msg
 
 
 -- CREATE
+
+
+empty : PageContent msg
+empty =
+    PageContent { heading = Nothing, content = [] }
 
 
 {-| Create a page content with a single column and no heading
