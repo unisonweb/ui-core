@@ -52,6 +52,9 @@
   scroll-behavior: smooth;
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+  display: flex;
+  flex-direction: column;
+  gap: 2.625rem;
 }
 
 .page-content::-webkit-scrollbar {
@@ -108,6 +111,16 @@
   height: 1.5rem;
   align-items: center;
   color: var(--u-color_text_subdued);
+}
+
+.page-content .columns {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+.page-content .columns .column {
+  display: flex;
+  flex: 1;
 }
 
 /* -- Sidebar -------------------------------------------------------------- */
