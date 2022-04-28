@@ -90,14 +90,16 @@
   font-weight: bold;
 }
 
-#app-header .right {
-  margin-left: auto;
+#app-header .left-side {
+  margin-left: 1.5rem;
   justify-self: flex-end;
   align-items: center;
 }
 
-#app-header .right .banner {
-  margin-right: 0.75rem;
+#app-header .right-side {
+  margin-left: auto;
+  justify-self: flex-end;
+  align-items: center;
 }
 
 /* -- Responsive ----------------------------------------------------------- */

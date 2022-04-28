@@ -5,8 +5,6 @@ import Html.Attributes exposing (class, id)
 import Html.Events exposing (onClick)
 import Maybe.Extra as MaybeE
 import UI
-import UI.Banner as Banner exposing (Banner)
-import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
 import UI.Navigation as Navigation exposing (Navigation)
@@ -24,8 +22,8 @@ type alias AppHeader msg =
     { menuToggle : Maybe msg
     , appTitle : AppTitle msg
     , navigation : Maybe (Navigation msg)
-    , banner : Maybe (Banner msg)
-    , rightButton : Maybe (Button msg)
+    , leftSide : List (Html msg)
+    , rightSide : List (Html msg)
     }
 
 
@@ -34,8 +32,8 @@ appHeader appTitle =
     { menuToggle = Nothing
     , appTitle = appTitle
     , navigation = Nothing
-    , banner = Nothing
-    , rightButton = Nothing
+    , leftSide = []
+    , rightSide = []
     }
 
 
@@ -70,24 +68,11 @@ view appHeader_ =
                     a
                         [ class "menu-toggle", onClick toggle ]
                         [ Icon.view Icon.list ]
-
-        banner =
-            case appHeader_.banner of
-                Nothing ->
-                    UI.nothing
-
-                Just banner_ ->
-                    Banner.view banner_
-
-        rightButton =
-            appHeader_.rightButton
-                |> Maybe.map Button.small
-                |> Maybe.map Button.view
-                |> Maybe.withDefault UI.nothing
     in
     view_
         [ menuToggle
         , viewAppTitle appHeader_.appTitle
         , MaybeE.unwrap UI.nothing Navigation.view appHeader_.navigation
-        , section [ class "right" ] [ banner, rightButton ]
+        , section [ class "left-side" ] appHeader_.rightSide
+        , section [ class "right-side" ] appHeader_.rightSide
         ]
