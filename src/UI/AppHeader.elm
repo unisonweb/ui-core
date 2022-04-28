@@ -73,6 +73,6 @@ view appHeader_ =
         [ menuToggle
         , viewAppTitle appHeader_.appTitle
         , MaybeE.unwrap UI.nothing Navigation.view appHeader_.navigation
-        , section [ class "left-side" ] appHeader_.rightSide
+        , section [ class "left-side" ] appHeader_.leftSide
         , section [ class "right-side" ] appHeader_.rightSide
         ]
