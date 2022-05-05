@@ -1,5 +1,6 @@
 module UI.Navigation exposing
-    ( Navigation
+    ( NavItem
+    , Navigation
     , empty
     , view
     , withItems
