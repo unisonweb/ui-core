@@ -3,7 +3,6 @@ module Code.Perspective exposing (..)
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.Namespace exposing (NamespaceDetails)
-import Json.Decode as Decode exposing (field)
 import RemoteData exposing (RemoteData(..), WebData)
 
 
@@ -21,13 +20,18 @@ import RemoteData exposing (RemoteData(..), WebData)
 -}
 
 
+type RootPerspective
+    = Relative
+    | Absolute Hash
+
+
 type
     Perspective
     -- The Root can refer to several things; the root of the codebase,
     -- the root of a project, or a users codebase.
-    = Root Hash
+    = Root RootPerspective
     | Namespace
-        { rootHash : Hash
+        { root : RootPerspective
         , fqn : FQN
         , details : WebData NamespaceDetails
         }
@@ -35,22 +39,40 @@ type
 
 toRootPerspective : Perspective -> Perspective
 toRootPerspective perspective =
-    Root (rootHash perspective)
+    Root (rootPerspective perspective)
 
 
 toNamespacePerspective : Perspective -> FQN -> Perspective
 toNamespacePerspective perspective fqn_ =
-    Namespace { rootHash = rootHash perspective, fqn = fqn_, details = NotAsked }
+    Namespace { root = rootPerspective perspective, fqn = fqn_, details = NotAsked }
 
 
-rootHash : Perspective -> Hash
-rootHash perspective =
+rootPerspective : Perspective -> RootPerspective
+rootPerspective perspective =
     case perspective of
-        Root hash_ ->
-            hash_
+        Root p ->
+            p
 
         Namespace d ->
-            d.rootHash
+            d.root
+
+
+rootHash : Perspective -> Maybe Hash
+rootHash perspective =
+    case perspective of
+        Root Relative ->
+            Nothing
+
+        Root (Absolute h) ->
+            Just h
+
+        Namespace d ->
+            case d.root of
+                Relative ->
+                    Nothing
+
+                Absolute h ->
+                    Just h
 
 
 fqn : Perspective -> FQN
@@ -63,14 +85,27 @@ fqn perspective =
             d.fqn
 
 
+rootPerspectiveEquals : RootPerspective -> RootPerspective -> Bool
+rootPerspectiveEquals a b =
+    case ( a, b ) of
+        ( Relative, Relative ) ->
+            True
+
+        ( Absolute ah, Absolute bh ) ->
+            Hash.equals ah bh
+
+        _ ->
+            False
+
+
 equals : Perspective -> Perspective -> Bool
 equals a b =
     case ( a, b ) of
-        ( Root ah, Root bh ) ->
-            Hash.equals ah bh
+        ( Root ap, Root bp ) ->
+            rootPerspectiveEquals ap bp
 
         ( Namespace ans, Namespace bns ) ->
-            Hash.equals ans.rootHash bns.rootHash && FQN.equals ans.fqn bns.fqn
+            rootPerspectiveEquals ans.root bns.root && FQN.equals ans.fqn bns.fqn
 
         _ ->
             False
@@ -90,57 +125,14 @@ toParams perspective =
             ByNamespace Relative d.fqn
 
 
-fromParams : PerspectiveParams -> Maybe Perspective
+fromParams : PerspectiveParams -> Perspective
 fromParams params =
     case params of
-        ByRoot Relative ->
-            Nothing
+        ByRoot p ->
+            Root p
 
-        ByNamespace Relative _ ->
-            Nothing
-
-        ByRoot (Absolute h) ->
-            Just (Root h)
-
-        ByNamespace (Absolute h) fqn_ ->
-            Just (Namespace { rootHash = h, fqn = fqn_, details = NotAsked })
-
-
-{-| Similar to `fromParams`, but requires a previous `Perspective` (with a
-root hash) to migrate from
--}
-nextFromParams : Perspective -> PerspectiveParams -> Perspective
-nextFromParams perspective params =
-    let
-        rootHash_ =
-            rootHash perspective
-    in
-    case ( params, perspective ) of
-        ( ByNamespace Relative fqn_, Namespace d ) ->
-            if Hash.equals rootHash_ d.rootHash && FQN.equals fqn_ d.fqn then
-                Namespace d
-
-            else
-                Namespace { rootHash = rootHash_, fqn = fqn_, details = NotAsked }
-
-        ( ByNamespace (Absolute h) fqn_, Namespace d ) ->
-            if Hash.equals h d.rootHash && FQN.equals fqn_ d.fqn then
-                Namespace d
-
-            else
-                Namespace { rootHash = h, fqn = fqn_, details = NotAsked }
-
-        ( ByNamespace Relative fqn_, _ ) ->
-            Namespace { rootHash = rootHash_, fqn = fqn_, details = NotAsked }
-
-        ( ByNamespace (Absolute h) fqn_, _ ) ->
-            Namespace { rootHash = h, fqn = fqn_, details = NotAsked }
-
-        ( ByRoot Relative, _ ) ->
-            Root rootHash_
-
-        ( ByRoot (Absolute h), _ ) ->
-            Root h
+        ByNamespace p fqn_ ->
+            Namespace { root = p, fqn = fqn_, details = NotAsked }
 
 
 needsFetching : Perspective -> Bool
@@ -174,34 +166,11 @@ isNamespacePerspective perspective =
 
 
 
--- Decode ---------------------------------------------------------------------
-
-
-decode : PerspectiveParams -> Decode.Decoder Perspective
-decode perspectiveParams =
-    let
-        make rootHash_ =
-            case perspectiveParams of
-                ByRoot _ ->
-                    Root rootHash_
-
-                ByNamespace _ fqn_ ->
-                    Namespace { rootHash = rootHash_, fqn = fqn_, details = NotAsked }
-    in
-    Decode.map make (field "namespaceListingHash" Hash.decode)
-
-
-
 -- PerspectiveParams ----------------------------------------------------------
 -- These are how a perspective is represented in the url, supporting relative
 -- URLs; "latest" vs the absolute URL with a root hash.
 
 
-type RootPerspectiveParam
-    = Relative
-    | Absolute Hash
-
-
 type PerspectiveParams
-    = ByRoot RootPerspectiveParam
-    | ByNamespace RootPerspectiveParam FQN
+    = ByRoot RootPerspective
+    | ByNamespace RootPerspective FQN
