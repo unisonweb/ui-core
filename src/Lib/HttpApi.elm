@@ -2,6 +2,7 @@ module Lib.HttpApi exposing
     ( ApiBasePath(..)
     , ApiRequest
     , EndpointUrl(..)
+    , HttpResult
     , perform
     , toRequest
     , toTask
