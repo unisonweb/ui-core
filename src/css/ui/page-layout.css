@@ -118,6 +118,7 @@
   flex-direction: row;
   gap: 1.5rem;
 }
+
 .page-content .columns .column {
   display: flex;
   flex: 1;
@@ -127,8 +128,10 @@
 
 .page.sidebar-edge-to-edge-layout .page-content {
   height: calc(100vh - var(--app-header-height));
+  padding: 0;
   overflow: auto;
   width: 100%;
+  align-items: normal;
 }
 
 .page.sidebar-left-content-layout .page-content {
