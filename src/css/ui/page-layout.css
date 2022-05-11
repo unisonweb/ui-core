@@ -138,7 +138,7 @@
  * also depends on the .page-content reset of align-items ...
  */
 .page.sidebar-edge-to-edge-layout .page-content .column {
-  display: auto;
+  display: initial;
 }
 
 .page.sidebar-left-content-layout .page-content {
