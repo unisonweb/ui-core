@@ -14,7 +14,7 @@
   color: var(--color_user-summary_text_subdued);
 }
 
-.user-summary .user-sumary_name,
+.user-summary .user-summary_name,
 /* If there's no name, treat the handle the same as if it was the name */
 .user-summary.user-summary_handle-only .user-summary_handle {
   font-size: var(--font-size-medium);
