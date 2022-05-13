@@ -83,7 +83,7 @@
   height: 1.75rem;
   width: 1.75rem;
   border-radius: calc(1.75rem / 2);
-  background: var(--u-color_container_subdued);
+  background: var(--u-color_element_subdued);
 }
 
 .page-content .page-heading .icon {

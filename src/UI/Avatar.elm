@@ -20,13 +20,13 @@ view { url, text, fallbackIcon } =
     case ( url, text ) of
         ( Nothing, Just n ) ->
             div
-                [ class "avatar avatar-text"
+                [ class "avatar avatar_text"
                 ]
                 [ Html.text (String.left 1 n) ]
 
         ( Just a, _ ) ->
             div
-                [ class "avatar avatar-image"
+                [ class "avatar avatar_image"
                 , style "background" ("url(" ++ Url.toString a ++ ")")
                 , alt "Avatar"
                 ]
@@ -34,7 +34,7 @@ view { url, text, fallbackIcon } =
 
         _ ->
             div
-                [ class "avatar avatar-blank-icon"
+                [ class "avatar avatar_blank-icon"
                 , alt "Avatar"
                 ]
                 [ MaybeE.unwrap UI.nothing Icon.view fallbackIcon ]

@@ -20,13 +20,13 @@ type alias UserSummary u =
 view : UserSummary u -> Html msg
 view { avatarUrl, handle, name } =
     let
-        name_ =
+        ( name_, attrs ) =
             case name of
                 Just n ->
-                    span [ class "user-name" ] [ text n ]
+                    ( span [ class "user-summary_name" ] [ text n ], [ class "user-summary" ] )
 
                 Nothing ->
-                    UI.nothing
+                    ( UI.nothing, [ class "user-summary user-summary_handle-only" ] )
 
         avatar =
             { text = Maybe.map (String.left 1) name
@@ -38,5 +38,5 @@ view { avatarUrl, handle, name } =
         [ class "user-summary" ]
         [ Avatar.view avatar
         , name_
-        , span [ class "user-handle" ] [ text (UserHandle.toString handle) ]
+        , span [ class "user-summary_handle" ] [ text (UserHandle.toString handle) ]
         ]
