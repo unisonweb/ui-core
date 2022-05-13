@@ -27,7 +27,7 @@ view { url, text, fallbackIcon } =
         ( Just a, _ ) ->
             div
                 [ class "avatar avatar_image"
-                , style "background" ("url(" ++ Url.toString a ++ ")")
+                , style "background-image" ("url(" ++ Url.toString a ++ ")")
                 , alt "Avatar"
                 ]
                 []
