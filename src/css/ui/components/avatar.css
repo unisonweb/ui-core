@@ -10,21 +10,18 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--color_avatar);
+  background-color: var(--color_avatar);
+  background-size: cover;
 }
 
-.avatar .avatar_text {
+.avatar.avatar_text {
   font-size: 0.625rem;
   text-transform: uppercase;
   font-weight: bold;
   line-height: 1;
 }
 
-.avatar .avatar_image {
-  background-size: cover;
-}
-
-.avatar .avatar_blank-icon .icon {
+.avatar.avatar_blank-icon .icon {
   font-size: 1rem;
   color: var(--color_avatar_blank_icon);
 }
