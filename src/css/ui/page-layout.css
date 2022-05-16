@@ -154,77 +154,9 @@
 
 /* -- Sidebar -------------------------------------------------------------- */
 
-#main-sidebar {
-  /* @color-todo @inverse */
-  --color-sidebar-fg: var(--color-gray-lighten-50);
-  --color-sidebar-fg-em: var(--color-gray-lighten-100);
-  --color-sidebar-bg: var(--color-gray-darken-20);
-  /* see color files for why this is needed */
-  --color-sidebar-bg-transparent: var(--color-gray-darken-20-transparent);
-  --color-sidebar-border: var(--color-gray-base);
-  --color-sidebar-subtle-fg: var(--color-gray-lighten-20);
-  --color-sidebar-subtle-fg-em: var(--color-gray-lighten-30);
-  --color-sidebar-subtle-bg: var(--color-transparent);
-  --color-sidebar-focus-fg: var(--color-gray-lighten-60);
-  --color-sidebar-focus-bg: var(--color-gray-darken-10);
-  --color-sidebar-keyboard-shortcut-key-fg: var(--color-gray-lighten-30);
-  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-base);
-  --color-sidebar-keyboard-shortcut-then: var(--color-gray-lighten-20);
-  --color-sidebar-keyboard-shortcut-separator: var(--color-gray-base);
-  --color-sidebar-keyboard-shortcut-hover-key-fg: var(--color-gray-lighten-50);
-  --color-sidebar-keyboard-shortcut-hover-key-bg: var(--color-gray-base);
-  --color-sidebar-keyboard-shortcut-hover-then: var(--color-gray-lighten-20);
-  --color-sidebar-keyboard-shortcut-hover-separator: var(--color-gray-base);
-  --color-sidebar-button-default-text: var(--color-gray-lighten-30);
-  --color-sidebar-button-default-icon: var(--color-gray-lighten-20);
-  --color-sidebar-button-default-bg: var(--color-gray-base);
-  --color-sidebar-button-default-hover-text: var(--color-gray-lighten-50);
-  --color-sidebar-button-default-hover-icon: var(--color-gray-lighten-30);
-  --color-sidebar-button-default-hover-bg: var(--color-gray-base);
-  --color-sidebar-divider: var(--color-gray-darken-10);
-
-  --color-sidebar-tooltip-fg: var(--color-gray-lighten-60);
-  --color-sidebar-tooltip-bg: var(--color-gray-darken-30);
-  --color-sidebar-tooltip-border: var(--color-gray-darken-10);
-
+#main-sidebar.sidebar {
   grid-area: main-sidebar;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  overflow: visible;
-  height: calc(100vh - var(--app-header-height));
-  background: var(--color-sidebar-bg);
-  color: var(--color-sidebar-fg);
-  border-right: 1px solid var(--color-sidebar-border);
-  box-shadow: 0 -1px 0 var(--color-sidebar-border);
-  font-size: var(--font-size-medium);
-  z-index: var(--layer-popover);
-
-  --u-color_text: var(--color-sidebar-fg);
-  --u-color_text_subdued: var(--color-sidebar-subtle-fg);
-
-  --color-tooltip-text: var(--color-sidebar-tooltip-fg);
-  --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
-  --color-tooltip-border: var(--color-sidebar-tooltip-border);
-
-  --u-color_divider: var(--color-sidebar-divider);
-}
-
-#main-sidebar .button {
-  --color-button-default-text: var(--color-sidebar-button-default-text);
-  --color-button-default-icon: var(--color-sidebar-button-default-icon);
-  --color-button-default-bg: var(--color-sidebar-button-default-bg);
-  --color-button-default-hover-text: var(
-    --color-sidebar-button-default-hover-text
-  );
-  --color-button-default-hover-icon: var(
-    --color-sidebar-button-default-hover-icon
-  );
-  --color-button-default-hover-bg: var(--color-sidebar-button-default-hover-bg);
-}
-
-#main-sidebar a:hover {
-  text-decoration: none;
+  --sidebar-height: calc(100vh - var(--app-header-height));
 }
 
 #main-sidebar .expanded-content {
@@ -234,87 +166,6 @@
   opacity: 1;
   transition: all var(--transition-sidebar-collapse-time);
   transition-delay: var(--transition-sidebar-collapse-time);
-}
-
-#main-sidebar .sidebar-scroll-area {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: calc(100vh - var(--app-header-height));
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-sidebar-subtle-fg) var(--color-sidebar-bg);
-  padding: 0rem 1rem 1rem 1.5rem;
-}
-
-#main-sidebar .sidebar-scroll-area::-webkit-scrollbar {
-  width: 0.4rem;
-  height: 0.4rem;
-}
-
-#main-sidebar .sidebar-scroll-area::-webkit-scrollbar-track {
-  background: var(--color-sidebar-bg);
-}
-
-#main-sidebar .sidebar-scroll-area::-webkit-scrollbar-thumb {
-  background-color: var(--color-sidebar-subtle-fg);
-  border-radius: 0.2rem;
-}
-
-#main-sidebar .loading-placeholder {
-  background: var(--color-sidebar-subtle-fg);
-  opacity: 0.5;
-}
-
-#main-sidebar .sidebar-section {
-  margin-top: 1.5rem;
-}
-
-#main-sidebar .sidebar-section:first-child {
-  margin-top: 1rem;
-}
-
-#main-sidebar .sidebar-section-title {
-  font-size: var(--font-size-medium);
-  font-weight: normal;
-  color: var(--color-sidebar-subtle-fg);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  height: 1.875rem;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-
-/* TODO: Consolidate with codebase-tree .node */
-
-#main-sidebar .sidebar-item {
-  margin-left: -0.5rem;
-  display: flex;
-  user-select: none;
-  align-items: center;
-  border-radius: var(--border-radius-base);
-  padding-left: 0.5rem;
-  margin-bottom: 0.125rem;
-  height: 1.875rem;
-}
-
-#main-sidebar .sidebar-item > label {
-  color: var(--color-sidebar-fg);
-  transition: all 0.2s;
-  cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.875;
-}
-
-#main-sidebar .sidebar-item:hover {
-  background: var(--color-sidebar-focus-bg);
-  text-decoration: none;
-}
-
-#main-sidebar .divider {
-  margin: 0;
 }
 
 /* -- Collapsing ----------------------------------------------------------- */
@@ -357,29 +208,6 @@
   color: var(--color-sidebar-keyboard-shortcut-hover-key-fg);
 }
 
-#main-sidebar .sidebar-header {
-  padding: 1rem 1.5rem 0 1.5rem;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  gap: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-#main-sidebar .sidebar-header:after {
-  position: absolute;
-  left: 1.5rem;
-  right: 1.5rem;
-  bottom: -2rem;
-  height: 1.75rem;
-  content: "";
-  background: linear-gradient(
-    var(--color-sidebar-bg),
-    var(--color-sidebar-bg),
-    var(--color-sidebar-bg-transparent)
-  );
-}
-
 #main-sidebar .sidebar-header .hasvatar {
   position: relative;
 }
@@ -409,25 +237,6 @@
   white-space: nowrap;
   text-align: right;
   flex-direction: row-reverse;
-}
-
-#main-sidebar .sidebar-header-item {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  user-select: none;
-  align-items: center;
-  border-radius: var(--border-radius-base);
-  height: 1.875rem;
-  gap: 0.75rem;
-}
-
-#main-sidebar .sidebar-header-item .button {
-  width: 100%;
-}
-
-#main-sidebar . {
-  margin-bottom: 0;
 }
 
 /* -- Main Sidebar Unison Submenu ----------------------------------------------------- */

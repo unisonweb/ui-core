@@ -3,7 +3,7 @@ module UI.PageLayout exposing (..)
 import Html exposing (Html, div, header)
 import Html.Attributes exposing (class, classList)
 import UI.PageContent as PageContent exposing (PageContent)
-import UI.Sidebar as Sidebar
+import UI.Sidebar as Sidebar exposing (Sidebar)
 
 
 type PageHero msg
@@ -17,12 +17,12 @@ type PageLayout msg
             PageContent msg
         }
     | SidebarEdgeToEdgeLayout
-        { sidebar : List (Html msg)
+        { sidebar : Sidebar msg
         , sidebarToggled : Bool
         , content : PageContent msg
         }
     | SidebarLeftContentLayout
-        { sidebar : List (Html msg)
+        { sidebar : Sidebar msg
         , sidebarToggled : Bool
         , content : PageContent msg
         }
