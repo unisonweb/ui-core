@@ -21,8 +21,8 @@ type SearchOptions
 
 
 init : Perspective -> Maybe FQN -> SearchOptions
-init perspective mfqn =
-    case ( perspective, mfqn ) of
+init perspective adhocFqn =
+    case ( perspective, adhocFqn ) of
         ( Perspective.Namespace { fqn }, Nothing ) ->
             SearchOptions (WithinNamespacePerspective fqn)
 
