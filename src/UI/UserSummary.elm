@@ -35,7 +35,7 @@ view { avatarUrl, handle, name } =
             }
     in
     div
-        [ class "user-summary" ]
+        attrs
         [ Avatar.view avatar
         , name_
         , span [ class "user-summary_handle" ] [ text (UserHandle.toString handle) ]

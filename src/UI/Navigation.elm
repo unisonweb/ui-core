@@ -10,7 +10,6 @@ module UI.Navigation exposing
 import Html exposing (Html, nav, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
-import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
 
@@ -46,23 +45,13 @@ empty =
 
 
 withItems : List (NavItem msg) -> NavItem msg -> List (NavItem msg) -> Navigation msg -> Navigation msg
-withItems before selected after nav =
-    case nav of
-        WithoutSelected _ ->
-            WithSelected (Zipper.from before selected after)
-
-        WithSelected _ ->
-            WithSelected (Zipper.from before selected after)
+withItems before selected after _ =
+    WithSelected (Zipper.from before selected after)
 
 
 withNoSelectedItems : List (NavItem msg) -> Navigation msg -> Navigation msg
-withNoSelectedItems items nav =
-    case nav of
-        WithoutSelected _ ->
-            WithoutSelected items
-
-        WithSelected _ ->
-            WithoutSelected items
+withNoSelectedItems items _ =
+    WithoutSelected items
 
 
 viewItem : Bool -> NavItem msg -> Html msg

@@ -25,12 +25,9 @@ import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
 import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
 import Task
-import UI.Button as Button
-import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
 import UI.KeyboardShortcut.KeyboardEvent as KeyboardEvent exposing (KeyboardEvent)
-import UI.Toolbar as Toolbar
 
 
 
@@ -69,7 +66,6 @@ init config mRef =
 
 type Msg
     = NoOp
-    | Find
     | FetchItemFinished Reference (Result Http.Error Item)
     | IsDocCropped Reference (Result Dom.Error Bool)
     | Keydown KeyboardEvent
@@ -90,9 +86,6 @@ update config msg ({ workspaceItems } as model) =
     case msg of
         NoOp ->
             ( model, Cmd.none, None )
-
-        Find ->
-            ( model, Cmd.none, ShowFinderRequest Nothing )
 
         FetchItemFinished ref itemResult ->
             case itemResult of
@@ -503,12 +496,7 @@ view model =
 
         WorkspaceItems.WorkspaceItems _ ->
             article [ id "workspace" ]
-                [ Button.iconThenLabel Find Icon.search "Find Definition"
-                    |> Button.small
-                    |> Button.view
-                    |> Toolbar.toolbar
-                    |> Toolbar.view
-                , section
+                [ section
                     [ id "workspace-content" ]
                     [ section [ class "definitions-pane" ] (viewWorkspaceItems model.workspaceItems) ]
                 ]
