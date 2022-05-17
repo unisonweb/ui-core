@@ -96,8 +96,7 @@
   transition: background 2s;
 }
 
-#app-header .navigation .nav-item.selected,
-#app-header .navigation .nav-item:hover {
+#app-header .navigation .nav-item.selected {
   font-weight: bold;
 }
 
