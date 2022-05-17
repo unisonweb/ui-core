@@ -5,7 +5,6 @@ import Html.Attributes exposing (class)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import UI
 import UI.Avatar as Avatar
-import UI.Icon as Icon
 import Url exposing (Url)
 
 
@@ -29,10 +28,7 @@ view { avatarUrl, handle, name } =
                     ( UI.nothing, [ class "user-summary user-summary_handle-only" ] )
 
         avatar =
-            { text = Maybe.map (String.left 1) name
-            , url = avatarUrl
-            , fallbackIcon = Just Icon.user
-            }
+            Avatar.avatar avatarUrl (Maybe.map (String.left 1) name)
     in
     div
         attrs
