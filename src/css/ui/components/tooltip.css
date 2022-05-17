@@ -51,6 +51,9 @@
     var(--tooltip-border-size) + var(--tooltip-arrow-size)
   );
 
+  --u-color_interactive: var(--color-blue-2);
+  --u-color_interactive_hovered: var(--color-blue-3);
+
   /* Docs (.definition-doc) can exist inside tooltips, but tooltips often have
    * a different background color, so overwrite doc colors to match tooltip */
   --color-doc-link: var(--color-tooltip-link);
