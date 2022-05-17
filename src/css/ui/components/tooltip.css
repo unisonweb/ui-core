@@ -5,6 +5,7 @@
   --color-tooltip-text: var(--color-gray-lighten-60);
   --color-tooltip-subtle-text: var(--color-gray-lighten-20);
   --color-tooltip-bg: var(--color-gray-darken-30);
+  --color-tooltip-border: var(--color-gray-darken-30);
   --color-tooltip-source-bg: var(--color-gray-darken-20);
   --color-tooltip-source-mg: var(--color-gray-darken-10);
   --color-tooltip-fold-hover-bg: var(--color-gray-darken-10);
@@ -291,4 +292,3 @@
 .tooltip .tooltip-menu-items .tooltip-menu-item:hover .icon {
   color: var(--color-tooltip-item-hover-subtle-text);
 }
-
