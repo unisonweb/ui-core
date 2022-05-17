@@ -5,6 +5,7 @@ import Json.Decode as Decode
 import List.Nonempty as NEL
 import Process
 import Task
+import Url exposing (Url)
 
 
 
@@ -43,6 +44,20 @@ decodeFailInvalid failMessage m =
 decodeTag : Decode.Decoder String
 decodeTag =
     Decode.field "tag" Decode.string
+
+
+decodeUrl : Decode.Decoder Url
+decodeUrl =
+    let
+        decodeUrl_ s =
+            case Url.fromString s of
+                Just u ->
+                    Decode.succeed u
+
+                Nothing ->
+                    Decode.fail "Could not parse as URL"
+    in
+    Decode.andThen decodeUrl_ Decode.string
 
 
 httpErrorToString : Http.Error -> String
