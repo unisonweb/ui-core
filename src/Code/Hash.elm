@@ -10,6 +10,7 @@ module Code.Hash exposing
     , isRawHash
     , prefix
     , stripHashPrefix
+    , toApiUrlString
     , toShortString
     , toString
     , toUrlString
@@ -21,6 +22,7 @@ module Code.Hash exposing
 import Json.Decode as Decode
 import Lib.Util as Util
 import Regex
+import Url
 import Url.Parser
 
 
@@ -137,6 +139,22 @@ toUrlString hash =
     hash
         |> toString
         |> String.replace prefix urlPrefix
+
+
+toApiUrlString : Hash -> String
+toApiUrlString h =
+    let
+        re =
+            Maybe.withDefault Regex.never (Regex.fromString "#[d|a|](\\d+)$")
+
+        stripConstructorPositionFromHash =
+            Regex.replace re (always "")
+    in
+    h
+        |> toString
+        |> String.replace prefix ""
+        |> stripConstructorPositionFromHash
+        |> Url.percentEncode
 
 
 prefix : String
