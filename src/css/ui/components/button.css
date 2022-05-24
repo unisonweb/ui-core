@@ -10,10 +10,10 @@
   --color-button-primary-icon: var(--u-color_icon-on-action-emphasized);
   --color-button-primary-bg: var(--u-color_action_emphasized);
   --color-button-primary-hover-text: var(
-    -u-color_text-on-action-emphasized_hovered
+    --u-color_text-on-action-emphasized_hovered
   );
   --color-button-primary-hover-icon: var(
-    -u-color_icon-on-action-emphasized_hovered
+    --u-color_icon-on-action-emphasized_hovered
   );
   --color-button-primary-hover-bg: var(--u-color_action_emphasized_hovered);
 
