@@ -26,6 +26,6 @@ view title click =
                 ]
             , viewFauxDefinition
             , viewFauxDefinition
-            , Button.iconThenLabel_ click Icon.search "Find Definitions" |> Button.view
+            , Button.iconThenLabel_ click Icon.search "Find Definitions" |> Button.primary |> Button.view
             ]
         ]

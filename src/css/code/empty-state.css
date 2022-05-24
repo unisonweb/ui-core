@@ -1,10 +1,9 @@
 .code_empty-state {
-  margin-top: 2rem;
   font-size: 1rem;
   background: url(./empty-state-bg.svg);
   background-position: center bottom;
   background-repeat: no-repeat;
-  padding-bottom: 4rem;
+  padding: 4.625rem;
   display: flex;
   justify-content: center;
   color: var(--u-color_text);
@@ -18,8 +17,10 @@
 
 .code_empty-state h2 {
   font-size: 1.5rem;
-  margin-bottom: 1.5rem;
   color: var(--u-color_text);
+}
+.code_empty-state p {
+  margin-bottom: 0;
 }
 
 .code_empty-state .code_empty-state_content {
@@ -43,5 +44,5 @@
 .code_empty-state .button {
   margin-top: 0.8rem;
   display: flex;
-  justify-content: flex-end;
+  align-self: flex-end;
 }
