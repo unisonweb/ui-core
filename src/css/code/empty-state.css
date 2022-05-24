@@ -1,0 +1,47 @@
+.code_empty-state {
+  margin-top: 2rem;
+  font-size: 1rem;
+  background: url(./empty-state-bg.svg);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  padding-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+  color: var(--u-color_text);
+}
+
+.code_empty-state header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.code_empty-state h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--u-color_text);
+}
+
+.code_empty-state .code_empty-state_content {
+  width: 28rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.code_empty-state .code_empty-state_faux-definition {
+  width: 28rem;
+  border: 1px solid var(--u-color_border);
+  border-radius: var(--border-radius-base);
+  background: var(--u-color_element);
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.code_empty-state .button {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: flex-end;
+}
