@@ -31,9 +31,10 @@
     --c-size_placeholder-shape_length_medium
   );
 
-  border-radius: calc((--c-size_placeholder-shape_text) / 2);
+  border-radius: calc(var(--c-size_placeholder-shape_text) / 2);
   height: var(--c-size_placeholder-shape_text);
   width: var(--c-length_placeholder-shape_text);
+  background: var(--c-color_placeholder-shape_text);
 }
 
 .placeholder-shape.placeholder-shape_text.placeholder-shape_size_tiny {
