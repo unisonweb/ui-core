@@ -144,9 +144,11 @@
 .page.sidebar-left-content-layout .page-content {
   height: calc(100vh - var(--app-header-height));
   overflow: auto;
-  width: 64rem;
   padding: 3rem 0 1.5rem 2.25rem;
   margin-left: 0;
+}
+.page.sidebar-left-content-layout .page-content .columns {
+  width: 40rem;
 }
 .page.sidebar-left-content-layout .page-content .page-heading {
   margin-left: -0.75rem;
