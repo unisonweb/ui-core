@@ -43,7 +43,6 @@
 }
 
 .code_empty-state .button {
-  margin-top: 0.8rem;
   display: flex;
   align-self: flex-end;
 }
