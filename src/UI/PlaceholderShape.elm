@@ -101,13 +101,13 @@ sizeToClassName size =
             "small"
 
         Medium ->
-            "small"
+            "medium"
 
         Large ->
-            "small"
+            "large"
 
         Huge ->
-            "small"
+            "huge"
 
 
 intensityToClassName : Intensity -> String

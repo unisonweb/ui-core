@@ -11,8 +11,8 @@ import UI.PlaceholderShape as PlaceholderShape
 viewFauxDefinition : Html msg
 viewFauxDefinition =
     div [ class "code_empty-state_faux-definition" ]
-        [ PlaceholderShape.text |> PlaceholderShape.withLength PlaceholderShape.Medium |> PlaceholderShape.view
-        , PlaceholderShape.text |> PlaceholderShape.view
+        [ PlaceholderShape.text |> PlaceholderShape.withSize PlaceholderShape.Large |> PlaceholderShape.withLength PlaceholderShape.Medium |> PlaceholderShape.view
+        , PlaceholderShape.text |> PlaceholderShape.withSize PlaceholderShape.Large |> PlaceholderShape.withLength PlaceholderShape.Large |> PlaceholderShape.view
         ]
 
 
