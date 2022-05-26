@@ -271,15 +271,19 @@ openReference config model relativeToRef ref =
 openItem : Config -> WithWorkspaceItems m -> Maybe Reference -> Reference -> ( WithWorkspaceItems m, Cmd Msg )
 openItem config ({ workspaceItems } as model) relativeToRef ref =
     -- We don't want to refetch or replace any already open definitions, but we
-    -- do want to focus and scroll to it
+    -- do want to focus and scroll to it (unless its already currently focused)
     if WorkspaceItems.member workspaceItems ref then
-        let
-            nextWorkspaceItems =
-                WorkspaceItems.focusOn workspaceItems ref
-        in
-        ( { model | workspaceItems = nextWorkspaceItems }
-        , scrollToDefinition ref
-        )
+        if not (WorkspaceItems.isFocused workspaceItems ref) then
+            let
+                nextWorkspaceItems =
+                    WorkspaceItems.focusOn workspaceItems ref
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , scrollToDefinition ref
+            )
+
+        else
+            ( model, Cmd.none )
 
     else
         let
@@ -457,14 +461,14 @@ scrollToDefinition ref =
     in
     Task.sequence
         [ Dom.getElement id |> Task.map (.element >> .y)
-        , Dom.getElement "page-content" |> Task.map (.element >> .y)
-        , Dom.getViewportOf "page-content" |> Task.map (.viewport >> .y)
+        , Dom.getElement "workspace-content" |> Task.map (.element >> .y)
+        , Dom.getViewportOf "workspace-content" |> Task.map (.viewport >> .y)
         ]
         |> Task.andThen
             (\outcome ->
                 case outcome of
                     elY :: viewportY :: viewportScrollTop :: [] ->
-                        Dom.setViewportOf "page-content" 0 (viewportScrollTop + (elY - viewportY))
+                        Dom.setViewportOf "workspace-content" 0 (viewportScrollTop + (elY - viewportY))
                             |> Task.onError (\_ -> Task.succeed ())
 
                     _ ->
