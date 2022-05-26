@@ -12,6 +12,7 @@
 .user-summary .user-summary_handle {
   font-size: var(--font-size-small);
   color: var(--color_user-summary_text_subdued);
+  padding-top: 1px;
 }
 
 .user-summary .user-summary_name,
@@ -20,4 +21,6 @@
   font-size: var(--font-size-medium);
   font-weight: bold;
   color: var(--color_user-summary_text);
+  /* Adjust to better align with avatar */
+  padding-top: 1px;
 }
