@@ -3,6 +3,9 @@
   display: grid;
   transition: grid-template-columns var(--transition-sidebar-collapse-time);
   --transition-sidebar-collapse-time: 0.3s;
+
+  --page-content-height: calc(100vh - var(--app-header-height));
+  --sidebar-height: calc(100vh - var(--app-header-height));
 }
 
 .page.sidebar-left-content-layout,
@@ -126,7 +129,7 @@
 }
 
 .page.sidebar-edge-to-edge-layout .page-content {
-  height: calc(100vh - var(--app-header-height));
+  height: var(--page-content-height);
   padding: 0;
   overflow: auto;
   width: 100%;
@@ -142,7 +145,7 @@
 }
 
 .page.sidebar-left-content-layout .page-content {
-  height: calc(100vh - var(--app-header-height));
+  height: var(--page-content-height);
   overflow: auto;
   padding: 3rem 0 1.5rem 2.25rem;
   margin-left: 0;
@@ -158,13 +161,13 @@
 
 #main-sidebar.sidebar {
   grid-area: main-sidebar;
-  --sidebar-height: calc(100vh - var(--app-header-height));
+  --sidebar-height: var(--sidebar-height);
 }
 
 #main-sidebar .expanded-content {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--app-header-height));
+  height: var(--sidebar-height);
   opacity: 1;
   transition: all var(--transition-sidebar-collapse-time);
   transition-delay: var(--transition-sidebar-collapse-time);
