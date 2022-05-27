@@ -454,27 +454,30 @@ isDocCropped ref =
 
 
 scrollToDefinition : Reference -> Cmd Msg
-scrollToDefinition ref =
-    let
-        id =
-            "definition-" ++ Reference.toString ref
-    in
-    Task.sequence
-        [ Dom.getElement id |> Task.map (.element >> .y)
-        , Dom.getElement "workspace-content" |> Task.map (.element >> .y)
-        , Dom.getViewportOf "workspace-content" |> Task.map (.viewport >> .y)
-        ]
-        |> Task.andThen
-            (\outcome ->
-                case outcome of
-                    elY :: viewportY :: viewportScrollTop :: [] ->
-                        Dom.setViewportOf "workspace-content" 0 (viewportScrollTop + (elY - viewportY))
-                            |> Task.onError (\_ -> Task.succeed ())
+scrollToDefinition _ =
+    {-
+       let
+           id =
+               "definition-" ++ Reference.toString ref
+       in
+       Task.sequence
+           [ Dom.getElement id |> Task.map (.element >> .y)
+           , Dom.getElement "workspace-content" |> Task.map (.element >> .y)
+           , Dom.getViewportOf "workspace-content" |> Task.map (.viewport >> .y)
+           ]
+           |> Task.andThen
+               (\outcome ->
+                   case outcome of
+                       elY :: viewportY :: viewportScrollTop :: [] ->
+                           Dom.setViewportOf "workspace-content" 0 (viewportScrollTop + (elY - viewportY))
+                               |> Task.onError (\_ -> Task.succeed ())
 
-                    _ ->
-                        Task.succeed ()
-            )
-        |> Task.attempt (always NoOp)
+                       _ ->
+                           Task.succeed ()
+               )
+           |> Task.attempt (always NoOp)
+    -}
+    Cmd.none
 
 
 
