@@ -23,4 +23,7 @@
   color: var(--color_user-summary_text);
   /* Adjust to better align with avatar */
   padding-top: 1px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
