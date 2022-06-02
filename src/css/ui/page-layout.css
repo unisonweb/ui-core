@@ -419,7 +419,10 @@
     width: 100vw;
     overflow: initial;
     padding: 0;
-    margin-left: auto;
+  }
+
+  .page.sidebar-left-content-layout .page-content .columns {
+    width: initial;
   }
 
   .page.sidebar-edge-to-edge-layout.sidebar-toggled,
