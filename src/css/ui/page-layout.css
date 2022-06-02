@@ -417,6 +417,9 @@
   .page.edge-to-edge-layout .page-content,
   .page.centered-layout .page-content {
     width: 100vw;
+    overflow: initial;
+    padding: 0;
+    margin-left: auto;
   }
 
   .page.sidebar-edge-to-edge-layout.sidebar-toggled,

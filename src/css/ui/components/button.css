@@ -62,6 +62,7 @@
   transition: all 0.1s ease-in;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
 }
 
 a.button,

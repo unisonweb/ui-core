@@ -13,20 +13,25 @@ type PageHero msg
 type PageLayout msg
     = HeroLayout
         { hero : PageHero msg
-        , content :
-            PageContent msg
+        , content : PageContent msg
+        , footerContent : List msg
         }
     | SidebarEdgeToEdgeLayout
         { sidebar : Sidebar msg
         , sidebarToggled : Bool
         , content : PageContent msg
+        , footerContent : List msg
         }
     | SidebarLeftContentLayout
         { sidebar : Sidebar msg
         , sidebarToggled : Bool
         , content : PageContent msg
+        , footerContent : List msg
         }
-    | CenteredLayout { content : PageContent msg }
+    | CenteredLayout
+        { content : PageContent msg
+        , footerContent : List msg
+        }
 
 
 
