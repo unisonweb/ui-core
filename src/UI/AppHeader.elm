@@ -14,10 +14,6 @@ type AppTitle msg
     = AppTitle (Click msg) (Html msg)
 
 
-type alias MenuToggle msg =
-    { onClick : msg }
-
-
 type alias AppHeader msg =
     { menuToggle : Maybe msg
     , appTitle : AppTitle msg
