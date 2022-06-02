@@ -38,6 +38,11 @@
   --color-button-default-hover-bg: var(--color-gray-base);
 }
 
+#app-header .toggle-and-title {
+  display: flex;
+  align-items: center;
+}
+
 #app-header .menu-toggle {
   display: none; /* enabled on mobile */
   line-height: 1.5rem;
