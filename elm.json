@@ -18,6 +18,8 @@
     "UI.Card",
     "UI.FoldToggle",
     "UI.PageLayout",
+    "UI.PageContent",
+    "UI.Avatar",
     "UI.Click",
     "UI.Icon",
     "UI.KeyboardShortcut",

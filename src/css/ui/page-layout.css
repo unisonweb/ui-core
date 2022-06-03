@@ -447,7 +447,9 @@
   .page.sidebar-left-content-layout {
     grid-template-rows: auto;
     grid-template-columns: auto;
-    grid-template-areas: "page-content";
+    grid-template-areas:
+      "page-content"
+      "page-footer";
   }
 
   #main-sidebar {
