@@ -56,7 +56,7 @@ viewPageFooter (PageFooter footerItems) =
         copyright =
             span [ class "copyright" ]
                 [ text "© 2021-2022 "
-                , Click.externalHref "https://unison-lang.org"
+                , Click.externalHref "https://unison-lang.org/unison-computing/"
                     |> Click.view [] [ text "Unison Computing, a public benefit corp" ]
                 ]
 

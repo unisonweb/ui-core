@@ -360,7 +360,7 @@
   height: 3.5rem;
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 0.5rem;
   color: var(--u-color_text);
   font-size: var(--font-size-small);
   align-items: center;
@@ -374,7 +374,7 @@
 .page .page-footer .page-footer_items {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .page .page-footer .page-footer_items .separator {
