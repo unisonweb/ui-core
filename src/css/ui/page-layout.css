@@ -356,13 +356,15 @@
 /* -- Page Footer ---------------------------------------------------------- */
 
 .page .page-footer {
-  grid-area: "page-footer";
+  grid-area: page-footer;
   height: 3.5rem;
   display: flex;
   flex-direction: row;
   gap: 2rem;
   color: var(--u-color_text);
   font-size: var(--font-size-small);
+  align-items: center;
+  justify-content: center;
 }
 
 .page .page-footer .copyright {
