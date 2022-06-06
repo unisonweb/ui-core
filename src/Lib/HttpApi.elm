@@ -43,6 +43,15 @@ type ApiUrl
     | SameOrigin (List String)
 
 
+apiUrlFromString : String -> ApiUrl
+apiUrlFromString s =
+    -- Attempt to parse as a URL and assume its CrossOrigin, otherwise
+    -- assume its a path and parse it into segments for SameOrigin.
+    Url.fromString s
+        |> Maybe.map CrossOrigin
+        |> Maybe.withDefault (SameOrigin (String.split "/" s))
+
+
 {-| An EndpointUrl represents a level above a Url String. It includes paths and
 query parameters in a structured way such that the structure can be built up
 over several steps.
