@@ -3,6 +3,7 @@ module Lib.HttpApi exposing
     , ApiUrl(..)
     , EndpointUrl(..)
     , HttpResult
+    , apiUrlFromString
     , perform
     , toRequest
     , toTask
