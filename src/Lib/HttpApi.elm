@@ -1,6 +1,6 @@
 module Lib.HttpApi exposing
-    ( ApiBasePath(..)
-    , ApiRequest
+    ( ApiRequest
+    , ApiUrl(..)
     , EndpointUrl(..)
     , HttpResult
     , perform
@@ -12,7 +12,8 @@ module Lib.HttpApi exposing
 import Http
 import Json.Decode as Decode
 import Task exposing (Task)
-import Url.Builder exposing (QueryParameter, absolute)
+import Url exposing (Url)
+import Url.Builder exposing (QueryParameter, absolute, crossOrigin)
 
 
 
@@ -25,6 +26,21 @@ import Url.Builder exposing (QueryParameter, absolute)
    around Api requests
 
 -}
+{-
+
+   ApiUrl
+   ======
+
+   CrossOrigin: for URLs to a different domain or subdomain.api.example.com
+
+   SameOrigin: with an optional path to indicate the base of the URL that the HTTP API exists on
+   ex: SameOrigin ["api"]
+-}
+
+
+type ApiUrl
+    = CrossOrigin Url
+    | SameOrigin (List String)
 
 
 {-| An EndpointUrl represents a level above a Url String. It includes paths and
@@ -35,16 +51,14 @@ type EndpointUrl
     = EndpointUrl (List String) (List QueryParameter)
 
 
-{-| A base path to indicate the base of the URL that the HTTP API exists on
-ex: ApiBasePath ["api"]
--}
-type ApiBasePath
-    = ApiBasePath (List String)
+toUrl : ApiUrl -> EndpointUrl -> String
+toUrl apiUrl (EndpointUrl paths queryParams) =
+    case apiUrl of
+        CrossOrigin url ->
+            crossOrigin (Url.toString url) paths queryParams
 
-
-toUrl : ApiBasePath -> EndpointUrl -> String
-toUrl (ApiBasePath basePath) (EndpointUrl paths queryParams) =
-    absolute (basePath ++ paths) queryParams
+        SameOrigin basePath ->
+            absolute (basePath ++ paths) queryParams
 
 
 
@@ -67,10 +81,10 @@ toRequest decoder toMsg endpoint =
     ApiRequest endpoint decoder toMsg
 
 
-perform : ApiBasePath -> ApiRequest a msg -> Cmd msg
-perform basePath (ApiRequest endpoint decoder toMsg) =
+perform : ApiUrl -> ApiRequest a msg -> Cmd msg
+perform apiUrl (ApiRequest endpoint decoder toMsg) =
     Http.get
-        { url = toUrl basePath endpoint
+        { url = toUrl apiUrl endpoint
         , expect = Http.expectJson toMsg decoder
         }
 
@@ -81,12 +95,12 @@ perform basePath (ApiRequest endpoint decoder toMsg) =
 
 {-| TODO Perhaps this API should be merged into ApiRequest fully?? |
 -}
-toTask : ApiBasePath -> Decode.Decoder a -> EndpointUrl -> Task Http.Error a
-toTask basePath decoder endpoint =
+toTask : ApiUrl -> Decode.Decoder a -> EndpointUrl -> Task Http.Error a
+toTask apiUrl decoder endpoint =
     Http.task
         { method = "GET"
         , headers = []
-        , url = toUrl basePath endpoint
+        , url = toUrl apiUrl endpoint
         , body = Http.emptyBody
         , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
         , timeout = Nothing

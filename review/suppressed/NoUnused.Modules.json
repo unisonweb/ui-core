@@ -3,6 +3,8 @@
   "automatically created by": "elm-review suppress",
   "learn more": "elm-review suppress --help",
   "suppressions": [
+    { "count": 1, "filePath": "src/Code/EmptyState.elm" },
+    { "count": 1, "filePath": "src/UI/ErrorCard.elm" },
     { "count": 1, "filePath": "src/UI/UserSummary.elm" }
   ]
 }

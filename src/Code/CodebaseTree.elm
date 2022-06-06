@@ -45,7 +45,7 @@ init config =
         model =
             { rootNamespaceListing = Loading, expandedNamespaceListings = FQNSet.empty }
     in
-    ( model, HttpApi.perform config.apiBasePath (fetchRootNamespaceListing config) )
+    ( model, HttpApi.perform config.apiUrl (fetchRootNamespaceListing config) )
 
 
 
@@ -100,7 +100,7 @@ update config msg model =
 
                 cmd =
                     if shouldExpand && not namespaceContentFetched then
-                        HttpApi.perform config.apiBasePath (fetchSubNamespaceListing config fqn)
+                        HttpApi.perform config.apiUrl (fetchSubNamespaceListing config fqn)
 
                     else
                         Cmd.none
