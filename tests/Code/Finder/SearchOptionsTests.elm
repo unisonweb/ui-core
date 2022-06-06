@@ -114,10 +114,11 @@ perspectiveFqn =
 namespacePerspective : Maybe Perspective
 namespacePerspective =
     Hash.fromString "#testhash"
-        |> Maybe.map (\h -> Perspective.Namespace { rootHash = h, fqn = perspectiveFqn, details = NotAsked })
+        |> Maybe.map (\h -> Perspective.Namespace { root = Perspective.Absolute h, fqn = perspectiveFqn, details = NotAsked })
 
 
 codebasePerspective : Maybe Perspective
 codebasePerspective =
     Hash.fromString "#testhash"
+        |> Maybe.map Perspective.Absolute
         |> Maybe.map Perspective.Root
