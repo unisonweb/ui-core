@@ -62,7 +62,7 @@ type EndpointUrl
 
 
 toUrl : ApiUrl -> EndpointUrl -> String
-toUrl apiUrl (EndpointUrl _ paths queryParams) =
+toUrl apiUrl (EndpointUrl paths queryParams) =
     case apiUrl of
         CrossOrigin url ->
             crossOrigin (Url.toString url) paths queryParams
