@@ -310,7 +310,7 @@ pink3 =
 
 greens : List Color
 greens =
-    [ green1, green2, green3, green4 ]
+    [ green1, green2, green3, green4, green5 ]
 
 
 green1 : Color
@@ -331,6 +331,11 @@ green3 =
 green4 : Color
 green4 =
     Color (C.rgb255 198 255 222)
+
+
+green5 : Color
+green5 =
+    Color (C.rgb255 227 255 239)
 
 
 
