@@ -34,5 +34,5 @@ type CodebaseEndpoint
     | Definition { perspective : Perspective, ref : Reference }
 
 
-type alias ToApiEndpointUrl =
-    CodebaseEndpoint -> HttpApi.EndpointUrl
+type alias ToApiEndpoint =
+    CodebaseEndpoint -> HttpApi.Endpoint

@@ -1,7 +1,8 @@
 module Lib.HttpApi exposing
     ( ApiRequest
     , ApiUrl(..)
-    , EndpointUrl(..)
+    , Endpoint(..)
+    , EndpointConfig
     , HttpResult
     , apiUrlFromString
     , perform
@@ -53,22 +54,49 @@ apiUrlFromString s =
         |> Maybe.withDefault (SameOrigin (String.split "/" s))
 
 
-{-| An EndpointUrl represents a level above a Url String. It includes paths and
-query parameters in a structured way such that the structure can be built up
-over several steps.
+{-| An Endpoint represents a description of an API Endpoint with Http Method,
+Url Path, query params and post body
 -}
-type EndpointUrl
-    = EndpointUrl (List String) (List QueryParameter)
+type alias EndpointConfig e =
+    { e | path : List String, queryParams : List QueryParameter }
 
 
-toUrl : ApiUrl -> EndpointUrl -> String
-toUrl apiUrl (EndpointUrl paths queryParams) =
+type alias EndpointWithoutBody =
+    EndpointConfig {}
+
+
+type Endpoint
+    = GET (EndpointConfig EndpointWithoutBody)
+    | POST (EndpointConfig { body : Http.Body })
+      -- TODO: Add support for PATCH, which might need a bit more constrained
+      -- `body` field.
+    | PUT (EndpointConfig { body : Http.Body })
+    | DELETE (EndpointConfig {})
+
+
+toUrl : ApiUrl -> Endpoint -> String
+toUrl apiUrl endpoint =
+    let
+        ( path, queryParams ) =
+            case endpoint of
+                GET c ->
+                    ( c.path, c.queryParams )
+
+                POST c ->
+                    ( c.path, c.queryParams )
+
+                PUT c ->
+                    ( c.path, c.queryParams )
+
+                DELETE c ->
+                    ( c.path, c.queryParams )
+    in
     case apiUrl of
         CrossOrigin url ->
-            crossOrigin (Url.toString url) paths queryParams
+            crossOrigin (Url.toString url) path queryParams
 
         SameOrigin basePath ->
-            absolute (basePath ++ paths) queryParams
+            absolute (basePath ++ path) queryParams
 
 
 
@@ -83,10 +111,10 @@ type alias HttpResult a =
 Required to perform a call to the API.
 -}
 type ApiRequest a msg
-    = ApiRequest EndpointUrl (Decode.Decoder a) (HttpResult a -> msg)
+    = ApiRequest Endpoint (Decode.Decoder a) (HttpResult a -> msg)
 
 
-toRequest : Decode.Decoder a -> (HttpResult a -> msg) -> EndpointUrl -> ApiRequest a msg
+toRequest : Decode.Decoder a -> (HttpResult a -> msg) -> Endpoint -> ApiRequest a msg
 toRequest decoder toMsg endpoint =
     ApiRequest endpoint decoder toMsg
 
@@ -102,15 +130,50 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
                 SameOrigin _ ->
                     Http.request
     in
-    request_
-        { method = "GET"
-        , headers = []
-        , body = Http.emptyBody
-        , url = toUrl apiUrl endpoint
-        , expect = Http.expectJson toMsg decoder
-        , timeout = Just timeout
-        , tracker = Nothing
-        }
+    case endpoint of
+        GET _ ->
+            request_
+                { method = "GET"
+                , headers = []
+                , body = Http.emptyBody
+                , url = toUrl apiUrl endpoint
+                , expect = Http.expectJson toMsg decoder
+                , timeout = Just timeout
+                , tracker = Nothing
+                }
+
+        POST c ->
+            request_
+                { method = "POST"
+                , headers = []
+                , body = c.body
+                , url = toUrl apiUrl endpoint
+                , expect = Http.expectJson toMsg decoder
+                , timeout = Just timeout
+                , tracker = Nothing
+                }
+
+        PUT c ->
+            request_
+                { method = "PUT"
+                , headers = []
+                , body = c.body
+                , url = toUrl apiUrl endpoint
+                , expect = Http.expectJson toMsg decoder
+                , timeout = Just timeout
+                , tracker = Nothing
+                }
+
+        DELETE _ ->
+            request_
+                { method = "DELETE"
+                , headers = []
+                , body = Http.emptyBody
+                , url = toUrl apiUrl endpoint
+                , expect = Http.expectJson toMsg decoder
+                , timeout = Just timeout
+                , tracker = Nothing
+                }
 
 
 
@@ -119,7 +182,7 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
 
 {-| TODO Perhaps this API should be merged into ApiRequest fully?? |
 -}
-toTask : ApiUrl -> Decode.Decoder a -> EndpointUrl -> Task Http.Error a
+toTask : ApiUrl -> Decode.Decoder a -> Endpoint -> Task Http.Error a
 toTask apiUrl decoder endpoint =
     let
         task_ =
@@ -130,14 +193,46 @@ toTask apiUrl decoder endpoint =
                 SameOrigin _ ->
                     Http.task
     in
-    task_
-        { method = "GET"
-        , headers = []
-        , url = toUrl apiUrl endpoint
-        , body = Http.emptyBody
-        , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-        , timeout = Just timeout
-        }
+    case endpoint of
+        GET _ ->
+            task_
+                { headers = []
+                , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
+                , timeout = Just timeout
+                , url = toUrl apiUrl endpoint
+                , method = "GET"
+                , body = Http.emptyBody
+                }
+
+        POST c ->
+            task_
+                { headers = []
+                , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
+                , timeout = Just timeout
+                , url = toUrl apiUrl endpoint
+                , method = "POST"
+                , body = c.body
+                }
+
+        PUT c ->
+            task_
+                { headers = []
+                , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
+                , timeout = Just timeout
+                , url = toUrl apiUrl endpoint
+                , method = "PUT"
+                , body = c.body
+                }
+
+        DELETE _ ->
+            task_
+                { headers = []
+                , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
+                , timeout = Just timeout
+                , url = toUrl apiUrl endpoint
+                , method = "DELETE"
+                , body = Http.emptyBody
+                }
 
 
 httpJsonBodyResolver : Decode.Decoder a -> Http.Response String -> HttpResult a

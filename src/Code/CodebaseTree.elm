@@ -179,7 +179,7 @@ fetchSubNamespaceListing config fqn =
 fetchNamespaceListing : Config -> Maybe FQN -> (Result Http.Error NamespaceListing -> msg) -> ApiRequest NamespaceListing msg
 fetchNamespaceListing config fqn toMsg =
     CodebaseApi.Browse { perspective = config.perspective, ref = Maybe.map NamespaceRef.NameRef fqn }
-        |> config.toApiEndpointUrl
+        |> config.toApiEndpoint
         |> HttpApi.toRequest (NamespaceListing.decode fqn) toMsg
 
 

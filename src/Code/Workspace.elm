@@ -438,7 +438,7 @@ fetchDefinition config ref =
                 }
     in
     endpoint
-        |> config.toApiEndpointUrl
+        |> config.toApiEndpoint
         |> HttpApi.toRequest (WorkspaceItem.decodeItem ref) (FetchItemFinished ref)
 
 

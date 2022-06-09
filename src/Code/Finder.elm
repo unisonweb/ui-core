@@ -337,7 +337,7 @@ performSearch :
     -> FinderSearch
     -> String
     -> ( FinderSearch, ApiRequest (List FinderMatch) Msg )
-performSearch { toApiEndpointUrl, perspective } options search query =
+performSearch { toApiEndpoint, perspective } options search query =
     let
         search_ =
             case search of
@@ -354,20 +354,20 @@ performSearch { toApiEndpointUrl, perspective } options search query =
             case options of
                 SearchOptions AllNamespaces ->
                     fetchMatches
-                        toApiEndpointUrl
+                        toApiEndpoint
                         (Perspective.toRootPerspective perspective)
                         Nothing
                         query
 
                 SearchOptions (WithinNamespacePerspective _) ->
-                    fetchMatches toApiEndpointUrl
+                    fetchMatches toApiEndpoint
                         perspective
                         Nothing
                         query
 
                 SearchOptions (WithinNamespace fqn) ->
                     fetchMatches
-                        toApiEndpointUrl
+                        toApiEndpoint
                         perspective
                         (Just fqn)
                         query
@@ -375,8 +375,8 @@ performSearch { toApiEndpointUrl, perspective } options search query =
     ( search_, fetch )
 
 
-fetchMatches : CodebaseApi.ToApiEndpointUrl -> Perspective -> Maybe FQN -> String -> ApiRequest (List FinderMatch) Msg
-fetchMatches toApiEndpointUrl perspective withinFqn query =
+fetchMatches : CodebaseApi.ToApiEndpoint -> Perspective -> Maybe FQN -> String -> ApiRequest (List FinderMatch) Msg
+fetchMatches toApiEndpoint perspective withinFqn query =
     let
         limit =
             9
@@ -391,7 +391,7 @@ fetchMatches toApiEndpointUrl perspective withinFqn query =
         , sourceWidth = sourceWidth
         , query = query
         }
-        |> toApiEndpointUrl
+        |> toApiEndpoint
         |> HttpApi.toRequest FinderMatch.decodeMatches (FetchMatchesFinished query)
 
 
