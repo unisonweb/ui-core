@@ -62,7 +62,7 @@ type EndpointUrl
 
 
 toUrl : ApiUrl -> EndpointUrl -> String
-toUrl apiUrl (EndpointUrl paths queryParams) =
+toUrl apiUrl (EndpointUrl _ paths queryParams) =
     case apiUrl of
         CrossOrigin url ->
             crossOrigin (Url.toString url) paths queryParams
@@ -93,9 +93,23 @@ toRequest decoder toMsg endpoint =
 
 perform : ApiUrl -> ApiRequest a msg -> Cmd msg
 perform apiUrl (ApiRequest endpoint decoder toMsg) =
-    Http.get
-        { url = toUrl apiUrl endpoint
+    let
+        request_ =
+            case apiUrl of
+                CrossOrigin _ ->
+                    Http.riskyRequest
+
+                SameOrigin _ ->
+                    Http.request
+    in
+    request_
+        { method = "GET"
+        , headers = []
+        , body = Http.emptyBody
+        , url = toUrl apiUrl endpoint
         , expect = Http.expectJson toMsg decoder
+        , timeout = Just timeout
+        , tracker = Nothing
         }
 
 
@@ -107,13 +121,22 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
 -}
 toTask : ApiUrl -> Decode.Decoder a -> EndpointUrl -> Task Http.Error a
 toTask apiUrl decoder endpoint =
-    Http.task
+    let
+        task_ =
+            case apiUrl of
+                CrossOrigin _ ->
+                    Http.riskyTask
+
+                SameOrigin _ ->
+                    Http.task
+    in
+    task_
         { method = "GET"
         , headers = []
         , url = toUrl apiUrl endpoint
         , body = Http.emptyBody
         , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-        , timeout = Nothing
+        , timeout = Just timeout
         }
 
 
@@ -137,3 +160,12 @@ httpJsonBodyResolver decoder resp =
             Decode.decodeString decoder s
                 -- just trying; if our decoder understands the response body, great
                 |> Result.mapError (\_ -> Http.BadStatus m.statusCode)
+
+
+
+-- HELPERS
+
+
+timeout : Float
+timeout =
+    15000

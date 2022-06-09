@@ -56,7 +56,7 @@ view modal_ =
             modal_.header
                 |> Maybe.map
                     (\title ->
-                        header [ class "modal-header " ]
+                        header [ class "modal-header" ]
                             [ h2 [] [ title ]
                             , a [ class "close-modal", onClick modal_.closeMsg ]
                                 [ Icon.view Icon.x ]
