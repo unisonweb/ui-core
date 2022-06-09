@@ -286,7 +286,7 @@ grayLighten100 =
 
 pinks : List Color
 pinks =
-    [ pink1, pink2, pink3 ]
+    [ pink1, pink2, pink3, pink4, pink5 ]
 
 
 pink1 : Color
@@ -302,6 +302,16 @@ pink2 =
 pink3 : Color
 pink3 =
     Color (C.rgb255 255 155 163)
+
+
+pink4 : Color
+pink4 =
+    Color (C.rgb255 255 193 193)
+
+
+pink5 : Color
+pink5 =
+    Color (C.rgb255 254 238 240)
 
 
 
@@ -335,10 +345,11 @@ green4 =
 
 green5 : Color
 green5 =
-    Color (C.rgb255 227 255 239)
+    Color (C.rgb255 232 248 239)
 
 
 
+--
 -- Blues
 
 
