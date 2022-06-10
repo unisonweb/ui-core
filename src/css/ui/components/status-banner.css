@@ -27,6 +27,7 @@
   padding: 0 0.75rem 0 0.5rem;
   color: var(--c-color_status-banner_text);
   font-size: var(--font-size-medium);
+  border-radius: 1rem;
 }
 
 .status-banner.status-banner_good {
