@@ -1,0 +1,71 @@
+.status-indicator {
+  --c-color_status-indicator_good: var(--u-color_positive_element);
+  --c-color_status-indicator_icon-on-good: var(
+    --u-color_positive_icon-on-element
+  );
+  --c-color_status-indicator_bad: var(--u-color_critical_element);
+  --c-color_status-indicator_icon-on-bad: var(
+    --u-color_critical_icon-on-element
+  );
+  --c-color_status-indicator_info: var(--u-color_info_element);
+  --c-color_status-indicator_icon-on-info: var(--u-color_info_icon-on-element);
+  --c-color_status-indicator_working: var(--u-color_working_element);
+  --c-color_status-indicator_icon-on-working: var(
+    --u-color_working_icon-on-element
+  );
+
+  --c-size_status-indicator: 1.25rem;
+  --c-size_status-indicator_icon: 0.875rem;
+
+  font-size: var(--c-size_status-indicator_icon);
+  width: var(--c-size_status-indicator);
+  height: var(--c-size_status-indicator);
+  border-radius: calc(var(--c-size_status-indicator) / 2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-indicator.status-indicator_good {
+  background: var(--c-color_status-indicator_good);
+}
+.status-indicator.status-indicator_good .icon {
+  color: var(--c-color_status-indicator_icon-on-good);
+}
+
+.status-indicator.status-indicator_bad {
+  background: var(--c-color_status-indicator_bad);
+}
+.status-indicator.status-indicator_bad .icon {
+  color: var(--c-color_status-indicator_icon-on-bad);
+}
+
+.status-indicator.status-indicator_info {
+  background: var(--c-color_status-indicator_info);
+}
+.status-indicator.status-indicator_info .icon {
+  color: var(--c-color_status-indicator_icon-on-info);
+}
+
+.status-indicator.status-indicator_working {
+  background: var(--c-color_status-indicator_working);
+}
+.status-indicator.status-indicator_working .icon {
+  color: var(--c-color_status-indicator_icon-on-working);
+  animation-name: pulse-scale;
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes pulse-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

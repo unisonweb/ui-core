@@ -95,9 +95,15 @@
   --u-color_critical_action_hovered: var(--color-pink-1);
   --u-color_critical_text-on-action_hovered: var(--color-gray-lighten-100);
   --u-color_critical_icon-on-action_hovered: var(--color-pink-3);
+  --u-color_critical_element: var(--color-pink-2);
+  --u-color_critical_text-on-element: var(--color-gray-lighten-100);
+  --u-color_critical_icon-on-element: var(--color-gray-lighten-100);
 
   --u-color_info_container_subdued: var(--color-blue-5);
   --u-color_info_text: var(--color-blue-2);
+  --u-color_info_element: var(--color-blue-2);
+  --u-color_info_text-on-element: var(--color-gray-lighten-100);
+  --u-color_info_icon-on-element: var(--color-gray-lighten-100);
 
   --u-color_positive_text: var(--color-green-2);
   --u-color_positive_icon: var(--color-green-3);
@@ -107,6 +113,13 @@
   --u-color_positive_action_hovered: var(--color-green-2);
   --u-color_positive_text-on-action_hovered: var(--color-gray-lighten-100);
   --u-color_positive_icon-on-action_hovered: var(--color-green-4);
+  --u-color_positive_element: var(--color-green-1);
+  --u-color_positive_text-on-element: var(--color-gray-lighten-100);
+  --u-color_positive_icon-on-element: var(--color-gray-lighten-100);
+
+  --u-color_working_element: var(--color-purple-5);
+  --u-color_working_text-on-element: var(--color-purple-2);
+  --u-color_working_icon-on-element: var(--color-purple-2);
 
   /* Syntax */
   --color-syntax-plain: var(--u-color_text);
