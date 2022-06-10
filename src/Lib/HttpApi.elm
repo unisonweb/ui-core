@@ -9,6 +9,8 @@ module Lib.HttpApi exposing
     , toRequest
     , toTask
     , toUrl
+    , withHeader
+    , withXSRFToken
     )
 
 import Http
@@ -111,16 +113,31 @@ type alias HttpResult a =
 Required to perform a call to the API.
 -}
 type ApiRequest a msg
-    = ApiRequest Endpoint (Decode.Decoder a) (HttpResult a -> msg)
+    = ApiRequest
+        { endpoint : Endpoint
+        , decoder : Decode.Decoder a
+        , toMsg : HttpResult a -> msg
+        , headers : List Http.Header
+        }
 
 
 toRequest : Decode.Decoder a -> (HttpResult a -> msg) -> Endpoint -> ApiRequest a msg
 toRequest decoder toMsg endpoint =
-    ApiRequest endpoint decoder toMsg
+    ApiRequest { endpoint = endpoint, decoder = decoder, toMsg = toMsg, headers = [] }
+
+
+withXSRFToken : String -> ApiRequest a msg -> ApiRequest a msg
+withXSRFToken token apiRequest =
+    withHeader ( "X-XSRF-TOKEN", token ) apiRequest
+
+
+withHeader : ( String, String ) -> ApiRequest a msg -> ApiRequest a msg
+withHeader ( name, value ) (ApiRequest req) =
+    ApiRequest { req | headers = Http.header name value :: req.headers }
 
 
 perform : ApiUrl -> ApiRequest a msg -> Cmd msg
-perform apiUrl (ApiRequest endpoint decoder toMsg) =
+perform apiUrl (ApiRequest { endpoint, decoder, toMsg, headers }) =
     let
         request_ =
             case apiUrl of
@@ -134,7 +151,7 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
         GET _ ->
             request_
                 { method = "GET"
-                , headers = []
+                , headers = headers
                 , body = Http.emptyBody
                 , url = toUrl apiUrl endpoint
                 , expect = Http.expectJson toMsg decoder
@@ -145,7 +162,7 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
         POST c ->
             request_
                 { method = "POST"
-                , headers = []
+                , headers = headers
                 , body = c.body
                 , url = toUrl apiUrl endpoint
                 , expect = Http.expectJson toMsg decoder
@@ -156,7 +173,7 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
         PUT c ->
             request_
                 { method = "PUT"
-                , headers = []
+                , headers = headers
                 , body = c.body
                 , url = toUrl apiUrl endpoint
                 , expect = Http.expectJson toMsg decoder
@@ -167,7 +184,7 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
         DELETE _ ->
             request_
                 { method = "DELETE"
-                , headers = []
+                , headers = headers
                 , body = Http.emptyBody
                 , url = toUrl apiUrl endpoint
                 , expect = Http.expectJson toMsg decoder
@@ -180,10 +197,24 @@ perform apiUrl (ApiRequest endpoint decoder toMsg) =
 --- TASK ----------------------------------------------------------------------
 
 
-{-| TODO Perhaps this API should be merged into ApiRequest fully?? |
+{-| toTask
+
+By default, don't add headers
+
 -}
 toTask : ApiUrl -> Decode.Decoder a -> Endpoint -> Task Http.Error a
 toTask apiUrl decoder endpoint =
+    toTask_ apiUrl decoder [] endpoint
+
+
+{-| toTask
+
+  - TODO: This API should be merged into ApiRequest fully, such that ApiRequest can be chainable.
+    This would also mean headers can be supported for Task
+
+-}
+toTask_ : ApiUrl -> Decode.Decoder a -> List Http.Header -> Endpoint -> Task Http.Error a
+toTask_ apiUrl decoder headers endpoint =
     let
         task_ =
             case apiUrl of
@@ -196,7 +227,7 @@ toTask apiUrl decoder endpoint =
     case endpoint of
         GET _ ->
             task_
-                { headers = []
+                { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
                 , timeout = Just timeout
                 , url = toUrl apiUrl endpoint
@@ -206,7 +237,7 @@ toTask apiUrl decoder endpoint =
 
         POST c ->
             task_
-                { headers = []
+                { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
                 , timeout = Just timeout
                 , url = toUrl apiUrl endpoint
@@ -216,7 +247,7 @@ toTask apiUrl decoder endpoint =
 
         PUT c ->
             task_
-                { headers = []
+                { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
                 , timeout = Just timeout
                 , url = toUrl apiUrl endpoint
@@ -226,7 +257,7 @@ toTask apiUrl decoder endpoint =
 
         DELETE _ ->
             task_
-                { headers = []
+                { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
                 , timeout = Just timeout
                 , url = toUrl apiUrl endpoint
