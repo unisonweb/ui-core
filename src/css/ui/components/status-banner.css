@@ -1,0 +1,50 @@
+.status-banner {
+  --c-color_status-banner_good: var(--u-color_positive_element_subdued);
+  --c-color_status-banner_text-on-good: var(
+    --u-color_positive_text-on-element_subdued
+  );
+
+  --c-color_status-banner_bad: var(--u-color_critical_element_subdued);
+  --c-color_status-banner_text-on-bad: var(
+    --u-color_critical_text-on-element_subdued
+  );
+
+  --c-color_status-banner_info: var(--u-color_info_element_subdued);
+  --c-color_status-banner_text-on-info: var(
+    --u-color_info_text-on-element_subdued
+  );
+
+  --c-color_status-banner_working: var(--u-color_working_element_subdued);
+  --c-color_status-banner_text-on-working: var(
+    --u-color_working_text-on-element_subdued
+  );
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  height: 2rem;
+  padding: 0 0.75rem 0 0.5rem;
+  color: var(--c-color_status-banner_text);
+  font-size: var(--font-size-medium);
+}
+
+.status-banner.status-banner_good {
+  color: var(--c-color_status-banner_text-on-good);
+  background: var(--c-color_status-banner_good);
+}
+
+.status-banner.status-banner_bad {
+  color: var(--c-color_status-banner_text-on-bad);
+  background: var(--c-color_status-banner_bad);
+}
+
+.status-banner.status-banner_info {
+  color: var(--c-color_status-banner_text-on-info);
+  background: var(--c-color_status-banner_info);
+}
+
+.status-banner.status-banner_working {
+  color: var(--c-color_status-banner_text-on-working);
+  background: var(--c-color_status-banner_working);
+}
