@@ -423,7 +423,7 @@ orange5 =
 
 purples : List Color
 purples =
-    [ purple1, purple2, purple3, purple4 ]
+    [ purple1, purple2, purple3, purple4, purple5 ]
 
 
 purple1 : Color
@@ -444,3 +444,8 @@ purple3 =
 purple4 : Color
 purple4 =
     Color (C.rgb255 198 168 236)
+
+
+purple5 : Color
+purple5 =
+    Color (C.rgb255 226 204 253)
