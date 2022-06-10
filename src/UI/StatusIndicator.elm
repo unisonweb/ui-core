@@ -41,10 +41,10 @@ view indicator =
                     ( "good", Icon.view Icon.checkmark )
 
                 Bad ->
-                    ( "working", Icon.view Icon.warn )
+                    ( "bad", Icon.view Icon.warn )
 
                 Info ->
-                    ( "working", Icon.view Icon.bulb )
+                    ( "info", Icon.view Icon.bulb )
 
                 Working ->
                     ( "working", Icon.view Icon.largeDot )
