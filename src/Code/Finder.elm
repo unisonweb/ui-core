@@ -171,7 +171,7 @@ update config msg model =
                     ( search, fetch ) =
                         performSearch config model.options model.search query
                 in
-                ( { model | search = search }, HttpApi.perform config.apiUrl fetch, Remain )
+                ( { model | search = search }, HttpApi.perform config.api fetch, Remain )
 
             else
                 ( model, Cmd.none, Remain )
@@ -207,7 +207,7 @@ update config msg model =
                             ( search_, fetch ) =
                                 performSearch config options model.search model.input
                         in
-                        ( search_, HttpApi.perform config.apiUrl fetch )
+                        ( search_, HttpApi.perform config.api fetch )
 
                     else
                         ( model.search, Cmd.none )

@@ -299,7 +299,7 @@ openItem config ({ workspaceItems } as model) relativeToRef ref =
                         WorkspaceItems.insertWithFocusBefore workspaceItems r toInsert
         in
         ( { model | workspaceItems = nextWorkspaceItems }
-        , Cmd.batch [ HttpApi.perform config.apiUrl (fetchDefinition config ref), scrollToDefinition ref ]
+        , Cmd.batch [ HttpApi.perform config.api (fetchDefinition config ref), scrollToDefinition ref ]
         )
 
 

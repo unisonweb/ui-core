@@ -3,14 +3,16 @@ module Lib.HttpApi exposing
     , ApiUrl(..)
     , Endpoint(..)
     , EndpointConfig
+    , HttpApi
     , HttpResult
     , apiUrlFromString
+    , httpApi
+    , httpApi_
     , perform
     , toRequest
     , toTask
     , toUrl
     , withHeader
-    , withXSRFToken
     )
 
 import Http
@@ -30,6 +32,32 @@ import Url.Builder exposing (QueryParameter, absolute, crossOrigin)
    around Api requests
 
 -}
+
+
+type alias HttpApi =
+    { url : ApiUrl
+    , headers : List Http.Header
+    }
+
+
+httpApi : String -> Maybe String -> HttpApi
+httpApi rawUrl xsrfToken =
+    let
+        headers =
+            xsrfToken
+                |> Maybe.map (Http.header "X-XSRF-TOKEN")
+                |> Maybe.map (\x -> [ x ])
+                |> Maybe.withDefault []
+    in
+    httpApi_ rawUrl headers
+
+
+httpApi_ : String -> List Http.Header -> HttpApi
+httpApi_ rawUrl headers =
+    { url = apiUrlFromString rawUrl, headers = headers }
+
+
+
 {-
 
    ApiUrl
@@ -126,21 +154,16 @@ toRequest decoder toMsg endpoint =
     ApiRequest { endpoint = endpoint, decoder = decoder, toMsg = toMsg, headers = [] }
 
 
-withXSRFToken : String -> ApiRequest a msg -> ApiRequest a msg
-withXSRFToken token apiRequest =
-    withHeader ( "X-XSRF-TOKEN", token ) apiRequest
-
-
 withHeader : ( String, String ) -> ApiRequest a msg -> ApiRequest a msg
 withHeader ( name, value ) (ApiRequest req) =
     ApiRequest { req | headers = Http.header name value :: req.headers }
 
 
-perform : ApiUrl -> ApiRequest a msg -> Cmd msg
-perform apiUrl (ApiRequest { endpoint, decoder, toMsg, headers }) =
+perform : HttpApi -> ApiRequest a msg -> Cmd msg
+perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
     let
         request_ =
-            case apiUrl of
+            case api.url of
                 CrossOrigin _ ->
                     Http.riskyRequest
 
@@ -151,9 +174,9 @@ perform apiUrl (ApiRequest { endpoint, decoder, toMsg, headers }) =
         GET _ ->
             request_
                 { method = "GET"
-                , headers = headers
+                , headers = api.headers ++ headers
                 , body = Http.emptyBody
-                , url = toUrl apiUrl endpoint
+                , url = toUrl api.url endpoint
                 , expect = Http.expectJson toMsg decoder
                 , timeout = Just timeout
                 , tracker = Nothing
@@ -162,9 +185,9 @@ perform apiUrl (ApiRequest { endpoint, decoder, toMsg, headers }) =
         POST c ->
             request_
                 { method = "POST"
-                , headers = headers
+                , headers = api.headers ++ headers
                 , body = c.body
-                , url = toUrl apiUrl endpoint
+                , url = toUrl api.url endpoint
                 , expect = Http.expectJson toMsg decoder
                 , timeout = Just timeout
                 , tracker = Nothing
@@ -173,9 +196,9 @@ perform apiUrl (ApiRequest { endpoint, decoder, toMsg, headers }) =
         PUT c ->
             request_
                 { method = "PUT"
-                , headers = headers
+                , headers = api.headers ++ headers
                 , body = c.body
-                , url = toUrl apiUrl endpoint
+                , url = toUrl api.url endpoint
                 , expect = Http.expectJson toMsg decoder
                 , timeout = Just timeout
                 , tracker = Nothing
@@ -184,9 +207,9 @@ perform apiUrl (ApiRequest { endpoint, decoder, toMsg, headers }) =
         DELETE _ ->
             request_
                 { method = "DELETE"
-                , headers = headers
+                , headers = api.headers ++ headers
                 , body = Http.emptyBody
-                , url = toUrl apiUrl endpoint
+                , url = toUrl api.url endpoint
                 , expect = Http.expectJson toMsg decoder
                 , timeout = Just timeout
                 , tracker = Nothing
