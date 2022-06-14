@@ -1,6 +1,6 @@
 #workspace {
   --color-workspace-gutter: var(--u-color_container_subdued);
-  /* width of the workspace is used further down for things like source width */t 
+  /* width of the workspace is used further down for things like source width */
   --workspace-content-width: var(--main-content-width);
   --workspace-content-height: calc(100vh - var(--app-header-height));
 
