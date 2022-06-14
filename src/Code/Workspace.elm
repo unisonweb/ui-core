@@ -461,14 +461,14 @@ scrollToDefinition ref =
     in
     Task.sequence
         [ Dom.getElement id |> Task.map (.element >> .y)
-        , Dom.getElement "workspace-content" |> Task.map (.element >> .y)
-        , Dom.getViewportOf "workspace-content" |> Task.map (.viewport >> .y)
+        , Dom.getElement "page-content" |> Task.map (.element >> .y)
+        , Dom.getViewportOf "page-content" |> Task.map (.viewport >> .y)
         ]
         |> Task.andThen
             (\outcome ->
                 case outcome of
                     elY :: viewportY :: viewportScrollTop :: [] ->
-                        Dom.setViewportOf "workspace-content" 0 (viewportScrollTop + (elY - viewportY))
+                        Dom.setViewportOf "page-content" 0 (viewportScrollTop + (elY - viewportY))
                             |> Task.onError (\_ -> Task.succeed ())
 
                     _ ->
