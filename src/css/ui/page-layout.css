@@ -5,7 +5,6 @@
   --transition-sidebar-collapse-time: 0.3s;
 
   --page-content-height: calc(100vh - var(--app-header-height));
-  --sidebar-height: calc(100vh - var(--app-header-height));
 }
 
 .page.sidebar-left-content-layout,
@@ -161,7 +160,7 @@
 
 #main-sidebar.sidebar {
   grid-area: main-sidebar;
-  --sidebar-height: var(--sidebar-height);
+  --sidebar-height: calc(100vh - var(--app-header-height));
 }
 
 #main-sidebar .expanded-content {
