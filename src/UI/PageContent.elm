@@ -11,7 +11,7 @@ module UI.PageContent exposing
     )
 
 import Html exposing (Html, div, h1, header, p, section, text)
-import Html.Attributes exposing (class, id)
+import Html.Attributes exposing (class)
 import UI
 import UI.Icon as Icon exposing (Icon)
 
@@ -132,4 +132,4 @@ view_ footer (PageContent { heading, content }) =
                 Nothing ->
                     [ viewColumns content, footer ]
     in
-    section [ id "page-content", class "page-content" ] items
+    section [ class "page-content" ] items

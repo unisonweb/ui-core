@@ -1,5 +1,7 @@
 #workspace {
   --color-workspace-gutter: var(--u-color_container_subdued);
+  /* width of the workspace is used further down for things like source width */
+  --workspace-content-width: var(--main-content-width);
   --workspace-content-height: calc(100vh - var(--app-header-height));
 
   display: flex;
@@ -7,9 +9,28 @@
 }
 
 #workspace-content {
+  overflow: auto;
   height: var(--workspace-content-height);
   padding-top: 2rem;
+  scroll-behavior: smooth;
+  scrollbar-width: auto;
+  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+  /* gutter */
   box-shadow: inset 2rem 0 0 var(--color-workspace-gutter);
+}
+
+#workspace-content::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+#workspace-content::-webkit-scrollbar-track {
+  background: var(--u-color_scrollbar-track);
+}
+
+#workspace-content::-webkit-scrollbar-thumb {
+  background-color: var(--u-color_scrollbar);
+  border-radius: var(--border-radius-base);
 }
 
 @media only screen and (max-width: 1024px) {
