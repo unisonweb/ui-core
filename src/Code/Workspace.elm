@@ -453,6 +453,8 @@ isDocCropped ref =
         |> Task.attempt (IsDocCropped ref)
 
 
+{-| TODO: Should this take a "scroll area" id instead of relaying on page-content?
+-}
 scrollToDefinition : Reference -> Cmd Msg
 scrollToDefinition ref =
     let
