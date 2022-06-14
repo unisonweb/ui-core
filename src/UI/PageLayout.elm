@@ -81,13 +81,13 @@ view page =
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
-        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, content, footer } ->
+        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, content } ->
             div
                 [ class "page sidebar-edge-to-edge-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
                 [ Sidebar.view sidebar
-                , PageContent.view_ (viewPageFooter footer) content
+                , PageContent.view content
                 ]
 
         SidebarLeftContentLayout { sidebar, sidebarToggled, content, footer } ->
