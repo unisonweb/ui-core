@@ -78,8 +78,7 @@ view page =
         HeroLayout { hero, content, footer } ->
             div [ class "page hero-layout" ]
                 [ viewPageHero hero
-                , PageContent.view content
-                , viewPageFooter footer
+                , PageContent.view_ (viewPageFooter footer) content
                 ]
 
         SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, content, footer } ->
@@ -88,8 +87,7 @@ view page =
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
                 [ Sidebar.view sidebar
-                , PageContent.view content
-                , viewPageFooter footer
+                , PageContent.view_ (viewPageFooter footer) content
                 ]
 
         SidebarLeftContentLayout { sidebar, sidebarToggled, content, footer } ->
@@ -98,12 +96,10 @@ view page =
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
                 [ Sidebar.view sidebar
-                , PageContent.view content
-                , viewPageFooter footer
+                , PageContent.view_ (viewPageFooter footer) content
                 ]
 
         CenteredLayout { content, footer } ->
             div [ class "page centered-layout" ]
-                [ PageContent.view content
-                , viewPageFooter footer
+                [ PageContent.view_ (viewPageFooter footer) content
                 ]

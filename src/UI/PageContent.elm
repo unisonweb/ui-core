@@ -6,11 +6,13 @@ module UI.PageContent exposing
     , threeColumns
     , twoColumns
     , view
+    , view_
     , withPageHeading
     )
 
 import Html exposing (Html, div, h1, header, p, section, text)
 import Html.Attributes exposing (class)
+import UI
 import UI.Icon as Icon exposing (Icon)
 
 
@@ -115,14 +117,19 @@ viewColumns columns =
 
 
 view : PageContent msg -> Html msg
-view (PageContent { heading, content }) =
+view pageContent =
+    view_ UI.nothing pageContent
+
+
+view_ : Html msg -> PageContent msg -> Html msg
+view_ footer (PageContent { heading, content }) =
     let
         items =
             case heading of
                 Just h ->
-                    [ viewPageHeading h, viewColumns content ]
+                    [ viewPageHeading h, viewColumns content, footer ]
 
                 Nothing ->
-                    [ viewColumns content ]
+                    [ viewColumns content, footer ]
     in
     section [ class "page-content" ] items
