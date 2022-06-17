@@ -2,6 +2,7 @@ module UI.Modal exposing
     ( Content(..)
     , Modal
     , modal
+    , modal_
     , view
     , withAttributes
     , withHeader
@@ -22,7 +23,7 @@ type Content msg
 
 type alias Modal msg =
     { id : String
-    , closeMsg : msg
+    , closeMsg : Maybe msg
     , attributes : List (Attribute msg)
     , header : Maybe (Html msg)
     , content : Content msg
@@ -31,59 +32,81 @@ type alias Modal msg =
 
 modal : String -> msg -> Content msg -> Modal msg
 modal id closeMsg content =
+    modal_ id content |> withClose closeMsg
+
+
+modal_ : String -> Content msg -> Modal msg
+modal_ id content =
     { id = id
-    , closeMsg = closeMsg
+    , closeMsg = Nothing
     , attributes = []
     , header = Nothing
     , content = content
     }
 
 
+withClose : msg -> Modal msg -> Modal msg
+withClose closeMsg modal__ =
+    { modal__ | closeMsg = Just closeMsg }
+
+
 withHeader : String -> Modal msg -> Modal msg
-withHeader title modal_ =
-    { modal_ | header = Just (text title) }
+withHeader title modal__ =
+    { modal__ | header = Just (text title) }
 
 
 withAttributes : List (Attribute msg) -> Modal msg -> Modal msg
-withAttributes attrs modal_ =
-    { modal_ | attributes = modal_.attributes ++ attrs }
+withAttributes attrs modal__ =
+    { modal__ | attributes = modal__.attributes ++ attrs }
 
 
 view : Modal msg -> Html msg
-view modal_ =
+view modal__ =
     let
         header_ =
-            modal_.header
+            modal__.header
                 |> Maybe.map
                     (\title ->
                         header [ class "modal-header" ]
                             [ h2 [] [ title ]
-                            , a [ class "close-modal", onClick modal_.closeMsg ]
-                                [ Icon.view Icon.x ]
+                            , modal__.closeMsg
+                                |> Maybe.map
+                                    (\msg ->
+                                        a [ class "close-modal", onClick msg ]
+                                            [ Icon.view Icon.x ]
+                                    )
+                                |> Maybe.withDefault UI.nothing
                             ]
                     )
                 |> Maybe.withDefault UI.nothing
 
         content =
-            case modal_.content of
+            case modal__.content of
                 Content c ->
                     section [ class "modal-content" ] [ c ]
 
                 CustomContent c ->
                     c
     in
-    view_ modal_.closeMsg (id modal_.id :: modal_.attributes) [ header_, content ]
+    view_ modal__.closeMsg (id modal__.id :: modal__.attributes) [ header_, content ]
 
 
 
 -- INTERNALS
 
 
-view_ : msg -> List (Attribute msg) -> List (Html msg) -> Html msg
+view_ : Maybe msg -> List (Attribute msg) -> List (Html msg) -> Html msg
 view_ closeMsg attrs content =
-    div [ id overlayId, on "click" (decodeOverlayClick closeMsg) ]
-        [ div (tabindex 0 :: class "modal" :: attrs) content
-        ]
+    case closeMsg of
+        Just closeMsg_ ->
+            div [ id overlayId, on "click" (decodeOverlayClick closeMsg_) ]
+                [ div (tabindex 0 :: class "modal" :: attrs) content
+                ]
+
+        Nothing ->
+            div [ id overlayId ]
+                [ div (tabindex 0 :: class "modal" :: attrs) content
+                ]
 
 
 overlayId : String
