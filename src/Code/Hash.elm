@@ -150,15 +150,22 @@ toApiUrlString h =
         stripConstructorPositionFromHash =
             Regex.replace re (always "")
     in
-    h
-        |> toString
-        |> stripConstructorPositionFromHash
-        -- Change builtins like ##Nat to %23Nat, so that when the backend adds
-        -- an extra #, it evens out to 2.
-        |> String.replace (prefix ++ prefix) (Url.percentEncode prefix)
-        -- Removes hash symbol completely since the backend adds 1 when querying
-        |> String.replace prefix ""
-        |> Url.percentEncode
+    if isAssumedBuiltin h then
+        h
+            |> toString
+            |> stripConstructorPositionFromHash
+            -- Change builtins like ##Nat to #Nat, so that when the backend adds
+            -- an extra #, it evens out to 2.
+            |> String.replace (prefix ++ prefix) prefix
+            |> Url.percentEncode
+
+    else
+        h
+            |> toString
+            |> stripConstructorPositionFromHash
+            -- Removes hash symbol completely since the backend adds 1 when querying
+            |> String.replace prefix ""
+            |> Url.percentEncode
 
 
 prefix : String
