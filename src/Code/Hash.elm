@@ -152,8 +152,8 @@ toApiUrlString h =
     in
     h
         |> toString
-        |> String.replace prefix ""
         |> stripConstructorPositionFromHash
+        |> String.replace prefix ""
         |> Url.percentEncode
 
 
