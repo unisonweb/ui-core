@@ -18,6 +18,7 @@ module Code.FullyQualifiedName exposing
     , numSegments
     , segments
     , snoc
+    , toApiUrlString
     , toString
     , toUrlSegments
     , toUrlString
