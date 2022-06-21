@@ -130,6 +130,11 @@ toUrlSegments fqn =
         |> NEL.map (Url.percentEncode >> urlEncodeSegmentDot)
 
 
+toApiUrlString : FQN -> String
+toApiUrlString fqn =
+    fqn |> toString |> Url.percentEncode
+
+
 toUrlString : FQN -> String
 toUrlString fqn =
     fqn
