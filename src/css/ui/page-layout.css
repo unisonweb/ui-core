@@ -67,7 +67,7 @@
 .page-content .page-heading {
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: center;
   gap: 0.5rem;
 }
 
@@ -97,6 +97,7 @@
   height: 1.75rem;
   font-size: 1.5rem;
   align-items: center;
+  line-height: 1.2;
   color: var(--u-color_text);
 }
 
