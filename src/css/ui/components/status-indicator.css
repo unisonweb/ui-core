@@ -58,7 +58,7 @@
 .status-indicator.status-indicator_working .icon {
   color: var(--c-color_status-indicator_icon-on-working);
   animation-name: pulse-scale;
-  animation-duration: 2000ms;
+  animation-duration: 1500ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }

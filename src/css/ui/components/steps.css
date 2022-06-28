@@ -1,0 +1,41 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.step {
+  --c-size_step-number: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.step .step-number {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  width: var(--c-size_step-number);
+  height: var(--c-size_step-number);
+  border-radius: calc(var(--c-size_step-number) / 2);
+  font-size: var(--font-size-base);
+  background: var(--u-color_info_element);
+  color: var(--u-color_info_text-on-element);
+}
+
+.step .step-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.step .step-details .step-title {
+  font-size: var(--font-size-base);
+}
+
+.step .step-details .step-content {
+  font-size: var(--font-size-medium);
+}
