@@ -213,6 +213,8 @@ a.button:hover {
 
 /* -- Uncontained & Colors ------------------------------------------------- */
 .button.uncontained {
+  --color-button-default-text: var(--u-color_interactive);
+
   background: var(--color-transparent);
 }
 
