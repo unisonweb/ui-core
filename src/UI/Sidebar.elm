@@ -57,6 +57,19 @@ empty id =
 
 
 
+-- MAP
+
+
+mapSection : (a -> msg) -> SidebarSection a -> SidebarSection msg
+mapSection toMsg sectionA =
+    { title = sectionA.title
+    , titleButton = Maybe.map (Button.map toMsg) sectionA.titleButton
+    , content = List.map (Html.map toMsg) sectionA.content
+    , scrollable = sectionA.scrollable
+    }
+
+
+
 -- CREATE ELEMENT
 
 

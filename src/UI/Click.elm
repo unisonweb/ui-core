@@ -47,6 +47,26 @@ disabled =
 
 
 
+-- TRANSFORM
+
+
+map : (a -> msg) -> Click a -> Click msg
+map toMsg click_ =
+    case click_ of
+        ExternalHref href_ ->
+            ExternalHref href_
+
+        Href href_ ->
+            Href href_
+
+        OnClick a settings ->
+            OnClick (toMsg a) settings
+
+        Disabled ->
+            Disabled
+
+
+
 -- ALTER
 
 

@@ -62,6 +62,18 @@ withToggleAnimation on icon =
 
 
 
+-- TRANFORM
+
+
+map : (a -> msg) -> Icon a -> Icon msg
+map toMsg (Icon id_ attrs_ items_) =
+    Icon
+        id_
+        (List.map (Html.Attributes.map toMsg) attrs_)
+        (List.map (Svg.map toMsg) items_)
+
+
+
 -- ICONS
 
 
@@ -541,9 +553,9 @@ eyeSlash =
         ]
 
 
-map : Icon msg
-map =
-    Icon "map"
+unfoldedMap : Icon msg
+unfoldedMap =
+    Icon "unfolded-map"
         []
         [ path [ fill "currentColor", d "M0 3.30902C0 3.11963 0.107001 2.9465 0.276393 2.8618L4 1V11L0.723607 12.6382C0.391156 12.8044 0 12.5627 0 12.191V3.30902Z" ] []
         , path [ fill "currentColor", d "M5 1L9 3V13L5 11V1Z" ] []

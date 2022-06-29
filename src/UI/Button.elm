@@ -13,6 +13,7 @@ module UI.Button exposing
     , iconThenLabel_
     , icon_
     , large
+    , map
     , medium
     , positive
     , preventDefault
@@ -50,6 +51,29 @@ type alias Button msg =
 
 
 -- BASE
+
+
+map : (a -> msg) -> Button a -> Button msg
+map toMsg buttonA =
+    let
+        mapContent : Content a -> Content msg
+        mapContent c =
+            case c of
+                Icon i ->
+                    Icon (I.map toMsg i)
+
+                IconThenLabel i label ->
+                    IconThenLabel (I.map toMsg i) label
+
+                Label label ->
+                    Label label
+    in
+    { click = Click.map toMsg buttonA.click
+    , content = mapContent buttonA.content
+    , type_ = buttonA.type_
+    , color = buttonA.color
+    , size = buttonA.size
+    }
 
 
 button : msg -> String -> Button msg
