@@ -26,12 +26,12 @@
   flex-shrink: 0;
 }
 
-.status-indicator .status-indicator_regular {
+.status-indicator.status-indicator_regular {
   --c-size_status-indicator: 1.25rem;
   --c-size_status-indicator_icon: 0.875rem;
 }
 
-.status-indicator .status-indicator_large {
+.status-indicator.status-indicator_large {
   --c-size_status-indicator: 4rem;
   --c-size_status-indicator_icon: 2rem;
 }
