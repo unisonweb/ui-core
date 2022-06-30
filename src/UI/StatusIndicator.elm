@@ -5,35 +5,73 @@ import Html.Attributes exposing (class)
 import UI.Icon as Icon
 
 
-type StatusIndicator
+type Indicator
     = Good
     | Bad
     | Info
     | Working
 
 
-good : Html msg
+type Size
+    = Regular
+    | Large
+
+
+type alias StatusIndicator =
+    { indicator : Indicator
+    , size : Size
+    }
+
+
+
+-- CREATE
+
+
+good : StatusIndicator
 good =
-    view Good
+    { indicator = Good, size = Regular }
 
 
-bad : Html msg
+bad : StatusIndicator
 bad =
-    view Bad
+    { indicator = Bad, size = Regular }
 
 
-info : Html msg
+info : StatusIndicator
 info =
-    view Info
+    { indicator = Bad, size = Regular }
 
 
-working : Html msg
+working : StatusIndicator
 working =
-    view Working
+    { indicator = Bad, size = Regular }
+
+
+
+-- MODIFY
+
+
+withSize : Size -> StatusIndicator -> StatusIndicator
+withSize size statusIndicator =
+    { statusIndicator | size = size }
+
+
+large : StatusIndicator -> StatusIndicator
+large statusIndicator =
+    withSize Large statusIndicator
+
+
+regular : StatusIndicator -> StatusIndicator
+regular statusIndicator =
+    withSize Regular statusIndicator
+
+
+
+-- VIEW
 
 
 view : StatusIndicator -> Html msg
-view indicator =
+view { indicator, size } =
     let
         ( className, content ) =
             case indicator of
@@ -48,5 +86,14 @@ view indicator =
 
                 Working ->
                     ( "working", Icon.view Icon.largeDot )
+
+        sizeClassName =
+            case size of
+                Regular ->
+                    "status-indicator_regular"
+
+                Large ->
+                    "status-indicator_large"
     in
-    div [ class ("status-indicator status-indicator_" ++ className) ] [ content ]
+    div [ class ("status-indicator status-indicator_" ++ className ++ " " ++ sizeClassName) ]
+        [ content ]

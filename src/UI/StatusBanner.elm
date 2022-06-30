@@ -50,6 +50,6 @@ view banner =
                     ( "working", StatusIndicator.working, t )
     in
     div [ class ("status-banner status-banner_" ++ className) ]
-        [ indicator
+        [ indicator |> StatusIndicator.view
         , label [] [ text text_ ]
         ]

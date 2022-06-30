@@ -14,9 +14,6 @@
     --u-color_working_icon-on-element
   );
 
-  --c-size_status-indicator: 1.25rem;
-  --c-size_status-indicator_icon: 0.875rem;
-
   width: var(--c-size_status-indicator);
   height: var(--c-size_status-indicator);
   border-radius: calc(var(--c-size_status-indicator) / 2);
@@ -24,6 +21,16 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.status-indicator .status-indicator_regular {
+  --c-size_status-indicator: 1.25rem;
+  --c-size_status-indicator_icon: 0.875rem;
+}
+
+.status-indicator .status-indicator_large {
+  --c-size_status-indicator: 4rem;
+  --c-size_status-indicator_icon: 2rem;
 }
 
 .status-indicator .icon {
