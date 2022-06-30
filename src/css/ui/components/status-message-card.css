@@ -1,0 +1,12 @@
+.status-message-card {
+  font-size: var(--font-size-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.status-message-card .status-message-card_title {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
