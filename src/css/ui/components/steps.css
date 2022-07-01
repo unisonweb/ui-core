@@ -21,8 +21,8 @@
   height: var(--c-size_step-number);
   border-radius: calc(var(--c-size_step-number) / 2);
   font-size: var(--font-size-base);
-  background: var(--u-color_info_element);
-  color: var(--u-color_info_text-on-element);
+  background: var(--u-color_info_element_subdued);
+  color: var(--u-color_info_icon-on-element_subdued);
 }
 
 .step .step-details {
