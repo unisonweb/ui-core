@@ -39,12 +39,12 @@ bad =
 
 info : StatusIndicator
 info =
-    { indicator = Bad, size = Regular }
+    { indicator = Info, size = Regular }
 
 
 working : StatusIndicator
 working =
-    { indicator = Bad, size = Regular }
+    { indicator = Working, size = Regular }
 
 
 
