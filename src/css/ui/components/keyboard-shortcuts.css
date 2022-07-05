@@ -23,19 +23,7 @@
 .keyboard-shortcut {
   display: flex;
   flex-direction: row;
-  /* gap: 0.25rem; */
-}
-
-.keyboard-shortcut .key {
-  margin-right: 0.25rem;
-}
-
-.keyboard-shortcut:last-child .key {
-  margin-right: 0;
-}
-
-.keyboard-shortcut .key:last-child {
-  margin-right: 0;
+  gap: 0.25rem;
 }
 
 .keyboard-shortcut .key {
