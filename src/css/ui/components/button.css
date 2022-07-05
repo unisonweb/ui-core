@@ -47,6 +47,7 @@
   --color-button-decorative-blue-hover-bg: var(--color-blue-1);
 
   --color-button-share-text: var(--color-purple-1);
+  --color-button-share-icon: var(--color-purple-2);
   --color-button-share-bg: var(--color-purple-4);
   --color-button-share-hover-text: var(--color-purple-2);
   --color-button-share-hover-bg: var(--color-purple-4);
@@ -199,7 +200,7 @@ a.button:hover {
 }
 
 .button.contained.share .icon {
-  color: var(--color-button-share-text);
+  color: var(--color-button-share-icon);
 }
 
 .button.contained.share:hover {
