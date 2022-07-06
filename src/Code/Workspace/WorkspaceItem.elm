@@ -403,15 +403,10 @@ viewInfoItems hash_ info =
             else
                 UI.nothing
 
-        formattedHash =
-            hash_ |> Hash.toShortString |> Hash.stripHashPrefix
-
-        hashTooltip =
-            Tooltip.tooltip (viewInfoItem Icon.hash formattedHash) (Tooltip.Text (Hash.toString hash_))
-                |> Tooltip.withArrow Tooltip.Start
-                |> Tooltip.view
+        hashInfoItem =
+            hash_ |> Hash.toShortString |> Hash.stripHashPrefix |> viewInfoItem Icon.hash
     in
-    div [ class "info-items" ] [ hashTooltip, namespace, otherNames ]
+    div [ class "info-items" ] [ hashInfoItem, namespace, otherNames ]
 
 
 viewInfo : Zoom -> Msg -> Hash -> Info -> Category -> Html Msg
