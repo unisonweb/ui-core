@@ -483,6 +483,7 @@
     display: none;
   }
 
+  .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading {
     margin-left: 0;
   }
