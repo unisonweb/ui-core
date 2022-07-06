@@ -217,6 +217,7 @@
   padding: 0.5rem 0.75rem;
   margin-left: 1rem;
   border-radius: var(--border-radius-base);
+  white-space: normal;
 }
 
 .definition-doc aside > section:first-child {
@@ -492,4 +493,3 @@
     width: calc(100vw - 9.25rem);
   }
 }
-
