@@ -72,10 +72,10 @@
 
 .sidebar .sidebar-scroll-area {
   display: flex;
+  flex: 1;
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
-  height: var(--sidebar-height);
   scrollbar-width: thin;
   scrollbar-color: var(--color-sidebar-subtle-fg) var(--color-sidebar-bg);
   padding: 0rem 1rem 1rem 1.5rem;
