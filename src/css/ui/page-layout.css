@@ -483,6 +483,11 @@
     display: none;
   }
 
+  .page-content .page-heading {
+    margin: 0.75rem;
+    margin-bottom: 0;
+  }
+
   .page .page-footer {
     flex-direction: column;
   }
