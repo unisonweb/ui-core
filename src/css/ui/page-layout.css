@@ -483,6 +483,10 @@
     display: none;
   }
 
+  .page.centered-layout .page-content .page-heading {
+    margin-left: 0;
+  }
+
   .page-content .page-heading {
     margin: 0.75rem;
     margin-bottom: 0;
