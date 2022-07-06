@@ -438,7 +438,7 @@
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 64rem) {
   .page.sidebar-edge-to-edge-layout,
   .page.sidebar-left-content-layout {
     grid-template-rows: auto;
@@ -486,8 +486,7 @@
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
   .page-content .page-heading {
-    margin: 0.75rem;
-    margin-bottom: 0;
+    margin: 3rem 0.75rem 0 0.75rem;
   }
 
   .page .page-footer {
@@ -496,5 +495,13 @@
 
   .page .page-footer .separator:first-of-type {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 37rem) {
+  .page.sidebar-left-content-layout .page-content .page-heading,
+  .page.centered-layout .page-content .page-heading,
+  .page-content .page-heading {
+    margin: 1rem 0.75rem 0 0.75rem;
   }
 }
