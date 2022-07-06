@@ -482,4 +482,12 @@
   .page.sidebar-toggled .page-content {
     display: none;
   }
+
+  .page .page-footer {
+    flex-direction: column;
+  }
+
+  .page .page-footer .separator:first-of-type {
+    display: none;
+  }
 }
