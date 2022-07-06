@@ -486,7 +486,7 @@
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
   .page-content .page-heading {
-    margin: 3rem 0.75rem 0 0.75rem;
+    margin: 2rem 1.5rem 0 1.5rem;
   }
 
   .page .page-footer {
@@ -502,6 +502,6 @@
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
   .page-content .page-heading {
-    margin: 1rem 0.75rem 0 0.75rem;
+    margin: 1rem 1rem 0 1rem;
   }
 }
