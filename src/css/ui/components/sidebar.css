@@ -1,5 +1,4 @@
 .sidebar {
-  --sidebar-height: 100vh;
   /* @color-todo @inverse */
   --color-sidebar-fg: var(--color-gray-lighten-50);
   --color-sidebar-fg-em: var(--color-gray-lighten-100);
@@ -33,10 +32,10 @@
   --color-sidebar-tooltip-border: var(--color-gray-darken-10);
 
   display: flex;
+  flex: 1;
   flex-direction: column;
   position: relative;
   overflow: visible;
-  height: var(--sidebar-height);
   background: var(--color-sidebar-bg);
   color: var(--color-sidebar-fg);
   border-right: 1px solid var(--color-sidebar-border);
