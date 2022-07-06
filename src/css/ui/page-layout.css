@@ -452,6 +452,10 @@
     display: none;
   }
 
+  .page-content {
+    gap: 1.5rem;
+  }
+
   .page.sidebar-edge-to-edge-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
