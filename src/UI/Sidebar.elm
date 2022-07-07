@@ -36,7 +36,7 @@ type SidebarContentItem msg
 
 
 type alias ToggleConfig msg =
-    { isToggled : Bool, click : Click msg }
+    { isToggled : Bool, toggleMsg : msg }
 
 
 type Toggle msg
@@ -244,17 +244,17 @@ view sidebar_ =
                 NotToggleable ->
                     UI.nothing
 
-                Toggle { isToggled, click } ->
+                Toggle { isToggled, toggleMsg } ->
                     if isToggled then
                         footer [ class "sidebar-footer" ]
-                            [ Button.icon_ click Icon.leftSidebarOff
+                            [ Button.icon toggleMsg Icon.leftSidebarOff
                                 |> Button.small
                                 |> Button.view
                             ]
 
                     else
                         footer [ class "sidebar-footer" ]
-                            [ Button.iconThenLabel_ click Icon.leftSidebarOn "Toggle Sidebar"
+                            [ Button.iconThenLabel toggleMsg Icon.leftSidebarOn "Toggle Sidebar"
                                 |> Button.small
                                 |> Button.view
                             ]
