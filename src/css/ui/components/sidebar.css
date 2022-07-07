@@ -193,3 +193,10 @@
 .sidebar .sidebar-header-item .button {
   width: 100%;
 }
+
+.sidebar .sidebar-footer {
+  align-self: flex-end;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}

@@ -269,21 +269,9 @@
     overflow: visible;
   }
 
-  .page.sidebar-toggled #main-sidebar .collapsed-content {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .page.sidebar-toggled #main-sidebar .expanded-content {
-    transition: opacity;
-    transition-duration: var(--transition-sidebar-collapse-time) * 1.1;
-    transition-delay: 0;
-    opacity: 0;
-    overflow: hidden;
-  }
-
+  .page.sidebar-toggled .sidebar-header,
   .page.sidebar-toggled .sidebar-scroll-area {
-    overflow: hidden;
+    display: none;
   }
 }
 

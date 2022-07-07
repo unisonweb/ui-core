@@ -28,6 +28,9 @@ module UI.Button exposing
     , uncontained
     , view
     , withClick
+    , withIconAfterLabel
+    , withIconBeforeLabel
+    , withIconsBeforeAndAfterLabel
     , withSize
     , withType
     )
@@ -221,6 +224,82 @@ view { content, type_, color, click, size } =
 
         Disabled ->
             Html.button attrs content_
+
+
+
+-- ICONS
+
+
+withIconBeforeLabel : I.Icon msg -> Button msg -> Button msg
+withIconBeforeLabel iconBefore button__ =
+    let
+        content =
+            case button__.content of
+                Icon _ ->
+                    -- Kind of an awkward case... since we're expecting a label
+                    button__.content
+
+                IconThenLabel _ l ->
+                    IconThenLabel iconBefore l
+
+                IconThenLabelThenIcon _ l iconAfter ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                LabelThenIcon l iconAfter ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                Label l ->
+                    IconThenLabel iconBefore l
+    in
+    { button__ | content = content }
+
+
+withIconAfterLabel : I.Icon msg -> Button msg -> Button msg
+withIconAfterLabel iconAfter button__ =
+    let
+        content =
+            case button__.content of
+                Icon _ ->
+                    -- Kind of an awkward case... since we're expecting a label
+                    button__.content
+
+                IconThenLabel iconBefore l ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                IconThenLabelThenIcon iconBefore l _ ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                LabelThenIcon l _ ->
+                    LabelThenIcon l iconAfter
+
+                Label l ->
+                    LabelThenIcon l iconAfter
+    in
+    { button__ | content = content }
+
+
+withIconsBeforeAndAfterLabel : I.Icon msg -> I.Icon msg -> Button msg -> Button msg
+withIconsBeforeAndAfterLabel iconBefore iconAfter button__ =
+    let
+        content =
+            case button__.content of
+                Icon _ ->
+                    -- Kind of an awkward case... since we're expecting a label
+                    button__.content
+
+                IconThenLabel _ l ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                IconThenLabelThenIcon _ l _ ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                LabelThenIcon l _ ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+
+                Label l ->
+                    IconThenLabelThenIcon iconBefore l iconAfter
+    in
+    { button__ | content = content }
 
 
 

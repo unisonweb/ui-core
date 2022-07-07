@@ -1,6 +1,6 @@
 module UI.Sidebar exposing (..)
 
-import Html exposing (Html, aside, div, h3, span, text)
+import Html exposing (Html, aside, div, footer, h3, span, text)
 import Html.Attributes exposing (class, id)
 import Maybe.Extra as MaybeE
 import UI
@@ -36,8 +36,8 @@ type SidebarContentItem msg
 
 
 type Toggle msg
-    = ToggleDisabled
-    | Toggle { isToggled : Bool, toggle : Click msg }
+    = NotToggleable
+    | Toggle { isToggled : Bool, click : Click msg }
 
 
 type alias Sidebar msg =
@@ -59,7 +59,7 @@ sidebar id h =
 
 empty : String -> Sidebar msg
 empty id =
-    { id = id, header = Nothing, content = [], toggle = ToggleDisabled }
+    { id = id, header = Nothing, content = [], toggle = NotToggleable }
 
 
 
@@ -229,6 +229,26 @@ view sidebar_ =
     let
         header_ =
             MaybeE.unwrap UI.nothing viewHeader sidebar_.header
+
+        toggle =
+            case sidebar_.toggle of
+                NotToggleable ->
+                    UI.nothing
+
+                Toggle { isToggled, click } ->
+                    if isToggled then
+                        footer [ class "sidebar-footer" ]
+                            [ Button.icon_ click Icon.leftSidebarOff
+                                |> Button.small
+                                |> Button.view
+                            ]
+
+                    else
+                        footer [ class "sidebar-footer" ]
+                            [ Button.iconThenLabel_ click Icon.leftSidebarOn "Toggle Sidebar"
+                                |> Button.small
+                                |> Button.view
+                            ]
     in
     aside [ id sidebar_.id, class "sidebar" ]
-        (header_ :: List.map viewSidebarContentItem sidebar_.content)
+        (header_ :: List.map viewSidebarContentItem sidebar_.content ++ [ toggle ])
