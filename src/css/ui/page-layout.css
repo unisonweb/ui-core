@@ -164,10 +164,8 @@
   --c-height_sidebar: calc(100vh - var(--app-header-height));
 }
 
-/* -- Collapsing ----------------------------------------------------------- */
-
-#main-sidebar .sidebar-header .hashvatar {
-  position: relative;
+#main-sidebar .sidebar-header {
+  overflow: hidden;
 }
 
 #main-sidebar .sidebar-header .is-overflowing .hashvatar:after {
