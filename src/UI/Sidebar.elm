@@ -35,9 +35,13 @@ type SidebarContentItem msg
     | Section (SidebarSection msg)
 
 
+type alias ToggleConfig msg =
+    { isToggled : Bool, click : Click msg }
+
+
 type Toggle msg
     = NotToggleable
-    | Toggle { isToggled : Bool, click : Click msg }
+    | Toggle (ToggleConfig msg)
 
 
 type alias Sidebar msg =
@@ -156,6 +160,11 @@ withDivider sidebar_ =
 withSection : SidebarSection msg -> Sidebar msg -> Sidebar msg
 withSection section_ sidebar_ =
     withContentItem (Section section_) sidebar_
+
+
+withToggle : ToggleConfig msg -> Sidebar msg -> Sidebar msg
+withToggle toggleConfig sidebar_ =
+    { sidebar_ | toggle = Toggle toggleConfig }
 
 
 
