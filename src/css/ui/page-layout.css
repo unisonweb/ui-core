@@ -164,7 +164,7 @@
   --c-height_sidebar: calc(100vh - var(--app-header-height));
 }
 
-#main-sidebar .sidebar-header {
+#main-sidebar .namespace-header {
   overflow: hidden;
 }
 
