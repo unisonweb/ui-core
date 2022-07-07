@@ -35,10 +35,16 @@ type SidebarContentItem msg
     | Section (SidebarSection msg)
 
 
+type Toggle msg
+    = ToggleDisabled
+    | Toggle { isToggled : Bool, toggle : Click msg }
+
+
 type alias Sidebar msg =
     { id : String
     , header : Maybe (SidebarHeader msg)
     , content : List (SidebarContentItem msg)
+    , toggle : Toggle msg
     }
 
 
@@ -53,7 +59,7 @@ sidebar id h =
 
 empty : String -> Sidebar msg
 empty id =
-    { id = id, header = Nothing, content = [] }
+    { id = id, header = Nothing, content = [], toggle = ToggleDisabled }
 
 
 

@@ -85,15 +85,13 @@ a.button:hover {
 .button.small {
   height: 1.5rem;
   font-size: var(--font-size-small);
+  gap: 0.25rem;
 }
 
 .button.small:not(.content-icon) {
   padding: 0 0.5rem;
 }
 
-.button.small.content-icon-then-label .icon {
-  margin-right: 0.25rem;
-}
 .button.small.content-icon {
   width: 1.5rem;
 }

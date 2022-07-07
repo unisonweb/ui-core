@@ -10,8 +10,12 @@ module UI.Button exposing
     , github
     , icon
     , iconThenLabel
+    , iconThenLabelThenIcon
+    , iconThenLabelThenIcon_
     , iconThenLabel_
     , icon_
+    , labelThenIcon
+    , labelThenIcon_
     , large
     , map
     , medium
@@ -37,6 +41,8 @@ import UI.Icon as I
 type Content msg
     = Icon (I.Icon msg)
     | IconThenLabel (I.Icon msg) String
+    | LabelThenIcon String (I.Icon msg)
+    | IconThenLabelThenIcon (I.Icon msg) String (I.Icon msg)
     | Label String
 
 
@@ -64,6 +70,12 @@ map toMsg buttonA =
 
                 IconThenLabel i label ->
                     IconThenLabel (I.map toMsg i) label
+
+                IconThenLabelThenIcon i1 label i2 ->
+                    IconThenLabelThenIcon (I.map toMsg i1) label (I.map toMsg i2)
+
+                LabelThenIcon label i ->
+                    LabelThenIcon label (I.map toMsg i)
 
                 Label label ->
                     Label label
@@ -121,6 +133,36 @@ iconThenLabel_ click icon__ label =
     }
 
 
+labelThenIcon : msg -> String -> I.Icon msg -> Button msg
+labelThenIcon msg label icon__ =
+    labelThenIcon_ (Click.onClick msg) label icon__
+
+
+labelThenIcon_ : Click msg -> String -> I.Icon msg -> Button msg
+labelThenIcon_ click label icon__ =
+    { click = click
+    , content = LabelThenIcon label icon__
+    , type_ = Contained
+    , color = Default
+    , size = Medium
+    }
+
+
+iconThenLabelThenIcon : msg -> I.Icon msg -> String -> I.Icon msg -> Button msg
+iconThenLabelThenIcon msg iconBefore label iconAfter =
+    iconThenLabelThenIcon_ (Click.onClick msg) iconBefore label iconAfter
+
+
+iconThenLabelThenIcon_ : Click msg -> I.Icon msg -> String -> I.Icon msg -> Button msg
+iconThenLabelThenIcon_ click iconBefore label iconAfter =
+    { click = click
+    , content = IconThenLabelThenIcon iconBefore label iconAfter
+    , type_ = Contained
+    , color = Default
+    , size = Medium
+    }
+
+
 
 -- Click Settings
 
@@ -149,6 +191,12 @@ view { content, type_, color, click, size } =
 
                 IconThenLabel i l ->
                     ( "content-icon-then-label", [ I.view i, text l ] )
+
+                IconThenLabelThenIcon i1 l i2 ->
+                    ( "content-icon-then-label-then", [ I.view i1, text l, I.view i2 ] )
+
+                LabelThenIcon l i ->
+                    ( "content-label-then-icon", [ text l, I.view i ] )
 
                 Label l ->
                     ( "content-label", [ text l ] )
