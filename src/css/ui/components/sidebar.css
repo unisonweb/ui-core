@@ -1,5 +1,6 @@
 .sidebar {
   /* @color-todo @inverse */
+  --c-height_sidebar: 100vh;
   --color-sidebar-fg: var(--color-gray-lighten-50);
   --color-sidebar-fg-em: var(--color-gray-lighten-100);
   --color-sidebar-bg: var(--color-gray-darken-20);
@@ -34,6 +35,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  height: var(--c-height_sidebar);
   position: relative;
   overflow: visible;
   background: var(--color-sidebar-bg);
@@ -74,6 +76,7 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  height: var(--c-height_sidebar);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;

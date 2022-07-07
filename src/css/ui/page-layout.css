@@ -161,59 +161,12 @@
 
 #main-sidebar.sidebar {
   grid-area: main-sidebar;
-  --sidebar-height: calc(100vh - var(--app-header-height));
-}
-
-#main-sidebar .expanded-content {
-  display: flex;
-  flex-direction: column;
-  height: var(--sidebar-height);
-  opacity: 1;
-  transition: all var(--transition-sidebar-collapse-time);
-  transition-delay: var(--transition-sidebar-collapse-time);
+  --c-height_sidebar: calc(100vh - var(--app-header-height));
 }
 
 /* -- Collapsing ----------------------------------------------------------- */
 
-#main-sidebar .collapse-sidebar-button {
-  position: absolute;
-  left: var(--main-sidebar-width);
-  top: 1rem;
-  z-index: var(--layer-popover);
-  opacity: 0;
-  transition: opacity 0.2s !important;
-}
-
-#app:not(.sidebar-toggled) .collapse-sidebar-button .button {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  padding-left: 0.2rem;
-  background: var(--color-sidebar-bg);
-}
-
-#main-sidebar:not(.sidebar-toggled):hover .collapse-sidebar-button {
-  opacity: 1;
-}
-
-#main-sidebar .collapsed-content {
-  transform: translateX(-17rem);
-  width: var(--main-sidebar-collapsed-width);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: all var(--transition-sidebar-collapse-time) ease-in-out;
-  position: absolute;
-  bottom: 1rem;
-  gap: 1.5rem;
-}
-
-#main-sidebar .collapsed-content .keyboard-shortcut:hover .key {
-  color: var(--color-sidebar-keyboard-shortcut-hover-key-fg);
-}
-
-#main-sidebar .sidebar-header .hasvatar {
+#main-sidebar .sidebar-header .hashvatar {
   position: relative;
 }
 
@@ -242,91 +195,6 @@
   white-space: nowrap;
   text-align: right;
   flex-direction: row-reverse;
-}
-
-/* -- Main Sidebar Unison Submenu ----------------------------------------------------- */
-
-#main-sidebar .sidebar-unison-submenu {
-  color: var(--color-sidebar-subtle-fg);
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-#main-sidebar .sidebar-unison-submenu:hover {
-  color: var(--color-sidebar-focus-fg);
-}
-
-#main-sidebar nav a.tooltip-menu-item {
-  margin-left: 0;
-}
-
-/* -- Main Sidebar Nav ----------------------------------------------------- */
-
-#main-sidebar nav {
-  display: flex;
-  flex-direction: column;
-  justify-self: flex-end;
-  flex: none;
-  margin-top: auto;
-  padding-top: 1.5rem;
-}
-
-#main-sidebar nav a {
-  height: 1.5rem;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s;
-  padding-left: 0.5rem;
-  margin-left: -0.5rem;
-  border-radius: var(--border-radius-base);
-  white-space: nowrap;
-}
-
-#main-sidebar nav a,
-#main-sidebar nav .icon {
-  color: var(--color-sidebar-subtle-fg);
-}
-
-#main-sidebar nav a:hover,
-#main-sidebar nav a:hover .icon {
-  color: var(--color-sidebar-fg);
-  text-decoration: none;
-}
-
-#main-sidebar .show-keyboard-shortcuts {
-  position: relative;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  color: var(--color-sidebar-fg);
-  cursor: pointer;
-  height: 1.875rem;
-  margin-top: 1.5rem;
-}
-
-#main-sidebar .show-keyboard-shortcuts:hover {
-  text-decoration: none;
-}
-
-#main-sidebar .show-keyboard-shortcuts .keyboard-shortcut {
-  justify-self: flex-end;
-  margin-left: auto;
-  margin-right: 0.1875rem;
-}
-
-#main-sidebar .keyboard-shortcut .key {
-  color: var(--color-sidebar-keyboard-shortcut-key-fg);
-  background: var(--color-sidebar-keyboard-shortcut-key-bg);
-  font-weight: normal;
-}
-
-#main-sidebar .show-keyboard-shortcuts:hover {
-  background: var(--color-sidebar-focus-bg);
-}
-
-#main-sidebar .show-keyboard-shortcuts:hover .key {
-  color: var(--color-sidebar-keyboard-shortcut-hover-key-fg);
 }
 
 /* -- Hero ----------------------------------------------------------------- */
