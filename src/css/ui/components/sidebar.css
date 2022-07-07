@@ -195,8 +195,7 @@
 }
 
 .sidebar .sidebar-footer {
-  align-self: flex-end;
-  margin-bottom: 1.5rem;
+  padding: 1.5rem 0;
   display: flex;
   justify-content: center;
 }

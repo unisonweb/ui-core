@@ -247,14 +247,14 @@ view sidebar_ =
                 Toggle { isToggled, toggleMsg } ->
                     if isToggled then
                         footer [ class "sidebar-footer" ]
-                            [ Button.icon toggleMsg Icon.leftSidebarOff
+                            [ Button.icon toggleMsg Icon.leftSidebarOn
                                 |> Button.small
                                 |> Button.view
                             ]
 
                     else
                         footer [ class "sidebar-footer" ]
-                            [ Button.iconThenLabel toggleMsg Icon.leftSidebarOn "Toggle Sidebar"
+                            [ Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
                                 |> Button.small
                                 |> Button.view
                             ]

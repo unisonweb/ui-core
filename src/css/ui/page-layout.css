@@ -271,7 +271,7 @@
 
   .page.sidebar-toggled .sidebar-header,
   .page.sidebar-toggled .sidebar-scroll-area {
-    display: none;
+    opacity: 0;
   }
 }
 
