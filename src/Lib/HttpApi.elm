@@ -131,7 +131,6 @@ toUrl apiUrl endpoint =
         toUrlString u =
             u
                 |> Url.toString
-                |> Debug.log "what"
                 |> stripSlashSuffix
     in
     case apiUrl of
