@@ -120,10 +120,23 @@ toUrl apiUrl endpoint =
 
                 DELETE c ->
                     ( c.path, c.queryParams )
+
+        stripSlashSuffix s =
+            if String.endsWith "/" s then
+                String.dropRight 1 s
+
+            else
+                s
+
+        toUrlString u =
+            u
+                |> Url.toString
+                |> Debug.log "what"
+                |> stripSlashSuffix
     in
     case apiUrl of
         CrossOrigin url ->
-            crossOrigin (Url.toString url) path queryParams
+            crossOrigin (toUrlString url) path queryParams
 
         SameOrigin basePath ->
             absolute (basePath ++ path) queryParams

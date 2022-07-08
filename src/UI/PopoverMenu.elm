@@ -3,7 +3,8 @@ module UI.PopoverMenu exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import List.Nonempty as Nonempty exposing (Nonempty)
-import UI.Button as Button
+import UI
+import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
 
@@ -35,27 +36,48 @@ type alias PopoverMenu msg =
 -- VIEW
 
 
+viewButton : msg -> String -> Maybe (Icon msg) -> PopoverState -> Button msg
+viewButton toggleMsg label icon state =
+    let
+        chevron =
+            case state of
+                Open ->
+                    Icon.chevronUp
+
+                Closed ->
+                    Icon.chevronDown
+    in
+    Button.button toggleMsg label
+        |> Button.withIconAfterLabel chevron
+        |> Button.small
+        |> buttonWithIcon icon
+
+
+buttonWithIcon : Maybe (Icon msg) -> Button msg -> Button msg
+buttonWithIcon icon button =
+    case icon of
+        Just i ->
+            Button.withIconBeforeLabel i button
+
+        Nothing ->
+            button
+
+
 view : PopoverMenu msg -> Html msg
 view { toggleMsg, state, buttonIcon, buttonLabel } =
     let
-        buttonBase =
-            Button.button toggleMsg buttonLabel
-                |> (\b ->
-                        case buttonIcon of
-                            Just i ->
-                                Button.withIconBeforeLabel i b
-
-                            Nothing ->
-                                b
-                   )
-                |> Button.small
-
         button =
-            case state of
-                Open ->
-                    buttonBase |> Button.withIconAfterLabel Icon.chevronUp
+            viewButton toggleMsg buttonLabel buttonIcon state
 
+        menu =
+            case state of
                 Closed ->
-                    buttonBase |> Button.withIconAfterLabel Icon.chevronDown
+                    UI.nothing
+
+                Open ->
+                    div [] []
     in
-    div [ class "popoverMenu" ] []
+    div [ class "popoverMenu" ]
+        [ button |> Button.view
+        , menu
+        ]
