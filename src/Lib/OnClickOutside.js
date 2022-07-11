@@ -10,7 +10,7 @@ class OnClickOutside extends HTMLElement {
   connectedCallback() {
     this.onMouseDown = (e) => {
       const isOutside = !document
-        .getElementById(this.getAttribute("id"))
+        .getElementById("on-click-outside")
         .contains(e.target);
 
       if (isOutside) {
