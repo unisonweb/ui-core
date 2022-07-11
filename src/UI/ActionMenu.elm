@@ -14,6 +14,7 @@ module UI.ActionMenu exposing
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class, classList)
+import Lib.OnClickOutside exposing (onClickOutside)
 import List.Nonempty as Nonempty exposing (Nonempty(..))
 import UI
 import UI.Button as Button exposing (Button)
@@ -157,8 +158,15 @@ view { toggleMsg, state, buttonIcon, buttonLabel, actionItems } =
 
                 Open ->
                     ( viewItems actionItems, True )
+
+        actionMenu_ =
+            div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
+                [ button |> Button.view
+                , menu
+                ]
     in
-    div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
-        [ button |> Button.view
-        , menu
-        ]
+    if isOpen then
+        onClickOutside toggleMsg actionMenu_
+
+    else
+        actionMenu_
