@@ -13,7 +13,10 @@ class OnClickOutside extends HTMLElement {
         .getElementById("on-click-outside")
         .contains(e.target);
 
+      console.log("mouse down");
+
       if (isOutside) {
+        console.log("its outside?");
         var event = new CustomEvent("clickOutside");
         this.dispatchEvent(event);
       }
@@ -27,4 +30,4 @@ class OnClickOutside extends HTMLElement {
   }
 }
 
-customElements.define("click-outside", OnClickOutside);
+customElements.define("on-click-outside", OnClickOutside);
