@@ -13,11 +13,8 @@ class OnClickOutside extends HTMLElement {
         .getElementById("on-click-outside")
         .contains(e.target);
 
-      console.log("mouse down");
-
       if (isOutside) {
-        console.log("its outside?");
-        var event = new CustomEvent("clickOutside");
+        const event = new CustomEvent("clickOutside");
         this.dispatchEvent(event);
       }
     };
