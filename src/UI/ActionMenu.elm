@@ -13,7 +13,7 @@ module UI.ActionMenu exposing
     )
 
 import Html exposing (Html, div, text)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
 import List.Nonempty as Nonempty exposing (Nonempty(..))
 import UI
 import UI.Button as Button exposing (Button)
@@ -150,15 +150,15 @@ view { toggleMsg, state, buttonIcon, buttonLabel, actionItems } =
         button =
             viewButton toggleMsg buttonLabel buttonIcon state
 
-        menu =
+        ( menu, isOpen ) =
             case state of
                 Closed ->
-                    UI.nothing
+                    ( UI.nothing, False )
 
                 Open ->
-                    viewItems actionItems
+                    ( viewItems actionItems, True )
     in
-    div [ class "action-menu" ]
+    div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
         [ button |> Button.view
         , menu
         ]
