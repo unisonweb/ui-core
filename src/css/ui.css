@@ -25,6 +25,12 @@
   --font-size-large: 1.5rem;
   --font-size-medium: 0.875rem;
   --font-size-small: 0.75rem;
+
+  /* -- Breakpoints -------------------------------------------------------- */
+  --sm: 544px;
+  --md: 768px;
+  --lg: 1012px;
+  --xl: 1280px;
 }
 
 @import "./ui/colors.css";
