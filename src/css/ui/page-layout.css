@@ -258,13 +258,6 @@
     --main-sidebar-width: var(--main-sidebar-collapsed-width);
   }
 
-  .page.sidebar-toggled .collapse-sidebar-button {
-    animation: collapse-sidebar-button var(--transition-sidebar-collapse-time)
-      ease-in-out;
-    transition: none;
-    animation-fill-mode: forwards;
-  }
-
   .page.sidebar-toggled #main-sidebar {
     overflow: visible;
   }
@@ -272,23 +265,6 @@
   .page.sidebar-toggled .sidebar-header,
   .page.sidebar-toggled .sidebar-scroll-area {
     opacity: 0;
-  }
-}
-
-/* collapse animations */
-@keyframes collapse-sidebar-button {
-  0% {
-    opacity: 0;
-    transform: translateX(-17rem);
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(-3.15rem);
   }
 }
 
@@ -303,6 +279,10 @@
   }
 
   #main-sidebar {
+    display: none;
+  }
+
+  #main-sidebar .sidebar-toggle {
     display: none;
   }
 

@@ -248,26 +248,30 @@ view sidebar_ =
                 Toggle { isToggled, toggleMsg } ->
                     if isToggled then
                         footer [ class "sidebar-footer" ]
-                            [ Tooltip.tooltip
-                                (Button.icon toggleMsg Icon.leftSidebarOn
-                                    |> Button.small
-                                    |> Button.view
-                                )
-                                (Tooltip.text "Toggle Sidebar")
-                                |> Tooltip.withPosition Tooltip.Above
-                                |> Tooltip.view
+                            [ div [ class "sidebar-toggle" ]
+                                [ Tooltip.tooltip
+                                    (Button.icon toggleMsg Icon.leftSidebarOn
+                                        |> Button.small
+                                        |> Button.view
+                                    )
+                                    (Tooltip.text "Toggle Sidebar")
+                                    |> Tooltip.withPosition Tooltip.Above
+                                    |> Tooltip.view
+                                ]
                             ]
 
                     else
                         footer [ class "sidebar-footer" ]
-                            [ Tooltip.tooltip
-                                (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
-                                    |> Button.small
-                                    |> Button.view
-                                )
-                                (Tooltip.text "Toggle Sidebar")
-                                |> Tooltip.withPosition Tooltip.Above
-                                |> Tooltip.view
+                            [ div [ class "sidebar-toggle" ]
+                                [ Tooltip.tooltip
+                                    (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
+                                        |> Button.small
+                                        |> Button.view
+                                    )
+                                    (Tooltip.text "Toggle Sidebar")
+                                    |> Tooltip.withPosition Tooltip.Above
+                                    |> Tooltip.view
+                                ]
                             ]
     in
     aside [ id sidebar_.id, class "sidebar" ]

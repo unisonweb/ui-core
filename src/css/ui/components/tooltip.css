@@ -156,6 +156,20 @@
   );
 }
 
+.tooltip:is(.below, .above).arrow-middle {
+  transform: translateX(-25%);
+}
+
+.tooltip:is(.below, .above).arrow-middle .tooltip-bubble:after {
+  left: 50%;
+  transform: translateY(-50%);
+}
+
+.tooltip:is(.below, .above).arrow-middle .tooltip-bubble:before {
+  left: 50%;
+  transform: translateY(-50%);
+}
+
 .tooltip:is(.below, .above).arrow-end {
   right: 0;
 }
