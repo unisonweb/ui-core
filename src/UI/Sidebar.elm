@@ -255,7 +255,7 @@ view sidebar_ =
                                         |> Button.view
                                     )
                                     (Tooltip.text "Toggle Sidebar")
-                                    |> Tooltip.withPosition Tooltip.Above
+                                    |> Tooltip.withPosition Tooltip.RightOf
                                     |> Tooltip.view
                                 ]
                             ]
@@ -269,7 +269,7 @@ view sidebar_ =
                                         |> Button.view
                                     )
                                     (Tooltip.text "Toggle Sidebar")
-                                    |> Tooltip.withPosition Tooltip.Above
+                                    |> Tooltip.withPosition Tooltip.RightOf
                                     |> Tooltip.view
                                 ]
                             ]
