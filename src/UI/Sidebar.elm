@@ -7,7 +7,7 @@ import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
-import UI.Tooltil as Tooltip
+import UI.Tooltip as Tooltip
 
 
 type SidebarHeader msg
@@ -254,6 +254,7 @@ view sidebar_ =
                                     |> Button.view
                                 )
                                 (Tooltip.text "Toggle Sidebar")
+                                |> Tooltip.view
                             ]
 
                     else
@@ -264,6 +265,7 @@ view sidebar_ =
                                     |> Button.view
                                 )
                                 (Tooltip.text "Toggle Sidebar")
+                                |> Tooltip.view
                             ]
     in
     aside [ id sidebar_.id, class "sidebar" ]

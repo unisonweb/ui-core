@@ -14,7 +14,7 @@ module UI.Tooltip exposing
     , withPosition
     )
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import UI
 import UI.Click as Click exposing (Click)
@@ -111,15 +111,15 @@ view { arrow, content, trigger, position } =
                         Nothing ->
                             UI.nothing
             in
-            Click.view [ class "tooltip-menu-item" ] [ iconHtml, text item.label ] item.click
+            Click.view [ class "tooltip-menu-item" ] [ iconHtml, Html.text item.label ] item.click
 
         content_ =
             case content of
                 Text t ->
-                    text t
+                    Html.text t
 
-                Rich html ->
-                    html
+                Rich html_ ->
+                    html_
 
                 Menu items ->
                     div [ class "tooltip-menu-items" ] (List.map viewMenuItem items)

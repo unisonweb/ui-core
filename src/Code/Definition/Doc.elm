@@ -445,7 +445,7 @@ view refToMsg toggleFoldMsg docFoldToggles document =
                 Tooltip triggerContent tooltipContent ->
                     Tooltip.tooltip
                         (viewAtCurrentSectionLevel triggerContent)
-                        (Tooltip.Rich (viewAtCurrentSectionLevel tooltipContent))
+                        (Tooltip.rich (viewAtCurrentSectionLevel tooltipContent))
                         |> Tooltip.withArrow Tooltip.Start
                         |> Tooltip.view
 

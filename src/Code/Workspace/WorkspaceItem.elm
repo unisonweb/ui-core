@@ -391,7 +391,7 @@ viewInfoItems hash_ info =
             if numOtherNames > 0 then
                 let
                     otherNamesTooltipContent =
-                        Tooltip.Rich (div [] (List.map (\n -> div [] [ text (FQN.toString n) ]) info.otherNames))
+                        Tooltip.rich (div [] (List.map (\n -> div [] [ text (FQN.toString n) ]) info.otherNames))
 
                     otherNamesLabel =
                         pluralize "other name..." "other names..." numOtherNames
