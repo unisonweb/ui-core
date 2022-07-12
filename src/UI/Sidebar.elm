@@ -7,6 +7,7 @@ import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
+import UI.Tooltil as Tooltip
 
 
 type SidebarHeader msg
@@ -247,16 +248,22 @@ view sidebar_ =
                 Toggle { isToggled, toggleMsg } ->
                     if isToggled then
                         footer [ class "sidebar-footer" ]
-                            [ Button.icon toggleMsg Icon.leftSidebarOn
-                                |> Button.small
-                                |> Button.view
+                            [ Tooltip.tooltip
+                                (Button.icon toggleMsg Icon.leftSidebarOn
+                                    |> Button.small
+                                    |> Button.view
+                                )
+                                (Tooltip.text "Toggle Sidebar")
                             ]
 
                     else
                         footer [ class "sidebar-footer" ]
-                            [ Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
-                                |> Button.small
-                                |> Button.view
+                            [ Tooltip.tooltip
+                                (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
+                                    |> Button.small
+                                    |> Button.view
+                                )
+                                (Tooltip.text "Toggle Sidebar")
                             ]
     in
     aside [ id sidebar_.id, class "sidebar" ]

@@ -1,10 +1,12 @@
 module UI.Tooltip exposing
     ( Arrow(..)
-    , Content(..)
+    , Content
     , MenuItem
     , Position(..)
     , Tooltip
     , menu
+    , rich
+    , text
     , textMenu
     , tooltip
     , view
@@ -65,6 +67,16 @@ textMenu items =
     items
         |> List.map (\( l, c ) -> MenuItem Nothing l c)
         |> Menu
+
+
+text : String -> Content msg
+text t =
+    Text t
+
+
+rich : Html msg -> Content msg
+rich h =
+    Rich h
 
 
 tooltip : Html msg -> Content msg -> Tooltip msg
