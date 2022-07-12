@@ -27,10 +27,10 @@
   --font-size-small: 0.75rem;
 
   /* -- Breakpoints -------------------------------------------------------- */
-  --sm: 544px;
-  --md: 768px;
-  --lg: 1012px;
-  --xl: 1280px;
+  --u-breakpoint-sm: 544px;
+  --u-breakpoint-md: 768px;
+  --u-breakpoint-lg: 1012px;
+  --u-breakpoint-xl: 1280px;
 }
 
 @import "./ui/colors.css";

@@ -268,7 +268,8 @@
   }
 }
 
-@media only screen and (max-width: 64rem) {
+/* @media only screen and (max-width: 64rem) {*/
+@media only screen and (max-width: var(--u-breakpoint-lg)) {
   .page.sidebar-edge-to-edge-layout,
   .page.sidebar-left-content-layout {
     grid-template-rows: auto;
