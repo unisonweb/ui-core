@@ -2,11 +2,14 @@ module UI.Sidebar exposing (..)
 
 import Html exposing (Html, aside, div, footer, h3, span, text)
 import Html.Attributes exposing (class, id)
+import Lib.OperatingSystem exposing (OperatingSystem(..))
 import Maybe.Extra as MaybeE
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
+import UI.KeyboardShortcut as KeyboardShortcut
+import UI.KeyboardShortcut.Key as Key exposing (Key(..))
 import UI.Tooltip as Tooltip
 
 
@@ -234,11 +237,19 @@ viewSidebarContentItem item =
             viewSection s
 
 
-view : Sidebar msg -> Html msg
-view sidebar_ =
+view : OperatingSystem -> Sidebar msg -> Html msg
+view os sidebar_ =
     let
         header_ =
             MaybeE.unwrap UI.nothing viewHeader sidebar_.header
+
+        toggleKeyboardShortcut =
+            case os of
+                MacOS ->
+                    KeyboardShortcut.Chord Meta (B Key.Lower)
+
+                _ ->
+                    KeyboardShortcut.Chord Ctrl (B Key.Lower)
 
         toggle =
             case sidebar_.toggle of
