@@ -49,5 +49,6 @@
 @media only screen and (max-width: 1024px) {
   .code_empty-state {
     width: auto;
+    margin: auto;
   }
 }
