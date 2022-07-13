@@ -1,6 +1,7 @@
 module Lib.UserHandle exposing
     ( UserHandle
     , decode
+    , decodeUnprefixed
     , equals
     , fromString
     , fromUnprefixedString
