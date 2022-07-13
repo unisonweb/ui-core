@@ -3,25 +3,75 @@ module Lib.UserHandle exposing
     , decode
     , equals
     , fromString
-    , toRawString
+    , fromUnpefixedString
+    , isValidHandle
     , toString
+    , toUnprefixedString
     )
 
 import Json.Decode as Decode exposing (string)
+import Regex
 
 
 type UserHandle
     = UserHandle String
 
 
-{-| TODO: Validate
--}
 fromString : String -> Maybe UserHandle
 fromString raw =
+    if String.startsWith "@" raw then
+        fromString_ raw
+
+    else
+        Nothing
+
+
+fromUnpefixedString : String -> Maybe UserHandle
+fromUnpefixedString raw =
+    if String.startsWith "@" raw then
+        Nothing
+
+    else
+        fromString_ raw
+
+
+fromString_ : String -> Maybe UserHandle
+fromString_ raw =
+    let
+        validate s =
+            if isValidHandle s then
+                Just s
+
+            else
+                Nothing
+    in
     raw
         |> String.filter (\c -> c /= '@')
-        |> UserHandle
-        |> Just
+        |> validate
+        |> Maybe.map UserHandle
+
+
+{-| Modelled after the GitHub user handle requirements, since we're importing their handles.
+
+Validates an un-prefixed string. So `@unison` would not be valid. We add and
+remove `@` as a toString/fromString step instead
+
+Requirements (via <https://github.com/shinnn/github-username-regex>):
+
+  - May only contain alphanumeric characters or hyphens.
+  - Can't have multiple consecutive hyphens.
+  - Can't begin or end with a hyphen.
+  - Maximum is 39 characters.
+
+-}
+isValidHandle : String -> Bool
+isValidHandle raw =
+    let
+        re =
+            Maybe.withDefault Regex.never <|
+                Regex.fromString "^[a-z\\d](?:[a-z\\d]|-(?=[a-z\\d])){1,39}$"
+    in
+    Regex.contains re raw
 
 
 toString : UserHandle -> String
@@ -29,8 +79,8 @@ toString (UserHandle raw) =
     "@" ++ raw
 
 
-toRawString : UserHandle -> String
-toRawString (UserHandle raw) =
+toUnprefixedString : UserHandle -> String
+toUnprefixedString (UserHandle raw) =
     raw
 
 
