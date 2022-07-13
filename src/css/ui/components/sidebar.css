@@ -205,6 +205,8 @@
 .sidebar .sidebar-toggle_tooltip {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: 10.5rem;
 }
 
