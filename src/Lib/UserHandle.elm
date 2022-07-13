@@ -101,3 +101,17 @@ decode =
                     Decode.fail "Could not parse as UserHandle"
     in
     Decode.andThen decodeUserHandle_ string
+
+
+decodeUnprefixed : Decode.Decoder UserHandle
+decodeUnprefixed =
+    let
+        decodeUserHandle_ s =
+            case fromUnprefixedString s of
+                Just u ->
+                    Decode.succeed u
+
+                Nothing ->
+                    Decode.fail "Could not parse as UserHandle"
+    in
+    Decode.andThen decodeUserHandle_ string
