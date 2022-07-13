@@ -3,7 +3,7 @@ module Lib.UserHandle exposing
     , decode
     , equals
     , fromString
-    , fromUnpefixedString
+    , fromUnprefixedString
     , isValidHandle
     , toString
     , toUnprefixedString
@@ -26,8 +26,8 @@ fromString raw =
         Nothing
 
 
-fromUnpefixedString : String -> Maybe UserHandle
-fromUnpefixedString raw =
+fromUnprefixedString : String -> Maybe UserHandle
+fromUnprefixedString raw =
     if String.startsWith "@" raw then
         Nothing
 
