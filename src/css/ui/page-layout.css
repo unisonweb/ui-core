@@ -280,7 +280,6 @@
 
   #main-sidebar {
     position: absolute;
-    display: none;
     transform: translateX(-100%);
     opacity: 0;
   }
@@ -312,7 +311,6 @@
   }
 
   .page.sidebar-toggled #main-sidebar {
-    display: flex;
     transform: translateX(0);
     opacity: 1;
   }
