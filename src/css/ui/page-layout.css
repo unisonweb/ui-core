@@ -310,6 +310,7 @@
 
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
+    display: flex;
   }
 
   .page.sidebar-left-content-layout .page-content .page-heading,
