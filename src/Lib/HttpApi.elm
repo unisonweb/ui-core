@@ -77,11 +77,22 @@ type ApiUrl
 
 apiUrlFromString : String -> ApiUrl
 apiUrlFromString s =
-    -- Attempt to parse as a URL and assume its CrossOrigin, otherwise
-    -- assume its a path and parse it into segments for SameOrigin.
-    Url.fromString s
-        |> Maybe.map CrossOrigin
-        |> Maybe.withDefault (SameOrigin (String.split "/" s))
+    let
+        sameOrigin =
+            s
+                |> String.split "/"
+                |> List.filter (String.isEmpty >> not)
+                |> SameOrigin
+    in
+    if String.startsWith "http" s then
+        -- Attempt to parse as a URL and assume its CrossOrigin, otherwise
+        -- assume its a path and parse it into segments for SameOrigin.
+        Url.fromString s
+            |> Maybe.map CrossOrigin
+            |> Maybe.withDefault sameOrigin
+
+    else
+        sameOrigin
 
 
 {-| An Endpoint represents a description of an API Endpoint with Http Method,
