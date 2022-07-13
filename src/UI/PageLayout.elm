@@ -29,6 +29,7 @@ type PageLayout msg
         (Layout
             { sidebar : Sidebar msg
             , sidebarToggled : Bool
+            , operatingSystem : OperatingSystem
             }
             msg
         )
@@ -36,6 +37,7 @@ type PageLayout msg
         (Layout
             { sidebar : Sidebar msg
             , sidebarToggled : Bool
+            , operatingSystem : OperatingSystem
             }
             msg
         )
@@ -73,8 +75,8 @@ viewPageFooter (PageFooter footerItems) =
                 [ copyright, span [ class "page-footer_items" ] (sep :: List.intersperse sep footerItems) ]
 
 
-view : OperatingSystem -> PageLayout msg -> Html msg
-view os page =
+view : PageLayout msg -> Html msg
+view page =
     case page of
         HeroLayout { hero, content, footer } ->
             div [ class "page hero-layout" ]
@@ -82,21 +84,21 @@ view os page =
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
-        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, content } ->
+        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, operatingSystem, content } ->
             div
                 [ class "page sidebar-edge-to-edge-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
-                [ Sidebar.view os sidebar
+                [ Sidebar.view operatingSystem sidebar
                 , PageContent.view content
                 ]
 
-        SidebarLeftContentLayout { sidebar, sidebarToggled, content, footer } ->
+        SidebarLeftContentLayout { sidebar, sidebarToggled, operatingSystem, content, footer } ->
             div
                 [ class "page sidebar-left-content-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
-                [ Sidebar.view os sidebar
+                [ Sidebar.view operatingSystem sidebar
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
