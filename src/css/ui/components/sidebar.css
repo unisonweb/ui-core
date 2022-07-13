@@ -207,3 +207,12 @@
   flex-direction: row;
   gap: 1rem;
 }
+
+.sidebar .sidebar-toggle_tooltip .keyboard-shortcuts {
+  --color-keyboard-shortcut-key-text: var(
+    --color-sidebar-keyboard-shortcut-key-fg
+  );
+  --color-keyboard-shortcut-key-bg: var(
+    --color-sidebar-keyboard-shortcut-key-bg
+  );
+}
