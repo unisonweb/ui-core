@@ -201,3 +201,9 @@
   justify-content: center;
   justify-self: flex-end;
 }
+
+.sidebar .sidebar-toggle_tooltip {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

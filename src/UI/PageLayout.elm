@@ -2,6 +2,7 @@ module UI.PageLayout exposing (..)
 
 import Html exposing (Html, div, header, span, text)
 import Html.Attributes exposing (class, classList)
+import Lib.OperatingSystem exposing (OperatingSystem)
 import UI.Click as Click
 import UI.PageContent as PageContent exposing (PageContent)
 import UI.Sidebar as Sidebar exposing (Sidebar)
@@ -72,8 +73,8 @@ viewPageFooter (PageFooter footerItems) =
                 [ copyright, span [ class "page-footer_items" ] (sep :: List.intersperse sep footerItems) ]
 
 
-view : PageLayout msg -> Html msg
-view page =
+view : OperatingSystem -> PageLayout msg -> Html msg
+view os page =
     case page of
         HeroLayout { hero, content, footer } ->
             div [ class "page hero-layout" ]
@@ -86,7 +87,7 @@ view page =
                 [ class "page sidebar-edge-to-edge-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
-                [ Sidebar.view sidebar
+                [ Sidebar.view os sidebar
                 , PageContent.view content
                 ]
 
@@ -95,7 +96,7 @@ view page =
                 [ class "page sidebar-left-content-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
                 ]
-                [ Sidebar.view sidebar
+                [ Sidebar.view os sidebar
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
