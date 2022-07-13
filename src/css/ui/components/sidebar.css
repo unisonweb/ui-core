@@ -205,7 +205,7 @@
 .sidebar .sidebar-toggle_tooltip {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  width: 10.5rem;
 }
 
 /* @todo: should come from tooltip */
