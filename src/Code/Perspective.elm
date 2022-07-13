@@ -47,6 +47,16 @@ toNamespacePerspective perspective fqn_ =
     Namespace { root = rootPerspective perspective, fqn = fqn_, details = NotAsked }
 
 
+namespacePerspective : FQN -> Perspective
+namespacePerspective fqn_ =
+    namespacePerspective_ Relative fqn_
+
+
+namespacePerspective_ : RootPerspective -> FQN -> Perspective
+namespacePerspective_ root fqn_ =
+    Namespace { root = root, fqn = fqn_, details = NotAsked }
+
+
 rootPerspective : Perspective -> RootPerspective
 rootPerspective perspective =
     case perspective of
