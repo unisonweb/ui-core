@@ -212,6 +212,11 @@
   margin: auto;
 }
 
+.page.hero-layout .page-footer {
+  margin: auto;
+  margin-bottom: 1.5rem;
+}
+
 /* -- Page Footer ---------------------------------------------------------- */
 
 .page .page-footer {
