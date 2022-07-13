@@ -53,6 +53,8 @@
   --color-tooltip-border: var(--color-sidebar-tooltip-border);
 
   --u-color_divider: var(--color-sidebar-divider);
+
+  transition: all 0.5s;
 }
 
 .sidebar .button {

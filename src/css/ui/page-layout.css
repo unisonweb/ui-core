@@ -279,7 +279,10 @@
   }
 
   #main-sidebar {
+    position: absolute;
     display: none;
+    transform: translateX(-100%);
+    opacity: 0;
   }
 
   #main-sidebar .sidebar-toggle {
@@ -309,8 +312,9 @@
   }
 
   .page.sidebar-toggled #main-sidebar {
-    position: absolute;
     display: flex;
+    transform: translateX(0);
+    opacity: 1;
   }
 
   .page.sidebar-left-content-layout .page-content .page-heading,
