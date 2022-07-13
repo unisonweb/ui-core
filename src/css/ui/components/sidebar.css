@@ -208,6 +208,8 @@
   gap: 1rem;
 }
 
+/* @todo: should come from tooltip */
+/* @color-todo @inverse */
 .sidebar .sidebar-toggle_tooltip .keyboard-shortcuts {
   --color-keyboard-shortcut-key-text: var(
     --color-sidebar-keyboard-shortcut-key-fg
