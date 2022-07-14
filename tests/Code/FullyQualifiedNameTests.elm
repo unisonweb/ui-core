@@ -39,9 +39,9 @@ dropLast =
             \_ ->
                 let
                     fqn =
-                        FQN.fromString "List.map"
+                        FQN.fromString "base.List.map"
                 in
-                Expect.equal [ "List" ] (segments (FQN.dropLast fqn))
+                Expect.equal [ "base", "List" ] (segments (FQN.dropLast fqn))
         , test "keeps the last segment" <|
             \_ ->
                 let

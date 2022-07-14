@@ -159,7 +159,11 @@ numSegments (FQN segments_) =
 -}
 dropLast : FQN -> FQN
 dropLast (FQN segments_) =
-    FQN (NEL.Nonempty (NEL.head segments_) (List.drop 1 (NEL.tail segments_)))
+    FQN
+        (NEL.Nonempty
+            (NEL.head segments_)
+            (Maybe.withDefault [] (ListE.init (NEL.tail segments_)))
+        )
 
 
 fromParent : FQN -> String -> FQN
