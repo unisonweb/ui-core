@@ -4,6 +4,7 @@ module Code.FullyQualifiedName exposing
     , cons
     , decode
     , decodeFromParent
+    , dropLast
     , equals
     , fromList
     , fromParent
@@ -80,7 +81,7 @@ fromList segments_ =
         |> List.map String.trim
         |> List.filter (String.isEmpty >> not)
         |> NEL.fromList
-        |> Maybe.withDefault (NEL.fromElement ".")
+        |> Maybe.withDefault (NEL.singleton ".")
         |> FQN
 
 
@@ -152,6 +153,13 @@ segments (FQN segments_) =
 numSegments : FQN -> Int
 numSegments (FQN segments_) =
     NEL.length segments_
+
+
+{-| Drops the last segment of the FQN, unless there's only 1
+-}
+dropLast : FQN -> FQN
+dropLast (FQN segments_) =
+    FQN (NEL.Nonempty (NEL.head segments_) (List.drop 1 (NEL.tail segments_)))
 
 
 fromParent : FQN -> String -> FQN

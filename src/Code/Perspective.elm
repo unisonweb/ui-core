@@ -67,6 +67,23 @@ rootPerspective perspective =
             d.root
 
 
+{-| Move the perspective up 1 level through the number of segments of a
+namespace FQN and finally stopping at the Root perspective
+-}
+upOneLevel : Perspective -> Perspective
+upOneLevel pers =
+    case pers of
+        Root _ ->
+            pers
+
+        Namespace d ->
+            if FQN.numSegments d.fqn > 1 then
+                namespacePerspective_ d.root (FQN.dropLast d.fqn)
+
+            else
+                Root d.root
+
+
 rootHash : Perspective -> Maybe Hash
 rootHash perspective =
     case perspective of

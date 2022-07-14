@@ -32,6 +32,26 @@ snoc =
         ]
 
 
+dropLast : Test
+dropLast =
+    describe "FullyQualifiedName.dropLast"
+        [ test "removes the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "List.map"
+                in
+                Expect.equal [ "List" ] (segments (FQN.dropLast fqn))
+        , test "keeps the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "List"
+                in
+                Expect.equal [ "List" ] (segments (FQN.dropLast fqn))
+        ]
+
+
 append : Test
 append =
     describe "FullyQualifiedName.append"
