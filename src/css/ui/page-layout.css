@@ -162,6 +162,7 @@
 #main-sidebar.sidebar {
   grid-area: main-sidebar;
   --c-height_sidebar: calc(100vh - var(--app-header-height));
+  --c-width_sidebar: var(--main-sidebar-width);
 }
 
 #main-sidebar .namespace-header {
@@ -259,8 +260,8 @@
 /* -- Responsive ----------------------------------------------------------- */
 
 @media only screen and (min-width: 1025px) {
-  .page.sidebar-toggled {
-    --main-sidebar-width: var(--main-sidebar-collapsed-width);
+  .page.sidebar-toggled #main-sidebar.sidebar {
+    --c-width_sidebar: var(--main-sidebar-collapsed-width);
   }
 
   .page.sidebar-toggled #main-sidebar {
