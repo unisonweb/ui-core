@@ -1,4 +1,7 @@
 .sidebar {
+  /* TODO Figure out how width, height, collapse etc can move better into this
+   * module from page-layout and ui
+   */
   /* defaults, overwritten by ui.css and page-layout.css */
   --c-height_sidebar: 100vh;
   --c-width_sidebar: 17rem;

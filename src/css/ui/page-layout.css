@@ -260,7 +260,7 @@
 /* -- Responsive ----------------------------------------------------------- */
 
 @media only screen and (min-width: 1025px) {
-  .page.sidebar-toggled #main-sidebar.sidebar {
+  .page.sidebar-toggled {
     --main-sidebar-width: var(--main-sidebar-collapsed-width);
   }
 
