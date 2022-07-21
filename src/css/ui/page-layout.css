@@ -26,6 +26,12 @@
   grid-template-areas: "page-content";
 }
 
+.page.presentation-layout {
+  grid-template-rows: auto;
+  grid-template-columns: auto;
+  grid-template-areas: "page-content";
+}
+
 .page.hero-layout {
   /* @color-todo @inverse */
   --color-page-hero-fg: var(--color-gray-lighten-100);
@@ -125,6 +131,16 @@
 }
 
 .page.centered-layout .page-content .page-heading {
+  margin-left: -0.75rem;
+}
+
+.page.presentation-layout .page-content {
+  width: 64rem;
+  margin: auto;
+  padding: 3rem 1.5rem 1.5rem 1.5rem;
+}
+
+.page.presentation-layout .page-content .page-heading {
   margin-left: -0.75rem;
 }
 
@@ -275,7 +291,7 @@
   }
 }
 
-@media only screen and (max-width: 64rem) {
+@media only screen and (max-width: 1024px) {
   .page.sidebar-edge-to-edge-layout,
   .page.sidebar-left-content-layout {
     grid-template-rows: auto;
@@ -303,7 +319,8 @@
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.edge-to-edge-layout .page-content,
-  .page.centered-layout .page-content {
+  .page.centered-layout .page-content,
+  .page.presentation-layout .page-content {
     width: 100vw;
     overflow: initial;
     padding: 3rem 0 0 0;
@@ -324,6 +341,7 @@
 
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
+  .page.presentation-layout .page-content .page-heading,
   .page-content .page-heading {
     margin: 0 1.5rem 0 1.5rem;
   }
@@ -337,9 +355,10 @@
   }
 }
 
-@media only screen and (max-width: 37rem) {
+@media only screen and (max-width: 592px) {
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
+  .page.presentation-layout .page-content .page-heading,
   .page-content .page-heading {
     margin: 0 1rem 0 1rem;
   }

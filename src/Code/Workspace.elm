@@ -28,6 +28,7 @@ import Task
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
 import UI.KeyboardShortcut.KeyboardEvent as KeyboardEvent exposing (KeyboardEvent)
+import UI.ViewMode exposing (ViewMode)
 
 
 
@@ -490,8 +491,8 @@ subscriptions _ =
 -- VIEW
 
 
-view : Model -> Html Msg
-view model =
+view : ViewMode -> Model -> Html Msg
+view _ model =
     case model.workspaceItems of
         WorkspaceItems.Empty ->
             -- TODO: Remove WorkspaceItems.Empty

@@ -42,6 +42,7 @@ type PageLayout msg
             msg
         )
     | CenteredLayout (Layout {} msg)
+    | PresentationLayout (PageContent msg)
 
 
 
@@ -105,4 +106,9 @@ view page =
         CenteredLayout { content, footer } ->
             div [ class "page centered-layout" ]
                 [ PageContent.view_ (viewPageFooter footer) content
+                ]
+
+        PresentationLayout content ->
+            div [ class "page presentation-layout" ]
+                [ PageContent.view_ (viewPageFooter (PageFooter [])) content
                 ]

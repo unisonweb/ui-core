@@ -8,6 +8,7 @@ import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
 import UI.Navigation as Navigation exposing (Navigation)
+import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 type AppTitle msg
@@ -20,6 +21,7 @@ type alias AppHeader msg =
     , navigation : Maybe (Navigation msg)
     , leftSide : List (Html msg)
     , rightSide : List (Html msg)
+    , viewMode : ViewMode
     }
 
 
@@ -30,12 +32,18 @@ appHeader appTitle =
     , navigation = Nothing
     , leftSide = []
     , rightSide = []
+    , viewMode = ViewMode.Regular
     }
 
 
 withNavigation : Navigation msg -> AppHeader msg -> AppHeader msg
 withNavigation navigation appHeader_ =
     { appHeader_ | navigation = Just navigation }
+
+
+withViewMode : ViewMode -> AppHeader msg -> AppHeader msg
+withViewMode viewMode appHeader_ =
+    { appHeader_ | viewMode = viewMode }
 
 
 
