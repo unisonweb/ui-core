@@ -7,7 +7,7 @@ import Code.Definition.Doc as Doc exposing (Doc, DocFoldToggles)
 import Code.Definition.Info as Info exposing (Info)
 import Code.Definition.Reference as Reference exposing (Reference)
 import Code.Definition.Source as Source
-import Code.Definition.Term as Term exposing (Term(..), TermCategory, TermDetail, TermSource)
+import Code.Definition.Term as Term exposing (Term(..), TermCategory(..), TermDetail, TermSource)
 import Code.Definition.Type as Type exposing (Type(..), TypeCategory, TypeDetail, TypeSource)
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
@@ -28,6 +28,7 @@ import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
 import UI.Tooltip as Tooltip
+import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 type WorkspaceItem
@@ -593,20 +594,45 @@ viewItem ref data isFocused =
                 (viewContent Nothing)
 
 
-view : WorkspaceItem -> Bool -> Html Msg
-view workspaceItem isFocused =
+viewPresentationItem : Reference -> ItemData -> Html Msg
+viewPresentationItem ref data =
+    case data.item of
+        TermItem (Term _ category detail) ->
+            case category of
+                DocTerm ->
+                    detail.doc
+                        |> Maybe.map (viewDoc ref MadeFullyVisible data.docFoldToggles)
+                        |> Maybe.withDefault UI.nothing
+
+                _ ->
+                    UI.nothing
+
+        TypeItem _ ->
+            UI.nothing
+
+        DataConstructorItem _ ->
+            UI.nothing
+
+        AbilityConstructorItem _ ->
+            UI.nothing
+
+
+view : ViewMode -> WorkspaceItem -> Bool -> Html Msg
+view viewMode workspaceItem isFocused =
     let
-        focusedAttrs =
-            [ classList [ ( "focused", isFocused ) ] ]
+        attrs =
+            [ classList [ ( "focused", isFocused && ViewMode.isRegular viewMode ) ]
+            , class (ViewMode.toCssClass viewMode)
+            ]
     in
     case workspaceItem of
         Loading ref ->
-            viewRow ref focusedAttrs [] ( UI.nothing, UI.loadingPlaceholder ) [ ( UI.nothing, UI.loadingPlaceholder ) ]
+            viewRow ref attrs [] ( UI.nothing, UI.loadingPlaceholder ) [ ( UI.nothing, UI.loadingPlaceholder ) ]
 
         Failure ref err ->
             viewClosableRow
                 ref
-                focusedAttrs
+                attrs
                 (div [ class "error-header" ]
                     [ Icon.view Icon.warn
                     , Icon.view (Reference.toIcon ref)
@@ -624,7 +650,12 @@ view workspaceItem isFocused =
                 ]
 
         Success ref data ->
-            viewItem ref data isFocused
+            case viewMode of
+                ViewMode.Regular ->
+                    viewItem ref data isFocused
+
+                ViewMode.Presentation ->
+                    viewPresentationItem ref data
 
 
 

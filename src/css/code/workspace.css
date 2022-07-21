@@ -9,12 +9,15 @@
 }
 
 #workspace-content {
-  overflow: auto;
-  height: var(--workspace-content-height);
-  padding-top: 2rem;
   scroll-behavior: smooth;
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+}
+
+#workspace.view-mode_regular #workspace-content {
+  overflow: auto;
+  height: var(--workspace-content-height);
+  padding-top: 2rem;
   /* gutter */
   box-shadow: inset 2rem 0 0 var(--color-workspace-gutter);
 }

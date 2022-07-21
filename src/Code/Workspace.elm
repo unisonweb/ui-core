@@ -28,7 +28,7 @@ import Task
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
 import UI.KeyboardShortcut.KeyboardEvent as KeyboardEvent exposing (KeyboardEvent)
-import UI.ViewMode exposing (ViewMode)
+import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 
@@ -492,26 +492,35 @@ subscriptions _ =
 
 
 view : ViewMode -> Model -> Html Msg
-view _ model =
+view viewMode model =
     case model.workspaceItems of
         WorkspaceItems.Empty ->
             -- TODO: Remove WorkspaceItems.Empty
             -- this state is now determined via Route
             div [] []
 
-        WorkspaceItems.WorkspaceItems _ ->
-            article [ id "workspace" ]
-                [ section
-                    [ id "workspace-content" ]
-                    [ section [ class "definitions-pane" ] (viewWorkspaceItems model.workspaceItems) ]
-                ]
+        WorkspaceItems.WorkspaceItems { focus } ->
+            case viewMode of
+                ViewMode.Regular ->
+                    article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
+                        [ section
+                            [ id "workspace-content" ]
+                            [ section [ class "definitions-pane" ] (viewWorkspaceItems model.workspaceItems) ]
+                        ]
+
+                ViewMode.Presentation ->
+                    article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
+                        [ section
+                            [ id "workspace-content" ]
+                            [ section [ class "definitions-pane" ] [ viewItem ViewMode.Presentation focus True ] ]
+                        ]
 
 
-viewItem : WorkspaceItem -> Bool -> Html Msg
-viewItem workspaceItem isFocused =
-    Html.map WorkspaceItemMsg (WorkspaceItem.view workspaceItem isFocused)
+viewItem : ViewMode -> WorkspaceItem -> Bool -> Html Msg
+viewItem viewMode workspaceItem isFocused =
+    Html.map WorkspaceItemMsg (WorkspaceItem.view viewMode workspaceItem isFocused)
 
 
 viewWorkspaceItems : WorkspaceItems -> List (Html Msg)
 viewWorkspaceItems =
-    WorkspaceItems.mapToList viewItem
+    WorkspaceItems.mapToList (viewItem ViewMode.Regular)

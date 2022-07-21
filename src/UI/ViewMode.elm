@@ -9,6 +9,16 @@ type ViewMode
     | Presentation
 
 
+isRegular : ViewMode -> Bool
+isRegular vm =
+    vm == Regular
+
+
+isPresentation : ViewMode -> Bool
+isPresentation vm =
+    vm == Presentation
+
+
 button : (ViewMode -> msg) -> ViewMode -> Button msg
 button updateViewModeMsg viewMode =
     let
@@ -28,3 +38,13 @@ button updateViewModeMsg viewMode =
                         |> Button.uncontained
     in
     button_ |> Button.small
+
+
+toCssClass : ViewMode -> String
+toCssClass vm =
+    case vm of
+        Regular ->
+            "view-mode_regular"
+
+        Presentation ->
+            "view-mode_presentation"

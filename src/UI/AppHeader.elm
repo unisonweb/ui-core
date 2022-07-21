@@ -55,9 +55,9 @@ viewAppTitle (AppTitle click content) =
     Click.view [ class "app-title" ] [ content ] click
 
 
-view_ : List (Html msg) -> Html msg
-view_ content =
-    header [ id "app-header" ] content
+view_ : ViewMode -> List (Html msg) -> Html msg
+view_ viewMode content =
+    header [ id "app-header", class (ViewMode.toCssClass viewMode) ] content
 
 
 view : AppHeader msg -> Html msg
@@ -74,6 +74,7 @@ view appHeader_ =
                         [ Icon.view Icon.list ]
     in
     view_
+        appHeader_.viewMode
         [ section [ class "toggle-and-title" ]
             [ menuToggle
             , viewAppTitle appHeader_.appTitle
