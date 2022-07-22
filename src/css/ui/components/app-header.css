@@ -28,6 +28,7 @@
   --color-app-header-context-unison-share-text: var(--color-purple-4);
   --color-app-header-context-unison-local-text: var(--color-pink-3);
   --color-app-header-border: transparent;
+  --u-color_c_navigation-item_selected: var(--color-gray-lighten-50);
   opacity: 0.5;
   transition: opacity 0.2s;
 }
