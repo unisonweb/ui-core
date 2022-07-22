@@ -601,7 +601,7 @@ viewPresentationItem ref data =
             case category of
                 DocTerm ->
                     detail.doc
-                        |> Maybe.map (viewDoc ref MadeFullyVisible data.docFoldToggles)
+                        |> Maybe.map (Doc.view (OpenReference ref) (ToggleDocFold ref) data.docFoldToggles)
                         |> Maybe.withDefault UI.nothing
 
                 _ ->
