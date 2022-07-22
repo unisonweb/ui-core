@@ -278,7 +278,7 @@
 @media only screen and (max-width: 1280px) {
   .page.presentation-layout .page-content {
     margin: initial;
-    margin-left: 4rem;
+    padding-left: 4rem;
   }
 }
 
