@@ -382,6 +382,10 @@
   line-height: 1.1;
 }
 
+.definition-doc h1 .span:last-child > .word:last-child {
+  margin-right: 0;
+}
+
 .definition-doc h2 {
   font-size: 1rem;
   margin-top: 1.5rem;

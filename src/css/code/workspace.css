@@ -22,6 +22,10 @@
   box-shadow: inset 2rem 0 0 var(--color-workspace-gutter);
 }
 
+#workspace.view-mode_presentation #workspace-content {
+  padding-top: 4rem;
+}
+
 #workspace.view-mode_presentation #workspace-content .definition-doc {
   font-size: var(--font-size-base);
 }
@@ -33,6 +37,7 @@
   font-size: 2.5rem;
   margin-bottom: 2rem;
   font-weight: 900;
+  line-height: 1.2;
 }
 
 #workspace-content::-webkit-scrollbar {
