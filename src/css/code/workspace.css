@@ -12,14 +12,22 @@
   scroll-behavior: smooth;
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+  padding-top: 2rem;
 }
 
 #workspace.view-mode_regular #workspace-content {
   overflow: auto;
   height: var(--workspace-content-height);
-  padding-top: 2rem;
   /* gutter */
   box-shadow: inset 2rem 0 0 var(--color-workspace-gutter);
+}
+
+#workspace.view-mode_ #workspace-content .definition-doc {
+  font-size: var(--font-size-base);
+}
+
+#workspace.view-mode_ #workspace-content .definition-doc h1:first-child {
+  font-size: 3rem;
 }
 
 #workspace-content::-webkit-scrollbar {
