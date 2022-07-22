@@ -333,6 +333,10 @@
     padding: 3rem 0 0 0;
   }
 
+  .page.presentation-layout .page-content {
+    padding: 3rem 2rem;
+  }
+
   .page.edge-to-edge-layout .page-content {
     padding: 0;
   }

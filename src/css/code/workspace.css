@@ -40,6 +40,21 @@
   line-height: 1.2;
 }
 
+#workspace.view-mode_presentation #workspace-content .definition-doc h2 {
+  font-size: 1.5rem;
+}
+
+#workspace.view-mode_presentation
+  #workspace-content
+  .definition-doc
+  :is(h3, h4, h5) {
+  font-size: 1.25rem;
+}
+
+#workspace.view-mode_presentation #workspace-content .definition-doc aside {
+  font-size: var(--font-size-medium);
+}
+
 #workspace-content::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
