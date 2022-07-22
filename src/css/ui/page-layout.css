@@ -247,7 +247,8 @@
   align-items: center;
 }
 
-.page.centered-layout .page-footer {
+.page.centered-layout .page-footer,
+.page.presentation-layout .page-footer {
   justify-content: center;
 }
 
