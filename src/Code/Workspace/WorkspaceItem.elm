@@ -630,7 +630,23 @@ view viewMode workspaceItem isFocused =
         Loading ref ->
             case viewMode of
                 ViewMode.Regular ->
-                    viewRow ref attrs [] ( UI.nothing, UI.loadingPlaceholder ) [ ( UI.nothing, UI.loadingPlaceholder ) ]
+                    viewRow ref
+                        attrs
+                        []
+                        ( UI.nothing
+                        , PlaceholderShape.text
+                            |> PlaceholderShape.withSize PlaceholderShape.Large
+                            |> PlaceholderShape.withLength PlaceholderShape.Medium
+                            |> PlaceholderShape.view
+                        )
+                        [ ( UI.nothing
+                          , PlaceholderShape.text
+                                |> PlaceholderShape.withSize PlaceholderShape.Large
+                                |> PlaceholderShape.withLength PlaceholderShape.Large
+                                |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
+                                |> PlaceholderShape.view
+                          )
+                        ]
 
                 ViewMode.Presentation ->
                     div [ class "loading" ]
