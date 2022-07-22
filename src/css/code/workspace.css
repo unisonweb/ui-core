@@ -22,11 +22,14 @@
   box-shadow: inset 2rem 0 0 var(--color-workspace-gutter);
 }
 
-#workspace.view-mode_ #workspace-content .definition-doc {
+#workspace.view-mode_presentation #workspace-content .definition-doc {
   font-size: var(--font-size-base);
 }
 
-#workspace.view-mode_ #workspace-content .definition-doc h1:first-child {
+#workspace.view-mode_presentation
+  #workspace-content
+  .definition-doc
+  h1:first-child {
   font-size: 3rem;
 }
 
