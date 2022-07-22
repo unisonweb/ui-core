@@ -330,7 +330,7 @@
   .page.presentation-layout .page-content {
     width: 100vw;
     overflow: initial;
-    padding: 3rem 0 0 0;
+    padding: 3rem 0 3rem 0;
   }
 
   .page.presentation-layout .page-content {

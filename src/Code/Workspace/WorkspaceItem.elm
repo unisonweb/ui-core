@@ -27,6 +27,7 @@ import UI.Button as Button
 import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
+import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip
 import UI.ViewMode as ViewMode exposing (ViewMode)
 
@@ -627,7 +628,22 @@ view viewMode workspaceItem isFocused =
     in
     case workspaceItem of
         Loading ref ->
-            viewRow ref attrs [] ( UI.nothing, UI.loadingPlaceholder ) [ ( UI.nothing, UI.loadingPlaceholder ) ]
+            case viewMode of
+                ViewMode.Regular ->
+                    viewRow ref attrs [] ( UI.nothing, UI.loadingPlaceholder ) [ ( UI.nothing, UI.loadingPlaceholder ) ]
+
+                ViewMode.Presentation ->
+                    div [ class "loading" ]
+                        [ PlaceholderShape.text
+                            |> PlaceholderShape.withSize PlaceholderShape.Large
+                            |> PlaceholderShape.withLength PlaceholderShape.Medium
+                            |> PlaceholderShape.view
+                        , PlaceholderShape.text
+                            |> PlaceholderShape.withSize PlaceholderShape.Large
+                            |> PlaceholderShape.withLength PlaceholderShape.Large
+                            |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
+                            |> PlaceholderShape.view
+                        ]
 
         Failure ref err ->
             viewClosableRow
