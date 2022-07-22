@@ -54,6 +54,11 @@
 #workspace.view-mode_presentation #workspace-content .definition-doc aside {
   font-size: var(--font-size-medium);
 }
+#workspace.view-mode_presentation #workspace-content .loading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
 
 #workspace-content::-webkit-scrollbar {
   width: 0.5rem;
