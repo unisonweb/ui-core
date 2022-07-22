@@ -1,7 +1,7 @@
 /* -- App Header ---------------------------------------------------------- */
 
-#app-header {
-  /* @color-todo @inverse */
+/* @color-todo @inverse */
+#app-header.view-mode_regular {
   --color-app-header-text: var(--color-gray-lighten-100);
   --color-app-header-bg: var(--color-gray-darken-10);
   --color-app-header-subtle-text: var(--color-gray-lighten-20);
@@ -16,7 +16,27 @@
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_selected: var(--color-gray-darken-20);
   --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
+}
 
+/* In Presentation Mode the header gets a light theme treatment and made semi
+ * transparent */
+#app-header.view-mode_presentation {
+  --color-app-header-text: var(--u-color_text);
+  --color-app-header-bg: var(--u-color_backgrond);
+  --color-app-header-subtle-text: var(--u-color_text_very-subdued);
+  --color-app-header-subtle-text-em: var(--u-color_text_subdued);
+  --color-app-header-context-unison-share-text: var(--color-purple-4);
+  --color-app-header-context-unison-local-text: var(--color-pink-3);
+  --color-app-header-border: transparent;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+#app-header.view-mode_presentation:hover {
+  opacity: 1;
+}
+
+#app-header {
   grid-area: app-header;
   padding: 0 1rem 0 1.5rem;
   background: var(--color-app-header-bg);
@@ -28,7 +48,9 @@
   height: var(--app-header-height);
 }
 
-#app-header .button {
+/* We only overwrite the button colors for Regular, since Presentation just
+ * uses the default */
+#app-header.view-mode_regular .button {
   /* @color-todo @inverse */
   --color-button-default-text: var(--color-gray-lighten-30);
   --color-button-default-icon: var(--color-gray-lighten-20);
