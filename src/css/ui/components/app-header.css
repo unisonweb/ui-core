@@ -34,8 +34,8 @@
 
 #app-header.view-mode_presentation .navigation {
   --u-color_c_navigation-item_selected: var(--color-gray-lighten-50);
-  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-30);
-  --u-color_c_navigation-item_hovered: var(--color-gray-lighten-30);
+  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-20);
+  --u-color_c_navigation-item_hovered: var(--color-gray-lighten-40);
   --u-color_c_text-on-navigation-item_hovered: var(--color-gray-base);
 }
 
