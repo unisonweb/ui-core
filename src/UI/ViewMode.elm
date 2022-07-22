@@ -9,6 +9,25 @@ type ViewMode
     | Presentation
 
 
+fromString : String -> ViewMode
+fromString s =
+    if s == "presentation" then
+        Presentation
+
+    else
+        Regular
+
+
+toString : ViewMode -> String
+toString vm =
+    case vm of
+        Regular ->
+            "regular"
+
+        Presentation ->
+            "presentation"
+
+
 isRegular : ViewMode -> Bool
 isRegular vm =
     vm == Regular
@@ -42,9 +61,4 @@ button updateViewModeMsg viewMode =
 
 toCssClass : ViewMode -> String
 toCssClass vm =
-    case vm of
-        Regular ->
-            "view-mode_regular"
-
-        Presentation ->
-            "view-mode_presentation"
+    "view-mode_" ++ toString vm
