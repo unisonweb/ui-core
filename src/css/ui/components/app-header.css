@@ -128,6 +128,7 @@
   font-size: var(--font-size-medium);
   padding: 0 1rem;
   transition: background 0.2s;
+  line-height: 1;
 }
 
 #app-header .navigation .nav-item.selected {
