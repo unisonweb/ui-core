@@ -2,6 +2,9 @@ module UI.Navigation exposing
     ( NavItem
     , Navigation
     , empty
+    , navItem
+    , navItemWithIcon
+    , navItemWithNudge
     , view
     , withItems
     , withNoSelectedItems
@@ -12,6 +15,7 @@ import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
+import UI.Nudge as Nudge exposing (Nudge)
 
 
 
@@ -27,7 +31,11 @@ import UI.Icon as Icon exposing (Icon)
 
 
 type alias NavItem msg =
-    { icon : Maybe (Icon msg), label : String, click : Click msg }
+    { icon : Maybe (Icon msg)
+    , label : String
+    , nudge : Nudge msg
+    , click : Click msg
+    }
 
 
 type Navigation msg
@@ -37,6 +45,25 @@ type Navigation msg
 
 
 -- CREATE
+
+
+navItem : String -> Click msg -> NavItem msg
+navItem label click =
+    { icon = Nothing
+    , label = label
+    , nudge = Nudge.NoNudge
+    , click = click
+    }
+
+
+navItemWithIcon : Icon msg -> NavItem msg -> NavItem msg
+navItemWithIcon icon item =
+    { item | icon = Just icon }
+
+
+navItemWithNudge : Nudge msg -> NavItem msg -> NavItem msg
+navItemWithNudge nudge item =
+    { item | nudge = nudge }
 
 
 empty : Navigation msg
@@ -55,15 +82,15 @@ withNoSelectedItems items _ =
 
 
 viewItem : Bool -> NavItem msg -> Html msg
-viewItem isSelected { icon, label, click } =
+viewItem isSelected { icon, label, nudge, click } =
     let
         content =
             case icon of
                 Nothing ->
-                    [ text label ]
+                    [ text label, Nudge.view nudge ]
 
                 Just i ->
-                    [ Icon.view i, text label ]
+                    [ Icon.view i, text label, Nudge.view nudge ]
     in
     Click.view [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ] content click
 

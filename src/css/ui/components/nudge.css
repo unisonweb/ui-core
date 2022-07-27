@@ -1,0 +1,9 @@
+.nudge {
+  position: relative;
+  display: inline-flex;
+}
+
+.nudge .icon {
+  color: var(--u-color_info_icon);
+  font-size: 0.875rem;
+}

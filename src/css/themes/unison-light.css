@@ -103,6 +103,7 @@
 
   --u-color_info_container_subdued: var(--color-blue-5);
   --u-color_info_text: var(--color-blue-2);
+  --u-color_info_icon: var(--color-blue-3);
   --u-color_info_element: var(--color-blue-2);
   --u-color_info_text-on-element: var(--color-gray-lighten-100);
   --u-color_info_icon-on-element: var(--color-gray-lighten-100);
