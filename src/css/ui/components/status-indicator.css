@@ -67,20 +67,8 @@
 }
 .status-indicator.status-indicator_working .icon {
   color: var(--c-color_status-indicator_icon-on-working);
-  animation-name: pulse-scale;
+  animation-name: pulsate-size;
   animation-duration: 1500ms;
   animation-iteration-count: infinite;
   animation-timing-function: var(--anim-elastic);
-}
-
-@keyframes pulse-scale {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
 }

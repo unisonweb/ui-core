@@ -52,12 +52,12 @@
 }
 
 /* scale3D instead of scale forces the animation onto the GPU, avoiding jank */
-@keyframes pulse-grow {
+@keyframes pulsate-size {
   0% {
     transform: scale3D(1, 1, 1);
   }
   50% {
-    transform: scale3D(1.25, 1.25, 1.25);
+    transform: scale3D(1.5, 1.5, 1.5);
   }
   100% {
     transform: scale3D(1, 1, 1);

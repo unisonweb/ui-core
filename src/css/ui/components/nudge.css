@@ -7,3 +7,10 @@
   color: var(--u-color_info_icon);
   font-size: 0.875rem;
 }
+
+.nudge.pulsate .icon {
+  animation-name: pulsate-size;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: var(--anim-elastic);
+}
