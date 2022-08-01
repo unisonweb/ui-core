@@ -1,0 +1,43 @@
+.profile-snippet.profile-snippet_size_small {
+  --c-size_profile-snippet_name: var(--font-size-small);
+}
+
+.profile-snippet.profile-snippet_size_medium {
+  --c-size_profile-snippet_name: var(--font-size-medium);
+  --c-size_profile-snippet_handle: var(--font-size-small);
+}
+
+.profile-snippet.profile-snippet_size_large {
+  --c-size_profile-snippet_name: var(--font-size-large);
+  --c-size_profile-snippet_handle: var(--font-size-small);
+}
+
+.profile-snippet {
+  --color_profile-snippet_text: var(--u-color_text);
+  --color_profile-snippet_text_subdued: var(--u-color_text_subdued);
+  --color_profile-snippet_border: var(--u-color_border_subdued);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-snippet .profile-snippet_handle {
+  font-size: var(--c-size_profile-snippet_handle);
+  color: var(--color_profile-snippet_text_subdued);
+  padding-top: 1px;
+}
+
+.profile-snippet .profile-snippet_name,
+/* If there's no name, treat the handle the same as if it was the name */
+.profile-snippet.profile-snippet_handle-only .profile-snippet_handle {
+  font-size: var(--c-size_profile-snippet_name);
+  font-weight: bold;
+  color: var(--color_profile-snippet_text);
+  /* Adjust to better align with avatar */
+  padding-top: 1px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -15,6 +15,22 @@
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
+.avatar.small {
+  --avatar_size: 1.125rem;
+}
+
+.avatar.medium {
+  --avatar_size: 1.5rem;
+}
+
+.avatar.large {
+  --avatar_size: 2.625rem;
+}
+
+.avatar.huge {
+  --avatar_size: 5.25rem;
+}
+
 .avatar.avatar_text {
   font-size: 0.625rem;
   text-transform: uppercase;
