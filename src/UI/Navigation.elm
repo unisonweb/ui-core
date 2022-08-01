@@ -95,10 +95,10 @@ viewItem isSelected { icon, label, nudge, toTooltip, click } =
         content =
             case icon of
                 Nothing ->
-                    span [ class "item-content" ] [ text label, Nudge.view nudge ]
+                    span [ class "nav-item_content" ] [ text label, Nudge.view nudge ]
 
                 Just i ->
-                    span [ class "item-content" ] [ Icon.view i, text label, Nudge.view nudge ]
+                    span [ class "nav-item_content" ] [ Icon.view i, text label, Nudge.view nudge ]
 
         item =
             case toTooltip of

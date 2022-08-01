@@ -11,14 +11,17 @@
 
 .navigation .nav-item {
   position: relative;
+  color: var(--u-color_c_text-on-navigation-item);
+  background: var(--u-color_c_navigation-item);
+  transition: background 0.2s;
+}
+
+.navigation .nav-item_content {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
-  color: var(--u-color_c_text-on-navigation-item);
-  background: var(--u-color_c_navigation-item);
-  transition: background 0.2s;
 }
 
 .navigation .nav-item.selected {
