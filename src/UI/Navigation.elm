@@ -10,12 +10,13 @@ module UI.Navigation exposing
     , withNoSelectedItems
     )
 
-import Html exposing (Html, nav, text)
+import Html exposing (Html, nav, span, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge)
+import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
 
@@ -35,6 +36,7 @@ type alias NavItem msg =
     , label : String
     , nudge : Nudge msg
     , click : Click msg
+    , toTooltip : Maybe (Html msg -> Tooltip msg)
     }
 
 
@@ -53,6 +55,7 @@ navItem label click =
     , label = label
     , nudge = Nudge.NoNudge
     , click = click
+    , toTooltip = Nothing
     }
 
 
@@ -64,6 +67,11 @@ navItemWithIcon icon item =
 navItemWithNudge : Nudge msg -> NavItem msg -> NavItem msg
 navItemWithNudge nudge item =
     { item | nudge = nudge }
+
+
+navItemWithTooltip : (Html msg -> Tooltip msg) -> NavItem msg -> NavItem msg
+navItemWithTooltip toTooltip item =
+    { item | toTooltip = Just toTooltip }
 
 
 empty : Navigation msg
@@ -82,17 +90,25 @@ withNoSelectedItems items _ =
 
 
 viewItem : Bool -> NavItem msg -> Html msg
-viewItem isSelected { icon, label, nudge, click } =
+viewItem isSelected { icon, label, nudge, toTooltip, click } =
     let
         content =
             case icon of
                 Nothing ->
-                    [ text label, Nudge.view nudge ]
+                    span [ class "item-content" ] [ text label, Nudge.view nudge ]
 
                 Just i ->
-                    [ Icon.view i, text label, Nudge.view nudge ]
+                    span [ class "item-content" ] [ Icon.view i, text label, Nudge.view nudge ]
+
+        item =
+            case toTooltip of
+                Just t ->
+                    Tooltip.view (t content)
+
+                Nothing ->
+                    content
     in
-    Click.view [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ] content click
+    Click.view [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ] [ item ] click
 
 
 view : Navigation msg -> Html msg
