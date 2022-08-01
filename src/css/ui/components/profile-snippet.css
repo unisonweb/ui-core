@@ -23,6 +23,23 @@
   gap: 0.5rem;
 }
 
+.profile-snippet .profile-snippet_text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-snippet.profile-snippet_size_large {
+  gap: 0.75rem;
+}
+
+.profile-snippet.profile-snippet_size_large .profile-snippet_text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
 .profile-snippet .profile-snippet_handle {
   font-size: var(--c-size_profile-snippet_handle);
   color: var(--color_profile-snippet_text_subdued);
