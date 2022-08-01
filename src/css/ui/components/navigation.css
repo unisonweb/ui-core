@@ -10,6 +10,10 @@
 }
 
 .navigation .nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   position: relative;
   color: var(--u-color_c_text-on-navigation-item);
   background: var(--u-color_c_navigation-item);
