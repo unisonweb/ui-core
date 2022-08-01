@@ -131,7 +131,7 @@
   line-height: 1;
 }
 
-#app-header .navigation .nav-item.selected {
+#app-header .navigation .nav-item.selected .nav-item_content {
   font-weight: bold;
 }
 
