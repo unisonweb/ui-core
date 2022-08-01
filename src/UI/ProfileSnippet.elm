@@ -77,13 +77,13 @@ view { size, user } =
         ( sizeClass, avatar ) =
             case size of
                 Small ->
-                    ( class "small", avatar_ |> Avatar.small )
+                    ( class "profile-snippet_small", avatar_ |> Avatar.small )
 
                 Medium ->
-                    ( class "medium", avatar_ |> Avatar.medium )
+                    ( class "profile-snippet_medium", avatar_ |> Avatar.medium )
 
                 Large ->
-                    ( class "large", avatar_ |> Avatar.large )
+                    ( class "profile-snippet_large", avatar_ |> Avatar.large )
 
         ( name_, attrs ) =
             case name of
