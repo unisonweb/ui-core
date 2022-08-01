@@ -5,6 +5,7 @@ module UI.Navigation exposing
     , navItem
     , navItemWithIcon
     , navItemWithNudge
+    , navItemWithTooltip
     , view
     , withItems
     , withNoSelectedItems
