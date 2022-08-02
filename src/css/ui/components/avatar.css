@@ -12,7 +12,7 @@
   justify-content: center;
   background-color: transparent; /* Don't use a color when we don't yet know if there's an image loading */
   background-size: cover;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .avatar.small {
