@@ -338,7 +338,7 @@
   }
 
   .page-centered-layout .page-content,
-  .page.sidebar-left-content-layout .page-content,
+  .page.sidebar-left-content-layout .page-content {
     padding: 3rem 0 3rem 0;
   }
 
