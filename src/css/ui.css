@@ -31,9 +31,9 @@
   --u-viewport_md: 768px;
   --u-viewport_lg: 1012px;
   --u-viewport_xl: 1280px;
-
-  @custom-media --u-viewport_min-lg (width > 1013px);
 }
+
+@custom-media --u-viewport_min-lg (width > 1013px);
 
 @import "./ui/colors.css";
 @import "./ui/fonts.css";
