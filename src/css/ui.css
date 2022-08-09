@@ -37,7 +37,7 @@
   @custom-media --u-viewport_max-md (max-width: var(--u-viewport_md));
   @custom-media --u-viewport_min-md (min-width: calc(var(--u-viewport_md) + 1px));
   @custom-media --u-viewport_max-lg (max-width: var(--u-viewport_lg));
-  @custom-media --u-viewport_min-lg (min-width: calc(var(--u-viewport_lg) + 1px));
+  @custom-media --u-viewport_min-lg (min-width: 1013px);
   @custom-media --u-viewport_max-xl (max-width: var(--u-viewport_xl));
   @custom-media --u-viewport_min-xl (min-width: calc(var(--u-viewport_xl) + 1px));
 }
