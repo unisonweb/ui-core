@@ -370,7 +370,7 @@
   opacity: 1;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1012px) {
   .workspace-item {
     box-shadow: none;
     padding: 1rem;

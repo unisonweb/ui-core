@@ -46,7 +46,7 @@
   align-self: flex-end;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1012px) {
   .code_empty-state {
     width: auto;
     margin: auto;
