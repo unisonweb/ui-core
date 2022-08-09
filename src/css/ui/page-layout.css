@@ -283,7 +283,7 @@
   }
 
   .page.hero-layout .page-content {
-    width: 50rem;
+    width: 58rem;
   }
 }
 
@@ -340,6 +340,10 @@
   .page-centered-layout .page-content,
   .page.sidebar-left-content-layout .page-content {
     padding: 3rem 0 3rem 0;
+  }
+
+  .page.presentation-layout .page-content {
+    padding: 3rem 1rem;
   }
 
   .page.presentation-layout .page-content {
