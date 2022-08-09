@@ -275,14 +275,19 @@
 }
 
 /* -- Responsive ----------------------------------------------------------- */
+
 @media only screen and (max-width: 1280px) {
   .page.presentation-layout .page-content {
     margin: initial;
     padding-left: 4rem;
   }
+
+  .page.hero-layout .page-content {
+    width: 50rem;
+  }
 }
 
-@media only screen and (min-width: 1025px) {
+@media only screen and (min-width: 1013px) {
   .page.sidebar-toggled {
     --main-sidebar-width: var(--main-sidebar-collapsed-width);
   }
