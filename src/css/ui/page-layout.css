@@ -346,8 +346,8 @@
     padding: 3rem 1rem;
   }
 
-  .page.presentation-layout .page-content {
-    padding: 3rem 1rem;
+  .page.hero-layout .page-content {
+    padding-bottom: 3rem;
   }
 
   .page.edge-to-edge-layout .page-content,
