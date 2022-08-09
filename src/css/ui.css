@@ -27,10 +27,19 @@
   --font-size-small: 0.75rem;
 
   /* -- Breakpoints -------------------------------------------------------- */
-  --u-breakpoint-sm: 544px;
-  --u-breakpoint-md: 768px;
-  --u-breakpoint-lg: 1012px;
-  --u-breakpoint-xl: 1280px;
+  --u-viewport-sm: 544px;
+  --u-viewport-md: 768px;
+  --u-viewport-lg: 1012px;
+  --u-viewport-xl: 1280px;
+
+  @custom-media --max-viewport-sm (max-width: var(--u-viewport-sm));
+  @custom-media --min-viewport-sm (min-width: calc(var(--u-viewport-sm) + 1px));
+  @custom-media --max-viewport-md (max-width: var(--u-viewport-md));
+  @custom-media --min-viewport-md (min-width: calc(var(--u-viewport-md) + 1px));
+  @custom-media --max-viewport-lg (max-width: var(--u-viewport-lg));
+  @custom-media --min-viewport-lg (min-width: calc(var(--u-viewport-lg) + 1px));
+  @custom-media --max-viewport-xl (max-width: var(--u-viewport-xl));
+  @custom-media --min-viewport-xl (min-width: calc(var(--u-viewport-xl) + 1px));
 }
 
 @import "./ui/colors.css";
