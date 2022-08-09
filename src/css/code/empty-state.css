@@ -3,6 +3,7 @@
   background: url(./empty-state-bg.svg);
   background-position: center 2rem;
   background-repeat: no-repeat;
+  background-size: contain;
   padding: 0rem 4.625rem 5.5rem 4.625rem;
   display: flex;
   justify-content: center;
