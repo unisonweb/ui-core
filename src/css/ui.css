@@ -1,18 +1,3 @@
-/* -- Breakpoints -------------------------------------------------------- */
---u-viewport_sm: 544px;
---u-viewport_md: 768px;
---u-viewport_lg: 1012px;
---u-viewport_xl: 1280px;
-
-@custom-media --u-viewport_max-sm (max-width: var(--u-viewport_sm));
-@custom-media --u-viewport_min-sm (min-width: calc(var(--u-viewport_sm) + 1px));
-@custom-media --u-viewport_max-md (max-width: var(--u-viewport_md));
-@custom-media --u-viewport_min-md (min-width: calc(var(--u-viewport_md) + 1px));
-@custom-media --u-viewport_max-lg (max-width: var(--u-viewport_lg));
-@custom-media --u-viewport_min-lg (min-width: 1013px);
-@custom-media --u-viewport_max-xl (max-width: var(--u-viewport_xl));
-@custom-media --u-viewport_min-xl (min-width: calc(var(--u-viewport_xl) + 1px));
-
 :root {
   --size-base: 16px;
   --app-header-height: 3.5rem;
@@ -40,6 +25,14 @@
   --font-size-large: 1.5rem;
   --font-size-medium: 0.875rem;
   --font-size-small: 0.75rem;
+
+  /* -- Breakpoints -------------------------------------------------------- */
+  --u-viewport_sm: 544px;
+  --u-viewport_md: 768px;
+  --u-viewport_lg: 1012px;
+  --u-viewport_xl: 1280px;
+
+  @custom-media --u-viewport_min-lg (min-width: 1013px);
 }
 
 @import "./ui/colors.css";
