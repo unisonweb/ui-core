@@ -333,8 +333,12 @@
   .page.edge-to-edge-layout .page-content,
   .page.centered-layout .page-content,
   .page.presentation-layout .page-content {
-    width: 100vw;
+    width: 100%;
     overflow: initial;
+  }
+
+  .page-centered-layout .page-content,
+  .page.sidebar-left-content-layout .page-content,
     padding: 3rem 0 3rem 0;
   }
 
@@ -342,7 +346,8 @@
     padding: 3rem 1rem;
   }
 
-  .page.edge-to-edge-layout .page-content {
+  .page.edge-to-edge-layout .page-content,
+  .page.sidebar-edge-to-edge-layout .page-content {
     padding: 0;
   }
 
