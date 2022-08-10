@@ -34,7 +34,7 @@
 
   @custom-media --u-viewport_max-sm (width <= var(--u-viewport_sm));
   @custom-media --u-viewport_min-sm (width > var(--u-viewport_sm));
-  @custom-media --u-viewport_max-md (width <=var(--u-viewport_md));
+  @custom-media --u-viewport_max-md (width <= var(--u-viewport_md));
   @custom-media --u-viewport_min-md (width > var(--u-viewport_md));
   @custom-media --u-viewport_max-lg (width <= var(--u-viewport_lg));
   @custom-media --u-viewport_min-lg (width > var(--u-viewport_lg));
