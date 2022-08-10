@@ -31,12 +31,13 @@ module UI.Button exposing
     , withIconAfterLabel
     , withIconBeforeLabel
     , withIconsBeforeAndAfterLabel
+    , withIsActive
     , withSize
     , withType
     )
 
 import Html exposing (Html, a, text)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
 import UI.Click as Click exposing (Click(..))
 import UI.Icon as I
 
@@ -55,6 +56,7 @@ type alias Button msg =
     , type_ : Type
     , color : Color
     , size : Size
+    , isActive : Bool
     }
 
 
@@ -88,6 +90,7 @@ map toMsg buttonA =
     , type_ = buttonA.type_
     , color = buttonA.color
     , size = buttonA.size
+    , isActive = False
     }
 
 
@@ -103,6 +106,7 @@ button_ click label =
     , type_ = Contained
     , color = Default
     , size = Medium
+    , isActive = False
     }
 
 
@@ -118,6 +122,7 @@ icon_ click icon__ =
     , type_ = Contained
     , color = Default
     , size = Medium
+    , isActive = False
     }
 
 
@@ -133,6 +138,7 @@ iconThenLabel_ click icon__ label =
     , type_ = Contained
     , color = Default
     , size = Medium
+    , isActive = False
     }
 
 
@@ -148,6 +154,7 @@ labelThenIcon_ click label icon__ =
     , type_ = Contained
     , color = Default
     , size = Medium
+    , isActive = False
     }
 
 
@@ -163,6 +170,7 @@ iconThenLabelThenIcon_ click iconBefore label iconAfter =
     , type_ = Contained
     , color = Default
     , size = Medium
+    , isActive = False
     }
 
 
@@ -185,7 +193,7 @@ preventDefault button__ =
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, type_, color, click, size } =
+view { content, type_, color, click, size, isActive } =
     let
         ( contentType, content_ ) =
             case content of
@@ -210,6 +218,7 @@ view { content, type_, color, click, size } =
             , class (colorToClassName color)
             , class (sizeToClassName size)
             , class contentType
+            , classList [ ( "button_active", isActive ) ]
             ]
     in
     case click of
@@ -332,6 +341,11 @@ uncontained button__ =
 withType : Type -> Button clickMsg -> Button clickMsg
 withType type_ button__ =
     { button__ | type_ = type_ }
+
+
+withIsActive : Bool -> Button clickMsg -> Button clickMsg
+withIsActive isActive button__ =
+    { button__ | isActive = isActive }
 
 
 withClick : Click msg -> Button msg -> Button msg

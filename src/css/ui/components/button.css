@@ -132,12 +132,14 @@ a.button:hover {
   color: var(--color-button-default-icon);
 }
 
-.button.contained.default:hover {
+.button.contained.default:hover,
+.button.contained.default.button_active {
   color: var(--color-button-default-hover-text);
   background: var(--color-button-default-hover-bg);
 }
 
-.button.contained.default:hover .icon {
+.button.contained.default:hover .icon,
+.button.contained.default.button_active .icon {
   color: var(--color-button-default-hover-icon);
 }
 
@@ -149,12 +151,14 @@ a.button:hover {
   color: var(--color-button-primary-icon);
 }
 
-.button.contained.primary:hover {
+.button.contained.primary:hover,
+.button.contained.primary.button_active {
   color: var(--color-button-primary-hover-text);
   background: var(--color-button-primary-hover-bg);
 }
 
-.button.contained.primary:hover .icon {
+.button.contained.primary:hover .icon,
+.button.contained.primary.button_active .icon {
   color: var(--color-button-primary-hover-icon);
 }
 
@@ -167,11 +171,13 @@ a.button:hover {
   color: var(--color-button-danger-icon);
 }
 
-.button.contained.danger:hover {
+.button.contained.danger:hover,
+.button.contained.danger.button_active {
   color: var(--color-button-danger-hover-text);
   background: var(--color-button-danger-hover-bg);
 }
-.button.contained.danger:hover .icon {
+.button.contained.danger:hover .icon,
+.button.contained.danger.button_active .icon {
   color: var(--color-button-danger-hover-icon);
 }
 
@@ -184,11 +190,13 @@ a.button:hover {
   color: var(--color-button-positive-icon);
 }
 
-.button.contained.positive:hover {
+.button.contained.positive:hover,
+.button.contained.positive.button_active {
   color: var(--color-button-positive-hover-text);
   background: var(--color-button-positive-hover-bg);
 }
-.button.contained.positive:hover .icon {
+.button.contained.positive:hover .icon,
+.button.contained.positive.button_active .icon {
   color: var(--color-button-positive-hover-icon);
 }
 
@@ -201,12 +209,14 @@ a.button:hover {
   color: var(--color-button-share-icon);
 }
 
-.button.contained.share:hover {
+.button.contained.share:hover,
+.button.contained.share.button_active {
   color: var(--color-button-share-hover-text);
   background: var(--color-button-share-hover-bg);
 }
 
-.button.contained.share:hover .icon {
+.button.contained.share:hover .icon,
+.button.contained.share.button_active .icon {
   color: var(--color-button-share-hover-text);
 }
 
@@ -222,12 +232,14 @@ a.button:hover {
   color: var(--color-button-default-text);
 }
 
-.button.uncontained.default:hover {
+.button.uncontained.default:hover,
+.button.uncontained.default.button_active {
   color: var(--color-button-default-hover-text);
   background: var(--color-button-default-hover-bg);
 }
 
-.button.uncontained.default:hover .icon {
+.button.uncontained.default:hover .icon,
+.button.uncontained.default.button_active .icon {
   color: var(--color-button-default-hover-text);
 }
 
@@ -236,12 +248,14 @@ a.button:hover {
   color: var(--color-button-primary-mono-text);
 }
 
-.button.uncontained.primary-mono:hover {
+.button.uncontained.primary-mono:hover,
+.button.uncontained.primary-mono.button_active {
   color: var(--color-button-primary-mono-hover-text);
   background: var(--color-button-primary-mono-hover-bg);
 }
 
-.button.uncontained.primary-mono:hover .icon {
+.button.uncontained.primary-mono:hover .icon,
+.button.uncontained.primary-mono.button_active .icon {
   color: var(--color-button-primary-mono-hover-text);
 }
 
@@ -250,11 +264,13 @@ a.button:hover {
   color: var(--color-button-primary-text);
 }
 
-.button.uncontained.primary:hover {
+.button.uncontained.primary:hover,
+.button.uncontained.primary.button_active {
   color: var(--color-button-primary-hover-text);
   background: var(--color-button-primary-hover-bg);
 }
-.button.uncontained.primary:hover .icon {
+.button.uncontained.primary:hover .icon,
+.button.uncontained.primary.button_active .icon {
   color: var(--color-button-primary-hover-text);
 }
 
@@ -263,12 +279,14 @@ a.button:hover {
   color: var(--color-button-share-text);
 }
 
-.button.uncontained.share:hover {
+.button.uncontained.share:hover,
+.button.uncontained.share.button_active {
   color: var(--color-button-share-hover-text);
   background: var(--color-button-share-hover-bg);
 }
 
-.button.uncontained.share:hover .icon {
+.button.uncontained.share:hover .icon,
+.button.uncontained.share.button_active .icon {
   color: var(--color-button-share-hover-text);
 }
 
@@ -277,10 +295,12 @@ a.button:hover {
   color: var(--color-button-danger-text);
 }
 
-.button.uncontained.danger:hover {
+.button.uncontained.danger:hover,
+.button.uncontained.danger.button_active {
   color: var(--color-button-danger-text);
   background: var(--color-button-danger-bg);
 }
-.button.uncontained.danger:hover .icon {
+.button.uncontained.danger:hover .icon,
+.button.uncontained.danger.button_active .icon {
   color: var(--color-button-danger-text);
 }
