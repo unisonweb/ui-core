@@ -1,3 +1,5 @@
+@import "./viewport.css";
+
 .page {
   grid-area: page-layout;
   display: grid;

@@ -25,25 +25,7 @@
   --font-size-large: 1.5rem;
   --font-size-medium: 0.875rem;
   --font-size-small: 0.75rem;
-
-  /* -- Viewport sizes ----------------------------------------------------- */
-  /* see @custom-media section further down */
-  --u-viewport_sm: 544px;
-  --u-viewport_md: 768px;
-  --u-viewport_lg: 1012px;
-  --u-viewport_xl: 1280px;
 }
-
-/* Can't refer to variables unfortunately, so they are duplicated. 
- * also @custom-media must be outside :root for some reason.. */
-@custom-media --u-viewport_max-sm (width <= 544px); /* --u-viewport_sm */
-@custom-media --u-viewport_min-sm (width > 544px); /* --u-viewport_sm */
-@custom-media --u-viewport_max-md (width <= 768px); /* --u-viewport_md */
-@custom-media --u-viewport_min-md (width > 768px); /* --u-viewport_md */
-@custom-media --u-viewport_max-lg (width <= 1012px); /* --u-viewport_lg */
-@custom-media --u-viewport_min-lg (width > 1012px); /* --u-viewport_lg */
-@custom-media --u-viewport_max-xl (width <= 1280px); /* --u-viewport_xl */
-@custom-media --u-viewport_min-xl (width > 1280); /* --u-viewport_xl */
 
 @import "./ui/colors.css";
 @import "./ui/fonts.css";
