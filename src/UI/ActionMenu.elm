@@ -148,16 +148,16 @@ viewItems (ActionItems items_) =
 view : ActionMenu msg -> Html msg
 view { toggleMsg, state, buttonIcon, buttonLabel, actionItems } =
     let
-        button =
+        button_ =
             viewButton toggleMsg buttonLabel buttonIcon state
 
-        ( menu, isOpen ) =
+        ( menu, isOpen, button ) =
             case state of
                 Closed ->
-                    ( UI.nothing, False )
+                    ( UI.nothing, False, button_ )
 
                 Open ->
-                    ( viewItems actionItems, True )
+                    ( viewItems actionItems, True, Button.active button_ )
 
         actionMenu_ =
             div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]

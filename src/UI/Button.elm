@@ -2,6 +2,7 @@ module UI.Button exposing
     ( Button
     , Size(..)
     , Type(..)
+    , active
     , button
     , button_
     , contained
@@ -19,6 +20,7 @@ module UI.Button exposing
     , large
     , map
     , medium
+    , notActive
     , positive
     , preventDefault
     , primary
@@ -346,6 +348,16 @@ withType type_ button__ =
 withIsActive : Bool -> Button clickMsg -> Button clickMsg
 withIsActive isActive button__ =
     { button__ | isActive = isActive }
+
+
+active : Button clickMsg -> Button clickMsg
+active button__ =
+    withIsActive True button__
+
+
+notActive : Button clickMsg -> Button clickMsg
+notActive button__ =
+    withIsActive False button__
 
 
 withClick : Click msg -> Button msg -> Button msg
