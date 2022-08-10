@@ -1,5 +1,3 @@
-@import "../ui/viewport.css";
-
 .code_empty-state {
   font-size: var(--font-size-medium);
   background: url(./empty-state-bg.svg);

@@ -1,5 +1,3 @@
-@import "../ui/viewport.css";
-
 .definition-doc {
   --color-doc-text: var(--u-color_text);
   --color-doc-bg: var(--u-color_container);

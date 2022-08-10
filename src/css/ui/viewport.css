@@ -1,11 +1,8 @@
-:root {
-  --u-viewport_sm: 544px;
-  --u-viewport_md: 768px;
-  --u-viewport_lg: 1012px;
-  --u-viewport_xl: 1280px;
-}
+/* For this to work across all the css files consistently and without race conditions, 
+ * this needs be imported via the `importFrom` option in the webpack config
+ */
 
-/* Can't refer to variables unfortunately, so they are duplicated. 
+/* Can't refer to variables unfortunately, so they are duplicated between here and ui.css. 
  * also @custom-media must be outside :root for some reason.. */
 @custom-media --u-viewport_max-sm (width <= 544px); /* --u-viewport_sm */
 @custom-media --u-viewport_min-sm (width > 544px); /* --u-viewport_sm */
