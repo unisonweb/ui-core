@@ -276,7 +276,7 @@
 
 /* -- Responsive ----------------------------------------------------------- */
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (--u-viewport_max-xl) {
   .page.presentation-layout .page-content {
     margin: initial;
     padding-left: 4rem;
@@ -287,7 +287,7 @@
   }
 }
 
-@media only screen and (min-width: 1013px) {
+@media only screen and (--u-viewport_min-lg) {
   .page.sidebar-toggled {
     --main-sidebar-width: var(--main-sidebar-collapsed-width);
   }
@@ -303,7 +303,7 @@
   }
 }
 
-@media only screen and (max-width: 1012px) {
+@media only screen and (--u-viewport_max-lg) {
   .page.sidebar-edge-to-edge-layout,
   .page.sidebar-left-content-layout {
     grid-template-rows: auto;
@@ -377,7 +377,7 @@
   }
 }
 
-@media only screen and (max-width: 544px) {
+@media only screen and (--u-viewport_max-sm) {
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
   .page.presentation-layout .page-content .page-heading,

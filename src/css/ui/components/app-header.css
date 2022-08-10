@@ -152,7 +152,7 @@
 
 /* -- Responsive ----------------------------------------------------------- */
 
-@media only screen and (max-width: 1012px) {
+@media only screen and (--u-viewport_max-lg) {
   #app-header {
     padding: 0 1rem;
   }

@@ -47,7 +47,7 @@
   align-self: flex-end;
 }
 
-@media only screen and (max-width: 1012px) {
+@media only screen and (--u-viewport_max-lg) {
   .code_empty-state {
     width: auto;
     margin: auto;

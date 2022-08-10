@@ -74,7 +74,7 @@
   border-radius: var(--border-radius-base);
 }
 
-@media only screen and (max-width: 1012px) {
+@media only screen and (--u-viewport_max-lg) {
   #workspace-content {
     box-shadow: none;
     height: auto;

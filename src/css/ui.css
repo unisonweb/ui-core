@@ -43,7 +43,7 @@
 @custom-media --u-viewport_max-lg (width <= 1012px); /* --u-viewport_lg */
 @custom-media --u-viewport_min-lg (width > 1012px); /* --u-viewport_lg */
 @custom-media --u-viewport_max-xl (width <= 1280px); /* --u-viewport_xl */
-@custom-media --u-viewport_min-xl (width > 1280); /* --u-viewport_xl*/
+@custom-media --u-viewport_min-xl (width > 1280); /* --u-viewport_xl */
 
 @import "./ui/colors.css";
 @import "./ui/fonts.css";

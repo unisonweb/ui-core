@@ -451,7 +451,7 @@
   margin: 1rem 0;
 }
 
-@media only screen and (max-width: 1012px) {
+@media only screen and (--u-viewport_max-lg) {
   .definition-doc .source.code,
   .definition-doc .sources .source,
   .definition-doc .folded-sources .source,
