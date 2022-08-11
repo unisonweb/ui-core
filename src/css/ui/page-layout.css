@@ -297,7 +297,7 @@
   }
 
   .page.sidebar-toggled .sidebar-header,
-  .page.sidebar-toggled .sidebar-scroll-area {
+  .page.sidebar-toggled .sidebar-section {
     opacity: 0;
     pointer-events: none;
   }
