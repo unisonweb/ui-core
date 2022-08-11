@@ -50,6 +50,9 @@
   box-shadow: 0 -1px 0 var(--color-sidebar-border);
   font-size: var(--font-size-medium);
   z-index: var(--layer-popover);
+
+  /* max-width: 100% avoids horizontal scroll when with is set to 100vw as it
+   * is on small screens */
   max-width: 100%;
 
   --u-color_text: var(--color-sidebar-fg);
