@@ -1,7 +1,7 @@
 module UI.Sidebar exposing (..)
 
 import Html exposing (Html, aside, div, footer, h3, span, text)
-import Html.Attributes exposing (class, id)
+import Html.Attributes exposing (class, classList, id)
 import Lib.OperatingSystem exposing (OperatingSystem(..))
 import Maybe.Extra as MaybeE
 import UI
@@ -193,17 +193,10 @@ viewSection { title, titleButton, content, scrollable } =
                 [ h3 [ class "sidebar-section-title" ] [ text title ]
                 , MaybeE.unwrap UI.nothing Button.view titleButton
                 ]
-
-        section_ =
-            Html.section
-                [ class "sidebar-section" ]
-                (sectionHeader :: content)
     in
-    if scrollable then
-        div [ class "sidebar-scroll-area" ] [ section_ ]
-
-    else
-        section_
+    Html.section
+        [ classList [ ( "sidebar-section", True ), ( "sidebar-section_scrollable", scrollable ) ] ]
+        (sectionHeader :: content)
 
 
 viewMenuItem : SidebarMenuItem msg -> Html msg
