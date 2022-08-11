@@ -91,7 +91,26 @@
 
 .sidebar .sidebar-section {
   margin-top: 1.5rem;
-  padding: 0rem 1rem 1rem 1.5rem;
+}
+
+.sidebar .sidebar-section .sidebar-section_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0rem 1rem 0 1.5rem;
+}
+
+.sidebar .sidebar-section_title {
+  font-size: var(--font-size-medium);
+  font-weight: normal;
+  color: var(--color-sidebar-subtle-fg);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  height: 1.875rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
 }
 
 .sidebar .sidebar-section .sidebar-section_content {
@@ -109,38 +128,18 @@
   scrollbar-color: var(--color-sidebar-subtle-fg) var(--color-sidebar-bg);
 }
 
-.sidebar .sidebar-section::-webkit-scrollbar {
+.sidebar .sidebar-section .sidebar-section_content::-webkit-scrollbar {
   width: 0.4rem;
   height: 0.4rem;
 }
 
-.sidebar .sidebar-section::-webkit-scrollbar-track {
+.sidebar .sidebar-section .sidebar-section_content::-webkit-scrollbar-track {
   background: var(--color-sidebar-bg);
 }
 
-.sidebar .sidebar-section::-webkit-scrollbar-thumb {
+.sidebar .sidebar-section .sidebar-section_content::-webkit-scrollbar-thumb {
   background-color: var(--color-sidebar-subtle-fg);
   border-radius: 0.2rem;
-}
-
-.sidebar .sidebar-section .sidebar-section-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding: 0rem 1rem 0 1.5rem;
-}
-
-.sidebar .sidebar-section-title {
-  font-size: var(--font-size-medium);
-  font-weight: normal;
-  color: var(--color-sidebar-subtle-fg);
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  height: 1.875rem;
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
 }
 
 .sidebar .sidebar-menu-item {

@@ -189,8 +189,8 @@ viewSection { title, titleButton, content, scrollable } =
     let
         sectionHeader =
             Html.header
-                [ class "sidebar-section-header" ]
-                [ h3 [ class "sidebar-section-title" ] [ text title ]
+                [ class "sidebar-section_header" ]
+                [ h3 [ class "sidebar-section_title" ] [ text title ]
                 , MaybeE.unwrap UI.nothing Button.view titleButton
                 ]
     in
