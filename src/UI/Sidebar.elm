@@ -195,8 +195,14 @@ viewSection { title, titleButton, content, scrollable } =
                 ]
     in
     Html.section
-        [ classList [ ( "sidebar-section", True ), ( "sidebar-section_scrollable", scrollable ) ] ]
-        (sectionHeader :: content)
+        [ classList
+            [ ( "sidebar-section", True )
+            , ( "sidebar-section_scrollable", scrollable )
+            ]
+        ]
+        [ sectionHeader
+        , div [ class "sidebar-section_content" ] content
+        ]
 
 
 viewMenuItem : SidebarMenuItem msg -> Html msg

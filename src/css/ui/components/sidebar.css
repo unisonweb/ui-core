@@ -94,7 +94,11 @@
   padding: 0rem 1rem 1rem 1.5rem;
 }
 
-.sidebar .sidebar-section.sidebar-section_scrollable {
+.sidebar .sidebar-section .sidebar-section_content {
+  padding: 0rem 1rem 1rem 1.5rem;
+}
+
+.sidebar .sidebar-section.sidebar-section_scrollable .sidebar-section_content {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -124,6 +128,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1rem;
+  padding: 0rem 1rem 0 1.5rem;
 }
 
 .sidebar .sidebar-section-title {
