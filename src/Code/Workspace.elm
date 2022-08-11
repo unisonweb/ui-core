@@ -79,7 +79,7 @@ type OutMsg
     | Focused Reference
     | Emptied
     | ShowFinderRequest (Maybe FQN)
-    | ChangePerspectiveToNamespace FQN
+    | ChangePerspectiveToSubNamespace FQN
 
 
 update : Config -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
@@ -216,8 +216,8 @@ update config msg ({ workspaceItems } as model) =
                     , None
                     )
 
-                WorkspaceItem.ChangePerspectiveToNamespace fqn ->
-                    ( model, Cmd.none, ChangePerspectiveToNamespace fqn )
+                WorkspaceItem.ChangePerspectiveToSubNamespace fqn ->
+                    ( model, Cmd.none, ChangePerspectiveToSubNamespace fqn )
 
                 WorkspaceItem.FindWithinNamespace fqn ->
                     ( model, Cmd.none, ShowFinderRequest (Just fqn) )

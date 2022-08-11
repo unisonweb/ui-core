@@ -81,7 +81,7 @@ type Msg
     | OpenReference Reference Reference
     | UpdateZoom Reference Zoom
     | ToggleDocFold Reference Doc.FoldId
-    | ChangePerspectiveToNamespace FQN
+    | ChangePerspectiveToSubNamespace FQN
     | FindWithinNamespace FQN
     | ShowFullDoc Reference
 
@@ -376,7 +376,7 @@ viewInfoItems hash_ info =
                         namespaceMenu =
                             Tooltip.menu
                                 [ ( Icon.browse, "Find within " ++ ns, Click.onClick (FindWithinNamespace fqn) )
-                                , ( Icon.intoFolder, "Change perspective to " ++ ns, Click.onClick (ChangePerspectiveToNamespace fqn) )
+                                , ( Icon.intoFolder, "Change perspective to " ++ ns, Click.onClick (ChangePerspectiveToSubNamespace fqn) )
                                 ]
                     in
                     Tooltip.tooltip (viewInfoItem Icon.folderOutlined ns) namespaceMenu
