@@ -385,7 +385,6 @@
   }
 
   .workspace-item .content .definition-source {
-    width: calc(100vw - 2rem);
     overflow: auto;
   }
 }
