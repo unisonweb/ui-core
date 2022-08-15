@@ -437,7 +437,7 @@
   }
 
   .page.sidebar-toggled .page-content {
-    padding: 0;
+    padding-left: 0;
   }
 }
 
