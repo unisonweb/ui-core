@@ -91,7 +91,7 @@
 
 .codebase-tree .namespace-tree .node:hover .tooltip {
   right: -0.3rem;
-  min-width: calc(var(--main-sidebar-width) - 1.5rem);
+  min-width: calc(var(--c-width_sidebar) - 1.5rem);
 }
 
 .codebase-tree .namespace-tree .node .definition-category {

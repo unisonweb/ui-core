@@ -10,7 +10,7 @@
 .page.sidebar-left-content-layout,
 .page.sidebar-edge-to-edge-layout {
   grid-template-rows: auto;
-  grid-template-columns: var(--main-sidebar-width) auto;
+  grid-template-columns: var(--c-width_sidebar) auto;
   grid-template-areas: "main-sidebar page-content";
 }
 
@@ -178,7 +178,6 @@
 #main-sidebar.sidebar {
   grid-area: main-sidebar;
   --c-height_sidebar: calc(100vh - var(--app-header-height));
-  --c-width_sidebar: var(--main-sidebar-width);
 }
 
 #main-sidebar .namespace-header {
@@ -288,8 +287,8 @@
 }
 
 @media only screen and (--u-viewport_min-lg) {
-  .page.sidebar-toggled {
-    --main-sidebar-width: var(--main-sidebar-collapsed-width);
+  .page.sidebar-toggled .sidebar {
+    --c-width_sidebar: var(--c-width_sidebar_narrow);
   }
 
   .page.sidebar-toggled #main-sidebar {
@@ -317,7 +316,7 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page {
-    --main-sidebar-width: var(--main-sidebar-collapsed-width);
+    --c-width_sidebar: var(--c-width_sidebar_narrow);
   }
 
   .page.sidebar-toggled {
@@ -339,7 +338,7 @@
   }
 
   .page.sidebar-toggled {
-    --main-sidebar-width: var(--main-sidebar-width);
+    --c-width_sidebar: var(--c-width_sidebar_regular);
   }
 
   .page.sidebar-toggled #main-sidebar {
@@ -450,7 +449,7 @@
   }
 
   .page.sidebar-toggled {
-    --main-sidebar-width: 100vw;
+    --c-width_sidebar: var(--c-width_sidebar_full);
   }
 
   .page.sidebar-toggled .collapse-sidebar-button,
