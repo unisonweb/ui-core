@@ -217,6 +217,10 @@
   font-weight: bold;
 }
 
+.workspace-item .content .workspace-item-definition-doc .definition-doc {
+  max-width: calc(100vw - 4rem);
+}
+
 .workspace-item
   .content
   .workspace-item-definition-doc
