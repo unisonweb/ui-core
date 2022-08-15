@@ -69,7 +69,7 @@
 
   --u-color_divider: var(--color-sidebar-divider);
 
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
 }
 
 .sidebar .button {
