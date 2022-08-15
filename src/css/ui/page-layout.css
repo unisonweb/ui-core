@@ -320,6 +320,14 @@
     --main-sidebar-width: var(--main-sidebar-collapsed-width);
   }
 
+  .page.sidebar-toggled {
+    grid-template-rows: auto;
+    grid-template-columns: auto;
+    grid-template-areas:
+      "page-content"
+      "page-footer";
+  }
+
   .page .sidebar-header,
   .page .sidebar-section {
     opacity: 0;
