@@ -4,11 +4,11 @@
    */
   /* defaults, overwritten by ui.css and page-layout.css */
   --c-height_sidebar: 100vh;
-  --c-width_sidebar_regular: 17rem;
-  --c-width_sidebar_narrow: 4.5rem;
-  --c-width_sidebar_full: 100vw;
 
-  --c-width_sidebar: var(--c-width_sidebar_regular);
+  /* Sidebar width is typically set on a page
+   * layout level as it is directly used in
+   * the CSS Grid */
+  --c-width_sidebar_fallback: 17rem;
 
   /* @color-todo @inverse */
   --color-sidebar-fg: var(--color-gray-lighten-50);
@@ -177,7 +177,7 @@
 }
 
 .sidebar .sidebar-header {
-  width: var(--c-width_sidebar);
+  width: var(--c-width_sidebar, --c-width_sidebar_fallback);
   padding: 1.5rem 1.5rem 0 1.5rem;
   display: flex;
   flex-direction: column;
@@ -215,7 +215,7 @@
 }
 
 .sidebar .sidebar-footer {
-  width: var(--c-width_sidebar);
+  width: var(--c-width_sidebar, --c-width_sidebar_fallback);
   margin-top: auto;
   padding: 1.5rem 0;
   display: flex;

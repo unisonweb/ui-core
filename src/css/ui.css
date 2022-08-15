@@ -6,6 +6,11 @@
   --border-radius-base: 0.25rem;
   --toolbar-height: 3.5rem;
 
+  --c-width_sidebar_regular: 17rem;
+  --c-width_sidebar_narrow: 4.5rem;
+  --c-width_sidebar_full: 100vw;
+  --c-width_sidebar: var(--c-width_sidebar_regular);
+
   /* -- Layers ------------------------------------------------------------- */
   --layer-beneath: 0;
   --layer-base: 1;
