@@ -258,39 +258,47 @@ view os sidebar_ =
                     [ toggleKeyboardShortcut ]
                 ]
 
+        {-
+            Both the expand (small button) and collapse (large button) actions
+            are added to the document, but hid accordingly with CSS media queries,
+            since the collapsed/expanded notion of "toggled" flips at different
+            breakpoints.
+
+            For instance on `xl`, the sidebar is fully visible and when
+            "toggled", it is shown in its narrow view, but the opposite is true
+            for `lg`.
+
+           `sm` and `md` has the sidebar completely hidden when untoggled, and
+            toggling means showing it.
+        -}
         toggle =
             case sidebar_.toggle of
                 NotToggleable ->
                     UI.nothing
 
-                Toggle { isToggled, toggleMsg } ->
-                    if isToggled then
-                        footer [ class "sidebar-footer" ]
-                            [ div [ class "sidebar-toggle" ]
-                                [ Tooltip.tooltip
-                                    (Button.icon toggleMsg Icon.leftSidebarOn
-                                        |> Button.small
-                                        |> Button.view
-                                    )
-                                    (Tooltip.rich tooltipContent)
-                                    |> Tooltip.withPosition Tooltip.RightOf
-                                    |> Tooltip.view
-                                ]
+                Toggle { toggleMsg } ->
+                    footer [ class "sidebar-footer" ]
+                        [ div [ class "sidebar-toggle sidebar-toggle_expand" ]
+                            [ Tooltip.tooltip
+                                (Button.icon toggleMsg Icon.leftSidebarOn
+                                    |> Button.small
+                                    |> Button.view
+                                )
+                                (Tooltip.rich tooltipContent)
+                                |> Tooltip.withPosition Tooltip.RightOf
+                                |> Tooltip.view
                             ]
-
-                    else
-                        footer [ class "sidebar-footer" ]
-                            [ div [ class "sidebar-toggle" ]
-                                [ Tooltip.tooltip
-                                    (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
-                                        |> Button.small
-                                        |> Button.view
-                                    )
-                                    (Tooltip.rich tooltipContent)
-                                    |> Tooltip.withPosition Tooltip.RightOf
-                                    |> Tooltip.view
-                                ]
+                        , div [ class "sidebar-toggle sidebar-toggle_collapse" ]
+                            [ Tooltip.tooltip
+                                (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
+                                    |> Button.small
+                                    |> Button.view
+                                )
+                                (Tooltip.rich tooltipContent)
+                                |> Tooltip.withPosition Tooltip.RightOf
+                                |> Tooltip.view
                             ]
+                        ]
     in
     aside [ id sidebar_.id, class "sidebar" ]
         (header_ :: List.map viewSidebarContentItem sidebar_.content ++ [ toggle ])
