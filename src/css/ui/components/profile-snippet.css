@@ -21,6 +21,7 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  transition: background 0.2s;
 }
 
 .profile-snippet .profile-snippet_text {
