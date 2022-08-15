@@ -427,6 +427,11 @@
     opacity: 0;
   }
 
+  .page.sidebar-toggled #main-sidebar {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+
   #main-sidebar .sidebar-toggle {
     display: none;
   }

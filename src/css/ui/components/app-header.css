@@ -157,11 +157,13 @@
     padding: 0 1rem;
   }
 
-  #app-header .menu-toggle {
-    display: flex;
-  }
-
   #app-header .banner {
     display: none;
+  }
+}
+
+@media only screen and (--u-viewport_max-md) {
+  #app-header .menu-toggle {
+    display: flex;
   }
 }
