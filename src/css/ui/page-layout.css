@@ -345,8 +345,6 @@
 
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
-    transform: translateX(-100%);
-    opacity: 0;
   }
 
   /* Sidebar toggle */
