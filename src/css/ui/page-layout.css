@@ -420,6 +420,10 @@
       "page-content"
       "page-footer";
   }
+  .page.sidebar-left-content-layout.sidebar-toggled .page-content,
+  .page.sidebar-edge-to-edge-layout.sidebar-toggled .page-content {
+    padding-left: 0;
+  }
 
   #main-sidebar {
     position: absolute;
@@ -434,10 +438,6 @@
 
   #main-sidebar .sidebar-toggle {
     display: none;
-  }
-
-  .page.sidebar-toggled .page-content {
-    padding-left: 0;
   }
 }
 
