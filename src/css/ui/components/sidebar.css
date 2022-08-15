@@ -57,6 +57,7 @@
 
   /* max-width: 100% avoids horizontal scroll when with is set to 100vw as it
    * is on small screens */
+  width: var(--c-width_sidebar, var(--c-width_sidebar_fallback));
   max-width: 100%;
 
   --u-color_text: var(--color-sidebar-fg);
@@ -177,7 +178,7 @@
 }
 
 .sidebar .sidebar-header {
-  width: var(--c-width_sidebar, --c-width_sidebar_fallback);
+  width: var(--c-width_sidebar, var(--c-width_sidebar_fallback));
   padding: 1.5rem 1.5rem 0 1.5rem;
   display: flex;
   flex-direction: column;
@@ -215,7 +216,7 @@
 }
 
 .sidebar .sidebar-footer {
-  width: var(--c-width_sidebar, --c-width_sidebar_fallback);
+  width: var(--c-width_sidebar, var(--c-width_sidebar_fallback));
   margin-top: auto;
   padding: 1.5rem 0;
   display: flex;
