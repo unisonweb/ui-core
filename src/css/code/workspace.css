@@ -14,8 +14,9 @@
 }
 
 #workspace.view-mode_regular #workspace-content {
-  overflow: auto;
   height: var(--workspace-content-height);
+  max-width: 100vw;
+  overflow: hidden;
   /* gutter */
   box-shadow: inset 2rem 0 0 var(--color-workspace-gutter);
 }
