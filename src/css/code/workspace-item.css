@@ -388,3 +388,9 @@
     overflow: auto;
   }
 }
+
+@media only screen and (--u-viewport_max-md) {
+  .workspace-item {
+    max-width: 100vw;
+  }
+}
