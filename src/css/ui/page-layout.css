@@ -343,6 +343,10 @@
     --c-width_sidebar: var(--c-width_sidebar_regular);
   }
 
+  .page.sidebar-toggled .page-content {
+    margin-left: var(--c-width_sidebar_narrow);
+  }
+
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
   }
@@ -391,11 +395,6 @@
     width: initial;
   }
 
-  .page.sidebar-toggled #main-sidebar {
-    transform: translateX(0);
-    opacity: 1;
-  }
-
   .page.sidebar-left-content-layout .page-content .page-heading,
   .page.centered-layout .page-content .page-heading,
   .page.presentation-layout .page-content .page-heading,
@@ -430,6 +429,10 @@
 
   #main-sidebar .sidebar-toggle {
     display: none;
+  }
+
+  .page.sidebar-toggled .page-content {
+    margin-left: 0;
   }
 }
 
