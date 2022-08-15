@@ -53,3 +53,8 @@
     margin: auto;
   }
 }
+@media only screen and (--u-viewport_max-sm) {
+  .code_empty-state {
+    padding: 0 1rem 2rem 1rem;
+  }
+}
