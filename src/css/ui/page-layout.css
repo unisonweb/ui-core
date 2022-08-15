@@ -5,6 +5,8 @@
   --transition-sidebar-collapse-time: 0.3s;
 
   --page-content-height: calc(100vh - var(--app-header-height));
+
+  --c-width_sidebar: var(--c-width_sidebar_regular);
 }
 
 .page.sidebar-left-content-layout,
@@ -287,7 +289,7 @@
 }
 
 @media only screen and (--u-viewport_min-lg) {
-  .page.sidebar-toggled .sidebar {
+  .page.sidebar-toggled {
     --c-width_sidebar: var(--c-width_sidebar_narrow);
   }
 
