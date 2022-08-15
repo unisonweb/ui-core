@@ -215,10 +215,6 @@
   font-weight: bold;
 }
 
-.workspace-item .content .workspace-item-definition-doc {
-  width: var(--workspace-content-width);
-}
-
 .workspace-item
   .content
   .workspace-item-definition-doc
@@ -291,7 +287,7 @@
   flex-direction: row;
   background: var(--color-workspace-item-source-bg);
   border-radius: var(--border-radius-base);
-  width: var(--workspace-content-width);
+  width: 100%;
   overflow: auto;
   scrollbar-width: auto;
   scrollbar-color: var(--color-workspace-item-subtle-fg)
