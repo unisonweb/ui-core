@@ -411,7 +411,7 @@
   }
 }
 
-@media only screen and (--u-viewport_max-sm) {
+@media only screen and (--u-viewport_max-md) {
   .page.sidebar-edge-to-edge-layout,
   .page.sidebar-left-content-layout {
     grid-template-rows: auto;
