@@ -52,6 +52,10 @@
   margin-bottom: 0;
 }
 
+.workspace-item .content .inner-row .workspace-item_inner-content {
+  max-width: var(--c-width_workspace-item_inner-content);
+}
+
 .workspace-item .gutter {
   display: flex;
   justify-content: center;
