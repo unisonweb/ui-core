@@ -82,8 +82,8 @@ type OutMsg
     | ChangePerspectiveToSubNamespace FQN
 
 
-update : Config -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
-update config msg ({ workspaceItems } as model) =
+update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
+update config viewMode msg ({ workspaceItems } as model) =
     case msg of
         NoOp ->
             ( model, Cmd.none, None )
@@ -170,7 +170,11 @@ update config msg ({ workspaceItems } as model) =
                     KeyboardShortcut.fromKeyboardEvent model.keyboardShortcut event
 
                 ( nextModel, cmd, out ) =
-                    handleKeyboardShortcut config.operatingSystem { model | keyboardShortcut = keyboardShortcut } shortcut
+                    handleKeyboardShortcut
+                        config.operatingSystem
+                        viewMode
+                        { model | keyboardShortcut = keyboardShortcut }
+                        shortcut
             in
             ( nextModel, Cmd.batch [ cmd, Cmd.map KeyboardShortcutMsg kCmd ], out )
 
@@ -312,8 +316,13 @@ openDefinitionsFocusToOutMsg openDefs =
         |> Maybe.withDefault Emptied
 
 
-handleKeyboardShortcut : OperatingSystem -> Model -> KeyboardShortcut -> ( Model, Cmd Msg, OutMsg )
-handleKeyboardShortcut os ({ workspaceItems } as model) shortcut =
+handleKeyboardShortcut :
+    OperatingSystem
+    -> ViewMode
+    -> Model
+    -> KeyboardShortcut
+    -> ( Model, Cmd Msg, OutMsg )
+handleKeyboardShortcut os viewMode model shortcut =
     let
         scrollToCmd =
             WorkspaceItems.focus
@@ -349,24 +358,24 @@ handleKeyboardShortcut os ({ workspaceItems } as model) shortcut =
             in
             ( { model | workspaceItems = next }, scrollToCmd next, openDefinitionsFocusToOutMsg next )
     in
-    case shortcut of
-        KeyboardShortcut.Chord Ctrl (K _) ->
+    case ( viewMode, shortcut ) of
+        ( _, KeyboardShortcut.Chord Ctrl (K _) ) ->
             ( model, Cmd.none, ShowFinderRequest Nothing )
 
-        KeyboardShortcut.Chord Meta (K _) ->
+        ( _, KeyboardShortcut.Chord Meta (K _) ) ->
             if os == OperatingSystem.MacOS then
                 ( model, Cmd.none, ShowFinderRequest Nothing )
 
             else
                 ( model, Cmd.none, None )
 
-        Sequence _ ForwardSlash ->
+        ( _, Sequence _ ForwardSlash ) ->
             ( model, Cmd.none, ShowFinderRequest Nothing )
 
-        Chord Alt ArrowDown ->
+        ( ViewMode.Regular, Chord Alt ArrowDown ) ->
             moveDown
 
-        Chord Alt ArrowUp ->
+        ( ViewMode.Regular, Chord Alt ArrowUp ) ->
             moveUp
 
         {- TODO: Support vim keys for moving. The reason this isn't straight
@@ -383,19 +392,19 @@ handleKeyboardShortcut os ({ workspaceItems } as model) shortcut =
               Chord Alt (K _) ->
                   moveUp
         -}
-        Sequence _ ArrowDown ->
+        ( ViewMode.Regular, Sequence _ ArrowDown ) ->
             nextDefinition
 
-        Sequence _ (J _) ->
+        ( ViewMode.Regular, Sequence _ (J _) ) ->
             nextDefinition
 
-        Sequence _ ArrowUp ->
+        ( ViewMode.Regular, Sequence _ ArrowUp ) ->
             prevDefinitions
 
-        Sequence _ (K _) ->
+        ( ViewMode.Regular, Sequence _ (K _) ) ->
             prevDefinitions
 
-        Sequence _ Space ->
+        ( ViewMode.Regular, Sequence _ Space ) ->
             let
                 cycleZoom wItems ref =
                     WorkspaceItems.updateData WorkspaceItem.cycleZoom ref wItems
@@ -408,13 +417,13 @@ handleKeyboardShortcut os ({ workspaceItems } as model) shortcut =
             in
             ( { model | workspaceItems = cycled }, Cmd.none, None )
 
-        Sequence _ (X _) ->
+        ( ViewMode.Regular, Sequence _ (X _) ) ->
             let
                 without =
-                    workspaceItems
+                    model.workspaceItems
                         |> WorkspaceItems.focus
-                        |> Maybe.map (WorkspaceItem.reference >> WorkspaceItems.remove workspaceItems)
-                        |> Maybe.withDefault workspaceItems
+                        |> Maybe.map (WorkspaceItem.reference >> WorkspaceItems.remove model.workspaceItems)
+                        |> Maybe.withDefault model.workspaceItems
             in
             ( { model | workspaceItems = without }
             , Cmd.none
