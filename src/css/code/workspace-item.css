@@ -35,6 +35,8 @@
   box-shadow: inset 2rem 0 0 var(--color-workspace-item-gutter);
   max-width: 100vw;
   overflow-x: hidden;
+
+  --c-width_workspace-item_inner-content: min(40rem, calc(100vw - 4rem));
 }
 
 .workspace-item .inner-row {
@@ -217,20 +219,20 @@
   font-weight: bold;
 }
 
-.workspace-item .content .workspace-item-definition-doc .definition-doc {
+.workspace-item .content .workspace-item_definition-doc .definition-doc {
   max-width: calc(100vw - 4rem);
 }
 
 .workspace-item
   .content
-  .workspace-item-definition-doc
+  .workspace-item_definition-doc
   .definition-doc-columns {
   position: relative;
   display: flex;
   flex-direction: row;
 }
 
-.workspace-item .content .workspace-item-definition-doc .icon-column {
+.workspace-item .content .workspace-item_definition-doc .icon-column {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -240,25 +242,25 @@
   margin-right: 0.25rem;
 }
 
-.workspace-item .content .workspace-item-definition-doc .icon-column .icon.doc {
+.workspace-item .content .workspace-item_definition-doc .icon-column .icon.doc {
   color: var(--color-workspace-item-subtle-fg);
 }
 
-.workspace-item .content .workspace-item-definition-doc .doc-column {
+.workspace-item .content .workspace-item_definition-doc .doc-column {
   max-height: 12rem;
   overflow: hidden;
 }
 
 .workspace-item
   .content
-  .workspace-item-definition-doc.shown-in-full
+  .workspace-item_definition-doc.shown-in-full
   .doc-column {
   overflow: visible;
   max-height: -moz-fit-content;
   max-height: fit-content;
 }
 
-.workspace-item .content .workspace-item-definition-doc .show-full-doc {
+.workspace-item .content .workspace-item_definition-doc .show-full-doc {
   position: relative;
   background: var(--color-workspace-item-bg);
   padding: 0 1.5rem;
@@ -266,7 +268,7 @@
 
 /* overlapping gradient for the content to peek out behind, indicating more is
  * below the fold */
-.workspace-item .content .workspace-item-definition-doc .show-full-doc:before {
+.workspace-item .content .workspace-item_definition-doc .show-full-doc:before {
   position: absolute;
   top: -4.5rem;
   left: 0;
@@ -379,7 +381,7 @@
   }
 
   .workspace-item .content,
-  .workspace-item .content .workspace-item-definition-doc,
+  .workspace-item .content .workspace-item_definition-doc,
   .workspace-item .content .error {
     padding-left: 0;
     margin-left: 0;

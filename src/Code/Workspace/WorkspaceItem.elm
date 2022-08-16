@@ -443,7 +443,7 @@ viewDoc ref docVisibility docFoldToggles doc =
 
         classes =
             classList
-                [ ( "workspace-item-definition-doc", True )
+                [ ( "workspace-item_inner-content workspace-item_definition-doc", True )
                 , ( "shown-in-full", shownInFull )
                 ]
     in
@@ -479,7 +479,7 @@ viewSource zoom onSourceToggleClick sourceConfig item =
             UI.codeBlock [] (div [] lines)
 
         viewToggableSource foldToggle renderedSource =
-            div [ class "definition-source" ]
+            div [ class "workspace-item_inner-content definition-source" ]
                 [ FoldToggle.view foldToggle, renderedSource ]
 
         isBuiltin_ =
