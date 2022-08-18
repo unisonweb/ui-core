@@ -464,4 +464,12 @@
   .page.sidebar-toggled .page-content {
     display: none;
   }
+
+  .page .page-footer {
+    font-size: var(--font-size-extra-small);
+  }
+
+  .page .page-footer .page-footer_items {
+    gap: 0.25rem;
+  }
 }
