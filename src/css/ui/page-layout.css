@@ -467,6 +467,8 @@
 
   .page .page-footer {
     font-size: var(--font-size-extra-small);
+    height: auto;
+    padding-bottom: 1.5rem;
   }
 
   .page .page-footer .page-footer_items {
