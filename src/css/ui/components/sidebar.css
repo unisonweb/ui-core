@@ -22,14 +22,6 @@
   --color-sidebar-subtle-bg: var(--color-transparent);
   --color-sidebar-focus-fg: var(--color-gray-lighten-60);
   --color-sidebar-focus-bg: var(--color-gray-darken-10);
-  --color-sidebar-keyboard-shortcut-key-fg: var(--color-gray-lighten-30);
-  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-base);
-  --color-sidebar-keyboard-shortcut-then: var(--color-gray-lighten-20);
-  --color-sidebar-keyboard-shortcut-separator: var(--color-gray-base);
-  --color-sidebar-keyboard-shortcut-hover-key-fg: var(--color-gray-lighten-50);
-  --color-sidebar-keyboard-shortcut-hover-key-bg: var(--color-gray-base);
-  --color-sidebar-keyboard-shortcut-hover-then: var(--color-gray-lighten-20);
-  --color-sidebar-keyboard-shortcut-hover-separator: var(--color-gray-base);
   --color-sidebar-button-default-text: var(--color-gray-lighten-30);
   --color-sidebar-button-default-icon: var(--color-gray-lighten-20);
   --color-sidebar-button-default-bg: var(--color-gray-base);
@@ -62,6 +54,7 @@
 
   --u-color_text: var(--color-sidebar-fg);
   --u-color_text_subdued: var(--color-sidebar-subtle-fg);
+  --u-color_element_subdued_hover: var(--color-gray-darken-10);
 
   --color-tooltip-text: var(--color-sidebar-tooltip-fg);
   --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
@@ -230,15 +223,4 @@
   align-items: center;
   justify-content: space-between;
   width: 10.5rem;
-}
-
-/* @todo: should come from tooltip */
-/* @color-todo @inverse */
-.sidebar .sidebar-toggle_tooltip .keyboard-shortcuts {
-  --color-keyboard-shortcut-key-text: var(
-    --color-sidebar-keyboard-shortcut-key-fg
-  );
-  --color-keyboard-shortcut-key-bg: var(
-    --color-sidebar-keyboard-shortcut-key-bg
-  );
 }
