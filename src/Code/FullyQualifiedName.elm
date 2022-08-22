@@ -250,17 +250,17 @@ namespaceOf suffixName fqn =
 
 viewSegment : String -> Html msg
 viewSegment seg =
-    span [ class "fully-qualified-name-segment" ] [ text seg ]
+    span [ class "fully-qualified-name_segment" ] [ text seg ]
 
 
 viewClickableSegment : Click msg -> String -> Html msg
 viewClickableSegment click seg =
-    Click.view [ class "fully-qualified-name-segment" ] [ text seg ] click
+    Click.view [ class "fully-qualified-name_segment clickable" ] [ text seg ] click
 
 
 viewSeparator : Html msg
 viewSeparator =
-    span [ class "fully-qualified-name-separator" ] [ text "." ]
+    span [ class "fully-qualified-name_separator" ] [ text "." ]
 
 
 {-| viewClickable
