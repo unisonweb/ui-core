@@ -26,6 +26,7 @@ module Code.FullyQualifiedName exposing
     , unqualifiedName
     , urlParser
     , view
+    , viewClickable
     )
 
 import Html exposing (Html, span, text)
@@ -34,6 +35,7 @@ import Json.Decode as Decode
 import List.Extra as ListE
 import List.Nonempty as NEL
 import String.Extra as StringE
+import UI.Click as Click exposing (Click)
 import Url
 import Url.Parser
 
@@ -242,20 +244,62 @@ namespaceOf suffixName fqn =
         Nothing
 
 
-view : FQN -> Html msg
-view fqn =
-    let
-        viewSegment seg =
-            span [ class "fully-qualified-name-segment" ] [ text seg ]
 
-        viewSep =
-            span [ class "fully-qualified-name-separator" ] [ text "." ]
+-- VIEW
+
+
+viewSegment : String -> Html msg
+viewSegment seg =
+    span [ class "fully-qualified-name-segment" ] [ text seg ]
+
+
+viewClickableSegment : Click msg -> String -> Html msg
+viewClickableSegment click seg =
+    Click.view [ class "fully-qualified-name-segment" ] [ text seg ] click
+
+
+viewSeparator : Html msg
+viewSeparator =
+    span [ class "fully-qualified-name-separator" ] [ text "." ]
+
+
+{-| viewClickable
+Each FQN segment is clickable.
+The `toClick`argument is called with the current segment and all preceeding segments.
+
+Given `FQN "foo.bar.baz"` and "bar" is clicked, the `toClick` is called with `FQN "foo.bar"`.
+If "baz" is clicked, `toClick` is called with `FQN "foo.bar.baz"`.
+
+-}
+viewClickable : (FQN -> Click msg) -> FQN -> Html msg
+viewClickable toClick fqn =
+    let
+        clickable seg ( prevSegments, clickableSegments ) =
+            let
+                next =
+                    prevSegments ++ [ seg ]
+            in
+            ( next
+            , clickableSegments ++ [ ( toClick (fromList next), seg ) ]
+            )
     in
     fqn
         |> segments
         |> NEL.toList
+        |> List.foldl clickable ( [], [] )
+        |> Tuple.second
+        |> List.map (\( c, s ) -> viewClickableSegment c s)
+        |> List.intersperse viewSeparator
+        |> span [ class "fully-qualified-name" ]
+
+
+view : FQN -> Html msg
+view fqn =
+    fqn
+        |> segments
+        |> NEL.toList
         |> List.map viewSegment
-        |> List.intersperse viewSep
+        |> List.intersperse viewSeparator
         |> span [ class "fully-qualified-name" ]
 
 
