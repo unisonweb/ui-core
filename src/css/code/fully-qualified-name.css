@@ -12,8 +12,7 @@
 }
 
 .fully-qualified-name .fully-qualified-name_segment.clickable:hover {
-  background: var(--u-color_element_subdued_hovered);
-  border-radius: var(--border-radius-base);
+  color: var(--u-color_interactive_hovered);
 }
 
 .fully-qualified-name .fully-qualified-name_separator {

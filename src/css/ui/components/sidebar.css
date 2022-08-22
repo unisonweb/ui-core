@@ -54,7 +54,8 @@
 
   --u-color_text: var(--color-sidebar-fg);
   --u-color_text_subdued: var(--color-sidebar-subtle-fg);
-  --u-color_element_subdued_hovered: var(--color-gray-darken-10);
+  --u-color_interactive: var(--color-blue-2);
+  --u-color_interactive_hovered: var(--color-blue-3);
 
   --color-tooltip-text: var(--color-sidebar-tooltip-fg);
   --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
