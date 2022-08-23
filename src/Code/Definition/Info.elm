@@ -65,5 +65,6 @@ namespaceAndOtherNames requestedRef suffixName fqns =
             fqns
                 |> NEL.toList
                 |> ListE.filterNot (FQN.equals fqnWithin)
+                |> ListE.uniqueBy FQN.toString
     in
     ( FQN.namespace fqnWithin, fqnsWithout )
