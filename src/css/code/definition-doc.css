@@ -204,10 +204,6 @@
   margin: 0;
 }
 
-.definition-doc .tooltip-bubble > section:only-child > :is(h1, h2, h3, h4, h5) {
-  margin-top: 0;
-}
-
 .definition-doc aside {
   position: absolute;
   right: -16rem;
@@ -251,13 +247,6 @@
   border-radius: var(--border-radius-base);
   display: flex;
   flex-direction: row;
-}
-
-.definition-doc
-  .callout
-  .callout-content
-  :is(h1:first-child, h2:first-child, h3:first-child, h4:first-child, h5:first-child, h6:first-child) {
-  margin-top: 0;
 }
 
 .definition-doc .callout .callout-content section .folded:last-child {
@@ -380,12 +369,10 @@
 
 .definition-doc h1 {
   font-size: 1.25rem;
-  margin-top: 1.5rem;
   margin-bottom: 0.75rem;
 }
 
 .definition-doc h1:first-child {
-  margin-top: 0;
   line-height: 1.1;
 }
 
@@ -395,31 +382,26 @@
 
 .definition-doc h2 {
   font-size: 1rem;
-  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 .definition-doc h3 {
   font-size: 0.875rem;
-  margin-top: 1.25rem;
   margin-bottom: 0.5rem;
 }
 
 .definition-doc h4 {
   font-size: 0.875rem;
-  margin-top: 1.25rem;
   margin-bottom: 0.5rem;
 }
 
 .definition-doc h5 {
   font-size: 0.875rem;
-  margin-top: 1.25rem;
   margin-bottom: 0.5rem;
 }
 
 .definition-doc h6 {
   font-size: 0.875rem;
-  margin-top: 1.25rem;
   margin-bottom: 0.5rem;
 }
 
