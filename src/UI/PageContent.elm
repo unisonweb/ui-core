@@ -2,6 +2,8 @@ module UI.PageContent exposing
     ( PageContent
     , PageHeading
     , empty
+    , map
+    , mapPageHeading
     , oneColumn
     , threeColumns
     , twoColumns
@@ -69,6 +71,26 @@ threeColumns ( one, two, three ) =
 withPageHeading : PageHeading msg -> PageContent msg -> PageContent msg
 withPageHeading pageHeading (PageContent cfg) =
     PageContent { cfg | heading = Just pageHeading }
+
+
+
+-- MAP
+
+
+map : (a -> msg) -> PageContent a -> PageContent msg
+map toMsg (PageContent pageContentA) =
+    PageContent
+        { heading = Maybe.map (mapPageHeading toMsg) pageContentA.heading
+        , content = List.map (List.map (Html.map toMsg)) pageContentA.content
+        }
+
+
+mapPageHeading : (a -> msg) -> PageHeading a -> PageHeading msg
+mapPageHeading toMsg pageHeadingA =
+    { icon = Maybe.map (Icon.map toMsg) pageHeadingA.icon
+    , heading = pageHeadingA.heading
+    , description = pageHeadingA.description
+    }
 
 
 
