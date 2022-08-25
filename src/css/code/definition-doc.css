@@ -428,6 +428,8 @@
 .definition-doc .column {
   margin: 0;
   list-style-type: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .definition-doc .group {
