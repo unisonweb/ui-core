@@ -257,12 +257,12 @@
   margin-top: 1rem;
 }
 
-.definition-doc .doc_callout.callout-with-icon .doc_callout {
+.definition-doc .doc_callout.doc_callout-with-icon .doc_callout-content {
   padding-top: 1px;
   width: 100%;
 }
 
-.definition-doc .doc_callout .callout-icon {
+.definition-doc .doc_callout .doc_callout-icon {
   margin-right: 0.5rem;
   font-size: 1rem;
 }
