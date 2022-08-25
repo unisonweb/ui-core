@@ -49,11 +49,11 @@
   margin-right: 0.5ch;
 }
 
-.definition-doc .group .join > :last-child {
+.definition-doc .group .doc_join > :last-child {
   margin-left: -0.5ch;
 }
 
-.definition-doc .group .join {
+.definition-doc .doc_group .doc_join {
   white-space: nowrap;
 }
 
@@ -122,8 +122,8 @@
 }
 
 .definition-doc
-  .group
-  .join
+  .doc_group
+  .doc_join
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
   margin-right: 0;
 }
@@ -136,8 +136,8 @@
 }
 
 .definition-doc
-  .group
-  .join
+  .doc_group
+  .doc_join
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline)
   :is(.inline-code, code) {
   margin-right: 0;
@@ -240,7 +240,7 @@
   white-space: wrap;
 }
 
-.definition-doc .callout {
+.definition-doc .doc_callout {
   background: var(--color-doc-callout-bg);
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
@@ -249,32 +249,32 @@
   flex-direction: row;
 }
 
-.definition-doc .callout .callout-content section .folded:last-child {
+.definition-doc .doc_callout .doc_callout-content section .folded:last-child {
   margin-bottom: 0.25rem;
 }
 
-.definition-doc .folded-content .callout:nth-child(2) {
+.definition-doc .folded-content .doc_callout:nth-child(2) {
   margin-top: 1rem;
 }
 
-.definition-doc .callout.callout-with-icon .callout-content {
+.definition-doc .doc_callout.callout-with-icon .doc_callout {
   padding-top: 1px;
   width: 100%;
 }
 
-.definition-doc .callout .callout-icon {
+.definition-doc .doc_callout .callout-icon {
   margin-right: 0.5rem;
   font-size: 1rem;
 }
 
-.definition-doc .callout .source.code,
-.definition-doc .callout .sources .source,
-.definition-doc .callout .folded-sources .source,
-.definition-doc .callout .source.example,
-.definition-doc .callout .source.eval,
-.definition-doc .callout .source.signatures .signature,
+.definition-doc .doc_callout .source.code,
+.definition-doc .doc_callout .sources .source,
+.definition-doc .doc_callout .folded-sources .source,
+.definition-doc .doc_callout .source.example,
+.definition-doc .doc_callout .source.eval,
+.definition-doc .doc_callout .source.signatures .signature,
 .definition-doc
-  .callout
+  .doc_callout
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
   background: var(--color-doc-callout-source-bg);
 }
@@ -425,14 +425,14 @@
 .definition-doc .embed-inline {
 }
 
-.definition-doc .column {
+.definition-doc .doc_column {
   margin: 0;
   list-style-type: none;
   display: flex;
   flex-direction: column;
 }
 
-.definition-doc .group {
+.definition-doc .doc_group {
 }
 
 .definition-doc video {
@@ -470,21 +470,21 @@
     width: 100%;
   }
 
-  .definition-doc .callout .source.code,
-  .definition-doc .callout .sources .source,
-  .definition-doc .callout .folded-sources .source,
-  .definition-doc .callout .source.example,
-  .definition-doc .callout .source.eval,
-  .definition-doc .callout .source.signatures .signature {
+  .definition-doc .doc_callout .source.code,
+  .definition-doc .doc_callout .sources .source,
+  .definition-doc .doc_callout .folded-sources .source,
+  .definition-doc .doc_callout .source.example,
+  .definition-doc .doc_callout .source.eval,
+  .definition-doc .doc_callout .source.signatures .signature {
     width: 100%;
   }
 
-  .definition-doc .callout .folded .source.code,
-  .definition-doc .callout .folded .sources .source,
-  .definition-doc .callout .folded .folded-sources .source,
-  .definition-doc .callout .folded .source.example,
-  .definition-doc .callout .folded .source.eval,
-  .definition-doc .callout .folded .source.signatures .signature {
+  .definition-doc .doc_callout .folded .source.code,
+  .definition-doc .doc_callout .folded .sources .source,
+  .definition-doc .doc_callout .folded .folded-sources .source,
+  .definition-doc .doc_callout .folded .source.example,
+  .definition-doc .doc_callout .folded .source.eval,
+  .definition-doc .doc_callout .folded .source.signatures .signature {
     width: 100%;
   }
 }

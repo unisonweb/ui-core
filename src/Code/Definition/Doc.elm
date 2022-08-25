@@ -450,7 +450,7 @@ view refToMsg toggleFoldMsg docFoldToggles document =
                         |> Tooltip.view
 
                 Aside d ->
-                    span [ class "aside-anchor" ]
+                    span [ class "doc_aside-anchor" ]
                         [ aside [] [ viewAtCurrentSectionLevel d ]
                         ]
 
@@ -459,14 +459,14 @@ view refToMsg toggleFoldMsg docFoldToggles document =
                         ( cls, ico ) =
                             case icon of
                                 Just emoji ->
-                                    ( class "callout callout-with-icon", div [ class "callout-icon" ] [ text (toString "" emoji) ] )
+                                    ( class "doc_callout doc_callout-with-icon", div [ class "doc_callout-icon" ] [ text (toString "" emoji) ] )
 
                                 Nothing ->
-                                    ( class "callout", UI.nothing )
+                                    ( class "doc_callout", UI.nothing )
                     in
                     div [ cls ]
                         [ ico
-                        , div [ class "callout-content" ]
+                        , div [ class "doc_callout-content" ]
                             [ viewAtCurrentSectionLevel content ]
                         ]
 
@@ -687,20 +687,20 @@ view refToMsg toggleFoldMsg docFoldToggles document =
                             UI.nothing
 
                 Join docs ->
-                    span [ class "join" ] (List.map viewAtCurrentSectionLevel (mergeWords " " docs))
+                    span [ class "doc_join" ] (List.map viewAtCurrentSectionLevel (mergeWords " " docs))
 
                 UntitledSection docs ->
                     section [] (List.map (viewSectionContent viewAtCurrentSectionLevel) docs)
 
                 Column docs ->
-                    ul [ class "column" ]
+                    ul [ class "doc_column" ]
                         (List.map
                             (\c -> li [] [ viewAtCurrentSectionLevel c ])
                             (mergeWords " " docs)
                         )
 
                 Group content ->
-                    span [ class "group" ] [ viewAtCurrentSectionLevel content ]
+                    span [ class "doc_group" ] [ viewAtCurrentSectionLevel content ]
     in
     article [ class "definition-doc" ] [ view_ 1 document ]
 
