@@ -46,6 +46,58 @@ type PageLayout msg
 
 
 
+-- MAP
+
+
+map : (a -> msg) -> PageLayout a -> PageLayout msg
+map toMsg pageLayout =
+    case pageLayout of
+        HeroLayout layout ->
+            HeroLayout
+                { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                , hero = mapPageHero toMsg layout.hero
+                }
+
+        SidebarEdgeToEdgeLayout layout ->
+            SidebarEdgeToEdgeLayout
+                { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                , sidebar = Sidebar.map toMsg layout.sidebar
+                , sidebarToggled = layout.sidebarToggled
+                , operatingSystem = layout.operatingSystem
+                }
+
+        SidebarLeftContentLayout layout ->
+            SidebarLeftContentLayout
+                { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                , sidebar = Sidebar.map toMsg layout.sidebar
+                , sidebarToggled = layout.sidebarToggled
+                , operatingSystem = layout.operatingSystem
+                }
+
+        CenteredLayout layout ->
+            CenteredLayout
+                { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                }
+
+        PresentationLayout content ->
+            PresentationLayout (PageContent.map toMsg content)
+
+
+mapPageFooter : (a -> msg) -> PageFooter a -> PageFooter msg
+mapPageFooter toMsg (PageFooter items) =
+    PageFooter (List.map (Html.map toMsg) items)
+
+
+mapPageHero : (a -> msg) -> PageHero a -> PageHero msg
+mapPageHero toMsg (PageHero hero) =
+    PageHero (Html.map toMsg hero)
+
+
+
 -- VIEW
 
 

@@ -74,6 +74,42 @@ empty id =
 -- MAP
 
 
+map : (a -> msg) -> Sidebar a -> Sidebar msg
+map toMsg sidebarA =
+    { id = sidebarA.id
+    , header = Maybe.map (mapHeader toMsg) sidebarA.header
+    , content = List.map (mapContentItem toMsg) sidebarA.content
+    , toggle = mapToggle toMsg sidebarA.toggle
+    }
+
+
+mapHeader : (a -> msg) -> SidebarHeader a -> SidebarHeader msg
+mapHeader toMsg (SidebarHeader items) =
+    SidebarHeader (List.map (Html.map toMsg) items)
+
+
+mapContentItem : (a -> msg) -> SidebarContentItem a -> SidebarContentItem msg
+mapContentItem toMsg contentItemA =
+    case contentItemA of
+        MenuItem item ->
+            MenuItem (mapMenuItem toMsg item)
+
+        Divider ->
+            Divider
+
+        Section sec ->
+            Section (mapSection toMsg sec)
+
+
+mapMenuItem : (a -> msg) -> SidebarMenuItem a -> SidebarMenuItem msg
+mapMenuItem toMsg menuItemA =
+    { click = Click.map toMsg menuItemA.click
+    , icon = Icon.map toMsg menuItemA.icon
+    , label = menuItemA.label
+    , count = menuItemA.count
+    }
+
+
 mapSection : (a -> msg) -> SidebarSection a -> SidebarSection msg
 mapSection toMsg sectionA =
     { title = sectionA.title
@@ -81,6 +117,16 @@ mapSection toMsg sectionA =
     , content = List.map (Html.map toMsg) sectionA.content
     , scrollable = sectionA.scrollable
     }
+
+
+mapToggle : (a -> msg) -> Toggle a -> Toggle msg
+mapToggle toMsg toggleA =
+    case toggleA of
+        NotToggleable ->
+            NotToggleable
+
+        Toggle cfg ->
+            Toggle { isToggled = cfg.isToggled, toggleMsg = toMsg cfg.toggleMsg }
 
 
 
