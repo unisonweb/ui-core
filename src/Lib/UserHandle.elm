@@ -3,6 +3,7 @@ module Lib.UserHandle exposing
     , decode
     , decodeUnprefixed
     , equals
+    , fromSlug
     , fromString
     , fromUnprefixedString
     , isValidHandle
@@ -11,17 +12,25 @@ module Lib.UserHandle exposing
     )
 
 import Json.Decode as Decode exposing (string)
-import Regex
+import Lib.Slug as Slug exposing (Slug)
 
 
 type UserHandle
-    = UserHandle String
+    = UserHandle Slug
+
+
+fromSlug : Slug -> UserHandle
+fromSlug slug =
+    UserHandle slug
 
 
 fromString : String -> Maybe UserHandle
 fromString raw =
     if String.startsWith "@" raw then
-        fromString_ raw
+        raw
+            |> String.filter (\c -> c /= '@')
+            |> Slug.fromString
+            |> Maybe.map UserHandle
 
     else
         Nothing
@@ -33,61 +42,35 @@ fromUnprefixedString raw =
         Nothing
 
     else
-        fromString_ raw
+        raw |> Slug.fromString |> Maybe.map UserHandle
 
 
-fromString_ : String -> Maybe UserHandle
-fromString_ raw =
-    let
-        validate s =
-            if isValidHandle s then
-                Just s
-
-            else
-                Nothing
-    in
-    raw
-        |> String.filter (\c -> c /= '@')
-        |> validate
-        |> Maybe.map UserHandle
-
-
-{-| Modelled after the GitHub user handle requirements, since we're importing their handles.
-
-Validates an un-prefixed string. So `@unison` would not be valid. We add and
-remove `@` as a toString/fromString step instead
-
-Requirements (via <https://github.com/shinnn/github-username-regex>):
-
-  - May only contain alphanumeric characters or hyphens.
-  - Can't have multiple consecutive hyphens.
-  - Can't begin or end with a hyphen.
-  - Maximum is 39 characters.
-
--}
 isValidHandle : String -> Bool
-isValidHandle raw =
-    let
-        re =
-            Maybe.withDefault Regex.never <|
-                Regex.fromString "^[a-z\\d](?:[a-z\\d]|-(?=[a-z\\d])){1,39}$"
-    in
-    Regex.contains re raw
+isValidHandle unprefixed =
+    if String.contains "@" unprefixed then
+        False
+
+    else
+        Slug.isValidSlug unprefixed
 
 
 toString : UserHandle -> String
-toString (UserHandle raw) =
-    "@" ++ raw
+toString (UserHandle slug) =
+    "@" ++ Slug.toString slug
 
 
 toUnprefixedString : UserHandle -> String
-toUnprefixedString (UserHandle raw) =
-    raw
+toUnprefixedString (UserHandle slug) =
+    Slug.toString slug
 
 
 equals : UserHandle -> UserHandle -> Bool
 equals (UserHandle a) (UserHandle b) =
     a == b
+
+
+
+-- DECODE
 
 
 decode : Decode.Decoder UserHandle
