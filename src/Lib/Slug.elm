@@ -1,4 +1,12 @@
-module Lib.Slug exposing (Slug, decode, equals, fromString, isValidSlug, toString)
+module Lib.Slug exposing
+    ( Slug
+    , decode
+    , equals
+    , fromString
+    , isValidSlug
+    , toString
+    , unsafeFromString
+    )
 
 import Json.Decode as Decode exposing (string)
 import Regex
@@ -21,6 +29,13 @@ fromString raw =
     raw
         |> validate
         |> Maybe.map Slug
+
+
+{-| Don't use, meant for ease of testing
+-}
+unsafeFromString : String -> Slug
+unsafeFromString raw =
+    Slug raw
 
 
 toString : Slug -> String

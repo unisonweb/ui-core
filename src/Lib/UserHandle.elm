@@ -9,6 +9,7 @@ module Lib.UserHandle exposing
     , isValidHandle
     , toString
     , toUnprefixedString
+    , unsafeFromString
     )
 
 import Json.Decode as Decode exposing (string)
@@ -34,6 +35,13 @@ fromString raw =
 
     else
         Nothing
+
+
+{-| Don't use, meant for ease of testing
+-}
+unsafeFromString : String -> UserHandle
+unsafeFromString raw =
+    raw |> Slug.unsafeFromString |> UserHandle
 
 
 fromUnprefixedString : String -> Maybe UserHandle

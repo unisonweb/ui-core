@@ -1,20 +1,20 @@
 module Code.ProjectTests exposing (..)
 
-import Code.FullyQualifiedName as FQN
-import Code.Hash as Hash
 import Code.Project as Project
 import Expect
+import Lib.Slug as Slug
+import Lib.UserHandle as UserHandle
 import Test exposing (..)
 
 
-slug : Test
-slug =
-    describe "Project.slug"
-        [ test "Returns the slug of a project by owner and name" <|
+shorthand : Test
+shorthand =
+    describe "Project.shorthand"
+        [ test "Returns the shorthand of a project by owner and name" <|
             \_ ->
                 Expect.equal
-                    "unison.http"
-                    (Project.slug project |> FQN.toString)
+                    "@unison/http"
+                    (Project.shorthand project)
         ]
 
 
@@ -24,7 +24,7 @@ slug =
 
 project : Project.ProjectListing
 project =
-    { owner = Project.Owner "unison"
-    , name = FQN.fromString "http"
-    , hash = Hash.unsafeFromString "##unison.http"
+    { handle = UserHandle.unsafeFromString "unison"
+    , slug = Slug.unsafeFromString "http"
+    , name = "http"
     }
