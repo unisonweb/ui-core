@@ -5,6 +5,7 @@
   height: 2rem;
   padding: 0 0.6rem 0 0.25rem;
   border-radius: var(--border-radius-base);
+  color: var(--u-color_text);
 }
 
 .project-listing:hover {
