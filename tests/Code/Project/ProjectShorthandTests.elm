@@ -18,6 +18,35 @@ toString =
         ]
 
 
+fromString : Test
+fromString =
+    describe "ProjectShorthand.fromString"
+        [ test "creates a ProjectShorthand from valid handle string and a valid slug string" <|
+            \_ ->
+                let
+                    result =
+                        ProjectShorthand.fromString "@unison" "http"
+                            |> Maybe.map ProjectShorthand.toString
+                            |> Maybe.withDefault "FAIL"
+                in
+                Expect.equal "@unison/http" result
+        ]
+
+
+unsafeFromString : Test
+unsafeFromString =
+    describe "ProjectShorthand.unsafeFromString"
+        [ test "creates a ProjectShorthand from valid unprefixed handle string and a valid slug string" <|
+            \_ ->
+                let
+                    result =
+                        ProjectShorthand.unsafeFromString "unison" "http"
+                            |> ProjectShorthand.toString
+                in
+                Expect.equal "@unison/http" result
+        ]
+
+
 handle : Test
 handle =
     describe "ProjectShorthand.handle"
