@@ -1,0 +1,11 @@
+.project-shorthand {
+  font-weight: bold;
+  color: var(--u-color_text);
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.project-shorthand .project-shorthand_separator {
+  color: var(--u-color_text_subdued);
+}
