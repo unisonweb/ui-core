@@ -1,4 +1,14 @@
-module Code.Project.ProjectShorthand exposing (..)
+module Code.Project.ProjectShorthand exposing
+    ( ProjectShorthand
+    , equals
+    , fromString
+    , handle
+    , projectShorthand
+    , slug
+    , toString
+    , unsafeFromString
+    , view
+    )
 
 import Html exposing (Html, label, span, text)
 import Html.Attributes exposing (class)
@@ -8,6 +18,22 @@ import Lib.UserHandle as UserHandle exposing (UserHandle)
 
 type ProjectShorthand
     = ProjectShorthand { handle : UserHandle, slug : Slug }
+
+
+fromString : String -> String -> Maybe ProjectShorthand
+fromString rawHandle rawSlug =
+    Maybe.map2 projectShorthand
+        (UserHandle.fromString rawHandle)
+        (Slug.fromString rawSlug)
+
+
+{-| Don't use! It's meant for tests
+-}
+unsafeFromString : String -> String -> ProjectShorthand
+unsafeFromString rawHandle rawSlug =
+    projectShorthand
+        (UserHandle.unsafeFromString rawHandle)
+        (Slug.unsafeFromString rawSlug)
 
 
 projectShorthand : UserHandle -> Slug -> ProjectShorthand
