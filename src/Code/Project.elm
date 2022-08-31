@@ -2,6 +2,7 @@ module Code.Project exposing (..)
 
 import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
+import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
 import Html exposing (Html, text)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (field, string)
@@ -11,21 +12,31 @@ import UI.Click as Click
 
 
 type alias Project a =
-    { a | slug : Slug, handle : UserHandle, name : String }
+    { a | shorthand : ProjectShorthand, name : String }
 
 
 type alias ProjectListing =
     Project {}
 
 
-shorthand : Project a -> String
+shorthand : Project a -> ProjectShorthand
 shorthand project =
-    UserHandle.toString project.handle ++ "/" ++ Slug.toString project.slug
+    project.shorthand
+
+
+handle : Project a -> UserHandle
+handle p =
+    ProjectShorthand.handle p.shorthand
+
+
+slug : Project a -> Slug
+slug p =
+    ProjectShorthand.slug p.shorthand
 
 
 equals : Project a -> Project b -> Bool
 equals a b =
-    shorthand a == shorthand b
+    ProjectShorthand.equals a.shorthand b.shorthand
 
 
 
@@ -36,11 +47,11 @@ viewProjectListing : Click.Click msg -> Project a -> Html msg
 viewProjectListing click project =
     let
         hash =
-            Hash.unsafeFromString (shorthand project)
+            Hash.unsafeFromString (ProjectShorthand.toString project.shorthand)
     in
     Click.view [ class "project-listing" ]
         [ Hashvatar.view hash
-        , text (shorthand project)
+        , ProjectShorthand.view project.shorthand
         ]
         click
 
@@ -52,8 +63,10 @@ viewProjectListing click project =
 decodeListing : Decode.Decoder ProjectListing
 decodeListing =
     let
-        mk handle slug name =
-            { handle = handle, slug = slug, name = name }
+        mk handle_ slug_ name =
+            { shorthand = ProjectShorthand.projectShorthand handle_ slug_
+            , name = name
+            }
     in
     Decode.map3
         mk
