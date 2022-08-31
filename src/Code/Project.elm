@@ -3,7 +3,7 @@ module Code.Project exposing (..)
 import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
-import Html exposing (Html, text)
+import Html exposing (Html)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (field, string)
 import Lib.Slug as Slug exposing (Slug)
