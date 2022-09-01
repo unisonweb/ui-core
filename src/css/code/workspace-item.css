@@ -36,7 +36,10 @@
   max-width: 100vw;
   overflow-x: hidden;
 
-  --c-width_workspace-item_inner-content: min(40rem, calc(100vw - 4rem));
+  --c-width_workspace-item_inner-content: min(
+    var(--readable-column-width),
+    calc(100vw - 4rem)
+  );
 }
 
 .workspace-item .inner-row {

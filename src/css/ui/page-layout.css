@@ -168,9 +168,11 @@
   padding: 3rem 0 1.5rem 2.25rem;
   margin-left: 0;
 }
+
 .page.sidebar-left-content-layout .page-content .columns {
-  width: 40rem;
+  width: var(--readable-column-width);
 }
+
 .page.sidebar-left-content-layout .page-content .page-heading {
   margin-left: -0.75rem;
 }
