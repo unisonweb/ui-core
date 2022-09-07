@@ -6,6 +6,10 @@
   gap: 0.25rem;
 }
 
+.project-shorthand .project-shorthand_handle {
+  color: var(--u-color_text_subdued);
+}
+
 .project-shorthand .project-shorthand_separator {
   color: var(--u-color_text_very-subdued);
 }
