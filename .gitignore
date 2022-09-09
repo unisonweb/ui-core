@@ -2,6 +2,6 @@ elm-stuff
 .DS_Store
 public/bundle.js
 node_modules
-dist
+build
 .unisonHistory
 .unison

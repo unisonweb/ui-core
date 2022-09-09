@@ -1,0 +1,93 @@
+{
+  "targets": {
+    "UI": {
+      "inputs": [
+        "src/UI.elm",
+        "src/UI/ActionMenu.elm",
+        "src/UI/AppHeader.elm",
+        "src/UI/Avatar.elm",
+        "src/UI/Banner.elm",
+        "src/UI/Button.elm",
+        "src/UI/Card.elm",
+        "src/UI/Click.elm",
+        "src/UI/Color.elm",
+        "src/UI/CopyField.elm",
+        "src/UI/ErrorCard.elm",
+        "src/UI/FoldToggle.elm",
+        "src/UI/Icon.elm",
+        "src/UI/KeyboardShortcut.elm",
+        "src/UI/KeyboardShortcut/Key.elm",
+        "src/UI/KeyboardShortcut/KeyboardEvent.elm",
+        "src/UI/Modal.elm",
+        "src/UI/Navigation.elm",
+        "src/UI/Nudge.elm",
+        "src/UI/PageContent.elm",
+        "src/UI/PageLayout.elm",
+        "src/UI/PlaceholderShape.elm",
+        "src/UI/ProfileSnippet.elm",
+        "src/UI/Sidebar.elm",
+        "src/UI/StatusBanner.elm",
+        "src/UI/StatusIndicator.elm",
+        "src/UI/StatusMessageCard.elm",
+        "src/UI/Steps.elm",
+        "src/UI/Toolbar.elm",
+        "src/UI/Tooltip.elm",
+        "src/UI/ViewMode.elm"
+      ],
+      "output": "build/ui.js"
+    },
+    "Code": {
+      "inputs": [
+        "src/Code/CodebaseApi.elm",
+        "src/Code/Hash.elm",
+        "src/Code/CodebaseTree.elm",
+        "src/Code/CodebaseTree/NamespaceListing.elm",
+        "src/Code/Config.elm",
+        "src/Code/Finder.elm",
+        "src/Code/Finder/FinderMatch.elm",
+        "src/Code/Finder/SearchOptions.elm",
+        "src/Code/Definition/AbilityConstructor.elm",
+        "src/Code/Definition/Info.elm",
+        "src/Code/Definition/Category.elm",
+        "src/Code/Definition/DataConstructor.elm",
+        "src/Code/Definition/Doc.elm",
+        "src/Code/Definition/Readme.elm",
+        "src/Code/Definition/Reference.elm",
+        "src/Code/Definition/Source.elm",
+        "src/Code/Definition/Term.elm",
+        "src/Code/Definition/Type.elm",
+        "src/Code/FullyQualifiedName.elm",
+        "src/Code/FullyQualifiedNameSet.elm",
+        "src/Code/HashQualified.elm",
+        "src/Code/Hashvatar.elm",
+        "src/Code/Hashvatar/HexGrid.elm",
+        "src/Code/Namespace.elm",
+        "src/Code/Namespace/NamespaceRef.elm",
+        "src/Code/Perspective.elm",
+        "src/Code/Project.elm",
+        "src/Code/Project/ProjectShorthand.elm",
+        "src/Code/Syntax.elm",
+        "src/Code/UrlParsers.elm",
+        "src/Code/Workspace.elm",
+        "src/Code/Workspace/WorkspaceItem.elm",
+        "src/Code/Workspace/WorkspaceItems.elm",
+        "src/Code/Workspace/Zoom.elm",
+        "src/Code/EmptyState.elm"
+      ],
+      "output": "build/code.js"
+    },
+    "Lib": {
+      "inputs": [
+        "src/Lib/OperatingSystem.elm",
+        "src/Lib/OnClickOutside.elm",
+        "src/Lib/SearchResults.elm",
+        "src/Lib/UserHandle.elm",
+        "src/Lib/Util.elm",
+        "src/Lib/Slug.elm",
+        "src/Lib/HttpApi.elm",
+        "src/Lib/TreePath.elm"
+      ],
+      "output": "build/lib.js"
+    }
+  }
+}
