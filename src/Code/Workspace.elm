@@ -78,7 +78,7 @@ type OutMsg
     = None
     | Focused Reference
     | Emptied
-    | ShowFinderRequest (Maybe FQN)
+    | ShowFinderRequest FQN
     | ChangePerspectiveToSubNamespace FQN
 
 
@@ -224,7 +224,7 @@ update config viewMode msg ({ workspaceItems } as model) =
                     ( model, Cmd.none, ChangePerspectiveToSubNamespace fqn )
 
                 WorkspaceItem.FindWithinNamespace fqn ->
-                    ( model, Cmd.none, ShowFinderRequest (Just fqn) )
+                    ( model, Cmd.none, ShowFinderRequest fqn )
 
         KeyboardShortcutMsg kMsg ->
             let
@@ -317,12 +317,11 @@ openDefinitionsFocusToOutMsg openDefs =
 
 
 handleKeyboardShortcut :
-    OperatingSystem
-    -> ViewMode
+    ViewMode
     -> Model
     -> KeyboardShortcut
     -> ( Model, Cmd Msg, OutMsg )
-handleKeyboardShortcut os viewMode model shortcut =
+handleKeyboardShortcut viewMode model shortcut =
     let
         scrollToCmd =
             WorkspaceItems.focus
@@ -359,19 +358,6 @@ handleKeyboardShortcut os viewMode model shortcut =
             ( { model | workspaceItems = next }, scrollToCmd next, openDefinitionsFocusToOutMsg next )
     in
     case ( viewMode, shortcut ) of
-        ( _, KeyboardShortcut.Chord Ctrl (K _) ) ->
-            ( model, Cmd.none, ShowFinderRequest Nothing )
-
-        ( _, KeyboardShortcut.Chord Meta (K _) ) ->
-            if os == OperatingSystem.MacOS then
-                ( model, Cmd.none, ShowFinderRequest Nothing )
-
-            else
-                ( model, Cmd.none, None )
-
-        ( _, Sequence _ ForwardSlash ) ->
-            ( model, Cmd.none, ShowFinderRequest Nothing )
-
         ( ViewMode.Regular, Chord Alt ArrowDown ) ->
             moveDown
 
