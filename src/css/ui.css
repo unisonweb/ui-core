@@ -4,8 +4,8 @@
   --page-hero-height: 16rem;
   --border-radius-base: 0.25rem;
   /* Good size for avoiding long lines and for
-   * fitting the width we render code at */
-  --readable-column-width: 42rem;
+   * fitting the width we render code at (80 char) */
+  --readable-column-width: 43rem;
 
   --c-width_sidebar_regular: 17rem;
   --c-width_sidebar_narrow: 4.5rem;
