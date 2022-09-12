@@ -1,4 +1,4 @@
-module Code.Finder exposing (Model, Msg, OutMsg(..), init, update, view)
+module Code.Finder exposing (Model, Msg, OutMsg(..), init, isShowFinderKeyboardShortcut, update, view)
 
 import Browser.Dom as Dom
 import Code.CodebaseApi as CodebaseApi
@@ -50,6 +50,7 @@ import Html.Attributes
 import Html.Events exposing (onClick, onInput)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
+import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
 import Lib.SearchResults as SearchResults exposing (SearchResults(..))
 import Lib.Util as Util
 import List.Nonempty as NEL
@@ -325,6 +326,22 @@ finderSearchToMaybe fs =
 
         _ ->
             Nothing
+
+
+isShowFinderKeyboardShortcut : OperatingSystem -> KeyboardShortcut -> Bool
+isShowFinderKeyboardShortcut os shortcut =
+    case shortcut of
+        KeyboardShortcut.Chord Ctrl (K _) ->
+            True
+
+        KeyboardShortcut.Chord Meta (K _) ->
+            os == OperatingSystem.MacOS
+
+        Sequence _ ForwardSlash ->
+            True
+
+        _ ->
+            False
 
 
 

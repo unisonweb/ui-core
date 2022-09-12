@@ -23,7 +23,6 @@ import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
-import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
 import Task
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
@@ -171,7 +170,6 @@ update config viewMode msg ({ workspaceItems } as model) =
 
                 ( nextModel, cmd, out ) =
                     handleKeyboardShortcut
-                        config.operatingSystem
                         viewMode
                         { model | keyboardShortcut = keyboardShortcut }
                         shortcut
