@@ -23,6 +23,7 @@ import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
+import Lib.ScrollTo as ScrollTo
 import Task
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
@@ -450,25 +451,10 @@ isDocCropped ref =
 scrollToDefinition : Reference -> Cmd Msg
 scrollToDefinition ref =
     let
-        id =
+        targetId =
             "definition-" ++ Reference.toString ref
     in
-    Task.sequence
-        [ Dom.getElement id |> Task.map (.element >> .y)
-        , Dom.getElement "workspace-content" |> Task.map (.element >> .y)
-        , Dom.getViewportOf "workspace-content" |> Task.map (.viewport >> .y)
-        ]
-        |> Task.andThen
-            (\outcome ->
-                case outcome of
-                    elY :: viewportY :: viewportScrollTop :: [] ->
-                        Dom.setViewportOf "workspace-content" 0 (viewportScrollTop + (elY - viewportY))
-                            |> Task.onError (\_ -> Task.succeed ())
-
-                    _ ->
-                        Task.succeed ()
-            )
-        |> Task.attempt (always NoOp)
+    ScrollTo.scrollTo NoOp "workspace-content" targetId
 
 
 
