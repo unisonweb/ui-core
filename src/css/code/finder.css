@@ -220,11 +220,14 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  cursor: pointer;
+  padding-left: 0.5rem;
+}
+
+#finder .definition-match .naming .name-and-namespace {
   max-width: 14rem;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  padding-left: 0.5rem;
 }
 
 #finder .definition-match .name {

@@ -467,8 +467,10 @@ viewMarkedNaming matchedPositions namespace name =
     in
     td
         [ class "naming" ]
-        [ label [ class "name" ] markedName
-        , label [ class "namespace" ] markedNamespace
+        [ div [ class "name-and-namespace" ]
+            [ label [ class "name" ] markedName
+            , label [ class "namespace" ] markedNamespace
+            ]
         ]
 
 
