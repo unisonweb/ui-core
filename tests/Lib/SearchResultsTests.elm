@@ -35,8 +35,7 @@ next =
                     result =
                         SearchResults.from [ "a" ] "b" [ "c" ]
                             |> SearchResults.next
-                            |> SearchResults.toMaybe
-                            |> Maybe.map SearchResults.focus
+                            |> SearchResults.focus
                 in
                 Expect.equal (Just "c") result
         , test "keeps focus if no elements after" <|
@@ -45,8 +44,7 @@ next =
                     result =
                         SearchResults.from [ "a", "b" ] "c" []
                             |> SearchResults.next
-                            |> SearchResults.toMaybe
-                            |> Maybe.map SearchResults.focus
+                            |> SearchResults.focus
                 in
                 Expect.equal (Just "c") result
         ]
@@ -61,8 +59,7 @@ prev =
                     result =
                         SearchResults.from [ "a" ] "b" [ "c" ]
                             |> SearchResults.prev
-                            |> SearchResults.toMaybe
-                            |> Maybe.map SearchResults.focus
+                            |> SearchResults.focus
                 in
                 Expect.equal (Just "a") result
         , test "keeps focus if no elements before" <|
@@ -71,8 +68,7 @@ prev =
                     result =
                         SearchResults.from [] "a" [ "b", "c" ]
                             |> SearchResults.prev
-                            |> SearchResults.toMaybe
-                            |> Maybe.map SearchResults.focus
+                            |> SearchResults.focus
                 in
                 Expect.equal (Just "a") result
         ]

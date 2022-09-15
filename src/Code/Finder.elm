@@ -6,7 +6,7 @@ import Code.Config exposing (Config)
 import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..))
 import Code.Definition.Category as Category
 import Code.Definition.DataConstructor exposing (DataConstructor(..))
-import Code.Definition.Reference exposing (Reference(..))
+import Code.Definition.Reference as Reference exposing (Reference(..))
 import Code.Definition.Source as Source
 import Code.Definition.Term exposing (Term(..))
 import Code.Definition.Type exposing (Type(..))
@@ -51,9 +51,11 @@ import Html.Events exposing (onClick, onInput)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
 import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
+import Lib.ScrollTo as ScrollTo
 import Lib.SearchResults as SearchResults exposing (SearchResults(..))
 import Lib.Util as Util
 import List.Nonempty as NEL
+import Maybe.Extra as MaybeE
 import Task
 import UI
 import UI.Icon as Icon
@@ -246,25 +248,39 @@ update config msg model =
                     let
                         newSearch =
                             finderSearchMap SearchResults.prev model.search
+
+                        scrollToCmd =
+                            newSearch
+                                |> finderSearchToMaybe
+                                |> Maybe.andThen SearchResults.focus
+                                |> Maybe.map FinderMatch.reference
+                                |> Maybe.map scrollToMatch
+                                |> Maybe.withDefault Cmd.none
                     in
-                    ( { newModel | search = newSearch }, cmd, Remain )
+                    ( { newModel | search = newSearch }, Cmd.batch [ cmd, scrollToCmd ], Remain )
 
                 Sequence _ ArrowDown ->
                     let
                         newSearch =
                             finderSearchMap SearchResults.next model.search
+
+                        scrollToCmd =
+                            newSearch
+                                |> finderSearchToMaybe
+                                |> Maybe.andThen SearchResults.focus
+                                |> Maybe.map FinderMatch.reference
+                                |> Maybe.map scrollToMatch
+                                |> Maybe.withDefault Cmd.none
                     in
-                    ( { newModel | search = newSearch }, cmd, Remain )
+                    ( { newModel | search = newSearch }, Cmd.batch [ cmd, scrollToCmd ], Remain )
 
                 Sequence _ Enter ->
                     let
                         openFocused results =
-                            case results of
-                                Empty ->
-                                    Remain
-
-                                SearchResults matches ->
-                                    OpenDefinition ((SearchResults.focus >> FinderMatch.reference) matches)
+                            results
+                                |> SearchResults.focus
+                                |> Maybe.map FinderMatch.reference
+                                |> MaybeE.unwrap Remain OpenDefinition
 
                         out =
                             case model.search of
@@ -414,7 +430,16 @@ fetchMatches toApiEndpoint perspective withinFqn query =
 
 focusSearchInput : Cmd Msg
 focusSearchInput =
-    Task.attempt (\_ -> NoOp) (Dom.focus "search")
+    Task.attempt (always NoOp) (Dom.focus "search")
+
+
+scrollToMatch : Reference -> Cmd Msg
+scrollToMatch ref =
+    let
+        targetId =
+            "match-" ++ Reference.toString ref
+    in
+    ScrollTo.scrollTo NoOp "finder-results" targetId
 
 
 
@@ -489,9 +514,16 @@ viewMatch keyboardShortcut match isFocused shortcut =
                     Just key ->
                         KeyboardShortcut.view keyboardShortcut (Sequence (Just Key.Semicolon) key)
 
+        matchId ref =
+            "match-" ++ Reference.toString ref
+
         viewMatch_ reference icon naming source =
             tr
-                [ classList [ ( "definition-match", True ), ( "focused", isFocused ) ]
+                [ id (matchId reference)
+                , classList
+                    [ ( "definition-match", True )
+                    , ( "focused", isFocused )
+                    ]
                 , onClick (Select reference)
                 ]
                 [ td [ class "category" ] [ Icon.view icon ]
@@ -539,7 +571,7 @@ viewMatches keyboardShortcut matches =
                 |> List.indexedMap (\i ( d, f ) -> ( d, f, indexToShortcut i ))
                 |> List.map (\( d, f, s ) -> viewMatch keyboardShortcut d f s)
     in
-    section [ class "results" ] [ table [] [ tbody [] matchItems ] ]
+    section [ id "finder-results", class "results" ] [ table [] [ tbody [] matchItems ] ]
 
 
 view : Model -> Html Msg

@@ -135,6 +135,16 @@ focusOn pred results =
             SearchResults (focusOnMatch pred matches)
 
 
+focus : SearchResults a -> Maybe a
+focus results =
+    case results of
+        Empty ->
+            Nothing
+
+        SearchResults m ->
+            Just (focusMatch m)
+
+
 
 -- MATCHES
 
@@ -153,8 +163,8 @@ prevMatch ((Matches data) as matches) =
     unwrap matches Matches (Zipper.previous data)
 
 
-focus : Matches a -> a
-focus (Matches data) =
+focusMatch : Matches a -> a
+focusMatch (Matches data) =
     Zipper.current data
 
 
