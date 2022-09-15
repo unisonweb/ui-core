@@ -1,8 +1,12 @@
 #finder {
+  --c-spacing_finder_top: 7rem;
+  --c-height_finder_search-field: 3rem;
+  --c-width_finder: 50rem;
+
   --color-search-field: var(--u-color_element_subdued);
   position: relative;
-  width: 50rem;
-  margin-top: 7rem;
+  width: var(--c-width_finder);
+  margin-top: var(--c-spacing_finder_top);
 }
 
 #finder:focus {
@@ -22,6 +26,7 @@
   display: flex;
   align-items: center;
   position: relative;
+  height: var(--c-height_finder_search-field);
 }
 
 #finder header .icon.search {
@@ -64,7 +69,7 @@
 }
 
 #finder .reset {
-  height: 3rem;
+  height: var(--c-height_finder_search-field);
   padding: 0 1rem;
   justify-content: center;
   align-items: center;
@@ -121,6 +126,27 @@
   position: relative;
   padding: 0.75rem;
   border-top: 1px solid var(--color-modal-inner-border);
+  max-height: calc(
+    calc(100vh - var(--c-spacing_finder_top)) -
+      var(--c-height_finder_search-field)
+  );
+  overflow-y: auto;
+  scrollbar-width: auto;
+  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+}
+
+#finder .results::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+#finder .results::-webkit-scrollbar-track {
+  background: var(--u-color_scrollbar-track);
+}
+
+#finder .results::-webkit-scrollbar-thumb {
+  background-color: var(--u-color_scrollbar);
+  border-radius: var(--border-radius-base);
 }
 
 #finder .results + header {
