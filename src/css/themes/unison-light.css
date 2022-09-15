@@ -83,7 +83,7 @@
   --u-color_element_emphasized_hovered: var(--color-gray-lighten-50);
   --u-color_element_emphasized_selected: var(--color-gray-lighten-50);
 
-  --u-color_search-highlight_text: var(--color-gray-blue-2);
+  --u-color_search-highlight_text: var(--color-blue-2);
   --u-color_search-highlight_background: var(--color-transparent);
 
   --u-color_critical_text: var(--color-pink-1);
