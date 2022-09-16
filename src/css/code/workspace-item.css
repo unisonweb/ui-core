@@ -114,7 +114,7 @@
 }
 
 .workspace-item .actions .close:hover .icon {
-  color: var(--u-color_icon-on-action-subdued-hovered);
+  color: var(--u-color_icon-on-action-subdued_hovered);
 }
 
 .workspace-item header .info {

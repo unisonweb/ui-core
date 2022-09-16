@@ -9,7 +9,7 @@
   --color-modal-overlay: var(--u-color_backdrop);
   --color-modal-border: var(--color-transparent);
   --color-modal-subtle-fg: var(--u-color_text_very-subdued);
-  --color-modal-subtle-fg-em: var(--u-color-text-subdued);
+  --color-modal-subtle-fg-em: var(--u-color_text_subdued);
   --color-modal-subtle-mg: var(--color-gray-lighten-55);
   --color-modal-subtle-bg: var(--u-color_container_subdued);
   --color-modal-focus-fg: var(--u-color_text);

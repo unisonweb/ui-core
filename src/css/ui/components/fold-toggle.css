@@ -1,7 +1,7 @@
 .fold-toggle {
   --color-fold-toggle-icon: var(--u-color_icon-on-action-subdued);
   --color-fold-toggle-bg: var(--u-color_action_subdued);
-  --color-fold-toggle-hover-icon: var(--u-color_icon-on-action-subdued-hovered);
+  --color-fold-toggle-hover-icon: var(--u-color_icon-on-action-subdued_hovered);
   --color-fold-toggle-hover-bg: var(--u-color_action_subdued_hovered);
 
   display: inline-flex;

@@ -5,7 +5,7 @@
   --color-doc-aside-source-bg: var(--u-color_element_emphasized);
   --color-doc-callout-bg: var(--u-color_info_container_subdued);
   --color-doc-callout-source-bg: var(--u-color_element_emphasized);
-  --color-doc-subtle-text: var(--u-color_text__very-subdued);
+  --color-doc-subtle-text: var(--u-color_text_very-subdued);
   --color-doc-source-bg: var(--u-color_container_subdued);
   --color-doc-content-border: var(--u-color_border_subdued);
   --color-doc-divider: var(--u-color_divider);
@@ -68,8 +68,7 @@
   border-radius: var(--border-radius-base);
   margin-bottom: 1rem;
   scrollbar-width: auto;
-  scrollbar-color: var(--color-workspace-item-subtle-text)
-    var(--color-transparent);
+  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
 }
 
@@ -92,7 +91,7 @@
 .definition-doc .source.example::-webkit-scrollbar-track,
 .definition-doc .source.eval::-webkit-scrollbar-track,
 .definition-doc .source.signatures .signature::-webkit-scrollbar-track {
-  background: var(--color-transparent);
+  background: var(--u-color_scrollbar-track);
 }
 
 .definition-doc .source.code::-webkit-scrollbar-thumb,
@@ -101,7 +100,7 @@
 .definition-doc .source.example::-webkit-scrollbar-thumb,
 .definition-doc .source.eval::-webkit-scrollbar-thumb,
 .definition-doc .source.signatures .signature::-webkit-scrollbar-thumb {
-  background-color: var(--color-workspace-item-subtle-text);
+  background-color: var(--u-color_scrollbar);
   border-radius: var(--border-radius-base);
 }
 

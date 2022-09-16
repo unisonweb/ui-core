@@ -25,7 +25,7 @@
   gap: 0.5rem;
   padding: 0.375rem;
   padding-right: 0.75rem;
-  color: var(--c-color_status-banner_text);
+  color: var(--u-color_text);
   font-size: var(--font-size-medium);
   border-radius: 1rem;
 }

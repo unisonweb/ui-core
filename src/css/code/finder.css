@@ -39,6 +39,7 @@
   transition-delay: 0.4s;
 
   /* shine trails */
+  --color-icon-1: var(--color-modal-fg);
   --color-icon-2: var(--color-pink-1);
   --color-icon-3: var(--color-orange-2);
   --color-icon-4: var(--color-blue-2);

@@ -58,7 +58,7 @@
   --u-color_text-on-action-subdued: var(--color-blue-1);
   --u-color_icon-on-action-subdued: var(--color-gray-lighten-20);
   --u-color_action_subdued_hovered: var(--color-gray-lighten-45);
-  --u-color_icon-action_subdued-hovered: var(--color-gray-base);
+  --u-color_icon-on-action-subdued_hovered: var(--color-gray-base);
   --u-color_action_emphasized: var(--color-gray-darken-20);
   --u-color_text-on-action-emphasized: var(--color-gray-lighten-60);
   --u-color_icon-on-action-emphasized: var(--color-gray-lighten-30);

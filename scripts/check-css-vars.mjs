@@ -3,6 +3,8 @@
 // Combine all CSS files and check if CSS variables that are referenced
 // actually are defined somewhere in all the files.
 // Currently does not verify that the variables referenced are in scope.
+//
+// TODO: Don't warn for var usages that have fallbacks
 import glob from "glob";
 import fs from "fs/promises";
 

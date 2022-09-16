@@ -243,22 +243,6 @@ a.button:hover {
   color: var(--color-button-default-hover-text);
 }
 
-.button.uncontained.primary-mono,
-.button.uncontained.primary-mono .icon {
-  color: var(--color-button-primary-mono-text);
-}
-
-.button.uncontained.primary-mono:hover,
-.button.uncontained.primary-mono.button_active {
-  color: var(--color-button-primary-mono-hover-text);
-  background: var(--color-button-primary-mono-hover-bg);
-}
-
-.button.uncontained.primary-mono:hover .icon,
-.button.uncontained.primary-mono.button_active .icon {
-  color: var(--color-button-primary-mono-hover-text);
-}
-
 .button.uncontained.primary,
 .button.uncontained.primary .icon {
   color: var(--color-button-primary-text);

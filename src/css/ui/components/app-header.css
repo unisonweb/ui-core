@@ -22,7 +22,7 @@
  * transparent */
 #app-header.view-mode_presentation {
   --color-app-header-text: var(--u-color_text);
-  --color-app-header-bg: var(--u-color_backgrond);
+  --color-app-header-bg: var(--u-color_background);
   --color-app-header-subtle-text: var(--u-color_text_very-subdued);
   --color-app-header-subtle-text-em: var(--u-color_text_subdued);
   --color-app-header-context-unison-share-text: var(--color-purple-4);
@@ -61,7 +61,7 @@
   /* @color-todo @inverse */
   --color-button-default-text: var(--color-gray-lighten-30);
   --color-button-default-icon: var(--color-gray-lighten-20);
-  --color-button-default-bg: var(--u-color-gray-base);
+  --color-button-default-bg: var(--color-gray-base);
   --color-button-default-hover-text: var(--color-gray-lighten-50);
   --color-button-default-hover-icon: var(--color-gray-lighten-30);
   --color-button-default-hover-bg: var(--color-gray-base);
