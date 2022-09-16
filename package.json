@@ -6,6 +6,7 @@
     "test": "elm-test",
     "review": "elm-review",
     "build": "elm make",
+    "check-css-vars": "scripts/check-css-vars.mjs",
     "watch": "elm-watch hot",
     "sha": "git rev-parse HEAD | cut -c 1-8"
   },
@@ -25,6 +26,7 @@
     "elm-review": "^2.7.1",
     "elm-test": "^0.19.1-revision7",
     "elm-watch": "^1.0.1",
+    "glob": "^8.0.3",
     "prettier": "^2.6.2"
   }
 }

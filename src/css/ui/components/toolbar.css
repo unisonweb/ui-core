@@ -2,7 +2,7 @@
   --color-toolbar: var(--u-color_container);
   --color-toolbar-border: var(--u-color_border_subdued);
 
-  height: var(--toolbar-height);
+  height: 3rem;
   padding-left: 2.625rem;
   padding-right: 1rem;
   font-size: var(--font-size-medium);
