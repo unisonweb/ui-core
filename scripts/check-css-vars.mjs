@@ -8,7 +8,7 @@
 import glob from "glob";
 import fs from "fs/promises";
 
-glob("src/**/*.css", function (err, files) {
+glob("src/**/*.css", (err, files) => {
   if (err) console.error(err);
 
   Promise.all(files.map((f) => fs.readFile(f, "utf-8")))
