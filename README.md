@@ -3,6 +3,8 @@ Unison UI Core
 
 Shared design system and core components for Unison Local and Unison Share.
 
+[![CI](https://github.com/unisonweb/ui-core/actions/workflows/ci.yml/badge.svg)](https://github.com/unisonweb/ui-core/actions/workflows/ci.yml)
+
 Adding new Icons
 ----------------
 
