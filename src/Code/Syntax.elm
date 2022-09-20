@@ -16,13 +16,15 @@ import Code.Definition.Reference as Reference exposing (Reference)
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
-import Html exposing (Html, a, span, text)
+import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onMouseEnter, onMouseLeave)
 import Json.Decode as Decode exposing (andThen, at, field)
 import Json.Decode.Extra exposing (when)
 import Lib.Util as Util
 import List.Nonempty as NEL
+import UI.Click as Click exposing (Click)
+import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
 type Width
@@ -91,7 +93,13 @@ type SyntaxType
 
 
 type Linked msg
-    = Linked (Reference -> msg)
+    = Linked (Reference -> Click msg)
+    | LinkedWithTooltip
+        { click : Reference -> Click msg
+        , hoverStart : Reference -> msg
+        , hoverEnd : Reference -> msg
+        , tooltip : Reference -> Maybe (Tooltip msg)
+        }
     | NotLinked
 
 
@@ -315,8 +323,29 @@ viewSegment linked (SyntaxSegment sType sText) =
                 text sText
     in
     case ( linked, ref ) of
-        ( Linked toReferenceClickMsg, Just r ) ->
-            a [ class className, onClick (toReferenceClickMsg r) ] [ content ]
+        ( Linked click, Just r ) ->
+            Click.view
+                [ class className ]
+                [ content ]
+                (click r)
+
+        ( LinkedWithTooltip l, Just r ) ->
+            let
+                content_ =
+                    case l.tooltip r of
+                        Just t ->
+                            Tooltip.view t
+
+                        Nothing ->
+                            content
+            in
+            Click.view
+                [ class className
+                , onMouseEnter (l.hoverStart r)
+                , onMouseLeave (l.hoverEnd r)
+                ]
+                [ content_ ]
+                (l.click r)
 
         _ ->
             span [ class className ] [ content ]

@@ -5,6 +5,7 @@ import Code.Definition.Reference exposing (Reference)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode
+import UI.Click exposing (Click)
 
 
 {-| Represent the Readme Doc definition of a namespace. This is typically
@@ -20,14 +21,14 @@ type Readme
 
 
 view :
-    (Reference -> msg)
+    (Reference -> Click msg)
     -> (FoldId -> msg)
     -> DocFoldToggles
     -> Readme
     -> Html msg
-view refToMsg toggleFoldMsg docFoldToggles (Readme doc) =
+view click toggleFoldMsg docFoldToggles (Readme doc) =
     div [ class "readme" ]
-        [ Doc.view refToMsg toggleFoldMsg docFoldToggles doc ]
+        [ Doc.view click toggleFoldMsg docFoldToggles doc ]
 
 
 

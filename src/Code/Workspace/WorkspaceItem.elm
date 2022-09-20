@@ -454,7 +454,7 @@ viewDoc ref docVisibility docFoldToggles doc =
                 [ class "doc-column"
                 , id ("definition-doc-" ++ Reference.toString ref)
                 ]
-                [ Doc.view (OpenReference ref)
+                [ Doc.view (OpenReference ref >> Click.onClick)
                     (ToggleDocFold ref)
                     docFoldToggles
                     doc
@@ -544,7 +544,7 @@ viewItem ref data isFocused =
             [ class zoomClass, classList [ ( "focused", isFocused ) ] ]
 
         sourceConfig =
-            Source.Rich (OpenReference ref)
+            Source.Rich (OpenReference ref >> Click.onClick)
 
         viewDoc_ doc =
             doc
@@ -602,7 +602,7 @@ viewPresentationItem ref data =
             case category of
                 DocTerm ->
                     detail.doc
-                        |> Maybe.map (Doc.view (OpenReference ref) (ToggleDocFold ref) data.docFoldToggles)
+                        |> Maybe.map (Doc.view (OpenReference ref >> Click.onClick) (ToggleDocFold ref) data.docFoldToggles)
                         |> Maybe.withDefault UI.nothing
 
                 _ ->

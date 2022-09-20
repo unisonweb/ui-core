@@ -20,10 +20,11 @@ import Code.Syntax as Syntax
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import UI
+import UI.Click exposing (Click)
 
 
 type ViewConfig msg
-    = Rich (Reference -> msg)
+    = Rich (Reference -> Click msg)
     | Monochrome
     | Plain
 
