@@ -79,7 +79,7 @@ type OutMsg
     | Focused Reference
     | Emptied
     | ShowFinderRequest FQN
-    | ChangePerspectiveToSubNamespace FQN
+    | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
 update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
@@ -220,7 +220,11 @@ update config viewMode msg ({ workspaceItems } as model) =
                     )
 
                 WorkspaceItem.ChangePerspectiveToSubNamespace fqn ->
-                    ( model, Cmd.none, ChangePerspectiveToSubNamespace fqn )
+                    let
+                        ref =
+                            WorkspaceItems.focusedReference model.workspaceItems
+                    in
+                    ( model, Cmd.none, ChangePerspectiveToSubNamespace ref fqn )
 
                 WorkspaceItem.FindWithinNamespace fqn ->
                     ( model, Cmd.none, ShowFinderRequest fqn )
