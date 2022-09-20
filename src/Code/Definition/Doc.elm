@@ -59,7 +59,6 @@ import Html.Attributes
         , title
         , type_
         )
-import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (bool, field, index, int, string)
 import Json.Decode.Extra as DecodeE exposing (when)
 import Lib.TreePath as TreePath exposing (TreePath)
