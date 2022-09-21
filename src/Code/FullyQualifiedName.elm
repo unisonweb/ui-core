@@ -6,6 +6,7 @@ module Code.FullyQualifiedName exposing
     , decodeFromParent
     , dropLast
     , equals
+    , extend
     , fromList
     , fromParent
     , fromString
@@ -19,6 +20,7 @@ module Code.FullyQualifiedName exposing
     , numSegments
     , segments
     , snoc
+    , stripPrefix
     , toApiUrlString
     , toString
     , toUrlSegments
@@ -199,6 +201,43 @@ equals a b =
 append : FQN -> FQN -> FQN
 append (FQN a) (FQN b) =
     FQN (NEL.append a b)
+
+
+{-| Remove the prefix (if present)
+-}
+stripPrefix : FQN -> FQN -> FQN
+stripPrefix (FQN prefix) (FQN fqn_) =
+    let
+        prefix_ =
+            NEL.toList prefix
+
+        fqn__ =
+            NEL.toList fqn_
+
+        potentialPrefix =
+            List.take (List.length prefix_) fqn__
+    in
+    if prefix_ == potentialPrefix then
+        fromList (List.drop (List.length prefix_) fqn__)
+
+    else
+        fromList fqn__
+
+
+{-| Extend a FQN with another, removing exact overlaps in the right side list.
+
+Examples:
+
+  - extend (FQN "a.b.c") (FQN "a.b.c.d.e.f") -> FQN "ab.c.d.e.f"
+  - extend (FQN "a.b.c") (FQN "a.k.e.f") -> FQN "a.b.c.a.k.e.f"
+  - extend (FQN "a.b.c") (FQN "e.f") -> FQN "a.b.c.e.f"
+
+-}
+extend : FQN -> FQN -> FQN
+extend a b =
+    b
+        |> stripPrefix a
+        |> append a
 
 
 cons : String -> FQN -> FQN

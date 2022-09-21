@@ -78,6 +78,78 @@ append =
         ]
 
 
+extend : Test
+extend =
+    describe "FullyQualifiedName.extend"
+        [ test "extends 2 FQNs, keeping the start of the FQNs the same when they overlap" <|
+            \_ ->
+                let
+                    a =
+                        FQN.fromString "a.b.c"
+
+                    b =
+                        FQN.fromString "a.b.c.d.e.f"
+                in
+                Expect.equal "a.b.c.d.e.f" (FQN.toString (FQN.extend a b))
+        , test "extends 2 FQNs, keeping overlaps only when fully overlapping the left side" <|
+            \_ ->
+                let
+                    a =
+                        FQN.fromString "a.b.c"
+
+                    b =
+                        FQN.fromString "a.k.e.f"
+                in
+                Expect.equal "a.b.c.a.k.e.f" (FQN.toString (FQN.extend a b))
+        , test "Appends the 2 FQNs when there's no overlap" <|
+            \_ ->
+                let
+                    a =
+                        FQN.fromString "a.b.c"
+
+                    b =
+                        FQN.fromString "e.f"
+                in
+                Expect.equal "a.b.c.e.f" (FQN.toString (FQN.extend a b))
+        ]
+
+
+stripPrefix : Test
+stripPrefix =
+    describe "FullyQualifiedName.stripPrefix"
+        [ test "removes the prefix if present" <|
+            \_ ->
+                let
+                    a =
+                        FQN.fromString "a.b.c"
+
+                    b =
+                        FQN.fromString "a.b.c.d.e.f"
+                in
+                Expect.equal "d.e.f" (FQN.toString (FQN.stripPrefix a b))
+        , test "removes nothing if the prefix is not present" <|
+            \_ ->
+                let
+                    a =
+                        FQN.fromString "a.b.c"
+
+                    b =
+                        FQN.fromString "a.k.e.f"
+                in
+                Expect.equal "a.k.e.f" (FQN.toString (FQN.stripPrefix a b))
+        , test "Appends the 2 FQNs when there's no overlap" <|
+            \_ ->
+                let
+                    a =
+                        FQN.fromString "a.b.c"
+
+                    b =
+                        FQN.fromString "e.f"
+                in
+                Expect.equal "a.b.c.e.f" (FQN.toString (FQN.extend a b))
+        ]
+
+
 fromString : Test
 fromString =
     describe "FullyQualifiedName.fromString"
