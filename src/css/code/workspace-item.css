@@ -303,7 +303,7 @@
   background: var(--color-workspace-item-source-bg);
   border-radius: var(--border-radius-base);
   width: 100%;
-  overflow: auto;
+  overflow-x: auto;
   scrollbar-width: auto;
   scrollbar-color: var(--color-workspace-item-subtle-fg)
     var(--color-transparent);
