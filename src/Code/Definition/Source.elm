@@ -12,7 +12,6 @@ module Code.Definition.Source exposing
     , viewTypeSource
     )
 
-import Code.Definition.Reference exposing (Reference)
 import Code.Definition.Term as Term exposing (TermSignature(..), TermSource)
 import Code.Definition.Type as Type exposing (TypeSource)
 import Code.FullyQualifiedName as FQN exposing (FQN)
@@ -20,11 +19,10 @@ import Code.Syntax as Syntax
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import UI
-import UI.Click exposing (Click)
 
 
 type ViewConfig msg
-    = Rich (Reference -> Click msg)
+    = Rich (Syntax.LinkedWithTooltipConfig msg)
     | Monochrome
     | Plain
 
@@ -181,8 +179,8 @@ viewSyntax viewConfig =
 viewConfigToSyntaxLinked : ViewConfig msg -> Syntax.Linked msg
 viewConfigToSyntaxLinked viewConfig =
     case viewConfig of
-        Rich toReferenceClickMsg ->
-            Syntax.Linked toReferenceClickMsg
+        Rich cfg ->
+            Syntax.LinkedWithTooltip cfg
 
         _ ->
             Syntax.NotLinked

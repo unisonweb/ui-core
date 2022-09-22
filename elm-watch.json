@@ -56,6 +56,7 @@
         "src/Code/Definition/Source.elm",
         "src/Code/Definition/Term.elm",
         "src/Code/Definition/Type.elm",
+        "src/Code/DefinitionSummaryTooltip.elm",
         "src/Code/FullyQualifiedName.elm",
         "src/Code/FullyQualifiedNameSet.elm",
         "src/Code/HashQualified.elm",

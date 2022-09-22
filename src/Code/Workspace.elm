@@ -15,6 +15,7 @@ import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
 import Code.Definition.Doc as Doc
 import Code.Definition.Reference as Reference exposing (Reference)
+import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
@@ -38,6 +39,7 @@ import UI.ViewMode as ViewMode exposing (ViewMode)
 type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
+    , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
     }
 
 
@@ -47,6 +49,7 @@ init config mRef =
         model =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
+            , definitionSummaryTooltip = DefinitionSummaryTooltip.init
             }
     in
     case mRef of
@@ -72,6 +75,7 @@ type Msg
     | Keydown KeyboardEvent
     | KeyboardShortcutMsg KeyboardShortcut.Msg
     | WorkspaceItemMsg WorkspaceItem.Msg
+    | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
 
 
 type OutMsg
@@ -179,6 +183,9 @@ update config viewMode msg ({ workspaceItems } as model) =
 
         WorkspaceItemMsg wiMsg ->
             case wiMsg of
+                WorkspaceItem.NoOp ->
+                    ( model, Cmd.none, None )
+
                 WorkspaceItem.OpenReference relativeToRef ref ->
                     openReference config model relativeToRef ref
 
@@ -228,6 +235,20 @@ update config viewMode msg ({ workspaceItems } as model) =
 
                 WorkspaceItem.FindWithinNamespace fqn ->
                     ( model, Cmd.none, ShowFinderRequest fqn )
+
+                WorkspaceItem.DefinitionSummaryTooltipMsg tMsg ->
+                    let
+                        ( definitionSummaryTooltip, tCmd ) =
+                            DefinitionSummaryTooltip.update tMsg model.definitionSummaryTooltip
+                    in
+                    ( { model | definitionSummaryTooltip = definitionSummaryTooltip }, Cmd.map DefinitionSummaryTooltipMsg tCmd, None )
+
+        DefinitionSummaryTooltipMsg tMsg ->
+            let
+                ( definitionSummaryTooltip, tCmd ) =
+                    DefinitionSummaryTooltip.update tMsg model.definitionSummaryTooltip
+            in
+            ( { model | definitionSummaryTooltip = definitionSummaryTooltip }, Cmd.map DefinitionSummaryTooltipMsg tCmd, None )
 
         KeyboardShortcutMsg kMsg ->
             let
@@ -488,22 +509,22 @@ view viewMode model =
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ section
                             [ id "workspace-content" ]
-                            [ section [ class "definitions-pane" ] (viewWorkspaceItems model.workspaceItems) ]
+                            [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
                         ]
 
                 ViewMode.Presentation ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ section
                             [ id "workspace-content" ]
-                            [ section [ class "definitions-pane" ] [ viewItem ViewMode.Presentation focus True ] ]
+                            [ section [ class "definitions-pane" ] [ viewItem model.definitionSummaryTooltip ViewMode.Presentation focus True ] ]
                         ]
 
 
-viewItem : ViewMode -> WorkspaceItem -> Bool -> Html Msg
-viewItem viewMode workspaceItem isFocused =
-    Html.map WorkspaceItemMsg (WorkspaceItem.view viewMode workspaceItem isFocused)
+viewItem : DefinitionSummaryTooltip.Model -> ViewMode -> WorkspaceItem -> Bool -> Html Msg
+viewItem definitionSummaryTooltip viewMode workspaceItem isFocused =
+    Html.map WorkspaceItemMsg (WorkspaceItem.view definitionSummaryTooltip viewMode workspaceItem isFocused)
 
 
-viewWorkspaceItems : WorkspaceItems -> List (Html Msg)
-viewWorkspaceItems =
-    WorkspaceItems.mapToList (viewItem ViewMode.Regular)
+viewWorkspaceItems : DefinitionSummaryTooltip.Model -> WorkspaceItems -> List (Html Msg)
+viewWorkspaceItems definitionSummaryTooltip =
+    WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)

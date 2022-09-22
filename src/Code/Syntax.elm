@@ -1,12 +1,16 @@
 module Code.Syntax exposing
     ( Linked(..)
+    , LinkedWithTooltipConfig
     , Syntax
     , SyntaxSegment(..)
     , SyntaxType(..)
+    , ToClick
+    , TooltipConfig
     , Width(..)
     , decode
     , decodeSingleton
     , foldl
+    , linkedWithTooltipConfig
     , numLines
     , reference
     , view
@@ -92,19 +96,39 @@ type SyntaxType
     | DocKeyword
 
 
+type alias TooltipConfig msg =
+    { toHoverStart : Reference -> msg
+    , toHoverEnd : Reference -> msg
+    , toTooltip : Reference -> Maybe (Tooltip msg)
+    }
+
+
+type alias ToClick msg =
+    Reference -> Click msg
+
+
+type alias LinkedWithTooltipConfig msg =
+    { toClick : ToClick msg
+    , tooltip : TooltipConfig msg
+    }
+
+
 type Linked msg
-    = Linked (Reference -> Click msg)
-    | LinkedWithTooltip
-        { click : Reference -> Click msg
-        , hoverStart : Reference -> msg
-        , hoverEnd : Reference -> msg
-        , tooltip : Reference -> Maybe (Tooltip msg)
-        }
+    = Linked (ToClick msg)
+    | LinkedWithTooltip (LinkedWithTooltipConfig msg)
     | NotLinked
 
 
 
 -- HELPERS
+
+
+linkedWithTooltipConfig :
+    ToClick msg
+    -> TooltipConfig msg
+    -> LinkedWithTooltipConfig msg
+linkedWithTooltipConfig toClick tooltipConfig =
+    { toClick = toClick, tooltip = tooltipConfig }
 
 
 {-| TODO: Parse Syntax into a list of lines and this function can be removed
@@ -332,7 +356,7 @@ viewSegment linked (SyntaxSegment sType sText) =
         ( LinkedWithTooltip l, Just r ) ->
             let
                 content_ =
-                    case l.tooltip r of
+                    case l.tooltip.toTooltip r of
                         Just t ->
                             Tooltip.view content t
 
@@ -341,11 +365,11 @@ viewSegment linked (SyntaxSegment sType sText) =
             in
             Click.view
                 [ class className
-                , onMouseEnter (l.hoverStart r)
-                , onMouseLeave (l.hoverEnd r)
+                , onMouseEnter (l.tooltip.toHoverStart r)
+                , onMouseLeave (l.tooltip.toHoverEnd r)
                 ]
                 [ content_ ]
-                (l.click r)
+                (l.toClick r)
 
         _ ->
             span [ class className ] [ content ]

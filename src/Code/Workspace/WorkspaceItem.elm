@@ -9,9 +9,11 @@ import Code.Definition.Reference as Reference exposing (Reference)
 import Code.Definition.Source as Source
 import Code.Definition.Term as Term exposing (Term(..), TermCategory(..), TermDetail, TermSource)
 import Code.Definition.Type as Type exposing (Type(..), TypeCategory, TypeDetail, TypeSource)
+import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
+import Code.Syntax as Syntax
 import Code.Workspace.Zoom as Zoom exposing (Zoom(..))
 import Html exposing (Attribute, Html, a, div, h3, header, label, section, span, strong, text)
 import Html.Attributes exposing (class, classList, id, title)
@@ -84,6 +86,8 @@ type Msg
     | ChangePerspectiveToSubNamespace FQN
     | FindWithinNamespace FQN
     | ShowFullDoc Reference
+    | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
+    | NoOp
 
 
 fromItem : Reference -> Item -> WorkspaceItem
@@ -421,8 +425,8 @@ viewInfo zoom onClick_ hash_ info category =
         ]
 
 
-viewDoc : Reference -> DocVisibility -> DocFoldToggles -> Doc -> Html Msg
-viewDoc ref docVisibility docFoldToggles doc =
+viewDoc : Syntax.LinkedWithTooltipConfig Msg -> Reference -> DocVisibility -> DocFoldToggles -> Doc -> Html Msg
+viewDoc syntaxConfig ref docVisibility docFoldToggles doc =
     let
         ( showFullDoc, shownInFull ) =
             case docVisibility of
@@ -454,7 +458,7 @@ viewDoc ref docVisibility docFoldToggles doc =
                 [ class "doc-column"
                 , id ("definition-doc-" ++ Reference.toString ref)
                 ]
-                [ Doc.view (OpenReference ref >> Click.onClick)
+                [ Doc.view syntaxConfig
                     (ToggleDocFold ref)
                     docFoldToggles
                     doc
@@ -526,8 +530,8 @@ viewSource zoom onSourceToggleClick sourceConfig item =
                 |> Tuple.mapBoth viewLineGutter (viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_))
 
 
-viewItem : Reference -> ItemData -> Bool -> Html Msg
-viewItem ref data isFocused =
+viewItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Bool -> Html Msg
+viewItem syntaxConfig ref data isFocused =
     let
         ( zoomClass, infoZoomToggle, sourceZoomToggle ) =
             case data.zoom of
@@ -544,11 +548,11 @@ viewItem ref data isFocused =
             [ class zoomClass, classList [ ( "focused", isFocused ) ] ]
 
         sourceConfig =
-            Source.Rich (OpenReference ref >> Click.onClick)
+            Source.Rich syntaxConfig
 
         viewDoc_ doc =
             doc
-                |> Maybe.map (viewDoc ref data.docVisibility data.docFoldToggles)
+                |> Maybe.map (viewDoc syntaxConfig ref data.docVisibility data.docFoldToggles)
                 |> Maybe.map (\d -> ( UI.nothing, d ))
 
         viewBuiltin_ item =
@@ -595,14 +599,14 @@ viewItem ref data isFocused =
                 (viewContent Nothing)
 
 
-viewPresentationItem : Reference -> ItemData -> Html Msg
-viewPresentationItem ref data =
+viewPresentationItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Html Msg
+viewPresentationItem syntaxConfig ref data =
     case data.item of
         TermItem (Term _ category detail) ->
             case category of
                 DocTerm ->
                     detail.doc
-                        |> Maybe.map (Doc.view (OpenReference ref >> Click.onClick) (ToggleDocFold ref) data.docFoldToggles)
+                        |> Maybe.map (Doc.view syntaxConfig (ToggleDocFold ref) data.docFoldToggles)
                         |> Maybe.withDefault UI.nothing
 
                 _ ->
@@ -618,8 +622,8 @@ viewPresentationItem ref data =
             UI.nothing
 
 
-view : ViewMode -> WorkspaceItem -> Bool -> Html Msg
-view viewMode workspaceItem isFocused =
+view : DefinitionSummaryTooltip.Model -> ViewMode -> WorkspaceItem -> Bool -> Html Msg
+view sourceTooltip viewMode workspaceItem isFocused =
     let
         attrs =
             [ classList [ ( "focused", isFocused && ViewMode.isRegular viewMode ) ]
@@ -682,12 +686,21 @@ view viewMode workspaceItem isFocused =
                 ]
 
         Success ref data ->
+            let
+                linkedWithTooltipConfig =
+                    Syntax.linkedWithTooltipConfig
+                        (OpenReference ref >> Click.onClick)
+                        (DefinitionSummaryTooltip.tooltipConfig
+                            DefinitionSummaryTooltipMsg
+                            sourceTooltip
+                        )
+            in
             case viewMode of
                 ViewMode.Regular ->
-                    viewItem ref data isFocused
+                    viewItem linkedWithTooltipConfig ref data isFocused
 
                 ViewMode.Presentation ->
-                    viewPresentationItem ref data
+                    viewPresentationItem linkedWithTooltipConfig ref data
 
 
 

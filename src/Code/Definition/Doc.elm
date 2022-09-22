@@ -64,7 +64,7 @@ import Json.Decode.Extra as DecodeE exposing (when)
 import Lib.TreePath as TreePath exposing (TreePath)
 import Set exposing (Set)
 import UI
-import UI.Click as Click exposing (Click)
+import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon
 import UI.Tooltip as Tooltip
@@ -378,14 +378,14 @@ toString sep doc =
             ""
 
 
-view : (Reference -> Click msg) -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
-view click toggleFoldMsg docFoldToggles document =
+view : Syntax.LinkedWithTooltipConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
+view linkedCfg toggleFoldMsg docFoldToggles document =
     let
         viewSignature =
-            Source.viewTermSignature (Source.Rich click)
+            Source.viewTermSignature (Source.Rich linkedCfg)
 
         linked =
-            Syntax.Linked click
+            Syntax.LinkedWithTooltip linkedCfg
 
         viewSyntax =
             Syntax.view linked
@@ -548,7 +548,7 @@ view click toggleFoldMsg docFoldToggles document =
                             a [ class "named-link", href h, rel "noopener", target "_blank" ] [ viewAtCurrentSectionLevel label ]
 
                         ReferenceHref ref ->
-                            Click.view [ class "named-link" ] [ viewAtCurrentSectionLevel label ] (click ref)
+                            Click.view [ class "named-link" ] [ viewAtCurrentSectionLevel label ] (linkedCfg.toClick ref)
 
                         InvalidHref ->
                             span [ class "named-link invalid-href" ] [ viewAtCurrentSectionLevel label ]
