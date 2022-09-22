@@ -10,7 +10,7 @@ import UI.Tooltip as Tooltip exposing (Tooltip)
 type Nudge msg
     = NoNudge
     | Nudge
-        { withTooltip : Maybe (Html msg -> Tooltip msg)
+        { withTooltip : Maybe (Tooltip msg)
         , pulsate : Bool
         }
 
@@ -33,14 +33,14 @@ nudge =
 -- MODIFY
 
 
-withTooltip : (Html msg -> Tooltip msg) -> Nudge msg -> Nudge msg
-withTooltip toTooltip nudge_ =
+withTooltip : Tooltip msg -> Nudge msg -> Nudge msg
+withTooltip tooltip nudge_ =
     case nudge_ of
         NoNudge ->
-            withTooltip toTooltip nudge
+            withTooltip tooltip nudge
 
         Nudge n ->
-            Nudge { n | withTooltip = Just toTooltip }
+            Nudge { n | withTooltip = Just tooltip }
 
 
 pulsate : Nudge msg -> Nudge msg
@@ -81,7 +81,5 @@ view nudge_ =
                 Nothing ->
                     viewNudgeDot settings.pulsate
 
-                Just toTooltip ->
-                    viewNudgeDot settings.pulsate
-                        |> toTooltip
-                        |> Tooltip.view
+                Just tooltip ->
+                    Tooltip.view (viewNudgeDot settings.pulsate) tooltip

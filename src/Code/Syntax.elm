@@ -334,7 +334,7 @@ viewSegment linked (SyntaxSegment sType sText) =
                 content_ =
                     case l.tooltip r of
                         Just t ->
-                            Tooltip.view t
+                            Tooltip.view content t
 
                         Nothing ->
                             content

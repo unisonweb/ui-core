@@ -379,9 +379,9 @@ viewInfoItems hash_ info =
                                 , ( Icon.intoFolder, "Change perspective to " ++ ns, Click.onClick (ChangePerspectiveToSubNamespace fqn) )
                                 ]
                     in
-                    Tooltip.tooltip (viewInfoItem Icon.folderOutlined ns) namespaceMenu
+                    Tooltip.tooltip namespaceMenu
                         |> Tooltip.withArrow Tooltip.Start
-                        |> Tooltip.view
+                        |> Tooltip.view (viewInfoItem Icon.folderOutlined ns)
 
                 Nothing ->
                     UI.nothing
@@ -398,9 +398,9 @@ viewInfoItems hash_ info =
                     otherNamesLabel =
                         pluralize "other name..." "other names..." numOtherNames
                 in
-                Tooltip.tooltip (viewInfoItem Icon.tagsOutlined otherNamesLabel) otherNamesTooltipContent
+                Tooltip.tooltip otherNamesTooltipContent
                     |> Tooltip.withArrow Tooltip.Start
-                    |> Tooltip.view
+                    |> Tooltip.view (viewInfoItem Icon.tagsOutlined otherNamesLabel)
 
             else
                 UI.nothing

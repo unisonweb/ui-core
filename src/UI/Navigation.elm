@@ -37,7 +37,7 @@ type alias NavItem msg =
     , label : String
     , nudge : Nudge msg
     , click : Click msg
-    , toTooltip : Maybe (Html msg -> Tooltip msg)
+    , tooltip : Maybe (Tooltip msg)
     }
 
 
@@ -56,7 +56,7 @@ navItem label click =
     , label = label
     , nudge = Nudge.NoNudge
     , click = click
-    , toTooltip = Nothing
+    , tooltip = Nothing
     }
 
 
@@ -70,9 +70,9 @@ navItemWithNudge nudge item =
     { item | nudge = nudge }
 
 
-navItemWithTooltip : (Html msg -> Tooltip msg) -> NavItem msg -> NavItem msg
-navItemWithTooltip toTooltip item =
-    { item | toTooltip = Just toTooltip }
+navItemWithTooltip : Tooltip msg -> NavItem msg -> NavItem msg
+navItemWithTooltip tooltip item =
+    { item | tooltip = Just tooltip }
 
 
 empty : Navigation msg
@@ -91,7 +91,7 @@ withNoSelectedItems items _ =
 
 
 viewItem : Bool -> NavItem msg -> Html msg
-viewItem isSelected { icon, label, nudge, toTooltip, click } =
+viewItem isSelected { icon, label, nudge, tooltip, click } =
     let
         content =
             case icon of
@@ -102,9 +102,9 @@ viewItem isSelected { icon, label, nudge, toTooltip, click } =
                     span [ class "nav-item_content" ] [ Icon.view i, text label, Nudge.view nudge ]
 
         item =
-            case toTooltip of
+            case tooltip of
                 Just t ->
-                    Tooltip.view (t content)
+                    Tooltip.view content t
 
                 Nothing ->
                     content

@@ -302,9 +302,9 @@ viewNamespaceListing expandedNamespaceListings (NamespaceListing _ name content)
             ]
             [ Icon.caretRight |> Icon.withClassList [ ( "expanded", isExpanded ) ] |> Icon.view
             , viewListingLabel (unqualifiedName name)
-            , Tooltip.tooltip changePerspectiveTo (Tooltip.text ("Change perspective to " ++ fullName))
+            , Tooltip.tooltip (Tooltip.text ("Change perspective to " ++ fullName))
                 |> Tooltip.withArrow Tooltip.End
-                |> Tooltip.view
+                |> Tooltip.view changePerspectiveTo
             ]
         , namespaceContent
         ]

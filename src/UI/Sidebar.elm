@@ -326,23 +326,23 @@ view os sidebar_ =
                     footer [ class "sidebar-footer" ]
                         [ div [ class "sidebar-toggle sidebar-toggle_expand" ]
                             [ Tooltip.tooltip
-                                (Button.icon toggleMsg Icon.leftSidebarOn
-                                    |> Button.small
-                                    |> Button.view
-                                )
                                 (Tooltip.rich tooltipContent)
                                 |> Tooltip.withPosition Tooltip.RightOf
                                 |> Tooltip.view
+                                    (Button.icon toggleMsg Icon.leftSidebarOn
+                                        |> Button.small
+                                        |> Button.view
+                                    )
                             ]
                         , div [ class "sidebar-toggle sidebar-toggle_collapse" ]
                             [ Tooltip.tooltip
-                                (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
-                                    |> Button.small
-                                    |> Button.view
-                                )
                                 (Tooltip.rich tooltipContent)
                                 |> Tooltip.withPosition Tooltip.RightOf
                                 |> Tooltip.view
+                                    (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
+                                        |> Button.small
+                                        |> Button.view
+                                    )
                             ]
                         ]
     in

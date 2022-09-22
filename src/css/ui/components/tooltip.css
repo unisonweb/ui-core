@@ -242,13 +242,14 @@
   transform: translateY(-50%);
 }
 
-/* -- Trigger ---------------------------------------------------------------*/
+/* -- Trigger / Showing -----------------------------------------------------*/
 
 .tooltip-trigger {
   display: inline-flex;
   position: relative;
 }
 
+.tooltip-trigger.tooltip_show .tooltip,
 .tooltip-trigger:hover .tooltip {
   animation: fade-in 0.2s;
   pointer-events: auto;

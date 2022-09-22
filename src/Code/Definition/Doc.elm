@@ -444,10 +444,9 @@ view click toggleFoldMsg docFoldToggles document =
 
                 Tooltip triggerContent tooltipContent ->
                     Tooltip.tooltip
-                        (viewAtCurrentSectionLevel triggerContent)
                         (Tooltip.rich (viewAtCurrentSectionLevel tooltipContent))
                         |> Tooltip.withArrow Tooltip.Start
-                        |> Tooltip.view
+                        |> Tooltip.view (viewAtCurrentSectionLevel triggerContent)
 
                 Aside d ->
                     span [ class "doc_aside-anchor" ]
