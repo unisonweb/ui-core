@@ -4,7 +4,6 @@ import Code.Definition.Reference as Reference exposing (Reference)
 import Code.Syntax as Syntax
 import Html exposing (div, text)
 import RemoteData exposing (RemoteData(..), WebData)
-import UI.Click exposing (Click)
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
