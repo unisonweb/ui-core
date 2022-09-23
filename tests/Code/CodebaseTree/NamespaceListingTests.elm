@@ -105,12 +105,16 @@ sortContent =
                         , SubDefinition (PatchListing "patch")
                         , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
                         , SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
+                        , SubDefinition (TypeListing (Hash.unsafeFromString "#åleruse") (FQN.fromString "åleruse") (Type DataType))
                         , SubDefinition (TermListing (Hash.unsafeFromString "#y") (FQN.fromString "y") (Term PlainTerm))
+                        , SubDefinition (TypeListing (Hash.unsafeFromString "#apple") (FQN.fromString "apple") (Type DataType))
                         , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
                         ]
 
                     expected =
-                        [ SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
+                        [ SubDefinition (TypeListing (Hash.unsafeFromString "#apple") (FQN.fromString "apple") (Type DataType))
+                        , SubDefinition (TypeListing (Hash.unsafeFromString "#åleruse") (FQN.fromString "åleruse") (Type DataType))
+                        , SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
                         , SubDefinition (TypeListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") (Type DataType))
                         , SubNamespace (NamespaceListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") NotAsked)
                         , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))

@@ -16,6 +16,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Json.Decode as Decode exposing (andThen, at, field)
 import Json.Decode.Extra exposing (when)
+import Lib.UnicodeSort as UnicodeSort
 import RemoteData exposing (RemoteData(..), WebData)
 
 
@@ -78,7 +79,7 @@ contentFetched (NamespaceListing _ fqn content) needleFqn =
 sortContent : NamespaceListingContent -> NamespaceListingContent
 sortContent content =
     let
-        sorter child =
+        toComparable child =
             case child of
                 SubNamespace (NamespaceListing _ fqn _) ->
                     String.toLower (FQN.toString fqn)
@@ -97,8 +98,11 @@ sortContent content =
 
                 SubDefinition (PatchListing name) ->
                     "zzz" ++ String.toLower name
+
+        sorter a b =
+            UnicodeSort.compareUnicode (toComparable a) (toComparable b)
     in
-    List.sortBy sorter content
+    List.sortWith sorter content
 
 
 
