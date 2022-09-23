@@ -1,6 +1,6 @@
 module Lib.UnicodeSort.UnicodeData exposing (decompositionMap)
 
-import Dict as Dict exposing (Dict)
+import Dict exposing (Dict)
 
 
 decompositionMap : Dict Int (List Int)

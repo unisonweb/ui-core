@@ -7,7 +7,7 @@ module Lib.UnicodeSort exposing (compareUnicode)
 -}
 
 import Char
-import Dict as Dict
+import Dict
 import Lib.UnicodeSort.UnicodeData exposing (decompositionMap)
 import String
 
