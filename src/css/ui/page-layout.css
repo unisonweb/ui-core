@@ -152,6 +152,7 @@
   padding: 0;
   width: 100%;
   align-items: normal;
+  overflow: auto;
 }
 
 /* allow columns to be edge to edge 
@@ -364,14 +365,17 @@
     gap: 1.5rem;
   }
 
-  .page.sidebar-edge-to-edge-layout .page-content,
-  .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.edge-to-edge-layout .page-content,
   .page.centered-layout .page-content,
   .page.presentation-layout .page-content {
     width: 100%;
     overflow: initial;
+  }
+
+  .page.sidebar-edge-to-edge-layout .page-content,
+  .page.sidebar-left-content-layout .page-content {
+    width: 100%;
   }
 
   .page-centered-layout .page-content,

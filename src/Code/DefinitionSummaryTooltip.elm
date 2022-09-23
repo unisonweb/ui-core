@@ -86,7 +86,7 @@ fetchDefinition _ =
 
 viewSummary : WebData DefinitionSummary -> Tooltip.Content msg
 viewSummary _ =
-    Tooltip.rich (div [] [ text "hi" ])
+    Tooltip.rich (div [] [ text "TODO" ])
 
 
 view : Model -> Reference -> Maybe (Tooltip msg)

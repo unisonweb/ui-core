@@ -16,19 +16,20 @@ module Code.Syntax exposing
     , view
     )
 
+-- import Html.Events exposing (onMouseEnter, onMouseLeave)
+
 import Code.Definition.Reference as Reference exposing (Reference)
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
-import Html.Events exposing (onMouseEnter, onMouseLeave)
 import Json.Decode as Decode exposing (andThen, at, field)
 import Json.Decode.Extra exposing (when)
 import Lib.Util as Util
 import List.Nonempty as NEL
 import UI.Click as Click exposing (Click)
-import UI.Tooltip as Tooltip exposing (Tooltip)
+import UI.Tooltip exposing (Tooltip)
 
 
 type Width
@@ -354,21 +355,24 @@ viewSegment linked (SyntaxSegment sType sText) =
                 (click r)
 
         ( LinkedWithTooltip l, Just r ) ->
-            let
-                content_ =
-                    case l.tooltip.toTooltip r of
-                        Just t ->
-                            Tooltip.view content t
+            {-
+               let
+                   content_ =
+                       case l.tooltip.toTooltip r of
+                           Just t ->
+                               Tooltip.view content t
 
-                        Nothing ->
-                            content
-            in
+                           Nothing ->
+                               content
+               in
+            -}
             Click.view
                 [ class className
-                , onMouseEnter (l.tooltip.toHoverStart r)
-                , onMouseLeave (l.tooltip.toHoverEnd r)
+
+                -- , onMouseEnter (l.tooltip.toHoverStart r)
+                -- , onMouseLeave (l.tooltip.toHoverEnd r)
                 ]
-                [ content_ ]
+                [ content ]
                 (l.toClick r)
 
         _ ->
