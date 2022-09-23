@@ -96,7 +96,7 @@ sortContent content =
                     String.toLower (FQN.toString fqn)
 
                 SubDefinition (PatchListing name) ->
-                    String.toLower name
+                    "zzz" ++ String.toLower name
     in
     List.sortBy sorter content
 

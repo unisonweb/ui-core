@@ -116,8 +116,8 @@ sortContent =
                         , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
                         , SubDefinition (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
                         , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
-                        , SubDefinition (PatchListing "patch")
                         , SubDefinition (TermListing (Hash.unsafeFromString "#y") (FQN.fromString "y") (Term PlainTerm))
+                        , SubDefinition (PatchListing "patch")
                         ]
 
                     result =
