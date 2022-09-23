@@ -1,6 +1,14 @@
 module Code.CodebaseTree.NamespaceListingTests exposing (..)
 
-import Code.CodebaseTree.NamespaceListing as NamespaceListing exposing (NamespaceListing(..), NamespaceListingChild(..))
+import Code.CodebaseTree.NamespaceListing as NamespaceListing
+    exposing
+        ( DefinitionListing(..)
+        , NamespaceListing(..)
+        , NamespaceListingChild(..)
+        )
+import Code.Definition.Category exposing (Category(..))
+import Code.Definition.Term exposing (TermCategory(..))
+import Code.Definition.Type exposing (TypeCategory(..))
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Expect
@@ -79,6 +87,37 @@ map =
 
                     result =
                         Maybe.map (NamespaceListing.map f) original
+                in
+                Expect.equal expected result
+        ]
+
+
+sortContent : Test
+sortContent =
+    describe "CodebaseTree.NamespaceListing.sort"
+        [ test "Sorts NamespaceContent alphabetically by FQN, case insensitive" <|
+            \_ ->
+                let
+                    content =
+                        [ SubDefinition (TypeListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") (Type DataType))
+                        , SubNamespace (NamespaceListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") NotAsked)
+                        , SubDefinition (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
+                        , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
+                        , SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
+                        , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
+                        ]
+
+                    expected =
+                        [ SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
+                        , SubDefinition (TypeListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") (Type DataType))
+                        , SubNamespace (NamespaceListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") NotAsked)
+                        , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
+                        , SubDefinition (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
+                        , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
+                        ]
+
+                    result =
+                        NamespaceListing.sortContent content
                 in
                 Expect.equal expected result
         ]

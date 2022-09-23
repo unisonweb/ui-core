@@ -6,6 +6,7 @@ module Code.CodebaseTree.NamespaceListing exposing
     , contentFetched
     , decode
     , map
+    , sortContent
     )
 
 import Code.Definition.Category as Category exposing (Category)
@@ -72,6 +73,32 @@ contentFetched (NamespaceListing _ fqn content) needleFqn =
     in
     (FQN.equals fqn needleFqn && RemoteData.isSuccess content)
         || (content |> RemoteData.map contentIncludes |> RemoteData.withDefault False)
+
+
+sortContent : NamespaceListingContent -> NamespaceListingContent
+sortContent content =
+    let
+        sorter child =
+            case child of
+                SubNamespace (NamespaceListing _ fqn _) ->
+                    String.toLower (FQN.toString fqn)
+
+                SubDefinition (TypeListing _ fqn _) ->
+                    String.toLower (FQN.toString fqn)
+
+                SubDefinition (TermListing _ fqn _) ->
+                    String.toLower (FQN.toString fqn)
+
+                SubDefinition (DataConstructorListing _ fqn) ->
+                    String.toLower (FQN.toString fqn)
+
+                SubDefinition (AbilityConstructorListing _ fqn) ->
+                    String.toLower (FQN.toString fqn)
+
+                SubDefinition (PatchListing name) ->
+                    String.toLower name
+    in
+    List.sortBy sorter content
 
 
 
@@ -181,4 +208,4 @@ decodeContent parentFqn =
                 , when decodeTag ((==) "PatchObject") (field "contents" decodePatchListing)
                 ]
     in
-    Decode.list decodeChild
+    Decode.list decodeChild |> Decode.map sortContent
