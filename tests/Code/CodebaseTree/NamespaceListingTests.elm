@@ -102,8 +102,10 @@ sortContent =
                         [ SubDefinition (TypeListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") (Type DataType))
                         , SubNamespace (NamespaceListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") NotAsked)
                         , SubDefinition (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
+                        , SubDefinition (PatchListing "patch")
                         , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
                         , SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
+                        , SubDefinition (TermListing (Hash.unsafeFromString "#y") (FQN.fromString "y") (Term PlainTerm))
                         , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
                         ]
 
@@ -114,6 +116,8 @@ sortContent =
                         , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
                         , SubDefinition (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
                         , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
+                        , SubDefinition (PatchListing "patch")
+                        , SubDefinition (TermListing (Hash.unsafeFromString "#y") (FQN.fromString "y") (Term PlainTerm))
                         ]
 
                     result =

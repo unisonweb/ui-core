@@ -235,8 +235,8 @@ viewDefinitionListing listing =
         AbilityConstructorListing _ fqn ->
             viewDefRow (AbilityConstructorReference (NameOnly fqn)) fqn "constructor" Icon.abilityConstructor
 
-        PatchListing _ ->
-            viewListingRow Nothing "Patch" "patch" Icon.patch
+        PatchListing p ->
+            viewListingRow Nothing p "patch" Icon.patch
 
 
 viewLoadedNamespaceListingContent : FQNSet -> NamespaceListingContent -> Html Msg
