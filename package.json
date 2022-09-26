@@ -25,7 +25,7 @@
     "elm-format": "^0.8.5",
     "elm-review": "^2.7.1",
     "elm-test": "^0.19.1-revision7",
-    "elm-watch": "^1.0.1",
+    "elm-watch": "^1.0.2",
     "glob": "^8.0.3",
     "prettier": "^2.6.2"
   }
