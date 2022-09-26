@@ -36,6 +36,7 @@
 
   position: absolute;
   opacity: 0;
+  display: none;
   pointer-events: none;
   z-index: var(--layer-tooltip);
 
@@ -254,6 +255,7 @@
   animation: fade-in 0.2s;
   pointer-events: auto;
   opacity: 1;
+  display: flex;
 }
 
 /* -- Content -------------------------------------------------------------- */
