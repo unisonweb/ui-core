@@ -22,7 +22,6 @@ code a {
   margin: 0 -0.25rem;
   border-radius: var(--border-radius-base);
   line-height: 1.4;
-  will-change: transform;
 }
 
 code a:hover {
