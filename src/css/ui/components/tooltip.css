@@ -1,5 +1,16 @@
 /* -- Core ------------------------------------------------------------------*/
 
+/*
+
+Overflow and position has some unique properties:
+https://stackoverflow.com/questions/40149221/tooltip-needs-to-be-in-overflow-auto-container-without-being-cut-off
+
+As does the will-change property when paired with overflow. If it is present on
+a parent element of the trigger (or the trigger itself), it will put the
+tooltip at a weirdly lower z-index and also trigger a scrollbar even if it is
+positioned absolute within the overflow container.
+ 
+*/
 .tooltip {
   /* @color-todo @inverse */
   --color-tooltip-text: var(--color-gray-lighten-60);
