@@ -37,6 +37,7 @@
   position: absolute;
   opacity: 0;
   pointer-events: none;
+  display: none;
   z-index: var(--layer-tooltip);
 
   --tooltip-border-size: 1px;
@@ -82,7 +83,7 @@
 /* -- Core ------------------------------------------------------------------*/
 
 .tooltip-bubble {
-  position: relative;
+  position: absolute;
   font-size: var(--font-size-medium);
   color: var(--color-tooltip-text);
   background: var(--color-tooltip-bg);
@@ -112,7 +113,7 @@
 
 /* -- Arrows and Positions --------------------------------------------------*/
 
-.tooltip.below {
+.tooltip.below .tooltip-bubble {
   padding-top: 0.5rem;
   top: 1.5rem;
 }
@@ -127,7 +128,7 @@
   border-bottom-color: var(--color-tooltip-border);
 }
 
-.tooltip.above {
+.tooltip.above .tooltip-bubble {
   padding-bottom: 0.5rem;
   bottom: 1.5rem;
 }
@@ -142,7 +143,7 @@
   border-top-color: var(--color-tooltip-border);
 }
 
-.tooltip:is(.below, .above).arrow-start {
+.tooltip:is(.below, .above).arrow-start .tooltip-bubble {
   left: 0;
 }
 
@@ -156,7 +157,7 @@
   );
 }
 
-.tooltip:is(.below, .above).arrow-end {
+.tooltip:is(.below, .above).arrow-end .tooltip-bubble {
   right: 0;
 }
 
@@ -170,7 +171,7 @@
   );
 }
 
-.tooltip.right-of {
+.tooltip.right-of .tooltip-bubble {
   padding-left: 0.5rem;
   left: 100%;
 }
@@ -185,7 +186,7 @@
   border-right-color: var(--color-tooltip-border);
 }
 
-.tooltip.left-of {
+.tooltip.left-of .tooltip-bubble {
   padding-right: 0.5rem;
   right: 100%;
 }
@@ -200,7 +201,7 @@
   border-left-color: var(--color-tooltip-border);
 }
 
-.tooltip:is(.right-of, .left-of).arrow-start {
+.tooltip:is(.right-of, .left-of).arrow-start .tooltip-bubble {
   top: 0;
 }
 
@@ -214,7 +215,7 @@
   );
 }
 
-.tooltip:is(.right-of, .left-of).arrow-end {
+.tooltip:is(.right-of, .left-of).arrow-end .tooltip-bubble {
   bottom: 0;
 }
 
@@ -228,7 +229,7 @@
   );
 }
 
-.tooltip:is(.right-of, .left-of).arrow-middle {
+.tooltip:is(.right-of, .left-of).arrow-middle .tooltip-bubble {
   transform: translateY(-25%);
 }
 
@@ -246,7 +247,6 @@
 
 .tooltip-trigger {
   display: inline-flex;
-  position: relative;
 }
 
 .tooltip-trigger.tooltip_show .tooltip,
@@ -254,6 +254,7 @@
   animation: fade-in 0.2s;
   pointer-events: auto;
   opacity: 1;
+  display: flex;
 }
 
 /* -- Content -------------------------------------------------------------- */
