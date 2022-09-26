@@ -246,7 +246,6 @@
 
 .tooltip-trigger {
   display: inline-flex;
-  position: relative;
 }
 
 .tooltip-trigger.tooltip_show .tooltip,
