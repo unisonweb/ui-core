@@ -256,6 +256,7 @@
 .workspace-item .content .workspace-item_definition-doc .doc-column {
   max-height: 12rem;
   overflow: hidden;
+  flex-grow: 1;
 }
 
 .workspace-item
@@ -302,6 +303,10 @@
   flex-direction: row;
   background: var(--color-workspace-item-source-bg);
   border-radius: var(--border-radius-base);
+}
+
+.workspace-item .content .definition-source > .rich {
+  flex-grow: 1;
 }
 
 .workspace-item .content .definition-source > .rich > code {
