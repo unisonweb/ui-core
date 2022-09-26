@@ -33,7 +33,7 @@
   font-size: var(--font-size-medium);
   /* gutter */
   box-shadow: inset 2rem 0 0 var(--color-workspace-item-gutter);
-  max-width: 100vw;
+  max-width: calc(100vw - 4rem);
   overflow-x: clip;
 
   --c-width_workspace-item_inner-content: min(
@@ -56,7 +56,7 @@
 }
 
 .workspace-item .content .inner-row .workspace-item_inner-content {
-  max-width: var(--c-width_workspace-item_inner-content);
+  width: var(--c-width_workspace-item_inner-content);
 }
 
 .workspace-item .gutter {
