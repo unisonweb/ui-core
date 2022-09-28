@@ -218,6 +218,10 @@
   justify-self: flex-end;
 }
 
+.sidebar .sidebar-toggle .tooltip-bubble {
+  right: 0;
+}
+
 .sidebar .sidebar-toggle_tooltip {
   display: flex;
   flex-direction: row;

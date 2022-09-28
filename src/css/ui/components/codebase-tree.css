@@ -89,8 +89,8 @@
   opacity: 1;
 }
 
-.codebase-tree .namespace-tree .node:hover .tooltip {
-  right: -0.3rem;
+.codebase-tree .namespace-tree .node:hover .tooltip-bubble {
+  right: -2rem;
   min-width: calc(var(--c-width_sidebar) - 1.5rem);
 }
 
