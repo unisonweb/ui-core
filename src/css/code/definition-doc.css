@@ -196,7 +196,10 @@
 
 .definition-doc .tooltip {
   min-width: 24rem;
-  top: 1rem;
+}
+
+.definition-doc .tooltip-bubble {
+  margin-top: 0.25rem;
 }
 
 .definition-doc .tooltip-bubble > section:only-child {
