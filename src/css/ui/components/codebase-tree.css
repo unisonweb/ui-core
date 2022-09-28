@@ -92,7 +92,7 @@
 .codebase-tree .namespace-tree .node:hover .tooltip-bubble {
   right: -2rem;
   min-width: calc(var(--c-width_sidebar) - 1.5rem);
-  margin-top: 1rem;
+  margin-top: 0.75rem;
 }
 
 .codebase-tree .namespace-tree .node .definition-category {
