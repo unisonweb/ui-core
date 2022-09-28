@@ -219,7 +219,17 @@
 }
 
 .sidebar .sidebar-toggle .tooltip-bubble {
-  right: 0;
+  width: max-content;
+}
+
+.sidebar .sidebar-toggle_collapse .tooltip-bubble {
+  /* @todo fix tooltips so we can better automatically position them*/
+  left: calc(var(--c-width_sidebar) - 2rem);
+}
+
+.sidebar .sidebar-toggle_expand .tooltip-bubble {
+  /* @todo fix tooltips so we can better automatically position them*/
+  left: calc(var(--c-width_sidebar) - 2rem);
 }
 
 .sidebar .sidebar-toggle_tooltip {
