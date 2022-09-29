@@ -1,9 +1,21 @@
 module Code.DefinitionSummaryTooltip exposing (Model, Msg, init, tooltipConfig, update)
 
-import Code.Definition.Reference as Reference exposing (Reference)
+import Code.CodebaseApi as CodebaseApi
+import Code.Config exposing (Config)
+import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
+import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorSummary)
+import Code.Definition.Reference as Reference exposing (Reference(..))
+import Code.Definition.Term as Term exposing (Term(..), TermSummary, termSignatureSyntax)
+import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceSyntax)
+import Code.FullyQualifiedName as FQN
+import Code.Hash as Hash
 import Code.Syntax as Syntax
-import Html exposing (div, text)
+import Json.Decode as Decode exposing (at, field)
+import Json.Decode.Extra exposing (when)
+import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
+import Lib.Util exposing (decodeTag)
 import RemoteData exposing (RemoteData(..), WebData)
+import UI
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
@@ -12,8 +24,10 @@ import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
 type DefinitionSummary
-    = Term
-    | Type
+    = TermHover TermSummary
+    | TypeHover TypeSummary
+    | DataConstructorHover DataConstructorSummary
+    | AbilityConstructorHover AbilityConstructorSummary
 
 
 type alias Model =
@@ -32,14 +46,16 @@ init =
 type Msg
     = ShowTooltip Reference
     | HideTooltip Reference
-    | FetchDefinitionFinished Reference (WebData DefinitionSummary)
+    | FetchDefinitionFinished Reference (HttpResult DefinitionSummary)
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update : Config -> Msg -> Model -> ( Model, Cmd Msg )
+update config msg model =
     case msg of
         ShowTooltip ref ->
-            ( Just ( ref, Loading ), fetchDefinition ref )
+            ( Just ( ref, Loading )
+            , fetchDefinition config ref |> HttpApi.perform config.api
+            )
 
         HideTooltip _ ->
             ( Nothing, Cmd.none )
@@ -48,7 +64,7 @@ update msg model =
             case model of
                 Just ( r, _ ) ->
                     if Reference.equals ref r then
-                        ( Just ( r, d ), Cmd.none )
+                        ( Just ( r, RemoteData.fromResult d ), Cmd.none )
 
                     else
                         ( Nothing, Cmd.none )
@@ -75,9 +91,13 @@ tooltipConfig toMsg model =
 -- EFFECTS
 
 
-fetchDefinition : Reference -> Cmd Msg
-fetchDefinition _ =
-    Cmd.none
+fetchDefinition : Config -> Reference -> ApiRequest DefinitionSummary Msg
+fetchDefinition { toApiEndpoint, perspective } ref =
+    CodebaseApi.Summary
+        { perspective = perspective, ref = ref }
+        |> toApiEndpoint
+        |> HttpApi.toRequest decodeSummary
+            (FetchDefinitionFinished ref)
 
 
 
@@ -85,8 +105,37 @@ fetchDefinition _ =
 
 
 viewSummary : WebData DefinitionSummary -> Tooltip.Content msg
-viewSummary _ =
-    Tooltip.rich (div [] [ text "TODO" ])
+viewSummary summary =
+    let
+        viewSummary_ s =
+            case s of
+                TermHover (Term _ _ { signature }) ->
+                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+
+                TypeHover (Type _ _ { source }) ->
+                    source
+                        |> typeSourceSyntax
+                        |> Maybe.map (Syntax.view Syntax.NotLinked)
+                        |> Maybe.withDefault UI.nothing
+
+                AbilityConstructorHover (AbilityConstructor _ { signature }) ->
+                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+
+                DataConstructorHover (DataConstructor _ { signature }) ->
+                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+    in
+    case summary of
+        NotAsked ->
+            Tooltip.text ""
+
+        Loading ->
+            Tooltip.text ""
+
+        Success sum ->
+            Tooltip.rich (viewSummary_ sum)
+
+        Failure _ ->
+            Tooltip.text ""
 
 
 view : Model -> Reference -> Maybe (Tooltip msg)
@@ -106,3 +155,117 @@ view model reference =
     model
         |> Maybe.andThen withMatchingReference
         |> Maybe.map view_
+
+
+
+-- JSON DECODERS
+
+
+decodeTypeSummary : Decode.Decoder DefinitionSummary
+decodeTypeSummary =
+    let
+        makeSummary fqn name_ source =
+            { fqn = fqn
+            , name = name_
+            , namespace = FQN.namespaceOf name_ fqn
+            , source = source
+            }
+    in
+    Decode.map TypeHover
+        (Decode.map3 Type
+            (at [ "namedType", "typeHash" ] Hash.decode)
+            (Type.decodeTypeCategory [ "namedType", "typeTag" ])
+            (Decode.map3 makeSummary
+                (at [ "namedType", "typeName" ] FQN.decode)
+                (field "bestFoundTypeName" FQN.decode)
+                (Type.decodeTypeSource [ "typeDef", "tag" ] [ "typeDef", "contents" ])
+            )
+        )
+
+
+decodeTermSummary : Decode.Decoder DefinitionSummary
+decodeTermSummary =
+    let
+        makeSummary fqn name_ signature =
+            { fqn = fqn
+            , name = name_
+            , namespace = FQN.namespaceOf name_ fqn
+            , signature = signature
+            }
+    in
+    Decode.map TermHover
+        (Decode.map3 Term
+            (at [ "namedTerm", "termHash" ] Hash.decode)
+            (Term.decodeTermCategory [ "namedTerm", "termTag" ])
+            (Decode.map3 makeSummary
+                (at [ "namedTerm", "termName" ] FQN.decode)
+                (field "bestFoundTermName" FQN.decode)
+                (Term.decodeSignature [ "namedTerm", "termType" ])
+            )
+        )
+
+
+decodeAbilityConstructorSummary : Decode.Decoder DefinitionSummary
+decodeAbilityConstructorSummary =
+    let
+        makeSummary fqn name_ signature =
+            { fqn = fqn
+            , name = name_
+            , namespace = FQN.namespaceOf name_ fqn
+            , signature = signature
+            }
+    in
+    Decode.map AbilityConstructorHover
+        (Decode.map2 AbilityConstructor
+            (at [ "namedTerm", "termHash" ] Hash.decode)
+            (Decode.map3 makeSummary
+                (at [ "namedTerm", "termName" ] FQN.decode)
+                (field "bestFoundTermName" FQN.decode)
+                (AbilityConstructor.decodeSignature [ "namedTerm", "termType" ])
+            )
+        )
+
+
+decodeDataConstructorSummary : Decode.Decoder DefinitionSummary
+decodeDataConstructorSummary =
+    let
+        makeSummary fqn name_ signature =
+            { fqn = fqn
+            , name = name_
+            , namespace = FQN.namespaceOf name_ fqn
+            , signature = signature
+            }
+    in
+    Decode.map DataConstructorHover
+        (Decode.map2 DataConstructor
+            (at [ "namedTerm", "termHash" ] Hash.decode)
+            (Decode.map3 makeSummary
+                (at [ "namedTerm", "termName" ] FQN.decode)
+                (field "bestFoundTermName" FQN.decode)
+                (DataConstructor.decodeSignature [ "namedTerm", "termType" ])
+            )
+        )
+
+
+decodeSummary : Decode.Decoder DefinitionSummary
+decodeSummary =
+    let
+        termTypeByHash hash =
+            if Hash.isAbilityConstructorHash hash then
+                "AbilityConstructor"
+
+            else if Hash.isDataConstructorHash hash then
+                "DataConstructor"
+
+            else
+                "Term"
+
+        decodeConstructorSuffix =
+            Decode.map termTypeByHash (at [ "contents", "namedTerm", "termHash" ] Hash.decode)
+    in
+    Decode.oneOf
+        [ when decodeConstructorSuffix ((==) "AbilityConstructor") (field "contents" decodeAbilityConstructorSummary)
+        , when decodeConstructorSuffix ((==) "DataConstructor") (field "contents" decodeDataConstructorSummary)
+        , when decodeTag ((==) "FoundTermResult") (field "contents" decodeTermSummary)
+        , when decodeTag ((==) "FoundTypeResult") (field "contents" decodeTypeSummary)
+        ]

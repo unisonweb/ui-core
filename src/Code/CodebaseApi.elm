@@ -32,6 +32,7 @@ type CodebaseEndpoint
         }
     | Browse { perspective : Perspective, ref : Maybe NamespaceRef }
     | Definition { perspective : Perspective, ref : Reference }
+    | Summary { perspective : Perspective, ref : Reference }
 
 
 type alias ToApiEndpoint =

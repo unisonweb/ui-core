@@ -12,6 +12,7 @@ module Code.Definition.Term exposing
     , isBuiltin
     , isBuiltinSource
     , termSignature
+    , termSignatureSyntax
     )
 
 import Code.Definition.Info exposing (Info)
@@ -89,6 +90,11 @@ termSignature source =
 
         Builtin sig ->
             sig
+
+
+termSignatureSyntax : TermSignature -> Syntax
+termSignatureSyntax (TermSignature syntax) =
+    syntax
 
 
 

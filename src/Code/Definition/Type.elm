@@ -9,6 +9,7 @@ module Code.Definition.Type exposing
     , decodeTypeSource
     , isBuiltin
     , isBuiltinSource
+    , typeSourceSyntax
     )
 
 import Code.Definition.Info exposing (Info)
@@ -71,6 +72,16 @@ isBuiltinSource source =
 
         Builtin ->
             True
+
+
+typeSourceSyntax : TypeSource -> Maybe Syntax
+typeSourceSyntax typeSource =
+    case typeSource of
+        Source syntax ->
+            Just syntax
+
+        Builtin ->
+            Nothing
 
 
 

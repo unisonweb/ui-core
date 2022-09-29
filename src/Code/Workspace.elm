@@ -239,14 +239,14 @@ update config viewMode msg ({ workspaceItems } as model) =
                 WorkspaceItem.DefinitionSummaryTooltipMsg tMsg ->
                     let
                         ( definitionSummaryTooltip, tCmd ) =
-                            DefinitionSummaryTooltip.update tMsg model.definitionSummaryTooltip
+                            DefinitionSummaryTooltip.update config tMsg model.definitionSummaryTooltip
                     in
                     ( { model | definitionSummaryTooltip = definitionSummaryTooltip }, Cmd.map DefinitionSummaryTooltipMsg tCmd, None )
 
         DefinitionSummaryTooltipMsg tMsg ->
             let
                 ( definitionSummaryTooltip, tCmd ) =
-                    DefinitionSummaryTooltip.update tMsg model.definitionSummaryTooltip
+                    DefinitionSummaryTooltip.update config tMsg model.definitionSummaryTooltip
             in
             ( { model | definitionSummaryTooltip = definitionSummaryTooltip }, Cmd.map DefinitionSummaryTooltipMsg tCmd, None )
 
