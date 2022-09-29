@@ -4,7 +4,7 @@ import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
 import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
 import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorSummary)
-import Code.Definition.Reference as Reference exposing (Reference(..))
+import Code.Definition.Reference as Reference exposing (Reference)
 import Code.Definition.Term as Term exposing (Term(..), TermSummary, termSignatureSyntax)
 import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceSyntax)
 import Code.FullyQualifiedName as FQN
