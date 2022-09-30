@@ -57,12 +57,12 @@ type SyntaxType
     | BooleanLiteral
     | Blank
     | Var
-    | TypeReference Hash
-    | TermReference Hash
+    | TypeReference Hash (Maybe FQN)
+    | TermReference Hash (Maybe FQN)
       -- +:|:+|++
     | Op SeqOp
-    | DataConstructorReference Hash
-    | AbilityConstructorReference Hash
+    | DataConstructorReference Hash (Maybe FQN)
+    | AbilityConstructorReference Hash (Maybe FQN)
     | AbilityBraces
       -- let|handle|in|where|match|with|cases|->|if|then|else|and|or
     | ControlKeyword
@@ -80,7 +80,7 @@ type SyntaxType
     | UseKeyword
     | UsePrefix
     | UseSuffix
-      -- TODO: This should be a HashQualified
+      -- TODO: Should this be a HashQualified ?
     | HashQualifier String
       -- ! '
     | DelayForceChar
@@ -149,16 +149,16 @@ numLines (Syntax segments) =
 reference : SyntaxSegment -> Maybe Reference
 reference (SyntaxSegment syntaxType _) =
     case syntaxType of
-        TypeReference h ->
+        TypeReference h fqn ->
             Just (Reference.TypeReference (HQ.HashOnly h))
 
-        TermReference h ->
+        TermReference h fqn ->
             Just (Reference.TermReference (HQ.HashOnly h))
 
-        AbilityConstructorReference h ->
+        AbilityConstructorReference h fqn ->
             Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
 
-        DataConstructorReference h ->
+        DataConstructorReference h fqn ->
             Just (Reference.DataConstructorReference (HQ.HashOnly h))
 
         _ ->
@@ -198,16 +198,16 @@ syntaxTypeToClassName sType =
         Var ->
             "var"
 
-        TypeReference _ ->
+        TypeReference _ _ ->
             "type-reference"
 
-        TermReference _ ->
+        TermReference _ _ ->
             "term-reference"
 
-        DataConstructorReference _ ->
+        DataConstructorReference _ _ ->
             "data-constructor-reference"
 
-        AbilityConstructorReference _ ->
+        AbilityConstructorReference _ _ ->
             "ability-constructor-reference"
 
         Op seqOp ->
@@ -294,16 +294,16 @@ viewSegment linked (SyntaxSegment sType sText) =
     let
         ref =
             case sType of
-                TypeReference h ->
+                TypeReference h fqn ->
                     Just (Reference.TypeReference (HQ.HashOnly h))
 
-                TermReference h ->
+                TermReference h fqn ->
                     Just (Reference.TermReference (HQ.HashOnly h))
 
-                AbilityConstructorReference h ->
+                AbilityConstructorReference h fqn ->
                     Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
 
-                DataConstructorReference h ->
+                DataConstructorReference h fqn ->
                     Just (Reference.DataConstructorReference (HQ.HashOnly h))
 
                 _ ->
@@ -315,19 +315,19 @@ viewSegment linked (SyntaxSegment sType sText) =
                     String.contains "." sText
             in
             case sType of
-                TypeReference _ ->
+                TypeReference _ _ ->
                     isFQN_
 
-                TermReference _ ->
+                TermReference _ _ ->
                     isFQN_
 
                 HashQualifier _ ->
                     isFQN_
 
-                DataConstructorReference _ ->
+                DataConstructorReference _ _ ->
                     isFQN_
 
-                AbilityConstructorReference _ ->
+                AbilityConstructorReference _ _ ->
                     isFQN_
 
                 _ ->
@@ -499,21 +499,25 @@ decodeTag =
 decodeSyntaxSegment : Decode.Decoder SyntaxSegment
 decodeSyntaxSegment =
     let
-        hashToReference hash =
+        hashToReference hash fqn =
             if Hash.isDataConstructorHash hash then
-                DataConstructorReference hash
+                DataConstructorReference hash fqn
 
             else if Hash.isAbilityConstructorHash hash then
-                AbilityConstructorReference hash
+                AbilityConstructorReference hash fqn
 
             else
-                TermReference hash
+                TermReference hash fqn
 
         decodeReference =
-            Decode.map hashToReference (at [ "annotation", "contents" ] Hash.decode)
+            Decode.map2 hashToReference
+                (at [ "annotation", "contents" ] Hash.decode)
+                (Decode.maybe (field "segment" FQN.decode))
 
         decodeTypeReference =
-            Decode.map TypeReference (at [ "annotation", "contents" ] Hash.decode)
+            Decode.map2 TypeReference
+                (at [ "annotation", "contents" ] Hash.decode)
+                (Decode.maybe (field "segment" FQN.decode))
 
         decodeHashQualifier =
             Decode.map HashQualifier (at [ "annotation", "contents" ] Decode.string)
