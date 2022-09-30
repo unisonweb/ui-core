@@ -150,16 +150,36 @@ reference : SyntaxSegment -> Maybe Reference
 reference (SyntaxSegment syntaxType _) =
     case syntaxType of
         TypeReference h fqn ->
-            Just (Reference.TypeReference (HQ.HashOnly h))
+            case fqn of
+                Just n ->
+                    Just (Reference.TypeReference (HQ.HashQualified n h))
+
+                Nothing ->
+                    Just (Reference.TypeReference (HQ.HashOnly h))
 
         TermReference h fqn ->
-            Just (Reference.TermReference (HQ.HashOnly h))
+            case fqn of
+                Just n ->
+                    Just (Reference.TermReference (HQ.HashQualified n h))
+
+                Nothing ->
+                    Just (Reference.TermReference (HQ.HashOnly h))
 
         AbilityConstructorReference h fqn ->
-            Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+            case fqn of
+                Just n ->
+                    Just (Reference.TermReference (HQ.HashQualified n h))
+
+                Nothing ->
+                    Just (Reference.TermReference (HQ.HashOnly h))
 
         DataConstructorReference h fqn ->
-            Just (Reference.DataConstructorReference (HQ.HashOnly h))
+            case fqn of
+                Just n ->
+                    Just (Reference.TermReference (HQ.HashQualified n h))
+
+                Nothing ->
+                    Just (Reference.TermReference (HQ.HashOnly h))
 
         _ ->
             Nothing
