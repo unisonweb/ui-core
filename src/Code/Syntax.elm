@@ -168,18 +168,18 @@ reference (SyntaxSegment syntaxType _) =
         AbilityConstructorReference h fqn ->
             case fqn of
                 Just n ->
-                    Just (Reference.TermReference (HQ.HashQualified n h))
+                    Just (Reference.AbilityConstructorReference (HQ.HashQualified n h))
 
                 Nothing ->
-                    Just (Reference.TermReference (HQ.HashOnly h))
+                    Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
 
         DataConstructorReference h fqn ->
             case fqn of
                 Just n ->
-                    Just (Reference.TermReference (HQ.HashQualified n h))
+                    Just (Reference.DataConstructorReference (HQ.HashQualified n h))
 
                 Nothing ->
-                    Just (Reference.TermReference (HQ.HashOnly h))
+                    Just (Reference.DataConstructorReference (HQ.HashOnly h))
 
         _ ->
             Nothing
@@ -315,16 +315,36 @@ viewSegment linked (SyntaxSegment sType sText) =
         ref =
             case sType of
                 TypeReference h fqn ->
-                    Just (Reference.TypeReference (HQ.HashOnly h))
+                    case fqn of
+                        Just n ->
+                            Just (Reference.TypeReference (HQ.HashQualified n h))
+
+                        Nothing ->
+                            Just (Reference.TypeReference (HQ.HashOnly h))
 
                 TermReference h fqn ->
-                    Just (Reference.TermReference (HQ.HashOnly h))
+                    case fqn of
+                        Just n ->
+                            Just (Reference.TermReference (HQ.HashQualified n h))
+
+                        Nothing ->
+                            Just (Reference.TermReference (HQ.HashOnly h))
 
                 AbilityConstructorReference h fqn ->
-                    Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+                    case fqn of
+                        Just n ->
+                            Just (Reference.AbilityConstructorReference (HQ.HashQualified n h))
+
+                        Nothing ->
+                            Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
 
                 DataConstructorReference h fqn ->
-                    Just (Reference.DataConstructorReference (HQ.HashOnly h))
+                    case fqn of
+                        Just n ->
+                            Just (Reference.DataConstructorReference (HQ.HashQualified n h))
+
+                        Nothing ->
+                            Just (Reference.DataConstructorReference (HQ.HashOnly h))
 
                 _ ->
                     Nothing
