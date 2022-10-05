@@ -150,6 +150,8 @@ view model reference =
 
         view_ d =
             Tooltip.tooltip (viewSummary d)
+                |> Tooltip.withArrow Tooltip.Start
+                |> Tooltip.withPosition Tooltip.Below
                 |> Tooltip.show
     in
     model
