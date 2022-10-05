@@ -200,7 +200,7 @@ decodeTermSummary =
             (Decode.map3 makeSummary
                 (field "fqn" FQN.decode)
                 (field "fqn" FQN.decode)
-                (Term.decodeSignature [ "summary" ])
+                (Term.decodeSignature [ "summary", "contents" ])
             )
         )
 
@@ -217,11 +217,11 @@ decodeAbilityConstructorSummary =
     in
     Decode.map AbilityConstructorHover
         (Decode.map2 AbilityConstructor
-            (at [ "namedTerm", "termHash" ] Hash.decode)
+            (field "hash" Hash.decode)
             (Decode.map3 makeSummary
-                (at [ "namedTerm", "termName" ] FQN.decode)
+                (field "fqn" FQN.decode)
                 (field "bestFoundTermName" FQN.decode)
-                (AbilityConstructor.decodeSignature [ "namedTerm", "termType" ])
+                (DataConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
 
@@ -238,11 +238,11 @@ decodeDataConstructorSummary =
     in
     Decode.map DataConstructorHover
         (Decode.map2 DataConstructor
-            (at [ "namedTerm", "termHash" ] Hash.decode)
+            (at [ "hash" ] Hash.decode)
             (Decode.map3 makeSummary
-                (at [ "namedTerm", "termName" ] FQN.decode)
-                (field "bestFoundTermName" FQN.decode)
-                (DataConstructor.decodeSignature [ "namedTerm", "termType" ])
+                (field "fqn" FQN.decode)
+                (field "fqn" FQN.decode)
+                (DataConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
 
@@ -261,11 +261,17 @@ decodeSummary =
                 "Term"
 
         decodeConstructorSuffix =
-            Decode.map termTypeByHash (at [ "contents", "namedTerm", "termHash" ] Hash.decode)
+            Decode.map termTypeByHash (at [ "hash" ] Hash.decode)
     in
     Decode.oneOf
-        [ when decodeConstructorSuffix ((==) "AbilityConstructor") (field "contents" decodeAbilityConstructorSummary)
-        , when decodeConstructorSuffix ((==) "DataConstructor") (field "contents" decodeDataConstructorSummary)
-        , when decodeTag ((==) "FoundTermResult") (field "contents" decodeTermSummary)
-        , when decodeTag ((==) "FoundTypeResult") (field "contents" decodeTypeSummary)
-        ]
+        [ decodeTermSummary ]
+
+
+
+{-
+   [ when decodeConstructorSuffix ((==) "AbilityConstructor") (field "contents" decodeAbilityConstructorSummary)
+   , when decodeConstructorSuffix ((==) "DataConstructor") (field "contents" decodeDataConstructorSummary)
+   , when decodeTag ((==) "FoundTermResult") (field "contents" decodeTermSummary)
+   , when decodeTag ((==) "FoundTypeResult") (field "contents" decodeTypeSummary)
+   ]
+-}
