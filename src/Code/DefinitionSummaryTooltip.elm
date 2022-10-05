@@ -109,7 +109,7 @@ viewSummary summary =
         viewBuiltinType name =
             span
                 []
-                [ span [] [ text "builtin " ]
+                [ span [ class "data-type-modifier" ] [ text "builtin " ]
                 , span [ class "data-type-keyword" ] [ text "type" ]
                 , span [ class "type-reference" ] [ text (" " ++ FQN.toString name) ]
                 ]

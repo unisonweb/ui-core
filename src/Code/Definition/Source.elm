@@ -106,7 +106,7 @@ viewTypeSource viewConfig source =
                 Type.Builtin ->
                     span
                         []
-                        [ span [] [ text "builtin " ]
+                        [ span [ class "data-type-modifier" ] [ text "builtin " ]
                         , span [ class "data-type-keyword" ] [ text "type" ]
                         ]
     in
