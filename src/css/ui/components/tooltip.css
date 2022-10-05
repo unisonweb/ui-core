@@ -108,7 +108,7 @@ positioned absolute within the overflow container.
   background: var(--color-tooltip-bg);
   padding: 0.5rem 0.75rem;
   border-radius: var(--border-radius-base);
-  min-width: 10rem;
+  min-width: max-content;
   border: var(--tooltip-border-size) solid var(--color-tooltip-border);
 }
 
@@ -188,6 +188,20 @@ positioned absolute within the overflow container.
   right: calc(
     var(--tooltip-arrow-edge-offset-horizontal) - var(--tooltip-border-size)
   );
+}
+
+.tooltip:is(.below, .above).arrow-middle .tooltip-bubble {
+  transform: translateX(-25%);
+}
+
+.tooltip:is(.below, .above).arrow-middle .tooltip-bubble:after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tooltip:is(.below, .above).arrow-middle .tooltip-bubble:before {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .tooltip.right-of .tooltip-bubble {
