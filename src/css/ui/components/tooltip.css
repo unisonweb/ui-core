@@ -36,7 +36,7 @@ positioned absolute within the overflow container.
   --color-tooltip-syntax-constructor: var(--color-blue-2);
   --color-tooltip-syntax-constructor-namespace: var(--color-blue-3);
   --color-tooltip-syntax-text: var(--color-green-2);
-  --color-tooltip-syntax-monochrome-base: var(--color-gray-lighten-40);
+  --color-tooltip-syntax-monochrome-base: var(--color-gray-lighten-30);
   --color-tooltip-syntax-monochrome-em: var(--color-gray-lighten-60);
   --color-tooltip-syntax-monochrome-subtle: var(--color-gray-lighten-20);
 
