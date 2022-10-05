@@ -2,9 +2,9 @@ module Code.DefinitionSummaryTooltip exposing (Model, Msg, init, tooltipConfig, 
 
 import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
-import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
+import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
 import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorSummary)
-import Code.Definition.Reference as Reference exposing (Reference)
+import Code.Definition.Reference as Reference exposing (Reference(..))
 import Code.Definition.Term as Term exposing (Term(..), TermSummary, termSignatureSyntax)
 import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceSyntax)
 import Code.FullyQualifiedName as FQN
@@ -13,9 +13,7 @@ import Code.Syntax as Syntax
 import Html exposing (div)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (at, field)
-import Json.Decode.Extra exposing (when)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
-import Lib.Util exposing (decodeTag)
 import RemoteData exposing (RemoteData(..), WebData)
 import UI
 import UI.Tooltip as Tooltip exposing (Tooltip)
@@ -98,7 +96,7 @@ fetchDefinition { toApiEndpoint, perspective } ref =
     CodebaseApi.Summary
         { perspective = perspective, ref = ref }
         |> toApiEndpoint
-        |> HttpApi.toRequest decodeSummary
+        |> HttpApi.toRequest (decodeSummary ref)
             (FetchDefinitionFinished ref)
 
 
@@ -177,12 +175,12 @@ decodeTypeSummary =
     in
     Decode.map TypeHover
         (Decode.map3 Type
-            (at [ "namedType", "typeHash" ] Hash.decode)
-            (Type.decodeTypeCategory [ "namedType", "typeTag" ])
+            (field "hash" Hash.decode)
+            (Type.decodeTypeCategory [ "tag" ])
             (Decode.map3 makeSummary
-                (at [ "namedType", "typeName" ] FQN.decode)
-                (field "bestFoundTypeName" FQN.decode)
-                (Type.decodeTypeSource [ "typeDef", "tag" ] [ "typeDef", "contents" ])
+                (field "fqn" FQN.decode)
+                (field "fqn" FQN.decode)
+                (Type.decodeTypeSource [ "summary", "tag" ] [ "summary", "contents" ])
             )
         )
 
@@ -224,7 +222,7 @@ decodeAbilityConstructorSummary =
             (field "hash" Hash.decode)
             (Decode.map3 makeSummary
                 (field "fqn" FQN.decode)
-                (field "bestFoundTermName" FQN.decode)
+                (field "fqn" FQN.decode)
                 (DataConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
@@ -251,31 +249,17 @@ decodeDataConstructorSummary =
         )
 
 
-decodeSummary : Decode.Decoder DefinitionSummary
-decodeSummary =
-    let
-        termTypeByHash hash =
-            if Hash.isAbilityConstructorHash hash then
-                "AbilityConstructor"
+decodeSummary : Reference -> Decode.Decoder DefinitionSummary
+decodeSummary ref =
+    case ref of
+        TermReference _ ->
+            decodeTermSummary
 
-            else if Hash.isDataConstructorHash hash then
-                "DataConstructor"
+        TypeReference _ ->
+            decodeTypeSummary
 
-            else
-                "Term"
+        AbilityConstructorReference _ ->
+            decodeAbilityConstructorSummary
 
-        decodeConstructorSuffix =
-            Decode.map termTypeByHash (at [ "hash" ] Hash.decode)
-    in
-    Decode.oneOf
-        [ decodeTermSummary ]
-
-
-
-{-
-   [ when decodeConstructorSuffix ((==) "AbilityConstructor") (field "contents" decodeAbilityConstructorSummary)
-   , when decodeConstructorSuffix ((==) "DataConstructor") (field "contents" decodeDataConstructorSummary)
-   , when decodeTag ((==) "FoundTermResult") (field "contents" decodeTermSummary)
-   , when decodeTag ((==) "FoundTypeResult") (field "contents" decodeTypeSummary)
-   ]
--}
+        DataConstructorReference _ ->
+            decodeDataConstructorSummary
