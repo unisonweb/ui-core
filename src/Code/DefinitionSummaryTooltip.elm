@@ -111,7 +111,7 @@ viewSummary summary =
                 []
                 [ span [] [ text "builtin " ]
                 , span [ class "data-type-keyword" ] [ text "type" ]
-                , span [ class "type-reference" ] [ text (FQN.toString name) ]
+                , span [ class "type-reference" ] [ text (" " ++ FQN.toString name) ]
                 ]
 
         viewSummary_ s =
