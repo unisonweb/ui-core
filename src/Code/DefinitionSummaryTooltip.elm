@@ -10,6 +10,8 @@ import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceS
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Syntax as Syntax
+import Html exposing (div)
+import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (at, field)
 import Json.Decode.Extra exposing (when)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
@@ -132,7 +134,7 @@ viewSummary summary =
             Tooltip.text ""
 
         Success sum ->
-            Tooltip.rich (viewSummary_ sum)
+            Tooltip.rich (div [ class "monochrome" ] [ viewSummary_ sum ])
 
         Failure _ ->
             Tooltip.text ""
