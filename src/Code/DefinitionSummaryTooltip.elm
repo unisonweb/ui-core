@@ -195,12 +195,12 @@ decodeTermSummary =
     in
     Decode.map TermHover
         (Decode.map3 Term
-            (at [ "namedTerm", "termHash" ] Hash.decode)
-            (Term.decodeTermCategory [ "namedTerm", "termTag" ])
+            (field "hash" Hash.decode)
+            (Term.decodeTermCategory [ "tag" ])
             (Decode.map3 makeSummary
-                (at [ "namedTerm", "termName" ] FQN.decode)
-                (field "bestFoundTermName" FQN.decode)
-                (Term.decodeSignature [ "namedTerm", "termType" ])
+                (field "fqn" FQN.decode)
+                (field "fqn" FQN.decode)
+                (Term.decodeSignature [ "summary" ])
             )
         )
 
