@@ -196,8 +196,8 @@ decodeTypeSummary =
             (field "hash" Hash.decode)
             (Type.decodeTypeCategory [ "tag" ])
             (Decode.map3 makeSummary
-                (field "fqn" FQN.decode)
-                (field "fqn" FQN.decode)
+                (field "displayName" FQN.decode)
+                (field "displayName" FQN.decode)
                 (Type.decodeTypeSource [ "summary", "tag" ] [ "summary", "contents" ])
             )
         )
@@ -218,8 +218,8 @@ decodeTermSummary =
             (field "hash" Hash.decode)
             (Term.decodeTermCategory [ "tag" ])
             (Decode.map3 makeSummary
-                (field "fqn" FQN.decode)
-                (field "fqn" FQN.decode)
+                (field "displayName" FQN.decode)
+                (field "displayName" FQN.decode)
                 (Term.decodeSignature [ "summary", "contents" ])
             )
         )
@@ -239,8 +239,8 @@ decodeAbilityConstructorSummary =
         (Decode.map2 AbilityConstructor
             (field "hash" Hash.decode)
             (Decode.map3 makeSummary
-                (field "fqn" FQN.decode)
-                (field "fqn" FQN.decode)
+                (field "displayName" FQN.decode)
+                (field "displayName" FQN.decode)
                 (DataConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
@@ -260,8 +260,8 @@ decodeDataConstructorSummary =
         (Decode.map2 DataConstructor
             (at [ "hash" ] Hash.decode)
             (Decode.map3 makeSummary
-                (field "fqn" FQN.decode)
-                (field "fqn" FQN.decode)
+                (field "displayName" FQN.decode)
+                (field "displayName" FQN.decode)
                 (DataConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
