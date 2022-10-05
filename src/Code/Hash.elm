@@ -143,29 +143,9 @@ toUrlString hash =
 
 toApiUrlString : Hash -> String
 toApiUrlString h =
-    let
-        re =
-            Maybe.withDefault Regex.never (Regex.fromString "#[d|a|](\\d+)$")
-
-        stripConstructorPositionFromHash =
-            Regex.replace re (always "")
-    in
-    if isAssumedBuiltin h then
-        h
-            |> toString
-            |> stripConstructorPositionFromHash
-            -- Change builtins like ##Nat to #Nat, so that when the backend adds
-            -- an extra #, it evens out to 2.
-            |> String.replace (prefix ++ prefix) prefix
-            |> Url.percentEncode
-
-    else
-        h
-            |> toString
-            |> stripConstructorPositionFromHash
-            -- Removes hash symbol completely since the backend adds 1 when querying
-            |> String.replace prefix ""
-            |> Url.percentEncode
+    h
+        |> toString
+        |> String.replace prefix apiPrefix
 
 
 prefix : String
@@ -175,6 +155,11 @@ prefix =
 
 urlPrefix : String
 urlPrefix =
+    "@"
+
+
+apiPrefix : String
+apiPrefix =
     "@"
 
 
