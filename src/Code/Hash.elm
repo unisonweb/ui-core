@@ -22,7 +22,6 @@ module Code.Hash exposing
 import Json.Decode as Decode
 import Lib.Util as Util
 import Regex
-import Url
 import Url.Parser
 
 
