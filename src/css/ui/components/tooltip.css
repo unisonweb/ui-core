@@ -39,7 +39,6 @@ positioned absolute within the overflow container.
   --color-syntax-monochrome-base: var(--color-gray-lighten-30);
   --color-syntax-monochrome-em: var(--color-gray-lighten-100);
   --color-syntax-monochrome-subtle: var(--color-gray-base);
-  );
 
   /* ActionMenu (should probably be moved out of tooltip) */
   --color-tooltip-item-text: var(--color-gray-lighten-60);
