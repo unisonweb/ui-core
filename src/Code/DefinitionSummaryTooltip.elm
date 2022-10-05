@@ -10,12 +10,11 @@ import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceS
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Syntax as Syntax
-import Html exposing (div)
+import Html exposing (div, span, text)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (at, field)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
 import RemoteData exposing (RemoteData(..), WebData)
-import UI
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
@@ -107,16 +106,24 @@ fetchDefinition { toApiEndpoint, perspective } ref =
 viewSummary : WebData DefinitionSummary -> Tooltip.Content msg
 viewSummary summary =
     let
+        viewBuiltinType name =
+            span
+                []
+                [ span [] [ text "builtin " ]
+                , span [ class "data-type-keyword" ] [ text "type" ]
+                , span [ class "type-reference" ] [ text (FQN.toString name) ]
+                ]
+
         viewSummary_ s =
             case s of
                 TermHover (Term _ _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
 
-                TypeHover (Type _ _ { source }) ->
+                TypeHover (Type _ _ { fqn, source }) ->
                     source
                         |> typeSourceSyntax
                         |> Maybe.map (Syntax.view Syntax.NotLinked)
-                        |> Maybe.withDefault UI.nothing
+                        |> Maybe.withDefault (viewBuiltinType fqn)
 
                 AbilityConstructorHover (AbilityConstructor _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
