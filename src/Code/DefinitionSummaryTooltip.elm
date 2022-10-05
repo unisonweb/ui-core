@@ -15,6 +15,7 @@ import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (at, field)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
 import RemoteData exposing (RemoteData(..), WebData)
+import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
@@ -133,7 +134,13 @@ viewSummary summary =
     in
     case summary of
         NotAsked ->
-            Tooltip.text ""
+            Tooltip.rich
+                (PlaceholderShape.text
+                    |> PlaceholderShape.withSize PlaceholderShape.Small
+                    |> PlaceholderShape.withLength PlaceholderShape.Small
+                    |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
+                    |> PlaceholderShape.view
+                )
 
         Loading ->
             Tooltip.text ""
