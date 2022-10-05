@@ -104,7 +104,7 @@ fetchDefinition { toApiEndpoint, perspective } ref =
 -- VIEW
 
 
-viewSummary : WebData DefinitionSummary -> Tooltip.Content msg
+viewSummary : WebData DefinitionSummary -> Maybe (Tooltip.Content msg)
 viewSummary summary =
     let
         viewBuiltinType name =
@@ -134,22 +134,24 @@ viewSummary summary =
     in
     case summary of
         NotAsked ->
-            Tooltip.rich
-                (PlaceholderShape.text
-                    |> PlaceholderShape.withSize PlaceholderShape.Small
-                    |> PlaceholderShape.withLength PlaceholderShape.Small
-                    |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
-                    |> PlaceholderShape.view
-                )
+            Nothing
 
         Loading ->
-            Tooltip.text ""
+            Just
+                (Tooltip.rich
+                    (PlaceholderShape.text
+                        |> PlaceholderShape.withSize PlaceholderShape.Small
+                        |> PlaceholderShape.withLength PlaceholderShape.Small
+                        |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
+                        |> PlaceholderShape.view
+                    )
+                )
 
         Success sum ->
-            Tooltip.rich (div [ class "monochrome" ] [ viewSummary_ sum ])
+            Just (Tooltip.rich (div [ class "monochrome" ] [ viewSummary_ sum ]))
 
         Failure _ ->
-            Tooltip.text ""
+            Nothing
 
 
 view : Model -> Reference -> Maybe (Tooltip msg)
@@ -163,14 +165,16 @@ view model reference =
                 Nothing
 
         view_ d =
-            Tooltip.tooltip (viewSummary d)
-                |> Tooltip.withArrow Tooltip.Start
-                |> Tooltip.withPosition Tooltip.Below
-                |> Tooltip.show
+            d
+                |> viewSummary
+                |> Maybe.map Tooltip.tooltip
+                |> Maybe.map (Tooltip.withArrow Tooltip.Start)
+                |> Maybe.map (Tooltip.withPosition Tooltip.Below)
+                |> Maybe.map Tooltip.show
     in
     model
         |> Maybe.andThen withMatchingReference
-        |> Maybe.map view_
+        |> Maybe.andThen view_
 
 
 
