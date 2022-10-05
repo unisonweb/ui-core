@@ -36,6 +36,10 @@ positioned absolute within the overflow container.
   --color-tooltip-syntax-constructor: var(--color-blue-2);
   --color-tooltip-syntax-constructor-namespace: var(--color-blue-3);
   --color-tooltip-syntax-text: var(--color-green-2);
+  --color-syntax-monochrome-base: var(--color-gray-lighten-30);
+  --color-syntax-monochrome-em: var(--color-gray-lighten-100);
+  --color-syntax-monochrome-subtle: var(--color-gray-base);
+  );
 
   /* ActionMenu (should probably be moved out of tooltip) */
   --color-tooltip-item-text: var(--color-gray-lighten-60);
@@ -89,6 +93,11 @@ positioned absolute within the overflow container.
     --color-tooltip-syntax-constructor-namespace
   );
   --color-syntax-text: var(--color-tooltip-syntax-text);
+  --color-syntax-monochrome-base: var(--color-tooltip-syntax-monochrome-base);
+  --color-syntax-monochrome-em: var(--color-tooltip-syntax-monochrome-em);
+  --color-syntax-monochrome-subtle: var(
+    --color-tooltip-syntax-monochrome-subtle
+  );
 }
 
 /* -- Core ------------------------------------------------------------------*/
