@@ -33,7 +33,7 @@ code a:active {
   transform: translate(0, 0.1rem);
 }
 
-code a:active .tooltip {
+code a:active .tooltip-trigger.tooltip_show .tooltip {
   display: none;
 }
 
