@@ -33,6 +33,10 @@ code a:active {
   transform: translate(0, 0.1rem);
 }
 
+code a:active .tooltip {
+  display: none;
+}
+
 .rich .fqn .sep {
   color: var(--color-syntax-subtle);
 }
