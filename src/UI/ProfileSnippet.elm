@@ -12,6 +12,7 @@ type Size
     = Small
     | Medium
     | Large
+    | Huge
 
 
 type alias User u =
@@ -56,6 +57,11 @@ large p =
     withSize Large p
 
 
+huge : ProfileSnippet u -> ProfileSnippet u
+huge p =
+    withSize Huge p
+
+
 withSize : Size -> ProfileSnippet u -> ProfileSnippet u
 withSize size p =
     { p | size = size }
@@ -85,6 +91,9 @@ view { size, user } =
                 Large ->
                     ( class "profile-snippet_size_large", avatar_ |> Avatar.large )
 
+                Huge ->
+                    ( class "profile-snippet_size_large", avatar_ |> Avatar.huge )
+
         ( name_, attrs ) =
             case name of
                 Just n ->
@@ -104,6 +113,11 @@ view { size, user } =
                     ]
 
                 Large ->
+                    [ name_
+                    , span [ class "profile-snippet_handle" ] [ text (UserHandle.toString handle) ]
+                    ]
+
+                Huge ->
                     [ name_
                     , span [ class "profile-snippet_handle" ] [ text (UserHandle.toString handle) ]
                     ]

@@ -12,6 +12,11 @@
   --c-size_profile-snippet_handle: var(--font-size-small);
 }
 
+.profile-snippet.profile-snippet_size_large {
+  --c-size_profile-snippet_name: var(--font-size-large);
+  --c-size_profile-snippet_handle: var(--font-size-medium);
+}
+
 .profile-snippet {
   --color_profile-snippet_text: var(--u-color_text);
   --color_profile-snippet_text_subdued: var(--u-color_text_subdued);
