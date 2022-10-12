@@ -64,7 +64,7 @@ update config msg model =
         FetchDefinitionFinished ref d ->
             case model of
                 Just ( r, _ ) ->
-                    if Reference.equals ref r then
+                    if Debug.log "eq" (Reference.equals ref r) then
                         ( Just ( r, RemoteData.fromResult d ), Cmd.none )
 
                     else
