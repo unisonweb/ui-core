@@ -75,6 +75,10 @@ update config msg model =
                         ( Nothing, Cmd.none )
 
                 Nothing ->
+                    let
+                        y =
+                            Debug.log "" "eh the model is nothing?"
+                    in
                     ( Nothing, Cmd.none )
 
 
