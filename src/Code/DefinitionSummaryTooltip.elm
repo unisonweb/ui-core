@@ -14,6 +14,7 @@ import Html exposing (div, span, text)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (at, field)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
+import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
 import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip exposing (Tooltip)
@@ -131,27 +132,28 @@ viewSummary summary =
 
                 DataConstructorHover (DataConstructor _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+
+        loading =
+            Tooltip.rich
+                (PlaceholderShape.text
+                    |> PlaceholderShape.withSize PlaceholderShape.Small
+                    |> PlaceholderShape.withLength PlaceholderShape.Small
+                    |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
+                    |> PlaceholderShape.view
+                )
     in
     case summary of
         NotAsked ->
-            Nothing
+            Just loading
 
         Loading ->
-            Just
-                (Tooltip.rich
-                    (PlaceholderShape.text
-                        |> PlaceholderShape.withSize PlaceholderShape.Small
-                        |> PlaceholderShape.withLength PlaceholderShape.Small
-                        |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
-                        |> PlaceholderShape.view
-                    )
-                )
+            Just loading
 
         Success sum ->
             Just (Tooltip.rich (div [ class "monochrome" ] [ viewSummary_ sum ]))
 
-        Failure _ ->
-            Nothing
+        Failure e ->
+            Just (Tooltip.text (Util.httpErrorToString e))
 
 
 view : Model -> Reference -> Maybe (Tooltip msg)
