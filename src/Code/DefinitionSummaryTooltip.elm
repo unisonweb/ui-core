@@ -64,10 +64,6 @@ update config msg model =
         FetchDefinitionFinished ref d ->
             case model of
                 Just ( r, _ ) ->
-                    let
-                        x =
-                            Debug.log "finished" ( ref, r )
-                    in
                     if Reference.equals ref r then
                         ( Just ( r, RemoteData.fromResult d ), Cmd.none )
 
@@ -75,10 +71,6 @@ update config msg model =
                         ( Nothing, Cmd.none )
 
                 Nothing ->
-                    let
-                        y =
-                            Debug.log "" "eh the model is nothing?"
-                    in
                     ( Nothing, Cmd.none )
 
 
