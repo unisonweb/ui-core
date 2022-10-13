@@ -45,6 +45,7 @@
     "Lib.SearchResults",
     "Lib.TreePath",
     "Lib.Color.Harmony",
+    "Lib.UnicodeSort",
     "Lib.HttpApi"
   ],
   "dependencies": {
