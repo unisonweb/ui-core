@@ -92,7 +92,7 @@ view { size, user } =
                     ( class "profile-snippet_size_large", avatar_ |> Avatar.large )
 
                 Huge ->
-                    ( class "profile-snippet_size_large", avatar_ |> Avatar.huge )
+                    ( class "profile-snippet_size_huge", avatar_ |> Avatar.huge )
 
         ( name_, attrs ) =
             case name of
