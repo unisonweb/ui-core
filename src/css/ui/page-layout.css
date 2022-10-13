@@ -466,7 +466,7 @@
     --c-width_sidebar: var(--c-width_sidebar_full);
   }
 
-  .page.sidebar-toggled .collapse-sidebar-button,
+  .page.sidebar-toggled .sidebar-footer,
   .page.sidebar-toggled .page-content {
     display: none;
   }
