@@ -12,7 +12,7 @@
   --c-size_profile-snippet_handle: var(--font-size-small);
 }
 
-.profile-snippet.profile-snippet_size_large {
+.profile-snippet.profile-snippet_size_huge {
   --c-size_profile-snippet_name: var(--font-size-large);
   --c-size_profile-snippet_handle: var(--font-size-medium);
 }
