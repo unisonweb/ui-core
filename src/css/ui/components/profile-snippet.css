@@ -36,11 +36,13 @@
   gap: 0.5rem;
 }
 
-.profile-snippet.profile-snippet_size_large {
+.profile-snippet.profile-snippet_size_large,
+.profile-snippet.profile-snippet_size_huge {
   gap: 0.75rem;
 }
 
-.profile-snippet.profile-snippet_size_large .profile-snippet_text {
+.profile-snippet.profile-snippet_size_large .profile-snippet_text,
+.profile-snippet.profile-snippet_size_huge .profile-snippet_text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
