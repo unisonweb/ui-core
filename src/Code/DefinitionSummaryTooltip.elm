@@ -14,7 +14,6 @@ import Html exposing (div, span, text)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode exposing (at, field)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
-import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
 import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip exposing (Tooltip)
