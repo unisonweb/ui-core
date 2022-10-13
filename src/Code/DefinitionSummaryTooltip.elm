@@ -152,8 +152,8 @@ viewSummary summary =
         Success sum ->
             Just (Tooltip.rich (div [ class "monochrome" ] [ viewSummary_ sum ]))
 
-        Failure e ->
-            Just (Tooltip.text (Util.httpErrorToString e))
+        Failure _ ->
+            Nothing
 
 
 view : Model -> Reference -> Maybe (Tooltip msg)
