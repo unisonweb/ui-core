@@ -54,7 +54,7 @@ button updateViewModeMsg viewMode =
                         (updateViewModeMsg Regular)
                         Icon.presentationSlash
                         "Exit Presentation Mode"
-                        |> Button.uncontained
+                        |> Button.subdued
     in
     button_ |> Button.small
 

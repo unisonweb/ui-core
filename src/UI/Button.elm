@@ -1,13 +1,14 @@
 module UI.Button exposing
     ( Button
     , Size(..)
-    , Type(..)
     , active
     , button
     , button_
-    , contained
-    , danger
+    , critical
+    , decorativeBlue
+    , decorativePurple
     , default
+    , emphasized
     , github
     , icon
     , iconThenLabel
@@ -23,11 +24,9 @@ module UI.Button exposing
     , notActive
     , positive
     , preventDefault
-    , primary
-    , share
     , small
     , stopPropagation
-    , uncontained
+    , subdued
     , view
     , withClick
     , withIconAfterLabel
@@ -35,7 +34,6 @@ module UI.Button exposing
     , withIconsBeforeAndAfterLabel
     , withIsActive
     , withSize
-    , withType
     )
 
 import Html exposing (Html, a, text)
@@ -55,7 +53,6 @@ type Content msg
 type alias Button msg =
     { click : Click msg
     , content : Content msg
-    , type_ : Type
     , color : Color
     , size : Size
     , isActive : Bool
@@ -89,7 +86,6 @@ map toMsg buttonA =
     in
     { click = Click.map toMsg buttonA.click
     , content = mapContent buttonA.content
-    , type_ = buttonA.type_
     , color = buttonA.color
     , size = buttonA.size
     , isActive = False
@@ -105,7 +101,6 @@ button_ : Click msg -> String -> Button msg
 button_ click label =
     { click = click
     , content = Label label
-    , type_ = Contained
     , color = Default
     , size = Medium
     , isActive = False
@@ -121,7 +116,6 @@ icon_ : Click msg -> I.Icon msg -> Button msg
 icon_ click icon__ =
     { click = click
     , content = Icon icon__
-    , type_ = Contained
     , color = Default
     , size = Medium
     , isActive = False
@@ -137,7 +131,6 @@ iconThenLabel_ : Click msg -> I.Icon msg -> String -> Button msg
 iconThenLabel_ click icon__ label =
     { click = click
     , content = IconThenLabel icon__ label
-    , type_ = Contained
     , color = Default
     , size = Medium
     , isActive = False
@@ -153,7 +146,6 @@ labelThenIcon_ : Click msg -> String -> I.Icon msg -> Button msg
 labelThenIcon_ click label icon__ =
     { click = click
     , content = LabelThenIcon label icon__
-    , type_ = Contained
     , color = Default
     , size = Medium
     , isActive = False
@@ -169,7 +161,6 @@ iconThenLabelThenIcon_ : Click msg -> I.Icon msg -> String -> I.Icon msg -> Butt
 iconThenLabelThenIcon_ click iconBefore label iconAfter =
     { click = click
     , content = IconThenLabelThenIcon iconBefore label iconAfter
-    , type_ = Contained
     , color = Default
     , size = Medium
     , isActive = False
@@ -195,7 +186,7 @@ preventDefault button__ =
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, type_, color, click, size, isActive } =
+view { content, color, click, size, isActive } =
     let
         ( contentType, content_ ) =
             case content of
@@ -216,7 +207,6 @@ view { content, type_, color, click, size, isActive } =
 
         attrs =
             [ class "button"
-            , class (typeToClassName type_)
             , class (colorToClassName color)
             , class (sizeToClassName size)
             , class contentType
@@ -317,32 +307,14 @@ withIconsBeforeAndAfterLabel iconBefore iconAfter button__ =
 -- VARIANTS
 
 
-type Type
-    = Contained
-    | Uncontained
-
-
 type Color
     = Default
-    | Primary
-    | Share
-    | Danger
+    | Emphasized
+    | Subdued
+    | Critical
     | Positive
-
-
-contained : Button clickMsg -> Button clickMsg
-contained button__ =
-    { button__ | type_ = Contained }
-
-
-uncontained : Button clickMsg -> Button clickMsg
-uncontained button__ =
-    { button__ | type_ = Uncontained }
-
-
-withType : Type -> Button clickMsg -> Button clickMsg
-withType type_ button__ =
-    { button__ | type_ = type_ }
+    | DecorativeBlue
+    | DecorativePurple
 
 
 withIsActive : Bool -> Button clickMsg -> Button clickMsg
@@ -370,19 +342,29 @@ default =
     withColor Default
 
 
-primary : Button clickMsg -> Button clickMsg
-primary =
-    withColor Primary
+subdued : Button clickMsg -> Button clickMsg
+subdued =
+    withColor Subdued
 
 
-share : Button clickMsg -> Button clickMsg
-share =
-    withColor Share
+emphasized : Button clickMsg -> Button clickMsg
+emphasized =
+    withColor Emphasized
 
 
-danger : Button clickMsg -> Button clickMsg
-danger =
-    withColor Danger
+decorativePurple : Button clickMsg -> Button clickMsg
+decorativePurple =
+    withColor DecorativePurple
+
+
+decorativeBlue : Button clickMsg -> Button clickMsg
+decorativeBlue =
+    withColor DecorativeBlue
+
+
+critical : Button clickMsg -> Button clickMsg
+critical =
+    withColor Critical
 
 
 positive : Button clickMsg -> Button clickMsg
@@ -452,30 +434,26 @@ sizeToClassName size =
             "large"
 
 
-typeToClassName : Type -> String
-typeToClassName type_ =
-    case type_ of
-        Contained ->
-            "contained"
-
-        Uncontained ->
-            "uncontained"
-
-
 colorToClassName : Color -> String
 colorToClassName color =
     case color of
         Default ->
             "default"
 
-        Primary ->
-            "primary"
+        Subdued ->
+            "subdued"
 
-        Share ->
-            "share"
+        Emphasized ->
+            "emphasized"
 
-        Danger ->
-            "danger"
+        DecorativePurple ->
+            "decorative-purple"
+
+        DecorativeBlue ->
+            "decorative-blue"
+
+        Critical ->
+            "critical"
 
         Positive ->
             "positive"
