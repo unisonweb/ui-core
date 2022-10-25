@@ -451,15 +451,8 @@
   .definition-doc .source.example,
   .definition-doc .source.eval,
   .definition-doc .source.signatures .signature {
-    width: 100%;
+    width: calc(100vw - 4rem);
     overflow: auto;
-  }
-
-  .definition-doc aside {
-    position: relative;
-    right: auto;
-    width: auto;
-    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
   }
 
   .definition-doc aside .source.code,
@@ -469,7 +462,7 @@
   .definition-doc aside .source.eval,
   .definition-doc aside .source.signatures .signature {
     max-width: none;
-    width: 100%;
+    width: calc(100vw - 4rem);
   }
 
   .definition-doc .doc_callout .source.code,
@@ -478,7 +471,7 @@
   .definition-doc .doc_callout .source.example,
   .definition-doc .doc_callout .source.eval,
   .definition-doc .doc_callout .source.signatures .signature {
-    width: 100%;
+    width: calc(100vw - 4rem);
   }
 
   .definition-doc .doc_callout .folded .source.code,
@@ -487,6 +480,13 @@
   .definition-doc .doc_callout .folded .source.example,
   .definition-doc .doc_callout .folded .source.eval,
   .definition-doc .doc_callout .folded .source.signatures .signature {
-    width: 100%;
+    width: calc(100vw - 4rem);
+  }
+
+  .definition-doc aside {
+    position: relative;
+    right: auto;
+    width: auto;
+    margin: 1.5rem 1.5rem 1.5rem 1.5rem;
   }
 }

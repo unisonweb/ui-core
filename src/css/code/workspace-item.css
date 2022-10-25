@@ -416,6 +416,7 @@
   }
 
   .workspace-item .content .definition-source > .rich > code {
+    width: calc(100vw - 4rem);
     overflow-x: auto;
   }
 }
