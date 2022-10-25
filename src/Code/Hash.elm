@@ -39,22 +39,27 @@ equals (Hash a) (Hash b) =
     a == b
 
 
-toString : Hash -> String
-toString (Hash h) =
+toString_ : String -> (String -> String) -> Hash -> String
+toString_ prefix_ encode (Hash h) =
     let
         p =
             if h.isAssumedBuiltin then
-                prefix ++ prefix
+                prefix_ ++ prefix_
 
             else
-                prefix
+                prefix_
 
         s =
             h.constructorSegment
-                |> Maybe.map (\s_ -> prefix ++ s_)
+                |> Maybe.map (\s_ -> encode prefix_ ++ s_)
                 |> Maybe.withDefault ""
     in
-    p ++ h.hash ++ s
+    p ++ encode h.hash ++ s
+
+
+toString : Hash -> String
+toString hash_ =
+    toString_ prefix identity hash_
 
 
 {-| Converts a Hash to a shortened (9 characters including the `#` character)
@@ -81,6 +86,16 @@ toShortString h =
                 String.left 9 s
     in
     h |> toString |> shorten
+
+
+toUrlString : Hash -> String
+toUrlString hash_ =
+    toString_ urlPrefix percentEncode hash_
+
+
+toApiUrlString : Hash -> String
+toApiUrlString hash_ =
+    toString_ apiPrefix percentEncode hash_
 
 
 {-| Assuming a Hash string, it strips _any number_ of prefixes at the beginning
@@ -188,29 +203,6 @@ fromUrlString str =
 
     else
         Nothing
-
-
-toUrlString : Hash -> String
-toUrlString (Hash h) =
-    let
-        p =
-            if h.isAssumedBuiltin then
-                urlPrefix ++ urlPrefix
-
-            else
-                urlPrefix
-
-        s =
-            h.constructorSegment
-                |> Maybe.map (\s_ -> urlPrefix ++ percentEncode s_)
-                |> Maybe.withDefault ""
-    in
-    p ++ percentEncode h.hash ++ s
-
-
-toApiUrlString : Hash -> String
-toApiUrlString h =
-    toUrlString h
 
 
 prefix : String
