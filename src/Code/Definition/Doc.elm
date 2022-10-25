@@ -477,7 +477,7 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                         viewRow cells =
                             tr [] (List.map viewCell (mergeWords " " cells))
                     in
-                    table [] [ tbody [] (List.map viewRow rows) ]
+                    div [ class "doc_table" ] [ table [] [ tbody [] (List.map viewRow rows) ] ]
 
                 Folded { foldId, isFolded, summary, details } ->
                     let
