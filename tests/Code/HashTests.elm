@@ -97,6 +97,16 @@ toUrlString =
                             |> Maybe.withDefault "fail"
                 in
                 Expect.equal "@foo%2F" result
+        , test "URI encodes the raw hash with a constructor suffix" <|
+            \_ ->
+                let
+                    result =
+                        "#foo/#bar"
+                            |> Hash.fromString
+                            |> Maybe.map Hash.toUrlString
+                            |> Maybe.withDefault "fail"
+                in
+                Expect.equal "@foo%2F@bar" result
         ]
 
 
@@ -123,6 +133,16 @@ toApiUrlString =
                             |> Maybe.withDefault "fail"
                 in
                 Expect.equal "@foo%2F" result
+        , test "URI encodes the raw hash with a constructor suffix" <|
+            \_ ->
+                let
+                    result =
+                        "#foo/#bar"
+                            |> Hash.fromString
+                            |> Maybe.map Hash.toApiUrlString
+                            |> Maybe.withDefault "fail"
+                in
+                Expect.equal "@foo%2F@bar" result
         ]
 
 

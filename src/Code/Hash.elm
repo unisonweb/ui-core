@@ -30,7 +30,7 @@ type Hash
     = Hash
         { hash : String
         , isAssumedBuiltin : Bool
-        , constructorSegment : Maybe String
+        , constructorSuffix : Maybe String
         }
 
 
@@ -50,8 +50,8 @@ toString_ prefix_ encode (Hash h) =
                 prefix_
 
         s =
-            h.constructorSegment
-                |> Maybe.map (\s_ -> encode prefix_ ++ s_)
+            h.constructorSuffix
+                |> Maybe.map (\s_ -> prefix_ ++ encode s_)
                 |> Maybe.withDefault ""
     in
     p ++ encode h.hash ++ s
@@ -150,11 +150,11 @@ fromString_ raw =
                 _ ->
                     Nothing
 
-        toHash ( hash, constructorSegment ) =
+        toHash ( hash, constructorSuffix ) =
             Hash
                 { isAssumedBuiltin = isAssumedBuiltin_
                 , hash = hash
-                , constructorSegment = constructorSegment
+                , constructorSuffix = constructorSuffix
                 }
     in
     raw
@@ -175,7 +175,7 @@ unsafeFromString raw =
             Hash
                 { hash = raw
                 , isAssumedBuiltin = False
-                , constructorSegment = Nothing
+                , constructorSuffix = Nothing
                 }
     in
     raw
