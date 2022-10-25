@@ -22,11 +22,16 @@ module Code.Hash exposing
 import Json.Decode as Decode
 import Lib.Util as Util
 import Regex
+import Url exposing (percentDecode, percentEncode)
 import Url.Parser
 
 
 type Hash
-    = Hash String
+    = Hash
+        { hash : String
+        , isAssumedBuiltin : Bool
+        , constructorSegment : Maybe String
+        }
 
 
 equals : Hash -> Hash -> Bool
@@ -34,11 +39,22 @@ equals (Hash a) (Hash b) =
     a == b
 
 
-{-| TODO: Should this remove the prefix?
--}
 toString : Hash -> String
-toString (Hash raw) =
-    raw
+toString (Hash h) =
+    let
+        p =
+            if h.isAssumedBuiltin then
+                prefix ++ prefix
+
+            else
+                prefix
+
+        s =
+            h.constructorSegment
+                |> Maybe.map (\s_ -> prefix ++ s_)
+                |> Maybe.withDefault ""
+    in
+    p ++ h.hash ++ s
 
 
 {-| Converts a Hash to a shortened (9 characters including the `#` character)
@@ -48,7 +64,7 @@ Example:
 
   - Hash "#cv93ajol371idlcd47do5g3nmj7...4s829ofv57mi19pls3l630" -> "#cv93ajol"
 
-Note that it does not shorten hashes that are assumed to be for builtins:
+Note, that it does not shorten hashes that are assumed to be builtins:
 
   - Hash "##Debug.watch" -> "##Debug.watch"
   - Hash "##IO.socketSend.impl" -> "##IO.SocketSend.impl"
@@ -90,10 +106,48 @@ stripHashPrefix s =
 fromString : String -> Maybe Hash
 fromString raw =
     if String.startsWith prefix raw then
-        Just (Hash raw)
+        fromString_ raw
 
     else
         Nothing
+
+
+fromString_ : String -> Maybe Hash
+fromString_ raw =
+    let
+        -- Checking a hash starts with 2 `#` characters is a weak heuristic for
+        -- builtins, but sometimes useful.
+        --
+        --   * Hash "##IO.socketSend.impl" -> True
+        --   * Hash "##Debug.watch" -> True
+        --   * Hash "#abc123def456" -> False
+        isAssumedBuiltin_ =
+            String.startsWith (prefix ++ prefix) raw
+
+        toSegments segments =
+            case segments of
+                [ h, c ] ->
+                    Just ( h, Just c )
+
+                [ h ] ->
+                    Just ( h, Nothing )
+
+                _ ->
+                    Nothing
+
+        toHash ( hash, constructorSegment ) =
+            Hash
+                { isAssumedBuiltin = isAssumedBuiltin_
+                , hash = hash
+                , constructorSegment = constructorSegment
+                }
+    in
+    raw
+        |> stripHashPrefix
+        |> String.split "#"
+        |> List.filter (\s -> String.length s > 0)
+        |> toSegments
+        |> Maybe.map toHash
 
 
 {-| !! Don't use this function outside of testing. It provides no guarantees
@@ -101,7 +155,17 @@ for the correctness of the Hash.
 -}
 unsafeFromString : String -> Hash
 unsafeFromString raw =
-    Hash raw
+    let
+        fallback =
+            Hash
+                { hash = raw
+                , isAssumedBuiltin = False
+                , constructorSegment = Nothing
+                }
+    in
+    raw
+        |> fromString_
+        |> Maybe.withDefault fallback
 
 
 isRawHash : String -> Bool
@@ -109,42 +173,44 @@ isRawHash str =
     String.startsWith prefix str || String.startsWith urlPrefix str
 
 
-{-| Checking a hash starts weith 2 `#` characters is a weak heuristic for
-builtins, but sometimes useful.
-
-  - Hash "##IO.socketSend.impl" -> True
-  - Hash "##Debug.watch" -> True
-  - Hash "#abc123def456" -> False
-
--}
 isAssumedBuiltin : Hash -> Bool
-isAssumedBuiltin hash_ =
-    hash_ |> toString |> String.startsWith "##"
+isAssumedBuiltin (Hash h) =
+    h.isAssumedBuiltin
 
 
 fromUrlString : String -> Maybe Hash
 fromUrlString str =
     if String.startsWith urlPrefix str then
         str
-            |> String.replace urlPrefix prefix
-            |> fromString
+            |> percentDecode
+            |> Maybe.map (String.replace urlPrefix prefix)
+            |> Maybe.andThen fromString
 
     else
         Nothing
 
 
 toUrlString : Hash -> String
-toUrlString hash =
-    hash
-        |> toString
-        |> String.replace prefix urlPrefix
+toUrlString (Hash h) =
+    let
+        p =
+            if h.isAssumedBuiltin then
+                urlPrefix ++ urlPrefix
+
+            else
+                urlPrefix
+
+        s =
+            h.constructorSegment
+                |> Maybe.map (\s_ -> urlPrefix ++ s_)
+                |> Maybe.withDefault ""
+    in
+    p ++ percentEncode h.hash ++ s
 
 
 toApiUrlString : Hash -> String
 toApiUrlString h =
-    h
-        |> toString
-        |> String.replace prefix apiPrefix
+    toUrlString h
 
 
 prefix : String
@@ -195,4 +261,5 @@ urlParser =
 
 decode : Decode.Decoder Hash
 decode =
-    Decode.map fromString Decode.string |> Decode.andThen (Util.decodeFailInvalid "Invalid Hash")
+    Decode.map fromString Decode.string
+        |> Decode.andThen (Util.decodeFailInvalid "Invalid Hash")

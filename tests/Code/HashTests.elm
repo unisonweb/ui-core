@@ -87,6 +87,42 @@ toUrlString =
                             |> Maybe.withDefault "fail"
                 in
                 Expect.equal "@foo" result
+        , test "URI encodes the raw hash" <|
+            \_ ->
+                let
+                    result =
+                        "#foo/"
+                            |> Hash.fromString
+                            |> Maybe.map Hash.toUrlString
+                            |> Maybe.withDefault "fail"
+                in
+                Expect.equal "@foo%2F" result
+        ]
+
+
+toApiUrlString : Test
+toApiUrlString =
+    describe "Hash.toApiUrlString"
+        [ test "Extracts the raw hash value in an API URL format" <|
+            \_ ->
+                let
+                    result =
+                        "#foo"
+                            |> Hash.fromString
+                            |> Maybe.map Hash.toApiUrlString
+                            |> Maybe.withDefault "fail"
+                in
+                Expect.equal "@foo" result
+        , test "URI encodes the raw hash" <|
+            \_ ->
+                let
+                    result =
+                        "#foo/"
+                            |> Hash.fromString
+                            |> Maybe.map Hash.toApiUrlString
+                            |> Maybe.withDefault "fail"
+                in
+                Expect.equal "@foo%2F" result
         ]
 
 
