@@ -202,7 +202,7 @@ toUrlString (Hash h) =
 
         s =
             h.constructorSegment
-                |> Maybe.map (\s_ -> urlPrefix ++ s_)
+                |> Maybe.map (\s_ -> urlPrefix ++ percentEncode s_)
                 |> Maybe.withDefault ""
     in
     p ++ percentEncode h.hash ++ s
