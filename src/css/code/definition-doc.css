@@ -81,7 +81,8 @@
 .definition-doc .folded-sources .source::-webkit-scrollbar,
 .definition-doc .source.example::-webkit-scrollbar,
 .definition-doc .source.eval::-webkit-scrollbar,
-.definition-doc .source.signatures .signature::-webkit-scrollbar {
+.definition-doc .source.signatures .signature::-webkit-scrollbar,
+.definition-doc .doc_table::-webkit-scrollbar {
   height: 0.375rem;
 }
 
@@ -90,7 +91,8 @@
 .definition-doc .folded-sources .source::-webkit-scrollbar-track,
 .definition-doc .source.example::-webkit-scrollbar-track,
 .definition-doc .source.eval::-webkit-scrollbar-track,
-.definition-doc .source.signatures .signature::-webkit-scrollbar-track {
+.definition-doc .source.signatures .signature::-webkit-scrollbar-track,
+.definition-doc .doc_table::-webkit-scrollbar-track {
   background: var(--u-color_scrollbar-track);
 }
 
@@ -99,7 +101,8 @@
 .definition-doc .folded-sources .source::-webkit-scrollbar-thumb,
 .definition-doc .source.example::-webkit-scrollbar-thumb,
 .definition-doc .source.eval::-webkit-scrollbar-thumb,
-.definition-doc .source.signatures .signature::-webkit-scrollbar-thumb {
+.definition-doc .source.signatures .signature::-webkit-scrollbar-thumb,
+.definition-doc .doc_table::-webkit-scrollbar-thumb {
   background-color: var(--u-color_scrollbar);
   border-radius: var(--border-radius-base);
 }
@@ -281,13 +284,13 @@
   background: var(--color-doc-callout-source-bg);
 }
 
-.definition-doc table {
+.definition-doc .doc_table table {
   margin-bottom: 1rem;
   table-layout: fixed;
   border-collapse: collapse;
 }
 
-.definition-doc table td {
+.definition-doc .doc_table table td {
   border: 1px solid var(--color-doc-content-border);
   padding: 0.5rem;
   vertical-align: top;
@@ -488,5 +491,12 @@
     right: auto;
     width: auto;
     margin: 1.5rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .definition-doc .doc_table {
+    width: calc(100vw - 4rem);
+    overflow: auto;
+    scrollbar-width: auto;
+    scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   }
 }
