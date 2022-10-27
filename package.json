@@ -8,6 +8,7 @@
     "build": "elm make",
     "check-css-vars": "scripts/check-css-vars.mjs",
     "watch": "elm-watch hot",
+    "check": "npm run build; npm run review; npm run test; npm run check-css-vars",
     "sha": "git rev-parse HEAD | cut -c 1-8"
   },
   "repository": {
