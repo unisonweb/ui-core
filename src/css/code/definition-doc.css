@@ -284,6 +284,11 @@
   background: var(--color-doc-callout-source-bg);
 }
 
+.definition-doc .doc_table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .definition-doc .doc_table table {
   margin-bottom: 1rem;
   table-layout: fixed;
@@ -495,7 +500,6 @@
 
   .definition-doc .doc_table {
     width: calc(100vw - 4rem);
-    overflow: auto;
     scrollbar-width: auto;
     scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   }
