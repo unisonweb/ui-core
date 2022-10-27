@@ -41,7 +41,7 @@ type ActionItems msg
 
 type ActionMenuTrigger msg
     = ButtonTrigger { icon : Maybe (Icon msg), label : String }
-    | CustomTrigger (Html msg)
+    | CustomTrigger { toHtml : Bool -> Html msg }
 
 
 type alias ActionMenu msg =
@@ -65,11 +65,11 @@ fromButton toggleMsg buttonLabel actionItems =
     }
 
 
-fromCustom : msg -> Html msg -> ActionItems msg -> ActionMenu msg
-fromCustom toggleMsg trigger actionItems =
+fromCustom : msg -> (Bool -> Html msg) -> ActionItems msg -> ActionMenu msg
+fromCustom toggleMsg toHtml actionItems =
     { toggleMsg = toggleMsg
     , state = Closed
-    , trigger = CustomTrigger trigger
+    , trigger = CustomTrigger { toHtml = toHtml }
     , actionItems = actionItems
     }
 
@@ -191,8 +191,8 @@ view { toggleMsg, state, trigger, actionItems } =
                     else
                         Button.view b_
 
-                CustomTrigger html ->
-                    html
+                CustomTrigger { toHtml } ->
+                    Click.view [] [ toHtml isOpen ] (Click.onClick toggleMsg)
 
         actionMenu_ =
             div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
