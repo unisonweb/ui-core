@@ -2,8 +2,9 @@ module UI.ActionMenu exposing
     ( ActionItem
     , ActionItems
     , ActionMenu
-    , actionMenu
     , close
+    , fromButton
+    , fromCustom
     , items
     , open
     , shouldBeOpen
@@ -38,11 +39,15 @@ type ActionItems msg
     = ActionItems (Nonempty (ActionItem msg))
 
 
+type ActionMenuTrigger msg
+    = ButtonTrigger { icon : Maybe (Icon msg), label : String }
+    | CustomTrigger (Html msg)
+
+
 type alias ActionMenu msg =
     { toggleMsg : msg
     , state : OpenState
-    , buttonIcon : Maybe (Icon msg)
-    , buttonLabel : String
+    , trigger : ActionMenuTrigger msg
     , actionItems : ActionItems msg
     }
 
@@ -51,12 +56,20 @@ type alias ActionMenu msg =
 -- CREATE
 
 
-actionMenu : msg -> String -> ActionItems msg -> ActionMenu msg
-actionMenu toggleMsg buttonLabel actionItems =
+fromButton : msg -> String -> ActionItems msg -> ActionMenu msg
+fromButton toggleMsg buttonLabel actionItems =
     { toggleMsg = toggleMsg
     , state = Closed
-    , buttonIcon = Nothing
-    , buttonLabel = buttonLabel
+    , trigger = ButtonTrigger { icon = Nothing, label = buttonLabel }
+    , actionItems = actionItems
+    }
+
+
+fromCustom : msg -> Html msg -> ActionItems msg -> ActionMenu msg
+fromCustom toggleMsg trigger actionItems =
+    { toggleMsg = toggleMsg
+    , state = Closed
+    , trigger = CustomTrigger trigger
     , actionItems = actionItems
     }
 
@@ -72,7 +85,16 @@ items actionItem actionItems =
 
 withButtonIcon : Icon msg -> ActionMenu msg -> ActionMenu msg
 withButtonIcon icon actionMenu_ =
-    { actionMenu_ | buttonIcon = Just icon }
+    case actionMenu_.trigger of
+        ButtonTrigger b ->
+            let
+                bt =
+                    ButtonTrigger { b | icon = Just icon }
+            in
+            { actionMenu_ | trigger = bt }
+
+        _ ->
+            actionMenu_
 
 
 withActionItem : ActionItem msg -> ActionMenu msg -> ActionMenu msg
@@ -146,24 +168,35 @@ viewItems (ActionItems items_) =
 
 
 view : ActionMenu msg -> Html msg
-view { toggleMsg, state, buttonIcon, buttonLabel, actionItems } =
+view { toggleMsg, state, trigger, actionItems } =
     let
-        button_ =
-            viewButton toggleMsg buttonLabel buttonIcon state
-
-        ( menu, isOpen, button ) =
+        ( menu, isOpen ) =
             case state of
                 Closed ->
-                    ( UI.nothing, False, button_ )
+                    ( UI.nothing, False )
 
                 Open ->
-                    ( viewItems actionItems, True, Button.active button_ )
+                    ( viewItems actionItems, True )
+
+        trigger_ =
+            case trigger of
+                ButtonTrigger { label, icon } ->
+                    let
+                        b_ =
+                            viewButton toggleMsg label icon state
+                    in
+                    if isOpen then
+                        b_ |> Button.active |> Button.view
+
+                    else
+                        Button.view b_
+
+                CustomTrigger html ->
+                    html
 
         actionMenu_ =
             div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
-                [ button |> Button.view
-                , menu
-                ]
+                [ trigger_, menu ]
     in
     if isOpen then
         onClickOutside toggleMsg actionMenu_
