@@ -227,7 +227,7 @@
 }
 
 .workspace-item .content .workspace-item_definition-doc .definition-doc {
-  max-width: calc(100vw - 4rem);
+  max-width: var(--border-radius-base);
 }
 
 .workspace-item
