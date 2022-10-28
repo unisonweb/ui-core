@@ -40,6 +40,10 @@
     var(--readable-column-width),
     calc(100vw - 4rem)
   );
+
+  --c-width_workspace-item_outer: calc(
+    var(--c-width_page-content_outer, 100vw) - 4rem
+  );
 }
 
 .workspace-item .inner-row {
@@ -228,6 +232,7 @@
 
 .workspace-item .content .workspace-item_definition-doc .definition-doc {
   max-width: var(--c-width_workspace-item_inner-content);
+  --c-width_doc_outer: var(--c-width_workspace-item_outer);
 }
 
 .workspace-item

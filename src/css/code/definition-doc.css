@@ -285,7 +285,7 @@
 }
 
 .definition-doc .doc_table {
-  max-width: 100%;
+  max-width: calc(var(--c-width_doc_outer, 100vw) - 4rem);
   overflow-x: auto;
 }
 
