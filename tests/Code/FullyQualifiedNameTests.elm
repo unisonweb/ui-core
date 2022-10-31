@@ -182,7 +182,7 @@ fromUrlString =
         , test "Supports . in segments (compose)" <|
             \_ ->
                 Expect.equal [ "a", "b", "." ] (segments (FQN.fromUrlString "a/b/."))
-        , test "Supports special characters n segments" <|
+        , test "Supports special characters in segments" <|
             \_ ->
                 let
                     results =
@@ -193,6 +193,7 @@ fromUrlString =
                         , segments (FQN.fromUrlString "a/b/!")
                         , segments (FQN.fromUrlString "a/b/-")
                         , segments (FQN.fromUrlString "a/b/==")
+                        , segments (FQN.fromUrlString "a/b/%F0%9F%90%A2") -- 🐢
                         ]
 
                     expects =
@@ -203,6 +204,7 @@ fromUrlString =
                         , [ "a", "b", "!" ]
                         , [ "a", "b", "-" ]
                         , [ "a", "b", "==" ]
+                        , [ "a", "b", "🐢" ]
                         ]
                 in
                 Expect.equal expects results
@@ -357,6 +359,22 @@ namespace =
                         FQN.fromString "map"
                 in
                 Expect.equal Nothing (FQN.namespace fqn)
+        ]
+
+
+toApiUrlString : Test
+toApiUrlString =
+    describe "FullyQualifiedName.toApiUrlString"
+        [ test "URI encodes the name" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map.🐢"
+
+                    result =
+                        FQN.toApiUrlString fqn
+                in
+                Expect.equal "base.List.map.%F0%9F%90%A2" result
         ]
 
 

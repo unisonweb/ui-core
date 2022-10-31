@@ -22,6 +22,8 @@ module Code.FullyQualifiedName exposing
     , snoc
     , stripPrefix
     , toApiUrlString
+    , toQueryString
+    , toQueryString_
     , toString
     , toUrlSegments
     , toUrlString
@@ -39,6 +41,7 @@ import List.Nonempty as NEL
 import String.Extra as StringE
 import UI.Click as Click exposing (Click)
 import Url
+import Url.Builder exposing (QueryParameter, string)
 import Url.Parser
 
 
@@ -134,6 +137,19 @@ toUrlSegments fqn =
     fqn
         |> segments
         |> NEL.map (Url.percentEncode >> urlEncodeSegmentDot)
+
+
+toQueryString : FQN -> QueryParameter
+toQueryString =
+    toQueryString_ "name"
+
+
+{-| This is intended to be used with elm/url's query param builder, which adds
+the percentEncoded, which is why we don't do that here
+-}
+toQueryString_ : String -> FQN -> QueryParameter
+toQueryString_ paramName fqn =
+    string paramName (toString fqn)
 
 
 toApiUrlString : FQN -> String
