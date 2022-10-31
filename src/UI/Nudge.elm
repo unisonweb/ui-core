@@ -54,6 +54,23 @@ pulsate nudge_ =
 
 
 
+-- MAP
+
+
+map : (a -> msg) -> Nudge a -> Nudge msg
+map toMsg nudgeA =
+    case nudgeA of
+        NoNudge ->
+            NoNudge
+
+        Nudge n ->
+            Nudge
+                { withTooltip = Maybe.map (Tooltip.map toMsg) n.withTooltip
+                , pulsate = n.pulsate
+                }
+
+
+
 -- VIEW
 
 

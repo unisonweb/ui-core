@@ -1,0 +1,107 @@
+/* -- Page Header ---------------------------------------------------------- */
+
+/* @color-todo @inverse */
+.page-header.view-mode_regular {
+  --c-color_page-header_text: var(--color-gray-lighten-100);
+  --c-color_page-header_bg: var(--color-gray-darken-25);
+  --c-color_page-header_subtle-text: var(--color-gray-lighten-20);
+  --c-color_page-header_subtle-text-em: var(--color-gray-lighten-50);
+  --c-color_page-header_context-unison-share-text: var(--color-purple-4);
+  --c-color_page-header_context-unison-local-text: var(--color-pink-3);
+  --c-color_page-header_border: transparent;
+  --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
+  --u-color_c_navigation-item: var(--color-transparent);
+  --u-color_c_navigation-item_hovered: var(--color-gray-base);
+  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-lighten-60);
+  --u-color_c_navigation-item: var(--color-transparent);
+  --u-color_c_navigation-item_selected: var(--color-gray-darken-20);
+  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
+}
+
+/* In Presentation Mode the header gets a light theme treatment and made semi
+ * transparent */
+.page-header.view-mode_presentation {
+  --c-color_page-header_text: var(--u-color_text);
+  --c-color_page-header_bg: var(--u-color_background);
+  --c-color_page-header_subtle-text: var(--u-color_text_very-subdued);
+  --c-color_page-header_subtle-text-em: var(--u-color_text_subdued);
+  --c-color_page-header_context-unison-share-text: var(--color-purple-4);
+  --c-color_page-header_context-unison-local-text: var(--color-pink-3);
+  --c-color_page-header_border: transparent;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.page-header.view-mode_presentation .navigation {
+  --u-color_c_navigation-item_selected: var(--color-gray-lighten-50);
+  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-20);
+  --u-color_c_navigation-item_hovered: var(--color-gray-lighten-40);
+  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-base);
+}
+
+.page-header.view-mode_presentation:hover {
+  opacity: 1;
+}
+
+.page-header {
+  grid-area: app-header;
+  padding: 0 1rem 0 1.5rem;
+  background: var(--c-color_page-header_bg);
+  color: var(--c-color_page-header_text);
+  border-bottom: 1px solid var(--c-color_page-header_border);
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  height: var(--app-header-height);
+}
+
+/* We only overwrite the button colors for Regular, since Presentation just
+ * uses the default */
+.page-header.view-mode_regular .button {
+  /* @color-todo @inverse */
+  --color-button-default-text: var(--color-gray-lighten-30);
+  --color-button-default-icon: var(--color-gray-lighten-20);
+  --color-button-default-bg: var(--color-gray-base);
+  --color-button-default-hover-text: var(--color-gray-lighten-50);
+  --color-button-default-hover-icon: var(--color-gray-lighten-30);
+  --color-button-default-hover-bg: var(--color-gray-base);
+}
+
+.page-header .page-header_page-context {
+}
+
+.page-header .navigation {
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.page-header .navigation .nav-item {
+  border-radius: 1rem;
+  height: 2rem;
+  font-size: var(--font-size-medium);
+  padding: 0 1rem;
+  transition: background 0.2s;
+  line-height: 1;
+}
+
+.page-header .navigation .nav-item.selected .nav-item_content {
+  font-weight: bold;
+}
+
+.page-header .page-header_right-side {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  justify-self: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* -- Responsive ----------------------------------------------------------- */
+
+@media only screen and (--u-viewport_max-lg) {
+  .page-header {
+    padding: 0 1rem;
+  }
+}

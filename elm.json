@@ -19,6 +19,7 @@
     "UI.FoldToggle",
     "UI.PageLayout",
     "UI.PageContent",
+    "UI.PageHeader",
     "UI.Avatar",
     "UI.Click",
     "UI.Icon",

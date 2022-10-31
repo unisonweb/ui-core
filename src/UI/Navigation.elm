@@ -2,6 +2,7 @@ module UI.Navigation exposing
     ( NavItem
     , Navigation
     , empty
+    , map
     , navItem
     , navItemWithIcon
     , navItemWithNudge
@@ -80,6 +81,10 @@ empty =
     WithoutSelected []
 
 
+
+-- MODIFY
+
+
 withItems : List (NavItem msg) -> NavItem msg -> List (NavItem msg) -> Navigation msg -> Navigation msg
 withItems before selected after _ =
     WithSelected (Zipper.from before selected after)
@@ -88,6 +93,34 @@ withItems before selected after _ =
 withNoSelectedItems : List (NavItem msg) -> Navigation msg -> Navigation msg
 withNoSelectedItems items _ =
     WithoutSelected items
+
+
+
+-- MAP
+
+
+mapNavItem : (a -> msg) -> NavItem a -> NavItem msg
+mapNavItem toMsg navItemA =
+    { icon = Maybe.map (Icon.map toMsg) navItemA.icon
+    , label = navItemA.label
+    , nudge = Nudge.map toMsg navItemA.nudge
+    , click = Click.map toMsg navItemA.click
+    , tooltip = Maybe.map (Tooltip.map toMsg) navItemA.tooltip
+    }
+
+
+map : (a -> msg) -> Navigation a -> Navigation msg
+map toMsg navA =
+    case navA of
+        WithoutSelected items ->
+            WithoutSelected (List.map (mapNavItem toMsg) items)
+
+        WithSelected items ->
+            WithSelected (Zipper.map (mapNavItem toMsg) items)
+
+
+
+-- VIEW
 
 
 viewItem : Bool -> NavItem msg -> Html msg
