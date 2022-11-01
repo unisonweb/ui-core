@@ -78,6 +78,7 @@
 }
 
 .page-header .page-header_page-context {
+  display: flex;
   height: 100%;
 }
 
