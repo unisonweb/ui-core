@@ -72,7 +72,11 @@
   --color-button-default-hover-bg: var(--color-gray-base);
 }
 
-.page-header .page-header_page-context {
+.page-header .page-header_page-context.is-active,
+.page-header .navigation .nav-item.selected {
+  border-bottom: 4px solid var(--c-color_page-header_active-nav-item);
+}
+
 }
 
 .page-header .navigation {
@@ -92,10 +96,6 @@
 
 .page-header .navigation .nav-item .icon {
   color: var(--c-color_page-header_subtle-text);
-}
-
-.page-header .navigation .nav-item.selected {
-  border-bottom: 4px solid var(--c-color_page-header_active-nav-item);
 }
 
 .page-header .page-header_right-side {
