@@ -44,7 +44,7 @@
 }
 
 .page-header {
-  grid-area: app-header;
+  grid-area: page-header;
   padding: 0 1rem 0 1.5rem;
   background: var(--c-color_page-header_bg);
   color: var(--c-color_page-header_text);
