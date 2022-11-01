@@ -23,6 +23,11 @@
   --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
 }
 
+.page-header.view-mode_regular .profile-snippet {
+  --color_profile-snippet_text: var(--c-color_page-header_text);
+  --color_profile-snippet_text_subdued: var(--c-color_page-header_subtle-text);
+}
+
 /* In Presentation Mode the header gets a light theme treatment and made semi
  * transparent */
 .page-header.view-mode_presentation {
@@ -72,7 +77,7 @@
   --color-button-default-hover-bg: var(--color-gray-base);
 }
 
-.page-header .page-header_page-context.is-active,
+.page-header .page-header_page-context_is-active,
 .page-header .navigation .nav-item.selected {
   border-bottom: 4px solid var(--c-color_page-header_active-nav-item);
 }
