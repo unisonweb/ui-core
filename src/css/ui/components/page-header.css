@@ -58,7 +58,7 @@
   padding: 0 1rem 0 1.5rem;
   background: var(--c-color_page-header_bg);
   color: var(--c-color_page-header_text);
-  box-shadow: inset 0 -1px 0 0 var(--c-color_page-header_active-nav-item);
+  box-shadow: inset 0 -1px 0 0 var(--c-color_page-header_border);
   display: flex;
   align-items: center;
   font-size: 1rem;
@@ -75,6 +75,10 @@
   --color-button-default-hover-text: var(--color-gray-lighten-50);
   --color-button-default-hover-icon: var(--color-gray-lighten-30);
   --color-button-default-hover-bg: var(--color-gray-base);
+}
+
+.page-header .page-header_page-context {
+  height: 100%;
 }
 
 .page-header .page-header_page-context_is-active,
