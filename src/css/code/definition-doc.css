@@ -499,9 +499,13 @@
   }
 
   .definition-doc .doc_table {
-    max-width: inherit;
-    width: calc(100vw - 4rem);
     scrollbar-width: auto;
     scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+  }
+}
+
+@media only screen and (--u-viewport_max-md) {
+  .definition-doc .doc_table {
+    max-width: inherit;
   }
 }
