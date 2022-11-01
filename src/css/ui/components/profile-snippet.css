@@ -20,7 +20,6 @@
 .profile-snippet {
   --color_profile-snippet_text: var(--u-color_text);
   --color_profile-snippet_text_subdued: var(--u-color_text_subdued);
-  --color_profile-snippet_border: var(--u-color_border_subdued);
 
   display: flex;
   flex-direction: row;

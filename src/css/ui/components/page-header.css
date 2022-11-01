@@ -8,7 +8,12 @@
   --c-color_page-header_subtle-text-em: var(--color-gray-lighten-50);
   --c-color_page-header_context-unison-share-text: var(--color-purple-4);
   --c-color_page-header_context-unison-local-text: var(--color-pink-3);
-  --c-color_page-header_border: transparent;
+  --c-color_page-header_border: var(--color-gray-darken-10);
+  --c-color_page-header_active-nav-item: var(--color-blue-3);
+
+  --color_profile-snippet_text: var(--c-color_page-header_text);
+  --color_profile-snippet_text_subdued: var(--c-color_page-header_subtle-text);
+
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_hovered: var(--color-gray-base);
@@ -85,8 +90,12 @@
   line-height: 1;
 }
 
-.page-header .navigation .nav-item.selected .nav-item_content {
-  font-weight: bold;
+.page-header .navigation .nav-item .icon {
+  color: var(--c-color_page-header_subtle-text);
+}
+
+.page-header .navigation .nav-item.selected {
+  border-bottom: 4px solid var(--c-color_page-header_active-nav-item);
 }
 
 .page-header .page-header_right-side {
