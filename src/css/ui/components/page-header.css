@@ -58,7 +58,7 @@
   padding: 0 1rem 0 1.5rem;
   background: var(--c-color_page-header_bg);
   color: var(--c-color_page-header_text);
-  border-bottom: 1px solid var(--c-color_page-header_border);
+  box-shadow: inset 0 -1px 0 0 var(--c-color_page-header_active-nav-item);
   display: flex;
   align-items: center;
   font-size: 1rem;
@@ -79,7 +79,7 @@
 
 .page-header .page-header_page-context_is-active,
 .page-header .navigation .nav-item.selected {
-  border-bottom: 4px solid var(--c-color_page-header_active-nav-item);
+  box-shadow: inset 0 -4px 0 0 var(--c-color_page-header_active-nav-item);
 }
 
 .page-header .navigation {
