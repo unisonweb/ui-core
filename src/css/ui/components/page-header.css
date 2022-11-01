@@ -10,10 +10,13 @@
   --c-color_page-header_context-unison-local-text: var(--color-pink-3);
   --c-color_page-header_border: var(--color-gray-darken-10);
   --c-color_page-header_active-nav-item: var(--color-blue-3);
+}
 
+.page-header.view-mode_regular .profile-snippet {
   --color_profile-snippet_text: var(--c-color_page-header_text);
   --color_profile-snippet_text_subdued: var(--c-color_page-header_subtle-text);
-
+}
+.page-header.view-mode_regular .navigation {
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_hovered: var(--color-transparent);
@@ -21,11 +24,6 @@
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_selected: var(--color-transparent);
   --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
-}
-
-.page-header.view-mode_regular .profile-snippet {
-  --color_profile-snippet_text: var(--c-color_page-header_text);
-  --color_profile-snippet_text_subdued: var(--c-color_page-header_subtle-text);
 }
 
 /* In Presentation Mode the header gets a light theme treatment and made semi
