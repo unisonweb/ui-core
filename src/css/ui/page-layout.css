@@ -16,7 +16,7 @@
   grid-template-columns: var(--c-width_sidebar) auto;
   grid-template-areas: "main-sidebar page-content";
 
-  --c-width_page-content_outer: calc(100vw - var(--c-width_sidebar_regular));
+  --c-width_page-content_outer: calc(100vw - var(--c-width_sidebar));
 }
 
 .page.edge-to-edge-layout {
