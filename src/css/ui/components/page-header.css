@@ -11,6 +11,7 @@
   --c-color_page-header_border: var(--color-gray-darken-10);
   --c-color_page-header_active-nav-item: var(--color-blue-3);
   --c-color_page-header_hover-nav-item: var(--color-gray-base);
+  --c-height_page-header: 3.5rem;
 }
 
 .page-header.view-mode_regular .profile-snippet {
@@ -62,7 +63,7 @@
   display: flex;
   align-items: center;
   font-size: 1rem;
-  height: var(--app-header-height);
+  height: var(--c-height_page-header);
 }
 
 /* We only overwrite the button colors for Regular, since Presentation just
@@ -80,7 +81,7 @@
 .page-header .page-header_page-context {
   display: flex;
   padding: 0 1.5rem;
-  height: 100%;
+  height: var(--c-height_page-header);
 }
 
 .page-header .page-header_page-context_is-active,
@@ -102,9 +103,8 @@
   border-radius: 1rem;
   font-size: var(--font-size-medium);
   padding: 0 1.5rem;
-  line-height: 1;
-  height: 100%;
-  flex: 1;
+  height: var(--c-height_page-header);
+  display: flex;
   border-radius: 0;
 }
 
