@@ -92,7 +92,7 @@ viewRightSide items =
 view : PageHeader msg -> Html msg
 view pageHeader_ =
     header
-        [ classList [ ( "page-header", True ) ]
+        [ class "page-header"
         , class (ViewMode.toCssClass pageHeader_.viewMode)
         ]
         [ viewPageContext pageHeader_.context
