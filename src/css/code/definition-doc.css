@@ -499,6 +499,7 @@
   }
 
   .definition-doc .doc_table {
+    width: calc(100vw - 4rem);
     scrollbar-width: auto;
     scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   }
