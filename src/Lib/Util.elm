@@ -12,6 +12,15 @@ import Url exposing (Url)
 -- Various utility functions and helpers
 
 
+possessive : String -> String
+possessive s =
+    if String.endsWith "s" s then
+        s ++ "'"
+
+    else
+        s ++ "'s"
+
+
 delayMsg : Float -> msg -> Cmd msg
 delayMsg delay msg =
     Task.perform (\_ -> msg) (Process.sleep delay)
