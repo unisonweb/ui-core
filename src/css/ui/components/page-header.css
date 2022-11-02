@@ -88,8 +88,9 @@
 .page-header .navigation .nav-item.selected {
   box-shadow: inset 0 -4px 0 0 var(--c-color_page-header_active-nav-item);
 }
-.page-header .page-header_page-context:hover,
-.page-header .navigation .nav-item:hover {
+.page-header
+  .page-header_page-context:not(.page-header_page-context_is-active):hover,
+.page-header .navigation .nav-item:not(.selected):hover {
   box-shadow: inset 0 -4px 0 0 var(--c-color_page-header_hover-nav-item);
 }
 
