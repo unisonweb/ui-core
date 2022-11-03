@@ -43,6 +43,7 @@
   /* @decorative */
   --color-button-decorative-blue-text: var(--color-gray-lighten-60);
   --color-button-decorative-blue-bg: var(--color-blue-2);
+  --color-button-decorative-blue-icon: var(--color-blue-3);
   --color-button-decorative-blue-hover-text: var(--color-gray-lighten-60);
   --color-button-decorative-blue-hover-bg: var(--color-blue-1);
 
