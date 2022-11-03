@@ -16,6 +16,10 @@ type alias Card msg =
     }
 
 
+
+-- CREATE
+
+
 card : List (Html msg) -> Card msg
 card items =
     { type_ = Uncontained, title = Nothing, items = items }
@@ -24,6 +28,10 @@ card items =
 titled : String -> List (Html msg) -> Card msg
 titled title items =
     { type_ = Uncontained, title = Just title, items = items }
+
+
+
+-- MODIFY
 
 
 withType : CardType -> Card msg -> Card msg
@@ -49,6 +57,22 @@ withItems items card_ =
 withItem : Html msg -> Card msg -> Card msg
 withItem item card_ =
     { card_ | items = card_.items ++ [ item ] }
+
+
+
+-- MAP
+
+
+map : (a -> msg) -> Card a -> Card msg
+map toMsg cardA =
+    { type_ = cardA.type_
+    , title = cardA.title
+    , items = List.map (Html.map toMsg) cardA.items
+    }
+
+
+
+-- VIEW
 
 
 view : Card msg -> Html msg
