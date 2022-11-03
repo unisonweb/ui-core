@@ -218,6 +218,26 @@ a.button:hover {
   color: var(--color-button-decorative-purple-hover-text);
 }
 
+.button.decorative-blue {
+  color: var(--color-button-decorative-blue-text);
+  background: var(--color-button-decorative-blue-bg);
+}
+
+.button.decorative-blue .icon {
+  color: var(--color-button-decorative-blue-icon);
+}
+
+.button.decorative-blue:hover,
+.button.decorative-blue.button_active {
+  color: var(--color-button-decorative-blue-hover-text);
+  background: var(--color-button-decorative-blue-hover-bg);
+}
+
+.button.decorative-blue:hover .icon,
+.button.decorative-blue.button_active .icon {
+  color: var(--color-button-decorative-blue-hover-text);
+}
+
 .button.subdued {
   --color-button-default-text: var(--u-color_interactive);
   background: var(--color-transparent);
