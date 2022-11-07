@@ -346,10 +346,6 @@
     --c-width_sidebar: var(--c-width_sidebar_regular);
   }
 
-  .page.sidebar-toggled #main-sidebar {
-    position: absolute;
-  }
-
   /* Sidebar toggle */
   .page .sidebar-toggle.sidebar-toggle_collapse {
     display: none;
@@ -429,6 +425,11 @@
   .page.sidebar-left-content-layout.sidebar-toggled .page-content,
   .page.sidebar-edge-to-edge-layout.sidebar-toggled .page-content {
     padding-left: 0;
+  }
+
+  .page.sidebar-edge-to-edge-layout.sidebar-toggled,
+  .page.sidebar-left-content-layout.sidebar-toggled {
+    position: relative;
   }
 
   #main-sidebar {
