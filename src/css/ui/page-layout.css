@@ -296,11 +296,6 @@
     --c-width_sidebar: var(--c-width_sidebar_narrow);
   }
 
-  .page.sidebar-toggled #main-sidebar {
-    position: absolute;
-    overflow: visible;
-  }
-
   .page.sidebar-toggled .sidebar-header,
   .page.sidebar-toggled .sidebar-section {
     opacity: 0;
