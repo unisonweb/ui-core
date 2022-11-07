@@ -1,39 +1,34 @@
 .page {
-  grid-area: page-layout;
   display: grid;
   transition: grid-template-columns var(--transition-sidebar-collapse-time);
   --transition-sidebar-collapse-time: 0.3s;
 
-  --page-content-height: calc(100vh - var(--app-header-height));
-
   --c-width_sidebar: var(--c-width_sidebar_regular);
   --c-width_page-content_outer: 100vw;
+
+  grid-template-rows: 1fr;
 }
 
 .page.sidebar-left-content-layout,
 .page.sidebar-edge-to-edge-layout {
-  grid-template-rows: auto;
-  grid-template-columns: var(--c-width_sidebar) auto;
+  grid-template-columns: auto 1fr;
   grid-template-areas: "main-sidebar page-content";
 
   --c-width_page-content_outer: calc(100vw - var(--c-width_sidebar));
 }
 
 .page.edge-to-edge-layout {
-  grid-template-rows: auto;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-areas: "page-content";
 }
 
 .page.centered-layout {
-  grid-template-rows: auto;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-areas: "page-content";
 }
 
 .page.presentation-layout {
-  grid-template-rows: auto;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr;
   grid-template-areas: "page-content";
 }
 
@@ -42,8 +37,8 @@
   --color-page-hero-fg: var(--color-gray-lighten-100);
   --color-page-hero-bg: var(--color-gray-darken-10);
 
-  grid-template-rows: var(--page-hero-height) auto;
-  grid-template-columns: auto;
+  grid-template-rows: var(--page-hero-height) 1fr;
+  grid-template-columns: 1fr;
   grid-template-areas:
     "page-hero"
     "page-content";
@@ -151,7 +146,6 @@
 
 /* Note: scrolling on edge-to-edge-layout is handled by the workspace */
 .page.sidebar-edge-to-edge-layout .page-content {
-  height: var(--page-content-height);
   padding: 0;
   width: 100%;
   align-items: normal;
@@ -167,7 +161,6 @@
 }
 
 .page.sidebar-left-content-layout .page-content {
-  height: var(--page-content-height);
   overflow: auto;
   padding: 3rem 0 1.5rem 2.25rem;
   margin-left: 0;
@@ -185,7 +178,6 @@
 
 #main-sidebar.sidebar {
   grid-area: main-sidebar;
-  --c-height_sidebar: calc(100vh - var(--app-header-height));
 }
 
 #main-sidebar .namespace-header {
