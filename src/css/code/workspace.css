@@ -1,6 +1,5 @@
 #workspace {
   --color-workspace-gutter: var(--u-color_container_subdued);
-  --workspace-content-height: var(--page-content-height);
 
   display: flex;
   flex-direction: column;
