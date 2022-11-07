@@ -58,6 +58,7 @@
   gap: 2.625rem;
   /* https://caniuse.com/?search=fill-available */
   height: stretch;
+  height: 100%;
 }
 
 .page-content::-webkit-scrollbar {
