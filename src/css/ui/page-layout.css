@@ -1,5 +1,6 @@
 .page {
   grid-area: page-layout;
+  overflow: auto;
   display: grid;
   transition: grid-template-columns var(--transition-sidebar-collapse-time);
   --transition-sidebar-collapse-time: 0.3s;
