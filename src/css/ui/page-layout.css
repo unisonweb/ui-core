@@ -434,6 +434,8 @@
   #main-sidebar {
     transform: translateX(-100%);
     opacity: 0;
+    bottom: 0;
+    top: 0;
   }
 
   .page.sidebar-toggled #main-sidebar {
