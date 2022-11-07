@@ -31,9 +31,9 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  height: var(--c-height_sidebar);
   position: relative;
-  overflow: visible;
+  overflow-y: auto;
+  overflow-x: clip;
   background: var(--color-sidebar-bg);
   color: var(--color-sidebar-fg);
   border-right: 1px solid var(--color-sidebar-border);
@@ -114,7 +114,6 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  height: var(--c-height_sidebar);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: thin;
