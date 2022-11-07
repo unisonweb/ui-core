@@ -435,6 +435,8 @@
     position: absolute;
     transform: translateX(-100%);
     opacity: 0;
+    bottom: 0;
+    top: 0;
   }
 
   .page.sidebar-toggled #main-sidebar {
@@ -457,9 +459,10 @@
 
   .page.sidebar-edge-to-edge-layout.sidebar-toggled,
   .page.sidebar-left-content-layout.sidebar-toggled {
-    grid-template-rows: auto;
-    grid-template-columns: auto auto;
-    grid-template-areas: "main-sidebar main-sidebar";
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "main-sidebar";
+    position: relative;
   }
 
   .page.sidebar-toggled {
