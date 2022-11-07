@@ -4,6 +4,7 @@ import Html exposing (Html, div, header)
 import Html.Attributes exposing (class, classList)
 import Maybe.Extra as MaybeE
 import UI
+import UI.Click as Click exposing (Click)
 import UI.Navigation as Nav exposing (Navigation)
 import UI.ViewMode as ViewMode exposing (ViewMode)
 
@@ -11,6 +12,7 @@ import UI.ViewMode as ViewMode exposing (ViewMode)
 type alias PageContext msg =
     { isActive : Bool
     , content : Html msg
+    , click : Maybe (Click msg)
     }
 
 
@@ -57,6 +59,7 @@ mapPageContext : (a -> msg) -> PageContext a -> PageContext msg
 mapPageContext toMsg contextA =
     { isActive = contextA.isActive
     , content = Html.map toMsg contextA.content
+    , click = Maybe.map (Click.map toMsg) contextA.click
     }
 
 
@@ -74,9 +77,18 @@ map toMsg headerA =
 
 
 viewPageContext : PageContext msg -> Html msg
-viewPageContext { isActive, content } =
-    div [ classList [ ( "page-header_page-context", True ), ( "page-header_page-context_is-active", isActive ) ] ]
-        [ content ]
+viewPageContext { click, isActive, content } =
+    let
+        attrs =
+            [ classList [ ( "page-header_page-context", True ), ( "page-header_page-context_is-active", isActive ) ]
+            ]
+    in
+    case click of
+        Nothing ->
+            div attrs [ content ]
+
+        Just c ->
+            Click.view attrs [ content ] c
 
 
 viewRightSide : List (Html msg) -> Html msg
