@@ -57,10 +57,6 @@
   flex-direction: column;
   gap: 2.625rem;
   /* https://caniuse.com/?search=fill-available */
-  height: -webkit-fill-available;
-  height: -moz-fill-available;
-  height: -moz-available;
-  height: fill-available;
   height: stretch;
 }
 
