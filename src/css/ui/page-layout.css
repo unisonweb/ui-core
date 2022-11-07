@@ -325,6 +325,8 @@
     grid-template-areas:
       "page-content"
       "page-footer";
+    position: relative;
+    --c-width_sidebar: var(--c-width_sidebar_regular);
   }
 
   .page .sidebar-header,
@@ -337,8 +339,9 @@
     overflow: visible;
   }
 
-  .page.sidebar-toggled {
-    --c-width_sidebar: var(--c-width_sidebar_regular);
+  .page.sidebar-toggled #main-sidebar {
+    top: 0;
+    bottom: 0;
   }
 
   /* Sidebar toggle */
