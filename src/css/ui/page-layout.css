@@ -56,6 +56,11 @@
   display: flex;
   flex-direction: column;
   gap: 2.625rem;
+  height: -webkit-fill-available;
+  height: -moz-fill-available;
+  height: -moz-available;
+  height: fill-available;
+  height: stretch;
 }
 
 .page-content::-webkit-scrollbar {
