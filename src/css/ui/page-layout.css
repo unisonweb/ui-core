@@ -432,6 +432,7 @@
   }
 
   #main-sidebar {
+    position: absolute;
     transform: translateX(-100%);
     opacity: 0;
     bottom: 0;
