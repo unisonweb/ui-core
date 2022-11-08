@@ -60,14 +60,19 @@ type alias Sidebar msg =
 -- CREATE
 
 
-sidebar : String -> SidebarHeader msg -> Sidebar msg
-sidebar id h =
-    empty id |> withHeader h
-
-
 empty : String -> Sidebar msg
 empty id =
     { id = id, header = Nothing, content = [], toggle = NotToggleable }
+
+
+sidebar : String -> SidebarHeader msg -> Sidebar msg
+sidebar id h =
+    sidebar_ id (Just h)
+
+
+sidebar_ : String -> Maybe (SidebarHeader msg) -> Sidebar msg
+sidebar_ id h =
+    { id = id, header = h, content = [], toggle = NotToggleable }
 
 
 
