@@ -29,7 +29,7 @@ view title click =
         [ div [ class "code_empty-state_content" ]
             [ header []
                 [ h2 [] [ text title ]
-                , p [] [ text "Browse, search, read docs, open definition, and explore." ]
+                , p [] [ text "Browse, search, read docs, open definitions, and explore." ]
                 ]
             , viewFauxDefinition
             , viewFauxDefinition
