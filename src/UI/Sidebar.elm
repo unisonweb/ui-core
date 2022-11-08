@@ -178,48 +178,48 @@ menuItemWithCount count menuItem__ =
 
 
 withHeader : SidebarHeader msg -> Sidebar msg -> Sidebar msg
-withHeader header_ sidebar_ =
-    { sidebar_ | header = Just header_ }
+withHeader header_ sidebar__ =
+    { sidebar__ | header = Just header_ }
 
 
 withContent : List (SidebarContentItem msg) -> Sidebar msg -> Sidebar msg
-withContent content sidebar_ =
-    { sidebar_ | content = content }
+withContent content sidebar__ =
+    { sidebar__ | content = content }
 
 
 withContentItem : SidebarContentItem msg -> Sidebar msg -> Sidebar msg
-withContentItem contentItem sidebar_ =
-    withContentItems [ contentItem ] sidebar_
+withContentItem contentItem sidebar__ =
+    withContentItems [ contentItem ] sidebar__
 
 
 withContentItems : List (SidebarContentItem msg) -> Sidebar msg -> Sidebar msg
-withContentItems contentItems sidebar_ =
-    { sidebar_ | content = sidebar_.content ++ contentItems }
+withContentItems contentItems sidebar__ =
+    { sidebar__ | content = sidebar__.content ++ contentItems }
 
 
 withMenuItem : SidebarMenuItem msg -> Sidebar msg -> Sidebar msg
-withMenuItem menuItem__ sidebar_ =
-    withContentItem (MenuItem menuItem__) sidebar_
+withMenuItem menuItem__ sidebar__ =
+    withContentItem (MenuItem menuItem__) sidebar__
 
 
 withMenuItems : List (SidebarMenuItem msg) -> Sidebar msg -> Sidebar msg
-withMenuItems menuItems sidebar_ =
-    withContentItems (List.map MenuItem menuItems) sidebar_
+withMenuItems menuItems sidebar__ =
+    withContentItems (List.map MenuItem menuItems) sidebar__
 
 
 withDivider : Sidebar msg -> Sidebar msg
-withDivider sidebar_ =
-    withContentItem Divider sidebar_
+withDivider sidebar__ =
+    withContentItem Divider sidebar__
 
 
 withSection : SidebarSection msg -> Sidebar msg -> Sidebar msg
-withSection section_ sidebar_ =
-    withContentItem (Section section_) sidebar_
+withSection section_ sidebar__ =
+    withContentItem (Section section_) sidebar__
 
 
 withToggle : ToggleConfig msg -> Sidebar msg -> Sidebar msg
-withToggle toggleConfig sidebar_ =
-    { sidebar_ | toggle = Toggle toggleConfig }
+withToggle toggleConfig sidebar__ =
+    { sidebar__ | toggle = Toggle toggleConfig }
 
 
 
@@ -288,10 +288,10 @@ viewSidebarContentItem item =
 
 
 view : OperatingSystem -> Sidebar msg -> Html msg
-view os sidebar_ =
+view os sidebar__ =
     let
         header_ =
-            MaybeE.unwrap UI.nothing viewHeader sidebar_.header
+            MaybeE.unwrap UI.nothing viewHeader sidebar__.header
 
         toggleKeyboardShortcut =
             case os of
@@ -323,7 +323,7 @@ view os sidebar_ =
             toggling means showing it.
         -}
         toggle =
-            case sidebar_.toggle of
+            case sidebar__.toggle of
                 NotToggleable ->
                     UI.nothing
 
@@ -351,5 +351,5 @@ view os sidebar_ =
                             ]
                         ]
     in
-    aside [ id sidebar_.id, class "sidebar" ]
-        (header_ :: List.map viewSidebarContentItem sidebar_.content ++ [ toggle ])
+    aside [ id sidebar__.id, class "sidebar" ]
+        (header_ :: List.map viewSidebarContentItem sidebar__.content ++ [ toggle ])
