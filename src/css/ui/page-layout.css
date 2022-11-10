@@ -1,6 +1,5 @@
 .page {
   grid-area: page-layout;
-  overflow: auto;
   display: grid;
   transition: grid-template-columns var(--transition-sidebar-collapse-time);
   --transition-sidebar-collapse-time: 0.3s;
@@ -13,6 +12,7 @@
 
 .page.sidebar-left-content-layout,
 .page.sidebar-edge-to-edge-layout {
+  overflow: auto;
   grid-template-columns: auto 1fr;
   grid-template-areas: "main-sidebar page-content";
 
@@ -22,11 +22,13 @@
 .page.edge-to-edge-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
+  overflow: auto;
 }
 
 .page.centered-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
+  overflow: auto;
 }
 
 .page.presentation-layout {
