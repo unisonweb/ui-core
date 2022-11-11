@@ -46,6 +46,33 @@ type PageLayout msg
 
 
 
+-- TRANSFORM
+
+
+withContent : PageContent msg -> PageLayout msg -> PageLayout msg
+withContent content pl =
+    let
+        withContent_ l =
+            { l | content = content }
+    in
+    case pl of
+        HeroLayout l ->
+            HeroLayout (withContent_ l)
+
+        SidebarEdgeToEdgeLayout l ->
+            SidebarEdgeToEdgeLayout (withContent_ l)
+
+        SidebarLeftContentLayout l ->
+            SidebarLeftContentLayout (withContent_ l)
+
+        CenteredLayout l ->
+            CenteredLayout (withContent_ l)
+
+        PresentationLayout _ ->
+            PresentationLayout content
+
+
+
 -- MAP
 
 
