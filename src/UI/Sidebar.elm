@@ -301,6 +301,13 @@ view os sidebar__ =
                 _ ->
                     KeyboardShortcut.Chord Ctrl (B Key.Lower)
 
+        tooltipContentShortcut =
+            div [ class "sidebar-toggle_tooltip" ]
+                [ KeyboardShortcut.viewShortcuts
+                    (KeyboardShortcut.init os)
+                    [ toggleKeyboardShortcut ]
+                ]
+
         tooltipContent =
             div [ class "sidebar-toggle_tooltip" ]
                 [ text "Toggle Sidebar"
@@ -341,7 +348,7 @@ view os sidebar__ =
                             ]
                         , div [ class "sidebar-toggle sidebar-toggle_collapse" ]
                             [ Tooltip.tooltip
-                                (Tooltip.rich tooltipContent)
+                                (Tooltip.rich tooltipContentShortcut)
                                 |> Tooltip.withPosition Tooltip.RightOf
                                 |> Tooltip.view
                                     (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
