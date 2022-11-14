@@ -217,7 +217,6 @@
 }
 
 .sidebar .sidebar-toggle .tooltip-bubble {
-  width: fit-content;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
@@ -237,8 +236,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /*width: 10.5rem;*/
+  width: 10.5rem;
 }
 
 .sidebar .sidebar-toggle_collapse .tooltip-bubble .sidebar-toggle_tooltip {
+  width: auto;
 }
