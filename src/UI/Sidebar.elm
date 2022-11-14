@@ -349,7 +349,7 @@ view os sidebar__ =
                         , div [ class "sidebar-toggle sidebar-toggle_collapse" ]
                             [ Tooltip.tooltip
                                 (Tooltip.rich tooltipContentShortcut)
-                                |> Tooltip.withPosition Tooltip.Above
+                                |> Tooltip.withPosition Tooltip.RightOf
                                 |> Tooltip.view
                                     (Button.iconThenLabel toggleMsg Icon.leftSidebarOff "Toggle Sidebar"
                                         |> Button.small
