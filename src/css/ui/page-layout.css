@@ -474,6 +474,10 @@
     --c-width_sidebar: var(--c-width_sidebar_full);
   }
 
+  .page.sidebar-toggled .sidebar .sidebar-section.sidebar-section_scrollable {
+    margin-bottom: 0;
+  }
+
   .page.sidebar-toggled .sidebar-footer,
   .page.sidebar-toggled .page-content {
     display: none;

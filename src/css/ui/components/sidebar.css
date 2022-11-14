@@ -118,6 +118,7 @@
   overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: var(--color-sidebar-subtle-fg) var(--color-sidebar-bg);
+  margin-bottom: 4.5rem;
 }
 
 .sidebar .sidebar-section::-webkit-scrollbar {
@@ -208,7 +209,11 @@
   padding: 1.5rem 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   justify-self: flex-end;
+  position: fixed;
+  bottom: 0;
+  height: 4.5rem;
 }
 
 .sidebar .sidebar-toggle .tooltip-bubble {
