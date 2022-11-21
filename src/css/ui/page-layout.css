@@ -492,6 +492,7 @@
   .page .page-footer .page-footer_items {
     gap: 0.25rem;
     flex-direction: column;
+    align-items: center;
   }
   .page .page-footer .page-footer_items .separator {
     display: none;
