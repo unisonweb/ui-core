@@ -134,3 +134,25 @@
     padding: 0 1rem;
   }
 }
+
+@media only screen and (--u-viewport_max-md) {
+  .page-header .profile-snippet .profile-snippet_name {
+    display: none;
+  }
+  .page-header .profile-snippet .profile-snippet_handle {
+    font-size: var(--c-size_profile-snippet_name);
+    font-weight: bold;
+    color: var(--color_profile-snippet_text);
+    /* Adjust to better align with avatar */
+    padding-top: 1px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (--u-viewport_max-sm) {
+  .page-header .profile-snippet .profile-snippet_text {
+    display: none;
+  }
+}
