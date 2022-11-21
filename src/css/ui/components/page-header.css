@@ -125,4 +125,12 @@
 /* -- Responsive ----------------------------------------------------------- */
 
 @media only screen and (--u-viewport_max-lg) {
+  .page-header {
+    padding: 0;
+  }
+
+  .page-header .page-header_page-context,
+  .page-header .navigation .nav-item {
+    padding: 0 1rem;
+  }
 }
