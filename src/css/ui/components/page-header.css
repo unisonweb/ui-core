@@ -125,7 +125,4 @@
 /* -- Responsive ----------------------------------------------------------- */
 
 @media only screen and (--u-viewport_max-lg) {
-  .page-header {
-    padding: 0 1rem;
-  }
 }

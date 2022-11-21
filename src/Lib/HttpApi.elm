@@ -9,6 +9,7 @@ module Lib.HttpApi exposing
     , httpApi
     , httpApi_
     , perform
+    , timeout
     , toRequest
     , toTask
     , toUrl
