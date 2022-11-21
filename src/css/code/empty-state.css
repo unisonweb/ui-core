@@ -58,4 +58,8 @@
   .code_empty-state {
     padding: 0 1rem 2rem 1rem;
   }
+
+  .code_empty-state .placeholder-shape {
+    max-width: 75vw;
+  }
 }
