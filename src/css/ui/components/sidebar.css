@@ -7,7 +7,7 @@
   /* @color-todo @inverse */
   --color-sidebar-fg: var(--color-gray-lighten-50);
   --color-sidebar-fg-em: var(--color-gray-lighten-100);
-  --color-sidebar-bg: var(--color-gray-darken-20);
+  --color-sidebar-bg: var(--color-gray-darken-25);
   /* see color files for why this is needed */
   --color-sidebar-bg-transparent: var(--color-gray-darken-20-transparent);
   --color-sidebar-border: var(--color-gray-base);
@@ -241,4 +241,22 @@
 
 .sidebar .sidebar-toggle_collapse .tooltip-bubble .sidebar-toggle_tooltip {
   width: auto;
+}
+
+.sidebar .sidebar_collapsed {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  background: var(--color-sidebar-bg);
+  width: fit-content;
+  padding: 0.25rem;
+  padding-left: 0.5rem;
+  margin: 0.5rem;
+  border-radius: var(--border-radius-base);
+}
+.sidebar .sidebar_collapsed .sidebar_collapsed_actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
 }
