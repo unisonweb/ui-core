@@ -82,7 +82,13 @@ sidebar id h =
 
 sidebar_ : String -> Maybe (SidebarHeader msg) -> Sidebar msg
 sidebar_ id h =
-    { id = id, header = h, content = [], toggle = NotToggleable }
+    { id = id
+    , header = h
+    , content = []
+    , toggle = NotToggleable
+    , collapsedContext = Nothing
+    , collapsedActions = []
+    }
 
 
 
@@ -95,6 +101,8 @@ map toMsg sidebarA =
     , header = Maybe.map (mapHeader toMsg) sidebarA.header
     , content = List.map (mapContentItem toMsg) sidebarA.content
     , toggle = mapToggle toMsg sidebarA.toggle
+    , collapsedContext = Maybe.map (Html.map toMsg) sidebarA.collapsedContext
+    , collapsedActions = List.map (Button.map toMsg) sidebarA.collapsedActions
     }
 
 
