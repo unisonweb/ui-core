@@ -363,7 +363,17 @@ view os sidebar__ =
                     ( UI.nothing, UI.nothing )
 
                 Toggle { toggleMsg } ->
-                    ( footer [ class "sidebar-footer" ]
+                    ( div [ class "sidebar-toggle sidebar-toggle_expand" ]
+                        [ Tooltip.tooltip
+                            (Tooltip.rich tooltipContent)
+                            |> Tooltip.withPosition Tooltip.RightOf
+                            |> Tooltip.view
+                                (Button.icon toggleMsg Icon.leftSidebarOn
+                                    |> Button.small
+                                    |> Button.view
+                                )
+                        ]
+                    , footer [ class "sidebar-footer" ]
                         [ div [ class "sidebar-toggle sidebar-toggle_collapse" ]
                             [ Tooltip.tooltip
                                 (Tooltip.rich tooltipContentShortcut)
@@ -374,16 +384,6 @@ view os sidebar__ =
                                         |> Button.view
                                     )
                             ]
-                        ]
-                    , div [ class "sidebar-toggle sidebar-toggle_expand" ]
-                        [ Tooltip.tooltip
-                            (Tooltip.rich tooltipContent)
-                            |> Tooltip.withPosition Tooltip.RightOf
-                            |> Tooltip.view
-                                (Button.icon toggleMsg Icon.leftSidebarOn
-                                    |> Button.small
-                                    |> Button.view
-                                )
                         ]
                     )
 
