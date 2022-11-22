@@ -390,7 +390,7 @@ view os sidebar__ =
         collapsed =
             div [ class "sidebar_collapsed" ]
                 [ Maybe.withDefault UI.nothing sidebar__.collapsedContext
-                , div [] (expand :: List.map Button.view sidebar__.collapsedActions)
+                , div [ class "sidebar_collapsed_actions" ] (expand :: List.map Button.view sidebar__.collapsedActions)
                 ]
     in
     aside [ id sidebar__.id, class "sidebar" ]
