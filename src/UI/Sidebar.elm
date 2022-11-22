@@ -53,6 +53,10 @@ type alias Sidebar msg =
     , header : Maybe (SidebarHeader msg)
     , content : List (SidebarContentItem msg)
     , toggle : Toggle msg
+
+    -- TODO does this belong inside of Toggle?
+    , collapsedContext : Maybe (Html msg)
+    , collapsedActions : List (Button msg)
     }
 
 
@@ -62,7 +66,13 @@ type alias Sidebar msg =
 
 empty : String -> Sidebar msg
 empty id =
-    { id = id, header = Nothing, content = [], toggle = NotToggleable }
+    { id = id
+    , header = Nothing
+    , content = []
+    , toggle = NotToggleable
+    , collapsedContext = Nothing
+    , collapsedActions = []
+    }
 
 
 sidebar : String -> SidebarHeader msg -> Sidebar msg
@@ -222,6 +232,16 @@ withToggle toggleConfig sidebar__ =
     { sidebar__ | toggle = Toggle toggleConfig }
 
 
+withCollapsedContext : Html msg -> Sidebar msg -> Sidebar msg
+withCollapsedContext context sidebar__ =
+    { sidebar__ | collapsedContext = Just context }
+
+
+withCollapsedActions : List (Button msg) -> Sidebar msg -> Sidebar msg
+withCollapsedActions actions sidebar__ =
+    { sidebar__ | collapsedActions = actions }
+
+
 
 -- VIEW
 
@@ -329,24 +349,14 @@ view os sidebar__ =
            `sm` and `md` has the sidebar completely hidden when untoggled, and
             toggling means showing it.
         -}
-        toggle =
+        ( expand, collapse ) =
             case sidebar__.toggle of
                 NotToggleable ->
-                    UI.nothing
+                    ( UI.nothing, UI.nothing )
 
                 Toggle { toggleMsg } ->
-                    footer [ class "sidebar-footer" ]
-                        [ div [ class "sidebar-toggle sidebar-toggle_expand" ]
-                            [ Tooltip.tooltip
-                                (Tooltip.rich tooltipContent)
-                                |> Tooltip.withPosition Tooltip.RightOf
-                                |> Tooltip.view
-                                    (Button.icon toggleMsg Icon.leftSidebarOn
-                                        |> Button.small
-                                        |> Button.view
-                                    )
-                            ]
-                        , div [ class "sidebar-toggle sidebar-toggle_collapse" ]
+                    ( footer [ class "sidebar-footer" ]
+                        [ div [ class "sidebar-toggle sidebar-toggle_collapse" ]
                             [ Tooltip.tooltip
                                 (Tooltip.rich tooltipContentShortcut)
                                 |> Tooltip.withPosition Tooltip.RightOf
@@ -357,6 +367,23 @@ view os sidebar__ =
                                     )
                             ]
                         ]
+                    , div [ class "sidebar-toggle sidebar-toggle_expand" ]
+                        [ Tooltip.tooltip
+                            (Tooltip.rich tooltipContent)
+                            |> Tooltip.withPosition Tooltip.RightOf
+                            |> Tooltip.view
+                                (Button.icon toggleMsg Icon.leftSidebarOn
+                                    |> Button.small
+                                    |> Button.view
+                                )
+                        ]
+                    )
+
+        collapsed =
+            div [ class "sidebar_collapsed" ]
+                [ Maybe.withDefault UI.nothing sidebar__.collapsedContext
+                , div [] (expand :: List.map Button.view sidebar__.collapsedActions)
+                ]
     in
     aside [ id sidebar__.id, class "sidebar" ]
-        (header_ :: List.map viewSidebarContentItem sidebar__.content ++ [ toggle ])
+        (collapsed :: header_ :: List.map viewSidebarContentItem sidebar__.content ++ [ collapse ])
