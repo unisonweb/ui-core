@@ -57,7 +57,7 @@
 
   --u-color_divider: var(--color-sidebar-divider);
 
-  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  transition: translate 0.2s ease-in-out;
 }
 
 .sidebar .button {
@@ -255,7 +255,7 @@
   margin: 0.5rem;
   border-radius: var(--border-radius-base);
   position: absolute;
-  display: none;
+  left: var(--c-width_sidebar);
 }
 
 .sidebar .sidebar_collapsed .sidebar_collapsed_actions {
