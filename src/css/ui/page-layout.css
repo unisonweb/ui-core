@@ -298,7 +298,8 @@
 
 @media only screen and (--u-viewport_min-lg) {
   .page:not(.sidebar-toggled) #main-sidebar sidebar .sidebar_collapsed {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .page.sidebar-toggled #main-sidebar .sidebar_collapsed {
@@ -307,6 +308,7 @@
 
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
+    height: 100%;
     translate: -100%;
     overflow: visible;
   }

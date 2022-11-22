@@ -257,6 +257,7 @@
   position: absolute;
   left: var(--c-width_sidebar);
   white-space: nowrap;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .sidebar .sidebar_collapsed .sidebar_collapsed_actions {
