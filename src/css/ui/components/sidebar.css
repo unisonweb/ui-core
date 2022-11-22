@@ -79,7 +79,7 @@
 
 .sidebar .loading-placeholder {
   background: var(--color-sidebar-subtle-fg);
-  opacity: 0.5;
+  opacity: 1.5;
 }
 
 .sidebar .sidebar-section {
@@ -256,6 +256,7 @@
   border-radius: var(--border-radius-base);
   position: absolute;
   left: var(--c-width_sidebar);
+  white-space: nowrap;
 }
 
 .sidebar .sidebar_collapsed .sidebar_collapsed_actions {
