@@ -251,13 +251,13 @@
   background: var(--color-sidebar-bg);
   width: fit-content;
   padding: 0.25rem;
-  padding-left: 0.5rem;
   margin: 0.5rem;
   border-radius: var(--border-radius-base);
-  position: absolute;
-  left: var(--c-width_sidebar);
   white-space: nowrap;
-  transition: opacity 0.2s ease-in-out;
+}
+
+.sidebar .sidebar_collapsed:has(.sidebar_collapsed_context) {
+  padding-left: 0.5rem;
 }
 
 .sidebar .sidebar_collapsed .sidebar_collapsed_actions {

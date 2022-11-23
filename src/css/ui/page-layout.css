@@ -284,9 +284,11 @@
 
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
-    height: 100%;
-    translate: -100%;
-    overflow: visible;
+    height: fit-content;
+  }
+
+  .page.sidebar-toggled #main-sidebar .sidebar_expanded {
+    opacity: 0;
   }
 }
 
