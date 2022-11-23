@@ -190,37 +190,6 @@
   grid-area: main-sidebar;
 }
 
-#main-sidebar .namespace-header {
-  overflow: hidden;
-}
-
-#main-sidebar .is-overflowing .namespace-header .icon:after {
-  position: absolute;
-  top: 0;
-  right: -1.5rem;
-  bottom: 0;
-  content: "";
-  width: 1.5rem;
-  background: linear-gradient(
-    90deg,
-    var(--color-sidebar-bg),
-    var(--color-sidebar-bg),
-    var(--color-sidebar-bg-transparent)
-  );
-}
-
-#main-sidebar .namespace-header-header .namespace {
-  display: inline-flex;
-  color: var(--color-sidebar-fg-em);
-  font-size: 1rem;
-  font-weight: 500;
-  height: 1.5rem;
-  overflow: hidden;
-  white-space: nowrap;
-  text-align: right;
-  flex-direction: row-reverse;
-}
-
 /* -- Hero ----------------------------------------------------------------- */
 
 .page.hero-layout .page-hero {
