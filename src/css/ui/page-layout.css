@@ -194,7 +194,7 @@
   overflow: hidden;
 }
 
-#main-sidebar .sidebar-header .is-overflowing .hashvatar:after {
+#main-sidebar .is-overflowing .namespace-header .icon:after {
   position: absolute;
   top: 0;
   right: -1.5rem;
@@ -209,7 +209,7 @@
   );
 }
 
-#main-sidebar .sidebar-header .namespace {
+#main-sidebar .namespace-header-header .namespace {
   display: inline-flex;
   color: var(--color-sidebar-fg-em);
   font-size: 1rem;
