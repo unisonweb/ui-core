@@ -285,7 +285,10 @@
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
     height: fit-content;
+    width: fit-content;
     padding: 0;
+    margin: 0.5rem;
+    border-radius: var(--border-radius-base);
   }
 
   .page.sidebar-toggled #main-sidebar .sidebar_expanded {

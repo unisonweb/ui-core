@@ -57,7 +57,7 @@
 
   --u-color_divider: var(--color-sidebar-divider);
 
-  transition: translate 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .sidebar .button {
@@ -250,14 +250,7 @@
   align-items: center;
   background: var(--color-sidebar-bg);
   width: fit-content;
-  padding: 0.25rem;
-  margin: 0.5rem;
-  border-radius: var(--border-radius-base);
   white-space: nowrap;
-}
-
-.sidebar .sidebar_collapsed:has(.sidebar_collapsed_context) {
-  padding-left: 0.5rem;
 }
 
 .sidebar .sidebar_collapsed .sidebar_collapsed_actions {
