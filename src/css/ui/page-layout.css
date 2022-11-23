@@ -285,10 +285,11 @@
   .page.sidebar-toggled #main-sidebar {
     position: absolute;
     height: fit-content;
+    padding: 0;
   }
 
   .page.sidebar-toggled #main-sidebar .sidebar_expanded {
-    opacity: 0;
+    display: none;
   }
 }
 
