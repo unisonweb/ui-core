@@ -249,8 +249,12 @@
   gap: 1rem;
   align-items: center;
   background: var(--color-sidebar-bg);
-  width: fit-content;
+  padding: 0.25rem;
   white-space: nowrap;
+}
+
+.sidebar .sidebar_collapsed:has(.sidebar_collapsed_context) {
+  padding-left: 0.5rem;
 }
 
 .sidebar .sidebar_collapsed .sidebar_collapsed_actions {
