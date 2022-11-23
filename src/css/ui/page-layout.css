@@ -266,6 +266,13 @@
 }
 
 @media only screen and (--u-viewport_min-lg) {
+  .page.sidebar-edge-to-edge-layout.sidebar-toggled,
+  .page.sidebar-left-content-layout.sidebar-toggled {
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "page-content";
+  }
+
   .page:not(.sidebar-toggled) #main-sidebar sidebar .sidebar_collapsed {
     opacity: 0;
     pointer-events: none;
