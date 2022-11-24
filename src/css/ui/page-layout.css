@@ -295,6 +295,10 @@
   .page.sidebar-toggled #main-sidebar .sidebar_expanded {
     display: none;
   }
+
+  .page.sidebar-toggled .page-content {
+    padding-top: 1rem;
+  }
 }
 
 @media only screen and (--u-viewport_max-lg) {
