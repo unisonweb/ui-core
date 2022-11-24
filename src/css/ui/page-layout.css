@@ -275,11 +275,12 @@
 
   .page:not(.sidebar-toggled) #main-sidebar .sidebar_collapsed {
     opacity: 0;
-    pointer-events: none;
+    display: none;
   }
 
   .page.sidebar-toggled #main-sidebar .sidebar_collapsed {
     display: flex;
+    opacity: 1;
   }
 
   .page.sidebar-toggled #main-sidebar {

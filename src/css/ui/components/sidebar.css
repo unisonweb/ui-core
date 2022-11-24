@@ -251,6 +251,7 @@
   background: var(--color-sidebar-bg);
   padding: 0.25rem;
   white-space: nowrap;
+  transition: all 0.2s ease-in-out;
 }
 
 .sidebar .sidebar_collapsed:has(.sidebar_collapsed_context) {
