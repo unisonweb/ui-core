@@ -29,9 +29,6 @@
   --color-sidebar-tooltip-border: var(--color-gray-darken-10);
 
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  position: relative;
   overflow-y: auto;
   overflow-x: clip;
   background: var(--color-sidebar-bg);
@@ -241,6 +238,15 @@
 
 .sidebar .sidebar-toggle_collapse .tooltip-bubble .sidebar-toggle_tooltip {
   width: auto;
+}
+
+.sidebar .sidebar_expanded {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: clip;
 }
 
 .sidebar .sidebar_collapsed {
