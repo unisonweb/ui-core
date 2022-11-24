@@ -273,7 +273,7 @@
     grid-template-areas: "page-content";
   }
 
-  .page:not(.sidebar-toggled) #main-sidebar sidebar .sidebar_collapsed {
+  .page:not(.sidebar-toggled) #main-sidebar .sidebar_collapsed {
     opacity: 0;
     pointer-events: none;
   }
