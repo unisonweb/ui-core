@@ -296,7 +296,7 @@
     display: none;
   }
 
-  .page.sidebar-toggled .page-content {
+  .page.sidebar-edge-to-edge-layout .page-content {
     padding-top: 1rem;
   }
 }
