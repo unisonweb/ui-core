@@ -303,11 +303,8 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page.sidebar-toggled {
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "page-content"
-      "page-footer";
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "main-sidebar page-content";
     position: relative;
     --c-width_sidebar: var(--c-width_sidebar_regular);
   }
