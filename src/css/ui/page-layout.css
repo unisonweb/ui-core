@@ -270,7 +270,7 @@
   .page.sidebar-left-content-layout.sidebar-toggled {
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
-    grid-template-areas: "page-content";
+    grid-template-areas: "page-content" "page-footer";
   }
 
   .page:not(.sidebar-toggled) #main-sidebar .sidebar_collapsed {
@@ -303,8 +303,8 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page.sidebar-toggled {
-    grid-template-rows: auto;
-    grid-template-columns: auto;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
       "page-content"
       "page-footer";
