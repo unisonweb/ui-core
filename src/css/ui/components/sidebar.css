@@ -29,6 +29,7 @@
   --color-sidebar-tooltip-border: var(--color-gray-darken-10);
 
   display: flex;
+  flex-direction: column;
   overflow-y: auto;
   overflow-x: clip;
   background: var(--color-sidebar-bg);
