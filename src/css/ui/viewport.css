@@ -12,3 +12,58 @@
 @custom-media --u-viewport_min-lg (width > 1012px); /* --u-viewport_lg */
 @custom-media --u-viewport_max-xl (width <= 1280px); /* --u-viewport_xl */
 @custom-media --u-viewport_min-xl (width > 1280); /* --u-viewport_xl */
+
+.min-xl,
+.max-xl,
+.min-lg,
+.max-lg,
+.min-md,
+.max-md,
+.min-sm,
+.max-sm {
+  display: none;
+}
+
+@media only screen and (--u-viewport_min-xl) {
+  .min-xl {
+    display: block;
+  }
+}
+@media only screen and (--u-viewport_max-xl) {
+  .max-xl {
+    display: block;
+  }
+}
+
+@media only screen and (--u-viewport_min-lg) {
+  .min-lg {
+    display: block;
+  }
+}
+@media only screen and (--u-viewport_max-lg) {
+  .max-lg {
+    display: block;
+  }
+}
+
+@media only screen and (--u-viewport_min-md) {
+  .min-md {
+    display: block;
+  }
+}
+@media only screen and (--u-viewport_max-md) {
+  .max-md {
+    display: block;
+  }
+}
+
+@media only screen and (--u-viewport_min-sm) {
+  .min-sm {
+    display: block;
+  }
+}
+@media only screen and (--u-viewport_max-sm) {
+  .max-sm {
+    display: block;
+  }
+}
