@@ -332,8 +332,9 @@
     display: none;
   }
 
+  .page.edge-to-edge-layout .page-content,
   .page.sidebar-edge-to-edge-layout .page-content {
-    padding-top: 1rem;
+    padding: 1rem 0 0 0;
   }
 
   .page-content {
@@ -361,11 +362,6 @@
 
   .page.presentation-layout .page-content {
     padding: 3rem 1rem;
-  }
-
-  .page.edge-to-edge-layout .page-content,
-  .page.sidebar-edge-to-edge-layout .page-content {
-    padding: 0;
   }
 
   .page.sidebar-left-content-layout .page-content .columns {
