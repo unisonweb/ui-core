@@ -41,6 +41,7 @@ type ActionItems msg
 
 type ActionMenuTrigger msg
     = ButtonTrigger { icon : Maybe (Icon msg), label : String }
+    | IconButtonTrigger (Icon msg)
     | CustomTrigger { toHtml : Bool -> Html msg }
 
 
@@ -61,6 +62,15 @@ fromButton toggleMsg buttonLabel actionItems =
     { toggleMsg = toggleMsg
     , state = Closed
     , trigger = ButtonTrigger { icon = Nothing, label = buttonLabel }
+    , actionItems = actionItems
+    }
+
+
+fromIconButton : msg -> Icon msg -> ActionItems msg -> ActionMenu msg
+fromIconButton toggleMsg icon actionItems =
+    { toggleMsg = toggleMsg
+    , state = Closed
+    , trigger = IconButtonTrigger icon
     , actionItems = actionItems
     }
 
@@ -92,6 +102,13 @@ withButtonIcon icon actionMenu_ =
                     ButtonTrigger { b | icon = Just icon }
             in
             { actionMenu_ | trigger = bt }
+
+        IconButtonTrigger _ ->
+            let
+                ibt =
+                    IconButtonTrigger icon
+            in
+            { actionMenu_ | trigger = ibt }
 
         _ ->
             actionMenu_
@@ -131,19 +148,20 @@ close menu =
 -- VIEW
 
 
+chevron : OpenState -> Icon msg
+chevron state =
+    case state of
+        Open ->
+            Icon.chevronUp
+
+        Closed ->
+            Icon.chevronDown
+
+
 viewButton : msg -> String -> Maybe (Icon msg) -> OpenState -> Button msg
 viewButton toggleMsg label icon state =
-    let
-        chevron =
-            case state of
-                Open ->
-                    Icon.chevronUp
-
-                Closed ->
-                    Icon.chevronDown
-    in
     Button.button toggleMsg label
-        |> Button.withIconAfterLabel chevron
+        |> Button.withIconAfterLabel (chevron state)
         |> Button.small
         |> buttonWithIcon icon
 
@@ -184,6 +202,19 @@ view { toggleMsg, state, trigger, actionItems } =
                     let
                         b_ =
                             viewButton toggleMsg label icon state
+                    in
+                    if isOpen then
+                        b_ |> Button.active |> Button.view
+
+                    else
+                        Button.view b_
+
+                IconButtonTrigger icon ->
+                    let
+                        b_ =
+                            Button.icon toggleMsg icon
+                                |> Button.withIconAfterLabel (chevron state)
+                                |> Button.small
                     in
                     if isOpen then
                         b_ |> Button.active |> Button.view
