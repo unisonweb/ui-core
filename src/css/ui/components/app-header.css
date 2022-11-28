@@ -150,6 +150,11 @@
   gap: 0.5rem;
 }
 
+#app-header .right-side .min-md,
+#app-header .right-side .max-sm {
+  gap: 0.5rem;
+}
+
 /* -- Responsive ----------------------------------------------------------- */
 
 @media only screen and (--u-viewport_max-lg) {

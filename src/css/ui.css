@@ -51,45 +51,48 @@
 
 @media only screen and (--u-viewport_min-xl) {
   .min-xl {
-    display: block;
+    display: inherit;
   }
 }
+
 @media only screen and (--u-viewport_max-xl) {
   .max-xl {
-    display: block;
+    display: inherit;
   }
 }
 
 @media only screen and (--u-viewport_min-lg) {
   .min-lg {
-    display: block;
+    display: inherit;
   }
 }
+
 @media only screen and (--u-viewport_max-lg) {
   .max-lg {
-    display: block;
+    display: inherit;
   }
 }
 
 @media only screen and (--u-viewport_min-md) {
   .min-md {
-    display: block;
+    display: inherit;
   }
 }
+
 @media only screen and (--u-viewport_max-md) {
   .max-md {
-    display: block;
+    display: inherit;
   }
 }
 
 @media only screen and (--u-viewport_min-sm) {
   .min-sm {
-    display: block;
+    display: inherit;
   }
 }
+
 @media only screen and (--u-viewport_max-sm) {
   .max-sm {
-    display: block;
   }
 }
 
