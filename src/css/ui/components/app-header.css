@@ -92,7 +92,6 @@
   flex-direction: row;
   align-items: center;
   color: var(--color-app-header-text);
-  margin-right: 2.5rem;
 }
 
 #app-header .app-title h1 {

@@ -93,6 +93,7 @@
 
 @media only screen and (--u-viewport_max-sm) {
   .max-sm {
+    display: inherit;
   }
 }
 
