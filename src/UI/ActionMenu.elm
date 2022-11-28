@@ -5,6 +5,7 @@ module UI.ActionMenu exposing
     , close
     , fromButton
     , fromCustom
+    , fromIconButton
     , items
     , open
     , shouldBeOpen
