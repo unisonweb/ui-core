@@ -313,12 +313,7 @@
     position: absolute;
   }
 
-  .page.sidebar-toggled #main-sidebar .sidebar_collapsed {
-    opacity: 0;
-    display: none;
-  }
-
-  .page #main-sidebar .sidebar_collapsed {
+  .page:not(.sidebar-toggled) #main-sidebar .sidebar_collapsed {
     display: flex;
     opacity: 1;
   }
@@ -332,6 +327,15 @@
   }
 
   .page:not(.sidebar-toggled) #main-sidebar .sidebar_expanded {
+    display: none;
+  }
+
+  .page.sidebar-toggled #main-sidebar {
+    height: stretch;
+  }
+
+  .page.sidebar-toggled #main-sidebar .sidebar_collapsed {
+    opacity: 0;
     display: none;
   }
 
