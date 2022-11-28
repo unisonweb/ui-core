@@ -336,14 +336,6 @@ view os sidebar__ =
                     [ toggleKeyboardShortcut ]
                 ]
 
-        tooltipContent =
-            div [ class "sidebar-toggle_tooltip" ]
-                [ text "Toggle Sidebar"
-                , KeyboardShortcut.viewShortcuts
-                    (KeyboardShortcut.init os)
-                    [ toggleKeyboardShortcut ]
-                ]
-
         {-
             Both the expand (small button) and collapse (large button) actions
             are added to the document, but hid accordingly with CSS media queries,
@@ -364,14 +356,9 @@ view os sidebar__ =
 
                 Toggle { toggleMsg } ->
                     ( div [ class "sidebar-toggle sidebar-toggle_expand" ]
-                        [ Tooltip.tooltip
-                            (Tooltip.rich tooltipContent)
-                            |> Tooltip.withPosition Tooltip.RightOf
-                            |> Tooltip.view
-                                (Button.icon toggleMsg Icon.leftSidebarOn
-                                    |> Button.small
-                                    |> Button.view
-                                )
+                        [ Button.icon toggleMsg Icon.leftSidebarOn
+                            |> Button.small
+                            |> Button.view
                         ]
                     , footer [ class "sidebar-footer" ]
                         [ div [ class "sidebar-toggle sidebar-toggle_collapse" ]
