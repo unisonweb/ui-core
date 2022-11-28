@@ -319,7 +319,7 @@
     opacity: 1;
   }
 
-  .page #main-sidebar {
+  .page:not(.sidebar-toggled) #main-sidebar {
     position: absolute;
     height: fit-content;
     width: fit-content;
@@ -328,7 +328,7 @@
     border-radius: var(--border-radius-base);
   }
 
-  .page #main-sidebar .sidebar_expanded {
+  .page:not(.sidebar-toggled) #main-sidebar .sidebar_expanded {
     display: none;
   }
 
