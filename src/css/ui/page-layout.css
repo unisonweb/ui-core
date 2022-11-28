@@ -309,6 +309,10 @@
     grid-template-areas: "page-content" "page-footer";
   }
 
+  .page #main-sidebar {
+    position: absolute;
+  }
+
   .page.sidebar-toggled #main-sidebar .sidebar_collapsed {
     opacity: 0;
     display: none;
@@ -320,7 +324,6 @@
   }
 
   .page:not(.sidebar-toggled) #main-sidebar {
-    position: absolute;
     height: fit-content;
     width: fit-content;
     padding: 0;
