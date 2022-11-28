@@ -265,7 +265,7 @@
   }
 }
 
-@media only screen and (--u-viewport_min-md) {
+@media only screen and (--u-viewport_min-lg) {
   .page.sidebar-edge-to-edge-layout.sidebar-toggled,
   .page.sidebar-left-content-layout.sidebar-toggled {
     grid-template-rows: 1fr;
