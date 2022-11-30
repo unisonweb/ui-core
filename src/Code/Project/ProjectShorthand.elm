@@ -6,6 +6,7 @@ module Code.Project.ProjectShorthand exposing
     , projectShorthand
     , slug
     , toString
+    , toUrlPath
     , unsafeFromString
     , view
     )
@@ -44,6 +45,11 @@ projectShorthand handle_ slug_ =
 toString : ProjectShorthand -> String
 toString (ProjectShorthand p) =
     UserHandle.toString p.handle ++ "/" ++ Slug.toString p.slug
+
+
+toUrlPath : ProjectShorthand -> List String
+toUrlPath (ProjectShorthand p) =
+    [ UserHandle.toString p.handle, Slug.toString p.slug ]
 
 
 handle : ProjectShorthand -> UserHandle
