@@ -53,6 +53,7 @@
   align-items: center;
   font-size: 1rem;
   height: var(--app-header-height);
+  gap: 1rem;
 }
 
 /* We only overwrite the button colors for Regular, since Presentation just
