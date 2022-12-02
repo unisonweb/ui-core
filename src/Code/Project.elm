@@ -21,8 +21,7 @@ type ProjectVisibility
 
 type alias ProjectDetails =
     Project
-        { name : String
-        , summary : Maybe String
+        { summary : Maybe String
         , tags : Set String
         , visibility : ProjectVisibility
         }
