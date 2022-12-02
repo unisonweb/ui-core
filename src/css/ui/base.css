@@ -62,3 +62,22 @@ mark {
   color: var(--u-color_search-highlight_text);
   background: var(--u-color_search-highlight_background);
 }
+
+* {
+  scrollbar-width: 0.5rem;
+  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  height: 0.375rem;
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--u-color_scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--u-color_scrollbar);
+  border-radius: var(--border-radius-base);
+}
