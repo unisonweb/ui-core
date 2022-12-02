@@ -1,8 +1,8 @@
 module Code.Project.ProjectShorthandTests exposing (..)
 
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
+import Code.Project.ProjectSlug as ProjectSlug
 import Expect
-import Lib.Slug as Slug
 import Lib.UserHandle as UserHandle
 import Test exposing (..)
 
@@ -65,7 +65,7 @@ slug =
             \_ ->
                 Expect.equal
                     "http"
-                    (ProjectShorthand.slug projectShorthand |> Slug.toString)
+                    (ProjectShorthand.slug projectShorthand |> ProjectSlug.toString)
         ]
 
 
@@ -80,6 +80,6 @@ projectShorthand =
             UserHandle.unsafeFromString "unison"
 
         slug_ =
-            Slug.unsafeFromString "http"
+            ProjectSlug.unsafeFromString "http"
     in
     ProjectShorthand.projectShorthand handle_ slug_

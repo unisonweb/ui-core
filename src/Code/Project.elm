@@ -3,20 +3,29 @@ module Code.Project exposing (..)
 import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
+import Code.Project.ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html)
 import Html.Attributes exposing (class)
-import Json.Decode as Decode exposing (field, string)
-import Lib.Slug as Slug exposing (Slug)
-import Lib.UserHandle as UserHandle exposing (UserHandle)
+import Lib.UserHandle exposing (UserHandle)
+import Set exposing (Set)
 import UI.Click as Click
 
 
 type alias Project a =
-    { a | shorthand : ProjectShorthand, name : String }
+    { a | shorthand : ProjectShorthand }
 
 
-type alias ProjectListing =
-    Project {}
+type ProjectVisibility
+    = Public
+
+
+type alias ProjectDetails =
+    Project
+        { name : String
+        , summary : Maybe String
+        , tags : Set String
+        , visibility : ProjectVisibility
+        }
 
 
 shorthand : Project a -> ProjectShorthand
@@ -29,7 +38,7 @@ handle p =
     ProjectShorthand.handle p.shorthand
 
 
-slug : Project a -> Slug
+slug : Project a -> ProjectSlug
 slug p =
     ProjectShorthand.slug p.shorthand
 
@@ -54,27 +63,3 @@ viewProjectListing click project =
         , ProjectShorthand.view project.shorthand
         ]
         click
-
-
-
--- Decode
-
-
-decodeListing : Decode.Decoder ProjectListing
-decodeListing =
-    let
-        mk handle_ slug_ name =
-            { shorthand = ProjectShorthand.projectShorthand handle_ slug_
-            , name = name
-            }
-    in
-    Decode.map3
-        mk
-        (field "owner" UserHandle.decodeUnprefixed)
-        (field "name" Slug.decode)
-        (field "name" string)
-
-
-decodeListings : Decode.Decoder (List ProjectListing)
-decodeListings =
-    Decode.list decodeListing
