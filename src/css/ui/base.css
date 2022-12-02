@@ -69,16 +69,16 @@ mark {
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
 }
 
-*::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 0.375rem;
   width: 0.5rem;
 }
 
-*::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: var(--u-color_scrollbar-track);
 }
 
-*::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--u-color_scrollbar);
   border-radius: var(--border-radius-base);
 }
