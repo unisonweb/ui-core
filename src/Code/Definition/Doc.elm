@@ -61,6 +61,7 @@ import Html.Attributes
         )
 import Json.Decode as Decode exposing (bool, field, index, int, string)
 import Json.Decode.Extra as DecodeE exposing (when)
+import Lib.EmbedKatex as EmbedKatex
 import Lib.TreePath as TreePath exposing (TreePath)
 import Set exposing (Set)
 import UI
@@ -413,7 +414,12 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                     span [ class "rich source inline-code" ] [ UI.inlineCode [] (viewAtCurrentSectionLevel code) ]
 
                 CodeBlock lang code ->
-                    div [ class "rich source code", lang |> stringToClass |> class ] [ UI.codeBlock [] (viewAtCurrentSectionLevel code) ]
+                    if lang == "katex" then
+                        EmbedKatex.katex (toString "" code)
+                            |> EmbedKatex.view
+
+                    else
+                        div [ class "rich source code", lang |> stringToClass |> class ] [ UI.codeBlock [] (viewAtCurrentSectionLevel code) ]
 
                 Bold d ->
                     strong [] [ viewAtCurrentSectionLevel d ]
