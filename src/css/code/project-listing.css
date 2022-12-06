@@ -3,14 +3,18 @@
   flex-direction: row;
   align-items: center;
   gap: 0.75rem;
-  height: 2rem;
-  padding: 0 0.6rem 0 0.25rem;
   border-radius: var(--border-radius-base);
   color: var(--u-color_text);
   font-size: var(--font-size-medium);
+  height: 1.5rem;
 }
 
-.project-listing:hover {
+a.project-listing {
+  padding: 0 0.6rem 0 0.25rem;
+  height: 2rem;
+}
+
+a.project-listing :hover {
   text-decoration: none;
   background: var(--u-color_element_hovered);
 }
