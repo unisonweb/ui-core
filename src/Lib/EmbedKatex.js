@@ -1,5 +1,6 @@
 // <embed-katex markup="some katex markup" display="block">
 // </embed-katex>
+
 class EmbedKatex extends HTMLElement {
   constructor() {
     super();
