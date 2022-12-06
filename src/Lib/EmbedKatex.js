@@ -7,7 +7,7 @@ class EmbedKatex extends HTMLElement {
 
   connectedCallback() {
     if (katex) {
-      render();
+      this.render();
     }
   }
 
