@@ -50,3 +50,15 @@
   font-size: var(--font-size-extra-small);
   text-transform: uppercase;
 }
+
+.action-menu .action-menu_action-item-divider {
+  padding: 0;
+  margin: 0 -0.25rem;
+  height: 1rem;
+}
+
+/* TODO @divider multi style */
+.action-menu .action-menu_action-item-divider .divider {
+  height: 1px;
+  background: var(--color-gray-darken-10);
+}
