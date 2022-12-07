@@ -2,6 +2,7 @@
   /* @color-todo @inverse */
   --c-color_action-menu_action-items: var(--color-gray-darken-30);
   --c-color_action-menu_action-items_text: var(--color-gray-lighten-100);
+  --c-color_action-menu_action-items_text_subdued: var(--color-gray-lighten-20);
   --c-color_action-menu_action-items_icon: var(--color-gray-lighten-20);
 
   position: relative;
@@ -42,4 +43,10 @@
 
 .action-menu .action-menu_action-item .icon {
   color: var(--c-color_action-menu_action-items_icon);
+}
+
+.action-menu .action-menu_action-item-title {
+  color: var(--c-color_action-menu_action-items_text_subdued);
+  font-size: var(--font-size-extra-small);
+  text-transform: uppercase;
 }

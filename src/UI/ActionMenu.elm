@@ -231,15 +231,15 @@ viewItems (ActionItems items_) =
             case i of
                 Option o ->
                     Click.view
-                        [ class "action-menu_action-item" ]
+                        [ class "action-menu_action-item action-menu_action-item-option" ]
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon, text o.label ]
                         o.click
 
                 Divider ->
-                    div [ class "action-menu_action-item" ] [ UI.divider ]
+                    div [ class "action-menu_action-item action-menu_action-item-divider" ] [ UI.divider ]
 
                 Loading ->
-                    div [ class "action-menu_action-item" ]
+                    div [ class "action-menu_action-item action-menu_action-item-loading" ]
                         [ PlaceholderShape.text
                             |> PlaceholderShape.small
                             |> PlaceholderShape.subdued
