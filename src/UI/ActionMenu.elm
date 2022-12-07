@@ -3,11 +3,15 @@ module UI.ActionMenu exposing
     , ActionItems
     , ActionMenu
     , close
+    , divider
     , fromButton
     , fromCustom
     , fromIconButton
     , items
     , open
+    , option
+    , optionWithNoIcon
+    , option_
     , shouldBeOpen
     , view
     , withActionItem
@@ -18,6 +22,7 @@ import Html exposing (Html, div, text)
 import Html.Attributes exposing (class, classList)
 import Lib.OnClickOutside exposing (onClickOutside)
 import List.Nonempty as Nonempty exposing (Nonempty(..))
+import Maybe.Extra as MaybeE
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
@@ -29,11 +34,16 @@ type OpenState
     | Closed
 
 
-type alias ActionItem msg =
-    { icon : Icon msg
+type alias ActionOption msg =
+    { icon : Maybe (Icon msg)
     , label : String
     , click : Click msg
     }
+
+
+type ActionItem msg
+    = Option (ActionOption msg)
+    | Divider
 
 
 type ActionItems msg
@@ -88,6 +98,26 @@ fromCustom toggleMsg toHtml actionItems =
 items : ActionItem msg -> List (ActionItem msg) -> ActionItems msg
 items actionItem actionItems =
     ActionItems (Nonempty actionItem actionItems)
+
+
+option : Icon msg -> String -> Click msg -> ActionItem msg
+option icon label click =
+    option_ (Just icon) label click
+
+
+optionWithNoIcon : String -> Click msg -> ActionItem msg
+optionWithNoIcon label click =
+    option_ Nothing label click
+
+
+option_ : Maybe (Icon msg) -> String -> Click msg -> ActionItem msg
+option_ icon label click =
+    Option { icon = icon, label = label, click = click }
+
+
+divider : ActionItem msg
+divider =
+    Divider
 
 
 
@@ -181,7 +211,15 @@ viewItems : ActionItems msg -> Html msg
 viewItems (ActionItems items_) =
     let
         viewItem i =
-            Click.view [ class "action-menu_action-item" ] [ Icon.view i.icon, text i.label ] i.click
+            case i of
+                Option o ->
+                    Click.view
+                        [ class "action-menu_action-item" ]
+                        [ MaybeE.unwrap UI.nothing Icon.view o.icon, text o.label ]
+                        o.click
+
+                Divider ->
+                    UI.divider
     in
     div [ class "action-menu_action-items" ] (items_ |> Nonempty.toList |> List.map viewItem)
 
