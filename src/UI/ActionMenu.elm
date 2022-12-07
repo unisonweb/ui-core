@@ -3,16 +3,18 @@ module UI.ActionMenu exposing
     , ActionItems
     , ActionMenu
     , close
-    , divider
+    , dividerItem
     , fromButton
     , fromCustom
     , fromIconButton
     , items
+    , loadingItem
     , open
-    , option
-    , optionWithoutIcon
-    , option_
+    , optionItem
+    , optionItemWithoutIcon
+    , optionItem_
     , shouldBeOpen
+    , titleItem
     , view
     , withActionItem
     , withButtonIcon
@@ -27,6 +29,8 @@ import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
+import UI.Nudge exposing (Nudge)
+import UI.PlaceholderShape as PlaceholderShape
 
 
 type OpenState
@@ -38,12 +42,15 @@ type alias ActionOption msg =
     { icon : Maybe (Icon msg)
     , label : String
     , click : Click msg
+    , nudge : Maybe (Nudge msg)
     }
 
 
 type ActionItem msg
     = Option (ActionOption msg)
     | Divider
+    | Title String
+    | Loading
 
 
 type ActionItems msg
@@ -100,24 +107,34 @@ items actionItem actionItems =
     ActionItems (Nonempty actionItem actionItems)
 
 
-option : Icon msg -> String -> Click msg -> ActionItem msg
-option icon label click =
-    option_ (Just icon) label click
+optionItem : Icon msg -> String -> Click msg -> ActionItem msg
+optionItem icon label click =
+    optionItem_ (Just icon) label click
 
 
-optionWithoutIcon : String -> Click msg -> ActionItem msg
-optionWithoutIcon label click =
-    option_ Nothing label click
+optionItemWithoutIcon : String -> Click msg -> ActionItem msg
+optionItemWithoutIcon label click =
+    optionItem_ Nothing label click
 
 
-option_ : Maybe (Icon msg) -> String -> Click msg -> ActionItem msg
-option_ icon label click =
-    Option { icon = icon, label = label, click = click }
+optionItem_ : Maybe (Icon msg) -> String -> Click msg -> ActionItem msg
+optionItem_ icon label click =
+    Option { icon = icon, label = label, click = click, nudge = Nothing }
 
 
-divider : ActionItem msg
-divider =
+loadingItem : ActionItem msg
+loadingItem =
+    Loading
+
+
+dividerItem : ActionItem msg
+dividerItem =
     Divider
+
+
+titleItem : String -> ActionItem msg
+titleItem title =
+    Title title
 
 
 
@@ -219,7 +236,18 @@ viewItems (ActionItems items_) =
                         o.click
 
                 Divider ->
-                    UI.divider
+                    div [ class "action-menu_action-item" ] [ UI.divider ]
+
+                Loading ->
+                    div [ class "action-menu_action-item" ]
+                        [ PlaceholderShape.text
+                            |> PlaceholderShape.small
+                            |> PlaceholderShape.subdued
+                            |> PlaceholderShape.view
+                        ]
+
+                Title t ->
+                    div [ class "action-menu_action-item action-menu_action-item-title" ] [ text t ]
     in
     div [ class "action-menu_action-items" ] (items_ |> Nonempty.toList |> List.map viewItem)
 

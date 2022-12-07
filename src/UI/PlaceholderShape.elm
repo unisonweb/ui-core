@@ -66,6 +66,46 @@ withIntensity intensity (Text t) =
     Text { t | intensity = intensity }
 
 
+tiny : PlaceholderShape -> PlaceholderShape
+tiny ps =
+    withSize Tiny ps
+
+
+small : PlaceholderShape -> PlaceholderShape
+small ps =
+    withSize Small ps
+
+
+medium : PlaceholderShape -> PlaceholderShape
+medium ps =
+    withSize Medium ps
+
+
+large : PlaceholderShape -> PlaceholderShape
+large ps =
+    withSize Large ps
+
+
+huge : PlaceholderShape -> PlaceholderShape
+huge ps =
+    withSize Huge ps
+
+
+emphasized : PlaceholderShape -> PlaceholderShape
+emphasized ps =
+    withIntensity Emphasized ps
+
+
+normal : PlaceholderShape -> PlaceholderShape
+normal ps =
+    withIntensity Normal ps
+
+
+subdued : PlaceholderShape -> PlaceholderShape
+subdued ps =
+    withIntensity Subdued ps
+
+
 
 -- VIEW
 
