@@ -10,7 +10,7 @@ module UI.ActionMenu exposing
     , items
     , open
     , option
-    , optionWithNoIcon
+    , optionWithoutIcon
     , option_
     , shouldBeOpen
     , view
@@ -105,8 +105,8 @@ option icon label click =
     option_ (Just icon) label click
 
 
-optionWithNoIcon : String -> Click msg -> ActionItem msg
-optionWithNoIcon label click =
+optionWithoutIcon : String -> Click msg -> ActionItem msg
+optionWithoutIcon label click =
     option_ Nothing label click
 
 
