@@ -28,6 +28,7 @@ import Maybe.Extra as MaybeE
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
+import UI.Divider as Divider
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge exposing (Nudge)
 import UI.PlaceholderShape as PlaceholderShape
@@ -236,7 +237,13 @@ viewItems (ActionItems items_) =
                         o.click
 
                 Divider ->
-                    div [ class "action-menu_action-item action-menu_action-item-divider" ] [ UI.divider ]
+                    div [ class "action-menu_action-item action-menu_action-item-divider" ]
+                        [ Divider.divider
+                            |> Divider.small
+                            |> Divider.onDark
+                            |> Divider.withoutMargin
+                            |> Divider.view
+                        ]
 
                 Loading ->
                     div [ class "action-menu_action-item action-menu_action-item-loading" ]

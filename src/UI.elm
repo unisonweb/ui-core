@@ -3,6 +3,7 @@ module UI exposing (..)
 import Html exposing (Attribute, Html, code, div, hr, pre, span, strong, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
+import UI.Divider as Divider
 import UI.Icon as Icon
 
 
@@ -65,7 +66,7 @@ emptyStateMessage message =
 
 divider : Html msg
 divider =
-    hr [ class "divider" ] []
+    Divider.divider |> Divider.view
 
 
 charWidth : Int -> String

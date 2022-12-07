@@ -1,8 +1,23 @@
 .divider {
-  background: var(--u-color_divider);
   border: 0;
-  margin: 1.5rem 0;
   height: 2px;
   border-radius: 1px;
   width: 100%;
+}
+
+.divider.divider_size_small {
+  height: 1px;
+}
+
+.divider.divider_on-surface_light {
+  background: var(--u-color_divider);
+}
+
+.divider.divider_on-surface_dark {
+  /* @color-todo */
+  background: var(--color-gray-darken-10);
+}
+
+.divider.divider_margin {
+  margin: 1.5rem 0;
 }
