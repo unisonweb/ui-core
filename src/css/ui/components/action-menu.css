@@ -35,7 +35,6 @@
   font-size: var(--font-size-medium);
   line-height: 1;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
 }
 
@@ -55,7 +54,7 @@
   flex-direction: column;
   gap: 0.125rem;
 }
-.action-menu .action-menu_action-item-option_text::after {
+.action-menu .action-menu_action-item-option::after {
   position: absolute;
   top: 0;
   right: 0;
