@@ -51,7 +51,7 @@
 
 .action-menu .action-menu_action-item-option,
 .action-menu .action-menu_action-item-option::after {
-  transition: all 0.2s;
+  transition: none;
 }
 
 .action-menu .action-menu_action-item-option:hover {
