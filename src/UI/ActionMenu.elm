@@ -20,7 +20,7 @@ module UI.ActionMenu exposing
     , withButtonIcon
     )
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div, label, text)
 import Html.Attributes exposing (class, classList)
 import Lib.OnClickOutside exposing (onClickOutside)
 import List.Nonempty as Nonempty exposing (Nonempty(..))
@@ -255,7 +255,9 @@ viewSheet (ActionItems items_) =
                         ]
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon
                         , div [ class "action-menu_action-item-option_text" ]
-                            [ text o.label
+                            [ label
+                                [ class "action-menu_action-item-option_label" ]
+                                [ text o.label ]
                             , MaybeE.unwrap UI.nothing viewSubtext o.subtext
                             ]
                         ]
