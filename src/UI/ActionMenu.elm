@@ -244,15 +244,19 @@ viewSheet (ActionItems items_) =
             case i of
                 Option o ->
                     let
-                        viewSubText t =
+                        viewSubtext t =
                             div [ class "action-menu_action-item-option_subtext" ] [ text t ]
                     in
                     Click.view
-                        [ class "action-menu_action-item action-menu_action-item-option" ]
+                        [ classList
+                            [ ( "action-menu_action-item action-menu_action-item-option", True )
+                            , ( "action-menu_action-item-option-with-subtext", MaybeE.isJust o.subtext )
+                            ]
+                        ]
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon
                         , div [ class "action-menu_action-item-option_text" ]
                             [ text o.label
-                            , MaybeE.unwrap UI.nothing viewSubText o.subtext
+                            , MaybeE.unwrap UI.nothing viewSubtext o.subtext
                             ]
                         ]
                         o.click

@@ -63,6 +63,7 @@
   flex-direction: column;
   gap: 0.125rem;
 }
+
 .action-menu .action-menu_action-item-option::after {
   position: absolute;
   top: 0;
@@ -85,6 +86,11 @@
     var(--c-color_action-menu_action_action-item-option_hover)
   );
 }
+
+.action-menu .action-menu_action-item-option-with-subtext {
+  height: 3.125rem;
+}
+
 .action-menu .action-menu_action-item-option_subtext {
   color: var(--c-color_action-menu_action-items_text_subdued);
 }
