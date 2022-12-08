@@ -41,8 +41,8 @@ type alias HttpApi =
     }
 
 
-httpApi : String -> Maybe String -> HttpApi
-httpApi rawUrl xsrfToken =
+httpApi : Bool -> String -> Maybe String -> HttpApi
+httpApi withCredentials rawUrl xsrfToken =
     let
         headers =
             xsrfToken
@@ -50,7 +50,7 @@ httpApi rawUrl xsrfToken =
                 |> Maybe.map (\x -> [ x ])
                 |> Maybe.withDefault []
     in
-    httpApi_ (apiUrlFromString rawUrl) headers
+    httpApi_ (apiUrlFromString withCredentials rawUrl) headers
 
 
 httpApi_ : ApiUrl -> List Http.Header -> HttpApi
@@ -77,20 +77,27 @@ type ApiUrl
     | SameOrigin (List String)
 
 
-apiUrlFromString : String -> ApiUrl
-apiUrlFromString s =
+apiUrlFromString : Bool -> String -> ApiUrl
+apiUrlFromString withCredentials s =
     let
         sameOrigin =
             s
                 |> String.split "/"
                 |> List.filter (String.isEmpty >> not)
                 |> SameOrigin
+
+        crossOrigin_ =
+            if withCredentials then
+                WithCredentialsCrossOrigin
+
+            else
+                CrossOrigin
     in
     if String.startsWith "http" s then
         -- Attempt to parse as a URL and assume its CrossOrigin, otherwise
         -- assume its a path and parse it into segments for SameOrigin.
         Url.fromString s
-            |> Maybe.map CrossOrigin
+            |> Maybe.map crossOrigin_
             |> Maybe.withDefault sameOrigin
 
     else
