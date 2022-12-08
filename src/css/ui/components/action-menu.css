@@ -1,6 +1,6 @@
 .action-menu {
   /* @color-todo @inverse */
-  --c-color_action-menu_action-sheet: var(--color-gray-darken-30);
+  --c-color_action-menu_sheet: var(--color-gray-darken-30);
   --c-color_action-menu_action-items_text: var(--color-gray-lighten-100);
   --c-color_action-menu_action-items_text_subdued: var(--color-gray-lighten-20);
   --c-color_action-menu_action-items_icon: var(--color-gray-lighten-20);
@@ -13,7 +13,7 @@
   right: 0;
   margin-top: 0.25rem;
   border-radius: var(--border-radius-base);
-  background: var(--c-color_action-menu_action-sheet);
+  background: var(--c-color_action-menu_sheet);
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -60,9 +60,10 @@
   right: 0;
   bottom: 0;
   content: " ";
-  background: linear(
+  background: linear-gradient(
+    to left,
     var(--color-transparent),
-    var(--c-color_action-menu_action-sheet)
+    var(--c-color_action-menu_sheet)
   );
   width: 2rem;
 }
