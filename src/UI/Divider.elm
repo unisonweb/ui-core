@@ -99,4 +99,4 @@ view d =
             else
                 class "divider_no-margin"
     in
-    hr [ class "divider", sizeClass, surfaceClass ] []
+    hr [ class "divider", sizeClass, surfaceClass, paddingClass ] []

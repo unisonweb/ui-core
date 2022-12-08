@@ -1,6 +1,6 @@
 module UI exposing (..)
 
-import Html exposing (Attribute, Html, code, div, hr, pre, span, strong, text)
+import Html exposing (Attribute, Html, code, div, pre, span, strong, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import UI.Divider as Divider
