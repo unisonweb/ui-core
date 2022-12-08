@@ -60,7 +60,10 @@
   right: 0;
   bottom: 0;
   content: " ";
-  background: linear(var(--color-transparent), var(--c-color_action-menu_action-sheet))
+  background: linear(
+    var(--color-transparent),
+    var(--c-color_action-menu_action-sheet)
+  );
   width: 2rem;
 }
 .action-menu .action-menu_action-item-option_sub-text {
