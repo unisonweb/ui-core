@@ -225,8 +225,8 @@ buttonWithIcon icon button =
             button
 
 
-viewItems : ActionItems msg -> Html msg
-viewItems (ActionItems items_) =
+viewSheet : ActionItems msg -> Html msg
+viewSheet (ActionItems items_) =
     let
         viewItem i =
             case i of
@@ -256,7 +256,7 @@ viewItems (ActionItems items_) =
                 Title t ->
                     div [ class "action-menu_action-item action-menu_action-item-title" ] [ text t ]
     in
-    div [ class "action-menu_action-items" ] (items_ |> Nonempty.toList |> List.map viewItem)
+    div [ class "action-menu_sheet" ] (items_ |> Nonempty.toList |> List.map viewItem)
 
 
 view : ActionMenu msg -> Html msg
@@ -268,7 +268,7 @@ view { toggleMsg, state, trigger, actionItems } =
                     ( UI.nothing, False )
 
                 Open ->
-                    ( viewItems actionItems, True )
+                    ( viewSheet actionItems, True )
 
         trigger_ =
             case trigger of
