@@ -93,6 +93,7 @@
 
 .action-menu .action-menu_action-item-option_subtext {
   color: var(--c-color_action-menu_action-items_text_subdued);
+  font-size: var(--font-size-small);
 }
 
 .action-menu .action-menu_action-item-option .icon {
