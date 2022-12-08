@@ -61,7 +61,7 @@
   bottom: 0;
   content: " ";
   background: linear-gradient(
-    to left,
+    90deg),
     var(--color-transparent),
     var(--c-color_action-menu_sheet)
   );
