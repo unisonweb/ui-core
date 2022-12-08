@@ -93,11 +93,15 @@
 
 .action-menu .action-menu_action-item-option_label {
   height: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .action-menu .action-menu_action-item-option_subtext {
   color: var(--c-color_action-menu_action-items_text_subdued);
   font-size: var(--font-size-small);
+  display: flex;
+  align-items: center;
   height: 1rem;
 }
 
