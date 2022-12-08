@@ -188,8 +188,12 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
     let
         request_ =
             case api.url of
-                CrossOrigin _ ->
-                    Http.riskyRequest
+                CrossOrigin url ->
+                    if Url.toString url == "https://api.unison-lang.org" then
+                        Http.riskyRequest
+
+                    else
+                        Http.request
 
                 SameOrigin _ ->
                     Http.request
