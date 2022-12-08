@@ -50,12 +50,12 @@ httpApi rawUrl xsrfToken =
                 |> Maybe.map (\x -> [ x ])
                 |> Maybe.withDefault []
     in
-    httpApi_ rawUrl headers
+    httpApi_ (apiUrlFromString rawUrl) headers
 
 
-httpApi_ : String -> List Http.Header -> HttpApi
-httpApi_ rawUrl headers =
-    { url = apiUrlFromString rawUrl, headers = headers }
+httpApi_ : ApiUrl -> List Http.Header -> HttpApi
+httpApi_ apiUrl headers =
+    { url = apiUrl, headers = headers }
 
 
 
