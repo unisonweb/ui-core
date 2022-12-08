@@ -42,6 +42,7 @@ type OpenState
 type alias ActionOption msg =
     { icon : Maybe (Icon msg)
     , label : String
+    , subText : Maybe String
     , click : Click msg
     , nudge : Maybe (Nudge msg)
     }
@@ -110,17 +111,28 @@ items actionItem actionItems =
 
 optionItem : Icon msg -> String -> Click msg -> ActionItem msg
 optionItem icon label click =
-    optionItem_ (Just icon) label click
+    optionItem_ (Just icon) label Nothing click
 
 
 optionItemWithoutIcon : String -> Click msg -> ActionItem msg
 optionItemWithoutIcon label click =
-    optionItem_ Nothing label click
+    optionItem_ Nothing label Nothing click
 
 
-optionItem_ : Maybe (Icon msg) -> String -> Click msg -> ActionItem msg
-optionItem_ icon label click =
-    Option { icon = icon, label = label, click = click, nudge = Nothing }
+optionItem_ :
+    Maybe (Icon msg)
+    -> String
+    -> Maybe String
+    -> Click msg
+    -> ActionItem msg
+optionItem_ icon label subText click =
+    Option
+        { icon = icon
+        , label = label
+        , subText = subText
+        , click = click
+        , nudge = Nothing
+        }
 
 
 loadingItem : ActionItem msg
@@ -231,9 +243,18 @@ viewSheet (ActionItems items_) =
         viewItem i =
             case i of
                 Option o ->
+                    let
+                        viewSubText t =
+                            div [ class "action-menu_action-item-option_subtext" ] [ text t ]
+                    in
                     Click.view
                         [ class "action-menu_action-item action-menu_action-item-option" ]
-                        [ MaybeE.unwrap UI.nothing Icon.view o.icon, text o.label ]
+                        [ MaybeE.unwrap UI.nothing Icon.view o.icon
+                        , div [ class "action-menu_action-item-option_text" ]
+                            [ text o.label
+                            , MaybeE.unwrap UI.nothing viewSubText o.subText
+                            ]
+                        ]
                         o.click
 
                 Divider ->
