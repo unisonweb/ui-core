@@ -36,6 +36,7 @@
   line-height: 1;
   white-space: nowrap;
   overflow: hidden;
+  position: relative;
 }
 
 .action-menu .action-menu_action-item-title,
@@ -49,7 +50,6 @@
 }
 
 .action-menu .action-menu_action-item-option_text {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
