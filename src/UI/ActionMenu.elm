@@ -42,7 +42,7 @@ type OpenState
 type alias ActionOption msg =
     { icon : Maybe (Icon msg)
     , label : String
-    , subText : Maybe String
+    , subtext : Maybe String
     , click : Click msg
     , nudge : Maybe (Nudge msg)
     }
@@ -125,11 +125,11 @@ optionItem_ :
     -> Maybe String
     -> Click msg
     -> ActionItem msg
-optionItem_ icon label subText click =
+optionItem_ icon label subtext click =
     Option
         { icon = icon
         , label = label
-        , subText = subText
+        , subtext = subtext
         , click = click
         , nudge = Nothing
         }
@@ -252,7 +252,7 @@ viewSheet (ActionItems items_) =
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon
                         , div [ class "action-menu_action-item-option_text" ]
                             [ text o.label
-                            , MaybeE.unwrap UI.nothing viewSubText o.subText
+                            , MaybeE.unwrap UI.nothing viewSubText o.subtext
                             ]
                         ]
                         o.click

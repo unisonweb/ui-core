@@ -85,7 +85,7 @@
     var(--c-color_action-menu_action_action-item-option_hover)
   );
 }
-.action-menu .action-menu_action-item-option_sub-text {
+.action-menu .action-menu_action-item-option_subtext {
   color: var(--c-color_action-menu_action-items_text_subdued);
 }
 
