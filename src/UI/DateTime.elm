@@ -9,7 +9,7 @@ import Time exposing (Posix)
 formatDate : Posix -> String
 formatDate t =
     -- TODO should pass in zone
-    DateFormat.format "MMM d, YYYY" Time.utc t
+    DateFormat.format "MMM d, yyyy" Time.utc t
 
 
 decode : Decode.Decoder Posix
