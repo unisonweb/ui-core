@@ -3,6 +3,7 @@
   --c-color_action-menu_sheet: var(--color-gray-darken-30);
   --c-color_action-menu_action-items_text: var(--color-gray-lighten-100);
   --c-color_action-menu_action-items_text_subdued: var(--color-gray-lighten-20);
+  --c-color_action-menu_action-items_icon: var(--color-gray-lighten-20);
   --c-color_action-menu_action_action-item-option_hover: var(--color-gray-base);
 
   position: relative;
