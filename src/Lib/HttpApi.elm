@@ -73,6 +73,7 @@ httpApi_ rawUrl headers =
 
 type ApiUrl
     = CrossOrigin Url
+    | WithCredentialsCrossOrigin Url
     | SameOrigin (List String)
 
 
@@ -149,6 +150,9 @@ toUrl apiUrl endpoint =
         CrossOrigin url ->
             crossOrigin (toUrlString url) path queryParams
 
+        WithCredentialsCrossOrigin url ->
+            crossOrigin (toUrlString url) path queryParams
+
         SameOrigin basePath ->
             absolute (basePath ++ path) queryParams
 
@@ -188,14 +192,10 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
     let
         request_ =
             case api.url of
-                CrossOrigin url ->
-                    if Url.toString url == "https://api.unison-lang.org" then
-                        Http.riskyRequest
+                WithCredentialsCrossOrigin _ ->
+                    Http.riskyRequest
 
-                    else
-                        Http.request
-
-                SameOrigin _ ->
+                _ ->
                     Http.request
     in
     case endpoint of
@@ -269,10 +269,10 @@ toTask_ apiUrl decoder headers endpoint =
     let
         task_ =
             case apiUrl of
-                CrossOrigin _ ->
+                WithCredentialsCrossOrigin _ ->
                     Http.riskyTask
 
-                SameOrigin _ ->
+                _ ->
                     Http.task
     in
     case endpoint of
