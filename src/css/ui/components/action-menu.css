@@ -46,9 +46,14 @@
 
 .action-menu .action-menu_action-item-option .nudge {
   position: absolute;
-  right: 0;
+  top: 0.5rem;
+  right: 0.25rem;
   z-index: 1;
-  height: 2rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+}
+.action-menu .action-menu_action-item-option .nudge {
 }
 
 .action-menu .action-menu_action-item-title,
