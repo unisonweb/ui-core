@@ -13,7 +13,7 @@ toUrl =
             \_ ->
                 let
                     apiUrl =
-                        HttpApi.apiUrlFromString "https://api.example.com"
+                        HttpApi.apiUrlFromString False "https://api.example.com"
 
                     endpoint =
                         HttpApi.GET
