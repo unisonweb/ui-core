@@ -10,7 +10,7 @@
 }
 
 .action-menu .nudge {
-  position: aboslute;
+  position: absolute;
   top: -0.25rem;
   right: -0.25rem;
 }
