@@ -47,7 +47,7 @@
 .action-menu .action-menu_action-item-option .nudge {
   position: absolute;
   right: 0;
-  /*z-index: calc(var(--layer-popover) + 1)*/
+  z-index: calc(var(--layer-popover) + 1);
 }
 
 .action-menu .action-menu_action-item-title,
