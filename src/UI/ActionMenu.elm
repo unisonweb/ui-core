@@ -18,6 +18,7 @@ module UI.ActionMenu exposing
     , view
     , withActionItem
     , withButtonIcon
+    , withNudge
     )
 
 import Html exposing (Html, div, label, text)
@@ -30,7 +31,7 @@ import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Divider as Divider
 import UI.Icon as Icon exposing (Icon)
-import UI.Nudge exposing (Nudge)
+import UI.Nudge as Nudge exposing (Nudge(..))
 import UI.PlaceholderShape as PlaceholderShape
 
 
@@ -44,7 +45,7 @@ type alias ActionOption msg =
     , label : String
     , subtext : Maybe String
     , click : Click msg
-    , nudge : Maybe (Nudge msg)
+    , nudge : Nudge msg
     }
 
 
@@ -70,6 +71,7 @@ type alias ActionMenu msg =
     , state : OpenState
     , trigger : ActionMenuTrigger msg
     , actionItems : ActionItems msg
+    , nudge : Nudge msg
     }
 
 
@@ -83,6 +85,7 @@ fromButton toggleMsg buttonLabel actionItems =
     , state = Closed
     , trigger = ButtonTrigger { icon = Nothing, label = buttonLabel }
     , actionItems = actionItems
+    , nudge = NoNudge
     }
 
 
@@ -92,6 +95,7 @@ fromIconButton toggleMsg icon actionItems =
     , state = Closed
     , trigger = IconButtonTrigger icon
     , actionItems = actionItems
+    , nudge = NoNudge
     }
 
 
@@ -101,6 +105,7 @@ fromCustom toggleMsg toHtml actionItems =
     , state = Closed
     , trigger = CustomTrigger { toHtml = toHtml }
     , actionItems = actionItems
+    , nudge = NoNudge
     }
 
 
@@ -111,27 +116,28 @@ items actionItem actionItems =
 
 optionItem : Icon msg -> String -> Click msg -> ActionItem msg
 optionItem icon label click =
-    optionItem_ (Just icon) label Nothing click
+    optionItem_ (Just icon) label Nothing NoNudge click
 
 
 optionItemWithoutIcon : String -> Click msg -> ActionItem msg
 optionItemWithoutIcon label click =
-    optionItem_ Nothing label Nothing click
+    optionItem_ Nothing label Nothing NoNudge click
 
 
 optionItem_ :
     Maybe (Icon msg)
     -> String
     -> Maybe String
+    -> Nudge msg
     -> Click msg
     -> ActionItem msg
-optionItem_ icon label subtext click =
+optionItem_ icon label subtext nudge click =
     Option
         { icon = icon
         , label = label
         , subtext = subtext
+        , nudge = nudge
         , click = click
-        , nudge = Nothing
         }
 
 
@@ -184,6 +190,11 @@ withActionItem item_ actionMenu_ =
                     ActionItems (Nonempty.append (Nonempty.fromElement item_) l)
     in
     { actionMenu_ | actionItems = newActionItems }
+
+
+withNudge : Nudge msg -> ActionMenu msg -> ActionMenu msg
+withNudge nudge actionMenu_ =
+    { actionMenu_ | nudge = nudge }
 
 
 shouldBeOpen : Bool -> ActionMenu msg -> ActionMenu msg
@@ -260,6 +271,7 @@ viewSheet (ActionItems items_) =
                                 [ text o.label ]
                             , MaybeE.unwrap UI.nothing viewSubtext o.subtext
                             ]
+                        , Nudge.view o.nudge
                         ]
                         o.click
 
@@ -287,7 +299,7 @@ viewSheet (ActionItems items_) =
 
 
 view : ActionMenu msg -> Html msg
-view { toggleMsg, state, trigger, actionItems } =
+view { toggleMsg, nudge, state, trigger, actionItems } =
     let
         ( menu, isOpen ) =
             case state of
@@ -328,7 +340,7 @@ view { toggleMsg, state, trigger, actionItems } =
 
         actionMenu_ =
             div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
-                [ trigger_, menu ]
+                [ trigger_, Nudge.view nudge, menu ]
     in
     if isOpen then
         onClickOutside toggleMsg actionMenu_
