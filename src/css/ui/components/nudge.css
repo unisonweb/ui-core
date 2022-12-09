@@ -3,12 +3,14 @@
   display: inline-flex;
 }
 
-.nudge .icon {
-  color: var(--u-color_info_icon);
-  font-size: 0.875rem;
+.nudge .nudge_circle {
+  background: var(--u-color_info_icon);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.25rem;
 }
 
-.nudge.pulsate .icon {
+.nudge.pulsate .nudge_circle {
   animation-name: pulsate-size;
   animation-duration: 1500ms;
   animation-iteration-count: infinite;

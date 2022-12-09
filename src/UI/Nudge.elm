@@ -3,7 +3,6 @@ module UI.Nudge exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import UI
-import UI.Icon as Icon
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
@@ -83,7 +82,7 @@ viewNudgeDot pulsate_ =
           else
             class "nudge"
         ]
-        [ Icon.largeDot |> Icon.view
+        [ div [ class "nudge_circle" ] []
         ]
 
 

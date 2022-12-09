@@ -112,7 +112,7 @@
   height: 1rem;
 }
 
-.action-menu .action-menu_action-item-option :not(.nudge) .icon {
+.action-menu .action-menu_action-item-option .icon {
   color: var(--c-color_action-menu_action-items_icon);
 }
 
