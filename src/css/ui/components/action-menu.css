@@ -47,7 +47,7 @@
 .action-menu .action-menu_action-item-option .nudge {
   position: absolute;
   right: 0;
-  z-index: calc(var(--layer-popover) + 1);
+  z-index: 1;
 }
 
 .action-menu .action-menu_action-item-title,
@@ -112,7 +112,7 @@
   height: 1rem;
 }
 
-.action-menu .action-menu_action-item-option .icon {
+.action-menu .action-menu_action-item-option :not(.nudge) .icon {
   color: var(--c-color_action-menu_action-items_icon);
 }
 
