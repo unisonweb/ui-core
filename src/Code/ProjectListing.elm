@@ -5,7 +5,7 @@ import Code.Hashvatar as Hashvatar
 import Code.Project exposing (Project)
 import Code.Project.ProjectShorthand as ProjectShorthand
 import Html exposing (Html, div)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (classList)
 import UI.Click as Click exposing (Click)
 
 
@@ -71,21 +71,23 @@ map f p =
 
 
 view : ProjectListing p msg -> Html msg
-view { project, click } =
+view { project, size, click } =
     let
         hash =
             Hash.unsafeFromString (ProjectShorthand.toString project.shorthand)
+
+        attrs =
+            [ classList [ ( "project-listing", True ), ( "project-listing-size_large", size == Large ) ]
+            ]
+
+        content =
+            [ Hashvatar.view hash
+            , ProjectShorthand.view project.shorthand
+            ]
     in
     case click of
         Just c ->
-            Click.view [ class "project-listing" ]
-                [ Hashvatar.view hash
-                , ProjectShorthand.view project.shorthand
-                ]
-                c
+            Click.view attrs content c
 
         Nothing ->
-            div [ class "project-listing" ]
-                [ Hashvatar.view hash
-                , ProjectShorthand.view project.shorthand
-                ]
+            div attrs content
