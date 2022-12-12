@@ -8,6 +8,7 @@
   width: fit-content;
   align-items: center;
   line-height: 1;
+  font-size: var(--font-size-small);
 }
 
 .tags {
