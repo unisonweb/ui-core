@@ -1,14 +1,9 @@
 module Code.Project exposing (..)
 
-import Code.Hash as Hash
-import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
 import Code.Project.ProjectSlug exposing (ProjectSlug)
-import Html exposing (Html)
-import Html.Attributes exposing (class)
 import Lib.UserHandle exposing (UserHandle)
 import Set exposing (Set)
-import UI.Click as Click
 
 
 type alias Project a =
