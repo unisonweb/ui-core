@@ -67,6 +67,7 @@
         "src/Code/Perspective.elm",
         "src/Code/Project.elm",
         "src/Code/Project/ProjectShorthand.elm",
+        "src/Code/ProjectListing.elm",
         "src/Code/Syntax.elm",
         "src/Code/UrlParsers.elm",
         "src/Code/Workspace.elm",

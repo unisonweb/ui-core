@@ -9,6 +9,11 @@
   height: 1.5rem;
 }
 
+.project-listing.project-listing-size_large {
+  font-size: var(--font-size-base);
+  gap: 0.625rem;
+}
+
 a.project-listing {
   padding-right: 0.375rem;
   /* border-radius is halved, because it is going to appear as dobbled 
