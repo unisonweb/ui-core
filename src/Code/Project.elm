@@ -45,20 +45,3 @@ slug p =
 equals : Project a -> Project b -> Bool
 equals a b =
     ProjectShorthand.equals a.shorthand b.shorthand
-
-
-
--- View
-
-
-viewProjectListing : Click.Click msg -> Project a -> Html msg
-viewProjectListing click project =
-    let
-        hash =
-            Hash.unsafeFromString (ProjectShorthand.toString project.shorthand)
-    in
-    Click.view [ class "project-listing" ]
-        [ Hashvatar.view hash
-        , ProjectShorthand.view project.shorthand
-        ]
-        click
