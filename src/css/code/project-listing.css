@@ -3,18 +3,20 @@
   flex-direction: row;
   align-items: center;
   gap: 0.75rem;
-  border-radius: var(--border-radius-base);
   color: var(--u-color_text);
   font-size: var(--font-size-medium);
   height: 1.5rem;
 }
 
 a.project-listing {
-  padding: 0 0.6rem 0 0.25rem;
-  height: 2rem;
+  padding-right: 0.375rem;
+  /* border-radius is halved, because it is going to appear as dobbled 
+   * when applied via the box-shadow on hover */
+  border-radius: calc(var(--border-radius-base) / 2);
 }
 
 a.project-listing :hover {
   text-decoration: none;
   background: var(--u-color_element_hovered);
+  box-shadow: 0 0 0 0.25rem var(--u-color_element_hovered);
 }
