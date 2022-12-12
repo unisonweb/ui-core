@@ -15,7 +15,7 @@ a.project-listing {
   border-radius: calc(var(--border-radius-base) / 2);
 }
 
-a.project-listing :hover {
+a.project-listing:hover {
   text-decoration: none;
   background: var(--u-color_element_hovered);
   box-shadow: 0 0 0 0.25rem var(--u-color_element_hovered);
