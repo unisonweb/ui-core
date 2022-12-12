@@ -1,5 +1,6 @@
 .project-listing {
-  display: flex;
+  display: inline-flex;
+  width: fit-content;
   flex-direction: row;
   align-items: center;
   gap: 0.75rem;
@@ -13,6 +14,10 @@ a.project-listing {
   /* border-radius is halved, because it is going to appear as dobbled 
    * when applied via the box-shadow on hover */
   border-radius: calc(var(--border-radius-base) / 2);
+}
+
+a.project-listing * {
+  cursor: pointer;
 }
 
 a.project-listing:hover {
