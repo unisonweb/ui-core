@@ -46,3 +46,8 @@ view { label, click } =
 
         Nothing ->
             div attrs content
+
+
+viewTags : List (Tag msg) -> Html msg
+viewTags tags =
+    div [ class "tags" ] (List.map view tags)
