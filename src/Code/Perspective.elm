@@ -37,6 +37,11 @@ type
         }
 
 
+relativeRootPerspective : Perspective
+relativeRootPerspective =
+    Root Relative
+
+
 toRootPerspective : Perspective -> Perspective
 toRootPerspective perspective =
     Root (rootPerspective perspective)
