@@ -414,7 +414,8 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                     span [ class "rich source inline-code" ] [ UI.inlineCode [] (viewAtCurrentSectionLevel code) ]
 
                 CodeBlock lang code ->
-                    if String.toLower lang == "katex" then
+                    -- LaTeX is the language, KaTeX is the rendering engine
+                    if String.toLower lang == "latex" then
                         EmbedKatex.katex (toString "" code)
                             |> EmbedKatex.view
 

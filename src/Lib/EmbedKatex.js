@@ -1,6 +1,6 @@
 import katex from "katex";
 
-// <embed-katex markup="some katex markup" display="block">
+// <embed-katex markup="some latex notation" display="block">
 // </embed-katex>
 
 class EmbedKatex extends HTMLElement {
