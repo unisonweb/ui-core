@@ -10,15 +10,6 @@ class EmbedKatex extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("connected, rendering", katex);
-    if (katex) {
-      this.render();
-    } else {
-      console.warn("Can't render KaTeX, library missing.");
-    }
-  }
-
-  render() {
     const markup = this.getAttribute("markup");
     const display = this.getAttribute("display");
 
