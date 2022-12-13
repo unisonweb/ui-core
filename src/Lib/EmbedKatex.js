@@ -10,6 +10,7 @@ class EmbedKatex extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log("connected, rendering", katex);
     if (katex) {
       this.render();
     } else {
