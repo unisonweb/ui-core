@@ -12,6 +12,8 @@ class EmbedKatex extends HTMLElement {
   connectedCallback() {
     if (katex) {
       this.render();
+    } else {
+      console.warn("Can't render KaTeX, library missing.");
     }
   }
 
