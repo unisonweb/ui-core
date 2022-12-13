@@ -29,5 +29,8 @@
     "elm-watch": "^1.0.2",
     "glob": "^8.0.3",
     "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "katex": "^0.16.4"
   }
 }

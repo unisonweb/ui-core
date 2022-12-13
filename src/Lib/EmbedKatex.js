@@ -1,3 +1,5 @@
+import katex from "katex";
+
 // <embed-katex markup="some katex markup" display="block">
 // </embed-katex>
 
