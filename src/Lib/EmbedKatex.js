@@ -1,4 +1,5 @@
 import katex from "katex";
+import "katex/dist/katex.min.css";
 
 // <embed-katex markup="some latex notation" display="block">
 // </embed-katex>
