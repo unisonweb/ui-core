@@ -62,6 +62,7 @@ import Html.Attributes
 import Json.Decode as Decode exposing (bool, field, index, int, string)
 import Json.Decode.Extra as DecodeE exposing (when)
 import Lib.EmbedKatex as EmbedKatex
+import Lib.MermaidDiagram as MermaidDiagram
 import Lib.TreePath as TreePath exposing (TreePath)
 import Set exposing (Set)
 import UI
@@ -414,13 +415,18 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                     span [ class "rich source inline-code" ] [ UI.inlineCode [] (viewAtCurrentSectionLevel code) ]
 
                 CodeBlock lang code ->
-                    -- LaTeX is the language, KaTeX is the rendering engine
-                    if String.toLower lang == "latex" then
-                        EmbedKatex.katex (toString "" code)
-                            |> EmbedKatex.view
+                    case String.toLower lang of
+                        -- LaTeX is the language, KaTeX is the rendering engine
+                        "latex" ->
+                            EmbedKatex.katex (toString "" code)
+                                |> EmbedKatex.view
 
-                    else
-                        div [ class "rich source code", lang |> stringToClass |> class ] [ UI.codeBlock [] (viewAtCurrentSectionLevel code) ]
+                        "mermaid" ->
+                            MermaidDiagram.mermaid (toString "" code)
+                                |> MermaidDiagram.view
+
+                        _ ->
+                            div [ class "rich source code", lang |> stringToClass |> class ] [ UI.codeBlock [] (viewAtCurrentSectionLevel code) ]
 
                 Bold d ->
                     strong [] [ viewAtCurrentSectionLevel d ]
