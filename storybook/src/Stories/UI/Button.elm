@@ -1,10 +1,10 @@
 module Stories.UI.Button exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.Button as B
 import UI.Icon as I
+import Util exposing (col)
 
 
 main : Story () Msg

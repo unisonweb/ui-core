@@ -1,9 +1,9 @@
 module Stories.UI.FoldToggle exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.FoldToggle as F
+import Util exposing (col)
 
 
 main : Story () Msg

@@ -1,10 +1,10 @@
 module Stories.UI.Banner exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.Banner as B
 import UI.Click as C
+import Util exposing (col)
 
 
 main : Story () Msg

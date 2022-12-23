@@ -1,9 +1,9 @@
 module Stories.UI.Card exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.Card as C
+import Util exposing (col)
 
 
 main : Story () Msg

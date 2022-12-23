@@ -1,9 +1,9 @@
 module Stories.UI.Modal exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.Modal as M
+import Util exposing (col)
 
 
 main : Story () Msg

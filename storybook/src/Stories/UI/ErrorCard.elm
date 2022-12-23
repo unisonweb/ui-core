@@ -1,9 +1,9 @@
 module Stories.UI.ErrorCard exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.ErrorCard as E
+import Util exposing (col)
 
 
 main : Story () Msg

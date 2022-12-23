@@ -2,10 +2,10 @@ module Stories.UI.KeyboardShortcut exposing (..)
 
 import Html exposing (Html)
 import Lib.OperatingSystem
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.KeyboardShortcut as K
 import UI.KeyboardShortcut.Key as Key
+import Util exposing (col)
 
 
 main : Story () Msg

@@ -1,9 +1,9 @@
 module Stories.UI.Icon exposing (..)
 
 import Html exposing (Html)
-import Lib.Util exposing (col)
 import Storybook.Story exposing (Story)
 import UI.Icon as I
+import Util exposing (col)
 
 
 main : Story () Msg
