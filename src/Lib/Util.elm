@@ -1,7 +1,5 @@
 module Lib.Util exposing (..)
 
-import Html exposing (Attribute, Html)
-import Html.Attributes
 import Http
 import Json.Decode as Decode
 import List.Nonempty as NEL
@@ -12,11 +10,6 @@ import Url exposing (Url)
 
 
 -- Various utility functions and helpers
-
-
-col : List (Attribute msg) -> List (Html msg) -> Html msg
-col attrs children =
-    Html.div (Html.Attributes.class "col" :: attrs) children
 
 
 possessive : String -> String
