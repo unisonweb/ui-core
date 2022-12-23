@@ -4,7 +4,6 @@
   "summary": "Core libraries and design system for the UIs of the Unison programming language",
   "license": "MIT",
   "version": "1.0.0",
-  "source-directories": ["src"],
   "exposed-modules": [
     "UI.AppHeader",
     "UI.Color",

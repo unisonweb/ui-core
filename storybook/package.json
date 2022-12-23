@@ -1,0 +1,27 @@
+{
+  "name": "unison-ui-core-storybook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm install && npm run dev",
+    "dev": "start-storybook -p 6006",
+    "build": "build-storybook -o .storybook/dist",
+    "elm-git": "elm-git-install"
+  },
+  "devDependencies": {
+    "@babel/core": "7.18.10",
+    "@storybook/addon-a11y": "6.5.10",
+    "@storybook/addon-actions": "6.5.10",
+    "@storybook/addon-storysource": "6.5.10",
+    "@storybook/builder-vite": "0.2.2",
+    "@storybook/html": "6.5.10",
+    "chokidar": "3.5.3",
+    "elm": "0.19.1-5",
+    "elm-git-install": "^0.1.4",
+    "node-elm-compiler": "5.0.6",
+    "vite": "3.0.8"
+  },
+  "author": "",
+  "license": "ISC"
+}

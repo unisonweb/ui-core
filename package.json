@@ -9,9 +9,7 @@
     "check-css-vars": "scripts/check-css-vars.mjs",
     "watch": "elm-watch hot",
     "check": "npm run build; npm run review; npm run test; npm run check-css-vars",
-    "sha": "git rev-parse HEAD | cut -c 1-8",
-    "stories": "start-storybook -p 6006",
-    "build-stories": "build-storybook -o .storybook/dist"
+    "sha": "git rev-parse HEAD | cut -c 1-8"
   },
   "repository": {
     "type": "git",
