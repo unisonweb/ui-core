@@ -22,23 +22,13 @@
   },
   "homepage": "https://github.com/unisonweb/ui-core#readme",
   "devDependencies": {
-    "elm": "0.19.1-5",
+    "elm": "^0.19.1-5",
     "elm-format": "^0.8.5",
     "elm-review": "^2.7.1",
     "elm-test": "^0.19.1-revision7",
     "elm-watch": "^1.0.2",
     "glob": "^8.0.3",
-    "prettier": "^2.6.2",
-    "@babel/core": "7.18.10",
-    "@storybook/addon-a11y": "6.5.10",
-    "@storybook/addon-actions": "6.5.10",
-    "@storybook/addon-storysource": "6.5.10",
-    "@storybook/builder-vite": "0.2.2",
-    "@storybook/html": "6.5.10",
-    "chokidar": "3.5.3",
-    "elm-git-install": "^0.1.4",
-    "node-elm-compiler": "5.0.6",
-    "vite": "3.0.8"
+    "prettier": "^2.6.2"
   },
   "dependencies": {
     "katex": "^0.16.4",
