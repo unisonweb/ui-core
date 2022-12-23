@@ -1,4 +1,5 @@
 const StorybookElmPlugin = require("./storybook-elm/plugin");
+const { mergeConfig } = require("vite");
 
 module.exports = {
   framework: "@storybook/html",
@@ -12,7 +13,8 @@ module.exports = {
   async viteFinal(config) {
     // Automatically creates stories from .elm files
     config.plugins.push(StorybookElmPlugin());
-
-    return config;
+    return mergeConfig(config, {
+      server: { fs: { allow: [".."] } },
+    });
   },
 };
