@@ -5,5 +5,4 @@ node_modules
 build
 .unisonHistory
 .unison
-.storybook/dist
-dist
+storybook/.storybook/dist
