@@ -57,7 +57,7 @@ view { diagram, theme } =
                 Predefined themeName ->
                     attribute "theme-name" themeName
 
-                Custom cfg ->
+                Custom _ ->
                     attribute "custom-theme" "custom"
     in
     node "mermaid-diagram" [ attribute "diagram" diagram, themeAttr ] []
