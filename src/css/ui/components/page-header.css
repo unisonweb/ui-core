@@ -5,6 +5,7 @@
   --c-color_page-header_text: var(--color-gray-lighten-100);
   --c-color_page-header_bg: var(--color-gray-darken-20);
   --c-color_page-header_subtle-text: var(--color-gray-lighten-20);
+  --c-color_page-header_subtle-text-slight-em: var(--color-gray-lighten-30);
   --c-color_page-header_subtle-text-em: var(--color-gray-lighten-50);
   --c-color_page-header_context-unison-share-text: var(--color-purple-4);
   --c-color_page-header_context-unison-local-text: var(--color-pink-3);
@@ -17,6 +18,14 @@
 .page-header.view-mode_regular .profile-snippet {
   --color_profile-snippet_text: var(--c-color_page-header_text);
   --color_profile-snippet_text_subdued: var(--c-color_page-header_subtle-text);
+}
+
+.page-header.view-mode_regular .project-shorthand {
+  --c-color_project-shorthand_handle: var(
+    --c-color_page-header-subtle-text-slight-em
+  );
+  --c-color_project-shorthand_separator: var(--c-color_page-header-subtle-text);
+  --c-color_project-shorthand_slug: var(--c-color_page-header_text);
 }
 
 .page-header.view-mode_regular .navigation {
