@@ -22,9 +22,9 @@
 
 .page-header.view-mode_regular .project-shorthand {
   --c-color_project-shorthand_handle: var(
-    --c-color_page-header-subtle-text-slight-em
+    --c-color_page-header_subtle-text-slight-em
   );
-  --c-color_project-shorthand_separator: var(--c-color_page-header-subtle-text);
+  --c-color_project-shorthand_separator: var(--c-color_page-header_subtle-text);
   --c-color_project-shorthand_slug: var(--c-color_page-header_text);
 }
 
