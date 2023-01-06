@@ -5,7 +5,10 @@ module Code.Project.ProjectShorthand exposing
     , handle
     , projectShorthand
     , slug
+    , toApiStringParts
+    , toParts
     , toString
+    , toStringParts
     , toUrlPath
     , unsafeFromString
     , view
@@ -60,6 +63,21 @@ handle (ProjectShorthand p) =
 slug : ProjectShorthand -> ProjectSlug
 slug (ProjectShorthand p) =
     p.slug
+
+
+toParts : ProjectShorthand -> ( UserHandle, ProjectSlug )
+toParts (ProjectShorthand p) =
+    ( p.handle, p.slug )
+
+
+toStringParts : ProjectShorthand -> ( String, String )
+toStringParts (ProjectShorthand p) =
+    ( UserHandle.toString p.handle, ProjectSlug.toString p.slug )
+
+
+toApiStringParts : ProjectShorthand -> ( String, String )
+toApiStringParts (ProjectShorthand p) =
+    ( UserHandle.toUnprefixedString p.handle, ProjectSlug.toString p.slug )
 
 
 equals : ProjectShorthand -> ProjectShorthand -> Bool

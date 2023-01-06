@@ -19,6 +19,9 @@ type alias ProjectDetails =
         { summary : Maybe String
         , tags : Set String
         , visibility : ProjectVisibility
+        , numFavorites : Int
+        , numDownloads : Int
+        , numProjectDependents : Int
         }
 
 
