@@ -62,6 +62,7 @@ import Html.Attributes
 import Json.Decode as Decode exposing (bool, field, index, int, string)
 import Json.Decode.Extra as DecodeE exposing (when)
 import Lib.EmbedKatex as EmbedKatex
+import Lib.EmbedSvg as EmbedSvg
 import Lib.MermaidDiagram as MermaidDiagram
 import Lib.TreePath as TreePath exposing (TreePath)
 import Set exposing (Set)
@@ -188,6 +189,8 @@ type
         )
         (Dict String String)
     | FrontMatter (Dict String (List String))
+    | LaTeXInline String
+    | Svg String
 
 
 
@@ -698,6 +701,15 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                             -- FrontMatter shouldn't be shown when rendered
                             UI.nothing
 
+                        LaTeXInline latex ->
+                            latex
+                                |> EmbedKatex.katex
+                                |> EmbedKatex.asInline
+                                |> EmbedKatex.view
+
+                        Svg svg ->
+                            svg |> EmbedSvg.svg |> EmbedSvg.view
+
                 Join docs ->
                     span [ class "doc_join" ] (List.map viewAtCurrentSectionLevel (mergeWords " " docs))
 
@@ -796,6 +808,8 @@ decodeSpecialForm path =
             (Decode.map FrontMatter
                 (field "contents" (Decode.dict (Decode.list Decode.string)))
             )
+        , when tag ((==) "LaTeXInline") (Decode.map LaTeXInline (field "contents" Decode.string))
+        , when tag ((==) "Svg") (Decode.map Svg (field "contents" Decode.string))
         ]
 
 
