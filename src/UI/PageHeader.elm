@@ -51,6 +51,11 @@ withViewMode viewMode pageHeader_ =
     { pageHeader_ | viewMode = viewMode }
 
 
+withRightSide : List (Html msg) -> PageHeader msg -> PageHeader msg
+withRightSide rightSide pageHeader_ =
+    { pageHeader_ | rightSide = rightSide }
+
+
 
 -- MAP
 
