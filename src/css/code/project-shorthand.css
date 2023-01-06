@@ -1,15 +1,22 @@
 .project-shorthand {
+  --c-color_project-shorthand_handle: var(--u-color_text_subdued);
+  --c-color_project-shorthand_separator: var(--u-color_text_very-subdued);
+  --c-color_project-shorthand_slug: var(--u-color_text);
+
   font-weight: bold;
-  color: var(--u-color_text);
   display: inline-flex;
   flex-direction: row;
   gap: 0.25rem;
 }
 
 .project-shorthand .project-shorthand_handle {
-  color: var(--u-color_text_subdued);
+  color: var(--c-color_project-shorthand_handle);
 }
 
 .project-shorthand .project-shorthand_separator {
-  color: var(--u-color_text_very-subdued);
+  color: var(--c-color_project-shorthand_separator);
+}
+
+.project-shorthand .project-shorthand_slug {
+  color: var(--c-color_project-shorthand_slug);
 }
