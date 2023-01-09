@@ -23,7 +23,7 @@ type alias ProjectDetails =
         { summary : Maybe String
         , tags : Set String
         , visibility : ProjectVisibility
-        , numFavorites : Int
+        , numFavs : Int
         , numWeeklyDownloads : Int
         , numProjectDependents : Int
         }
@@ -64,12 +64,12 @@ decodeVisibility =
 decodeDetails : ProjectShorthand -> Decode.Decoder ProjectDetails
 decodeDetails shorthand_ =
     let
-        projectDetails summary tags visibility numFavorites numWeeklyDownloads numProjectDependents =
+        projectDetails summary tags visibility numFavs numWeeklyDownloads numProjectDependents =
             { shorthand = shorthand_
             , summary = summary
             , tags = tags
             , visibility = visibility
-            , numFavorites = numFavorites
+            , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
             , numProjectDependents = numProjectDependents
             }
@@ -78,6 +78,6 @@ decodeDetails shorthand_ =
         |> required "summary" (nullable string)
         |> required "tags" (DecodeE.set string)
         |> required "visibility" decodeVisibility
-        |> required "numFavorites" int
+        |> required "numFavs" int
         |> required "numWeeklyDownloads" int
         |> required "numProjectDependents" int
