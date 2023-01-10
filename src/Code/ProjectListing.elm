@@ -5,13 +5,14 @@ import Code.Hashvatar as Hashvatar
 import Code.Project exposing (Project)
 import Code.Project.ProjectShorthand as ProjectShorthand
 import Html exposing (Html, div)
-import Html.Attributes exposing (classList)
+import Html.Attributes exposing (class)
 import UI.Click as Click exposing (Click)
 
 
 type ProjectListingSize
     = Medium
     | Large
+    | Huge
 
 
 type alias ProjectListing p msg =
@@ -54,6 +55,11 @@ large p =
     withSize Large p
 
 
+huge : ProjectListing p msg -> ProjectListing p msg
+huge p =
+    withSize Huge p
+
+
 
 -- MAP
 
@@ -70,6 +76,19 @@ map f p =
 -- VIEW
 
 
+sizeClass : ProjectListingSize -> String
+sizeClass size =
+    case size of
+        Medium ->
+            "project-listing-size_medium"
+
+        Large ->
+            "project-listing-size_large"
+
+        Huge ->
+            "project-listing-size_huge"
+
+
 view : ProjectListing p msg -> Html msg
 view { project, size, click } =
     let
@@ -77,8 +96,7 @@ view { project, size, click } =
             Hash.unsafeFromString (ProjectShorthand.toString project.shorthand)
 
         attrs =
-            [ classList [ ( "project-listing", True ), ( "project-listing-size_large", size == Large ) ]
-            ]
+            [ class "project-listing", class (sizeClass size) ]
 
         content =
             [ Hashvatar.view hash
