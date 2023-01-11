@@ -132,6 +132,7 @@
 .page-content .columns .column {
   display: flex;
   flex: 1;
+  flex-direction: column;
 }
 
 .page.centered-layout .page-content {
