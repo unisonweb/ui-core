@@ -99,7 +99,7 @@ view cfg_ =
             rect [ width "24", height "24", rx "4", fill cfg.background ] []
     in
     -- the background rect provides both background color and boundary in the form of the mask hence its double usage
-    svg [ width "24", height "24", viewBox "0 0 24 24", fill "none" ]
+    svg [ width "100%", height "100%", viewBox "0 0 24 24", fill "none" ]
         [ mask [ id "hashvatar-mask", style "mask-type: alpha", maskUnits "userSpaceOnUse", x "0", y "0", width "24", height "24" ]
             [ background ]
         , g [ Attrs.mask "url(#hashvatar-mask)" ]

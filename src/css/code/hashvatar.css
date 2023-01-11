@@ -1,4 +1,6 @@
 .hashvatar {
   position: relative;
   display: inline-flex;
+  width: 1.5rem;
+  height: 1.5rem;
 }
