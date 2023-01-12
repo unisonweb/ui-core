@@ -4,7 +4,7 @@ import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorth
 import Code.Project.ProjectSlug exposing (ProjectSlug)
 import Json.Decode as Decode exposing (int, nullable, string)
 import Json.Decode.Extra as DecodeE exposing (when)
-import Json.Decode.Pipeline exposing (required)
+import Json.Decode.Pipeline exposing (optional, required)
 import Lib.UserHandle exposing (UserHandle)
 import Set exposing (Set)
 
@@ -78,6 +78,6 @@ decodeDetails shorthand_ =
         |> required "summary" (nullable string)
         |> required "tags" (DecodeE.set string)
         |> required "visibility" decodeVisibility
-        |> required "numFavs" int
-        |> required "numWeeklyDownloads" int
-        |> required "numProjectDependents" int
+        |> optional "numFavs" int 0
+        |> optional "numWeeklyDownloads" int 0
+        |> optional "numProjectDependents" int 0
