@@ -1,11 +1,11 @@
 module Code.Project exposing (..)
 
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
-import Code.Project.ProjectSlug exposing (ProjectSlug)
+import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Json.Decode as Decode exposing (int, nullable, string)
 import Json.Decode.Extra exposing (when)
 import Json.Decode.Pipeline exposing (optional, required)
-import Lib.UserHandle exposing (UserHandle)
+import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Set exposing (Set)
 
 
@@ -61,10 +61,15 @@ decodeVisibility =
         ]
 
 
-decodeDetails : ProjectShorthand -> Decode.Decoder ProjectDetails
-decodeDetails shorthand_ =
+decodeDetails : Decode.Decoder ProjectDetails
+decodeDetails =
     let
-        projectDetails summary tags visibility numFavs numWeeklyDownloads numProjectDependents =
+        makeProjectDetails : UserHandle -> ProjectSlug -> Maybe String -> List String -> ProjectVisibility -> Int -> Int -> Int -> ProjectDetails
+        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads numProjectDependents =
+            let
+                shorthand_ =
+                    ProjectShorthand.projectShorthand handle_ slug_
+            in
             { shorthand = shorthand_
             , summary = summary
             , tags = Set.fromList tags
@@ -74,7 +79,9 @@ decodeDetails shorthand_ =
             , numProjectDependents = numProjectDependents
             }
     in
-    Decode.succeed projectDetails
+    Decode.succeed makeProjectDetails
+        |> required "owner.handle" UserHandle.decode
+        |> required "slug" ProjectSlug.decode
         |> required "summary" (nullable string)
         |> required "tags" (Decode.list string)
         |> required "visibility" decodeVisibility
