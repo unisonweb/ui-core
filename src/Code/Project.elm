@@ -64,10 +64,10 @@ decodeVisibility =
 decodeDetails : ProjectShorthand -> Decode.Decoder ProjectDetails
 decodeDetails shorthand_ =
     let
-        projectDetails summary visibility numFavs numWeeklyDownloads numProjectDependents =
+        projectDetails summary tags visibility numFavs numWeeklyDownloads numProjectDependents =
             { shorthand = shorthand_
             , summary = summary
-            , tags = Set.empty
+            , tags = Set.fromList tags
             , visibility = visibility
             , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
@@ -76,7 +76,7 @@ decodeDetails shorthand_ =
     in
     Decode.succeed projectDetails
         |> required "summary" (nullable string)
-        -- |> required "tags" (DecodeE.set string)
+        |> required "tags" (Decode.list string)
         |> required "visibility" decodeVisibility
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
