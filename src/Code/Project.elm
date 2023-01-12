@@ -56,8 +56,8 @@ equals a b =
 decodeVisibility : Decode.Decoder ProjectVisibility
 decodeVisibility =
     Decode.oneOf
-        [ when Decode.string ((==) "Public") (Decode.succeed Public)
-        , when Decode.string ((==) "Private") (Decode.succeed Private)
+        [ when Decode.string ((==) "public") (Decode.succeed Public)
+        , when Decode.string ((==) "private") (Decode.succeed Private)
         ]
 
 
