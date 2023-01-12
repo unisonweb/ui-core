@@ -4,7 +4,7 @@ import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorth
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Json.Decode as Decode exposing (int, nullable, string)
 import Json.Decode.Extra exposing (when)
-import Json.Decode.Pipeline exposing (optional, required)
+import Json.Decode.Pipeline exposing (optional, required, requiredAt)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Set exposing (Set)
 
@@ -80,7 +80,7 @@ decodeDetails =
             }
     in
     Decode.succeed makeProjectDetails
-        |> required "owner.handle" UserHandle.decode
+        |> requiredAt [ "owner", "handle" ] UserHandle.decode
         |> required "slug" ProjectSlug.decode
         |> required "summary" (nullable string)
         |> required "tags" (Decode.list string)
