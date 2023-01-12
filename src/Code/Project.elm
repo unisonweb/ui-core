@@ -80,7 +80,7 @@ decodeDetails =
             }
     in
     Decode.succeed makeProjectDetails
-        |> requiredAt [ "owner", "handle" ] UserHandle.decode
+        |> requiredAt [ "owner", "handle" ] UserHandle.decodeUnprefixed
         |> required "slug" ProjectSlug.decode
         |> required "summary" (nullable string)
         |> required "tags" (Decode.list string)
