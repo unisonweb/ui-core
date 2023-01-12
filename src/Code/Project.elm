@@ -25,7 +25,6 @@ type alias ProjectDetails =
         , visibility : ProjectVisibility
         , numFavs : Int
         , numWeeklyDownloads : Int
-        , numProjectDependents : Int
         }
 
 
@@ -64,8 +63,7 @@ decodeVisibility =
 decodeDetails : Decode.Decoder ProjectDetails
 decodeDetails =
     let
-        makeProjectDetails : UserHandle -> ProjectSlug -> Maybe String -> List String -> ProjectVisibility -> Int -> Int -> Int -> ProjectDetails
-        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads numProjectDependents =
+        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads =
             let
                 shorthand_ =
                     ProjectShorthand.projectShorthand handle_ slug_
@@ -76,7 +74,6 @@ decodeDetails =
             , visibility = visibility
             , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
-            , numProjectDependents = numProjectDependents
             }
     in
     Decode.succeed makeProjectDetails
@@ -87,4 +84,3 @@ decodeDetails =
         |> required "visibility" decodeVisibility
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
-        |> optional "numProjectDependents" int 0
