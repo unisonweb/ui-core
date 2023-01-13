@@ -1,0 +1,16 @@
+.error-card {
+  display: flex;
+  flex-direction: column;
+  padding-top: 4rem;
+  justify-content: center;
+  text-align: center;
+}
+
+.error-card .emoji {
+  font-size: 2.625rem;
+}
+
+.error-card h3 {
+  font-size: 1.125rem;
+  color: var(--u-color_critical_text_subdued);
+}
