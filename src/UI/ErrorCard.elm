@@ -1,6 +1,6 @@
 module UI.ErrorCard exposing (..)
 
-import Html exposing (Html, div, h3, p, text)
+import Html exposing (Html, div, h2, p, text)
 import Html.Attributes exposing (class)
 import Maybe.Extra as MaybeE
 import UI
@@ -69,7 +69,7 @@ toCard errCard =
     Card.card
         [ div [ class "error-card" ]
             [ div [ class "emoji" ] [ text "😞" ]
-            , h3 [] [ text title ]
+            , h2 [] [ text title ]
             , p [] [ text txt ]
             , MaybeE.unwrap UI.nothing Button.view errCard.action
             ]
