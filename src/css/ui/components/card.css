@@ -41,7 +41,7 @@
       padding-box,
     linear-gradient(
         var(--color-card-border),
-        var(--color-card-on-surface-bg),
+        var(--color-card-border),
         var(--color-card-on-surface-bg)
       )
       border-box;
