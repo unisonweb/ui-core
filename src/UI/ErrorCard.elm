@@ -69,8 +69,10 @@ toCard errCard =
     Card.card
         [ div [ class "error-card" ]
             [ div [ class "emoji" ] [ text "😞" ]
-            , h2 [] [ text title ]
-            , p [] [ text txt ]
+            , div [ class "error-card_details" ]
+                [ h2 [] [ text title ]
+                , p [] [ text txt ]
+                ]
             , MaybeE.unwrap UI.nothing Button.view errCard.action
             ]
         ]

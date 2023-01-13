@@ -1,20 +1,22 @@
 .error-card {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
   padding-top: 4rem;
   justify-content: center;
   text-align: center;
-  gap: 1.5rem;
   max-width: 24rem;
   align-self: center;
 }
 
-.error-card .emoji {
-  font-size: 2.625rem;
+.error-card .error-card_details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.error-card h2 {
-  margin-bottom: 1rem;
+.error-card .emoji {
+  font-size: 2.625rem;
 }
 
 .error-card p {
