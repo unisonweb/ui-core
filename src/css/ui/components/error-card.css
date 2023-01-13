@@ -22,3 +22,7 @@
   margin-bottom: 0;
   font-size: var(--font-size-medium);
 }
+
+.error-card .button {
+  align-self: center;
+}
