@@ -59,7 +59,7 @@
         rgba(255, 255, 255, 0)
       )
       padding-box,
-    linear-gradient(to bottom, var(--color-card-border, transparent) border-box;
+    linear-gradient(var(--color-card-border, transparent) border-box;
   border-radius: var(--border-radius-base);
   border: 4px solid transparent;
 }
