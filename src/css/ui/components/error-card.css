@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding-top: 4rem;
   justify-content: center;
   text-align: center;
   max-width: 24rem;
