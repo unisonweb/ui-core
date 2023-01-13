@@ -65,6 +65,7 @@
   justify-content: center;
   align-items: center;
   white-space: nowrap;
+  width: fit-content;
 }
 
 a.button,
