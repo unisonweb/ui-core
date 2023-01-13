@@ -32,6 +32,7 @@
   /* @todo figure out how to configure this... */
   --color-card-on-surface-bg: var(--u-color_background_subdued);
   /* it'd be great if we could fade --color-card-bg... */
+  /*
   background: linear-gradient(
     rgba(255, 255, 255, 1),
     rgba(255, 255, 255, 0.25),
@@ -49,7 +50,13 @@
       var(--color-card-on-surface-bg)
     )
     30;
+  */
   padding: 4rem 0;
+
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to right, darkblue, darkorchid) border-box;
+  border-radius: 50em;
+  border: 4px solid transparent;
 }
 
 .card.contained-with-fade::before {
