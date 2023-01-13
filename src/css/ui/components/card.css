@@ -41,6 +41,9 @@
   border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  border-style: solid;
+  border-width: 1px;
+  border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
   padding: 4rem 0;
 }
 
