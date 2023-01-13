@@ -37,13 +37,18 @@
     rgba(255, 255, 255, 0.25),
     rgba(255, 255, 255, 0)
   );
-  border: 1px solid var(--color-card-border);
   border-bottom: 0;
+  border-top-left-radius: var(--border-radius-base);
+  border-top-right-radius: var(--border-radius-base);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-style: solid;
   border-width: 1px;
-  border-image: linear-gradient(#f6b73c, #4d9f0c) 30;
+  border-image: linear-gradient(
+      var(--color-card-border),
+      var(--color-card-on-surface-bg)
+    )
+    30;
   padding: 4rem 0;
 }
 
