@@ -27,3 +27,45 @@
   align-items: center;
   height: 2rem;
 }
+
+.card.contained-with-fade {
+  /* @todo figure out how to configure this... */
+  --color-card-on-surface-bg: var(--u-color_background_subdued);
+  /* it'd be great if we could fade --color-card-bg... */
+  background: linear-gradient(
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0)
+  );
+  border: 1px solid var(--color-card-border);
+  border-bottom: 0;
+  padding: 4rem 0;
+}
+
+.card.contained-with-fade::before {
+  position: absolute;
+  left: -1px;
+  bottom: 0;
+  height: 85%;
+  width: 1px;
+  background: linear-gradient(
+    var(--color-card-border),
+    var(--color-card-on-surface-bg),
+    var(--color-card-on-surface-bg)
+  );
+  content: "";
+}
+
+.card.contained-with-fade::after {
+  position: absolute;
+  right: -1px;
+  bottom: 0;
+  height: 85%;
+  width: 1px;
+  background: linear-gradient(
+    var(--color-card-border),
+    var(--color-card-on-surface-bg),
+    var(--color-card-on-surface-bg)
+  );
+  content: "";
+}

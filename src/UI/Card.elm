@@ -6,6 +6,7 @@ import Html.Attributes exposing (class)
 
 type CardType
     = Contained
+    | ContainedWithFade
     | Uncontained
 
 
@@ -42,6 +43,11 @@ withType type_ card_ =
 asContained : Card msg -> Card msg
 asContained card_ =
     { card_ | type_ = Contained }
+
+
+asContainedWithFade : Card msg -> Card msg
+asContainedWithFade card_ =
+    { card_ | type_ = ContainedWithFade }
 
 
 withTitle : String -> Card msg -> Card msg
@@ -90,6 +96,9 @@ view card_ =
             case card_.type_ of
                 Contained ->
                     "contained"
+
+                ContainedWithFade ->
+                    "contained-with-fade"
 
                 Uncontained ->
                     "uncontained"
