@@ -242,10 +242,6 @@ a.button:hover {
 .button.subdued {
   --color-button-default-text: var(--u-color_interactive);
   background: var(--color-transparent);
-}
-
-.button.subdued,
-.button.subdued .icon {
   color: var(--color-button-default-text);
 }
 

@@ -5,6 +5,8 @@
   justify-content: center;
   text-align: center;
   gap: 1.5rem;
+  max-width: 24rem;
+  align-self: center;
 }
 
 .error-card .emoji {
