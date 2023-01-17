@@ -2,6 +2,7 @@ module UI.Card exposing (..)
 
 import Html exposing (Html, div, h3, text)
 import Html.Attributes exposing (class)
+import Maybe.Extra as MaybeE
 
 
 type CardType
@@ -12,6 +13,7 @@ type CardType
 
 type alias Card msg =
     { type_ : CardType
+    , className : Maybe String
     , title : Maybe String
     , items : List (Html msg)
     }
@@ -23,12 +25,12 @@ type alias Card msg =
 
 card : List (Html msg) -> Card msg
 card items =
-    { type_ = Uncontained, title = Nothing, items = items }
+    { type_ = Uncontained, className = Nothing, title = Nothing, items = items }
 
 
 titled : String -> List (Html msg) -> Card msg
 titled title items =
-    { type_ = Uncontained, title = Just title, items = items }
+    { type_ = Uncontained, className = Nothing, title = Just title, items = items }
 
 
 
@@ -38,6 +40,11 @@ titled title items =
 withType : CardType -> Card msg -> Card msg
 withType type_ card_ =
     { card_ | type_ = type_ }
+
+
+withClassName : String -> Card msg -> Card msg
+withClassName className card_ =
+    { card_ | className = Just className }
 
 
 asContained : Card msg -> Card msg
@@ -72,6 +79,7 @@ withItem item card_ =
 map : (a -> msg) -> Card a -> Card msg
 map toMsg cardA =
     { type_ = cardA.type_
+    , className = cardA.className
     , title = cardA.title
     , items = List.map (Html.map toMsg) cardA.items
     }
@@ -84,6 +92,9 @@ map toMsg cardA =
 view : Card msg -> Html msg
 view card_ =
     let
+        className_ =
+            MaybeE.unwrap [] (\c -> [ class c ]) card_.className
+
         items =
             case card_.title of
                 Just t ->
@@ -103,4 +114,4 @@ view card_ =
                 Uncontained ->
                     "uncontained"
     in
-    div [ class "card", class typeClass ] items
+    div ([ class "card", class typeClass ] ++ className_) items
