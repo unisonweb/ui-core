@@ -48,6 +48,11 @@ equals a b =
     ProjectShorthand.equals a.shorthand b.shorthand
 
 
+isOwnedBy : UserHandle -> Project a -> Bool
+isOwnedBy handle_ project =
+    UserHandle.equals handle_ (handle project)
+
+
 
 -- DECODE
 
