@@ -1,6 +1,6 @@
 module Code.ProjectListing exposing (..)
 
-import Code.Project as Project exposing (Project)
+import Code.Project exposing (Project)
 import Code.Project.ProjectShorthand as ProjectShorthand
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
