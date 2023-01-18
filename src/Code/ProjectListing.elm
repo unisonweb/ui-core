@@ -1,8 +1,6 @@
 module Code.ProjectListing exposing (..)
 
-import Code.Hash as Hash
-import Code.Hashvatar as Hashvatar
-import Code.Project exposing (Project)
+import Code.Project as Project exposing (Project)
 import Code.Project.ProjectShorthand as ProjectShorthand
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
@@ -92,14 +90,11 @@ sizeClass size =
 view : ProjectListing p msg -> Html msg
 view { project, size, click } =
     let
-        hash =
-            Hash.unsafeFromString (ProjectShorthand.toString project.shorthand)
-
         attrs =
             [ class "project-listing", class (sizeClass size) ]
 
         content =
-            [ Hashvatar.view hash
+            [ ProjectShorthand.viewHashvatar project.shorthand
             , ProjectShorthand.view project.shorthand
             ]
     in
