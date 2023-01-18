@@ -4,4 +4,5 @@
   width: 1.5rem;
   height: 1.5rem;
   border-radius: var(--border-radius-base);
+  overflow: clip;
 }
