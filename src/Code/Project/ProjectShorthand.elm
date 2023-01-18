@@ -12,6 +12,7 @@ module Code.Project.ProjectShorthand exposing
     , toUrlPath
     , unsafeFromString
     , view
+    , viewHashvatar
     )
 
 import Code.Hash as Hash
