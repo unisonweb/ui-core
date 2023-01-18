@@ -12,7 +12,6 @@ import Svg.Attributes as Attrs
         , height
         , id
         , maskUnits
-        , rx
         , style
         , viewBox
         , width
