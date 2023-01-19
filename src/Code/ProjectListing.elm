@@ -74,6 +74,7 @@ map f p =
     { project = p.project
     , click = Maybe.map (Click.map f) p.click
     , size = p.size
+    , subdued = p.subdued
     }
 
 
