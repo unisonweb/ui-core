@@ -1,9 +1,10 @@
 module Code.ProjectListing exposing (..)
 
+import Code.Hashvatar as Hashvatar
 import Code.Project exposing (Project)
 import Code.Project.ProjectShorthand as ProjectShorthand
 import Html exposing (Html, div)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
 import UI.Click as Click exposing (Click)
 
 
@@ -17,6 +18,7 @@ type alias ProjectListing p msg =
     { project : Project p
     , click : Maybe (Click msg)
     , size : ProjectListingSize
+    , subdued : Bool
     }
 
 
@@ -26,7 +28,7 @@ type alias ProjectListing p msg =
 
 projectListing : Project p -> ProjectListing p msg
 projectListing project =
-    { project = project, click = Nothing, size = Medium }
+    { project = project, click = Nothing, size = Medium, subdued = False }
 
 
 
@@ -58,6 +60,11 @@ huge p =
     withSize Huge p
 
 
+subdued : ProjectListing p msg -> ProjectListing p msg
+subdued p =
+    { p | subdued = True }
+
+
 
 -- MAP
 
@@ -87,18 +94,47 @@ sizeClass size =
             "project-listing-size_huge"
 
 
-view : ProjectListing p msg -> Html msg
-view { project, size, click } =
+viewSubdued : ProjectListing p msg -> Html msg
+viewSubdued { project, size, click } =
     let
         attrs =
-            [ class "project-listing", class (sizeClass size) ]
+            [ class "project-listing project-listing_subdued", class (sizeClass size) ]
 
         content =
-            [ ProjectShorthand.viewHashvatar project.shorthand
+            [ Hashvatar.empty
             , ProjectShorthand.view project.shorthand
             ]
     in
     case click of
+        Just c ->
+            Click.view attrs content c
+
+        Nothing ->
+            div attrs content
+
+
+view : ProjectListing p msg -> Html msg
+view p =
+    let
+        attrs =
+            [ class "project-listing"
+            , class (sizeClass p.size)
+            , classList [ ( "project-listing_subdued", p.subdued ) ]
+            ]
+
+        hashvatar =
+            if p.subdued then
+                Hashvatar.empty
+
+            else
+                ProjectShorthand.viewHashvatar p.project.shorthand
+
+        content =
+            [ hashvatar
+            , ProjectShorthand.view p.project.shorthand
+            ]
+    in
+    case p.click of
         Just c ->
             Click.view attrs content c
 
