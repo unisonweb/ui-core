@@ -37,6 +37,18 @@ pageHeader ctx =
     }
 
 
+empty : PageHeader msg
+empty =
+    let
+        context =
+            { isActive = False
+            , click = Nothing
+            , content = UI.nothing
+            }
+    in
+    pageHeader context
+
+
 
 -- MODIFY
 
@@ -104,18 +116,6 @@ viewRightSide items =
 
         items_ ->
             div [ class "page-header_right-side" ] items_
-
-
-viewEmpty : PageHeader msg
-viewEmpty =
-    let
-        context =
-            { isActive = False
-            , click = Nothing
-            , content = UI.nothing
-            }
-    in
-    pageHeader context
 
 
 view : PageHeader msg -> Html msg
