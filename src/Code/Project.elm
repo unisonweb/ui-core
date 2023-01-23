@@ -2,7 +2,7 @@ module Code.Project exposing (..)
 
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
-import Json.Decode as Decode exposing (int, nullable, string)
+import Json.Decode as Decode exposing (bool, int, nullable, string)
 import Json.Decode.Extra exposing (when)
 import Json.Decode.Pipeline exposing (optional, required, requiredAt)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
@@ -25,6 +25,7 @@ type alias ProjectDetails =
         , visibility : ProjectVisibility
         , numFavs : Int
         , numWeeklyDownloads : Int
+        , isFaved : Bool
         }
 
 
@@ -68,7 +69,7 @@ decodeVisibility =
 decodeDetails : Decode.Decoder ProjectDetails
 decodeDetails =
     let
-        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads =
+        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved =
             let
                 shorthand_ =
                     ProjectShorthand.projectShorthand handle_ slug_
@@ -79,6 +80,7 @@ decodeDetails =
             , visibility = visibility
             , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
+            , isFaved = isFaved
             }
     in
     Decode.succeed makeProjectDetails
@@ -89,3 +91,4 @@ decodeDetails =
         |> required "visibility" decodeVisibility
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
+        |> required "isFaved" bool
