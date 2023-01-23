@@ -81,6 +81,20 @@ toggleFav ({ numFavs } as project) =
     { project | isFaved = isFaved, numFavs = numFavs_ }
 
 
+isFavedToBool : IsFaved -> Bool
+isFavedToBool isFaved =
+    isFaved == Faved || isFaved == JustFaved
+
+
+isFavedFromBool : Bool -> IsFaved
+isFavedFromBool b =
+    if b then
+        Faved
+
+    else
+        NotFaved
+
+
 
 -- DECODE
 
@@ -109,13 +123,6 @@ decodeDetails =
             , numWeeklyDownloads = numWeeklyDownloads
             , isFaved = isFaved
             }
-
-        isFavedFromBool isFaved =
-            if isFaved then
-                Faved
-
-            else
-                NotFaved
 
         decodeIsFaved : Decode.Decoder IsFaved
         decodeIsFaved =
