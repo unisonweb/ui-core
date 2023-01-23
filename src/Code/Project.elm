@@ -54,6 +54,22 @@ isOwnedBy handle_ project =
     UserHandle.equals handle_ (handle project)
 
 
+toggleFav : ProjectDetails -> ProjectDetails
+toggleFav project =
+    let
+        isFaved =
+            not project.isFaved
+
+        numFavs =
+            if isFaved then
+                project.numFavs + 1
+
+            else
+                project.numFavs - 1
+    in
+    { project | isFaved = isFaved, numFavs = numFavs }
+
+
 
 -- DECODE
 
