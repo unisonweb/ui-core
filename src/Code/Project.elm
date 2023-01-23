@@ -13,6 +13,13 @@ type alias Project a =
     { a | shorthand : ProjectShorthand }
 
 
+type IsFaved
+    = Unknown
+    | Faved
+    | NotFaved
+    | JustFaved
+
+
 type ProjectVisibility
     = Public
     | Private
@@ -25,7 +32,7 @@ type alias ProjectDetails =
         , visibility : ProjectVisibility
         , numFavs : Int
         , numWeeklyDownloads : Int
-        , isFaved : Bool
+        , isFaved : IsFaved
         }
 
 
@@ -55,19 +62,23 @@ isOwnedBy handle_ project =
 
 
 toggleFav : ProjectDetails -> ProjectDetails
-toggleFav project =
+toggleFav ({ numFavs } as project) =
     let
-        isFaved =
-            not project.isFaved
+        ( isFaved, numFavs_ ) =
+            case project.isFaved of
+                Faved ->
+                    ( NotFaved, numFavs - 1 )
 
-        numFavs =
-            if isFaved then
-                project.numFavs + 1
+                JustFaved ->
+                    ( NotFaved, numFavs - 1 )
 
-            else
-                project.numFavs - 1
+                NotFaved ->
+                    ( JustFaved, numFavs + 1 )
+
+                Unknown ->
+                    ( Unknown, numFavs )
     in
-    { project | isFaved = isFaved, numFavs = numFavs }
+    { project | isFaved = isFaved, numFavs = numFavs_ }
 
 
 
@@ -98,6 +109,17 @@ decodeDetails =
             , numWeeklyDownloads = numWeeklyDownloads
             , isFaved = isFaved
             }
+
+        isFavedFromBool isFaved =
+            if isFaved then
+                Faved
+
+            else
+                NotFaved
+
+        decodeIsFaved : Decode.Decoder IsFaved
+        decodeIsFaved =
+            Decode.map isFavedFromBool bool
     in
     Decode.succeed makeProjectDetails
         |> requiredAt [ "owner", "handle" ] UserHandle.decodeUnprefixed
@@ -107,4 +129,4 @@ decodeDetails =
         |> required "visibility" decodeVisibility
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
-        |> required "isFaved" bool
+        |> optional "isFaved" decodeIsFaved Unknown
