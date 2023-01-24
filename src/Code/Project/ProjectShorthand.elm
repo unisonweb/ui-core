@@ -12,8 +12,11 @@ module Code.Project.ProjectShorthand exposing
     , toUrlPath
     , unsafeFromString
     , view
+    , viewHashvatar
     )
 
+import Code.Hash as Hash
+import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, label, span, text)
 import Html.Attributes exposing (class)
@@ -83,6 +86,15 @@ toApiStringParts (ProjectShorthand p) =
 equals : ProjectShorthand -> ProjectShorthand -> Bool
 equals a b =
     toString a == toString b
+
+
+viewHashvatar : ProjectShorthand -> Html msg
+viewHashvatar shorthand =
+    let
+        hash =
+            Hash.unsafeFromString (toString shorthand)
+    in
+    Hashvatar.view hash
 
 
 view : ProjectShorthand -> Html msg

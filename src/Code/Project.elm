@@ -2,7 +2,7 @@ module Code.Project exposing (..)
 
 import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
-import Json.Decode as Decode exposing (int, nullable, string)
+import Json.Decode as Decode exposing (bool, int, nullable, string)
 import Json.Decode.Extra exposing (when)
 import Json.Decode.Pipeline exposing (optional, required, requiredAt)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
@@ -11,6 +11,13 @@ import Set exposing (Set)
 
 type alias Project a =
     { a | shorthand : ProjectShorthand }
+
+
+type IsFaved
+    = Unknown
+    | Faved
+    | NotFaved
+    | JustFaved
 
 
 type ProjectVisibility
@@ -25,6 +32,7 @@ type alias ProjectDetails =
         , visibility : ProjectVisibility
         , numFavs : Int
         , numWeeklyDownloads : Int
+        , isFaved : IsFaved
         }
 
 
@@ -48,6 +56,45 @@ equals a b =
     ProjectShorthand.equals a.shorthand b.shorthand
 
 
+isOwnedBy : UserHandle -> Project a -> Bool
+isOwnedBy handle_ project =
+    UserHandle.equals handle_ (handle project)
+
+
+toggleFav : ProjectDetails -> ProjectDetails
+toggleFav ({ numFavs } as project) =
+    let
+        ( isFaved, numFavs_ ) =
+            case project.isFaved of
+                Faved ->
+                    ( NotFaved, numFavs - 1 )
+
+                JustFaved ->
+                    ( NotFaved, numFavs - 1 )
+
+                NotFaved ->
+                    ( JustFaved, numFavs + 1 )
+
+                Unknown ->
+                    ( Unknown, numFavs )
+    in
+    { project | isFaved = isFaved, numFavs = numFavs_ }
+
+
+isFavedToBool : IsFaved -> Bool
+isFavedToBool isFaved =
+    isFaved == Faved || isFaved == JustFaved
+
+
+isFavedFromBool : Bool -> IsFaved
+isFavedFromBool b =
+    if b then
+        Faved
+
+    else
+        NotFaved
+
+
 
 -- DECODE
 
@@ -63,7 +110,7 @@ decodeVisibility =
 decodeDetails : Decode.Decoder ProjectDetails
 decodeDetails =
     let
-        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads =
+        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved =
             let
                 shorthand_ =
                     ProjectShorthand.projectShorthand handle_ slug_
@@ -74,7 +121,12 @@ decodeDetails =
             , visibility = visibility
             , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
+            , isFaved = isFaved
             }
+
+        decodeIsFaved : Decode.Decoder IsFaved
+        decodeIsFaved =
+            Decode.map isFavedFromBool bool
     in
     Decode.succeed makeProjectDetails
         |> requiredAt [ "owner", "handle" ] UserHandle.decodeUnprefixed
@@ -84,3 +136,4 @@ decodeDetails =
         |> required "visibility" decodeVisibility
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
+        |> optional "isFaved" decodeIsFaved Unknown

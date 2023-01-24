@@ -37,6 +37,18 @@ pageHeader ctx =
     }
 
 
+empty : PageHeader msg
+empty =
+    let
+        context =
+            { isActive = False
+            , click = Nothing
+            , content = UI.nothing
+            }
+    in
+    pageHeader context
+
+
 
 -- MODIFY
 

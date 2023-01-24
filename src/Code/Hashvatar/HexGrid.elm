@@ -12,7 +12,6 @@ import Svg.Attributes as Attrs
         , height
         , id
         , maskUnits
-        , rx
         , style
         , viewBox
         , width
@@ -96,7 +95,7 @@ view cfg_ =
                 ]
 
         background =
-            rect [ width "24", height "24", rx "4", fill cfg.background ] []
+            rect [ width "24", height "24", fill cfg.background ] []
     in
     -- the background rect provides both background color and boundary in the form of the mask hence its double usage
     svg [ width "100%", height "100%", viewBox "0 0 24 24", fill "none" ]
