@@ -26,13 +26,6 @@ delayMsg delay msg =
     Task.perform (\_ -> msg) (Process.sleep delay)
 
 
-{-| Sometimes requests don't have a response body, this turns the body into Unit
--}
-decodeEmptyBody : Decode.Decoder ()
-decodeEmptyBody =
-    Decode.succeed ()
-
-
 decodeNonEmptyList : Decode.Decoder a -> Decode.Decoder (NEL.Nonempty a)
 decodeNonEmptyList =
     Decode.list

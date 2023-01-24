@@ -3,6 +3,7 @@ module Lib.HttpApi exposing
     , ApiUrl(..)
     , Endpoint(..)
     , EndpointConfig
+    , ExpectedResponse(..)
     , HttpApi
     , HttpResult
     , apiUrlFromString
@@ -11,6 +12,7 @@ module Lib.HttpApi exposing
     , perform
     , timeout
     , toRequest
+    , toRequestWithEmptyResponse
     , toTask
     , toUrl
     , withHeader
@@ -39,6 +41,11 @@ type alias HttpApi =
     { url : ApiUrl
     , headers : List Http.Header
     }
+
+
+type ExpectedResponse a msg
+    = EmptyBody (HttpResult () -> msg)
+    | JsonBody (HttpResult a -> msg) (Decode.Decoder a)
 
 
 httpApi : Bool -> String -> Maybe String -> HttpApi
@@ -178,15 +185,19 @@ Required to perform a call to the API.
 type ApiRequest a msg
     = ApiRequest
         { endpoint : Endpoint
-        , decoder : Decode.Decoder a
-        , toMsg : HttpResult a -> msg
+        , expect : ExpectedResponse a msg
         , headers : List Http.Header
         }
 
 
 toRequest : Decode.Decoder a -> (HttpResult a -> msg) -> Endpoint -> ApiRequest a msg
 toRequest decoder toMsg endpoint =
-    ApiRequest { endpoint = endpoint, decoder = decoder, toMsg = toMsg, headers = [] }
+    ApiRequest { endpoint = endpoint, expect = JsonBody toMsg decoder, headers = [] }
+
+
+toRequestWithEmptyResponse : (HttpResult () -> msg) -> Endpoint -> ApiRequest a msg
+toRequestWithEmptyResponse toMsg endpoint =
+    ApiRequest { endpoint = endpoint, expect = EmptyBody toMsg, headers = [] }
 
 
 withHeader : ( String, String ) -> ApiRequest a msg -> ApiRequest a msg
@@ -195,7 +206,7 @@ withHeader ( name, value ) (ApiRequest req) =
 
 
 perform : HttpApi -> ApiRequest a msg -> Cmd msg
-perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
+perform api (ApiRequest { endpoint, expect, headers }) =
     let
         request_ =
             case api.url of
@@ -204,6 +215,14 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
 
                 _ ->
                     Http.request
+
+        expect_ =
+            case expect of
+                EmptyBody toMsg ->
+                    Http.expectWhatever toMsg
+
+                JsonBody toMsg decoder ->
+                    Http.expectJson toMsg decoder
     in
     case endpoint of
         GET _ ->
@@ -212,7 +231,7 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
                 , headers = api.headers ++ headers
                 , body = Http.emptyBody
                 , url = toUrl api.url endpoint
-                , expect = Http.expectJson toMsg decoder
+                , expect = expect_
                 , timeout = Just timeout
                 , tracker = Nothing
                 }
@@ -223,7 +242,7 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
                 , headers = api.headers ++ headers
                 , body = c.body
                 , url = toUrl api.url endpoint
-                , expect = Http.expectJson toMsg decoder
+                , expect = expect_
                 , timeout = Just timeout
                 , tracker = Nothing
                 }
@@ -234,7 +253,7 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
                 , headers = api.headers ++ headers
                 , body = c.body
                 , url = toUrl api.url endpoint
-                , expect = Http.expectJson toMsg decoder
+                , expect = expect_
                 , timeout = Just timeout
                 , tracker = Nothing
                 }
@@ -245,7 +264,7 @@ perform api (ApiRequest { endpoint, decoder, toMsg, headers }) =
                 , headers = api.headers ++ headers
                 , body = Http.emptyBody
                 , url = toUrl api.url endpoint
-                , expect = Http.expectJson toMsg decoder
+                , expect = expect_
                 , timeout = Just timeout
                 , tracker = Nothing
                 }
