@@ -128,6 +128,7 @@ type Endpoint
       -- TODO: Add support for PATCH, which might need a bit more constrained
       -- `body` field.
     | PUT (EndpointConfig { body : Http.Body })
+    | PATCH (EndpointConfig { body : Http.Body })
     | DELETE (EndpointConfig {})
 
 
@@ -143,6 +144,9 @@ toUrl apiUrl endpoint =
                     ( c.path, c.queryParams )
 
                 PUT c ->
+                    ( c.path, c.queryParams )
+
+                PATCH c ->
                     ( c.path, c.queryParams )
 
                 DELETE c ->
@@ -258,6 +262,17 @@ perform api (ApiRequest { endpoint, expect, headers }) =
                 , tracker = Nothing
                 }
 
+        PATCH c ->
+            request_
+                { method = "PATCH"
+                , headers = api.headers ++ headers
+                , body = c.body
+                , url = toUrl api.url endpoint
+                , expect = expect_
+                , timeout = Just timeout
+                , tracker = Nothing
+                }
+
         DELETE _ ->
             request_
                 { method = "DELETE"
@@ -329,6 +344,16 @@ toTask_ apiUrl decoder headers endpoint =
                 , timeout = Just timeout
                 , url = toUrl apiUrl endpoint
                 , method = "PUT"
+                , body = c.body
+                }
+
+        PATCH c ->
+            task_
+                { headers = headers
+                , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
+                , timeout = Just timeout
+                , url = toUrl apiUrl endpoint
+                , method = "PATCH"
                 , body = c.body
                 }
 
