@@ -17,7 +17,8 @@ import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
 import RemoteData exposing (RemoteData(..), WebData)
 import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip exposing (Tooltip)
-
+import Lib.Util as Util
+import Dict exposing (Dict)
 
 
 -- MODEL
@@ -29,14 +30,19 @@ type DefinitionSummary
     | DataConstructorHover DataConstructorSummary
     | AbilityConstructorHover AbilityConstructorSummary
 
-
 type alias Model =
-    Maybe ( Reference, WebData DefinitionSummary )
+    {
+        data: Maybe ( Reference, WebData DefinitionSummary )
+        , alreadyFetched: Dict String (Reference, WebData DefinitionSummary)
+    }
 
 
 init : Model
 init =
-    Nothing
+    {
+        data = Nothing
+        , alreadyFetched = Dict.empty
+    }
 
 
 
@@ -44,33 +50,53 @@ init =
 
 
 type Msg
-    = ShowTooltip Reference
+    = ShowTooltipDelayed Reference
+    | ShowTooltip Reference
     | HideTooltip Reference
+    | CachedDefinition Reference (WebData DefinitionSummary)
     | FetchDefinitionFinished Reference (HttpResult DefinitionSummary)
-
 
 update : Config -> Msg -> Model -> ( Model, Cmd Msg )
 update config msg model =
+    let debounceDelay = 500
+    in
     case msg of
+        ShowTooltipDelayed ref ->
+            let cached = (Dict.get (Reference.toString ref) model.alreadyFetched)
+            in
+            case cached of
+                Nothing -> ( model, Util.delayMsg debounceDelay (ShowTooltip ref) )
+                Just _ ->
+                    ({model | data = cached}, Cmd.none )
         ShowTooltip ref ->
-            ( Just ( ref, Loading )
-            , fetchDefinition config ref |> HttpApi.perform config.api
-            )
+            case model.data of
+                Just _ ->
+                    ( model, Cmd.none )
+                Nothing -> 
+                    ( {model | data = (Just ( ref, Loading ))}
+                    , fetchDefinition config ref |> HttpApi.perform config.api
+                    )
 
         HideTooltip _ ->
-            ( Nothing, Cmd.none )
+            ( {model | data = Nothing}, Cmd.none )
 
+        CachedDefinition ref d ->
+            ({model | data = (Just (ref, d))}, Cmd.none )
         FetchDefinitionFinished ref d ->
-            case model of
-                Just ( r, _ ) ->
+            case model.data of
+                Just ( r, _) ->
                     if Reference.equals ref r then
-                        ( Just ( r, RemoteData.fromResult d ), Cmd.none )
+                        let
+                            newData = ( r, RemoteData.fromResult d )
+                            newDict = (Dict.insert (Reference.toString ref) newData model.alreadyFetched)
+                        in
+                        ( { model | data = Just newData, alreadyFetched = newDict}, Cmd.none )
 
                     else
-                        ( Nothing, Cmd.none )
+                        ( { model | data = Nothing}, Cmd.none )
 
                 Nothing ->
-                    ( Nothing, Cmd.none )
+                    ( {model | data = Nothing}, Cmd.none )
 
 
 
@@ -81,7 +107,7 @@ update config msg model =
 -}
 tooltipConfig : (Msg -> msg) -> Model -> Syntax.TooltipConfig msg
 tooltipConfig toMsg model =
-    { toHoverStart = ShowTooltip >> toMsg
+    { toHoverStart = ShowTooltipDelayed >> toMsg
     , toHoverEnd = HideTooltip >> toMsg
     , toTooltip = \ref -> view model ref
     }
@@ -143,7 +169,7 @@ viewSummary summary =
     in
     case summary of
         NotAsked ->
-            Just loading
+            Nothing
 
         Loading ->
             Just loading
@@ -173,7 +199,7 @@ view model reference =
                 |> Maybe.map (Tooltip.withPosition Tooltip.Below)
                 |> Maybe.map Tooltip.show
     in
-    model
+    model.data
         |> Maybe.andThen withMatchingReference
         |> Maybe.andThen view_
 
