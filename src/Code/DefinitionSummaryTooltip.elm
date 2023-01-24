@@ -169,7 +169,7 @@ viewSummary summary =
     in
     case summary of
         NotAsked ->
-            Nothing
+            Just loading
 
         Loading ->
             Just loading
