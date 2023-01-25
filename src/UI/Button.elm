@@ -225,7 +225,7 @@ view { content, color, click, size, isActive } =
             a (attrs ++ Click.attrs click) content_
 
         Disabled ->
-            Html.button attrs content_
+            Html.button (class "disabled" :: attrs) content_
 
 
 
