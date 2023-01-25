@@ -31,16 +31,10 @@
   width: 1.75rem;
 }
 
+/* TODO: style this like the design */
 .radio-field .radio-field_option input[type="radio"] {
   width: 1rem;
   height: 1rem;
-  border-color: var(--u-color_border);
-  accent-color: var(--u-color_focus-border);
-}
-
-.radio-field .radio-field_option input[type="radio"]:focus {
-  border-color: var(--u-color_focus-border);
-  box-shadow: 0 0 0 0.125rem var(--u-color_focus-outline);
 }
 
 .radio-field .label-and-help-text {
