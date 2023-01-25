@@ -3,6 +3,7 @@
 .form a .label {
   font-size: var(--font-size-medium);
   font-weight: bold;
+  color: var(--u-color_text);
 }
 
 .form a .help-text {
@@ -16,6 +17,12 @@
   gap: 0.25rem;
 }
 
+.radio-field .radio-field_option {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
 .radio-field .label-and-help-text {
   display: flex;
   flex-direction: column;
@@ -24,9 +31,13 @@
 }
 
 .radio-field .label-and-help-text .label {
+  display: flex;
+  align-items: center;
   height: 1.5rem;
 }
 
 .radio-field .label-and-help-text .help-text {
+  display: flex;
+  align-items: center;
   height: 1.125rem;
 }
