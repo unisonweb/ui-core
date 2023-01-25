@@ -95,6 +95,16 @@ isFavedFromBool b =
         NotFaved
 
 
+visibilityToString : ProjectVisibility -> String
+visibilityToString pv =
+    case pv of
+        Public ->
+            "public"
+
+        Private ->
+            "private"
+
+
 
 -- DECODE
 
