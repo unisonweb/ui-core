@@ -24,7 +24,7 @@
   align-items: flex-start;
 }
 
-.radio-field .radio-field_option .radio {
+.radio-field .radio-field_option .radio-field_radio {
   display: flex;
   place-items: center;
   height: 2.25rem;
