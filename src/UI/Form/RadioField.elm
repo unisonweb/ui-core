@@ -47,12 +47,14 @@ view element =
 
         viewRadioOption option_ =
             Click.view [ class "radio-field_option" ]
-                [ input
-                    [ type_ "radio"
-                    , name element.name
-                    , checked (option_.value == element.selected)
+                [ div [ class "radio-field_radio" ]
+                    [ input
+                        [ type_ "radio"
+                        , name element.name
+                        , checked (option_.value == element.selected)
+                        ]
+                        []
                     ]
-                    []
                 , div
                     [ class "label-and-help-text" ]
                     [ label [ class "label" ] [ text option_.label ]
