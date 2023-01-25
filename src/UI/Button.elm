@@ -340,7 +340,7 @@ withClick click button__ =
 
 disabled : Button msg -> Button msg
 disabled button__ =
-    { button__ | click = Click.Disabled }
+    { button__ | click = Click.disabled }
 
 
 default : Button clickMsg -> Button clickMsg
