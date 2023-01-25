@@ -1,28 +1,32 @@
 /* Various form fields and controls */
 
-.form .label {
+.form a .label {
   font-size: var(--font-size-medium);
   font-weight: bold;
 }
 
-.form .help-text {
+.form a .help-text {
   font-size: var(--font-size-small);
   color: var(--u-color_text_subdued);
 }
 
 .radio-field {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 0.25rem;
 }
+
 .radio-field .label-and-help-text {
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
   padding-top: 0.375rem;
 }
+
 .radio-field .label-and-help-text .label {
   height: 1.5rem;
 }
+
 .radio-field .label-and-help-text .help-text {
   height: 1.125rem;
 }
