@@ -25,6 +25,7 @@
   max-width: 26rem;
   border-radius: var(--border-radius-base);
   transition: all 0.2s;
+  padding: 0 0.75rem 0.25rem 0.25rem;
 }
 
 .radio-field .radio-field_option:hover {
