@@ -46,7 +46,7 @@ view element =
             Click.onClick (element.onChange value)
 
         viewRadioOption option_ =
-            Click.view []
+            Click.view [ class "radio-field" ]
                 [ input
                     [ type_ "radio"
                     , name element.name
@@ -54,9 +54,9 @@ view element =
                     ]
                     []
                 , div
-                    []
-                    [ label [] [ text option_.label ]
-                    , small [] [ text option_.description ]
+                    [ class "label-and-help-text" ]
+                    [ label [ class "label" ] [ text option_.label ]
+                    , small [ class "help-text" ] [ text option_.description ]
                     ]
                 ]
                 (click option_.value)
