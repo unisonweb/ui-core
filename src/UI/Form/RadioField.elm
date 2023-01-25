@@ -15,9 +15,9 @@ type alias RadioOption a =
 
 type alias RadioField a msg =
     { name : String
-    , selected : a
-    , options : Nonempty (RadioOption a)
     , onChange : a -> msg
+    , options : Nonempty (RadioOption a)
+    , selected : a
     }
 
 
@@ -25,7 +25,7 @@ type alias RadioField a msg =
 -- CREATE
 
 
-field : String -> a -> Nonempty (RadioOption a) -> (a -> msg) -> RadioField a msg
+field : String -> (a -> msg) -> Nonempty (RadioOption a) -> a -> RadioField a msg
 field =
     RadioField
 
