@@ -1,15 +1,15 @@
 module UI.PageContent exposing
     ( PageContent
-    , PageHeading
+    , PageTitle
     , empty
     , map
-    , mapPageHeading
+    , mapPageTitle
     , oneColumn
     , threeColumns
     , twoColumns
     , view
     , view_
-    , withPageHeading
+    , withPageTitle
     )
 
 import Html exposing (Html, div, h1, header, p, section, text)
@@ -18,7 +18,7 @@ import UI
 import UI.Icon as Icon exposing (Icon)
 
 
-type alias PageHeading msg =
+type alias PageTitle msg =
     { icon : Maybe (Icon msg)
     , heading : String
     , description : Maybe String
@@ -27,7 +27,7 @@ type alias PageHeading msg =
 
 type PageContent msg
     = PageContent
-        { heading : Maybe (PageHeading msg)
+        { heading : Maybe (PageTitle msg)
         , content : List (List (Html msg))
         }
 
@@ -66,11 +66,11 @@ threeColumns ( one, two, three ) =
 -- MODIFY
 
 
-{-| Set a PageHeading
+{-| Set a PageTitle
 -}
-withPageHeading : PageHeading msg -> PageContent msg -> PageContent msg
-withPageHeading pageHeading (PageContent cfg) =
-    PageContent { cfg | heading = Just pageHeading }
+withPageTitle : PageTitle msg -> PageContent msg -> PageContent msg
+withPageTitle pageTitle (PageContent cfg) =
+    PageContent { cfg | heading = Just pageTitle }
 
 
 
@@ -80,16 +80,16 @@ withPageHeading pageHeading (PageContent cfg) =
 map : (a -> msg) -> PageContent a -> PageContent msg
 map toMsg (PageContent pageContentA) =
     PageContent
-        { heading = Maybe.map (mapPageHeading toMsg) pageContentA.heading
+        { heading = Maybe.map (mapPageTitle toMsg) pageContentA.heading
         , content = List.map (List.map (Html.map toMsg)) pageContentA.content
         }
 
 
-mapPageHeading : (a -> msg) -> PageHeading a -> PageHeading msg
-mapPageHeading toMsg pageHeadingA =
-    { icon = Maybe.map (Icon.map toMsg) pageHeadingA.icon
-    , heading = pageHeadingA.heading
-    , description = pageHeadingA.description
+mapPageTitle : (a -> msg) -> PageTitle a -> PageTitle msg
+mapPageTitle toMsg pageTitleA =
+    { icon = Maybe.map (Icon.map toMsg) pageTitleA.icon
+    , heading = pageTitleA.heading
+    , description = pageTitleA.description
     }
 
 
@@ -97,8 +97,8 @@ mapPageHeading toMsg pageHeadingA =
 -- VIEW
 
 
-viewPageHeading : PageHeading msg -> Html msg
-viewPageHeading { icon, heading, description } =
+viewPageTitle : PageTitle msg -> Html msg
+viewPageTitle { icon, heading, description } =
     let
         items =
             case ( icon, description ) of
@@ -149,7 +149,7 @@ view_ footer (PageContent { heading, content }) =
         items =
             case heading of
                 Just h ->
-                    [ viewPageHeading h, viewColumns content, footer ]
+                    [ viewPageTitle h, viewColumns content, footer ]
 
                 Nothing ->
                     [ viewColumns content, footer ]
