@@ -34,14 +34,14 @@ type DefinitionSummary
 
 type alias Model =
     { activeTooltip : Maybe ( Reference, WebData DefinitionSummary )
-    , alreadyFetched : Dict String ( Reference, WebData DefinitionSummary )
+    , summaries : Dict String ( Reference, WebData DefinitionSummary )
     }
 
 
 init : Model
 init =
     { activeTooltip = Nothing
-    , alreadyFetched = Dict.empty
+    , summaries = Dict.empty
     }
 
 
@@ -66,7 +66,7 @@ update config msg model =
         ShowTooltip ref ->
             let
                 cached =
-                    Dict.get (Reference.toString ref) model.alreadyFetched
+                    Dict.get (Reference.toString ref) model.summaries
             in
             case cached of
                 Nothing ->
@@ -97,9 +97,9 @@ update config msg model =
                                 ( r, RemoteData.fromResult d )
 
                             updatedAlreadyFetched =
-                                Dict.insert (Reference.toString ref) newActiveTooltip model.alreadyFetched
+                                Dict.insert (Reference.toString ref) newActiveTooltip model.summaries
                         in
-                        ( { model | activeTooltip = Just newActiveTooltip, alreadyFetched = updatedAlreadyFetched }, Cmd.none )
+                        ( { model | activeTooltip = Just newActiveTooltip, summaries = updatedAlreadyFetched }, Cmd.none )
 
                     else
                         ( { model | activeTooltip = Nothing }, Cmd.none )
