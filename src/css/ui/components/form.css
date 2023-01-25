@@ -22,13 +22,13 @@
   flex-direction: row;
   gap: 0.5rem;
   align-items: flex-start;
-  max-width: 20rem;
+  max-width: 26rem;
   border-radius: var(--border-radius-base);
   transition: all 0.2s;
 }
 
 .radio-field .radio-field_option:hover {
-  background: rgba(--u-color_container_hovered);
+  background: var(--u-color_container_hovered);
 }
 
 .radio-field .radio-field_option .radio-field_radio {
