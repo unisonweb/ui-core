@@ -8,6 +8,7 @@ module UI.Button exposing
     , decorativeBlue
     , decorativePurple
     , default
+    , disabled
     , emphasized
     , github
     , icon
@@ -335,6 +336,11 @@ notActive button__ =
 withClick : Click msg -> Button msg -> Button msg
 withClick click button__ =
     { button__ | click = click }
+
+
+disabled : Button msg -> Button msg
+disabled button__ =
+    { button__ | click = Click.Disabled }
 
 
 default : Button clickMsg -> Button clickMsg
