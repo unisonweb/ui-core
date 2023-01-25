@@ -1,3 +1,5 @@
+@import "./workspace-item.css";
+
 #workspace {
   --color-workspace-gutter: var(--u-color_container_subdued);
 
@@ -78,5 +80,3 @@
     width: auto;
   }
 }
-
-@import "./workspace-item.css";

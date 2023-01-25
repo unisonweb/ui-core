@@ -1,3 +1,10 @@
+@import "./ui/colors.css";
+@import "./ui/fonts.css";
+@import "./ui/base.css";
+@import "./ui/animations.css";
+@import "./ui/components.css";
+@import "./ui/page-layout.css";
+
 :root {
   --size-base: 16px;
   --app-header-height: 3.5rem;
@@ -96,10 +103,3 @@
     display: inherit;
   }
 }
-
-@import "./ui/colors.css";
-@import "./ui/fonts.css";
-@import "./ui/base.css";
-@import "./ui/animations.css";
-@import "./ui/components.css";
-@import "./ui/page-layout.css";
