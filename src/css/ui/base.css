@@ -82,3 +82,23 @@ mark {
   background-color: var(--u-color_scrollbar);
   border-radius: var(--border-radius-base);
 }
+
+a,
+a:visited {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--u-color_interactive);
+}
+
+a * {
+  cursor: pointer;
+}
+
+a:hover {
+  color: var(--u-color_interactive_hovered);
+}
+
+a:active {
+  color: var(--u-color_interactive_pressed);
+}
