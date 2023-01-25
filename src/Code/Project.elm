@@ -64,7 +64,7 @@ isOwnedBy handle_ project =
 toggleFav : ProjectDetails -> ProjectDetails
 toggleFav ({ numFavs } as project) =
     let
-        ( isFaved, numFavs_ ) =
+        ( isFaved_, numFavs_ ) =
             case project.isFaved of
                 Faved ->
                     ( NotFaved, numFavs - 1 )
@@ -78,12 +78,17 @@ toggleFav ({ numFavs } as project) =
                 Unknown ->
                     ( Unknown, numFavs )
     in
-    { project | isFaved = isFaved, numFavs = numFavs_ }
+    { project | isFaved = isFaved_, numFavs = numFavs_ }
+
+
+isFaved : ProjectDetails -> Bool
+isFaved p =
+    isFavedToBool p.isFaved
 
 
 isFavedToBool : IsFaved -> Bool
-isFavedToBool isFaved =
-    isFaved == Faved || isFaved == JustFaved
+isFavedToBool isFaved_ =
+    isFaved_ == Faved || isFaved_ == JustFaved
 
 
 isFavedFromBool : Bool -> IsFaved
@@ -120,7 +125,7 @@ decodeVisibility =
 decodeDetails : Decode.Decoder ProjectDetails
 decodeDetails =
     let
-        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved =
+        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved_ =
             let
                 shorthand_ =
                     ProjectShorthand.projectShorthand handle_ slug_
@@ -131,7 +136,7 @@ decodeDetails =
             , visibility = visibility
             , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
-            , isFaved = isFaved
+            , isFaved = isFaved_
             }
 
         decodeIsFaved : Decode.Decoder IsFaved
