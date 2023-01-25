@@ -30,7 +30,7 @@
   --u-color_background: var(--color-gray-lighten-100);
   --u-color_background_subdued: var(--color-gray-lighten-60);
   --u-color_caret: var(--color-blue-1);
-  --u-color_focus-border: var(--color-blue-1);
+  --u-color_focus-border: var(--color-blue-2);
   --u-color_focus-outline: var(--color-blue-2-25pct);
   --u-color_backdrop: var(--color-gray-darken-30-50pct);
   --u-color_scrollbar: var(--color-gray-lighten-30);
