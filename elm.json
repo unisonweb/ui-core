@@ -25,6 +25,7 @@
     "UI.KeyboardShortcut",
     "UI.KeyboardShortcut.Key",
     "UI.KeyboardShortcut.KeyboardEvent",
+    "UI.Form.RadioField",
     "Code.CodebaseApi",
     "Code.CodebaseTree",
     "Code.Config",
