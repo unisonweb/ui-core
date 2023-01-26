@@ -26,6 +26,7 @@
   border: 1px solid var(--u-color_border);
   border-radius: var(--border-radius-base);
   padding: 0.5rem 0.75rem;
+  font-size: var(--font-size-medium);
 }
 
 .text-field input[type="text"]:hover,
