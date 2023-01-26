@@ -12,6 +12,13 @@ import Url exposing (Url)
 -- Various utility functions and helpers
 
 
+{-| A unicode aware string length
+-}
+unicodeStringLength : String -> Int
+unicodeStringLength s =
+    s |> String.toList |> List.length
+
+
 possessive : String -> String
 possessive s =
     if String.endsWith "s" s then
