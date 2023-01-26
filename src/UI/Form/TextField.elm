@@ -45,8 +45,8 @@ withHelpText helpText textField =
     { textField | helpText = Just helpText }
 
 
-withNumLines : Int -> TextField msg -> TextField msg
-withNumLines nl textField =
+withRows : Int -> TextField msg -> TextField msg
+withRows nl textField =
     if nl > 0 then
         { textField | rows = nl }
 
