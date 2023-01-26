@@ -76,7 +76,8 @@
 }
 
 .sidebar .loading-placeholder {
-  background: var(--color-sidebar-subtle-fg);
+  /* @color-todo improve... */
+  background: var(--color-gray-darken-10);
   opacity: 1.5;
 }
 
