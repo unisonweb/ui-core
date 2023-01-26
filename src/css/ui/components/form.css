@@ -21,6 +21,23 @@
   gap: 0.5rem;
 }
 
+.text-field input[type="text"],
+.text-field textarea {
+  border: 1px solid var(--u-color_border);
+  border-radius: var(--border-radius-base);
+}
+
+.text-field input[type="text"]:hover,
+.text-field textarea:hover {
+  border-color: var(--u-color_border_hovered);
+}
+
+.text-field input[type="text"]:focus,
+.text-field textarea:focus {
+  border-color: var(--u-color_focus-border);
+  box-shadow: 0 0 0 2px var(--u-color_focus-outline);
+}
+
 /* -- RadioField ----------------------------------------------------------- */
 
 .radio-field {

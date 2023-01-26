@@ -44,7 +44,8 @@ body {
   overflow: overlay; /* helps with transparent scrollbar tracks (technically deprecated property) */
 }
 
-input {
+input,
+textarea {
   border: 0;
   border-radius: 0;
   font-family: var(--font-sans-serif);
