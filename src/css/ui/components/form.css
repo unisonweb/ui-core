@@ -1,11 +1,13 @@
 /* Various form fields and controls */
 
+.form-field .label,
 .form-field a .label {
   font-size: var(--font-size-medium);
   font-weight: bold;
   color: var(--u-color_text);
 }
 
+.form-field .help-text,
 .form-field a .help-text {
   font-size: var(--font-size-small);
   color: var(--u-color_text_subdued);
