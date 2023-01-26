@@ -34,6 +34,7 @@
 
 .text-field input[type="text"]:focus,
 .text-field textarea:focus {
+  outline: none;
   border-color: var(--u-color_focus-border);
   box-shadow: 0 0 0 2px var(--u-color_focus-outline);
 }
