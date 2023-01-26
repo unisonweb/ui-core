@@ -1,15 +1,25 @@
 /* Various form fields and controls */
 
-.form a .label {
+.form-field a .label {
   font-size: var(--font-size-medium);
   font-weight: bold;
   color: var(--u-color_text);
 }
 
-.form a .help-text {
+.form-field a .help-text {
   font-size: var(--font-size-small);
   color: var(--u-color_text_subdued);
 }
+
+/* -- TextField ------------------------------------------------------------ */
+
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* -- RadioField ----------------------------------------------------------- */
 
 .radio-field {
   display: flex;
