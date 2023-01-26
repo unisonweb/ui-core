@@ -2,6 +2,7 @@ module UI.Form.TextField exposing (..)
 
 import Html exposing (Html, div, input, label, small, text, textarea)
 import Html.Attributes exposing (class, placeholder, rows, type_, value)
+import Html.Events exposing (onInput)
 import Maybe.Extra as MaybeE
 import UI
 
@@ -85,14 +86,14 @@ view textField =
                     []
 
         attrs =
-            placeholder_ ++ [ type_ "text", class "text-field-input" ]
+            placeholder_ ++ [ class "text-field-input", onInput textField.onInput ]
 
         input_ =
             if textField.rows > 1 then
                 textarea (rows textField.rows :: attrs) [ text textField.value ]
 
             else
-                input (value textField.value :: attrs) []
+                input (value textField.value :: type_ "text" :: attrs) []
     in
     div [ class "form-field text-field" ]
         [ label [ class "label" ] [ text textField.label ]
