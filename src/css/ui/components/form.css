@@ -33,6 +33,10 @@
   height: 2.25rem;
 }
 
+.text-field textarea {
+  line-height: 1.5;
+}
+
 .text-field input[type="text"]:hover,
 .text-field textarea:hover {
   border-color: var(--u-color_border_hovered);
