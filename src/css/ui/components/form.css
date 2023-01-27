@@ -29,6 +29,10 @@
   font-size: var(--font-size-medium);
 }
 
+.text-field input[type="text"] {
+  height: 2.25rem;
+}
+
 .text-field input[type="text"]:hover,
 .text-field textarea:hover {
   border-color: var(--u-color_border_hovered);
