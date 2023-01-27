@@ -1,7 +1,17 @@
 module UI.Form.TextField exposing (..)
 
 import Html exposing (Html, div, input, label, small, text, textarea)
-import Html.Attributes exposing (autofocus, class, maxlength, placeholder, rows, type_, value)
+import Html.Attributes
+    exposing
+        ( autofocus
+        , class
+        , maxlength
+        , minlength
+        , placeholder
+        , rows
+        , type_
+        , value
+        )
 import Html.Events exposing (onInput)
 import Maybe.Extra as MaybeE
 import UI
@@ -14,6 +24,7 @@ type alias TextField msg =
     , rows : Int
     , helpText : Maybe String
     , maxlength : Maybe Int
+    , minlength : Maybe Int
     , autofocus : Bool
     , value : String
     }
@@ -31,6 +42,7 @@ field onInput label value =
     , rows = 1
     , helpText = Nothing
     , maxlength = Nothing
+    , minlength = Nothing
     , autofocus = False
     , value = value
     }
@@ -53,6 +65,11 @@ withHelpText helpText textField =
 withMaxLength : Int -> TextField msg -> TextField msg
 withMaxLength maxlength_ textField =
     { textField | maxlength = Just maxlength_ }
+
+
+withMinLength : Int -> TextField msg -> TextField msg
+withMinLength minlength_ textField =
+    { textField | minlength = Just minlength_ }
 
 
 withAutofocus : TextField msg -> TextField msg
@@ -81,6 +98,7 @@ map f t =
     , rows = t.rows
     , helpText = t.helpText
     , maxlength = t.maxlength
+    , minlength = t.minlength
     , autofocus = t.autofocus
     , value = t.value
     }
@@ -96,6 +114,7 @@ view textField =
         attrs =
             [ Maybe.map placeholder textField.placeholder
             , Maybe.map maxlength textField.maxlength
+            , Maybe.map minlength textField.minlength
             , Just (class "text-field-input")
             , Just (onInput textField.onInput)
             , Just (autofocus textField.autofocus)
