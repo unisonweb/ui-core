@@ -1,7 +1,7 @@
 module UI.Form.TextField exposing (..)
 
 import Html exposing (Html, div, input, label, small, text, textarea)
-import Html.Attributes exposing (class, placeholder, rows, type_, value)
+import Html.Attributes exposing (autofocus, class, maxlength, placeholder, rows, type_, value)
 import Html.Events exposing (onInput)
 import Maybe.Extra as MaybeE
 import UI
@@ -13,6 +13,8 @@ type alias TextField msg =
     , placeholder : Maybe String
     , rows : Int
     , helpText : Maybe String
+    , maxlength : Maybe Int
+    , autofocus : Bool
     , value : String
     }
 
@@ -28,6 +30,8 @@ field onInput label value =
     , placeholder = Nothing
     , rows = 1
     , helpText = Nothing
+    , maxlength = Nothing
+    , autofocus = False
     , value = value
     }
 
@@ -44,6 +48,16 @@ withPlaceholder placeholder textField =
 withHelpText : String -> TextField msg -> TextField msg
 withHelpText helpText textField =
     { textField | helpText = Just helpText }
+
+
+withMaxLength : Int -> TextField msg -> TextField msg
+withMaxLength maxlength_ textField =
+    { textField | maxlength = Just maxlength_ }
+
+
+withAutofocus : TextField msg -> TextField msg
+withAutofocus textField =
+    { textField | autofocus = True }
 
 
 withRows : Int -> TextField msg -> TextField msg
@@ -66,6 +80,8 @@ map f t =
     , placeholder = t.placeholder
     , rows = t.rows
     , helpText = t.helpText
+    , maxlength = t.maxlength
+    , autofocus = t.autofocus
     , value = t.value
     }
 
@@ -77,16 +93,14 @@ map f t =
 view : TextField msg -> Html msg
 view textField =
     let
-        placeholder_ =
-            case textField.placeholder of
-                Just p ->
-                    [ placeholder p ]
-
-                Nothing ->
-                    []
-
         attrs =
-            placeholder_ ++ [ class "text-field-input", onInput textField.onInput ]
+            [ Maybe.map placeholder textField.placeholder
+            , Maybe.map maxlength textField.maxlength
+            , Just (class "text-field-input")
+            , Just (onInput textField.onInput)
+            , Just (autofocus textField.autofocus)
+            ]
+                |> MaybeE.values
 
         input_ =
             if textField.rows > 1 then
