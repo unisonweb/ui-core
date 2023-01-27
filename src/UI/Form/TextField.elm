@@ -62,13 +62,13 @@ withHelpText helpText textField =
     { textField | helpText = Just helpText }
 
 
-withMaxLength : Int -> TextField msg -> TextField msg
-withMaxLength maxlength_ textField =
+withMaxlength : Int -> TextField msg -> TextField msg
+withMaxlength maxlength_ textField =
     { textField | maxlength = Just maxlength_ }
 
 
-withMinLength : Int -> TextField msg -> TextField msg
-withMinLength minlength_ textField =
+withMinlength : Int -> TextField msg -> TextField msg
+withMinlength minlength_ textField =
     { textField | minlength = Just minlength_ }
 
 
