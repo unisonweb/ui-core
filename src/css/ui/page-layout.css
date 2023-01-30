@@ -77,21 +77,21 @@
   border-radius: var(--border-radius-base);
 }
 
-.page-content .page-heading {
+.page-content .page-title {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
 }
 
-.page-content .page-heading .text {
+.page-content .page-title .text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.125rem;
 }
 
-.page-content .page-heading .icon-badge {
+.page-content .page-title .icon-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -101,12 +101,12 @@
   background: var(--u-color_element_subdued);
 }
 
-.page-content .page-heading .icon {
+.page-content .page-title .icon {
   color: var(--u-color_icon_subdued);
   font-size: 1.125rem;
 }
 
-.page-content .page-heading h1 {
+.page-content .page-title h1 {
   height: 1.75rem;
   font-size: 1.5rem;
   align-items: center;
@@ -114,7 +114,7 @@
   color: var(--u-color_text);
 }
 
-.page-content .page-heading .description {
+.page-content .page-title .description {
   height: 1.5rem;
   align-items: center;
   color: var(--u-color_text_subdued);
@@ -141,7 +141,7 @@
   padding: 3rem 1.5rem 1.5rem 1.5rem;
 }
 
-.page.centered-layout .page-content .page-heading {
+.page.centered-layout .page-content .page-title {
   margin-left: -0.75rem;
 }
 
@@ -151,7 +151,7 @@
   padding: 3rem 1.5rem 1.5rem 1.5rem;
 }
 
-.page.presentation-layout .page-content .page-heading {
+.page.presentation-layout .page-content .page-title {
   margin-left: -0.75rem;
 }
 
@@ -181,7 +181,7 @@
   width: var(--readable-column-width);
 }
 
-.page.sidebar-left-content-layout .page-content .page-heading {
+.page.sidebar-left-content-layout .page-content .page-title {
   margin-left: -0.75rem;
 }
 
@@ -376,10 +376,10 @@
     width: initial;
   }
 
-  .page.sidebar-left-content-layout .page-content .page-heading,
-  .page.centered-layout .page-content .page-heading,
-  .page.presentation-layout .page-content .page-heading,
-  .page-content .page-heading {
+  .page.sidebar-left-content-layout .page-content .page-title,
+  .page.centered-layout .page-content .page-title,
+  .page.presentation-layout .page-content .page-title,
+  .page-content .page-title {
     margin: 0 1.5rem 0 1.5rem;
   }
 
@@ -393,10 +393,10 @@
 }
 
 @media only screen and (--u-viewport_max-sm) {
-  .page.sidebar-left-content-layout .page-content .page-heading,
-  .page.centered-layout .page-content .page-heading,
-  .page.presentation-layout .page-content .page-heading,
-  .page-content .page-heading {
+  .page.sidebar-left-content-layout .page-content .page-title,
+  .page.centered-layout .page-content .page-title,
+  .page.presentation-layout .page-content .page-title,
+  .page-content .page-title {
     margin: 0 1rem 0 1rem;
   }
 
