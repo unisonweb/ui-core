@@ -149,17 +149,37 @@ numLines (Syntax segments) =
 reference : SyntaxSegment -> Maybe Reference
 reference (SyntaxSegment syntaxType _) =
     case syntaxType of
-        TypeReference h _ ->
-            Just (Reference.TypeReference (HQ.HashOnly h))
+        TypeReference h fqn ->
+            case fqn of
+                Just n ->
+                    Just (Reference.TypeReference (HQ.HashQualified n h))
 
-        TermReference h _ ->
-            Just (Reference.TermReference (HQ.HashOnly h))
+                Nothing ->
+                    Just (Reference.TypeReference (HQ.HashOnly h))
 
-        AbilityConstructorReference h _ ->
-            Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+        TermReference h fqn ->
+            case fqn of
+                Just n ->
+                    Just (Reference.TermReference (HQ.HashQualified n h))
 
-        DataConstructorReference h _ ->
-            Just (Reference.DataConstructorReference (HQ.HashOnly h))
+                Nothing ->
+                    Just (Reference.TermReference (HQ.HashOnly h))
+
+        AbilityConstructorReference h fqn ->
+            case fqn of
+                Just n ->
+                    Just (Reference.AbilityConstructorReference (HQ.HashQualified n h))
+
+                Nothing ->
+                    Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+
+        DataConstructorReference h fqn ->
+            case fqn of
+                Just n ->
+                    Just (Reference.DataConstructorReference (HQ.HashQualified n h))
+
+                Nothing ->
+                    Just (Reference.DataConstructorReference (HQ.HashOnly h))
 
         _ ->
             Nothing
@@ -294,17 +314,37 @@ viewSegment linked (SyntaxSegment sType sText) =
     let
         ref =
             case sType of
-                TypeReference h _ ->
-                    Just (Reference.TypeReference (HQ.HashOnly h))
+                TypeReference h fqn ->
+                    case fqn of
+                        Just n ->
+                            Just (Reference.TypeReference (HQ.HashQualified n h))
 
-                TermReference h _ ->
-                    Just (Reference.TermReference (HQ.HashOnly h))
+                        Nothing ->
+                            Just (Reference.TypeReference (HQ.HashOnly h))
 
-                AbilityConstructorReference h _ ->
-                    Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+                TermReference h fqn ->
+                    case fqn of
+                        Just n ->
+                            Just (Reference.TermReference (HQ.HashQualified n h))
 
-                DataConstructorReference h _ ->
-                    Just (Reference.DataConstructorReference (HQ.HashOnly h))
+                        Nothing ->
+                            Just (Reference.TermReference (HQ.HashOnly h))
+
+                AbilityConstructorReference h fqn ->
+                    case fqn of
+                        Just n ->
+                            Just (Reference.AbilityConstructorReference (HQ.HashQualified n h))
+
+                        Nothing ->
+                            Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+
+                DataConstructorReference h fqn ->
+                    case fqn of
+                        Just n ->
+                            Just (Reference.DataConstructorReference (HQ.HashQualified n h))
+
+                        Nothing ->
+                            Just (Reference.DataConstructorReference (HQ.HashOnly h))
 
                 _ ->
                     Nothing

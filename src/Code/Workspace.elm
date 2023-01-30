@@ -18,6 +18,7 @@ import Code.Definition.Reference as Reference exposing (Reference)
 import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
+import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Html exposing (Html, article, div, section)
@@ -187,7 +188,19 @@ update config viewMode msg ({ workspaceItems } as model) =
                     ( model, Cmd.none, None )
 
                 WorkspaceItem.OpenReference relativeToRef ref ->
-                    openReference config model relativeToRef ref
+                    let
+                        toHashOnly hq =
+                            case hq of
+                                HQ.HashQualified _ h ->
+                                    HQ.HashOnly h
+
+                                _ ->
+                                    hq
+
+                        hashOnlyRef =
+                            Reference.map toHashOnly ref
+                    in
+                    openReference config model relativeToRef hashOnlyRef
 
                 WorkspaceItem.Close ref ->
                     let
