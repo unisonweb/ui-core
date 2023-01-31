@@ -58,9 +58,6 @@
   display: flex;
   flex-direction: column;
   gap: 2.625rem;
-  /* https://caniuse.com/?search=fill-available */
-  height: 100%;
-  height: stretch;
 }
 
 .page-content::-webkit-scrollbar {
