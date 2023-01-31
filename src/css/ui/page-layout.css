@@ -58,9 +58,7 @@
   display: flex;
   flex-direction: column;
   gap: 2.625rem;
-  /* https://caniuse.com/?search=fill-available */
   height: 100%;
-  height: stretch;
 }
 
 .page-content::-webkit-scrollbar {
@@ -159,7 +157,6 @@
 .page.sidebar-edge-to-edge-layout .page-content {
   padding: 0;
   width: 100%;
-  height: auto;
   align-items: normal;
   overflow: auto;
 }
@@ -176,7 +173,6 @@
   overflow: auto;
   padding: 3rem 0 1.5rem 2.25rem;
   margin-left: 0;
-  height: auto;
 }
 
 .page.sidebar-left-content-layout .page-content .columns {
