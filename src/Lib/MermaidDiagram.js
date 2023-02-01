@@ -31,7 +31,7 @@ class MermaidDiagram extends HTMLElement {
         this.innerHTML = svg;
       });
     } catch (e) {
-      console.error(r);
+      console.error(e);
       this.innerHTML = "Error, could not render Mermaid Diagram";
       this.setAttribute("title", e.toString());
       document.getElementById(diagramId)?.remove();
