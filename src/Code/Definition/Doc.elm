@@ -56,7 +56,6 @@ import Html.Attributes
         , src
         , start
         , target
-        , title
         , type_
         )
 import Json.Decode as Decode exposing (bool, field, index, int, string)
