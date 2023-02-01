@@ -27,10 +27,14 @@ class MermaidDiagram extends HTMLElement {
         this.innerHTML = svg;
       });
     } catch (e) {
-      this.innerHTML =
+      const err = document.createElement("div");
+
+      err.textContent =
         "🆘 Unfortunately, the Mermaid diagram could not be rendered.";
-      this.classList.add("mermaid-diagram mermaid-diagram_error");
-      this.setAttribute("title", e.toString());
+      err.classList.add("mermaid-diagram mermaid-diagram_error");
+      err.setAttribute("title", e.toString());
+
+      this.appendChild(err);
 
       // When Mermaid fails, it sometimes leaves an orphaned iframe at the end
       // of <body>. Remove it.
