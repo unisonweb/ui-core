@@ -454,7 +454,8 @@
 
 .definition-doc .mermaid-diagram.mermaid-diagram_error {
   background: var(--color-doc-aside-bg);
-  padding: 1rem;
+  border-radius: var(--border-radius-base);
+  padding: 0.5rem 0.75rem;
 }
 
 @media only screen and (--u-viewport_max-lg) {
