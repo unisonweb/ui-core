@@ -28,7 +28,7 @@ class MermaidDiagram extends HTMLElement {
       });
     } catch (e) {
       this.innerHTML =
-        "⚠️  Unfortunately, the Mermaid diagram could not be rendered.";
+        "🆘 Unfortunately, the Mermaid diagram could not be rendered.";
       this.classList.add("mermaid-diagram mermaid-diagram_error");
       this.setAttribute("title", e.toString());
 
