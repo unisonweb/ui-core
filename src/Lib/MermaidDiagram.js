@@ -31,7 +31,8 @@ class MermaidDiagram extends HTMLElement {
 
       err.textContent =
         "🆘 Unfortunately, the Mermaid diagram could not be rendered.";
-      err.classList.add("mermaid-diagram").add("mermaid-diagram_error");
+      err.classList.add("mermaid-diagram");
+      err.classList.add("mermaid-diagram_error");
       err.setAttribute("title", e.toString());
 
       this.appendChild(err);
