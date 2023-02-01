@@ -12,28 +12,28 @@ class MermaidDiagram extends HTMLElement {
     const diagram = this.getAttribute("diagram");
     const themeName = this.getAttribute("theme-name");
 
+    // Generate a unique-ish diagram id, so we can have more than 1 diagram on
+    // the page at a time
     const diagramId = "mermaid-diagram_" + Date.now().toString();
 
     try {
-      console.log("mermaid init");
       mermaid.mermaidAPI.initialize({
         theme: themeName,
         startOnLoad: false,
         securityLevel: "sandbox",
       });
-      console.log("mermaid init done");
 
-      // Generate a diagram id, so we can have more than 1 diagram on the page at
-      // a time
-      console.log("mermaid render");
       mermaid.render(diagramId, diagram, (svg) => {
-        console.log("inner render callback");
         this.innerHTML = svg;
       });
     } catch (e) {
-      console.error(e);
-      this.innerHTML = "Error, could not render Mermaid Diagram";
+      this.innerHTML =
+        "⚠️  Unfortunately, the Mermaid diagram could not be rendered.";
+      this.classList.add("mermaid-diagram mermaid-diagram_error");
       this.setAttribute("title", e.toString());
+
+      // When Mermaid fails, it sometimes leaves an orphaned iframe at the end
+      // of <body>. Remove it.
       document.getElementById("i" + diagramId)?.remove();
     }
   }

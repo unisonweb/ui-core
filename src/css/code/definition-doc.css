@@ -452,6 +452,11 @@
   margin: 1rem 0;
 }
 
+.definition-doc .mermaid-diagram.mermaid-diagram_error {
+  background: var(--color-doc-aside-bg);
+  padding: 1rem;
+}
+
 @media only screen and (--u-viewport_max-lg) {
   .definition-doc .source.code,
   .definition-doc .sources .source,
