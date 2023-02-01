@@ -40,6 +40,9 @@ class MermaidDiagram extends HTMLElement {
       // When Mermaid fails, it sometimes leaves an orphaned iframe at the end
       // of <body>. Remove it.
       document.getElementById("i" + diagramId)?.remove();
+
+      // Rethrow error so we can ensure we log it.
+      throw e;
     }
   }
 }
