@@ -18,6 +18,13 @@ fromString =
                         handle |> Maybe.map UserHandle.toString
                 in
                 Expect.equal (Just "@tolkien") result
+        , test "Fails to create from a string with multiple @s" <|
+            \_ ->
+                let
+                    handle =
+                        UserHandle.fromString "@jrr@tolkien"
+                in
+                Expect.equal Nothing handle
         , test "Fails to create from a non @ unprefixed string" <|
             \_ ->
                 let

@@ -29,7 +29,7 @@ fromString : String -> Maybe UserHandle
 fromString raw =
     if String.startsWith "@" raw then
         raw
-            |> String.filter (\c -> c /= '@')
+            |> String.dropLeft 1
             |> Slug.fromString
             |> Maybe.map UserHandle
 
