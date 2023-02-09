@@ -1,6 +1,6 @@
 module Code.BranchShorthandTests exposing (..)
 
-import Code.BranchShorthand as BranchShorthand exposing (..)
+import Code.BranchShorthand as BranchShorthand
 import Expect
 import Test exposing (..)
 
