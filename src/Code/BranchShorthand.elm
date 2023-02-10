@@ -12,6 +12,11 @@ type BranchShorthand
     = BranchShorthand { handle : Maybe UserHandle, slug : BranchSlug }
 
 
+branchShorthand : Maybe UserHandle -> BranchSlug -> BranchShorthand
+branchShorthand handle_ slug_ =
+    BranchShorthand { handle = handle_, slug = slug_ }
+
+
 toString : BranchShorthand -> String
 toString (BranchShorthand b) =
     let
