@@ -22,6 +22,8 @@ import Parser exposing ((|.), (|=), Parser, backtrackable, keyword, succeed)
 -- Parsers --------------------------------------------------------------------
 
 
+{-| FQN example url segments: "base/List/map"
+-}
 fqn : Parser FQN
 fqn =
     let
@@ -57,6 +59,9 @@ fqnEnd =
     Parser.symbol ";"
 
 
+{-| Hash example url segment: "@asd123".
+contextual positioning in the url makes this different than a UserHandle
+-}
 hash : Parser Hash
 hash =
     let

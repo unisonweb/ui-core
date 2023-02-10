@@ -8,22 +8,47 @@ type BranchSlug
     = BranchSlug String
 
 
-type alias BranchShorthand =
-    { owner : Maybe UserHandle, slug : BranchSlug }
+type BranchShorthand
+    = BranchShorthand { handle : Maybe UserHandle, slug : BranchSlug }
 
 
 toString : BranchShorthand -> String
-toString b =
+toString (BranchShorthand b) =
     let
-        (BranchSlug slug) =
+        (BranchSlug slug_) =
             b.slug
     in
-    case b.owner of
+    case b.handle of
         Just h ->
-            UserHandle.toString h ++ "/" ++ slug
+            UserHandle.toString h ++ "/" ++ slug_
 
         Nothing ->
-            slug
+            slug_
+
+
+toUrlPath : BranchShorthand -> List String
+toUrlPath (BranchShorthand b) =
+    case b.handle of
+        Just h ->
+            [ UserHandle.toString h, branchSlugToString b.slug ]
+
+        Nothing ->
+            [ branchSlugToString b.slug ]
+
+
+toParts : BranchShorthand -> ( Maybe UserHandle, BranchSlug )
+toParts (BranchShorthand b) =
+    ( b.handle, b.slug )
+
+
+handle : BranchShorthand -> Maybe UserHandle
+handle (BranchShorthand b) =
+    b.handle
+
+
+slug : BranchShorthand -> BranchSlug
+slug (BranchShorthand b) =
+    b.slug
 
 
 {-| Branches can include a handle when being parsed.
@@ -53,12 +78,15 @@ fromString raw =
     in
     case parts of
         [ h, s ] ->
-            Maybe.map2 (\h_ s_ -> BranchShorthand (Just h_) s_)
+            Maybe.map2
+                (\h_ s_ -> BranchShorthand { handle = Just h_, slug = s_ })
                 (UserHandle.fromString h)
                 (branchSlugFromString s)
 
         [ s ] ->
-            Maybe.map (BranchShorthand Nothing) (branchSlugFromString s)
+            Maybe.map
+                (\s_ -> BranchShorthand { handle = Nothing, slug = s_ })
+                (branchSlugFromString s)
 
         _ ->
             Nothing
@@ -71,6 +99,11 @@ branchSlugFromString raw =
 
     else
         Nothing
+
+
+branchSlugToString : BranchSlug -> String
+branchSlugToString (BranchSlug s) =
+    s
 
 
 {-| Requirements
@@ -102,7 +135,10 @@ unsafeFromString raw =
     in
     case parts of
         [ h, s ] ->
-            BranchShorthand (Just (UserHandle.unsafeFromString h)) (BranchSlug s)
+            BranchShorthand
+                { handle = Just (UserHandle.unsafeFromString h)
+                , slug = BranchSlug s
+                }
 
         _ ->
-            BranchShorthand Nothing (BranchSlug raw)
+            BranchShorthand { handle = Nothing, slug = BranchSlug raw }
