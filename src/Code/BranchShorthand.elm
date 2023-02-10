@@ -17,6 +17,11 @@ branchShorthand handle_ slug_ =
     BranchShorthand { handle = handle_, slug = slug_ }
 
 
+main_ : BranchShorthand
+main_ =
+    BranchShorthand { handle = Nothing, slug = BranchSlug "main" }
+
+
 toString : BranchShorthand -> String
 toString (BranchShorthand b) =
     let
