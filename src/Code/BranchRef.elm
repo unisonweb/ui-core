@@ -67,6 +67,7 @@ valid examples are:
 
   - "mybranch", "myBranch", "mybr4nch"
   - "my-branch", "my\_branch", "-my---branch", "\_my-branch"
+    (for some reason elm-format wont allow having underscores without a backslash infront)
   - "@owner/my-branch"
 
 invalid examples
