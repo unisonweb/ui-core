@@ -1,4 +1,4 @@
-module Code.BranchShorthand exposing (..)
+module Code.BranchRef exposing (..)
 
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Regex
@@ -8,22 +8,22 @@ type BranchSlug
     = BranchSlug String
 
 
-type BranchShorthand
-    = BranchShorthand { handle : Maybe UserHandle, slug : BranchSlug }
+type BranchRef
+    = BranchRef { handle : Maybe UserHandle, slug : BranchSlug }
 
 
-branchShorthand : Maybe UserHandle -> BranchSlug -> BranchShorthand
-branchShorthand handle_ slug_ =
-    BranchShorthand { handle = handle_, slug = slug_ }
+branchRef : Maybe UserHandle -> BranchSlug -> BranchRef
+branchRef handle_ slug_ =
+    BranchRef { handle = handle_, slug = slug_ }
 
 
-main_ : BranchShorthand
+main_ : BranchRef
 main_ =
-    BranchShorthand { handle = Nothing, slug = BranchSlug "main" }
+    BranchRef { handle = Nothing, slug = BranchSlug "main" }
 
 
-toString : BranchShorthand -> String
-toString (BranchShorthand b) =
+toString : BranchRef -> String
+toString (BranchRef b) =
     let
         (BranchSlug slug_) =
             b.slug
@@ -36,8 +36,8 @@ toString (BranchShorthand b) =
             slug_
 
 
-toUrlPath : BranchShorthand -> List String
-toUrlPath (BranchShorthand b) =
+toUrlPath : BranchRef -> List String
+toUrlPath (BranchRef b) =
     case b.handle of
         Just h ->
             [ UserHandle.toString h, branchSlugToString b.slug ]
@@ -46,18 +46,18 @@ toUrlPath (BranchShorthand b) =
             [ branchSlugToString b.slug ]
 
 
-toParts : BranchShorthand -> ( Maybe UserHandle, BranchSlug )
-toParts (BranchShorthand b) =
+toParts : BranchRef -> ( Maybe UserHandle, BranchSlug )
+toParts (BranchRef b) =
     ( b.handle, b.slug )
 
 
-handle : BranchShorthand -> Maybe UserHandle
-handle (BranchShorthand b) =
+handle : BranchRef -> Maybe UserHandle
+handle (BranchRef b) =
     b.handle
 
 
-slug : BranchShorthand -> BranchSlug
-slug (BranchShorthand b) =
+slug : BranchRef -> BranchSlug
+slug (BranchRef b) =
     b.slug
 
 
@@ -80,7 +80,7 @@ invalid examples
   - "mybr%@#nch"
 
 -}
-fromString : String -> Maybe BranchShorthand
+fromString : String -> Maybe BranchRef
 fromString raw =
     let
         parts =
@@ -89,13 +89,13 @@ fromString raw =
     case parts of
         [ h, s ] ->
             Maybe.map2
-                (\h_ s_ -> BranchShorthand { handle = Just h_, slug = s_ })
+                (\h_ s_ -> BranchRef { handle = Just h_, slug = s_ })
                 (UserHandle.fromString h)
                 (branchSlugFromString s)
 
         [ s ] ->
             Maybe.map
-                (\s_ -> BranchShorthand { handle = Nothing, slug = s_ })
+                (\s_ -> BranchRef { handle = Nothing, slug = s_ })
                 (branchSlugFromString s)
 
         _ ->
@@ -135,7 +135,7 @@ isValidBranchSlug raw =
 
 {-| Don't use outside of testing
 -}
-unsafeFromString : String -> BranchShorthand
+unsafeFromString : String -> BranchRef
 unsafeFromString raw =
     let
         parts =
@@ -145,10 +145,10 @@ unsafeFromString raw =
     in
     case parts of
         [ h, s ] ->
-            BranchShorthand
+            BranchRef
                 { handle = Just (UserHandle.unsafeFromString h)
                 , slug = BranchSlug s
                 }
 
         _ ->
-            BranchShorthand { handle = Nothing, slug = BranchSlug raw }
+            BranchRef { handle = Nothing, slug = BranchSlug raw }

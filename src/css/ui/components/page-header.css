@@ -22,12 +22,10 @@
   );
 }
 
-.page-header.view-mode_regular .project-shorthand {
-  --c-color_project-shorthand_handle: var(--c-color_page-header_text_subdued);
-  --c-color_project-shorthand_separator: var(
-    --c-color_page-header_text_very-subdued
-  );
-  --c-color_project-shorthand_slug: var(--c-color_page-header_text);
+.page-header.view-mode_regular .project-ref {
+  --c-color_project-ref_handle: var(--c-color_page-header_text_subdued);
+  --c-color_project-ref_separator: var(--c-color_page-header_text_very-subdued);
+  --c-color_project-ref_slug: var(--c-color_page-header_text);
 }
 
 .page-header.view-mode_regular .navigation {

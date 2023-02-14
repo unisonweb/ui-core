@@ -1,7 +1,7 @@
 module Code.ProjectTests exposing (..)
 
 import Code.Project as Project exposing (Project)
-import Code.Project.ProjectShorthand as ProjectShorthand
+import Code.Project.ProjectRef as ProjectRef
 import Code.Project.ProjectSlug as ProjectSlug
 import Expect
 import Lib.UserHandle as UserHandle
@@ -9,14 +9,14 @@ import Set
 import Test exposing (..)
 
 
-shorthand : Test
-shorthand =
-    describe "Project.shorthand"
-        [ test "Returns the shorthand of a project by handle and slug" <|
+ref : Test
+ref =
+    describe "Project.ref"
+        [ test "Returns the ref of a project by handle and slug" <|
             \_ ->
                 Expect.equal
                     "@unison/http"
-                    (Project.shorthand project |> ProjectShorthand.toString)
+                    (Project.ref project |> ProjectRef.toString)
         ]
 
 
@@ -74,8 +74,8 @@ toggleFav =
 
 project : Project {}
 project =
-    { shorthand =
-        ProjectShorthand.projectShorthand
+    { ref =
+        ProjectRef.projectRef
             (UserHandle.unsafeFromString "unison")
             (ProjectSlug.unsafeFromString "http")
     }
@@ -83,8 +83,8 @@ project =
 
 projectDetails : Project.IsFaved -> Int -> Project.ProjectDetails
 projectDetails isFaved numFavs =
-    { shorthand =
-        ProjectShorthand.projectShorthand
+    { ref =
+        ProjectRef.projectRef
             (UserHandle.unsafeFromString "unison")
             (ProjectSlug.unsafeFromString "http")
     , isFaved = isFaved

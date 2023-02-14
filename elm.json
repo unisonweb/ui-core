@@ -43,7 +43,7 @@
         "Code.FullyQualifiedNameSet",
         "Code.Project",
         "Code.ProjectListing",
-        "Code.Project.ProjectShorthand",
+        "Code.Project.ProjectRef",
         "Code.Hash",
         "Code.HashQualified",
         "Code.Hashvatar",

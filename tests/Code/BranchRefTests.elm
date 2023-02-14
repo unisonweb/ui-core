@@ -1,6 +1,6 @@
-module Code.BranchShorthandTests exposing (..)
+module Code.BranchRefTests exposing (..)
 
-import Code.BranchShorthand as BranchShorthand
+import Code.BranchRef as BranchRef
 import Expect
 import Test exposing (..)
 
@@ -12,42 +12,42 @@ isValidBranchSlug =
             \_ ->
                 let
                     result =
-                        BranchShorthand.isValidBranchSlug "mybranch"
+                        BranchRef.isValidBranchSlug "mybranch"
                 in
                 Expect.true "Expected simple aplhanum in slugs to pass validation" result
         , test "can be any casing" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.isValidBranchSlug "AnyCasing"
+                        BranchRef.isValidBranchSlug "AnyCasing"
                 in
                 Expect.true "Expected any casing in slugs to pass validation" result
         , test "can include _" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.isValidBranchSlug "underscores__are_valid"
+                        BranchRef.isValidBranchSlug "underscores__are_valid"
                 in
                 Expect.true "Expected underscores in slugs to pass validation" result
         , test "can include -" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.isValidBranchSlug "dashes-are--valid"
+                        BranchRef.isValidBranchSlug "dashes-are--valid"
                 in
                 Expect.true "Expected dashes in slugs to pass validation" result
         , test "can not have spaces" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.isValidBranchSlug "cant have spaces"
+                        BranchRef.isValidBranchSlug "cant have spaces"
                 in
                 Expect.false "Expected spaces in slugs to fail validation" result
         , test "can not have symbols" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.isValidBranchSlug "ca|n/th\u{0007}ve$ymbols\"'!@#"
+                        BranchRef.isValidBranchSlug "ca|n/th\u{0007}ve$ymbols\"'!@#"
                 in
                 Expect.false "Expected symbols in slugs to fail validation" result
         ]
@@ -60,47 +60,47 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "mybranch"
+                        BranchRef.fromString "mybranch"
 
                     expected =
-                        Just (BranchShorthand.unsafeFromString "mybranch")
+                        Just (BranchRef.unsafeFromString "mybranch")
                 in
                 Expect.equal result expected
         , test "parses a branch with dashes" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "my-branch"
+                        BranchRef.fromString "my-branch"
 
                     expected =
-                        Just (BranchShorthand.unsafeFromString "my-branch")
+                        Just (BranchRef.unsafeFromString "my-branch")
                 in
                 Expect.equal result expected
         , test "parses a branch with underscores" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "my_branch"
+                        BranchRef.fromString "my_branch"
 
                     expected =
-                        Just (BranchShorthand.unsafeFromString "my_branch")
+                        Just (BranchRef.unsafeFromString "my_branch")
                 in
                 Expect.equal result expected
         , test "parses a topic branch with a handle" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "@somehandle/mybranch"
+                        BranchRef.fromString "@somehandle/mybranch"
 
                     expected =
-                        Just (BranchShorthand.unsafeFromString "@somehandle/mybranch")
+                        Just (BranchRef.unsafeFromString "@somehandle/mybranch")
                 in
                 Expect.equal result expected
         , test "fails to parse a branch with special characters" <|
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "m$^&ybranch"
+                        BranchRef.fromString "m$^&ybranch"
 
                     expected =
                         Nothing
@@ -110,7 +110,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "my/branch"
+                        BranchRef.fromString "my/branch"
 
                     expected =
                         Nothing
@@ -120,7 +120,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "my/branch"
+                        BranchRef.fromString "my/branch"
 
                     expected =
                         Nothing
@@ -130,7 +130,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "my/branch"
+                        BranchRef.fromString "my/branch"
 
                     expected =
                         Nothing
@@ -140,7 +140,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "@someowner/mybranch/annother"
+                        BranchRef.fromString "@someowner/mybranch/annother"
 
                     expected =
                         Nothing
@@ -150,7 +150,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "someowner@mybranch"
+                        BranchRef.fromString "someowner@mybranch"
 
                     expected =
                         Nothing
@@ -160,7 +160,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "@someowner@mybranch"
+                        BranchRef.fromString "@someowner@mybranch"
 
                     expected =
                         Nothing
@@ -170,7 +170,7 @@ fromString =
             \_ ->
                 let
                     result =
-                        BranchShorthand.fromString "@some@owner/mybranch"
+                        BranchRef.fromString "@some@owner/mybranch"
 
                     expected =
                         Nothing
@@ -181,14 +181,14 @@ fromString =
 
 toString : Test
 toString =
-    describe "BranchShorthand.toString"
+    describe "BranchRef.toString"
         [ test "just slug" <|
             \_ ->
                 let
                     result =
                         "mybranch"
-                            |> BranchShorthand.unsafeFromString
-                            |> BranchShorthand.toString
+                            |> BranchRef.unsafeFromString
+                            |> BranchRef.toString
                 in
                 Expect.equal "mybranch" result
         , test "owner handle and slug" <|
@@ -196,8 +196,8 @@ toString =
                 let
                     result =
                         "@owner/mybranch"
-                            |> BranchShorthand.unsafeFromString
-                            |> BranchShorthand.toString
+                            |> BranchRef.unsafeFromString
+                            |> BranchRef.toString
                 in
                 Expect.equal "@owner/mybranch" result
         ]

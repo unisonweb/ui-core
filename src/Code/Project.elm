@@ -1,6 +1,6 @@
 module Code.Project exposing (..)
 
-import Code.Project.ProjectShorthand as ProjectShorthand exposing (ProjectShorthand)
+import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Json.Decode as Decode exposing (bool, int, nullable, string)
 import Json.Decode.Extra exposing (when)
@@ -10,7 +10,7 @@ import Set exposing (Set)
 
 
 type alias Project a =
-    { a | shorthand : ProjectShorthand }
+    { a | ref : ProjectRef }
 
 
 type IsFaved
@@ -36,24 +36,24 @@ type alias ProjectDetails =
         }
 
 
-shorthand : Project a -> ProjectShorthand
-shorthand project =
-    project.shorthand
+ref : Project a -> ProjectRef
+ref project =
+    project.ref
 
 
 handle : Project a -> UserHandle
 handle p =
-    ProjectShorthand.handle p.shorthand
+    ProjectRef.handle p.ref
 
 
 slug : Project a -> ProjectSlug
 slug p =
-    ProjectShorthand.slug p.shorthand
+    ProjectRef.slug p.ref
 
 
 equals : Project a -> Project b -> Bool
 equals a b =
-    ProjectShorthand.equals a.shorthand b.shorthand
+    ProjectRef.equals a.ref b.ref
 
 
 isOwnedBy : UserHandle -> Project a -> Bool
@@ -127,10 +127,10 @@ decodeDetails =
     let
         makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved_ =
             let
-                shorthand_ =
-                    ProjectShorthand.projectShorthand handle_ slug_
+                ref_ =
+                    ProjectRef.projectRef handle_ slug_
             in
-            { shorthand = shorthand_
+            { ref = ref_
             , summary = summary
             , tags = Set.fromList tags
             , visibility = visibility

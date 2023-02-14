@@ -2,7 +2,7 @@ module Code.ProjectListing exposing (..)
 
 import Code.Hashvatar as Hashvatar
 import Code.Project exposing (Project)
-import Code.Project.ProjectShorthand as ProjectShorthand
+import Code.Project.ProjectRef as ProjectRef
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
 import UI.Click as Click exposing (Click)
@@ -103,7 +103,7 @@ viewSubdued { project, size, click } =
 
         content =
             [ Hashvatar.empty
-            , ProjectShorthand.view project.shorthand
+            , ProjectRef.view project.ref
             ]
     in
     case click of
@@ -128,11 +128,11 @@ view p =
                 Hashvatar.empty
 
             else
-                ProjectShorthand.viewHashvatar p.project.shorthand
+                ProjectRef.viewHashvatar p.project.ref
 
         content =
             [ hashvatar
-            , ProjectShorthand.view p.project.shorthand
+            , ProjectRef.view p.project.ref
             ]
     in
     case p.click of
