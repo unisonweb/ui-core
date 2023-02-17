@@ -1,16 +1,26 @@
 .tag {
   background: var(--u-color_element_emphasized);
   color: var(--u-color_text);
-  height: 1.25rem;
-  border-radius: calc(1.25rem / 2);
-  padding: 0.25rem 0.5rem;
   display: inline-flex;
   width: fit-content;
   align-items: center;
   flex-direction: row;
   line-height: 1;
   font-size: var(--font-size-small);
+}
+
+.tag.tag_size_medium {
+  padding: 0 0.5rem;
   gap: 0.25rem;
+  height: 1.25rem;
+  border-radius: calc(1.25rem / 2);
+}
+
+.tag.tag_size_large {
+  padding: 0 0.75rem;
+  gap: 0.5rem;
+  height: 1.5rem;
+  border-radius: calc(1.5rem / 2);
 }
 
 .tag .tag_text {
@@ -42,6 +52,8 @@
 .tag .tag_dimiss:hover .icon {
   color: var(--u-color_icon_hovered);
 }
+
+/* -- Collection ----------------------------------------------------------- */
 
 .tags {
   display: flex;

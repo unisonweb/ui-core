@@ -14,12 +14,18 @@ type TagAction msg
     | DismissRight (Click msg)
 
 
+type TagSize
+    = Medium
+    | Large
+
+
 type alias Tag msg =
     { icon : Maybe (Icon msg)
     , leftText : Maybe String
     , text : String
     , rightText : Maybe String
     , action : TagAction msg
+    , size : TagSize
     }
 
 
@@ -34,6 +40,7 @@ tag text_ =
     , text = text_
     , rightText = Nothing
     , action = NoAction
+    , size = Medium
     }
 
 
@@ -98,6 +105,7 @@ map toMsg t =
     , text = t.text
     , rightText = t.rightText
     , action = mapAction toMsg t.action
+    , size = t.size
     }
 
 
@@ -125,15 +133,18 @@ view t =
 
         tagText =
             div [ class "tag_text" ]
-                (MaybeE.values
-                    [ leftText
-                    , Just (text t.text)
-                    , rightText
-                    ]
-                )
+                (MaybeE.values [ leftText, Just (text t.text), rightText ])
+
+        sizeClass =
+            case t.size of
+                Medium ->
+                    class "tag_size_medium"
+
+                Large ->
+                    class "tag_size_large"
 
         attrs =
-            [ class "tag" ]
+            [ class "tag", sizeClass ]
 
         content =
             MaybeE.values [ icon, Just tagText ]
