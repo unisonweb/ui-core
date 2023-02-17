@@ -6,6 +6,7 @@ module UI.Navigation exposing
     , navItem
     , navItemWithIcon
     , navItemWithNudge
+    , navItemWithTag
     , navItemWithTooltip
     , view
     , withItems
@@ -15,9 +16,11 @@ module UI.Navigation exposing
 import Html exposing (Html, nav, span, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
+import Maybe.Extra as MaybeE
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge)
+import UI.Tag as Tag exposing (Tag)
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
@@ -36,6 +39,7 @@ import UI.Tooltip as Tooltip exposing (Tooltip)
 type alias NavItem msg =
     { icon : Maybe (Icon msg)
     , label : String
+    , tag : Maybe (Tag msg)
     , nudge : Nudge msg
     , click : Click msg
     , tooltip : Maybe (Tooltip msg)
@@ -55,6 +59,7 @@ navItem : String -> Click msg -> NavItem msg
 navItem label click =
     { icon = Nothing
     , label = label
+    , tag = Nothing
     , nudge = Nudge.NoNudge
     , click = click
     , tooltip = Nothing
@@ -74,6 +79,11 @@ navItemWithNudge nudge item =
 navItemWithTooltip : Tooltip msg -> NavItem msg -> NavItem msg
 navItemWithTooltip tooltip item =
     { item | tooltip = Just tooltip }
+
+
+navItemWithTag : Tag msg -> NavItem msg -> NavItem msg
+navItemWithTag tag item =
+    { item | tag = Just tag }
 
 
 empty : Navigation msg
@@ -103,6 +113,7 @@ mapNavItem : (a -> msg) -> NavItem a -> NavItem msg
 mapNavItem toMsg navItemA =
     { icon = Maybe.map (Icon.map toMsg) navItemA.icon
     , label = navItemA.label
+    , tag = Maybe.map (Tag.map toMsg) navItemA.tag
     , nudge = Nudge.map toMsg navItemA.nudge
     , click = Click.map toMsg navItemA.click
     , tooltip = Maybe.map (Tooltip.map toMsg) navItemA.tooltip
@@ -124,15 +135,17 @@ map toMsg navA =
 
 
 viewItem : Bool -> NavItem msg -> Html msg
-viewItem isSelected { icon, label, nudge, tooltip, click } =
+viewItem isSelected { icon, label, tag, nudge, tooltip, click } =
     let
         content =
-            case icon of
-                Nothing ->
-                    span [ class "nav-item_content" ] [ text label, Nudge.view nudge ]
-
-                Just i ->
-                    span [ class "nav-item_content" ] [ Icon.view i, text label, Nudge.view nudge ]
+            span [ class "nav-item_content" ]
+                ([ Maybe.map Icon.view icon
+                 , Just (text label)
+                 , Maybe.map Tag.view tag
+                 , Just (Nudge.view nudge)
+                 ]
+                    |> MaybeE.values
+                )
 
         item =
             case tooltip of

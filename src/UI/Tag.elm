@@ -3,7 +3,6 @@ module UI.Tag exposing (..)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Maybe.Extra as MaybeE
-import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
 
@@ -55,6 +54,36 @@ withDismissLeft click t =
 withDismissRight : Click msg -> Tag msg -> Tag msg
 withDismissRight click t =
     { t | action = DismissRight click }
+
+
+
+-- MAP
+
+
+mapAction : (a -> b) -> TagAction a -> TagAction b
+mapAction toMsg action =
+    case action of
+        NoAction ->
+            NoAction
+
+        TagClick c ->
+            TagClick (Click.map toMsg c)
+
+        DismissLeft c ->
+            DismissLeft (Click.map toMsg c)
+
+        DismissRight c ->
+            DismissRight (Click.map toMsg c)
+
+
+map : (a -> b) -> Tag a -> Tag b
+map toMsg t =
+    { icon = Maybe.map (Icon.map toMsg) t.icon
+    , leftText = t.leftText
+    , text = t.text
+    , rightText = t.rightText
+    , action = mapAction toMsg t.action
+    }
 
 
 
