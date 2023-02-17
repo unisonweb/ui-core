@@ -2,6 +2,8 @@ module Code.BranchRef exposing (..)
 
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Regex
+import UI.Icon as Icon
+import UI.Tag as Tag exposing (Tag)
 
 
 type BranchSlug
@@ -153,3 +155,22 @@ unsafeFromString raw =
 
         _ ->
             BranchRef { handle = Nothing, slug = BranchSlug raw }
+
+
+
+-- VIEW
+
+
+toTag : BranchRef -> Tag msg
+toTag branchRef_ =
+    let
+        tag =
+            case toParts branchRef_ of
+                ( Just handle_, branchSlug ) ->
+                    Tag.tag (branchSlugToString branchSlug)
+                        |> Tag.withLeftText (UserHandle.toString handle_ ++ "/")
+
+                ( Nothing, branchSlug ) ->
+                    Tag.tag (branchSlugToString branchSlug)
+    in
+    Tag.withIcon Icon.branch tag
