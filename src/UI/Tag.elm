@@ -123,22 +123,20 @@ view t =
         rightText =
             Maybe.map (text >> viewEl "tag_right-text") t.rightText
 
+        tagText =
+            div [ class "tag_text" ]
+                (MaybeE.values
+                    [ leftText
+                    , Just (text t.text)
+                    , rightText
+                    ]
+                )
+
         attrs =
             [ class "tag" ]
 
         content =
-            MaybeE.values
-                [ icon
-                , Just
-                    (div [ class "tag_text" ]
-                        (MaybeE.values
-                            [ leftText
-                            , Just (text t.text)
-                            , rightText
-                            ]
-                        )
-                    )
-                ]
+            MaybeE.values [ icon, Just tagText ]
     in
     case t.action of
         TagClick c ->

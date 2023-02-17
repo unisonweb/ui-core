@@ -25,10 +25,12 @@
 
 .tag .tag_icon .icon {
   color: var(--u-color_icon_subdued);
+  font-size: var(--font-size-small);
 }
 
 .tag .tag_dimiss .icon {
   color: var(--u-color_icon);
+  font-size: var(--font-size-extra-small);
 }
 
 .tag .tag_dimiss:hover .icon {
