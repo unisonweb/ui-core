@@ -127,7 +127,18 @@ view t =
             [ class "tag" ]
 
         content =
-            MaybeE.values [ icon, leftText, Just (text t.text), rightText ]
+            MaybeE.values
+                [ icon
+                , Just
+                    (div [ class "tag_text" ]
+                        (MaybeE.values
+                            [ leftText
+                            , Just (text t.text)
+                            , rightText
+                            ]
+                        )
+                    )
+                ]
     in
     case t.action of
         TagClick c ->
