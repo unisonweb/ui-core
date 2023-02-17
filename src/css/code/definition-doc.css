@@ -70,6 +70,7 @@
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
+  max-width: var(--c-width_doc_inner-content);
 }
 
 .definition-doc .folded-sources .source {

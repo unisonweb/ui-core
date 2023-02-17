@@ -232,6 +232,7 @@
 
 .workspace-item .content .workspace-item_definition-doc .definition-doc {
   --c-width_doc_outer: var(--c-width_workspace-item_outer);
+  --c-width_doc_inner-content: var(--c-width_workspace-item_inner-content);
 }
 
 .workspace-item
