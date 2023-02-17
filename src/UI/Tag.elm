@@ -51,6 +51,16 @@ withClick click t =
     { t | action = TagClick click }
 
 
+withLeftText : String -> Tag msg -> Tag msg
+withLeftText leftText t =
+    { t | leftText = Just leftText }
+
+
+withRightText : String -> Tag msg -> Tag msg
+withRightText rightText t =
+    { t | rightText = Just rightText }
+
+
 withDismissLeft : Click msg -> Tag msg -> Tag msg
 withDismissLeft click t =
     { t | action = DismissLeft click }
