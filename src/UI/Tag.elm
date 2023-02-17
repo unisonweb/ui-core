@@ -41,6 +41,11 @@ tag text_ =
 -- MODIFY
 
 
+withIcon : Icon msg -> Tag msg -> Tag msg
+withIcon icon t =
+    { t | icon = Just icon }
+
+
 withClick : Click msg -> Tag msg -> Tag msg
 withClick click t =
     { t | action = TagClick click }
