@@ -1,14 +1,38 @@
 .tag {
   background: var(--u-color_element_emphasized);
-  color: var(--u-color_text-on-element-emphasized);
+  color: var(--u-color_text);
   height: 1.25rem;
   border-radius: calc(1.25rem / 2);
   padding: 0.25rem 0.5rem;
   display: inline-flex;
   width: fit-content;
   align-items: center;
+  flex-direction: row;
   line-height: 1;
   font-size: var(--font-size-small);
+  gap: 0.25rem;
+}
+
+.tag .tag_text {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0;
+}
+.tag .tag_text .tag_left-text,
+.tag .tag_text .tag_right-text {
+  color: var(--u-color_text_subdued);
+}
+
+.tag .tag_icon .icon {
+  color: var(--u-color_icon_subdued);
+}
+
+.tag .tag_dimiss .icon {
+  color: var(--u-color_icon);
+}
+
+.tag .tag_dimiss:hover .icon {
+  color: var(--u-color_icon_hovered);
 }
 
 .tags {

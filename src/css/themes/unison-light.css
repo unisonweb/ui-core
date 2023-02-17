@@ -43,6 +43,7 @@
   --u-color_icon: var(--color-gray-lighten-20);
   --u-color_icon_subdued: var(--color-gray-lighten-30);
   --u-color_icon_emphasized: var(--color-gray-darken-20);
+  --u-color_icon_hovered: var(--color-gray-base);
   --u-color_divider: var(--color-gray-lighten-55);
   --u-color_border: var(--color-gray-lighten-40);
   --u-color_border_hovered: var(--color-gray-lighten-20);
@@ -82,6 +83,8 @@
   --u-color_element_subdued_selected: var(--color-gray-lighten-55);
   --u-color_element_emphasized: var(--color-gray-lighten-55);
   --u-color_text-on-element-emphasized: var(--color-gray-base);
+  --u-color_icon-on-element: var(--color-gray-base);
+  --u-color_icon-on-element-emphasized: var(--color-gray-base);
   --u-color_element_emphasized_hovered: var(--color-gray-lighten-50);
   --u-color_element_emphasized_selected: var(--color-gray-lighten-50);
 

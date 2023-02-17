@@ -2,11 +2,26 @@ module UI.Tag exposing (..)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
+import Maybe.Extra as MaybeE
+import UI
 import UI.Click as Click exposing (Click)
+import UI.Icon as Icon exposing (Icon)
+
+
+type TagAction msg
+    = NoAction
+    | TagClick (Click msg)
+    | DismissLeft (Click msg)
+    | DismissRight (Click msg)
 
 
 type alias Tag msg =
-    { label : String, click : Maybe (Click msg) }
+    { icon : Maybe (Icon msg)
+    , leftText : Maybe String
+    , text : String
+    , rightText : Maybe String
+    , action : TagAction msg
+    }
 
 
 
@@ -14,8 +29,13 @@ type alias Tag msg =
 
 
 tag : String -> Tag msg
-tag label_ =
-    { label = label_, click = Nothing }
+tag text_ =
+    { icon = Nothing
+    , leftText = Nothing
+    , text = text_
+    , rightText = Nothing
+    , action = NoAction
+    }
 
 
 
@@ -24,7 +44,17 @@ tag label_ =
 
 withClick : Click msg -> Tag msg -> Tag msg
 withClick click t =
-    { t | click = Just click }
+    { t | action = TagClick click }
+
+
+withDismissLeft : Click msg -> Tag msg -> Tag msg
+withDismissLeft click t =
+    { t | action = DismissLeft click }
+
+
+withDismissRight : Click msg -> Tag msg -> Tag msg
+withDismissRight click t =
+    { t | action = DismissRight click }
 
 
 
@@ -32,19 +62,40 @@ withClick click t =
 
 
 view : Tag msg -> Html msg
-view { label, click } =
+view t =
     let
+        viewEl class_ content_ =
+            div [ class class_ ] [ content_ ]
+
+        dismiss c =
+            Click.view [ class "tag_dismiss" ] [ Icon.view Icon.x ] c
+
+        icon =
+            Maybe.map (Icon.view >> viewEl "tag_icon") t.icon
+
+        leftText =
+            Maybe.map (text >> viewEl "tag_left-text") t.leftText
+
+        rightText =
+            Maybe.map (text >> viewEl "tag_right-text") t.leftText
+
         attrs =
             [ class "tag" ]
 
         content =
-            [ text label ]
+            MaybeE.values [ icon, leftText, Just (text t.text), rightText ]
     in
-    case click of
-        Just c ->
+    case t.action of
+        TagClick c ->
             Click.view attrs content c
 
-        Nothing ->
+        DismissLeft c ->
+            div attrs (dismiss c :: content)
+
+        DismissRight c ->
+            div attrs (content ++ [ dismiss c ])
+
+        _ ->
             div attrs content
 
 
