@@ -121,7 +121,7 @@ view t =
             Maybe.map (text >> viewEl "tag_left-text") t.leftText
 
         rightText =
-            Maybe.map (text >> viewEl "tag_right-text") t.leftText
+            Maybe.map (text >> viewEl "tag_right-text") t.rightText
 
         attrs =
             [ class "tag" ]
