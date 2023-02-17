@@ -23,6 +23,12 @@
   color: var(--u-color_text_subdued);
 }
 
+.tag .tag_icon,
+.tag .tag_dismiss {
+  display: flex;
+  place-content: center;
+}
+
 .tag .tag_icon .icon {
   color: var(--u-color_icon_subdued);
   font-size: var(--font-size-small);
