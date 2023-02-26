@@ -17,6 +17,7 @@ import Html exposing (Html, nav, span, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
 import Maybe.Extra as MaybeE
+import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge)
@@ -36,10 +37,16 @@ import UI.Tooltip as Tooltip exposing (Tooltip)
 -}
 
 
+type NavItemSecondaryContent msg
+    = NoContent
+    | TagContent (Tag msg)
+    | ButtonContent (Button msg)
+
+
 type alias NavItem msg =
     { icon : Maybe (Icon msg)
     , label : String
-    , tag : Maybe (Tag msg)
+    , secondary : NavItemSecondaryContent msg
     , nudge : Nudge msg
     , click : Click msg
     , tooltip : Maybe (Tooltip msg)
@@ -59,7 +66,7 @@ navItem : String -> Click msg -> NavItem msg
 navItem label click =
     { icon = Nothing
     , label = label
-    , tag = Nothing
+    , secondary = NoContent
     , nudge = Nudge.NoNudge
     , click = click
     , tooltip = Nothing
@@ -83,7 +90,12 @@ navItemWithTooltip tooltip item =
 
 navItemWithTag : Tag msg -> NavItem msg -> NavItem msg
 navItemWithTag tag item =
-    { item | tag = Just tag }
+    { item | secondary = TagContent tag }
+
+
+navItemWithButton : Button msg -> NavItem msg -> NavItem msg
+navItemWithButton button item =
+    { item | secondary = ButtonContent button }
 
 
 empty : Navigation msg
@@ -135,13 +147,24 @@ map toMsg navA =
 
 
 viewItem : Bool -> NavItem msg -> Html msg
-viewItem isSelected { icon, label, tag, nudge, tooltip, click } =
+viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
     let
+        secondaryContent =
+            case secondary of
+                TagContent tag ->
+                    Just (Tag.view tag)
+
+                ButtonContent button ->
+                    Just (Button.view button)
+
+                NoContent ->
+                    Nothing
+
         content =
             span [ class "nav-item_content" ]
                 ([ Maybe.map Icon.view icon
                  , Just (text label)
-                 , Maybe.map Tag.view tag
+                 , secondaryContent
                  , Just (Nudge.view nudge)
                  ]
                     |> MaybeE.values

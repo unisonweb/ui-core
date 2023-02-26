@@ -1,0 +1,90 @@
+module UI.AppDocument exposing (AppDocument, appDocument, map, view)
+
+import Browser exposing (Document)
+import Html exposing (Html, div)
+import Html.Attributes exposing (class, id)
+import Maybe.Extra as MaybeE
+import UI
+import UI.PageHeader as PageHeader exposing (PageHeader)
+
+
+
+{-
+
+   AppDocument
+   ===========
+
+   Very similar to Browser.Document, but includes a common app title and app
+   frame, as well as slots for header, page, and modals.
+-}
+
+
+type alias AppDocument msg =
+    { pageId : String
+    , title : String
+    , appHeader : AppHeader msg
+    , pageHeader : Maybe (PageHeader msg)
+    , page : Html msg
+    , modal : Maybe (Html msg)
+    }
+
+
+
+-- CREATE
+
+
+appDocument : String -> String -> AppHeader msg -> Html msg -> AppDocument msg
+appDocument pageId title appHeader page =
+    { pageId = pageId
+    , title = title
+    , appHeader = appHeader
+    , pageHeader = Nothing
+    , page = page
+    , modal = Nothing
+    }
+
+
+
+-- MAP
+
+
+map : (msgA -> msgB) -> AppDocument msgA -> AppDocument msgB
+map toMsgB { pageId, title, appHeader, pageHeader, page, modal } =
+    { pageId = pageId
+    , title = title
+    , appHeader = AppHeader.map toMsgB appHeader
+    , pageHeader = Maybe.map (PageHeader.map toMsgB) pageHeader
+    , page = Html.map toMsgB page
+    , modal = Maybe.map (Html.map toMsgB) modal
+    }
+
+
+
+-- VIEW
+
+
+viewAnnouncement : Html msg -> Html msg
+viewAnnouncement content =
+    div [ id "announcement" ] [ content ]
+
+
+view : AppHeaderContext msg -> AppDocument msg -> Document msg
+view appHeaderCtx { pageId, title, appHeader, pageHeader, page, modal } =
+    let
+        announcement =
+            Nothing
+    in
+    { title = title ++ " | Unison Share"
+    , body =
+        [ div
+            [ id "app"
+            , class pageId
+            ]
+            [ MaybeE.unwrap UI.nothing viewAnnouncement announcement
+            , AppHeader.view appHeaderCtx appHeader
+            , MaybeE.unwrap UI.nothing PageHeader.view pageHeader
+            , page
+            , Maybe.withDefault UI.nothing modal
+            ]
+        ]
+    }
