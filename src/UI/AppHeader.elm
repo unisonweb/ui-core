@@ -50,6 +50,26 @@ withViewMode viewMode appHeader_ =
 -- VIEW
 
 
+mapAppTitle : (a -> b) -> AppTitle a -> AppTitle b
+mapAppTitle f (AppTitle click content) =
+    AppTitle (Click.map f click) (Html.map f content)
+
+
+map : (a -> b) -> AppHeader a -> AppHeader b
+map f appHeader_ =
+    { menuToggle = Maybe.map f appHeader_.menuToggle
+    , appTitle = mapAppTitle f appHeader_.appTitle
+    , navigation = Maybe.map (Navigation.map f) appHeader_.navigation
+    , leftSide = List.map (Html.map f) appHeader_.leftSide
+    , rightSide = List.map (Html.map f) appHeader_.rightSide
+    , viewMode = appHeader_.viewMode
+    }
+
+
+
+-- VIEW
+
+
 viewAppTitle : AppTitle msg -> Html msg
 viewAppTitle (AppTitle click content) =
     Click.view [ class "app-title" ] [ content ] click

@@ -5,6 +5,7 @@
     "license": "MIT",
     "version": "1.0.0",
     "exposed-modules": [
+        "UI.AppDocument",
         "UI.AppHeader",
         "UI.Color",
         "UI.Sidebar",

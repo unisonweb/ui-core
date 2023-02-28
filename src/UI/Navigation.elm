@@ -4,6 +4,7 @@ module UI.Navigation exposing
     , empty
     , map
     , navItem
+    , navItemWithButton
     , navItemWithIcon
     , navItemWithNudge
     , navItemWithTag
@@ -121,11 +122,24 @@ withNoSelectedItems items _ =
 -- MAP
 
 
+mapNavItemSecondaryContent : (a -> msg) -> NavItemSecondaryContent a -> NavItemSecondaryContent msg
+mapNavItemSecondaryContent f secondary =
+    case secondary of
+        NoContent ->
+            NoContent
+
+        TagContent t ->
+            TagContent (Tag.map f t)
+
+        ButtonContent b ->
+            ButtonContent (Button.map f b)
+
+
 mapNavItem : (a -> msg) -> NavItem a -> NavItem msg
 mapNavItem toMsg navItemA =
     { icon = Maybe.map (Icon.map toMsg) navItemA.icon
     , label = navItemA.label
-    , tag = Maybe.map (Tag.map toMsg) navItemA.tag
+    , secondary = mapNavItemSecondaryContent toMsg navItemA.secondary
     , nudge = Nudge.map toMsg navItemA.nudge
     , click = Click.map toMsg navItemA.click
     , tooltip = Maybe.map (Tooltip.map toMsg) navItemA.tooltip
