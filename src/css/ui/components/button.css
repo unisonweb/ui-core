@@ -90,6 +90,10 @@ a.button:hover {
   gap: 0.25rem;
 }
 
+.button.small .icon {
+  font-size: var(--font-size-small);
+}
+
 .button.small:not(.content-icon) {
   padding: 0 0.5rem;
 }
@@ -103,8 +107,16 @@ a.button:hover {
   font-size: var(--font-size-medium);
 }
 
+.button.medium .icon {
+  font-size: var(--font-size-medium);
+}
+
 .button.medium:not(.content-icon) {
   padding: 0 0.75rem;
+}
+
+.button.medium.content-icon {
+  width: 2rem;
 }
 
 .button.medium.content-icon-then-label .icon {
@@ -116,8 +128,16 @@ a.button:hover {
   font-size: 1.125rem;
 }
 
+.button.large .icon {
+  font-size: 1.125rem;
+}
+
 .button.large:not(.content-icon) {
   padding: 0 1rem;
+}
+
+.button.large.content-icon {
+  width: 2.5rem;
 }
 
 .button.large.content-icon-then-label .icon {
