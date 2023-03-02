@@ -492,7 +492,7 @@ scrollToDefinition ref =
         targetId =
             "definition-" ++ Reference.toString ref
     in
-    ScrollTo.scrollTo NoOp "workspace-content" targetId
+    ScrollTo.scrollTo NoOp "page-content" targetId
 
 
 
