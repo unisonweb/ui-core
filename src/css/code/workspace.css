@@ -8,9 +8,6 @@
 }
 
 #workspace-content {
-  scroll-behavior: smooth;
-  scrollbar-width: auto;
-  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   padding-top: 2rem;
 }
 
@@ -53,24 +50,11 @@
 #workspace.view-mode_presentation #workspace-content .definition-doc aside {
   font-size: var(--font-size-medium);
 }
+
 #workspace.view-mode_presentation #workspace-content .loading {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-}
-
-#workspace-content::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-
-#workspace-content::-webkit-scrollbar-track {
-  background: var(--u-color_scrollbar-track);
-}
-
-#workspace-content::-webkit-scrollbar-thumb {
-  background-color: var(--u-color_scrollbar);
-  border-radius: var(--border-radius-base);
 }
 
 @media only screen and (--u-viewport_max-lg) {
