@@ -6,6 +6,14 @@ import Task
 
 scrollTo : msg -> String -> String -> Cmd msg
 scrollTo doneMsg containerId targetId =
+    let
+        done r =
+            let
+                x =
+                    Debug.log "scroll result" r
+            in
+            doneMsg
+    in
     Task.sequence
         [ Dom.getElement targetId |> Task.map (.element >> .y)
         , Dom.getElement containerId |> Task.map (.element >> .y)
@@ -21,4 +29,4 @@ scrollTo doneMsg containerId targetId =
                     _ ->
                         Task.succeed ()
             )
-        |> Task.attempt (always doneMsg)
+        |> Task.attempt done
