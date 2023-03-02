@@ -6,14 +6,6 @@ import Task
 
 scrollTo : msg -> String -> String -> Cmd msg
 scrollTo doneMsg containerId targetId =
-    let
-        done r =
-            let
-                x =
-                    Debug.log "scroll result" r
-            in
-            doneMsg
-    in
     Task.sequence
         [ Dom.getElement targetId |> Task.map (.element >> .y)
         , Dom.getElement containerId |> Task.map (.element >> .y)
@@ -21,7 +13,7 @@ scrollTo doneMsg containerId targetId =
         ]
         |> Task.andThen
             (\outcome ->
-                case outcome of
+                case Debug.log "scroll to outcome" outcome of
                     elY :: viewportY :: viewportScrollTop :: [] ->
                         Dom.setViewportOf containerId 0 (viewportScrollTop + (elY - viewportY))
                             |> Task.onError (\_ -> Task.succeed ())
@@ -29,4 +21,4 @@ scrollTo doneMsg containerId targetId =
                     _ ->
                         Task.succeed ()
             )
-        |> Task.attempt done
+        |> Task.attempt (always doneMsg)
