@@ -5,6 +5,7 @@ import Html.Attributes exposing (class)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import UI
 import UI.Avatar as Avatar
+import UI.Icon as Icon
 import UI.PlaceholderShape as PlaceholderShape
 import Url exposing (Url)
 
@@ -88,7 +89,7 @@ view { size, profile } =
         cfg =
             case profile of
                 Loading ->
-                    { avatar = Avatar.empty
+                    { avatar = Avatar.empty |> Avatar.withIcon Icon.user
                     , name = PlaceholderShape.text |> PlaceholderShape.view
                     , handle = PlaceholderShape.text |> PlaceholderShape.small |> PlaceholderShape.view
                     , attrs = [ class "profile-snippet" ]
