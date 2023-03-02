@@ -49,13 +49,15 @@
   --u-color_interactive: var(--color-blue-2);
   --u-color_interactive_hovered: var(--color-blue-3);
 
-  --color-tooltip-text: var(--color-sidebar-tooltip-fg);
-  --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
-  --color-tooltip-border: var(--color-sidebar-tooltip-border);
-
   --u-color_divider: var(--color-sidebar-divider);
 
   transition: all 0.2s ease-in-out;
+}
+
+.sidebar .tooltip {
+  --color-tooltip-text: var(--color-sidebar-tooltip-fg);
+  --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
+  --color-tooltip-border: var(--color-sidebar-tooltip-border);
 }
 
 .sidebar .button {
