@@ -28,6 +28,9 @@
   --color-sidebar-tooltip-bg: var(--color-gray-darken-10);
   --color-sidebar-tooltip-border: var(--color-gray-base);
 
+  --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-lighten-100);
+  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-lighten-20);
+
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -58,6 +61,15 @@
   --color-tooltip-text: var(--color-sidebar-tooltip-fg);
   --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
   --color-tooltip-border: var(--color-sidebar-tooltip-border);
+}
+
+.sidebar .keyboard-shortcut {
+  --color-keyboard-shortcut-key-text: var(
+    --color-sidebar-keyboard-shortcut-key-text
+  );
+  --color-keyboard-shortcut-key-bg: var(
+    --color-sidebar-keyboard-shortcut-key-bg
+  );
 }
 
 .sidebar .button {
