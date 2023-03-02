@@ -21,4 +21,4 @@ scrollTo doneMsg containerId targetId =
                     _ ->
                         Task.succeed ()
             )
-        |> Task.attempt (Debug.log "result" (always doneMsg))
+        |> Task.attempt (Debug.log "result" >> always doneMsg)
