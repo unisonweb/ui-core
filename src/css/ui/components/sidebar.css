@@ -25,8 +25,8 @@
   --color-sidebar-divider: var(--color-gray-darken-10);
 
   --color-sidebar-tooltip-fg: var(--color-gray-lighten-60);
-  --color-sidebar-tooltip-bg: var(--color-gray-darken-30);
-  --color-sidebar-tooltip-border: var(--color-gray-darken-10);
+  --color-sidebar-tooltip-bg: var(--color-gray-darken-10);
+  --color-sidebar-tooltip-border: var(--color-gray-base);
 
   display: flex;
   flex-direction: column;
