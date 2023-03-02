@@ -5,6 +5,7 @@ import Html.Attributes exposing (class)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import UI
 import UI.Avatar as Avatar
+import UI.PlaceholderShape as PlaceholderShape
 import Url exposing (Url)
 
 
@@ -23,8 +24,13 @@ type alias User u =
     }
 
 
+type Profile u
+    = Loading
+    | ProfileUser (User u)
+
+
 type alias ProfileSnippet u =
-    { user : User u
+    { profile : Profile u
     , size : Size
     }
 
@@ -35,7 +41,12 @@ type alias ProfileSnippet u =
 
 profileSnippet : User u -> ProfileSnippet u
 profileSnippet user =
-    { user = user, size = Medium }
+    { profile = ProfileUser user, size = Medium }
+
+
+loading : ProfileSnippet u
+loading =
+    { profile = Loading, size = Medium }
 
 
 
@@ -72,55 +83,46 @@ withSize size p =
 
 
 view : ProfileSnippet u -> Html msg
-view { size, user } =
+view { size, profile } =
     let
-        { avatarUrl, handle, name } =
-            user
+        cfg =
+            case profile of
+                Loading ->
+                    { avatar = Avatar.empty
+                    , name = PlaceholderShape.text |> PlaceholderShape.view
+                    , handle = PlaceholderShape.text |> PlaceholderShape.small |> PlaceholderShape.view
+                    , attrs = []
+                    }
 
-        avatar_ =
-            Avatar.avatar avatarUrl (Maybe.map (String.left 1) name)
+                ProfileUser user ->
+                    let
+                        cfg_ n class_ =
+                            { avatar = Avatar.avatar user.avatarUrl (Maybe.map (String.left 1) user.name)
+                            , name = n
+                            , handle = span [ class "profile-snippet_handle" ] [ text (UserHandle.toString user.handle) ]
+                            , attrs = [ class class_ ]
+                            }
+                    in
+                    case user.name of
+                        Just n ->
+                            cfg_ (span [ class "profile-snippet_name" ] [ text n ]) "profile-snippet"
 
-        ( sizeClass, avatar ) =
+                        Nothing ->
+                            cfg_ UI.nothing "profile-snippet profile-snippet_handle-only"
+
+        ( attrs, avatar, profileText ) =
             case size of
                 Small ->
-                    ( class "profile-snippet_size_small", avatar_ |> Avatar.small )
+                    ( class "profile-snippet_size_small" :: cfg.attrs, cfg.avatar |> Avatar.small, [ cfg.name ] )
 
                 Medium ->
-                    ( class "profile-snippet_size_medium", avatar_ |> Avatar.medium )
+                    ( class "profile-snippet_size_medium" :: cfg.attrs, cfg.avatar |> Avatar.medium, [ cfg.name, cfg.handle ] )
 
                 Large ->
-                    ( class "profile-snippet_size_large", avatar_ |> Avatar.large )
+                    ( class "profile-snippet_size_large" :: cfg.attrs, cfg.avatar |> Avatar.large, [ cfg.name, cfg.handle ] )
 
                 Huge ->
-                    ( class "profile-snippet_size_huge", avatar_ |> Avatar.huge )
-
-        ( name_, attrs ) =
-            case name of
-                Just n ->
-                    ( span [ class "profile-snippet_name" ] [ text n ], [ class "profile-snippet", sizeClass ] )
-
-                Nothing ->
-                    ( UI.nothing, [ class "profile-snippet profile-snippet_handle-only", sizeClass ] )
-
-        profileText =
-            case size of
-                Small ->
-                    [ name_ ]
-
-                Medium ->
-                    [ name_
-                    , span [ class "profile-snippet_handle" ] [ text (UserHandle.toString handle) ]
-                    ]
-
-                Large ->
-                    [ name_
-                    , span [ class "profile-snippet_handle" ] [ text (UserHandle.toString handle) ]
-                    ]
-
-                Huge ->
-                    [ name_
-                    , span [ class "profile-snippet_handle" ] [ text (UserHandle.toString handle) ]
-                    ]
+                    ( class "profile-snippet_size_huge" :: cfg.attrs, cfg.avatar |> Avatar.huge, [ cfg.name, cfg.handle ] )
     in
     div
         attrs
