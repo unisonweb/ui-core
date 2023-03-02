@@ -12,8 +12,8 @@ scrollTo doneMsg containerId targetId =
         , Dom.getViewportOf containerId |> Task.map (.viewport >> .y)
         ]
         |> Task.andThen
-            (\outcome ->
-                case Debug.log "scroll to outcome" outcome of
+            (\ys ->
+                case Debug.log "elY, viewportY, viewportscrollTop" ys of
                     elY :: viewportY :: viewportScrollTop :: [] ->
                         Dom.setViewportOf containerId 0 (viewportScrollTop + (elY - viewportY))
                             |> Task.onError (\_ -> Task.succeed ())
@@ -21,4 +21,4 @@ scrollTo doneMsg containerId targetId =
                     _ ->
                         Task.succeed ()
             )
-        |> Task.attempt (always doneMsg)
+        |> Task.attempt (Debug.log "result" (always doneMsg))
