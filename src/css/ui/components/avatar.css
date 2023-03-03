@@ -38,6 +38,10 @@
   line-height: 1;
 }
 
+.avatar.avatar_blank-icon {
+  background-color: var(--color-avatar);
+}
+
 .avatar.avatar_blank-icon .icon {
   font-size: 1rem;
   background-color: var(--color_avatar);
