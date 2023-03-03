@@ -91,7 +91,7 @@ view { size, profile } =
                 Loading ->
                     { avatar = Avatar.empty |> Avatar.withIcon Icon.user
                     , name = PlaceholderShape.text |> PlaceholderShape.view
-                    , handle = PlaceholderShape.text |> PlaceholderShape.small |> PlaceholderShape.view
+                    , handle = PlaceholderShape.text |> PlaceholderShape.tiny |> PlaceholderShape.view
                     , attrs = [ class "profile-snippet" ]
                     }
 
