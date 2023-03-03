@@ -22,6 +22,11 @@
   );
 }
 
+/* @color-todo inverse */
+.page-header.view-mode_regular .profile-snippet .avatar {
+  --color_avatar: var(--color-gray-base);
+}
+
 .page-header.view-mode_regular .project-ref {
   --c-color_project-ref_handle: var(--c-color_page-header_text_subdued);
   --c-color_project-ref_separator: var(--c-color_page-header_text_very-subdued);
