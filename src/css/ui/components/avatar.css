@@ -39,7 +39,7 @@
 }
 
 .avatar.avatar_blank-icon {
-  background-color: var(--color-avatar);
+  background-color: var(--color_avatar);
 }
 
 .avatar.avatar_blank-icon .icon {
