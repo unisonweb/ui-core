@@ -48,17 +48,17 @@
 }
 
 .avatar.small.avatar_blank-icon .icon {
-  font-size: 0.75rem;
+  font-size: 0.5rem;
 }
 
 .avatar.medium.avatar_blank-icon .icon {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
 }
 
 .avatar.large.avatar_blank-icon .icon {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .avatar.huge.avatar_blank-icon .icon {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
