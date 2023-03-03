@@ -465,7 +465,8 @@
   .definition-doc .folded-sources .source,
   .definition-doc .source.example,
   .definition-doc .source.eval,
-  .definition-doc .source.signatures .signature {
+  .definition-doc .source.signatures .signature,
+  .definition-doc .mermaid-diagram {
     width: calc(100vw - 4rem);
     overflow: auto;
   }
