@@ -90,11 +90,14 @@ view { size, profile } =
             case profile of
                 Loading ->
                     { avatar = Avatar.empty |> Avatar.withIcon Icon.user
-                    , name = PlaceholderShape.text |> PlaceholderShape.view
+                    , name =
+                        PlaceholderShape.text
+                            |> PlaceholderShape.withLength PlaceholderShape.Small
+                            |> PlaceholderShape.view
                     , handle =
                         PlaceholderShape.text
                             |> PlaceholderShape.subdued
-                            |> PlaceholderShape.withLength PlaceholderShape.Small
+                            |> PlaceholderShape.withLength PlaceholderShape.Tiny
                             |> PlaceholderShape.view
                     , attrs = [ class "profile-snippet" ]
                     }
