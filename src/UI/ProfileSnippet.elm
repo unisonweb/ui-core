@@ -99,7 +99,7 @@ view { size, profile } =
                             |> PlaceholderShape.subdued
                             |> PlaceholderShape.withLength PlaceholderShape.Tiny
                             |> PlaceholderShape.view
-                    , attrs = [ class "profile-snippet" ]
+                    , attrs = [ class "profile-snippet profile-snippet_loading" ]
                     }
 
                 ProfileUser user ->

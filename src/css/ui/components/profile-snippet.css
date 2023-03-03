@@ -47,6 +47,13 @@
   align-items: flex-start;
   gap: 0;
 }
+.profile-snippet.profile-snippet_size_large.profile-snippet_loading
+  .profile-snippet_text,
+.profile-snippet.profile-snippet_size_huge.profile-snippet_loading
+  .profile-snippet_text {
+  display: flex;
+  gap: 0.75rem;
+}
 
 .profile-snippet .profile-snippet_handle {
   font-size: var(--c-size_profile-snippet_handle);
