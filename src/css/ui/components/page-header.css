@@ -22,7 +22,7 @@
   );
 }
 
-/* @color-todo inverse */
+/* @color-todo @inverse */
 .page-header.view-mode_regular .profile-snippet .avatar {
   --color_avatar: var(--color-gray-base);
 }
