@@ -43,7 +43,22 @@
 }
 
 .avatar.avatar_blank-icon .icon {
-  font-size: 1rem;
   background-color: var(--color_avatar);
   color: var(--color_avatar_blank-icon);
+}
+
+.avatar.small.avatar_blank-icon .icon {
+  font-size: 0.75rem;
+}
+
+.avatar.medium.avatar_blank-icon .icon {
+  font-size: 0.875rem;
+}
+
+.avatar.large.avatar_blank-icon .icon {
+  font-size: 1rem;
+}
+
+.avatar.huge.avatar_blank-icon .icon {
+  font-size: 1.5rem;
 }
