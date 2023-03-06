@@ -152,7 +152,7 @@ viewKeyBase key isActive =
 
 viewBase : List (Html msg) -> Html msg
 viewBase shortcut =
-    kbd [ class "keyboard-shortcut" ] shortcut
+    span [ class "keyboard-shortcut" ] shortcut
 
 
 viewKey : OperatingSystem -> Key -> Bool -> Html msg
@@ -201,4 +201,4 @@ viewShortcuts model shortcuts =
                 |> List.map (view model)
                 |> List.intersperse or
     in
-    kbd [ class "keyboard-shortcuts" ] instructions
+    span [ class "keyboard-shortcuts" ] instructions
