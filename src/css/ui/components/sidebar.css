@@ -31,7 +31,7 @@
   --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-lighten-30);
   --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-gray-darken-10);
   --color-sidebar-keyboard-shortcut-key-border: var(--color-gray-lighten-20);
-  --color-sidebar-keyboard-shortcut-key-shadow: var(--color-gray-lighten-20);
+  --color-sidebar-keyboard-shortcut-key-shadow: var(--color-gray-base);
 
   display: flex;
   flex-direction: column;
