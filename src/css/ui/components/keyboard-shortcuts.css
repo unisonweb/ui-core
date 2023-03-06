@@ -3,16 +3,15 @@
   flex-direction: row;
   justify-self: flex-end;
   margin-left: auto;
-}
-
-.keyboard-shortcut {
   --color-keyboard-shortcut-key-text: var(--u-color_text-on-element-emphasized);
   --color-keyboard-shortcut-key-bg: var(--u-color_element_emphasized);
   --color-keyboard-shortcut-key-border: var(--u-color_border);
   --color-keyboard-shortcut-key-shadow: var(--u-color_border);
   --color-keyboard-shortcut-then: var(--u-color_text_subdued);
   --color-keyboard-shortcut-separator: var(--u-color_text_subdued);
+}
 
+.keyboard-shortcut {
   display: flex;
   flex-direction: row;
   gap: 0.25rem;
