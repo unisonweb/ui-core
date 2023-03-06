@@ -37,7 +37,7 @@
 
 module UI.KeyboardShortcut exposing (..)
 
-import Html exposing (Html, kbd, text)
+import Html exposing (Html, kbd, span, text)
 import Html.Attributes exposing (class, classList)
 import Lib.OperatingSystem exposing (OperatingSystem)
 import List.Nonempty as NEL
@@ -162,7 +162,7 @@ viewKey os key isActive =
 
 viewThen : Html msg
 viewThen =
-    kbd [ class "then" ] [ text "then" ]
+    span [ class "then" ] [ text "then" ]
 
 
 view : Model -> KeyboardShortcut -> Html msg
@@ -194,7 +194,7 @@ viewShortcuts : Model -> List KeyboardShortcut -> Html msg
 viewShortcuts model shortcuts =
     let
         or =
-            kbd [ class "separator" ] [ text "or" ]
+            span [ class "separator" ] [ text "or" ]
 
         instructions =
             shortcuts

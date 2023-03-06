@@ -5,16 +5,6 @@
   margin-left: auto;
 }
 
-.keyboard-shortcuts .separator {
-  display: inline-flex;
-  height: 1.5rem;
-  font-size: 0.875rem;
-  color: var(--color-keyboard-shortcut-separator);
-  align-items: center;
-  margin: 0 0.4rem;
-  line-height: 1;
-}
-
 .keyboard-shortcut {
   --color-keyboard-shortcut-key-text: var(--u-color_text-on-element-emphasized);
   --color-keyboard-shortcut-key-bg: var(--u-color_element_subdued);
@@ -44,6 +34,17 @@
   border: 1px solid var(--color-keyboard-shortcut-key-border);
   box-shadow: 0 2px 0 var(--color-keyboard-shortcut-key-shadow);
   transition: all 0.2s;
+  font-family: var(--font-sans-serif);
+}
+
+.keyboard-shortcuts .separator {
+  display: inline-flex;
+  height: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--color-keyboard-shortcut-separator);
+  align-items: center;
+  margin: 0 0.4rem;
+  line-height: 1;
 }
 
 .keyboard-shortcut .then {
