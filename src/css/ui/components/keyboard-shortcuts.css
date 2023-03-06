@@ -7,7 +7,7 @@
 
 .keyboard-shortcut {
   --color-keyboard-shortcut-key-text: var(--u-color_text-on-element-emphasized);
-  --color-keyboard-shortcut-key-bg: var(--u-color_element_subdued);
+  --color-keyboard-shortcut-key-bg: var(--u-color_element);
   --color-keyboard-shortcut-key-border: var(--u-color_border);
   --color-keyboard-shortcut-key-shadow: var(--u-color_border);
   --color-keyboard-shortcut-then: var(--u-color_text_subdued);
