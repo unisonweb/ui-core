@@ -26,7 +26,7 @@ class MermaidDiagram extends HTMLElement {
       mermaid.render(diagramId, diagram, (svg) => {
         this.innerHTML = svg;
         const iframe = this.getElementsByTagName("iframe");
-        iframe.classList.add("mermaid-diagram");
+        iframe?.classList?.add("mermaid-diagram");
       });
     } catch (e) {
       const err = document.createElement("div");
