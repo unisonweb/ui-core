@@ -8,6 +8,12 @@
   --c-width_page-content_outer: 100vw;
 
   grid-template-rows: 1fr;
+
+  background: var(--u-color_background);
+}
+
+.page.page_background_subdued {
+  background: var(--u-color_background_subdued);
 }
 
 .page.sidebar-left-content-layout,
@@ -52,27 +58,10 @@
 
 .page-content {
   grid-area: page-content;
-  scroll-behavior: smooth;
-  scrollbar-width: auto;
-  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   display: flex;
   flex-direction: column;
   gap: 2.625rem;
   height: 100%;
-}
-
-.page-content::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-}
-
-.page-content::-webkit-scrollbar-track {
-  background: var(--u-color_scrollbar-track);
-}
-
-.page-content::-webkit-scrollbar-thumb {
-  background-color: var(--u-color_scrollbar);
-  border-radius: var(--border-radius-base);
 }
 
 .page-content .page-title {
@@ -151,7 +140,6 @@
   margin-left: -0.75rem;
 }
 
-/* Note: scrolling on edge-to-edge-layout is handled by the workspace */
 .page.sidebar-edge-to-edge-layout .page-content {
   padding: 0;
   width: 100%;

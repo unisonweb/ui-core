@@ -16,10 +16,16 @@ type PageFooter msg
     = PageFooter (List (Html msg))
 
 
+type BackgroundColor
+    = DefaultBackground
+    | SubduedBackground
+
+
 type alias Layout a msg =
     { a
         | content : PageContent msg
         , footer : PageFooter msg
+        , backgroundColor : BackgroundColor
     }
 
 
@@ -43,6 +49,54 @@ type PageLayout msg
         )
     | CenteredLayout (Layout {} msg)
     | PresentationLayout (PageContent msg)
+
+
+heroLayout : PageHero msg -> PageContent msg -> PageFooter msg -> PageLayout msg
+heroLayout hero content footer =
+    HeroLayout
+        { hero = hero
+        , content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        }
+
+
+sidebarEdgeToEdgeLayout : OperatingSystem -> Sidebar msg -> PageContent msg -> PageFooter msg -> PageLayout msg
+sidebarEdgeToEdgeLayout os sidebar content footer =
+    SidebarEdgeToEdgeLayout
+        { sidebar = sidebar
+        , sidebarToggled = False
+        , content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        , operatingSystem = os
+        }
+
+
+sidebarLeftContentLayout : OperatingSystem -> Sidebar msg -> PageContent msg -> PageFooter msg -> PageLayout msg
+sidebarLeftContentLayout os sidebar content footer =
+    SidebarLeftContentLayout
+        { sidebar = sidebar
+        , sidebarToggled = False
+        , content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        , operatingSystem = os
+        }
+
+
+centeredLayout : PageContent msg -> PageFooter msg -> PageLayout msg
+centeredLayout content footer =
+    CenteredLayout
+        { content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        }
+
+
+presentationLayout : PageContent msg -> PageLayout msg
+presentationLayout content =
+    PresentationLayout content
 
 
 
@@ -72,6 +126,43 @@ withContent content pl =
             PresentationLayout content
 
 
+withBackgroundColor : BackgroundColor -> PageLayout msg -> PageLayout msg
+withBackgroundColor bg pl =
+    case pl of
+        HeroLayout l ->
+            HeroLayout { l | backgroundColor = bg }
+
+        SidebarEdgeToEdgeLayout l ->
+            SidebarEdgeToEdgeLayout { l | backgroundColor = bg }
+
+        SidebarLeftContentLayout l ->
+            SidebarLeftContentLayout { l | backgroundColor = bg }
+
+        CenteredLayout l ->
+            CenteredLayout { l | backgroundColor = bg }
+
+        PresentationLayout _ ->
+            pl
+
+
+withSubduedBackground : PageLayout msg -> PageLayout msg
+withSubduedBackground pl =
+    withBackgroundColor SubduedBackground pl
+
+
+withSidebarToggle : Bool -> PageLayout msg -> PageLayout msg
+withSidebarToggle sidebarToggled pl =
+    case pl of
+        SidebarEdgeToEdgeLayout l ->
+            SidebarEdgeToEdgeLayout { l | sidebarToggled = sidebarToggled }
+
+        SidebarLeftContentLayout l ->
+            SidebarLeftContentLayout { l | sidebarToggled = sidebarToggled }
+
+        _ ->
+            pl
+
+
 
 -- MAP
 
@@ -84,6 +175,7 @@ map toMsg pageLayout =
                 { content = PageContent.map toMsg layout.content
                 , footer = mapPageFooter toMsg layout.footer
                 , hero = mapPageHero toMsg layout.hero
+                , backgroundColor = layout.backgroundColor
                 }
 
         SidebarEdgeToEdgeLayout layout ->
@@ -93,6 +185,7 @@ map toMsg pageLayout =
                 , sidebar = Sidebar.map toMsg layout.sidebar
                 , sidebarToggled = layout.sidebarToggled
                 , operatingSystem = layout.operatingSystem
+                , backgroundColor = layout.backgroundColor
                 }
 
         SidebarLeftContentLayout layout ->
@@ -102,12 +195,14 @@ map toMsg pageLayout =
                 , sidebar = Sidebar.map toMsg layout.sidebar
                 , sidebarToggled = layout.sidebarToggled
                 , operatingSystem = layout.operatingSystem
+                , backgroundColor = layout.backgroundColor
                 }
 
         CenteredLayout layout ->
             CenteredLayout
                 { content = PageContent.map toMsg layout.content
                 , footer = mapPageFooter toMsg layout.footer
+                , backgroundColor = layout.backgroundColor
                 }
 
         PresentationLayout content ->
@@ -157,33 +252,47 @@ viewPageFooter (PageFooter footerItems) =
 
 view : PageLayout msg -> Html msg
 view page =
+    let
+        bgClassName bg =
+            case bg of
+                DefaultBackground ->
+                    class "page_background_default"
+
+                SubduedBackground ->
+                    class "page_background_subdued"
+    in
     case page of
-        HeroLayout { hero, content, footer } ->
-            div [ class "page hero-layout" ]
+        HeroLayout { hero, content, footer, backgroundColor } ->
+            div [ class "page hero-layout", bgClassName backgroundColor ]
                 [ viewPageHero hero
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
-        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, operatingSystem, content } ->
+        SidebarEdgeToEdgeLayout { sidebar, sidebarToggled, operatingSystem, content, backgroundColor } ->
             div
                 [ class "page sidebar-edge-to-edge-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
+                , bgClassName backgroundColor
                 ]
                 [ Sidebar.view operatingSystem sidebar
                 , PageContent.view content
                 ]
 
-        SidebarLeftContentLayout { sidebar, sidebarToggled, operatingSystem, content, footer } ->
+        SidebarLeftContentLayout { sidebar, sidebarToggled, operatingSystem, content, footer, backgroundColor } ->
             div
                 [ class "page sidebar-left-content-layout"
                 , classList [ ( "sidebar-toggled", sidebarToggled ) ]
+                , bgClassName backgroundColor
                 ]
                 [ Sidebar.view operatingSystem sidebar
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
-        CenteredLayout { content, footer } ->
-            div [ class "page centered-layout" ]
+        CenteredLayout { content, footer, backgroundColor } ->
+            div
+                [ class "page centered-layout"
+                , bgClassName backgroundColor
+                ]
                 [ PageContent.view_ (viewPageFooter footer) content
                 ]
 
