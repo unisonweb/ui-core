@@ -53,6 +53,11 @@ toParts (BranchRef b) =
     ( b.handle, b.slug )
 
 
+toStringParts : BranchRef -> ( Maybe String, String )
+toStringParts (BranchRef b) =
+    ( Maybe.map UserHandle.toString b.handle, branchSlugToString b.slug )
+
+
 handle : BranchRef -> Maybe UserHandle
 handle (BranchRef b) =
     b.handle
