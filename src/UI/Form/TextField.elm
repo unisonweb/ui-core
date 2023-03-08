@@ -15,11 +15,13 @@ import Html.Attributes
 import Html.Events exposing (onInput)
 import Maybe.Extra as MaybeE
 import UI
+import UI.Icon as Icon exposing (Icon)
 
 
 type alias TextField msg =
     { onInput : String -> msg
-    , label : String
+    , icon : Maybe (Icon msg)
+    , label : Maybe String
     , placeholder : Maybe String
     , rows : Int
     , helpText : Maybe String
@@ -36,9 +38,20 @@ type alias TextField msg =
 
 field : (String -> msg) -> String -> String -> TextField msg
 field onInput label value =
+    field_ onInput (Just label) Nothing value
+
+
+fieldWithoutLabel : (String -> msg) -> String -> String -> TextField msg
+fieldWithoutLabel onInput placeholder value =
+    field_ onInput Nothing (Just placeholder) value
+
+
+field_ : (String -> msg) -> Maybe String -> Maybe String -> String -> TextField msg
+field_ onInput label placeholder value =
     { onInput = onInput
+    , icon = Nothing
     , label = label
-    , placeholder = Nothing
+    , placeholder = placeholder
     , rows = 1
     , helpText = Nothing
     , maxlength = Nothing
@@ -86,6 +99,11 @@ withRows nl textField =
         textField
 
 
+withIcon : Icon msg -> TextField msg -> TextField msg
+withIcon icon tf =
+    { tf | icon = Just icon }
+
+
 
 -- MAP
 
@@ -93,6 +111,7 @@ withRows nl textField =
 map : (msgA -> msgB) -> TextField msgA -> TextField msgB
 map f t =
     { onInput = t.onInput >> f
+    , icon = Maybe.map (Icon.map f) t.icon
     , label = t.label
     , placeholder = t.placeholder
     , rows = t.rows
@@ -121,15 +140,28 @@ view textField =
             ]
                 |> MaybeE.values
 
-        input_ =
+        input__ =
             if textField.rows > 1 then
                 textarea (rows textField.rows :: attrs) [ text textField.value ]
 
             else
                 input (value textField.value :: type_ "text" :: attrs) []
+
+        input_ =
+            case textField.icon of
+                Nothing ->
+                    input__
+
+                Just i ->
+                    div [ class "text-field_input" ] [ Icon.view i, input__ ]
+
+        label_ =
+            textField.label
+                |> Maybe.map (\l -> label [ class "label" ] [ text l ])
+                |> Maybe.withDefault UI.nothing
+
+        helpText_ =
+            MaybeE.unwrap UI.nothing (\ht -> small [ class "help-text" ] [ text ht ]) textField.helpText
     in
     div [ class "form-field text-field" ]
-        [ label [ class "label" ] [ text textField.label ]
-        , input_
-        , MaybeE.unwrap UI.nothing (\ht -> small [ class "help-text" ] [ text ht ]) textField.helpText
-        ]
+        [ label_, input_, helpText_ ]

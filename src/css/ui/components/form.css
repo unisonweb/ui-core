@@ -20,13 +20,29 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .text-field input[type="text"],
 .text-field textarea {
   border: 1px solid var(--u-color_border);
   border-radius: var(--border-radius-base);
   padding: 0.5rem 0.75rem;
   font-size: var(--font-size-medium);
+}
+
+.text-field .text-field_input {
+  position: relative;
+}
+
+.text-field .text-field_icon {
+  position: absolute;
+  top: 0.6875rem;
+  left: 0.75rem;
+  font-size: var(--font-size-medium);
+  color: var(--u-color_icon_subdued);
+}
+
+.text-field .text-field_input input[type="text"],
+.text-field .text-field_input textarea {
+  padding-left: 2.125rem;
 }
 
 .text-field input[type="text"] {
