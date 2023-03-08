@@ -116,6 +116,7 @@
 
 .page-content .with-page-aside > .page-aside {
   width: 16rem;
+  font-size: var(--font-size-medium);
 }
 
 .page-content .columns {
