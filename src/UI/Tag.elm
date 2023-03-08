@@ -78,6 +78,16 @@ withDismissRight click t =
     { t | action = DismissRight click }
 
 
+large : Tag msg -> Tag msg
+large t =
+    { t | size = Large }
+
+
+medium : Tag msg -> Tag msg
+medium t =
+    { t | size = Medium }
+
+
 
 -- MAP
 
