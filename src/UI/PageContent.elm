@@ -191,7 +191,7 @@ view_ footer (PageContent p) =
                 LeftAside asideItems ->
                     div [ class "with-page-aside" ]
                         [ viewColumns p.content
-                        , aside [ class "page-aside page-aside_right" ] asideItems
+                        , aside [ class "page-aside page-aside_left" ] asideItems
                         ]
 
                 RightAside asideItems ->
