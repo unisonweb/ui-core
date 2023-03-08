@@ -6,6 +6,7 @@
   font-size: var(--font-size-small);
   color: var(--u-color_text_subdued);
   font-family: var(--font-monospace);
+  font-weight: lighter;
 }
 
 .hash .icon {
