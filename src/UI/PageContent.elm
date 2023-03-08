@@ -9,7 +9,10 @@ module UI.PageContent exposing
     , twoColumns
     , view
     , view_
+    , withLeftAside
     , withPageTitle
+    , withPageTitleText
+    , withRightAside
     )
 
 import Html exposing (Html, aside, div, h1, header, p, section, text)
@@ -89,11 +92,29 @@ threeColumns ( one, two, three ) =
 -- MODIFY
 
 
-{-| Set a PageTitle
--}
 withPageTitle : PageTitle msg -> PageContent msg -> PageContent msg
 withPageTitle pageTitle (PageContent cfg) =
     PageContent { cfg | title = Just pageTitle }
+
+
+withPageTitleText : String -> PageContent msg -> PageContent msg
+withPageTitleText pageTitleText pageContent =
+    withPageTitle
+        { icon = Nothing
+        , title = pageTitleText
+        , description = Nothing
+        }
+        pageContent
+
+
+withLeftAside : List (Html msg) -> PageContent msg -> PageContent msg
+withLeftAside asideContent (PageContent cfg) =
+    PageContent { cfg | aside = LeftAside asideContent }
+
+
+withRightAside : List (Html msg) -> PageContent msg -> PageContent msg
+withRightAside asideContent (PageContent cfg) =
+    PageContent { cfg | aside = LeftAside asideContent }
 
 
 
