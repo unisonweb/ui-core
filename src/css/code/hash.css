@@ -2,5 +2,13 @@
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0;
+  font-size: var(--font-size-small);
+  color: var(--u-color_text_subdued);
+  font-family: var(--font-monospace);
+}
+
+.hash .icon {
+  font-size: var(--font-size-medium);
+  color: var(--u-color_icon_subdued);
 }
