@@ -12,7 +12,7 @@ module UI.PageContent exposing
     , withPageTitle
     )
 
-import Html exposing (Html, div, h1, header, p, section, text)
+import Html exposing (Html, aside, div, h1, header, p, section, text)
 import Html.Attributes exposing (class, id)
 import UI
 import UI.Icon as Icon exposing (Icon)
@@ -25,10 +25,17 @@ type alias PageTitle msg =
     }
 
 
+type PageAside msg
+    = NoAside
+    | LeftAside (List (Html msg))
+    | RightAside (List (Html msg))
+
+
 type PageContent msg
     = PageContent
         { title : Maybe (PageTitle msg)
         , content : List (List (Html msg))
+        , aside : PageAside msg
         }
 
 
@@ -38,28 +45,44 @@ type PageContent msg
 
 empty : PageContent msg
 empty =
-    PageContent { title = Nothing, content = [] }
+    PageContent
+        { title = Nothing
+        , content = []
+        , aside = NoAside
+        }
 
 
 {-| Create a page content with a single column and no title
 -}
 oneColumn : List (Html msg) -> PageContent msg
 oneColumn rows =
-    PageContent { title = Nothing, content = [ rows ] }
+    PageContent
+        { title = Nothing
+        , content = [ rows ]
+        , aside = NoAside
+        }
 
 
 {-| Create a page content with 2 columns and no title
 -}
 twoColumns : ( List (Html msg), List (Html msg) ) -> PageContent msg
 twoColumns ( one, two ) =
-    PageContent { title = Nothing, content = [ one, two ] }
+    PageContent
+        { title = Nothing
+        , content = [ one, two ]
+        , aside = NoAside
+        }
 
 
 {-| Create a page content with 3 columns and no title
 -}
 threeColumns : ( List (Html msg), List (Html msg), List (Html msg) ) -> PageContent msg
 threeColumns ( one, two, three ) =
-    PageContent { title = Nothing, content = [ one, two, three ] }
+    PageContent
+        { title = Nothing
+        , content = [ one, two, three ]
+        , aside = NoAside
+        }
 
 
 
@@ -82,7 +105,21 @@ map toMsg (PageContent pageContentA) =
     PageContent
         { title = Maybe.map (mapPageTitle toMsg) pageContentA.title
         , content = List.map (List.map (Html.map toMsg)) pageContentA.content
+        , aside = mapPageAside toMsg pageContentA.aside
         }
+
+
+mapPageAside : (a -> msg) -> PageAside a -> PageAside msg
+mapPageAside toMsg pageAside =
+    case pageAside of
+        NoAside ->
+            NoAside
+
+        LeftAside content ->
+            LeftAside (List.map (Html.map toMsg) content)
+
+        RightAside content ->
+            RightAside (List.map (Html.map toMsg) content)
 
 
 mapPageTitle : (a -> msg) -> PageTitle a -> PageTitle msg
@@ -144,14 +181,31 @@ view pageContent =
 
 
 view_ : Html msg -> PageContent msg -> Html msg
-view_ footer (PageContent { title, content }) =
+view_ footer (PageContent p) =
     let
-        items =
-            case title of
+        inner =
+            case p.aside of
+                NoAside ->
+                    viewColumns p.content
+
+                LeftAside asideItems ->
+                    div [ class "with-page-aside" ]
+                        [ viewColumns p.content
+                        , aside [ class "page-aside page-aside_right" ] asideItems
+                        ]
+
+                RightAside asideItems ->
+                    div [ class "with-page-aside" ]
+                        [ viewColumns p.content
+                        , aside [ class "page-aside page-aside_right" ] asideItems
+                        ]
+
+        pageContent =
+            case p.title of
                 Just h ->
-                    [ viewPageTitle h, viewColumns content, footer ]
+                    [ viewPageTitle h, inner, footer ]
 
                 Nothing ->
-                    [ viewColumns content, footer ]
+                    [ inner, footer ]
     in
-    section [ id "page-content", class "page-content" ] items
+    section [ id "page-content", class "page-content" ] pageContent

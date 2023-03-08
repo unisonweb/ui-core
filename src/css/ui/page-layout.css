@@ -107,6 +107,17 @@
   color: var(--u-color_text_subdued);
 }
 
+.page-content .with-page-aside {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.page-content .with-page-aside > .page-aside {
+  width: 16rem;
+}
+
 .page-content .columns {
   display: flex;
   flex-direction: row;
@@ -390,6 +401,14 @@
     grid-template-columns: 1fr;
     grid-template-areas: "main-sidebar";
     position: relative;
+  }
+
+  .page. .page-content .with-page-aside {
+    flex-direction: column;
+  }
+
+  .page. .page-content .with-page-aside > .page-aside {
+    width: 100%;
   }
 
   .page.sidebar-toggled {
