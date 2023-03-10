@@ -8,22 +8,19 @@ import UI.Icon as I
 
 main : Program () Model Msg
 main =
-    Browser.application
+    Browser.element  
         { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
-        , onUrlChange = UrlChanged
-        , onUrlRequest = LinkClicked
         }
 
-type alias Model =
-    {key : Nav.Key}
+type alias Model = ()
 
 
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init _ _ key =
-    ( Model key, Cmd.none )
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( (), Cmd.none )
 
 type Msg
     = NoOp
@@ -130,9 +127,5 @@ elements = [
     ]
 
 
-view : Model -> Browser.Document Msg
-view model =
-    {
-        title = "This title won't show"
-        , body = [ h1 [] (elements |> List.map (I.view))]
-    }
+view : Model -> Html Msg
+view model = div [] [ h1 [] (elements |> List.map (I.view))]
