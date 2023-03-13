@@ -1,6 +1,5 @@
 {
   "name": "@unison/ui-core",
-  "version": "1.0.0",
   "description": "Shared design system and core components for Unison Local and Unison Share",
   "scripts": {
     "test": "elm-test",
