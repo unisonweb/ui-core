@@ -1,4 +1,4 @@
-module Button exposing (..)
+module UIStories.Button exposing (..)
 
 import Browser
 import Helper exposing (col)

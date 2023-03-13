@@ -1,4 +1,4 @@
-module Icon exposing (main)
+module UIStories.Icon exposing (main)
 
 import Browser
 import Html exposing (..)
