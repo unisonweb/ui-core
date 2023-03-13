@@ -1,7 +1,7 @@
-module UIStories.Button exposing (..)
+module Stories.UI.Button exposing (..)
 
 import Browser
-import Helper exposing (col)
+import Helpers.Layout exposing (col)
 import Html exposing (Html)
 import UI.Button as B
 import UI.Icon as I

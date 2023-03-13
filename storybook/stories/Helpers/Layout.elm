@@ -1,4 +1,4 @@
-module Helper exposing (..)
+module Helpers.Layout exposing (..)
 
 import Html exposing (Attribute, Html)
 import Html.Attributes

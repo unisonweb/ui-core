@@ -1,4 +1,4 @@
-module UIStories.Icon exposing (main)
+module Stories.UI.Icon exposing (main)
 
 import Browser
 import Html exposing (..)
