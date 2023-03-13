@@ -1,18 +1,17 @@
-module Main exposing (main)
+module Icon exposing (main)
 
 import Browser
 import Html exposing (..)
 import UI.Icon as I
-import Url
 
 
 main : Program () Model Msg
 main =
     Browser.element
-        { init = init
+        { init = \_ -> ( (), Cmd.none )
         , view = view
-        , update = update
-        , subscriptions = subscriptions
+        , update = \_ model -> ( model, Cmd.none )
+        , subscriptions = \_ -> Sub.none
         }
 
 
@@ -20,33 +19,8 @@ type alias Model =
     ()
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
-    ( (), Cmd.none )
-
-
-type Msg
-    = NoOp
-    | LinkClicked Browser.UrlRequest
-    | UrlChanged Url.Url
-
-
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
-    case msg of
-        NoOp ->
-            ( model, Cmd.none )
-
-        LinkClicked urlRequest ->
-            ( model, Cmd.none )
-
-        UrlChanged url ->
-            ( model, Cmd.none )
-
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
+type alias Msg =
+    ()
 
 
 elements : List (I.Icon msg)
@@ -132,5 +106,5 @@ elements =
 
 
 view : Model -> Html Msg
-view model =
+view _ =
     div [] [ h1 [] (elements |> List.map I.view) ]
