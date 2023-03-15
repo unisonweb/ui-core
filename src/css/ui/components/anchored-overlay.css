@@ -1,0 +1,10 @@
+.anchored-overlay {
+  position: relative;
+}
+
+.anchored-overlay_anchor {
+}
+
+.anchored-overlay_sheet {
+  position: absolute;
+}

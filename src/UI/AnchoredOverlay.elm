@@ -72,13 +72,16 @@ withSheet sheet_ anchoredOverlay_ =
 view : AnchoredOverlay msg -> Html msg
 view anchoredOverlay_ =
     let
+        anchor =
+            div [ class "anchored-overlay_anchor" ] [ anchoredOverlay_.anchor ]
+
         content =
             case anchoredOverlay_.sheet of
                 Closed ->
-                    [ anchoredOverlay_.anchor ]
+                    [ anchor ]
 
                 OpenSheet sheet_ ->
-                    [ anchoredOverlay_.anchor
+                    [ anchor
                     , onClickOutside
                         anchoredOverlay_.closeSheetMsg
                         (div [ class "anchored-overlay_sheet" ] [ sheet_ ])
