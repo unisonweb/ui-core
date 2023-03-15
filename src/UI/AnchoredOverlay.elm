@@ -81,10 +81,14 @@ view anchoredOverlay_ =
                     [ anchor ]
 
                 OpenSheet sheet_ ->
-                    [ anchor
-                    , onClickOutside
+                    [ onClickOutside
                         anchoredOverlay_.closeSheetMsg
-                        (div [ class "anchored-overlay_sheet" ] [ sheet_ ])
+                        (div
+                            []
+                            [ anchor
+                            , div [ class "anchored-overlay_sheet" ] [ sheet_ ]
+                            ]
+                        )
                     ]
     in
     div [ class "anchored-overlay" ] content
