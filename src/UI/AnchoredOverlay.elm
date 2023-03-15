@@ -20,6 +20,11 @@ type alias AnchoredOverlay msg =
 -- CREATE
 
 
+anchoredOverlay : Html msg -> AnchoredOverlay msg
+anchoredOverlay anchor =
+    { anchor = anchor, sheet = Closed }
+
+
 sheet : Html msg -> Sheet msg
 sheet content =
     OpenSheet content
