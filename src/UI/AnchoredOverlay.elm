@@ -5,7 +5,7 @@ import Html.Attributes exposing (class)
 import Lib.OnClickOutside exposing (onClickOutside)
 
 
-type Sheet msg
+type SheetState msg
     = Closed
     | OpenSheet (Html msg)
 
@@ -13,7 +13,7 @@ type Sheet msg
 type alias AnchoredOverlay msg =
     { closeSheetMsg : msg
     , anchor : Html msg
-    , sheet : Sheet msg
+    , sheet : SheetState msg
     }
 
 
@@ -29,7 +29,7 @@ anchoredOverlay closeSheetMsg anchor =
     }
 
 
-sheet : Html msg -> Sheet msg
+sheet : Html msg -> SheetState msg
 sheet content =
     OpenSheet content
 
@@ -38,7 +38,7 @@ sheet content =
 -- MAP
 
 
-mapOverlaySheet : (a -> b) -> Sheet a -> Sheet b
+mapOverlaySheet : (a -> b) -> SheetState a -> SheetState b
 mapOverlaySheet f sheet_ =
     case sheet_ of
         Closed ->
@@ -60,9 +60,9 @@ map f anchoredOverlay_ =
 -- MODIFY
 
 
-withSheet : Sheet msg -> AnchoredOverlay msg -> AnchoredOverlay msg
+withSheet : Html msg -> AnchoredOverlay msg -> AnchoredOverlay msg
 withSheet sheet_ anchoredOverlay_ =
-    { anchoredOverlay_ | sheet = sheet_ }
+    { anchoredOverlay_ | sheet = OpenSheet sheet_ }
 
 
 

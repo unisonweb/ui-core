@@ -1,5 +1,9 @@
+/* @color-todo @inverse */
 .anchored-overlay {
   position: relative;
+
+  --c-color_anchored-overlay_sheet_bg: var(--color-gray-darken-30);
+  --c-color_anchored-overlay_sheet_text: var(--color-gray-lighten-100);
 }
 
 .anchored-overlay_anchor {
@@ -7,4 +11,6 @@
 
 .anchored-overlay_sheet {
   position: absolute;
+  background: var(--c-color_anchored-overlay_sheet_bg);
+  color: var(--c-color_anchored-overlay_sheet_text);
 }
