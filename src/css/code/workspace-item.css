@@ -90,7 +90,7 @@
   border-radius: var(--border-radius-base);
   display: flex;
   flex-direction: row;
-  z-index: var(--layer-popover);
+  z-index: var(--layer-floating-controls);
   opacity: 0;
   transition: opacity 0.2s;
 }

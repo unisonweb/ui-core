@@ -42,7 +42,7 @@
   border-right: 1px solid var(--color-sidebar-border);
   box-shadow: 0 -1px 0 var(--color-sidebar-border);
   font-size: var(--font-size-medium);
-  z-index: var(--layer-popover);
+  z-index: var(--layer-floating-controls);
 
   /* max-width: 100% avoids horizontal scroll when with is set to 100vw as it
    * is on small screens */
