@@ -18,6 +18,7 @@ import Html exposing (Html, nav, span, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
 import Maybe.Extra as MaybeE
+import UI.AnchoredOverlay as AnchoredOverlay exposing (AnchoredOverlay)
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
@@ -42,6 +43,7 @@ type NavItemSecondaryContent msg
     = NoContent
     | TagContent (Tag msg)
     | ButtonContent (Button msg)
+    | AnchoredOverlayContent (AnchoredOverlay msg)
 
 
 type alias NavItem msg =
@@ -134,6 +136,9 @@ mapNavItemSecondaryContent f secondary =
         ButtonContent b ->
             ButtonContent (Button.map f b)
 
+        AnchoredOverlayContent ao ->
+            AnchoredOverlayContent (AnchoredOverlay.map f ao)
+
 
 mapNavItem : (a -> msg) -> NavItem a -> NavItem msg
 mapNavItem toMsg navItemA =
@@ -170,6 +175,9 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
 
                 ButtonContent button ->
                     Just (Button.view button)
+
+                AnchoredOverlayContent ao ->
+                    Just (AnchoredOverlay.view ao)
 
                 NoContent ->
                     Nothing

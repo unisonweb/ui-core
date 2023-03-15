@@ -11,7 +11,8 @@ type Sheet msg
 
 
 type alias AnchoredOverlay msg =
-    { anchor : Html msg
+    { closeSheetMsg : msg
+    , anchor : Html msg
     , sheet : Sheet msg
     }
 
@@ -20,9 +21,12 @@ type alias AnchoredOverlay msg =
 -- CREATE
 
 
-anchoredOverlay : Html msg -> AnchoredOverlay msg
-anchoredOverlay anchor =
-    { anchor = anchor, sheet = Closed }
+anchoredOverlay : msg -> Html msg -> AnchoredOverlay msg
+anchoredOverlay closeSheetMsg anchor =
+    { closeSheetMsg = closeSheetMsg
+    , anchor = anchor
+    , sheet = Closed
+    }
 
 
 sheet : Html msg -> Sheet msg
@@ -46,7 +50,8 @@ mapOverlaySheet f sheet_ =
 
 map : (a -> b) -> AnchoredOverlay a -> AnchoredOverlay b
 map f anchoredOverlay_ =
-    { anchor = Html.map f anchoredOverlay_.anchor
+    { closeSheetMsg = f anchoredOverlay_.closeSheetMsg
+    , anchor = Html.map f anchoredOverlay_.anchor
     , sheet = mapOverlaySheet f anchoredOverlay_.sheet
     }
 
@@ -64,8 +69,8 @@ withSheet sheet_ anchoredOverlay_ =
 -- VIEW
 
 
-view : msg -> AnchoredOverlay msg -> Html msg
-view closeSheetMsg anchoredOverlay_ =
+view : AnchoredOverlay msg -> Html msg
+view anchoredOverlay_ =
     let
         content =
             case anchoredOverlay_.sheet of
@@ -75,7 +80,7 @@ view closeSheetMsg anchoredOverlay_ =
                 OpenSheet sheet_ ->
                     [ anchoredOverlay_.anchor
                     , onClickOutside
-                        closeSheetMsg
+                        anchoredOverlay_.closeSheetMsg
                         (div [ class "anchored-overlay_sheet" ] [ sheet_ ])
                     ]
     in
