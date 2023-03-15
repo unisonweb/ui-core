@@ -4,6 +4,7 @@ module UI.Navigation exposing
     , empty
     , map
     , navItem
+    , navItemWithAnchoredOverlay
     , navItemWithButton
     , navItemWithIcon
     , navItemWithNudge
@@ -99,6 +100,11 @@ navItemWithTag tag item =
 navItemWithButton : Button msg -> NavItem msg -> NavItem msg
 navItemWithButton button item =
     { item | secondary = ButtonContent button }
+
+
+navItemWithAnchoredOverlay : AnchoredOverlay msg -> NavItem msg -> NavItem msg
+navItemWithAnchoredOverlay ao item =
+    { item | secondary = AnchoredOverlayContent ao }
 
 
 empty : Navigation msg
