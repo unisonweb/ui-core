@@ -13,4 +13,5 @@
   position: absolute;
   background: var(--c-color_anchored-overlay_sheet_bg);
   color: var(--c-color_anchored-overlay_sheet_text);
+  z-index: var(--layer-popover);
 }
