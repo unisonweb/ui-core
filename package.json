@@ -7,7 +7,7 @@
     "build": "elm make",
     "check-css-vars": "scripts/check-css-vars.mjs",
     "watch": "elm-watch hot",
-    "check": "npm run build; npm run review; npm run test; npm run check-css-vars",
+    "check": "npm run build; npm run review; npm run test; npm run check-css-vars; prettier --check .",
     "sha": "git rev-parse HEAD | cut -c 1-8"
   },
   "repository": {
@@ -27,7 +27,7 @@
     "elm-test": "^0.19.1-revision7",
     "elm-watch": "^1.0.2",
     "glob": "^8.0.3",
-    "prettier": "^2.6.2"
+    "prettier": "2.8.4"
   },
   "dependencies": {
     "katex": "^0.16.4",

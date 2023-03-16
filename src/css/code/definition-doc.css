@@ -372,8 +372,14 @@
   margin-bottom: 0;
 }
 
-:is(.definition-doc h1, .definition-doc h2, .definition-doc h3, .definition-doc
-    h4, .definition-doc h5, .definition-doc h6)
+:is(
+    .definition-doc h1,
+    .definition-doc h2,
+    .definition-doc h3,
+    .definition-doc h4,
+    .definition-doc h5,
+    .definition-doc h6
+  )
   p {
   margin: 0;
 }
