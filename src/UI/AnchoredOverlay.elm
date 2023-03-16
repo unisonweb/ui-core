@@ -73,9 +73,9 @@ map f anchoredOverlay_ =
 -- MODIFY
 
 
-withSheet : Html msg -> AnchoredOverlay msg -> AnchoredOverlay msg
+withSheet : Sheet msg -> AnchoredOverlay msg -> AnchoredOverlay msg
 withSheet sheet_ anchoredOverlay_ =
-    { anchoredOverlay_ | sheet = OpenSheet (DefaultSheet sheet_) }
+    { anchoredOverlay_ | sheet = OpenSheet sheet_ }
 
 
 
