@@ -6,12 +6,18 @@
   --c-color_anchored-overlay_sheet_text: var(--color-gray-lighten-100);
 }
 
-.anchored-overlay_anchor {
-}
-
 .anchored-overlay_sheet {
   position: absolute;
   background: var(--c-color_anchored-overlay_sheet_bg);
   color: var(--c-color_anchored-overlay_sheet_text);
   z-index: var(--layer-popover);
+  right: 0;
+}
+
+.anchored-overlay_sheet.anchored-overlay_sheet_default {
+  border-radius: var(--border-radius-base);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column
+  gap: 0.75rem;
 }

@@ -7,7 +7,12 @@ import Lib.OnClickOutside exposing (onClickOutside)
 
 type SheetState msg
     = Closed
-    | OpenSheet (Html msg)
+    | OpenSheet (Sheet msg)
+
+
+type Sheet msg
+    = DefaultSheet (Html msg)
+    | CustomSheet (Html msg)
 
 
 type alias AnchoredOverlay msg =
@@ -31,7 +36,7 @@ anchoredOverlay closeSheetMsg anchor =
 
 sheet : Html msg -> SheetState msg
 sheet content =
-    OpenSheet content
+    OpenSheet (DefaultSheet content)
 
 
 
@@ -62,7 +67,7 @@ map f anchoredOverlay_ =
 
 withSheet : Html msg -> AnchoredOverlay msg -> AnchoredOverlay msg
 withSheet sheet_ anchoredOverlay_ =
-    { anchoredOverlay_ | sheet = OpenSheet sheet_ }
+    { anchoredOverlay_ | sheet = OpenSheet (DefaultSheet sheet_) }
 
 
 
@@ -81,12 +86,22 @@ view anchoredOverlay_ =
                     [ anchor ]
 
                 OpenSheet sheet_ ->
+                    let
+                        ( sheet__, sheetCls ) =
+                            case sheet_ of
+                                DefaultSheet s ->
+                                    ( s, class "anchored-overlay_sheet_default" )
+
+                                CustomSheet s ->
+                                    ( s, class "anchored-overlay_sheet_custom" )
+                    in
                     [ onClickOutside
                         anchoredOverlay_.closeSheetMsg
                         (div
                             []
                             [ anchor
-                            , div [ class "anchored-overlay_sheet" ] [ sheet_ ]
+                            , div [ class "anchored-overlay_sheet", sheetCls ]
+                                [ sheet__ ]
                             ]
                         )
                     ]
