@@ -220,7 +220,7 @@
   gap: 0.75rem;
 }
 
-.sidebar .sidebar-header-item .button {
+.sidebar .sidebar-header-item .button:not(.content-icon) {
   width: 100%;
 }
 
