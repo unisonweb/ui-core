@@ -8,7 +8,8 @@
   --c-color_form-field_focus-border: var(--u-color_focus-border);
   --c-color_form-field_focus-outline: var(--u-color_focus-outline);
   --c-color_form-field_icon_subdued: var(--u-color_icon_subdued);
-  --c-color_form-field_container_hovered: var(--u-color_container_hovered);
+  --c-color_form-field_background: var(--u-color_element);
+  --c-color_form-field_background_hovered: var(--u-color_element_hovered);
 }
 
 .form-field .label,
@@ -37,6 +38,7 @@
   border-radius: var(--border-radius-base);
   padding: 0.5rem 0.75rem;
   font-size: var(--font-size-medium);
+  background-color: var(--c-color_form-field_background);
 }
 
 .text-field .text-field_input {
@@ -97,7 +99,7 @@
 }
 
 .radio-field .radio-field_option:hover {
-  background: var(--c-color_form-field_container_hovered);
+  background: var(--c-color_form-field_background_hovered);
 }
 
 .radio-field .radio-field_option .radio-field_radio {
