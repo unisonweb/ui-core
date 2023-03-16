@@ -34,9 +34,14 @@ anchoredOverlay closeSheetMsg anchor =
     }
 
 
-sheet : Html msg -> SheetState msg
+sheet : Html msg -> Sheet msg
 sheet content =
-    OpenSheet (DefaultSheet content)
+    DefaultSheet content
+
+
+customSheet : Html msg -> Sheet msg
+customSheet content =
+    CustomSheet content
 
 
 
