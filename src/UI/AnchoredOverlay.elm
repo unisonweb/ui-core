@@ -54,8 +54,11 @@ mapOverlaySheet f sheet_ =
         Closed ->
             Closed
 
-        OpenSheet content ->
-            OpenSheet (Html.map f content)
+        OpenSheet (DefaultSheet content) ->
+            OpenSheet (DefaultSheet (Html.map f content))
+
+        OpenSheet (CustomSheet content) ->
+            OpenSheet (CustomSheet (Html.map f content))
 
 
 map : (a -> b) -> AnchoredOverlay a -> AnchoredOverlay b
