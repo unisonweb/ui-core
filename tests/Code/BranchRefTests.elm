@@ -201,3 +201,27 @@ toString =
                 in
                 Expect.equal "@owner/mybranch" result
         ]
+
+
+toApiString : Test
+toApiString =
+    describe "BranchRef.toApiString"
+        [ test "just slug" <|
+            \_ ->
+                let
+                    result =
+                        "mybranch"
+                            |> BranchRef.unsafeFromString
+                            |> BranchRef.toApiString
+                in
+                Expect.equal "mybranch" result
+        , test "owner handle and slug" <|
+            \_ ->
+                let
+                    result =
+                        "@owner/mybranch"
+                            |> BranchRef.unsafeFromString
+                            |> BranchRef.toApiString
+                in
+                Expect.equal "@owner%2Fmybranch" result
+        ]

@@ -38,6 +38,21 @@ toString (BranchRef b) =
             slug_
 
 
+toApiString : BranchRef -> String
+toApiString (BranchRef b) =
+    let
+        (BranchSlug slug_) =
+            b.slug
+    in
+    case b.handle of
+        Just h ->
+            -- Escape "/" as "%2F"
+            UserHandle.toString h ++ "%2F" ++ slug_
+
+        Nothing ->
+            slug_
+
+
 toUrlPath : BranchRef -> List String
 toUrlPath (BranchRef b) =
     case b.handle of
