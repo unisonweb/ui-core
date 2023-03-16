@@ -203,16 +203,16 @@ toString =
         ]
 
 
-toApiString : Test
-toApiString =
-    describe "BranchRef.toApiString"
+toApiUrlString : Test
+toApiUrlString =
+    describe "BranchRef.toApiUrlString"
         [ test "just slug" <|
             \_ ->
                 let
                     result =
                         "mybranch"
                             |> BranchRef.unsafeFromString
-                            |> BranchRef.toApiString
+                            |> BranchRef.toApiUrlString
                 in
                 Expect.equal "mybranch" result
         , test "owner handle and slug" <|
@@ -221,7 +221,7 @@ toApiString =
                     result =
                         "@owner/mybranch"
                             |> BranchRef.unsafeFromString
-                            |> BranchRef.toApiString
+                            |> BranchRef.toApiUrlString
                 in
                 Expect.equal "@owner%2Fmybranch" result
         ]

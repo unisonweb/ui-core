@@ -38,8 +38,8 @@ toString (BranchRef b) =
             slug_
 
 
-toApiString : BranchRef -> String
-toApiString (BranchRef b) =
+toApiUrlString : BranchRef -> String
+toApiUrlString (BranchRef b) =
     let
         (BranchSlug slug_) =
             b.slug
