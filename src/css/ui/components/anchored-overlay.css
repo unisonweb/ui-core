@@ -21,7 +21,7 @@
   --c-color_form-field_focus-outline: var(--u-color_focus-outline);
   --c-color_form-field_icon_subdued: var(--u-color_icon_subdued);
   --c-color_form-field_background: var(--color-gray-darken-20);
-  --c-color_form-field_background_hovered: var(--gray-darken-10);
+  --c-color_form-field_background_hovered: var(--color-gray-darken-10);
 }
 
 .anchored-overlay_sheet {
