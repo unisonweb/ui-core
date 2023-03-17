@@ -4,6 +4,7 @@ module UI.Navigation exposing
     , empty
     , map
     , navItem
+    , navItemWithAnchoredOverlay
     , navItemWithButton
     , navItemWithIcon
     , navItemWithNudge
@@ -18,6 +19,7 @@ import Html exposing (Html, nav, span, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
 import Maybe.Extra as MaybeE
+import UI.AnchoredOverlay as AnchoredOverlay exposing (AnchoredOverlay)
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon exposing (Icon)
@@ -42,6 +44,7 @@ type NavItemSecondaryContent msg
     = NoContent
     | TagContent (Tag msg)
     | ButtonContent (Button msg)
+    | AnchoredOverlayContent (AnchoredOverlay msg)
 
 
 type alias NavItem msg =
@@ -99,6 +102,11 @@ navItemWithButton button item =
     { item | secondary = ButtonContent button }
 
 
+navItemWithAnchoredOverlay : AnchoredOverlay msg -> NavItem msg -> NavItem msg
+navItemWithAnchoredOverlay ao item =
+    { item | secondary = AnchoredOverlayContent ao }
+
+
 empty : Navigation msg
 empty =
     WithoutSelected []
@@ -133,6 +141,9 @@ mapNavItemSecondaryContent f secondary =
 
         ButtonContent b ->
             ButtonContent (Button.map f b)
+
+        AnchoredOverlayContent ao ->
+            AnchoredOverlayContent (AnchoredOverlay.map f ao)
 
 
 mapNavItem : (a -> msg) -> NavItem a -> NavItem msg
@@ -170,6 +181,9 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
 
                 ButtonContent button ->
                     Just (Button.view button)
+
+                AnchoredOverlayContent ao ->
+                    Just (AnchoredOverlay.view ao)
 
                 NoContent ->
                     Nothing

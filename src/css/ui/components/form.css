@@ -1,16 +1,28 @@
 /* Various form fields and controls */
 
+.form-field {
+  --c-color_form-field_text: var(--u-color_text);
+  --c-color_form-field_text_subdued: var(--u-color_text_subdued);
+  --c-color_form-field_border: var(--u-color_border);
+  --c-color_form-field_border_hovered: var(--u-color_border_hovered);
+  --c-color_form-field_focus-border: var(--u-color_focus-border);
+  --c-color_form-field_focus-outline: var(--u-color_focus-outline);
+  --c-color_form-field_icon_subdued: var(--u-color_icon_subdued);
+  --c-color_form-field_background: var(--u-color_element);
+  --c-color_form-field_background_hovered: var(--u-color_element_hovered);
+}
+
 .form-field .label,
 .form-field a .label {
   font-size: var(--font-size-medium);
   font-weight: bold;
-  color: var(--u-color_text);
+  color: var(--c-color_form-field_text);
 }
 
 .form-field .help-text,
 .form-field a .help-text {
   font-size: var(--font-size-small);
-  color: var(--u-color_text_subdued);
+  color: var(--c-color_form-field_text_subdued);
 }
 
 /* -- TextField ------------------------------------------------------------ */
@@ -20,13 +32,31 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-
 .text-field input[type="text"],
 .text-field textarea {
-  border: 1px solid var(--u-color_border);
+  border: 1px solid var(--c-color_form-field_border);
   border-radius: var(--border-radius-base);
   padding: 0.5rem 0.75rem;
   font-size: var(--font-size-medium);
+  background-color: var(--c-color_form-field_background);
+}
+
+.text-field .text-field_input {
+  position: relative;
+}
+
+.text-field .text-field_input .icon {
+  position: absolute;
+  top: 0.6875rem;
+  left: 0.75rem;
+  font-size: var(--font-size-medium);
+  color: var(--c-color_form-field_icon_subdued);
+}
+
+.text-field .text-field_input input[type="text"],
+.text-field .text-field_input textarea {
+  width: 100%;
+  padding-left: 2.125rem;
 }
 
 .text-field input[type="text"] {
@@ -39,14 +69,14 @@
 
 .text-field input[type="text"]:hover,
 .text-field textarea:hover {
-  border-color: var(--u-color_border_hovered);
+  border-color: var(--c-color_form-field_border_hovered);
 }
 
 .text-field input[type="text"]:focus,
 .text-field textarea:focus {
   outline: none;
-  border-color: var(--u-color_focus-border);
-  box-shadow: 0 0 0 2px var(--u-color_focus-outline);
+  border-color: var(--c-color_form-field_focus-border);
+  box-shadow: 0 0 0 2px var(--c-color_form-field_focus-outline);
 }
 
 /* -- RadioField ----------------------------------------------------------- */
@@ -69,7 +99,7 @@
 }
 
 .radio-field .radio-field_option:hover {
-  background: var(--u-color_container_hovered);
+  background: var(--c-color_form-field_background_hovered);
 }
 
 .radio-field .radio-field_option .radio-field_radio {

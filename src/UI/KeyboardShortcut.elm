@@ -9,7 +9,7 @@
   A `Sequence` is for keyboard shortcuts that either need just a single key to
   trigger— in which case the last key in the Sequence is all that's required to
   check— or a multiple key presses (limited to 2) done within a short time
-  spand of each other, much like how the <leader> shortcut sequences work in
+  span of each other, much like how the <leader> shortcut sequences work in
   the Vim editor. Keystrokes are recorded in KeyboardShortcut.Model.
   The `fromKeyboardEvent` helper creates a `Sequence` (when it doesn't match a
   `Chord`) using the last 2 presses made. If there was only, 1 keypress, it's a
@@ -37,7 +37,7 @@
 
 module UI.KeyboardShortcut exposing (..)
 
-import Html exposing (Html, span, text)
+import Html exposing (Html, kbd, span, text)
 import Html.Attributes exposing (class, classList)
 import Lib.OperatingSystem exposing (OperatingSystem)
 import List.Nonempty as NEL
@@ -147,7 +147,7 @@ startedSequenceWith model key =
 
 viewKeyBase : String -> Bool -> Html msg
 viewKeyBase key isActive =
-    span [ classList [ ( "key", True ), ( "active", isActive ) ] ] [ text key ]
+    kbd [ classList [ ( "key", True ), ( "active", isActive ) ] ] [ text key ]
 
 
 viewBase : List (Html msg) -> Html msg

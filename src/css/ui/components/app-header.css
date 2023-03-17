@@ -7,6 +7,7 @@
   --color-app-header-subtle-text: var(--color-gray-lighten-20);
   --color-app-header-subtle-text-em: var(--color-gray-lighten-50);
   --color-app-header-context-unison-share-text: var(--color-purple-4);
+  --color-app-header-context-unison-cloud-text: var(--color-blue-3);
   --color-app-header-context-unison-local-text: var(--color-pink-3);
   --color-app-header-border: transparent;
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
@@ -26,6 +27,7 @@
   --color-app-header-subtle-text: var(--u-color_text_very-subdued);
   --color-app-header-subtle-text-em: var(--u-color_text_subdued);
   --color-app-header-context-unison-share-text: var(--color-purple-4);
+  --color-app-header-context-unison-cloud-text: var(--color-blue-2);
   --color-app-header-context-unison-local-text: var(--color-pink-3);
   --color-app-header-border: transparent;
   opacity: 0.5;
@@ -110,6 +112,10 @@
 
 #app-header .app-title .unison-share {
   color: var(--color-app-header-context-unison-share-text);
+}
+
+#app-header .app-title .unison-cloud {
+  color: var(--color-app-header-context-unison-cloud-text);
 }
 
 #app-header .app-title .unison-local {

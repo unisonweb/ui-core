@@ -28,8 +28,10 @@
   --color-sidebar-tooltip-bg: var(--color-gray-darken-10);
   --color-sidebar-tooltip-border: var(--color-gray-base);
 
-  --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-lighten-100);
-  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-lighten-20);
+  --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-lighten-30);
+  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-darken-10);
+  --color-sidebar-keyboard-shortcut-key-border: var(--color-gray-lighten-20);
+  --color-sidebar-keyboard-shortcut-key-shadow: var(--color-gray-base);
 
   display: flex;
   flex-direction: column;
@@ -40,7 +42,7 @@
   border-right: 1px solid var(--color-sidebar-border);
   box-shadow: 0 -1px 0 var(--color-sidebar-border);
   font-size: var(--font-size-medium);
-  z-index: var(--layer-popover);
+  z-index: var(--layer-floating-controls);
 
   /* max-width: 100% avoids horizontal scroll when with is set to 100vw as it
    * is on small screens */
@@ -69,6 +71,12 @@
   );
   --color-keyboard-shortcut-key-bg: var(
     --color-sidebar-keyboard-shortcut-key-bg
+  );
+  --color-keyboard-shortcut-key-border: var(
+    --color-sidebar-keyboard-shortcut-key-border
+  );
+  --color-keyboard-shortcut-key-shadow: var(
+    --color-sidebar-keyboard-shortcut-key-shadow
   );
 }
 
@@ -212,7 +220,7 @@
   gap: 0.75rem;
 }
 
-.sidebar .sidebar-header-item .button {
+.sidebar .sidebar-header-item .button:not(.content-icon) {
   width: 100%;
 }
 

@@ -38,6 +38,21 @@ toString (BranchRef b) =
             slug_
 
 
+toApiUrlString : BranchRef -> String
+toApiUrlString (BranchRef b) =
+    let
+        (BranchSlug slug_) =
+            b.slug
+    in
+    case b.handle of
+        Just h ->
+            -- Escape "/" as "%2F"
+            UserHandle.toString h ++ "%2F" ++ slug_
+
+        Nothing ->
+            slug_
+
+
 toUrlPath : BranchRef -> List String
 toUrlPath (BranchRef b) =
     case b.handle of
@@ -51,6 +66,11 @@ toUrlPath (BranchRef b) =
 toParts : BranchRef -> ( Maybe UserHandle, BranchSlug )
 toParts (BranchRef b) =
     ( b.handle, b.slug )
+
+
+toStringParts : BranchRef -> ( Maybe String, String )
+toStringParts (BranchRef b) =
+    ( Maybe.map UserHandle.toString b.handle, branchSlugToString b.slug )
 
 
 handle : BranchRef -> Maybe UserHandle

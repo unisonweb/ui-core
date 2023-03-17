@@ -14,6 +14,9 @@
   /* -- Layers ------------------------------------------------------------- */
   --layer-beneath: 0;
   --layer-base: 1;
+  /* "floating-controls" are things like the collapsed Sidebar, an X in a
+   * TextField or on a WorkspaceItem */
+  --layer-floating-controls: 25;
   --layer-popover: 50;
   --layer-tooltip: 75;
   --layer-modal-overlay: 99;

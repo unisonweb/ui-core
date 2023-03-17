@@ -38,8 +38,27 @@
   line-height: 1;
 }
 
+.avatar.avatar_blank-icon {
+  background-color: var(--color_avatar);
+}
+
 .avatar.avatar_blank-icon .icon {
-  font-size: 1rem;
   background-color: var(--color_avatar);
   color: var(--color_avatar_blank-icon);
+}
+
+.avatar.small.avatar_blank-icon .icon {
+  font-size: 0.5rem;
+}
+
+.avatar.medium.avatar_blank-icon .icon {
+  font-size: 0.75rem;
+}
+
+.avatar.large.avatar_blank-icon .icon {
+  font-size: 1.5rem;
+}
+
+.avatar.huge.avatar_blank-icon .icon {
+  font-size: 2.25rem;
 }

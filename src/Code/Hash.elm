@@ -13,15 +13,20 @@ module Code.Hash exposing
     , toApiUrlString
     , toShortString
     , toString
+    , toUnprefixedShortString
     , toUrlString
     , unsafeFromString
     , urlParser
     , urlPrefix
+    , view
     )
 
+import Html exposing (Html, span, text)
+import Html.Attributes exposing (class)
 import Json.Decode as Decode
 import Lib.Util as Util
 import Regex
+import UI.Icon as Icon
 import Url exposing (percentDecode, percentEncode)
 import Url.Parser
 
@@ -75,8 +80,8 @@ Note, that it does not shorten hashes that are assumed to be builtins:
   - Hash "##IO.socketSend.impl" -> "##IO.SocketSend.impl"
 
 -}
-toShortString : Hash -> String
-toShortString h =
+toShortString_ : String -> Hash -> String
+toShortString_ p h =
     let
         shorten s =
             if isAssumedBuiltin h then
@@ -85,7 +90,17 @@ toShortString h =
             else
                 String.left 9 s
     in
-    h |> toString |> shorten
+    h |> toString_ p identity |> shorten
+
+
+toShortString : Hash -> String
+toShortString h =
+    toShortString_ prefix h
+
+
+toUnprefixedShortString : Hash -> String
+toUnprefixedShortString h =
+    toShortString_ "" h
 
 
 toUrlString : Hash -> String
@@ -240,6 +255,18 @@ isAbilityConstructorHash hash =
             Maybe.withDefault Regex.never (Regex.fromString "#a(\\d+)$")
     in
     hash |> toString |> Regex.contains abilityConstructorSuffix
+
+
+
+-- VIEW
+
+
+view : Hash -> Html msg
+view hash_ =
+    span [ class "hash" ]
+        [ Icon.view Icon.hash
+        , text (toUnprefixedShortString hash_)
+        ]
 
 
 
