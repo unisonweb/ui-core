@@ -11,19 +11,23 @@ import Html exposing (Html, text)
 {-| get returns the help for a given syntax segment.
 -}
 get : SyntaxSegment -> Maybe (Html msg)
-get (SyntaxSegment type_ word) =
-    case ( type_, word ) of
-        ( BytesLiteral, _ ) ->
-            Just bytesLiteral
-
-        ( DataTypeKeyword, "type" ) ->
-            Just typeKeyword
-
-        _ ->
-            Nothing
+get (SyntaxSegment _ _) =
+    Nothing
 
 
 
+{-
+
+   case ( type_, word ) of
+       ( BytesLiteral, _ ) ->
+           Just bytesLiteral
+
+       ( DataTypeKeyword, "type" ) ->
+           Just typeKeyword
+
+       _ ->
+           Nothing
+-}
 -- HELP
 
 
