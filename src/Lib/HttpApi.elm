@@ -396,4 +396,4 @@ httpJsonBodyResolver decoder resp =
 
 timeout : Float
 timeout =
-    15000
+    30000
