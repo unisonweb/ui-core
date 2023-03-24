@@ -2,8 +2,6 @@ module Code.Syntax exposing
     ( Linked(..)
     , LinkedWithTooltipConfig
     , Syntax
-    , SyntaxSegment(..)
-    , SyntaxType(..)
     , ToClick
     , TooltipConfig
     , Width(..)
@@ -18,8 +16,10 @@ module Code.Syntax exposing
 
 import Code.Definition.Reference as Reference exposing (Reference)
 import Code.FullyQualifiedName as FQN exposing (FQN)
-import Code.Hash as Hash exposing (Hash)
+import Code.Hash as Hash
 import Code.HashQualified as HQ
+import Code.Syntax.SyntaxHelp as SyntaxHelp
+import Code.Syntax.SyntaxSegment exposing (..)
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onMouseEnter, onMouseLeave)
@@ -37,63 +37,6 @@ type Width
 
 type Syntax
     = Syntax (NEL.Nonempty SyntaxSegment)
-
-
-type SyntaxSegment
-    = SyntaxSegment SyntaxType String
-
-
-type SeqOp
-    = Cons
-    | Snoc
-    | Concat
-
-
-type SyntaxType
-    = NumericLiteral
-    | TextLiteral
-    | BytesLiteral
-    | CharLiteral
-    | BooleanLiteral
-    | Blank
-    | Var
-    | TypeReference Hash (Maybe FQN)
-    | TermReference Hash (Maybe FQN)
-      -- +:|:+|++
-    | Op SeqOp
-    | DataConstructorReference Hash (Maybe FQN)
-    | AbilityConstructorReference Hash (Maybe FQN)
-    | AbilityBraces
-      -- let|handle|in|where|match|with|cases|->|if|then|else|and|or
-    | ControlKeyword
-      -- forall|->
-    | TypeOperator
-    | BindingEquals
-    | TypeAscriptionColon
-      -- type|ability
-    | DataTypeKeyword
-    | DataTypeParams
-    | Unit
-      -- unique
-    | DataTypeModifier
-      -- `use Foo bar` is keyword, prefix, suffix
-    | UseKeyword
-    | UsePrefix
-    | UseSuffix
-      -- TODO: Should this be a HashQualified ?
-    | HashQualifier String
-      -- ! '
-    | DelayForceChar
-      -- ? , ` [ ] @ |
-      -- Currently not all commas in the pretty-print output are marked up as DelimiterChar - we miss
-      -- out characters emitted by Pretty.hs helpers like Pretty.commas.
-    | DelimiterChar
-    | Parenthesis
-    | LinkKeyword -- `typeLink` and `termLink`
-      -- [: :] @[]
-    | DocDelimiter
-      -- the 'include' in @[include], etc
-    | DocKeyword
 
 
 type alias TooltipConfig msg =
@@ -310,7 +253,7 @@ viewFQN fqn =
 
 
 viewSegment : Linked msg -> SyntaxSegment -> Html msg
-viewSegment linked (SyntaxSegment sType sText) =
+viewSegment linked ((SyntaxSegment sType sText) as segment) =
     let
         ref =
             case sType of
@@ -412,7 +355,23 @@ viewSegment linked (SyntaxSegment sType sText) =
                 (l.toClick r)
 
         _ ->
-            span [ class className ] [ content ]
+            case SyntaxHelp.get segment of
+                Just help ->
+                    let
+                        tooltip =
+                            Tooltip.tooltip (Tooltip.rich help)
+                    in
+                    Tooltip.view
+                        (span
+                            [ class className ]
+                            [ content ]
+                        )
+                        tooltip
+
+                _ ->
+                    span
+                        [ class className ]
+                        [ content ]
 
 
 view : Linked msg -> Syntax -> Html msg
