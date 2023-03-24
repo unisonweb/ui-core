@@ -359,7 +359,10 @@ viewSegment linked ((SyntaxSegment sType sText) as segment) =
                 Just help ->
                     let
                         tooltip =
-                            Tooltip.tooltip (Tooltip.rich help)
+                            Tooltip.rich help
+                                |> Tooltip.tooltip
+                                |> Tooltip.withArrow Tooltip.Start
+                                |> Tooltip.withPosition Tooltip.Below
                     in
                     Tooltip.view
                         (span
