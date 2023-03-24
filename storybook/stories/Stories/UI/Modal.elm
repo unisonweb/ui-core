@@ -6,18 +6,14 @@ import Html exposing (Html)
 import UI.Modal as M
 
 
-main : Program () Model Msg
+main : Program () () Msg
 main =
     Browser.element
         { init = \_ -> ( (), Cmd.none )
-        , view = view
+        , view = \_ -> view
         , update = \_ currentModel -> ( currentModel, Cmd.none )
         , subscriptions = \_ -> Sub.none
         }
-
-
-type alias Model =
-    ()
 
 
 type Msg
@@ -33,7 +29,7 @@ elements =
     ]
 
 
-view : Model -> Html Msg
-view _ =
+view : Html Msg
+view =
     (elements |> List.map M.view)
         |> col []

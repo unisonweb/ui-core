@@ -5,18 +5,14 @@ import Html exposing (..)
 import UI.Icon as I
 
 
-main : Program () Model Msg
+main : Program () () Msg
 main =
     Browser.element
         { init = \_ -> ( (), Cmd.none )
-        , view = view
+        , view = \_ -> view
         , update = \_ model -> ( model, Cmd.none )
         , subscriptions = \_ -> Sub.none
         }
-
-
-type alias Model =
-    ()
 
 
 type alias Msg =
@@ -105,6 +101,6 @@ elements =
     ]
 
 
-view : Model -> Html Msg
-view _ =
+view : Html Msg
+view =
     div [] [ h1 [] (elements |> List.map I.view) ]

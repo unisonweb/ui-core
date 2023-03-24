@@ -6,18 +6,14 @@ import Html exposing (Html)
 import UI.ErrorCard as E
 
 
-main : Program () Model Msg
+main : Program () () Msg
 main =
     Browser.element
         { init = \_ -> ( (), Cmd.none )
-        , view = view
+        , view = \_ -> view
         , update = \_ model -> ( model, Cmd.none )
         , subscriptions = \_ -> Sub.none
         }
-
-
-type alias Model =
-    ()
 
 
 type Msg
@@ -31,7 +27,7 @@ elements =
     ]
 
 
-view : Model -> Html Msg
-view _ =
+view : Html Msg
+view =
     (elements |> List.map E.view)
         |> col []
