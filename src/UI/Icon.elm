@@ -1,6 +1,6 @@
 module UI.Icon exposing (..)
 
-import Html exposing (Html, div)
+import Html exposing (Html, span)
 import Html.Attributes exposing (class, classList)
 import Svg exposing (Svg, circle, path, rect, svg)
 import Svg.Attributes as Attrs
@@ -33,7 +33,7 @@ view (Icon name attrs content) =
         iconAttrs =
             class "icon" :: class name :: attrs
     in
-    div iconAttrs
+    span iconAttrs
         [ svg [ width "100%", height "100%", viewBox "0 0 14 14" ] content ]
 
 
