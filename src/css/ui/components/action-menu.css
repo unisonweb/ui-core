@@ -104,8 +104,7 @@
   );
 }
 
-.action-menu_action-item
-  .action-menu_action-item-option:has(.action-menu_action-item-option_subtext) {
+.action-menu_action-item-option:has(.action-menu_action-item-option_subtext) {
   height: 3.125rem;
 }
 
