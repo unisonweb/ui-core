@@ -4,6 +4,7 @@ import Html exposing (Html, div, header, span, text)
 import Html.Attributes exposing (class, classList)
 import Lib.OperatingSystem exposing (OperatingSystem)
 import UI.Click as Click
+import UI.CopyrightYear as CopyrightYear
 import UI.PageContent as PageContent exposing (PageContent)
 import UI.Sidebar as Sidebar exposing (Sidebar)
 
@@ -233,7 +234,7 @@ viewPageFooter (PageFooter footerItems) =
     let
         copyright =
             span [ class "copyright" ]
-                [ text "© 2023 "
+                [ CopyrightYear.view
                 , Click.externalHref "https://unison-lang.org/unison-computing/"
                     |> Click.view [] [ text "Unison Computing, PBC" ]
                 ]
