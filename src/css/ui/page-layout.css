@@ -228,6 +228,9 @@
 }
 
 .page .page-footer .copyright {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
   color: var(--u-color_text_subdued);
 }
 
