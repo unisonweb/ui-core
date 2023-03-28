@@ -29,6 +29,7 @@ import Maybe.Extra as MaybeE
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
+import UI.DateTime as DateTime exposing (DateTime, DateTimeFormat)
 import UI.Divider as Divider
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge(..))
@@ -40,10 +41,16 @@ type OpenState
     | Closed
 
 
+type Subtext
+    = NoSubtext
+    | SimpleSubtext String
+    | DateTimeSubtext DateTimeFormat DateTime
+
+
 type alias ActionOption msg =
     { icon : Maybe (Icon msg)
     , label : String
-    , subtext : Maybe String
+    , subtext : Subtext
     , click : Click msg
     , nudge : Nudge msg
     }
@@ -116,18 +123,18 @@ items actionItem actionItems =
 
 optionItem : Icon msg -> String -> Click msg -> ActionItem msg
 optionItem icon label click =
-    optionItem_ (Just icon) label Nothing NoNudge click
+    optionItem_ (Just icon) label NoSubtext NoNudge click
 
 
 optionItemWithoutIcon : String -> Click msg -> ActionItem msg
 optionItemWithoutIcon label click =
-    optionItem_ Nothing label Nothing NoNudge click
+    optionItem_ Nothing label NoSubtext NoNudge click
 
 
 optionItem_ :
     Maybe (Icon msg)
     -> String
-    -> Maybe String
+    -> Subtext
     -> Nudge msg
     -> Click msg
     -> ActionItem msg
@@ -255,21 +262,26 @@ viewSheet (ActionItems items_) =
             case i of
                 Option o ->
                     let
-                        viewSubtext t =
-                            div [ class "action-menu_action-item-option_subtext" ] [ text t ]
+                        viewSubtext st =
+                            case st of
+                                NoSubtext ->
+                                    UI.nothing
+
+                                SimpleSubtext t ->
+                                    div [ class "action-menu_action-item-option_subtext" ] [ text t ]
+
+                                DateTimeSubtext f t ->
+                                    div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f t ]
                     in
                     Click.view
-                        [ classList
-                            [ ( "action-menu_action-item action-menu_action-item-option", True )
-                            , ( "action-menu_action-item-option-with-subtext", MaybeE.isJust o.subtext )
-                            ]
+                        [ class "action-menu_action-item action-menu_action-item-option"
                         ]
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon
                         , div [ class "action-menu_action-item-option_text" ]
                             [ label
                                 [ class "action-menu_action-item-option_label" ]
                                 [ text o.label ]
-                            , MaybeE.unwrap UI.nothing viewSubtext o.subtext
+                            , viewSubtext o.subtext
                             ]
                         , Nudge.view o.nudge
                         ]
