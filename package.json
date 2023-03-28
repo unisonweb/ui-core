@@ -30,6 +30,7 @@
     "prettier": "2.8.4"
   },
   "dependencies": {
+    "date-fns": "^2.29.3",
     "katex": "^0.16.4",
     "mermaid": "^9.3.0"
   }
