@@ -2,6 +2,7 @@ module UI.ActionMenu exposing
     ( ActionItem
     , ActionItems
     , ActionMenu
+    , Subtext(..)
     , close
     , dividerItem
     , fromButton
