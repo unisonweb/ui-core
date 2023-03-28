@@ -24,8 +24,8 @@ class FormatDateTime extends HTMLElement {
     const formatName = this.getAttribute("format");
     const raw = this.innerText.trim();
     const d = parseISO(raw);
-    const formatter = FORMATS[formatName] || FORMATS.shortDate;
-    console.log(d, FORMATS, formatName, formatter, formatter(d));
+    const formatter = this.FORMATS[formatName] || this.FORMATS.shortDate;
+    console.log(d, this.FORMATS, formatName, formatter, formatter(d));
     this.innerHTML = "";
     this.appendChild(formatter(d));
   }
