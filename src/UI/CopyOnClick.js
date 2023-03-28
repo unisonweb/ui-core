@@ -1,9 +1,6 @@
 // <copy-on-click text="text-to-copy">
 //   clickable content
 // </copy-on-click>
-//
-// Use from Elm with an Icon:
-// node "copy-on-click" [ ] [ UI.Icon.view UI.Icon.clipboard ]
 class CopyOnClick extends HTMLElement {
   constructor() {
     super();

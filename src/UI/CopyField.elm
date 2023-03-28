@@ -1,8 +1,9 @@
 module UI.CopyField exposing (..)
 
-import Html exposing (Html, button, div, input, node, text)
-import Html.Attributes exposing (attribute, class, readonly, type_, value)
+import Html exposing (Html, button, div, input, text)
+import Html.Attributes exposing (class, readonly, type_, value)
 import UI
+import UI.CopyOnClick as CopyOnClick
 import UI.Icon as Icon
 
 
@@ -75,7 +76,5 @@ the webcomponent in JS land.
 -}
 copyButton : String -> Html msg
 copyButton toCopy =
-    node "copy-on-click"
-        [ attribute "text" toCopy ]
-        [ button [ class "button contained default" ] [ Icon.view Icon.clipboard ]
-        ]
+    CopyOnClick.view toCopy
+        (button [ class "button contained default" ] [ Icon.view Icon.clipboard ])
