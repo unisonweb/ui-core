@@ -9,13 +9,13 @@ import { format, formatDistance, parseISO } from "date-fns";
 //
 //   Mar 28, 2023
 //
-class FormatDateTime extends HTMLElement {
-  FORMATS = {
-    shortDate: (d) => format(d, "MMM d, yyyy"),
-    longDate: (d) => format(d, "MMMM d, yyyy"),
-    distance: (d) => formatDistance(d, new Date()),
-  };
+const FORMATS = {
+  shortDate: (d) => format(d, "MMM d, yyyy"),
+  longDate: (d) => format(d, "MMMM d, yyyy"),
+  distance: (d) => formatDistance(d, new Date()),
+};
 
+class FormatDateTime extends HTMLElement {
   constructor() {
     super();
   }
@@ -24,8 +24,8 @@ class FormatDateTime extends HTMLElement {
     const formatName = this.getAttribute("format");
     const raw = this.innerText.trim();
     const d = parseISO(raw);
-    const formatter = this.FORMATS[formatName] || this.FORMATS.shortDate;
-    console.log(d, this.FORMATS, formatName, formatter, formatter(d));
+    const formatter = FORMATS[formatName] || FORMATS.shortDate;
+    console.log(d, FORMATS, formatName, formatter, formatter(d));
     this.innerHTML = "";
     this.appendChild(formatter(d));
   }
