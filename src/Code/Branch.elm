@@ -22,8 +22,8 @@ type alias BranchSummary =
     Branch {}
 
 
-decodeBranchListing : Decode.Decoder BranchSummary
-decodeBranchListing =
+decodeSummary : Decode.Decoder BranchSummary
+decodeSummary =
     let
         makeBranch branchRef handle_ slug_ createdAt updatedAt =
             let
