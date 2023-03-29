@@ -10,46 +10,36 @@ isValidBranchSlug =
     describe "Branch.isValidBranchSlug"
         [ test "can be alphanumeric characters" <|
             \_ ->
-                let
-                    result =
-                        BranchRef.isValidBranchSlug "mybranch"
-                in
-                Expect.true "Expected simple aplhanum in slugs to pass validation" result
+                BranchRef.isValidBranchSlug "mybranch"
+                    |> Expect.equal True
+                    |> Expect.onFail
+                        "Expected simple aplhanum in slugs to pass validation"
         , test "can be any casing" <|
             \_ ->
-                let
-                    result =
-                        BranchRef.isValidBranchSlug "AnyCasing"
-                in
-                Expect.true "Expected any casing in slugs to pass validation" result
+                BranchRef.isValidBranchSlug "AnyCasing"
+                    |> Expect.equal True
+                    |> Expect.onFail
+                        "Expected any casing in slugs to pass validation"
         , test "can include _" <|
             \_ ->
-                let
-                    result =
-                        BranchRef.isValidBranchSlug "underscores__are_valid"
-                in
-                Expect.true "Expected underscores in slugs to pass validation" result
+                BranchRef.isValidBranchSlug "underscores__are_valid"
+                    |> Expect.equal True
+                    |> Expect.onFail "Expected underscores in slugs to pass validation"
         , test "can include -" <|
             \_ ->
-                let
-                    result =
-                        BranchRef.isValidBranchSlug "dashes-are--valid"
-                in
-                Expect.true "Expected dashes in slugs to pass validation" result
+                BranchRef.isValidBranchSlug "dashes-are--valid"
+                    |> Expect.equal True
+                    |> Expect.onFail "Expected dashes in slugs to pass validation"
         , test "can not have spaces" <|
             \_ ->
-                let
-                    result =
-                        BranchRef.isValidBranchSlug "cant have spaces"
-                in
-                Expect.false "Expected spaces in slugs to fail validation" result
+                BranchRef.isValidBranchSlug "cant have spaces"
+                    |> Expect.equal False
+                    |> Expect.onFail "Expected spaces in slugs to fail validation"
         , test "can not have symbols" <|
             \_ ->
-                let
-                    result =
-                        BranchRef.isValidBranchSlug "ca|n/th\u{0007}ve$ymbols\"'!@#"
-                in
-                Expect.false "Expected symbols in slugs to fail validation" result
+                BranchRef.isValidBranchSlug "ca|n/th\u{0007}ve$ymbols\"'!@#"
+                    |> Expect.equal False
+                    |> Expect.onFail "Expected symbols in slugs to fail validation"
         ]
 
 

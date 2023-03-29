@@ -28,7 +28,11 @@ appendWithFocus =
                 Expect.equal (Just term) (WorkspaceItems.last result)
         , test "Sets focus" <|
             \_ ->
-                Expect.true "Has focus" (Maybe.withDefault False <| Maybe.map (\r -> r == termRef) currentFocusedRef)
+                currentFocusedRef
+                    |> Maybe.map (\r -> r == termRef)
+                    |> Maybe.withDefault False
+                    |> Expect.equal True
+                    |> Expect.onFail "Has focus"
         ]
 
 
@@ -47,7 +51,11 @@ prependWithFocus =
                 Expect.equal (Just term) (WorkspaceItems.head result)
         , test "Sets focus" <|
             \_ ->
-                Expect.true "Has focus" (Maybe.withDefault False <| Maybe.map (\r -> r == termRef) currentFocusedRef)
+                currentFocusedRef
+                    |> Maybe.map (\r -> r == termRef)
+                    |> Maybe.withDefault False
+                    |> Expect.equal True
+                    |> Expect.onFail "Has focus"
         ]
 
 
@@ -81,7 +89,11 @@ insertWithFocusAfter =
                 Expect.equal expected (WorkspaceItems.toList inserted)
         , test "When inserted, the new element has focus" <|
             \_ ->
-                Expect.true "Has focus" (Maybe.withDefault False <| Maybe.map (\r -> r == reference toInsert) currentFocusedRef)
+                currentFocusedRef
+                    |> Maybe.map (\r -> r == reference toInsert)
+                    |> Maybe.withDefault False
+                    |> Expect.equal True
+                    |> Expect.onFail "Has focus"
         , test "When the 'after ref' is not present, insert at the end" <|
             \_ ->
                 let
@@ -133,7 +145,11 @@ insertWithFocusBefore =
                 Expect.equal expected (WorkspaceItems.toList inserted)
         , test "When inserted, the new element has focus" <|
             \_ ->
-                Expect.true "Has focus" (Maybe.withDefault False <| Maybe.map (\r -> r == reference toInsert) currentFocusedRef)
+                currentFocusedRef
+                    |> Maybe.map (\r -> r == reference toInsert)
+                    |> Maybe.withDefault False
+                    |> Expect.equal True
+                    |> Expect.onFail "Has focus"
         , test "When the 'before hash' is not present, insert at the end" <|
             \_ ->
                 let
@@ -245,7 +261,9 @@ remove =
                     result =
                         WorkspaceItems.remove workspaceItems toRemove
                 in
-                Expect.false "#a is removed" (WorkspaceItems.member result toRemove)
+                WorkspaceItems.member result toRemove
+                    |> Expect.equal False
+                    |> Expect.onFail "#a is removed"
         , test "When the element to remove is focused, remove the element and change focus to right after it" <|
             \_ ->
                 let
@@ -258,7 +276,9 @@ remove =
                     result =
                         WorkspaceItems.remove workspaceItems toRemove
                 in
-                Expect.true "#focus is removed and #c has focus" (not (WorkspaceItems.member result toRemove) && WorkspaceItems.isFocused result expectedNewFocus)
+                (not (WorkspaceItems.member result toRemove) && WorkspaceItems.isFocused result expectedNewFocus)
+                    |> Expect.equal True
+                    |> Expect.onFail "#focus is removed and #c has focus"
         , test "When the element to remove is focused and there are no elements after, remove the element and change focus to right before it" <|
             \_ ->
                 let
@@ -271,14 +291,15 @@ remove =
                     result =
                         WorkspaceItems.remove (WorkspaceItems.fromItems before focused []) toRemove
                 in
-                Expect.true "#focus is removed and #b has focus" (not (WorkspaceItems.member result toRemove) && WorkspaceItems.isFocused result expectedNewFocus)
+                (not (WorkspaceItems.member result toRemove) && WorkspaceItems.isFocused result expectedNewFocus)
+                    |> Expect.equal True
+                    |> Expect.onFail "#focus is removed and #b has focus"
         , test "When the element to remove is focused there are no other elements, it returns Empty" <|
             \_ ->
-                let
-                    result =
-                        WorkspaceItems.remove (WorkspaceItems.singleton term) (reference term)
-                in
-                Expect.true "Definition is empty" (WorkspaceItems.isEmpty result)
+                WorkspaceItems.remove (WorkspaceItems.singleton term) (reference term)
+                    |> WorkspaceItems.isEmpty
+                    |> Expect.equal True
+                    |> Expect.onFail "Definition is empty"
         ]
 
 
@@ -295,10 +316,14 @@ member =
     describe "WorkspaceItems.member"
         [ test "Returns true for a ref housed within" <|
             \_ ->
-                Expect.true "item is a member" (WorkspaceItems.member items termRef)
+                WorkspaceItems.member items termRef
+                    |> Expect.equal True
+                    |> Expect.onFail "item is a member"
         , test "Returns false for a ref *not* housed within" <|
             \_ ->
-                Expect.false "item is *not* a member" (WorkspaceItems.member items notFoundRef)
+                WorkspaceItems.member items notFoundRef
+                    |> Expect.equal False
+                    |> Expect.onFail "item is *not* a member"
         ]
 
 

@@ -24,14 +24,14 @@
     "elm": "^0.19.1-5",
     "elm-format": "^0.8.5",
     "elm-review": "^2.9.1",
-    "elm-test": "^0.19.1-revision7",
+    "elm-test": "^0.19.1-revision12",
     "elm-watch": "^1.0.2",
-    "glob": "^8.0.3",
-    "prettier": "2.8.4"
+    "glob": "^9.3.2",
+    "prettier": "^2.8.4"
   },
   "dependencies": {
     "date-fns": "^2.29.3",
     "katex": "^0.16.4",
-    "mermaid": "^9.3.0"
+    "mermaid": "^10.0.2"
   }
 }

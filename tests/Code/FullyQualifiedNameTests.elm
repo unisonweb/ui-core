@@ -282,7 +282,9 @@ isSuffixOf =
                     fqn =
                         FQN.fromString "base.List.map"
                 in
-                Expect.true "is correctly a suffix of" (FQN.isSuffixOf suffix fqn)
+                FQN.isSuffixOf suffix fqn
+                    |> Expect.equal True
+                    |> Expect.onFail "is correctly a suffix of"
         , test "Returns False when an FQN does not end in the provided suffix" <|
             \_ ->
                 let
@@ -292,7 +294,9 @@ isSuffixOf =
                     fqn =
                         FQN.fromString "base.List.map"
                 in
-                Expect.false "is correctly *not* a suffix of" (FQN.isSuffixOf suffix fqn)
+                FQN.isSuffixOf suffix fqn
+                    |> Expect.equal False
+                    |> Expect.onFail "is correctly *not* a suffix of"
         ]
 
 

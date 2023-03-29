@@ -31,14 +31,18 @@ isDocFoldToggled =
                     toggles =
                         Doc.toggleFold Doc.emptyDocFoldToggles id
                 in
-                Expect.true "doc is toggled" (Doc.isDocFoldToggled toggles id)
+                Doc.isDocFoldToggled toggles id
+                    |> Expect.equal True
+                    |> Expect.onFail "doc is toggled"
         , test "returns False if the doc is not toggled" <|
             \_ ->
                 let
                     toggles =
                         Doc.emptyDocFoldToggles
                 in
-                Expect.false "doc is not toggled" (Doc.isDocFoldToggled toggles id)
+                Doc.isDocFoldToggled toggles id
+                    |> Expect.equal False
+                    |> Expect.onFail "doc is not toggled"
         ]
 
 
@@ -67,7 +71,9 @@ toggleFold =
                     toggles =
                         Doc.toggleFold Doc.emptyDocFoldToggles id
                 in
-                Expect.true "doc was added" (Doc.isDocFoldToggled toggles id)
+                Doc.isDocFoldToggled toggles id
+                    |> Expect.equal True
+                    |> Expect.onFail "doc was added"
         , test "Removes a toggle if present" <|
             \_ ->
                 let
@@ -77,7 +83,9 @@ toggleFold =
                     without =
                         Doc.toggleFold toggles id
                 in
-                Expect.false "doc was removed" (Doc.isDocFoldToggled without id)
+                Doc.isDocFoldToggled without id
+                    |> Expect.equal False
+                    |> Expect.onFail "doc was removed"
         ]
 
 

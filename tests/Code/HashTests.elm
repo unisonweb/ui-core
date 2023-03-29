@@ -10,14 +10,14 @@ equals =
     describe "Hash.equals"
         [ test "Returns True when equal" <|
             \_ ->
-                Expect.true
-                    "Expected Hash \"#foo\" and Hash \"#foo\" to be equal"
-                    (Maybe.withDefault False (Maybe.map2 Hash.equals (Hash.fromString "#foo") (Hash.fromString "#foo")))
+                Maybe.withDefault False (Maybe.map2 Hash.equals (Hash.fromString "#foo") (Hash.fromString "#foo"))
+                    |> Expect.equal True
+                    |> Expect.onFail "Expected Hash \"#foo\" and Hash \"#foo\" to be equal"
         , test "Returns False when not equal" <|
             \_ ->
-                Expect.false
-                    "Expected Hash \"#foo\" and Hash \"#bar\" to *not* be equal"
-                    (Maybe.withDefault False (Maybe.map2 Hash.equals (Hash.fromString "#foo") (Hash.fromString "#bar")))
+                Maybe.withDefault False (Maybe.map2 Hash.equals (Hash.fromString "#foo") (Hash.fromString "#bar"))
+                    |> Expect.equal False
+                    |> Expect.onFail "Expected Hash \"#foo\" and Hash \"#bar\" to *not* be equal"
         ]
 
 
@@ -218,9 +218,18 @@ isRawHash : Test
 isRawHash =
     describe "Hash.isRawHash"
         [ test "True for strings prefixed with #" <|
-            \_ -> Expect.true "# is a raw hash" (Hash.isRawHash "#foo")
+            \_ ->
+                Hash.isRawHash "#foo"
+                    |> Expect.equal True
+                    |> Expect.onFail "# is a raw hash"
         , test "True for strings prefixed with @" <|
-            \_ -> Expect.true "@ is a raw hash" (Hash.isRawHash "@foo")
+            \_ ->
+                Hash.isRawHash "@foo"
+                    |> Expect.equal True
+                    |> Expect.onFail "@ is a raw hash"
         , test "False for non prefixed strings" <|
-            \_ -> Expect.false "needs prefix" (Hash.isRawHash "foo")
+            \_ ->
+                Hash.isRawHash "foo"
+                    |> Expect.equal False
+                    |> Expect.onFail "needs prefix"
         ]

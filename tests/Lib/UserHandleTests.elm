@@ -74,7 +74,8 @@ equals =
                         Maybe.map2 UserHandle.equals a b
                             |> Maybe.withDefault False
                 in
-                Expect.true "Expected handles @tolkien and @tolkien to be equal" result
+                Expect.equal True result
+                    |> Expect.onFail "Expected handles @tolkien and @tolkien to be equal"
         , test "Returns False when the handles are different" <|
             \_ ->
                 let
@@ -88,7 +89,8 @@ equals =
                         Maybe.map2 UserHandle.equals a b
                             |> Maybe.withDefault False
                 in
-                Expect.false "Expected handles @gimli and @legolas not to be equal" result
+                Expect.equal False result
+                    |> Expect.onFail "Expected handles @gimli and @legolas not to be equal"
         ]
 
 
@@ -133,72 +135,68 @@ isValidHandle =
                     result =
                         UserHandle.isValidHandle "samwise123"
                 in
-                Expect.true "Expected alphanumeric characters in handles to succeed validation" result
+                Expect.equal True result |> Expect.onFail "Expected alphanumeric characters in handles to succeed validation"
         , test "Can include hyphens" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "can-have-hyphens"
                 in
-                Expect.true "Expected hyphens in handles to succeed validation" result
+                Expect.equal True result |> Expect.onFail "Expected hyphens in handles to succeed validation"
         , test "Can' include consecutive hyphens" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "cant-have----consecutive--hyphens"
                 in
-                Expect.false "Expected consecutive hyphens in handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected consecutive hyphens in handles to fail validation"
         , test "Can't have spaces" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "cant have spaces"
                 in
-                Expect.false "Expected spaces in handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected spaces in handles to fail validation"
         , test "Can't have symbols" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "cant have $ymbols$!@#_"
                 in
-                Expect.false "Expected symbols in handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected symbols in handles to fail validation"
         , test "Can't have underscores" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "cant_have_underscores"
                 in
-                Expect.false "Expected underscores in handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected underscores in handles to fail validation"
         , test "Can't be longer than 39 characters" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "cantbemorethanthirtyninecharacterslongthatswaytolongofahandle"
                 in
-                Expect.false "Expected long handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected long handles to fail validation"
         , test "Can't start with an @ symbol" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "@rawhandlecantstartwithat"
                 in
-                Expect.false "Expected @ prefixed handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected @ prefixed handles to fail validation"
         , test "Can't start with a hyphen" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "-cant-start-with-a-hyphen"
                 in
-                Expect.false "Expected - prefixed handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected - prefixed handles to fail validation"
         , test "Can't end with a hyphen" <|
             \_ ->
                 let
                     result =
                         UserHandle.isValidHandle "can-end-with-a-hyphen-"
                 in
-                Expect.false "Expected - suffixed handles to fail validation" result
+                Expect.equal False result |> Expect.onFail "Expected - suffixed handles to fail validation"
         ]
-
-
-
-{- -}
