@@ -57,6 +57,8 @@
         "Code.Syntax",
         "Code.UrlParsers",
         "Code.Workspace",
+        "Code.Branch",
+        "Code.BranchRef",
         "Lib.Util",
         "Lib.OperatingSystem",
         "Lib.SearchResults",

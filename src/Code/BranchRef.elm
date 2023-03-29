@@ -1,6 +1,8 @@
 module Code.BranchRef exposing (..)
 
+import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
+import Lib.Util as Util
 import Regex
 import UI.Icon as Icon
 import UI.Tag as Tag exposing (Tag)
@@ -194,3 +196,13 @@ toTag branchRef_ =
                     Tag.tag (branchSlugToString branchSlug)
     in
     Tag.withIcon Icon.branch tag
+
+
+
+-- DECODE
+
+
+decode : Decode.Decoder BranchRef
+decode =
+    Decode.map fromString Decode.string
+        |> Decode.andThen (Util.decodeFailInvalid "Invalid BranchRef")

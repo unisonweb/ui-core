@@ -8,6 +8,10 @@ import Html.Attributes exposing (class, classList)
 import UI.Click as Click exposing (Click)
 
 
+
+-- TODO: Merge with ProjectRef
+
+
 type ProjectListingSize
     = Medium
     | Large

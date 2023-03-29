@@ -25,6 +25,12 @@ type ProjectVisibility
     | Private
 
 
+type alias ProjectSummary =
+    Project
+        { visibility : ProjectVisibility
+        }
+
+
 type alias ProjectDetails =
     Project
         { summary : Maybe String
@@ -152,3 +158,21 @@ decodeDetails =
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
         |> optional "isFaved" decodeIsFaved Unknown
+
+
+decodeSummary : Decode.Decoder ProjectSummary
+decodeSummary =
+    let
+        makeProjectSummary handle_ slug_ visibility =
+            let
+                ref_ =
+                    ProjectRef.projectRef handle_ slug_
+            in
+            { ref = ref_
+            , visibility = visibility
+            }
+    in
+    Decode.succeed makeProjectSummary
+        |> requiredAt [ "owner", "handle" ] UserHandle.decodeUnprefixed
+        |> required "slug" ProjectSlug.decode
+        |> required "visibility" decodeVisibility
