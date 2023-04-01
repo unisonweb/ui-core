@@ -7,6 +7,7 @@ import Card from "./Card.elm";
 import ErrorCard from "./ErrorCard.elm";
 import Banner from "./Banner.elm";
 import CopyField from "./CopyField.elm";
+import "../../../../src/UI/CopyOnClick.js"; // webcomponent
 import FoldToggle from "./FoldToggle.elm";
 import KeyboardShortcut from "./KeyboardShortcut.elm";
 import Modal from "./Modal.elm";
