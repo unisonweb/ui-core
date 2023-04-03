@@ -3,6 +3,7 @@ module Code.BranchRef exposing (..)
 import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Lib.Util as Util
+import Maybe.Extra as MaybeE
 import Regex
 import UI.Icon as Icon
 import UI.Tag as Tag exposing (Tag)
@@ -73,6 +74,11 @@ toParts (BranchRef b) =
 toStringParts : BranchRef -> ( Maybe String, String )
 toStringParts (BranchRef b) =
     ( Maybe.map UserHandle.toString b.handle, branchSlugToString b.slug )
+
+
+isContributorBranch : BranchRef -> Bool
+isContributorBranch (BranchRef b) =
+    MaybeE.isJust b.handle
 
 
 handle : BranchRef -> Maybe UserHandle
