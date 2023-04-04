@@ -1,7 +1,8 @@
 module Code.Branch exposing (..)
 
 import Code.BranchRef as BranchRef exposing (BranchRef)
-import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
+import Code.Project as Project exposing (Project)
+import Code.Project.ProjectRef as ProjectRef
 import Code.Project.ProjectSlug as ProjectSlug
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (required, requiredAt)
@@ -9,17 +10,17 @@ import Lib.UserHandle as UserHandle
 import UI.DateTime as DateTime exposing (DateTime)
 
 
-type alias Branch b =
+type alias Branch b p =
     { b
         | ref : BranchRef
-        , projectRef : ProjectRef
+        , project : Project p
         , createdAt : DateTime
         , updatedAt : DateTime
     }
 
 
 type alias BranchSummary =
-    Branch {}
+    Branch {} { visibility : Project.ProjectVisibility }
 
 
 decodeSummary : Decode.Decoder BranchSummary
@@ -31,7 +32,7 @@ decodeSummary =
                     ProjectRef.projectRef handle_ slug_
             in
             { ref = branchRef
-            , projectRef = projectRef
+            , project = { ref = projectRef, visibility = Project.Public }
             , createdAt = createdAt
             , updatedAt = updatedAt
             }
