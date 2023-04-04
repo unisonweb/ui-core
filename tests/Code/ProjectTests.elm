@@ -78,6 +78,7 @@ project =
         ProjectRef.projectRef
             (UserHandle.unsafeFromString "unison")
             (ProjectSlug.unsafeFromString "http")
+    , visibility = Project.Public
     }
 
 

@@ -60,6 +60,7 @@
         "Code.Branch",
         "Code.BranchRef",
         "Lib.Util",
+        "Lib.Paginated",
         "Lib.OperatingSystem",
         "Lib.SearchResults",
         "Lib.TreePath",

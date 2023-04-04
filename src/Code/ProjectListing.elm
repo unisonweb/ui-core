@@ -1,11 +1,13 @@
 module Code.ProjectListing exposing (..)
 
 import Code.Hashvatar as Hashvatar
-import Code.Project exposing (Project)
+import Code.Project as Project exposing (Project)
 import Code.Project.ProjectRef as ProjectRef
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
+import UI
 import UI.Click as Click exposing (Click)
+import UI.Icon as Icon
 
 
 
@@ -134,9 +136,18 @@ view p =
             else
                 ProjectRef.viewHashvatar p.project.ref
 
+        privateIcon =
+            case p.project.visibility of
+                Project.Private ->
+                    div [ class "project-listing_private-icon" ] [ Icon.view Icon.eyeSlash ]
+
+                _ ->
+                    UI.nothing
+
         content =
             [ hashvatar
             , ProjectRef.view p.project.ref
+            , privateIcon
             ]
     in
     case p.click of

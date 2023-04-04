@@ -44,3 +44,11 @@ a.project-listing:hover {
 .project-listing.project-listing_subdued {
   color: var(--u-color_text_subdued);
 }
+
+.project-listing .project-listing_private-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.75rem;
+  background: var(--u-color_element_subdued);
+  color: var(--u-color_text_subdued);
+}

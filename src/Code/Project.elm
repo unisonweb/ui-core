@@ -10,7 +10,7 @@ import Set exposing (Set)
 
 
 type alias Project a =
-    { a | ref : ProjectRef }
+    { a | ref : ProjectRef, visibility : ProjectVisibility }
 
 
 type IsFaved
@@ -26,9 +26,7 @@ type ProjectVisibility
 
 
 type alias ProjectSummary =
-    Project
-        { visibility : ProjectVisibility
-        }
+    Project {}
 
 
 type alias ProjectDetails =
