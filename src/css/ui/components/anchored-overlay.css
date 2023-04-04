@@ -20,8 +20,15 @@
   --c-color_form-field_focus-border: var(--u-color_focus-border);
   --c-color_form-field_focus-outline: var(--u-color_focus-outline);
   --c-color_form-field_icon_subdued: var(--color-gray-lighten-20);
+  --c-color_form-field_clear: var(--color-gray-lighten-20);
+  --c-color_form-field_clear_hovered: var(--color-gray-lighten-100);
   --c-color_form-field_background: var(--color-gray-darken-20);
   --c-color_form-field_background_hovered: var(--color-gray-darken-10);
+}
+
+.anchored-overlay .status-indicator {
+  --c-color_status-indicator_working: var(--color-purple-1);
+  --c-color_status-indicator_icon-on-working: var(--color-purple-4);
 }
 
 .anchored-overlay_sheet {

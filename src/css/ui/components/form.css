@@ -8,7 +8,7 @@
   --c-color_form-field_focus-border: var(--u-color_focus-border);
   --c-color_form-field_focus-outline: var(--u-color_focus-outline);
   --c-color_form-field_icon_subdued: var(--u-color_icon_subdued);
-  --c-color_form-field_clear_subdued: var(--u-color_icon_subdued);
+  --c-color_form-field_clear: var(--u-color_icon_subdued);
   --c-color_form-field_clear_hovered: var(--u-color_icon_hovered);
   --c-color_form-field_background: var(--u-color_element);
   --c-color_form-field_background_hovered: var(--u-color_element_hovered);
@@ -67,7 +67,7 @@
   top: 0.6875rem;
   right: 0.75rem;
   font-size: var(--font-size-medium);
-  color: var(--c-color_form-field_clear_subdued);
+  color: var(--c-color_form-field_clear);
 }
 .text-field .text-field_input .text-field_clear:hover {
   color: var(--c-color_form-field_clear_hovered);
