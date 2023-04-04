@@ -1,6 +1,6 @@
 module UI.StatusBanner exposing (..)
 
-import Html exposing (Html, div, label, text)
+import Html exposing (Html, div, p, text)
 import Html.Attributes exposing (class)
 import UI.StatusIndicator as StatusIndicator
 
@@ -48,8 +48,13 @@ view banner =
 
                 Working t ->
                     ( "working", StatusIndicator.working, t )
+
+        content =
+            text_
+                |> String.split "\n"
+                |> List.map (\t -> p [] [ text t ])
     in
     div [ class ("status-banner status-banner_" ++ className) ]
         [ indicator |> StatusIndicator.view
-        , label [] [ text text_ ]
+        , div [ class "status-banner_content" ] [ content ]
         ]

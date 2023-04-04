@@ -52,3 +52,7 @@
   color: var(--c-color_status-banner_text-on-working);
   background: var(--c-color_status-banner_working);
 }
+
+.status-banner .status-banner_content {
+  margin-trim: block-end;
+}
