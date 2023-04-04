@@ -227,10 +227,10 @@ view textField =
                     div [ class "text-field_input " ] [ input__, clear ]
 
                 TextFieldIcon i ->
-                    div [ class "text-field_input text-field_with-icon" ] [ div [ class "leading-icon" ] [ Icon.view i ], input__, clear ]
+                    div [ class "text-field_input text-field_with-icon" ] [ div [ class "text-field_icon" ] [ Icon.view i ], input__, clear ]
 
                 TextFieldStatusIndicator i ->
-                    div [ class "text-field_input text-field_with-icon" ] [ div [ class "leading-icon" ] [ StatusIndicator.view i ], input__, clear ]
+                    div [ class "text-field_input text-field_with-icon" ] [ StatusIndicator.view i, input__, clear ]
 
         label_ =
             textField.label
