@@ -123,7 +123,7 @@
   border-radius: 0;
 }
 
-.page-header .navigation .nav-item .icon {
+.page-header .navigation .nav-item_content > .icon {
   color: var(--c-color_page-header_icon_subdued);
 }
 
