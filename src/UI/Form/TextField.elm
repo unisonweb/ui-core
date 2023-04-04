@@ -224,13 +224,13 @@ view textField =
         input_ =
             case textField.icon of
                 NoIcon ->
-                    div [ class "text-field_input" ] [ input__, clear ]
+                    div [ class "text-field_input " ] [ input__, clear ]
 
                 TextFieldIcon i ->
-                    div [ class "text-field_input" ] [ Icon.view i, input__, clear ]
+                    div [ class "text-field_input text-field_with-icon" ] [ Icon.view i, input__, clear ]
 
                 TextFieldStatusIndicator i ->
-                    div [ class "text-field_input" ] [ StatusIndicator.view i, input__, clear ]
+                    div [ class "text-field_input text-field_with-icon" ] [ StatusIndicator.view i, input__, clear ]
 
         label_ =
             textField.label

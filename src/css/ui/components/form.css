@@ -46,7 +46,7 @@
   position: relative;
 }
 
-.text-field .text-field_input .icon {
+.text-field .text-field_input.text-field_with-icon .icon {
   position: absolute;
   top: 0.6875rem;
   left: 0.75rem;
@@ -54,8 +54,8 @@
   color: var(--c-color_form-field_icon_subdued);
 }
 
-.text-field .text-field_input input[type="text"],
-.text-field .text-field_input textarea {
+.text-field .text-field_input.text-field_with-icon input[type="text"],
+.text-field .text-field_input.text-field_with-icon textarea {
   width: 100%;
   padding-left: 2.125rem;
 }
