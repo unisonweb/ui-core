@@ -56,5 +56,5 @@ view banner =
     in
     div [ class ("status-banner status-banner_" ++ className) ]
         [ indicator |> StatusIndicator.view
-        , div [ class "status-banner_content" ] [ content ]
+        , div [ class "status-banner_content" ] content
         ]
