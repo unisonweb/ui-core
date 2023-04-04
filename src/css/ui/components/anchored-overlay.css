@@ -19,7 +19,7 @@
   --c-color_form-field_border_hovered: var(--u-color_border_hovered);
   --c-color_form-field_focus-border: var(--u-color_focus-border);
   --c-color_form-field_focus-outline: var(--u-color_focus-outline);
-  --c-color_form-field_icon_subdued: var(--u-color_icon_subdued);
+  --c-color_form-field_icon_subdued: var(--color-gray-lighten-20);
   --c-color_form-field_background: var(--color-gray-darken-20);
   --c-color_form-field_background_hovered: var(--color-gray-darken-10);
 }
