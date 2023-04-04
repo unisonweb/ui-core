@@ -48,9 +48,12 @@
   position: relative;
 }
 
-.text-field .text-field_input.text-field_with-icon .leading-icon .status-indicator {
+.text-field
+  .text-field_input.text-field_with-icon
+  .leading-icon
+  .status-indicator {
   position: absolute;
-  top: 0.5rem
+  top: 0.5rem;
   left: 0.5rem;
 }
 

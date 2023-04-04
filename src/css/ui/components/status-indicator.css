@@ -44,6 +44,7 @@
 .status-indicator.status-indicator_good {
   background: var(--c-color_status-indicator_good);
 }
+
 .status-indicator.status-indicator_good .icon {
   color: var(--c-color_status-indicator_icon-on-good);
 }
@@ -51,6 +52,7 @@
 .status-indicator.status-indicator_bad {
   background: var(--c-color_status-indicator_bad);
 }
+
 .status-indicator.status-indicator_bad .icon {
   color: var(--c-color_status-indicator_icon-on-bad);
 }
