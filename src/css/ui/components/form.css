@@ -39,6 +39,7 @@
   padding: 0.5rem 0.75rem;
   font-size: var(--font-size-medium);
   background-color: var(--c-color_form-field_background);
+  color: var(--c-color_form-field_text);
 }
 
 .text-field .text-field_input {
