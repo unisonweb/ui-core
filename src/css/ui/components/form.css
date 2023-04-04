@@ -57,7 +57,7 @@
   left: 0.5rem;
 }
 
-.text-field .text-field_input.text-field_with-icon .leading-icon .icon {
+.text-field .text-field_input.text-field_with-icon .leading-icon > .icon {
   position: absolute;
   top: 0.6875rem;
   left: 0.75rem;
