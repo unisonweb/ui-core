@@ -13,6 +13,8 @@
 
 /* @color-todo @inverse */
 .anchored-overlay .form-field {
+  --u-color_caret: var(--color-blue-5);
+
   --c-color_form-field_text: var(--color-gray-lighten-100);
   --c-color_form-field_text_subdued: var(--color-gray-lighten-20);
   --c-color_form-field_border: var(--color-gray-base);
