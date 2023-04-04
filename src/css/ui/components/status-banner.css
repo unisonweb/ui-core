@@ -53,6 +53,7 @@
   background: var(--c-color_status-banner_working);
 }
 
-.status-banner .status-banner_content {
-  margin-trim: block-end;
+.status-banner .status-banner_content p:last-child {
+  /* @todo: margin-trim */
+  margin-bottom: 0;
 }
