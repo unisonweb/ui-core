@@ -48,13 +48,16 @@
   position: relative;
 }
 
-.text-field .text-field_input.text-field_with-icon .leading-icon {
+.text-field .text-field_input.text-field_with-icon .leading-icon .status-indicator {
   position: absolute;
-  top: 0.6875rem;
-  left: 0.75rem;
+  top: 0.5rem
+  left: 0.5rem;
 }
 
 .text-field .text-field_input.text-field_with-icon .leading-icon .icon {
+  position: absolute;
+  top: 0.6875rem;
+  left: 0.75rem;
   font-size: var(--font-size-medium);
   color: var(--c-color_form-field_icon_subdued);
 }
