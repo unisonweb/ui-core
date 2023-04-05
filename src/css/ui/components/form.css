@@ -60,6 +60,7 @@
   left: 0.75rem;
   font-size: var(--font-size-medium);
   color: var(--c-color_form-field_icon_subdued);
+  transition: none;
 }
 
 .text-field .text-field_input .text-field_clear {
