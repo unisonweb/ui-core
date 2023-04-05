@@ -189,9 +189,6 @@ preventDefault button__ =
 view : Button clickMsg -> Html clickMsg
 view { content, color, click, size, isActive } =
     let
-        click_ =
-            Click.stopPropagation click
-
         ( contentType, content_ ) =
             case content of
                 Icon i ->
@@ -217,7 +214,7 @@ view { content, color, click, size, isActive } =
             , classList [ ( "button_active", isActive ) ]
             ]
     in
-    case click_ of
+    case click of
         OnClick _ _ ->
             Html.button (Click.attrs click ++ attrs) content_
 

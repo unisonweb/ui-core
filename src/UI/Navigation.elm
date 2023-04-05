@@ -180,7 +180,11 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
                     Just (Tag.view tag)
 
                 ButtonContent button ->
-                    Just (Button.view button)
+                    button
+                        |> Button.stopPropagation
+                        |> Button.preventDefault
+                        |> Button.view
+                        |> Just
 
                 AnchoredOverlayContent ao ->
                     Just (AnchoredOverlay.view ao)
