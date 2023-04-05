@@ -23,6 +23,7 @@ module UI.Button exposing
     , map
     , medium
     , notActive
+    , outlined
     , positive
     , preventDefault
     , small
@@ -311,6 +312,7 @@ withIconsBeforeAndAfterLabel iconBefore iconAfter button__ =
 type Color
     = Default
     | Emphasized
+    | Outlined
     | Subdued
     | Critical
     | Positive
@@ -351,6 +353,11 @@ default =
 subdued : Button clickMsg -> Button clickMsg
 subdued =
     withColor Subdued
+
+
+outlined : Button clickMsg -> Button clickMsg
+outlined =
+    withColor Outlined
 
 
 emphasized : Button clickMsg -> Button clickMsg
@@ -448,6 +455,9 @@ colorToClassName color =
 
         Subdued ->
             "subdued"
+
+        Outlined ->
+            "outlined"
 
         Emphasized ->
             "emphasized"

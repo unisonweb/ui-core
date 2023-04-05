@@ -1,6 +1,7 @@
 module Code.Branch exposing (..)
 
 import Code.BranchRef as BranchRef exposing (BranchRef)
+import Code.Hash as Hash exposing (Hash)
 import Code.Project as Project exposing (Project)
 import Code.Project.ProjectRef as ProjectRef
 import Code.Project.ProjectSlug as ProjectSlug
@@ -16,6 +17,7 @@ type alias Branch b p =
         , project : Project p
         , createdAt : DateTime
         , updatedAt : DateTime
+        , hash : Hash
     }
 
 
@@ -26,7 +28,7 @@ type alias BranchSummary =
 decodeSummary : Decode.Decoder BranchSummary
 decodeSummary =
     let
-        makeBranch branchRef handle_ slug_ visibility createdAt updatedAt =
+        makeBranch branchRef handle_ slug_ visibility createdAt updatedAt hash =
             let
                 projectRef =
                     ProjectRef.projectRef handle_ slug_
@@ -35,6 +37,7 @@ decodeSummary =
             , project = { ref = projectRef, visibility = visibility }
             , createdAt = createdAt
             , updatedAt = updatedAt
+            , hash = hash
             }
     in
     Decode.succeed makeBranch
@@ -44,3 +47,4 @@ decodeSummary =
         |> requiredAt [ "project", "visibility" ] Project.decodeVisibility
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
+        |> required "causalHash" Hash.decode
