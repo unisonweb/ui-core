@@ -38,7 +38,7 @@ decodeSummary =
             }
     in
     Decode.succeed makeBranch
-        |> required "ref" BranchRef.decode
+        |> required "branchRef" BranchRef.decode
         |> requiredAt [ "project", "owner" ] UserHandle.decode
         |> requiredAt [ "project", "slug" ] ProjectSlug.decode
         |> requiredAt [ "project", "visibility" ] Project.decodeVisibility
