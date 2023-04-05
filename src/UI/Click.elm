@@ -119,7 +119,7 @@ attrs click =
             [ Attrs.href href_, rel "noopener", target "_blank" ]
 
         Href href_ ->
-            [ Attrs.href href_ ]
+            [ Attrs.href href_, target "_self" ]
 
         OnClick msg settings ->
             let
