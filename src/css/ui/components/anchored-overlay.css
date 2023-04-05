@@ -28,6 +28,16 @@
   --c-color_form-field_background_hovered: var(--color-gray-darken-10);
 }
 
+/* @color-todo @inverse */
+.anchored-overlay .tag {
+  --c-color_tag_bg : var(--color-gray-darken-20);
+  --c-color_tag_text: var(--color-gray-lighten-100);
+  --c-color_tag_text_subdued: var(--color-gray-lighten-20);
+  --c-color_tag_icon: var(--color-gray-lighten-40);
+  --c-color_tag_icon_hovered: var(--color-gray-lighten-100);
+  --c-color_tag_icon_subdued: var(--color-gray-lighten-30);
+}
+
 .anchored-overlay .status-indicator {
   --c-color_status-indicator_working: var(--color-purple-1);
   --c-color_status-indicator_icon-on-working: var(--color-purple-4);

@@ -1,6 +1,13 @@
 .tag {
-  background: var(--u-color_element_emphasized);
-  color: var(--u-color_text);
+  --c-color_tag_bg = var(--u-color_element_emphasized);
+  --c-color_tag_text: var(--u-color_text);
+  --c-color_tag_text_subdued: var(--u-color_text_subdued);
+  --c-color_tag_icon: var(--u-color_icon);
+  --c-color_tag_icon_hovered: var(--u-color_icon_hovered);
+  --c-color_tag_icon_subdued: var(--u-color_icon_subdued);
+
+  background: var(--c-color_tag_bg);
+  color: var(--c-color_tag_text);
   display: inline-flex;
   width: fit-content;
   align-items: center;
@@ -30,7 +37,7 @@
 }
 .tag .tag_text .tag_left-text,
 .tag .tag_text .tag_right-text {
-  color: var(--u-color_text_subdued);
+  color: var(--c-color_tag_text_subdued);
 }
 
 .tag .tag_icon,
@@ -40,17 +47,17 @@
 }
 
 .tag .tag_icon .icon {
-  color: var(--u-color_icon_subdued);
+  color: var(--c-color_tag_icon_subdued);
   font-size: var(--font-size-small);
 }
 
 .tag .tag_dimiss .icon {
-  color: var(--u-color_icon);
+  color: var(--c-color_tag_icon);
   font-size: var(--font-size-extra-small);
 }
 
 .tag .tag_dimiss:hover .icon {
-  color: var(--u-color_icon_hovered);
+  color: var(--c-color_tag_icon_hovered);
 }
 
 /* -- Collection ----------------------------------------------------------- */
