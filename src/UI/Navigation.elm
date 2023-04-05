@@ -182,7 +182,6 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
                 ButtonContent button ->
                     button
                         |> Button.stopPropagation
-                        |> Button.preventDefault
                         |> Button.view
                         |> Just
 
