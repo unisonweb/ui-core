@@ -51,4 +51,7 @@ a.project-listing:hover {
   border-radius: 0.75rem;
   background: var(--u-color_element_subdued);
   color: var(--u-color_text_subdued);
+  display: inline-flex;
+  place-content: center;
+  place-items: center;
 }
