@@ -119,9 +119,7 @@ attrs click =
             [ Attrs.href href_, rel "noopener", target "_blank" ]
 
         Href href_ ->
-            -- target "_self" is set explicitly
-            -- because of this bug: https://github.com/elm/browser/issues/74
-            [ Attrs.href href_, target "_self" ]
+            [ Attrs.href href_ ]
 
         OnClick msg settings ->
             let
