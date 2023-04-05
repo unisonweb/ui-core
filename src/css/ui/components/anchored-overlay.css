@@ -57,4 +57,6 @@
 .anchored-overlay_sheet.anchored-overlay_sheet_default h3 {
   text-transform: uppercase;
   color: var(--c-color_anchored-overlay_sheet_text_very-subdued);
+  font-size: var(--font-size-extra-small);
+  margin-bottom: 1rem;
 }
