@@ -28,7 +28,7 @@ type alias BranchSummary =
 decodeSummary : Decode.Decoder BranchSummary
 decodeSummary =
     let
-        makeBranch branchRef handle_ slug_ visibility createdAt updatedAt hash =
+        makeBranch branchRef handle_ slug_ visibility createdAt updatedAt =
             let
                 projectRef =
                     ProjectRef.projectRef handle_ slug_
@@ -37,7 +37,9 @@ decodeSummary =
             , project = { ref = projectRef, visibility = visibility }
             , createdAt = createdAt
             , updatedAt = updatedAt
-            , hash = hash
+            , hash = Hash.unsafeFromString "TODO"
+
+            -- , hash = hash
             }
     in
     Decode.succeed makeBranch
@@ -47,4 +49,7 @@ decodeSummary =
         |> requiredAt [ "project", "visibility" ] Project.decodeVisibility
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
-        |> required "causalHash" Hash.decode
+
+
+
+-- |> required "causalHash" Hash.decode
