@@ -3,11 +3,8 @@ module Code.Branch exposing (..)
 import Code.BranchRef as BranchRef exposing (BranchRef)
 import Code.Hash as Hash exposing (Hash)
 import Code.Project as Project exposing (Project)
-import Code.Project.ProjectRef as ProjectRef
-import Code.Project.ProjectSlug as ProjectSlug
 import Json.Decode as Decode
-import Json.Decode.Pipeline exposing (required, requiredAt)
-import Lib.UserHandle as UserHandle
+import Json.Decode.Pipeline exposing (required)
 import UI.DateTime as DateTime exposing (DateTime)
 
 
@@ -28,28 +25,17 @@ type alias BranchSummary =
 decodeSummary : Decode.Decoder BranchSummary
 decodeSummary =
     let
-        makeBranch branchRef handle_ slug_ visibility createdAt updatedAt =
-            let
-                projectRef =
-                    ProjectRef.projectRef handle_ slug_
-            in
+        makeBranch branchRef project createdAt updatedAt hash =
             { ref = branchRef
-            , project = { ref = projectRef, visibility = visibility }
+            , project = project
             , createdAt = createdAt
             , updatedAt = updatedAt
-            , hash = Hash.unsafeFromString "TODO"
-
-            -- , hash = hash
+            , hash = hash
             }
     in
     Decode.succeed makeBranch
         |> required "branchRef" BranchRef.decode
-        |> requiredAt [ "project", "owner" ] UserHandle.decode
-        |> requiredAt [ "project", "slug" ] ProjectSlug.decode
-        |> requiredAt [ "project", "visibility" ] Project.decodeVisibility
+        |> required "project" Project.decodeSummary
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
-
-
-
--- |> required "causalHash" Hash.decode
+        |> required "causalHash" Hash.decode

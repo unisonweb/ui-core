@@ -30,7 +30,7 @@
 
 /* @color-todo @inverse */
 .anchored-overlay .tag {
-  --c-color_tag_bg : var(--color-gray-darken-20);
+  --c-color_tag_bg: var(--color-gray-darken-20);
   --c-color_tag_text: var(--color-gray-lighten-100);
   --c-color_tag_text_subdued: var(--color-gray-lighten-20);
   --c-color_tag_icon: var(--color-gray-lighten-40);
