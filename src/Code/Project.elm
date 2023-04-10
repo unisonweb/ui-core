@@ -171,6 +171,6 @@ decodeSummary =
             }
     in
     Decode.succeed makeProjectSummary
-        |> requiredAt [ "owner", "handle" ] UserHandle.decode
+        |> requiredAt [ "owner", "handle" ] UserHandle.decodeUnprefixed
         |> required "slug" ProjectSlug.decode
         |> required "visibility" decodeVisibility
