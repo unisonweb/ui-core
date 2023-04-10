@@ -3,6 +3,7 @@ module Lib.UserHandle exposing
     , decode
     , decodeUnprefixed
     , equals
+    , fromPrefixedString
     , fromSlug
     , fromString
     , fromUnprefixedString
@@ -27,6 +28,15 @@ fromSlug slug =
 
 fromString : String -> Maybe UserHandle
 fromString raw =
+    if String.startsWith "@" raw then
+        fromPrefixedString raw
+
+    else
+        fromUnprefixedString raw
+
+
+fromPrefixedString : String -> Maybe UserHandle
+fromPrefixedString raw =
     if String.startsWith "@" raw then
         raw
             |> String.dropLeft 1

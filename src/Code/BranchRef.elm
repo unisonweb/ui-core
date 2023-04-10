@@ -121,7 +121,7 @@ fromString raw =
         [ h, s ] ->
             Maybe.map2
                 (\h_ s_ -> BranchRef { handle = Just h_, slug = s_ })
-                (UserHandle.fromString h)
+                (UserHandle.fromPrefixedString h)
                 (branchSlugFromString s)
 
         [ s ] ->
