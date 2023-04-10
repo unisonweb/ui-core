@@ -18,44 +18,18 @@ fromString =
                         handle |> Maybe.map UserHandle.toString
                 in
                 Expect.equal (Just "@tolkien") result
-        , test "Creates a UserHandle from an unprefixed string" <|
-            \_ ->
-                let
-                    handle =
-                        UserHandle.fromString "tolkien"
-
-                    result =
-                        handle |> Maybe.map UserHandle.toString
-                in
-                Expect.equal (Just "@tolkien") result
-        ]
-
-
-fromPrefixedString : Test
-fromPrefixedString =
-    describe "UserHandle.fromPrefixedString"
-        [ test "Creates a UserHandle from an @ prefixed string" <|
-            \_ ->
-                let
-                    handle =
-                        UserHandle.fromPrefixedString "@tolkien"
-
-                    result =
-                        handle |> Maybe.map UserHandle.toString
-                in
-                Expect.equal (Just "@tolkien") result
         , test "Fails to create from a string with multiple @s" <|
             \_ ->
                 let
                     handle =
-                        UserHandle.fromPrefixedString "@jrr@tolkien"
+                        UserHandle.fromString "@jrr@tolkien"
                 in
                 Expect.equal Nothing handle
         , test "Fails to create from a non @ unprefixed string" <|
             \_ ->
                 let
                     handle =
-                        UserHandle.fromPrefixedString "tolkien"
+                        UserHandle.fromString "tolkien"
                 in
                 Expect.equal Nothing handle
         ]
