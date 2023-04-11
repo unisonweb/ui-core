@@ -1,0 +1,47 @@
+.kpi-tag {
+  --c-color_kpi-tag_kpi: var(--u-color_text);
+  --c-color_kpi-tag_icon: var(--u-color_icon);
+  --c-color_kpi-tag_label: var(--u-color_text_subdued);
+  --c-color_kpi-tag_bg: var(--u-color_element);
+  --c-color_kpi-tag_bg_hovered: var(--u-color_element_hovered);
+
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  height: 2rem;
+  place-items: center;
+  place-content: center;
+  padding: 0 1rem;
+  line-height: 1;
+  border-radius: 1rem;
+  background: var(--c-color_kpi-tag_bg);
+  transition: background 0.2s;
+}
+
+.kpi-tag.kpi-tag_interactive:hover {
+  background: var(--c-color_kpi-tag_bg_hovered);
+}
+
+.kpi-tag .kpi-tag_kpi {
+  font-weight: bold;
+  font-family: var(--font-monospace);
+  font-size: var(--font-size-small);
+  color: var(--c-color_kpi-tag_kpi);
+}
+
+.kpi-tag .icon {
+  font-size: var(--font-size-small);
+  color: var(--c-color_kpi-tag_icon);
+}
+
+.kpi-tag .kpi-tag_label {
+  font-size: var(--font-size-small);
+  color: var(--c-color_kpi-tag_label);
+}
+
+.kpi-tag_icon-then-label {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  height: 2rem;
+}

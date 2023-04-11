@@ -38,6 +38,7 @@
         "UI.StatusMessageCard",
         "UI.Steps",
         "UI.Tag",
+        "UI.KpiTag",
         "Code.CodebaseApi",
         "Code.CodebaseTree",
         "Code.Config",
