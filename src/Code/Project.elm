@@ -148,7 +148,7 @@ decodeDetails =
             Decode.map isFavedFromBool bool
     in
     Decode.succeed makeProjectDetails
-        |> requiredAt [ "owner", "handle" ] UserHandle.decodeUnprefixed
+        |> requiredAt [ "owner", "handle" ] UserHandle.decode
         |> required "slug" ProjectSlug.decode
         |> required "summary" (nullable string)
         |> required "tags" (Decode.list string)
