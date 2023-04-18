@@ -37,6 +37,12 @@
   overflow: auto;
 }
 
+.page.centered-narrow-layout {
+  grid-template-columns: 1fr;
+  grid-template-areas: "page-content";
+  overflow: auto;
+}
+
 .page.presentation-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
