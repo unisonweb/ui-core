@@ -44,4 +44,7 @@
   flex-direction: row;
   gap: 0.25rem;
   height: 2rem;
+  line-height: 1;
+  place-items: center;
+  place-content: center;
 }
