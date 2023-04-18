@@ -96,6 +96,15 @@ centeredLayout content footer =
         }
 
 
+centeredNarrowLayout : PageContent msg -> PageFooter msg -> PageLayout msg
+centeredNarrowLayout content footer =
+    CenteredNarrowLayout
+        { content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        }
+
+
 presentationLayout : PageContent msg -> PageLayout msg
 presentationLayout content =
     PresentationLayout content
