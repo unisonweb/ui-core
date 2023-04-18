@@ -1,9 +1,9 @@
 .kpi-tag {
   --c-color_kpi-tag_kpi: var(--u-color_text);
   --c-color_kpi-tag_icon: var(--u-color_icon);
-  --c-color_kpi-tag_label: var(--u-color_text_subdued);
-  --c-color_kpi-tag_bg: var(--u-color_element);
-  --c-color_kpi-tag_bg_hovered: var(--u-color_element_hovered);
+  --c-color_kpi-tag_label: var(--u-color_text-on-element-emphasized);
+  --c-color_kpi-tag_bg: var(--u-color_element_emphasized);
+  --c-color_kpi-tag_bg_hovered: var(--u-color_element_emphasized_hovered);
 
   display: inline-flex;
   flex-direction: row;
