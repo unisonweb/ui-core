@@ -138,7 +138,13 @@
   padding: 3rem 1.5rem 1.5rem 1.5rem;
 }
 
-.page.centered-layout .page-content .page-title {
+.page.centered-narrow-layout .page-content {
+  width: 46.75rem;
+  margin: auto;
+  padding: 3rem 1.5rem 1.5rem 1.5rem;
+}
+
+.page.centered-layout .page-content .page-title:has(.icon) {
   margin-left: -0.75rem;
 }
 
@@ -148,7 +154,7 @@
   padding: 3rem 1.5rem 1.5rem 1.5rem;
 }
 
-.page.presentation-layout .page-content .page-title {
+.page.presentation-layout .page-content .page-title:has(.icon) {
   margin-left: -0.75rem;
 }
 
@@ -223,6 +229,7 @@
 }
 
 .page.centered-layout .page-footer,
+.page.centered-narrow-layout .page-footer,
 .page.presentation-layout .page-footer {
   justify-content: center;
 }
@@ -347,6 +354,7 @@
   .page.hero-layout .page-content,
   .page.edge-to-edge-layout .page-content,
   .page.centered-layout .page-content,
+  .page.centered-narrow-layout .page-content,
   .page.presentation-layout .page-content {
     width: 100%;
     overflow: initial;
@@ -358,6 +366,7 @@
   }
 
   .page-centered-layout .page-content,
+  .page-centered-narrow-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content {
     padding: 3rem 0 3rem 0;
@@ -373,6 +382,7 @@
 
   .page.sidebar-left-content-layout .page-content .page-title,
   .page.centered-layout .page-content .page-title,
+  .page.centered-narrow-layout .page-content .page-title,
   .page.presentation-layout .page-content .page-title,
   .page-content .page-title {
     margin: 0 1.5rem 0 1.5rem;
@@ -390,6 +400,7 @@
 @media only screen and (--u-viewport_max-sm) {
   .page.sidebar-left-content-layout .page-content .page-title,
   .page.centered-layout .page-content .page-title,
+  .page.centered-narrow-layout .page-content .page-title,
   .page.presentation-layout .page-content .page-title,
   .page-content .page-title {
     margin: 0 1rem 0 1rem;

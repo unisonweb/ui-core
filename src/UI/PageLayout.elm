@@ -49,6 +49,7 @@ type PageLayout msg
             msg
         )
     | CenteredLayout (Layout {} msg)
+    | CenteredNarrowLayout (Layout {} msg)
     | PresentationLayout (PageContent msg)
 
 
@@ -123,6 +124,9 @@ withContent content pl =
         CenteredLayout l ->
             CenteredLayout (withContent_ l)
 
+        CenteredNarrowLayout l ->
+            CenteredNarrowLayout (withContent_ l)
+
         PresentationLayout _ ->
             PresentationLayout content
 
@@ -141,6 +145,9 @@ withBackgroundColor bg pl =
 
         CenteredLayout l ->
             CenteredLayout { l | backgroundColor = bg }
+
+        CenteredNarrowLayout l ->
+            CenteredNarrowLayout { l | backgroundColor = bg }
 
         PresentationLayout _ ->
             pl
@@ -201,6 +208,13 @@ map toMsg pageLayout =
 
         CenteredLayout layout ->
             CenteredLayout
+                { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                , backgroundColor = layout.backgroundColor
+                }
+
+        CenteredNarrowLayout layout ->
+            CenteredNarrowLayout
                 { content = PageContent.map toMsg layout.content
                 , footer = mapPageFooter toMsg layout.footer
                 , backgroundColor = layout.backgroundColor
@@ -292,6 +306,14 @@ view page =
         CenteredLayout { content, footer, backgroundColor } ->
             div
                 [ class "page centered-layout"
+                , bgClassName backgroundColor
+                ]
+                [ PageContent.view_ (viewPageFooter footer) content
+                ]
+
+        CenteredNarrowLayout { content, footer, backgroundColor } ->
+            div
+                [ class "page centered-narrow-layout"
                 , bgClassName backgroundColor
                 ]
                 [ PageContent.view_ (viewPageFooter footer) content
