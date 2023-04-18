@@ -2,6 +2,7 @@ module UI.KpiTag exposing (..)
 
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class, classList)
+import Lib.Util as Util
 import Maybe.Extra as MaybeE
 import UI
 import UI.Click as Click exposing (Click)
@@ -10,7 +11,8 @@ import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
 type alias KpiTag msg =
-    { label : String
+    { singularLabel : String
+    , pluralLabel : Maybe String
     , kpi : Int
     , tooltip : Maybe (Tooltip msg)
     , icon : Maybe (Icon msg)
@@ -23,8 +25,9 @@ type alias KpiTag msg =
 
 
 kpiTag : String -> Int -> KpiTag msg
-kpiTag label kpi =
-    { label = label
+kpiTag singular kpi =
+    { singularLabel = singular
+    , pluralLabel = Nothing
     , kpi = kpi
     , icon = Nothing
     , click = Nothing
@@ -34,6 +37,11 @@ kpiTag label kpi =
 
 
 -- MODIFY
+
+
+withPlural : String -> KpiTag msg -> KpiTag msg
+withPlural plural kt =
+    { kt | pluralLabel = Just plural }
 
 
 withIcon : Icon msg -> KpiTag msg -> KpiTag msg
@@ -57,7 +65,8 @@ withTooltip tooltip kt =
 
 map : (msgA -> msgB) -> KpiTag msgA -> KpiTag msgB
 map f kt =
-    { label = kt.label
+    { singularLabel = kt.singularLabel
+    , pluralLabel = kt.pluralLabel
     , kpi = kt.kpi
     , icon = Maybe.map (Icon.map f) kt.icon
     , click = Maybe.map (Click.map f) kt.click
@@ -70,13 +79,23 @@ map f kt =
 
 
 view : KpiTag msg -> Html msg
-view { label, kpi, icon, click, tooltip } =
+view { singularLabel, pluralLabel, kpi, icon, click, tooltip } =
     let
         kpi_ =
             span [ class "kpi-tag_kpi" ] [ text (String.fromInt kpi) ]
 
         icon_ =
             MaybeE.unwrap UI.nothing Icon.view icon
+
+        label =
+            let
+                s =
+                    singularLabel
+
+                p =
+                    Maybe.withDefault (s ++ "s") pluralLabel
+            in
+            Util.pluralize s p kpi
 
         label_ =
             span [ class "kpi-tag_label" ] [ text label ]
