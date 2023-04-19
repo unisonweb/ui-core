@@ -11,6 +11,30 @@ type alias EmptyStateCard msg =
     }
 
 
+
+-- CREATE
+
+
+emptyStateCard : Html msg -> Html msg -> EmptyStateCard msg
+emptyStateCard centerPiece content =
+    { centerPiece = centerPiece, content = content }
+
+
+
+-- MAP
+
+
+map : (msgA -> msgB) -> EmptyStateCard msgA -> EmptyStateCard msgB
+map f esc =
+    { centerPiece = Html.map f esc.centerPiece
+    , content = Html.map f esc.content
+    }
+
+
+
+-- VIEW
+
+
 asCard : EmptyStateCard msg -> Card msg
 asCard { centerPiece, content } =
     Card.card
