@@ -42,6 +42,10 @@ search =
     { type_ = Search, onSurface = OnSurface.light, content = [] }
 
 
+
+-- MODIFY
+
+
 withContent : List (Html msg) -> EmptyState msg -> EmptyState msg
 withContent content es =
     { es | content = content }
@@ -60,6 +64,10 @@ onDark es =
 onLight : EmptyState msg -> EmptyState msg
 onLight es =
     onSurface OnSurface.light es
+
+
+
+-- VIEW
 
 
 view : EmptyState msg -> Html msg
