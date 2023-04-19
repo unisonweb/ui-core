@@ -1,0 +1,58 @@
+.empty-state {
+  font-size: var(--font-size-medium);
+  color: var(--u-color_text);
+}
+
+/* -- Grid ----------------------------------------------------------------- */
+
+.empty-state .empty-state_grid {
+  background: url(./empty-state-bg.svg);
+  background-position: center 2rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding: 0rem 4.625rem 5.5rem 4.625rem;
+  display: flex;
+  justify-content: center;
+  width: 37.5rem;
+}
+
+/* -- Icon Cloud ----------------------------------------------------------- */
+
+.empty-state:has(.empty-state_icon-cloud) {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-self: center;
+  place-content: center;
+  place-items: center;
+}
+
+.empty-state .empty-state_icon-cloud {
+  position: relative;
+  width: 317px;
+  height: 174px;
+  background: url("../empty-state_icon-cloud.svg");
+}
+
+.empty-state .empty-state_icon-cloud_center-piece {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -25%);
+}
+
+.empty-state .empty-state_icon-cloud_center-piece.center-piece_circle {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 0 0.25rem var(--color-gray-lighten-55);
+}
+
+/* -- Search --------------------------------------------------------------- */
+
+.empty-state:has(.empty-state_search) {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  place-content: center;
+}
