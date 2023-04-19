@@ -1,0 +1,5 @@
+.empty-state-card {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
