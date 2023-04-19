@@ -47,6 +47,21 @@ withContent content es =
     { es | content = content }
 
 
+onSurface : OnSurface -> EmptyState msg -> EmptyState msg
+onSurface onSurface_ es =
+    { es | onSurface = onSurface_ }
+
+
+onDark : EmptyState msg -> EmptyState msg
+onDark es =
+    onSurface OnSurface.dark es
+
+
+onLight : EmptyState msg -> EmptyState msg
+onLight es =
+    onSurface OnSurface.light es
+
+
 view : EmptyState msg -> Html msg
 view es =
     let
