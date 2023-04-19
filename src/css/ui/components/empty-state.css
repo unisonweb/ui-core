@@ -27,6 +27,10 @@
   place-items: center;
 }
 
+.empty-state:has(.empty-state_icon-cloud) p {
+  margin: 0;
+}
+
 .empty-state .empty-state_icon-cloud {
   position: relative;
   width: 317px;
@@ -35,10 +39,15 @@
 }
 
 .empty-state .empty-state_icon-cloud_center-piece {
+  background: var(--color-blue-4);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -25%);
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
+  font-size: 2rem;
 }
 
 .empty-state .empty-state_icon-cloud_center-piece.center-piece_circle {
