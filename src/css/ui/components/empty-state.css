@@ -39,6 +39,9 @@
 }
 
 .empty-state .empty-state_icon-cloud_center-piece {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--color-blue-4);
   position: absolute;
   left: 50%;
