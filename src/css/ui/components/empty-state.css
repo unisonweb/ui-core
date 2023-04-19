@@ -42,7 +42,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--color-blue-4);
+  background: var(--color-gray-lighten-50);
   position: absolute;
   left: 50%;
   top: 50%;
