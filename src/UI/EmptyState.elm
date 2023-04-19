@@ -72,4 +72,4 @@ view es =
                 Search ->
                     div [ class "empty-state_search" ] []
     in
-    div [ class "empty-state" ] (illustration :: es.content)
+    div [ class "empty-state", OnSurface.toClass es.onSurface ] (illustration :: es.content)
