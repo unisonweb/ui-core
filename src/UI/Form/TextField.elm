@@ -111,12 +111,12 @@ withRows nl textField =
 
 withIcon : Icon msg -> TextField msg -> TextField msg
 withIcon icon tf =
-    { tf | icon = TextFieldIcon icon }
+    withTextFieldIcon (TextFieldIcon icon) tf
 
 
 withStatusIndicator : StatusIndicator -> TextField msg -> TextField msg
 withStatusIndicator indicator tf =
-    { tf | icon = TextFieldStatusIndicator indicator }
+    withTextFieldIcon (TextFieldStatusIndicator indicator) tf
 
 
 withIconOrIndicator : Icon msg -> StatusIndicator -> Bool -> TextField msg -> TextField msg
@@ -129,7 +129,7 @@ withIconOrIndicator icon indicator showIndicator tf =
             else
                 TextFieldIcon icon
     in
-    { tf | icon = icon_ }
+    withTextFieldIcon icon_ tf
 
 
 withIconOrWorking : Icon msg -> Bool -> TextField msg -> TextField msg
@@ -142,7 +142,12 @@ withIconOrWorking icon showWorking tf =
             else
                 TextFieldIcon icon
     in
-    { tf | icon = icon_ }
+    withTextFieldIcon icon_ tf
+
+
+withTextFieldIcon : TextFieldIcon msg -> TextField msg -> TextField msg
+withTextFieldIcon tfIcon tf =
+    { tf | icon = tfIcon }
 
 
 withClear : msg -> TextField msg -> TextField msg
