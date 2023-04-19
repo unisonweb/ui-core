@@ -1,6 +1,6 @@
 .code_empty-state {
   font-size: var(--font-size-medium);
-  background: url(./empty-state-bg.svg);
+  background: url(../ui/empty-state_grid.svg);
   background-position: center 2rem;
   background-repeat: no-repeat;
   background-size: contain;

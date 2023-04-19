@@ -6,7 +6,7 @@
 /* -- Grid ----------------------------------------------------------------- */
 
 .empty-state .empty-state_grid {
-  background: url(./empty-state-bg.svg);
+  background: url(./empty-state_grid.svg);
   background-position: center 2rem;
   background-repeat: no-repeat;
   background-size: contain;
