@@ -11,6 +11,7 @@
         "UI.Sidebar",
         "UI.Banner",
         "UI.CopyField",
+        "UI.EmptyStateCard",
         "UI.Toolbar",
         "UI.Button",
         "UI.Modal",

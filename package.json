@@ -22,7 +22,7 @@
   "homepage": "https://github.com/unisonweb/ui-core#readme",
   "devDependencies": {
     "elm": "^0.19.1-5",
-    "elm-format": "^0.8.5",
+    "elm-format": "^0.8.7",
     "elm-review": "^2.9.1",
     "elm-test": "^0.19.1-revision12",
     "elm-watch": "^1.0.2",

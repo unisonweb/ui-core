@@ -1,0 +1,12 @@
+.empty-state-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.empty-state-card .empty-state-card_icons {
+  position: relative;
+  width: 317px;
+  height: 174px;
+  background: url("../empty-state-icons-bg.svg");
+}
