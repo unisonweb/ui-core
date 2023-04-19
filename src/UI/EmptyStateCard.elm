@@ -54,10 +54,10 @@ viewCenterPiece : CenterPiece msg -> Html msg
 viewCenterPiece cp =
     case cp of
         CircleCenterPiece h ->
-            div [ class "center-piece center-piece_circle" ] [ h ]
+            div [ class "empty-state-card_center-piece center-piece_circle" ] [ h ]
 
         CustomCenterPiece h ->
-            div [ class "center-piece center-piece_custom" ] [ h ]
+            div [ class "empty-state-card_center-piece center-piece_custom" ] [ h ]
 
 
 asCard : EmptyStateCard msg -> Card msg
