@@ -42,6 +42,11 @@ search =
     { type_ = Search, onSurface = OnSurface.light, content = [] }
 
 
+withContent : List (Html msg) -> EmptyState msg -> EmptyState msg
+withContent content es =
+    { es | content = content }
+
+
 view : EmptyState msg -> Html msg
 view es =
     let
