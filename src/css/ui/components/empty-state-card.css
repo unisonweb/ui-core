@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  align-self: center;
+  place-content: center;
+  place-items: center;
 }
 
 .empty-state-card .empty-state-card_icons {
