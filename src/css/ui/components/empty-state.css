@@ -65,13 +65,21 @@
 .empty-state:has(.empty-state_search) {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   place-content: center;
+  align-items: center;
+  margin-top: 2.625rem;
+  align-self: center;
+}
+
+.empty-state:has(.empty-state_search) p {
+  margin-bottom: 0;
 }
 
 .empty-state .empty-state_search {
   width: 224px;
   height: 68px;
+  margin-bottom: 1rem;
 }
 
 .empty-state.on-light .empty-state_search {
