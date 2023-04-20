@@ -1,5 +1,6 @@
 .tag {
   --c-color_tag_bg: var(--u-color_element_emphasized);
+  --c-color_tag_bg_hovered: var(--u-color_element_emphasized_hovered);
   --c-color_tag_text: var(--u-color_text);
   --c-color_tag_text_subdued: var(--u-color_text_subdued);
   --c-color_tag_icon: var(--u-color_icon);
@@ -14,6 +15,13 @@
   flex-direction: row;
   line-height: 1;
   font-size: var(--font-size-small);
+}
+
+a.tag {
+  color: var(--c-color_tag_text);
+}
+a.tag:hover {
+  background: var(--c-color_tag_bg_hovered);
 }
 
 .tag.tag_size_medium {
