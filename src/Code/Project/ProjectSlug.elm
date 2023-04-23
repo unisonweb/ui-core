@@ -48,20 +48,11 @@ equals (ProjectSlug a) (ProjectSlug b) =
     a == b
 
 
-{-| Modelled after the GitHub user handle requirements, since we're importing their handles.
+{-| Requirements
 
-Validates an un-prefixed string. So `@unison` would not be valid. We add and
-remove `@` as a toString/fromString step instead
-
-Requirements (via <https://github.com/shinnn/github-username-regex>):
-
-  - May only contain alphanumeric characters or hyphens.
-  - Can't have multiple consecutive hyphens.
-  - Can't begin or end with a hyphen.
-  - Maximum is 39 characters.
-
-Additional requirements:
-
+  - May only contain alphanumeric characters, underscores, and hyphens.
+  - No special symbols or spaces
+  - no slashes
   - Can't be a reserved word, like "code" or "p" (those are used in URLs to mean other things)
 
 -}
@@ -76,7 +67,7 @@ isValidProjectSlug raw =
 
         re =
             Maybe.withDefault Regex.never <|
-                Regex.fromString "^[a-z\\d](?:[a-z\\d]|-(?=[a-z\\d])){1,39}$"
+                Regex.fromString "^[\\w-]+$"
     in
     not isReserved && Regex.contains re raw
 
