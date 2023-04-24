@@ -48,6 +48,8 @@
         "Code.FullyQualifiedNameSet",
         "Code.Project",
         "Code.ProjectListing",
+        "Code.ProjectRelease",
+        "Code.ProjectVersion",
         "Code.Project.ProjectRef",
         "Code.Hash",
         "Code.HashQualified",
