@@ -33,7 +33,7 @@ type alias ProjectRelease =
 -- DECODE
 
 
-decode : Decode.Decoder Release
+decode : Decode.Decoder ProjectRelease
 decode =
     let
         published at by =
