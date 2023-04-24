@@ -13,11 +13,21 @@ equals =
                 ProjectVersion.equals (projectVersion 1 2 3) (projectVersion 1 2 3)
                     |> Expect.equal True
                     |> Expect.onFail "Expected ProjectVersion \"1.2.3\" and ProjectVersion \"1.2.3\" to be equal"
-        , test "Returns False when not equal" <|
+        , test "Returns False when not equal on major" <|
             \_ ->
-                ProjectVersion.equals (projectVersion 1 2 3) (projectVersion 2 3 4)
+                ProjectVersion.equals (projectVersion 1 2 3) (projectVersion 2 2 3)
                     |> Expect.equal False
-                    |> Expect.onFail "Expected ProjectVersion \"1.2.3\" and ProjectVersion \"2.3.4\" not to be equal"
+                    |> Expect.onFail "Expected ProjectVersion \"1.2.3\" and ProjectVersion \"2.2.3\" not to be equal"
+        , test "Returns False when not equal on minor" <|
+            \_ ->
+                ProjectVersion.equals (projectVersion 1 2 3) (projectVersion 1 3 3)
+                    |> Expect.equal False
+                    |> Expect.onFail "Expected ProjectVersion \"1.2.3\" and ProjectVersion \"1.3.3\" not to be equal"
+        , test "Returns False when not equal on patch" <|
+            \_ ->
+                ProjectVersion.equals (projectVersion 1 2 3) (projectVersion 1 2 4)
+                    |> Expect.equal False
+                    |> Expect.onFail "Expected ProjectVersion \"1.2.3\" and ProjectVersion \"1.2.4\" not to be equal"
         ]
 
 

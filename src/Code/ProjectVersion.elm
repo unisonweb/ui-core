@@ -139,7 +139,7 @@ patch (ProjectVersion pv) =
 
 equals : ProjectVersion -> ProjectVersion -> Bool
 equals (ProjectVersion a) (ProjectVersion b) =
-    a.major == b.major && a.minor == b.minor && b.patch == b.patch
+    a.major == b.major && a.minor == b.minor && a.patch == b.patch
 
 
 nextMajor : ProjectVersion -> ProjectVersion
