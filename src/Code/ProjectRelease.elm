@@ -17,7 +17,7 @@ type ReleaseStatus
     | Unpublished { unpublishedAt : DateTime, unpublishedBy : UserHandle }
 
 
-type alias Release =
+type alias ProjectRelease =
     { version : ProjectVersion
     , causalHash : Hash
     , releaseNotes : Maybe Doc
