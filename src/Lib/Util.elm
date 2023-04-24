@@ -102,3 +102,29 @@ httpErrorToString err =
 
         Http.BadUrl url ->
             "Malformed url: " ++ url
+
+
+ascending : (a -> a -> Order) -> a -> a -> Order
+ascending comp a b =
+    case comp a b of
+        LT ->
+            LT
+
+        EQ ->
+            EQ
+
+        GT ->
+            GT
+
+
+descending : (a -> a -> Order) -> a -> a -> Order
+descending comp a b =
+    case comp a b of
+        LT ->
+            GT
+
+        EQ ->
+            EQ
+
+        GT ->
+            LT
