@@ -61,7 +61,7 @@ decode =
                     )
                 ]
     in
-    Decode.succeed Release
+    Decode.succeed ProjectRelease
         |> required "version" ProjectVersion.decode
         |> required "causalHash" Hash.decode
         |> required "releaseNotes" (nullable Doc.decode)
