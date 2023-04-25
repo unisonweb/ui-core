@@ -11,10 +11,14 @@ import Lib.UserHandle as UserHandle exposing (UserHandle)
 import UI.DateTime as DateTime exposing (DateTime)
 
 
+type alias StatusMeta =
+    { at : DateTime, by : UserHandle }
+
+
 type ReleaseStatus
     = Draft
-    | Published { publishedAt : DateTime, publishedBy : UserHandle }
-    | Unpublished { unpublishedAt : DateTime, unpublishedBy : UserHandle }
+    | Published StatusMeta
+    | Unpublished StatusMeta
 
 
 type alias ProjectRelease =
@@ -30,6 +34,40 @@ type alias ProjectRelease =
 
 
 
+-- HELPERS
+
+
+isDraft : ProjectRelease -> Bool
+isDraft pr =
+    case pr.status of
+        Draft _ ->
+            True
+
+        _ ->
+            False
+
+
+isPublished : ProjectRelease -> Bool
+isPublished pr =
+    case pr.status of
+        Published _ ->
+            True
+
+        _ ->
+            False
+
+
+isUnpublished : ProjectRelease -> Bool
+isUnpublished pr =
+    case pr.status of
+        Unpublished _ ->
+            True
+
+        _ ->
+            False
+
+
+
 -- DECODE
 
 
@@ -37,10 +75,10 @@ decode : Decode.Decoder ProjectRelease
 decode =
     let
         published at by =
-            Published { publishedAt = at, publishedBy = by }
+            Published { at = at, by = by }
 
         unpublished at by =
-            Unpublished { unpublishedAt = at, unpublishedBy = by }
+            Unpublished { at = at, by = by }
 
         decodeStatus =
             Decode.oneOf
