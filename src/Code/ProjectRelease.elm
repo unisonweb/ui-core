@@ -40,7 +40,7 @@ type alias ProjectRelease =
 isDraft : ProjectRelease -> Bool
 isDraft pr =
     case pr.status of
-        Draft _ ->
+        Draft ->
             True
 
         _ ->
