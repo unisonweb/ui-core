@@ -130,6 +130,6 @@ descending comp a b =
             LT
 
 
-sortByWith : (a -> comparable) -> (comparable -> comparable -> Order) -> List a -> List a
+sortByWith : (x -> a) -> (a -> a -> Order) -> List x -> List x
 sortByWith get compare_ list =
-    List.sortWith (\a b -> compare_ (get a) (get b)) list
+    List.sortWith (\x1 x2 -> compare_ (get x1) (get x2)) list
