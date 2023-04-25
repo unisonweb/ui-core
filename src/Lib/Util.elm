@@ -128,3 +128,8 @@ descending comp a b =
 
         GT ->
             LT
+
+
+sortByWith : (a -> comparable) -> (comparable -> comparable -> Order) -> List a -> List a
+sortByWith get compare_ list =
+    List.sortWith (\a b -> compare_ (get a) (get b)) list
