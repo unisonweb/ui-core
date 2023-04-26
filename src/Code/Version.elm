@@ -19,14 +19,12 @@ module Code.Version exposing
     , toList
     , toString
     , toUrlString
-    , urlParser
     , version
     )
 
 import Json.Decode as Decode
 import Lib.Util as Util
 import Maybe.Extra as MaybeE
-import Url.Parser
 
 
 type Version
@@ -186,11 +184,6 @@ toString_ sep v =
 
 
 -- DECODE
-
-
-urlParser : Url.Parser.Parser (Version -> a) a
-urlParser =
-    Url.Parser.custom "VERSION" fromUrlString
 
 
 decode : Decode.Decoder Version
