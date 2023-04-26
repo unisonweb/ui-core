@@ -212,7 +212,7 @@ a.button:hover {
 .button.outlined:not(.disabled):hover,
 .button.outlined.button_active {
   color: var(--color-button-outlined-hover-text);
-  box-shadow: 0 0 0 1px var(--color-button-outlined-hover-bg);
+  box-shadow: 0 0 0 1px var(--color-button-outlined-hover-border);
   background: var(--color-button-outlined-hover-bg);
 }
 

@@ -76,7 +76,7 @@
   --u-color_action_outlined_hovered: var(--color-transparent);
   --u-color_border-on-action-outlined_hovered: var(--color-gray-lighten-30);
   --u-color_text-on-action-outlined_hovered: var(--color-gray-darken-30);
-  --u-color_icon-on-action-outlined_hovered: var(--color-gray-base);
+  --u-color_icon-on-action-outlined_hovered: var(--color-gray-lighten-20);
 
   --u-color_container: var(--color-gray-lighten-100);
   --u-color_container_hovered: var(--color-gray-lighten-60);
