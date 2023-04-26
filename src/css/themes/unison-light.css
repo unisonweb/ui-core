@@ -70,7 +70,7 @@
   --u-color_icon-on-action-emphasized_hovered: var(--color-gray-lighten-30);
 
   --u-color_action_outlined: var(--color-transparent);
-  --u-color_border-action-outlined: var(--color-gray-lighten-45);
+  --u-color_border-on-action-outlined: var(--color-gray-lighten-45);
   --u-color_text-on-action-outlined: var(--color-gray-darken-30);
   --u-color_icon-on-action-outlined: var(--color-gray-lighten-20);
   --u-color_action_outlined_hovered: var(--color-transparent);
