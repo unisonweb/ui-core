@@ -1,9 +1,9 @@
-module Code.ProjectRelease exposing (..)
+module Code.Project.Release exposing (..)
 
 import Code.Definition.Doc as Doc exposing (Doc)
 import Code.Hash as Hash exposing (Hash)
 import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
-import Code.ProjectVersion as ProjectVersion exposing (ProjectVersion)
+import Code.Version as Version exposing (Version)
 import Json.Decode as Decode exposing (field, nullable, string)
 import Json.Decode.Extra exposing (when)
 import Json.Decode.Pipeline exposing (required)
@@ -21,8 +21,8 @@ type ReleaseStatus
     | Unpublished StatusMeta
 
 
-type alias ProjectRelease =
-    { version : ProjectVersion
+type alias Release =
+    { version : Version
     , causalHash : Hash
     , releaseNotes : Maybe Doc
     , projectRef : ProjectRef
@@ -37,9 +37,9 @@ type alias ProjectRelease =
 -- HELPERS
 
 
-isDraft : ProjectRelease -> Bool
-isDraft pr =
-    case pr.status of
+isDraft : Release -> Bool
+isDraft r =
+    case r.status of
         Draft ->
             True
 
@@ -47,9 +47,9 @@ isDraft pr =
             False
 
 
-isPublished : ProjectRelease -> Bool
-isPublished pr =
-    case pr.status of
+isPublished : Release -> Bool
+isPublished r =
+    case r.status of
         Published _ ->
             True
 
@@ -57,9 +57,9 @@ isPublished pr =
             False
 
 
-isUnpublished : ProjectRelease -> Bool
-isUnpublished pr =
-    case pr.status of
+isUnpublished : Release -> Bool
+isUnpublished r =
+    case r.status of
         Unpublished _ ->
             True
 
@@ -71,7 +71,7 @@ isUnpublished pr =
 -- DECODE
 
 
-decode : Decode.Decoder ProjectRelease
+decode : Decode.Decoder Release
 decode =
     let
         published at by =
@@ -99,8 +99,8 @@ decode =
                     )
                 ]
     in
-    Decode.succeed ProjectRelease
-        |> required "version" ProjectVersion.decode
+    Decode.succeed Release
+        |> required "version" Version.decode
         |> required "causalHash" Hash.decode
         |> required "releaseNotes" (nullable Doc.decode)
         |> required "projectRef" ProjectRef.decode
