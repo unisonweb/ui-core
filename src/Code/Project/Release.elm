@@ -1,5 +1,6 @@
 module Code.Project.Release exposing (..)
 
+import Code.BranchRef as BranchRef exposing (BranchRef)
 import Code.Definition.Doc as Doc exposing (Doc)
 import Code.Hash as Hash exposing (Hash)
 import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
@@ -65,6 +66,11 @@ isUnpublished r =
 
         _ ->
             False
+
+
+branchRef : Release -> BranchRef
+branchRef r =
+    BranchRef.releaseBranchRef r.version
 
 
 
