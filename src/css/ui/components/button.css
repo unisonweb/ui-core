@@ -17,6 +17,21 @@
   );
   --color-button-emphasized-hover-bg: var(--u-color_action_emphasized_hovered);
 
+  --color-button-outlined-text: var(--u-color_text-on-action-outlined);
+  --color-button-outlined-icon: var(--u-color_icon-on-action-outlined);
+  --color-button-outlined-border: var(--u-color_border-on-action-outlined);
+  --color-button-outlined-bg: var(--u-color_action_outlined);
+  --color-button-outlined-hover-text: var(
+    --u-color_text-on-action-outlined_hovered
+  );
+  --color-button-outlined-hover-icon: var(
+    --u-color_icon-on-action-outlined_hovered
+  );
+  --color-button-outlined-hover-bg: var(--u-color_action_outlined_hovered);
+  --color-button-outlined-hover-border: var(
+    --u-color_border-on-action-outlined_hovered
+  );
+
   --color-button-critical-text: var(--u-color_critical_text-on-action);
   --color-button-critical-icon: var(--u-color_critical_icon-on-action);
   --color-button-critical-bg: var(--u-color_critical_action);
@@ -183,6 +198,27 @@ a.button:hover {
 .button.emphasized:not(.disabled):hover .icon,
 .button.emphasized.button_active .icon {
   color: var(--color-button-emphasized-hover-icon);
+}
+
+.button.outlined {
+  color: var(--color-button-outlined-text);
+  box-shadow: 0 0 0 1px var(--color-button-outlined-border);
+  background: var(--color-button-outlined-bg);
+}
+.button.outlined .icon {
+  color: var(--color-button-outlined-icon);
+}
+
+.button.outlined:not(.disabled):hover,
+.button.outlined.button_active {
+  color: var(--color-button-outlined-hover-text);
+  box-shadow: 0 0 0 1px var(--color-button-outlined-hover-bg);
+  background: var(--color-button-outlined-hover-bg);
+}
+
+.button.outlined:not(.disabled):hover .icon,
+.button.outlined.button_active .icon {
+  color: var(--color-button-outlined-hover-icon);
 }
 
 .button.critical {
