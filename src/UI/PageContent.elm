@@ -18,6 +18,7 @@ module UI.PageContent exposing
 import Html exposing (Html, aside, div, h1, header, p, section, text)
 import Html.Attributes exposing (class, id)
 import UI
+import UI.Button as Button exposing (Button)
 import UI.Icon as Icon exposing (Icon)
 
 
@@ -25,6 +26,7 @@ type alias PageTitle msg =
     { icon : Maybe (Icon msg)
     , title : String
     , description : Maybe String
+    , action : Maybe (Button msg)
     }
 
 
@@ -103,6 +105,7 @@ withPageTitleText pageTitleText pageContent =
         { icon = Nothing
         , title = pageTitleText
         , description = Nothing
+        , action = Nothing
         }
         pageContent
 
@@ -148,6 +151,7 @@ mapPageTitle toMsg pageTitleA =
     { icon = Maybe.map (Icon.map toMsg) pageTitleA.icon
     , title = pageTitleA.title
     , description = pageTitleA.description
+    , action = Maybe.map (Button.map toMsg) pageTitleA.action
     }
 
 
@@ -156,9 +160,9 @@ mapPageTitle toMsg pageTitleA =
 
 
 viewPageTitle : PageTitle msg -> Html msg
-viewPageTitle { icon, title, description } =
+viewPageTitle { icon, title, description, action } =
     let
-        items =
+        items_ =
             case ( icon, description ) of
                 ( Nothing, Nothing ) ->
                     [ h1 [] [ text title ] ]
@@ -182,6 +186,14 @@ viewPageTitle { icon, title, description } =
                         , p [ class "description" ] [ text d ]
                         ]
                     ]
+
+        items =
+            case action of
+                Just b ->
+                    [ div [ class "page-title_with-action" ] [ div [] items_, Button.view b ] ]
+
+                Nothing ->
+                    items_
     in
     header [ class "page-title" ] items
 
