@@ -103,6 +103,18 @@ fromString =
                             |> Maybe.map BranchRef.releaseBranchRef
                 in
                 Expect.equal result expected
+        , test "parses a release draft branch ref" <|
+            \_ ->
+                let
+                    result =
+                        BranchRef.fromString "releases/drafts/2.3.1"
+
+                    expected =
+                        "2.3.1"
+                            |> Version.fromString
+                            |> Maybe.map BranchRef.releaseDraftBranchRef
+                in
+                Expect.equal result expected
         , test "fails to parse a branch with special characters" <|
             \_ ->
                 let

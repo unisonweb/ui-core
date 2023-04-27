@@ -17,6 +17,7 @@ type BranchRef
     = ProjectBranchRef BranchSlug
     | ContributorBranchRef UserHandle BranchSlug
     | ReleaseBranchRef Version
+    | ReleaseDraftBranchRef Version
 
 
 projectBranchRef : BranchSlug -> BranchRef
@@ -32,6 +33,11 @@ contributorBranchRef handle_ slug_ =
 releaseBranchRef : Version -> BranchRef
 releaseBranchRef version =
     ReleaseBranchRef version
+
+
+releaseDraftBranchRef : Version -> BranchRef
+releaseDraftBranchRef version =
+    ReleaseDraftBranchRef version
 
 
 main_ : BranchRef
@@ -51,6 +57,9 @@ toString br =
         ReleaseBranchRef v ->
             "releases/" ++ Version.toString v
 
+        ReleaseDraftBranchRef v ->
+            "releases/drafts/" ++ Version.toString v
+
 
 toApiUrlString : BranchRef -> String
 toApiUrlString br =
@@ -61,6 +70,10 @@ toApiUrlString br =
         ContributorBranchRef h (BranchSlug slug_) ->
             -- Escape "/" as "%2F"
             UserHandle.toString h ++ "%2F" ++ slug_
+
+        ReleaseDraftBranchRef v ->
+            -- Escape "/" as "%2F"
+            "releases%2Fdrafts%2F" ++ Version.toUrlString v
 
         ReleaseBranchRef v ->
             -- Escape "/" as "%2F"
@@ -75,6 +88,9 @@ toUrlPath br =
 
         ContributorBranchRef h slug_ ->
             [ UserHandle.toString h, branchSlugToString slug_ ]
+
+        ReleaseDraftBranchRef v ->
+            [ "releases", "drafts", Version.toUrlString v ]
 
         ReleaseBranchRef v ->
             [ "releases", Version.toUrlString v ]
@@ -110,6 +126,16 @@ isReleaseBranchRef br =
             False
 
 
+isReleaseDraftBranchRef : BranchRef -> Bool
+isReleaseDraftBranchRef br =
+    case br of
+        ReleaseDraftBranchRef _ ->
+            True
+
+        _ ->
+            False
+
+
 {-| Branches can include a handle when being parsed.
 
 valid examples are:
@@ -118,6 +144,8 @@ valid examples are:
   - "my-branch", "my\_branch", "-my---branch", "\_my-branch"
     (for some reason elm-format wont allow having underscores without a backslash infront)
   - "@owner/my-branch"
+  - "releases/1.2.3" -- where 1.2.3 is semver format
+  - "releases/drafts/1.2.3"
 
 invalid examples
 
@@ -137,6 +165,9 @@ fromString raw =
             String.split "/" raw
     in
     case parts of
+        [ "releases", "drafts", v ] ->
+            Maybe.map ReleaseDraftBranchRef (Version.fromString v)
+
         [ "releases", v ] ->
             Maybe.map ReleaseBranchRef (Version.fromString v)
 
@@ -210,6 +241,10 @@ toTag branchRef_ =
                 ReleaseBranchRef version ->
                     Tag.tag (Version.toString version)
                         |> Tag.withLeftText "releases/"
+
+                ReleaseDraftBranchRef version ->
+                    Tag.tag (Version.toString version)
+                        |> Tag.withLeftText "releases/drafts/"
     in
     Tag.withIcon Icon.branch tag
 
