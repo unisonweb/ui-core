@@ -4,6 +4,7 @@ module Code.Version exposing
     , compare
     , decode
     , descending
+    , empty
     , equals
     , fromList
     , fromString
@@ -19,7 +20,6 @@ module Code.Version exposing
     , toList
     , toString
     , toUrlString
-    , unreleased
     , version
     , view
     )
@@ -43,8 +43,8 @@ type Version
 -- CREATE
 
 
-unreleased : Version
-unreleased =
+empty : Version
+empty =
     version 0 0 0
 
 
