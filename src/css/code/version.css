@@ -4,7 +4,7 @@
   align-items: center;
   gap: 0;
   font-size: var(--font-size-medium);
-  color: var(--u-color_text_subdued);
+  color: var(--u-color_text);
   font-family: var(--font-monospace);
   font-weight: bold;
 }
