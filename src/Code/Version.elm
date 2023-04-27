@@ -19,6 +19,7 @@ module Code.Version exposing
     , toList
     , toString
     , toUrlString
+    , unreleased
     , version
     , view
     )
@@ -40,6 +41,11 @@ type Version
 
 
 -- CREATE
+
+
+unreleased : Version
+unreleased =
+    version 0 0 0
 
 
 version : Int -> Int -> Int -> Version
