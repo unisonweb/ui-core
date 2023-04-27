@@ -20,8 +20,11 @@ module Code.Version exposing
     , toString
     , toUrlString
     , version
+    , view
     )
 
+import Html exposing (Html, span, text)
+import Html.Attributes exposing (class)
 import Json.Decode as Decode
 import Lib.Util as Util
 import Maybe.Extra as MaybeE
@@ -183,10 +186,19 @@ toString_ sep v =
 
 
 
+-- VIEW
+
+
+view : Version -> Html msg
+view v =
+    span [ class "version" ] [ text (toString v) ]
+
+
+
 -- DECODE
 
 
 decode : Decode.Decoder Version
 decode =
     Decode.map fromString Decode.string
-        |> Decode.andThen (Util.decodeFailInvalid "Invalid Project Version")
+        |> Decode.andThen (Util.decodeFailInvalid "Invalid Version")

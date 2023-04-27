@@ -1,0 +1,10 @@
+.version {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  font-size: var(--font-size-medium);
+  color: var(--u-color_text_subdued);
+  font-family: var(--font-monospace);
+  font-weight: bold;
+}
