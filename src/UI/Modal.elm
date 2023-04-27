@@ -1,6 +1,8 @@
 module UI.Modal exposing
     ( Content(..)
     , Modal
+    , content
+    , customContent
     , modal
     , modal_
     , view
@@ -31,18 +33,28 @@ type alias Modal msg =
 
 
 modal : String -> msg -> Content msg -> Modal msg
-modal id closeMsg content =
-    modal_ id content |> withClose closeMsg
+modal id closeMsg content_ =
+    modal_ id content_ |> withClose closeMsg
 
 
 modal_ : String -> Content msg -> Modal msg
-modal_ id content =
+modal_ id content_ =
     { id = id
     , closeMsg = Nothing
     , attributes = []
     , header = Nothing
-    , content = content
+    , content = content_
     }
+
+
+content : Html msg -> Content msg
+content =
+    Content
+
+
+customContent : Html msg -> Content msg
+customContent =
+    CustomContent
 
 
 withClose : msg -> Modal msg -> Modal msg
@@ -80,7 +92,7 @@ view modal__ =
                     )
                 |> Maybe.withDefault UI.nothing
 
-        content =
+        content_ =
             case modal__.content of
                 Content c ->
                     section [ class "modal-content" ] [ c ]
@@ -88,7 +100,7 @@ view modal__ =
                 CustomContent c ->
                     c
     in
-    view_ modal__.closeMsg (id modal__.id :: modal__.attributes) [ header_, content ]
+    view_ modal__.closeMsg (id modal__.id :: modal__.attributes) [ header_, content_ ]
 
 
 
@@ -96,16 +108,16 @@ view modal__ =
 
 
 view_ : Maybe msg -> List (Attribute msg) -> List (Html msg) -> Html msg
-view_ closeMsg attrs content =
+view_ closeMsg attrs content_ =
     case closeMsg of
         Just closeMsg_ ->
             div [ id overlayId, on "click" (decodeOverlayClick closeMsg_) ]
-                [ div (tabindex 0 :: class "modal" :: attrs) content
+                [ div (tabindex 0 :: class "modal" :: attrs) content_
                 ]
 
         Nothing ->
             div [ id overlayId ]
-                [ div (tabindex 0 :: class "modal" :: attrs) content
+                [ div (tabindex 0 :: class "modal" :: attrs) content_
                 ]
 
 
