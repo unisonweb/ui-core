@@ -14,7 +14,7 @@ type alias Branch b p =
         , project : Project p
         , createdAt : DateTime
         , updatedAt : DateTime
-        , hash : Hash
+        , causalHash : Hash
     }
 
 
@@ -25,12 +25,12 @@ type alias BranchSummary =
 decodeSummary : Decode.Decoder BranchSummary
 decodeSummary =
     let
-        makeBranch branchRef project createdAt updatedAt hash =
+        makeBranch branchRef project createdAt updatedAt causalHash =
             { ref = branchRef
             , project = project
             , createdAt = createdAt
             , updatedAt = updatedAt
-            , hash = hash
+            , causalHash = causalHash
             }
     in
     Decode.succeed makeBranch
