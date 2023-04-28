@@ -198,15 +198,19 @@ unqualifiedName (FQN nameParts) =
 
 namespace : FQN -> Maybe FQN
 namespace (FQN segments_) =
-    case segments_ |> NEL.toList |> ListE.init of
-        Nothing ->
-            Nothing
+    let
+        namespace_ nsSegments =
+            case nsSegments of
+                [] ->
+                    Nothing
 
-        Just [] ->
-            Nothing
-
-        Just segments__ ->
-            Just (fromList segments__)
+                segments__ ->
+                    Just (fromList segments__)
+    in
+    segments_
+        |> NEL.toList
+        |> ListE.init
+        |> Maybe.andThen namespace_
 
 
 equals : FQN -> FQN -> Bool
