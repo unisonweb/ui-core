@@ -1,4 +1,4 @@
-module Stories.Code.WorkspaceItemSample exposing (..)
+module Stories.Code.Sample.WorkspaceItemSample exposing (..)
 
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem, decodeItem, decodeList, fromItem)
 import Helpers.ReferenceHelper exposing (sampleReference)

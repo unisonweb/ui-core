@@ -9,7 +9,7 @@ import Helpers.Layout exposing (col)
 import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
 import Json.Decode
-import Stories.Code.WorkspaceItemSample exposing (decodeSampleItemList)
+import Stories.Code.Sample.WorkspaceItemSample exposing (decodeSampleItemList)
 import UI.ViewMode
 
 

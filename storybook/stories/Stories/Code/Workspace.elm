@@ -9,7 +9,7 @@ import Code.Workspace.WorkspaceItems exposing (empty)
 import Code.Workspace.Zoom exposing (Zoom(..))
 import Html exposing (Html)
 import Lib.OperatingSystem
-import Stories.Code.WorkspaceItemsSample exposing (makeWorkspaceItems)
+import Stories.Code.Sample.WorkspaceItemsSample exposing (makeWorkspaceItems)
 import UI.KeyboardShortcut
 import UI.ViewMode
 

@@ -1,8 +1,8 @@
-module Stories.Code.WorkspaceItemsSample exposing (..)
+module Stories.Code.Sample.WorkspaceItemsSample exposing (..)
 
 import Code.Workspace.WorkspaceItems exposing (WorkspaceItems, fromItems)
 import Json.Decode
-import Stories.Code.WorkspaceItemSample exposing (decodeSampleWorkspaceItem, decodeSampleWorkspaceItemList)
+import Stories.Code.Sample.WorkspaceItemSample exposing (decodeSampleWorkspaceItem, decodeSampleWorkspaceItemList)
 
 
 makeWorkspaceItems : Result Json.Decode.Error WorkspaceItems
