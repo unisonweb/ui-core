@@ -1,11 +1,11 @@
 module Code.Project.Release exposing (..)
 
 import Code.BranchRef as BranchRef exposing (BranchRef)
-import Code.Definition.Doc as Doc exposing (Doc)
+import Code.Definition.Doc exposing (Doc)
 import Code.Hash as Hash exposing (Hash)
 import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
 import Code.Version as Version exposing (Version)
-import Json.Decode as Decode exposing (field, nullable, string)
+import Json.Decode as Decode exposing (field, string)
 import Json.Decode.Extra exposing (when)
 import Json.Decode.Pipeline exposing (required)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
@@ -105,12 +105,24 @@ decode =
                         (field "deprecatedBy" UserHandle.decode)
                     )
                 ]
+
+        release version unsquashed squashed projectRef createdAt createdBy updatedAt status =
+            { version = version
+            , causalHashUnsquashed = unsquashed
+            , causalHashSquashed = squashed
+            , releaseNotes = Nothing
+            , projectRef = projectRef
+            , createdAt = createdAt
+            , createdBy = createdBy
+            , updatedAt = updatedAt
+            , status = status
+            }
     in
-    Decode.succeed Release
+    Decode.succeed release
         |> required "version" Version.decode
         |> required "causalHashUnsquashed" Hash.decode
         |> required "causalHashSquashed" Hash.decode
-        |> required "releaseNotes" (nullable Doc.decode)
+        -- |> required "releaseNotes" (nullable Doc.decode)
         |> required "projectRef" ProjectRef.decode
         |> required "createdAt" DateTime.decode
         |> required "createdBy" UserHandle.decode
