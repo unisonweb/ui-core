@@ -24,7 +24,8 @@ type ReleaseStatus
 
 type alias Release =
     { version : Version
-    , causalHash : Hash
+    , causalHashUnsquashed : Hash
+    , causalHashSquashed : Hash
     , releaseNotes : Maybe Doc
     , projectRef : ProjectRef
     , createdAt : DateTime
@@ -107,7 +108,8 @@ decode =
     in
     Decode.succeed Release
         |> required "version" Version.decode
-        |> required "causalHash" Hash.decode
+        |> required "causalHashUnsquashed" Hash.decode
+        |> required "causalHashSquashed" Hash.decode
         |> required "releaseNotes" (nullable Doc.decode)
         |> required "projectRef" ProjectRef.decode
         |> required "createdAt" DateTime.decode
