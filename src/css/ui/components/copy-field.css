@@ -38,7 +38,7 @@
 .copy-field .copy-field-prefix {
   height: var(--height-without-border);
   padding: 0 0.5ch 0 0.5rem;
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-small);
   align-items: center;
   display: flex;
   color: var(--color-copy-field-prefix);
@@ -52,7 +52,7 @@
   width: 100%;
   font-family: var(--font-monospace);
   height: var(--height-without-border);
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-small);
   font-weight: normal;
   background: transparent;
   color: var(--color-copy-field-text);
