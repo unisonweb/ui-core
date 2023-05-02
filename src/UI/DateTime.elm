@@ -4,6 +4,7 @@ module UI.DateTime exposing
     , decode
     , fromPosix
     , fromString
+    , toISO8601
     , view
     )
 
