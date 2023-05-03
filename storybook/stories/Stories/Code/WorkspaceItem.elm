@@ -2,85 +2,99 @@ module Stories.Code.WorkspaceItem exposing (..)
 
 import Browser
 import Code.Syntax exposing (..)
-import Code.Workspace.WorkspaceItem exposing (Item, Msg(..), WorkspaceItem(..), fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.Zoom exposing (Zoom(..))
 import Dict
-import Helpers.Layout exposing (col)
 import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
-import Json.Decode
-import Stories.Code.Sample.WorkspaceItemSample exposing (decodeSampleItemList)
+import Http
 import UI.ViewMode
 
 
 type alias Model =
-    { zoom : Zoom
+    { workspaceItem : Maybe WorkspaceItem
     }
 
 
-main : Program () Model Msg
+type Message
+    = WorkspaceItemMsg Msg
+    | GotItem (Result Http.Error Item)
+
+
+main : Program () Model Message
 main =
     Browser.element
-        { init = \_ -> ( { zoom = Near }, Cmd.none )
+        { init = init
         , view = view
         , update = update
         , subscriptions = \_ -> Sub.none
         }
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+init : () -> ( Model, Cmd Message )
+init _ =
+    ( { workspaceItem = Nothing }
+    , Http.get
+        { url = "/increment_term_def.json"
+        , expect = Http.expectJson GotItem (decodeItem sampleReference)
+        }
+    )
+
+
+update : Message -> Model -> ( Model, Cmd Message )
 update msg model =
     case msg of
-        UpdateZoom _ zoom ->
-            ( { model | zoom = zoom }, Cmd.none )
+        WorkspaceItemMsg workspaceItemMsg ->
+            case workspaceItemMsg of
+                UpdateZoom _ zoom ->
+                    case model.workspaceItem of
+                        Nothing ->
+                            ( model, Cmd.none )
 
-        _ ->
-            ( model, Cmd.none )
+                        Just item ->
+                            case item of
+                                Success ref itemData ->
+                                    let
+                                        updatedData =
+                                            { itemData | zoom = zoom }
+
+                                        updatedModel =
+                                            { model
+                                                | workspaceItem = Just <| Success ref updatedData
+                                            }
+                                    in
+                                    ( updatedModel, Cmd.none )
+
+                                _ ->
+                                    ( model, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
+
+        GotItem result ->
+            case result of
+                Err error ->
+                    Debug.log (Debug.toString error)
+                        ( model, Cmd.none )
+
+                Ok item ->
+                    ( { model
+                        | workspaceItem = Just (fromItem sampleReference item)
+                      }
+                    , Cmd.none
+                    )
 
 
-view : Model -> Html Msg
+view : Model -> Html Message
 view model =
-    case decodeSampleItemList of
-        Err error ->
-            col [] [ Html.text (Json.Decode.errorToString error) ]
+    case model.workspaceItem of
+        Nothing ->
+            Html.text "No item"
 
-        Ok source ->
-            List.map
-                (viewItem model)
-                source
-                |> col []
-
-
-viewItem : Model -> Item -> Html Code.Workspace.WorkspaceItem.Msg
-viewItem model item =
-    let
-        workspaceItem =
-            fromItem sampleReference item
-    in
-    case workspaceItem of
-        Success ref originalItem ->
-            let
-                updatedItem =
-                    { originalItem
-                        | zoom = model.zoom
-                    }
-            in
+        Just item ->
             Code.Workspace.WorkspaceItem.view
                 { activeTooltip = Nothing, summaries = Dict.empty }
                 UI.ViewMode.Regular
-                (Success ref updatedItem)
+                item
                 True
-
-        Loading _ ->
-            Code.Workspace.WorkspaceItem.view
-                { activeTooltip = Nothing, summaries = Dict.empty }
-                UI.ViewMode.Regular
-                workspaceItem
-                True
-
-        Failure _ _ ->
-            Code.Workspace.WorkspaceItem.view
-                { activeTooltip = Nothing, summaries = Dict.empty }
-                UI.ViewMode.Regular
-                workspaceItem
-                True
+                |> Html.map WorkspaceItemMsg
