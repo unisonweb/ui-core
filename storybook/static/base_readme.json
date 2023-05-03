@@ -1,123 +1,4 @@
-module Stories.Code.Readme exposing (..)
-
-import Browser
-import Code.Definition.Doc as Doc
-import Code.Definition.Readme as Readme exposing (Readme)
-import Code.Syntax as Syntax
-import Code.Workspace.Zoom exposing (Zoom(..))
-import Html exposing (Html)
-import Json.Decode exposing (decodeString)
-import UI.Click as Click
-import Helpers.Layout exposing (col)
-
-sampleToClick : Syntax.ToClick ()
-sampleToClick =
-    \_ -> Click.Disabled
-
-
-sampleTooltipConfig : Syntax.TooltipConfig ()
-sampleTooltipConfig =
-    { toHoverStart = \_ -> ()
-    , toHoverEnd = \_ -> ()
-    , toTooltip = \_ -> Nothing
-    }
-
-
-config : Syntax.LinkedWithTooltipConfig ()
-config =
-    { toClick = sampleToClick
-    , tooltip = sampleTooltipConfig
-    }
-
-
-sampleFoldId : Doc.FoldId
-sampleFoldId =
-    Doc.FoldId []
-
-
-sampleToggles : Doc.DocFoldToggles
-sampleToggles =
-    Doc.emptyDocFoldToggles
-
-
-sampleReadme : Readme
-sampleReadme =
-    Readme.Readme <| Doc.Word "sample doc word"
-
-
-sampleView : Html ()
-sampleView =
-    Readme.view
-        config
-        (\_ -> ())
-        sampleToggles
-        sampleReadme
-
-
-type alias Model =
-    ()
-
-
-main : Program () Model ()
-main =
-    Browser.element
-        { init = \_ -> ( (), Cmd.none )
-        , view = view
-        , update = update
-        , subscriptions = \_ -> Sub.none
-        }
-
-
-update : () -> () -> ( (), Cmd () )
-update _ _ =
-    ( (), Cmd.none )
-
-
-view : Model -> Html ()
-view _ =
-    case decodeReadme of
-        Err error ->
-            col [] [ Html.text (Json.Decode.errorToString error) ]
-
-        Ok readme ->
-            Debug.log 
-                "log"
-                Readme.view
-                config
-                (\_ -> ())
-                sampleToggles
-                readme
-
-
-decodeReadme : Result Json.Decode.Error Readme
-decodeReadme =
-    decodeString Readme.decode readmeSample3
-
-
-readmeSample3 : String
-readmeSample3 = """
 {
-    "contents": [
-        {
-            "contents": "Read",
-            "tag": "Word"
-        },
-        {
-            "contents": "me!",
-            "tag": "Word"
-        }
-    ],
-    "tag": "Paragraph"
-}
-"""
-
-readmeSample2 : String
-readmeSample2 = """
-{"termDefinitions":{"#9fuc7rc235p4okvll4g4haamponj054lln4ohflsvdec256dq776b8nik98tmjrsqfbc28s5o88v059svrv1rjkn66r61rp99cq7osg":{"termNames":["public.file.latest.README"],"bestTermName":"latest.README","defnTermTag":"Doc","termDefinition":{"tag":"UserObject","contents":[{"annotation":{"contents":"latest.README","tag":"HashQualifier"},"segment":"latest.README"},{"annotation":{"tag":"TypeAscriptionColon"},"segment":" :"},{"annotation":null,"segment":" "},{"annotation":{"contents":"#ej86si0ur1lsjade71dojr25phk9bbom9rdks6dltolos5tjivakujcriqe02npba53n9gd7tkh8bmv08ttjb9t35lq2ch5heshqcs0","tag":"TypeReference"},"segment":"Doc"},{"annotation":null,"segment":"\\n"},{"annotation":{"contents":"latest.README","tag":"HashQualifier"},"segment":"latest.README"},{"annotation":{"tag":"BindingEquals"},"segment":" ="},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":{"tag":"DocDelimiter"},"segment":"{{"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"#"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"File"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"utilities"},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"Helpers"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"for"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"dealing"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"with"},{"annotation":null,"segment":" "},{"annotation":null,"segment":"files."},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"* "},{"annotation":null,"segment":"{"},{"annotation":{"contents":"#u5sprmftsjd0v1jddhtiqmm1ru6ac4humubuefs0gj8t89mcvkvha0idugsc52ij0ajulq905b8arqkqm524j1qdt1tmglln505arm8","tag":"TermReference"},"segment":"appendFile"},{"annotation":null,"segment":"}"},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"* "},{"annotation":null,"segment":"{"},{"annotation":{"contents":"#0h20d6hbk2k6rrtssd0neej2glefg4pj4ch18rcqvbt6otdevd7cvlfn115b32ft56rdnhagnbpid23hq73357bisht3u206fksalro","tag":"TermReference"},"segment":"readFile"},{"annotation":null,"segment":"}"},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"* "},{"annotation":null,"segment":"{"},{"annotation":{"contents":"#626og62l40dlejbtnm7dkbj004omumtu7t60f2j0d0prpo6fhitm22m523auh19hvskjfr7fk5mlgcrpkrtakr64h84t15d9obp6llo","tag":"TermReference"},"segment":"writeFile"},{"annotation":null,"segment":"}"},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"* "},{"annotation":null,"segment":"{"},{"annotation":{"contents":"#j0k72dube9tgcg3r5tr3kn83j6no1qnjn022q089vto6fru53e0ni0j5hnah8l47i9im29fhpr0nstsobffn7ni5j7lrcjc3pknn4io","tag":"TermReference"},"segment":"appendFileUtf8"},{"annotation":null,"segment":"}"},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"* "},{"annotation":null,"segment":"{"},{"annotation":{"contents":"#l4gfnrqfq3glvdn7mbni00esdj45r1mrrm3sac3di257ihjs30v8ogtjglcm4bq0b9kb1mqq0j2hch75ntgo5f8rmlurvk0dngsph38","tag":"TermReference"},"segment":"readFileUtf8"},{"annotation":null,"segment":"}"},{"annotation":null,"segment":"\\n"},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"  "},{"annotation":null,"segment":"* "},{"annotation":null,"segment":"{"},{"annotation":{"contents":"#pqon65lud6a1rgq7buch45gjl8qelsdhgb8m3hbdhe98m7km6299h8ilks4c2c17ugktsk6rbmaokkg4nojbh4pba0p1iql5hr44too","tag":"TermReference"},"segment":"writeFileUtf8"},{"annotation":null,"segment":"}"},{"annotation":null,"segment":" "},{"annotation":{"tag":"DocDelimiter"},"segment":"}}"}]},"signature":[{"annotation":{"contents":"#ej86si0ur1lsjade71dojr25phk9bbom9rdks6dltolos5tjivakujcriqe02npba53n9gd7tkh8bmv08ttjb9t35lq2ch5heshqcs0","tag":"TypeReference"},"segment":"Doc"}],"termDocs":[["latest.README","#9fuc7rc235p4okvll4g4haamponj054lln4ohflsvdec256dq776b8nik98tmjrsqfbc28s5o88v059svrv1rjkn66r61rp99cq7osg",{"contents":[{"contents":[{"contents":"File","tag":"Word"},{"contents":"utilities","tag":"Word"}],"tag":"Paragraph"},[{"contents":[{"contents":"Helpers","tag":"Word"},{"contents":"for","tag":"Word"},{"contents":"dealing","tag":"Word"},{"contents":"with","tag":"Word"},{"contents":"files.","tag":"Word"}],"tag":"Paragraph"},{"contents":[{"contents":[{"contents":{"contents":[{"annotation":{"contents":"#u5sprmftsjd0v1jddhtiqmm1ru6ac4humubuefs0gj8t89mcvkvha0idugsc52ij0ajulq905b8arqkqm524j1qdt1tmglln505arm8","tag":"TermReference"},"segment":"appendFile"}],"tag":"Link"},"tag":"Special"}],"tag":"Paragraph"},{"contents":[{"contents":{"contents":[{"annotation":{"contents":"#0h20d6hbk2k6rrtssd0neej2glefg4pj4ch18rcqvbt6otdevd7cvlfn115b32ft56rdnhagnbpid23hq73357bisht3u206fksalro","tag":"TermReference"},"segment":"readFile"}],"tag":"Link"},"tag":"Special"}],"tag":"Paragraph"},{"contents":[{"contents":{"contents":[{"annotation":{"contents":"#626og62l40dlejbtnm7dkbj004omumtu7t60f2j0d0prpo6fhitm22m523auh19hvskjfr7fk5mlgcrpkrtakr64h84t15d9obp6llo","tag":"TermReference"},"segment":"writeFile"}],"tag":"Link"},"tag":"Special"}],"tag":"Paragraph"},{"contents":[{"contents":{"contents":[{"annotation":{"contents":"#j0k72dube9tgcg3r5tr3kn83j6no1qnjn022q089vto6fru53e0ni0j5hnah8l47i9im29fhpr0nstsobffn7ni5j7lrcjc3pknn4io","tag":"TermReference"},"segment":"appendFileUtf8"}],"tag":"Link"},"tag":"Special"}],"tag":"Paragraph"},{"contents":[{"contents":{"contents":[{"annotation":{"contents":"#l4gfnrqfq3glvdn7mbni00esdj45r1mrrm3sac3di257ihjs30v8ogtjglcm4bq0b9kb1mqq0j2hch75ntgo5f8rmlurvk0dngsph38","tag":"TermReference"},"segment":"readFileUtf8"}],"tag":"Link"},"tag":"Special"}],"tag":"Paragraph"},{"contents":[{"contents":{"contents":[{"annotation":{"contents":"#pqon65lud6a1rgq7buch45gjl8qelsdhgb8m3hbdhe98m7km6299h8ilks4c2c17ugktsk6rbmaokkg4nojbh4pba0p1iql5hr44too","tag":"TermReference"},"segment":"writeFileUtf8"}],"tag":"Link"},"tag":"Special"}],"tag":"Paragraph"}],"tag":"BulletedList"}]],"tag":"Section"}]]}},"typeDefinitions":{},"missingDefinitions":[]}"""
-
-
-readmeSample : String
-readmeSample = """{
     "termDefinitions": {
         "#1444pla0bqsncfv212494rfuhl9fuqh7uhf8api0k0q235npufpo1ee79bs4j42s7m2lo5o9oo6ppmmqlr37i8ekrsp2pbc8suonqbo": {
             "termNames": [
@@ -155,7 +36,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": {
@@ -172,7 +53,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -186,7 +67,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -230,7 +111,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -238,7 +119,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -318,7 +199,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -414,7 +295,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -454,7 +335,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -466,7 +347,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -521,7 +402,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -533,7 +414,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -565,7 +446,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -577,7 +458,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -685,7 +566,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -793,7 +674,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -893,7 +774,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1017,7 +898,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1109,7 +990,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1121,7 +1002,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1145,7 +1026,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1157,7 +1038,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1270,7 +1151,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1386,7 +1267,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1481,7 +1362,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1586,7 +1467,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1660,7 +1541,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1770,7 +1651,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1794,7 +1675,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1915,7 +1796,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -1985,7 +1866,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2106,7 +1987,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2222,7 +2103,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2356,7 +2237,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2380,7 +2261,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2471,7 +2352,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2537,7 +2418,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2636,7 +2517,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2668,7 +2549,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2751,7 +2632,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2791,7 +2672,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2882,7 +2763,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -2989,7 +2870,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -3037,7 +2918,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -3147,7 +3028,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -3219,7 +3100,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -3337,7 +3218,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -3452,7 +3333,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -3500,7 +3381,7 @@ readmeSample = """{
                     },
                     {
                         "annotation": null,
-                        "segment": "\\n"
+                        "segment": "\n"
                     },
                     {
                         "annotation": null,
@@ -5558,4 +5439,3 @@ readmeSample = """{
     "typeDefinitions": {},
     "missingDefinitions": []
 }
-"""
