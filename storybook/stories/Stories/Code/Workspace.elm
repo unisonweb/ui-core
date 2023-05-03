@@ -4,17 +4,18 @@ import Browser
 import Code.DefinitionSummaryTooltip
 import Code.Syntax exposing (..)
 import Code.Workspace exposing (Model, Msg(..))
-import Code.Workspace.WorkspaceItem exposing (WorkspaceItem(..))
-import Code.Workspace.WorkspaceItems exposing (empty)
+import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItems exposing (empty, fromItems)
 import Code.Workspace.Zoom exposing (Zoom(..))
+import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
+import Http
 import Lib.OperatingSystem
-import Stories.Code.Sample.WorkspaceItemsSample exposing (makeWorkspaceItems)
 import UI.KeyboardShortcut
 import UI.ViewMode
 
 
-main : Program () Model Msg
+main : Program () Model Message
 main =
     Browser.element
         { init = init
@@ -24,19 +25,42 @@ main =
         }
 
 
-init : () -> ( Model, Cmd Msg )
+init : () -> ( Model, Cmd Message )
 init _ =
-    case makeWorkspaceItems of
-        Err _ ->
-            ( makeWorkspaceModel, Cmd.none )
+    ( initWorkspaceModel
+    , Http.get
+        { url = "/increment_term_def.json"
+        , expect = Http.expectJson GotItem (decodeItem sampleReference)
+        }
+    )
 
-        Ok workspaceItems ->
-            ( { makeWorkspaceModel | workspaceItems = workspaceItems }, Cmd.none )
+
+type Message
+    = WorkspaceMsg Msg
+    | GotItem (Result Http.Error Item)
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update _ model =
-    ( model, Cmd.none )
+update : Message -> Model -> ( Model, Cmd Message )
+update message model =
+    case message of
+        WorkspaceMsg _ ->
+            ( model, Cmd.none )
+
+        GotItem result ->
+            case result of
+                Err error ->
+                    Debug.log (Debug.toString error)
+                        ( model, Cmd.none )
+
+                Ok item ->
+                    let
+                        workspaceItem =
+                            fromItem sampleReference item
+
+                        workspaceItems =
+                            fromItems [ workspaceItem ] workspaceItem [ workspaceItem, workspaceItem ]
+                    in
+                    ( { model | workspaceItems = workspaceItems }, Cmd.none )
 
 
 sampleKeyboardShortcut : UI.KeyboardShortcut.Model
@@ -44,14 +68,17 @@ sampleKeyboardShortcut =
     UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS
 
 
-makeWorkspaceModel : Model
-makeWorkspaceModel =
+initWorkspaceModel : Model
+initWorkspaceModel =
     { workspaceItems = empty
     , keyboardShortcut = sampleKeyboardShortcut
     , definitionSummaryTooltip = Code.DefinitionSummaryTooltip.init
     }
 
 
-view : Model -> Html Msg
+view : Model -> Html Message
 view model =
-    Code.Workspace.view UI.ViewMode.Regular model
+    Html.map WorkspaceMsg <|
+        Code.Workspace.view
+            UI.ViewMode.Regular
+            model
