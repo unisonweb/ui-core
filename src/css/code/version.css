@@ -1,0 +1,9 @@
+.version {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+  color: var(--u-color_text);
+  font-family: var(--font-monospace);
+  font-weight: bold;
+}

@@ -1,4 +1,12 @@
-module UI.DateTime exposing (DateTime, DateTimeFormat(..), decode, fromPosix, view)
+module UI.DateTime exposing
+    ( DateTime
+    , DateTimeFormat(..)
+    , decode
+    , fromPosix
+    , fromString
+    , toISO8601
+    , view
+    )
 
 import Html exposing (Html, node, text)
 import Html.Attributes exposing (attribute)
@@ -25,6 +33,13 @@ fromPosix p =
 decode : Decode.Decoder DateTime
 decode =
     Decode.map DateTime Iso8601.decoder
+
+
+fromString : String -> Maybe DateTime
+fromString s =
+    s
+        |> Decode.decodeString decode
+        |> Result.toMaybe
 
 
 toISO8601 : DateTime -> String

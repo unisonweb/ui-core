@@ -4,7 +4,7 @@
   --color-card-title: var(--u-color_text_very-subdued);
   --color-card-border: var(--u-color_border_subdued);
 
-  padding: 1.5rem 1.5rem 2rem 1.5rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

@@ -1,7 +1,9 @@
 module Code.BranchRefTests exposing (..)
 
-import Code.BranchRef as BranchRef
+import Code.BranchRef as BranchRef exposing (unsafeBranchSlugFromString)
+import Code.Version as Version
 import Expect
+import Lib.UserHandle as UserHandle
 import Test exposing (..)
 
 
@@ -53,7 +55,7 @@ fromString =
                         BranchRef.fromString "mybranch"
 
                     expected =
-                        Just (BranchRef.unsafeFromString "mybranch")
+                        Just (BranchRef.projectBranchRef (unsafeBranchSlugFromString "mybranch"))
                 in
                 Expect.equal result expected
         , test "parses a branch with dashes" <|
@@ -63,7 +65,7 @@ fromString =
                         BranchRef.fromString "my-branch"
 
                     expected =
-                        Just (BranchRef.unsafeFromString "my-branch")
+                        Just (BranchRef.projectBranchRef (unsafeBranchSlugFromString "my-branch"))
                 in
                 Expect.equal result expected
         , test "parses a branch with underscores" <|
@@ -73,17 +75,44 @@ fromString =
                         BranchRef.fromString "my_branch"
 
                     expected =
-                        Just (BranchRef.unsafeFromString "my_branch")
+                        Just (BranchRef.projectBranchRef (unsafeBranchSlugFromString "my_branch"))
                 in
                 Expect.equal result expected
-        , test "parses a topic branch with a handle" <|
+        , test "parses a contributor branch ref" <|
             \_ ->
                 let
                     result =
                         BranchRef.fromString "@somehandle/mybranch"
 
                     expected =
-                        Just (BranchRef.unsafeFromString "@somehandle/mybranch")
+                        Just
+                            (BranchRef.contributorBranchRef (UserHandle.unsafeFromString "somehandle")
+                                (unsafeBranchSlugFromString "mybranch")
+                            )
+                in
+                Expect.equal result expected
+        , test "parses a release branch ref" <|
+            \_ ->
+                let
+                    result =
+                        BranchRef.fromString "releases/2.3.1"
+
+                    expected =
+                        "2.3.1"
+                            |> Version.fromString
+                            |> Maybe.map BranchRef.releaseBranchRef
+                in
+                Expect.equal result expected
+        , test "parses a release draft branch ref" <|
+            \_ ->
+                let
+                    result =
+                        BranchRef.fromString "releases/drafts/2.3.1"
+
+                    expected =
+                        "2.3.1"
+                            |> Version.fromString
+                            |> Maybe.map BranchRef.releaseDraftBranchRef
                 in
                 Expect.equal result expected
         , test "fails to parse a branch with special characters" <|
@@ -172,46 +201,70 @@ fromString =
 toString : Test
 toString =
     describe "BranchRef.toString"
-        [ test "just slug" <|
+        [ test "project branch ref" <|
             \_ ->
                 let
                     result =
                         "mybranch"
-                            |> BranchRef.unsafeFromString
-                            |> BranchRef.toString
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toString
+                            |> Maybe.withDefault "FAIL"
                 in
                 Expect.equal "mybranch" result
-        , test "owner handle and slug" <|
+        , test "contributor branch ref" <|
             \_ ->
                 let
                     result =
                         "@owner/mybranch"
-                            |> BranchRef.unsafeFromString
-                            |> BranchRef.toString
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toString
+                            |> Maybe.withDefault "FAIL"
                 in
                 Expect.equal "@owner/mybranch" result
+        , test "release branch ref" <|
+            \_ ->
+                let
+                    result =
+                        "releases/2.1.0"
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toString
+                            |> Maybe.withDefault "FAIL"
+                in
+                Expect.equal "releases/2.1.0" result
         ]
 
 
 toApiUrlString : Test
 toApiUrlString =
     describe "BranchRef.toApiUrlString"
-        [ test "just slug" <|
+        [ test "project branch ref" <|
             \_ ->
                 let
                     result =
                         "mybranch"
-                            |> BranchRef.unsafeFromString
-                            |> BranchRef.toApiUrlString
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toApiUrlString
+                            |> Maybe.withDefault "FAIL"
                 in
                 Expect.equal "mybranch" result
-        , test "owner handle and slug" <|
+        , test "contributor branch ref" <|
             \_ ->
                 let
                     result =
                         "@owner/mybranch"
-                            |> BranchRef.unsafeFromString
-                            |> BranchRef.toApiUrlString
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toApiUrlString
+                            |> Maybe.withDefault "FAIL"
                 in
                 Expect.equal "@owner%2Fmybranch" result
+        , test "releases branch ref" <|
+            \_ ->
+                let
+                    result =
+                        "releases/2.1.0"
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toApiUrlString
+                            |> Maybe.withDefault "FAIL"
+                in
+                Expect.equal "releases%2F2_1_0" result
         ]

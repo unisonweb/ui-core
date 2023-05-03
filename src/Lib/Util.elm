@@ -102,3 +102,34 @@ httpErrorToString err =
 
         Http.BadUrl url ->
             "Malformed url: " ++ url
+
+
+ascending : (a -> a -> Order) -> a -> a -> Order
+ascending comp a b =
+    case comp a b of
+        LT ->
+            LT
+
+        EQ ->
+            EQ
+
+        GT ->
+            GT
+
+
+descending : (a -> a -> Order) -> a -> a -> Order
+descending comp a b =
+    case comp a b of
+        LT ->
+            GT
+
+        EQ ->
+            EQ
+
+        GT ->
+            LT
+
+
+sortByWith : (x -> a) -> (a -> a -> Order) -> List x -> List x
+sortByWith get compare_ list =
+    List.sortWith (\x1 x2 -> compare_ (get x1) (get x2)) list

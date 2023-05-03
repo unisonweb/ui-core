@@ -1,9 +1,9 @@
 module Code.BranchRef exposing (..)
 
+import Code.Version as Version exposing (Version)
 import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Lib.Util as Util
-import Maybe.Extra as MaybeE
 import Regex
 import UI.Icon as Icon
 import UI.Tag as Tag exposing (Tag)
@@ -14,81 +14,126 @@ type BranchSlug
 
 
 type BranchRef
-    = BranchRef { handle : Maybe UserHandle, slug : BranchSlug }
+    = ProjectBranchRef BranchSlug
+    | ContributorBranchRef UserHandle BranchSlug
+    | ReleaseBranchRef Version
+    | ReleaseDraftBranchRef Version
 
 
-branchRef : Maybe UserHandle -> BranchSlug -> BranchRef
-branchRef handle_ slug_ =
-    BranchRef { handle = handle_, slug = slug_ }
+projectBranchRef : BranchSlug -> BranchRef
+projectBranchRef slug_ =
+    ProjectBranchRef slug_
+
+
+contributorBranchRef : UserHandle -> BranchSlug -> BranchRef
+contributorBranchRef handle_ slug_ =
+    ContributorBranchRef handle_ slug_
+
+
+releaseBranchRef : Version -> BranchRef
+releaseBranchRef version =
+    ReleaseBranchRef version
+
+
+releaseDraftBranchRef : Version -> BranchRef
+releaseDraftBranchRef version =
+    ReleaseDraftBranchRef version
 
 
 main_ : BranchRef
 main_ =
-    BranchRef { handle = Nothing, slug = BranchSlug "main" }
+    projectBranchRef (BranchSlug "main")
 
 
 toString : BranchRef -> String
-toString (BranchRef b) =
-    let
-        (BranchSlug slug_) =
-            b.slug
-    in
-    case b.handle of
-        Just h ->
+toString br =
+    case br of
+        ProjectBranchRef (BranchSlug slug_) ->
+            slug_
+
+        ContributorBranchRef h (BranchSlug slug_) ->
             UserHandle.toString h ++ "/" ++ slug_
 
-        Nothing ->
-            slug_
+        ReleaseBranchRef v ->
+            "releases/" ++ Version.toString v
+
+        ReleaseDraftBranchRef v ->
+            "releases/drafts/" ++ Version.toString v
 
 
 toApiUrlString : BranchRef -> String
-toApiUrlString (BranchRef b) =
-    let
-        (BranchSlug slug_) =
-            b.slug
-    in
-    case b.handle of
-        Just h ->
+toApiUrlString br =
+    case br of
+        ProjectBranchRef (BranchSlug slug_) ->
+            slug_
+
+        ContributorBranchRef h (BranchSlug slug_) ->
             -- Escape "/" as "%2F"
             UserHandle.toString h ++ "%2F" ++ slug_
 
-        Nothing ->
-            slug_
+        ReleaseDraftBranchRef v ->
+            -- Escape "/" as "%2F"
+            "releases%2Fdrafts%2F" ++ Version.toUrlString v
+
+        ReleaseBranchRef v ->
+            -- Escape "/" as "%2F"
+            "releases%2F" ++ Version.toUrlString v
 
 
 toUrlPath : BranchRef -> List String
-toUrlPath (BranchRef b) =
-    case b.handle of
-        Just h ->
-            [ UserHandle.toString h, branchSlugToString b.slug ]
+toUrlPath br =
+    case br of
+        ProjectBranchRef slug_ ->
+            [ branchSlugToString slug_ ]
 
-        Nothing ->
-            [ branchSlugToString b.slug ]
+        ContributorBranchRef h slug_ ->
+            [ UserHandle.toString h, branchSlugToString slug_ ]
 
+        ReleaseDraftBranchRef v ->
+            [ "releases", "drafts", Version.toUrlString v ]
 
-toParts : BranchRef -> ( Maybe UserHandle, BranchSlug )
-toParts (BranchRef b) =
-    ( b.handle, b.slug )
-
-
-toStringParts : BranchRef -> ( Maybe String, String )
-toStringParts (BranchRef b) =
-    ( Maybe.map UserHandle.toString b.handle, branchSlugToString b.slug )
+        ReleaseBranchRef v ->
+            [ "releases", Version.toUrlString v ]
 
 
-isContributorBranch : BranchRef -> Bool
-isContributorBranch (BranchRef b) =
-    MaybeE.isJust b.handle
+isProjectBranchRef : BranchRef -> Bool
+isProjectBranchRef br =
+    case br of
+        ProjectBranchRef _ ->
+            True
+
+        _ ->
+            False
 
 
-handle : BranchRef -> Maybe UserHandle
-handle (BranchRef b) =
-    b.handle
+isContributorBranchRef : BranchRef -> Bool
+isContributorBranchRef br =
+    case br of
+        ContributorBranchRef _ _ ->
+            True
+
+        _ ->
+            False
 
 
-slug : BranchRef -> BranchSlug
-slug (BranchRef b) =
-    b.slug
+isReleaseBranchRef : BranchRef -> Bool
+isReleaseBranchRef br =
+    case br of
+        ReleaseBranchRef _ ->
+            True
+
+        _ ->
+            False
+
+
+isReleaseDraftBranchRef : BranchRef -> Bool
+isReleaseDraftBranchRef br =
+    case br of
+        ReleaseDraftBranchRef _ ->
+            True
+
+        _ ->
+            False
 
 
 {-| Branches can include a handle when being parsed.
@@ -99,6 +144,8 @@ valid examples are:
   - "my-branch", "my\_branch", "-my---branch", "\_my-branch"
     (for some reason elm-format wont allow having underscores without a backslash infront)
   - "@owner/my-branch"
+  - "releases/1.2.3" -- where 1.2.3 is semver format
+  - "releases/drafts/1.2.3"
 
 invalid examples
 
@@ -118,16 +165,20 @@ fromString raw =
             String.split "/" raw
     in
     case parts of
+        [ "releases", "drafts", v ] ->
+            Maybe.map ReleaseDraftBranchRef (Version.fromString v)
+
+        [ "releases", v ] ->
+            Maybe.map ReleaseBranchRef (Version.fromString v)
+
         [ h, s ] ->
             Maybe.map2
-                (\h_ s_ -> BranchRef { handle = Just h_, slug = s_ })
+                (\h_ s_ -> ContributorBranchRef h_ s_)
                 (UserHandle.fromString h)
                 (branchSlugFromString s)
 
         [ s ] ->
-            Maybe.map
-                (\s_ -> BranchRef { handle = Nothing, slug = s_ })
-                (branchSlugFromString s)
+            Maybe.map ProjectBranchRef (branchSlugFromString s)
 
         _ ->
             Nothing
@@ -140,6 +191,13 @@ branchSlugFromString raw =
 
     else
         Nothing
+
+
+{-| Don't use outside of testing
+-}
+unsafeBranchSlugFromString : String -> BranchSlug
+unsafeBranchSlugFromString raw =
+    BranchSlug raw
 
 
 branchSlugToString : BranchSlug -> String
@@ -164,27 +222,6 @@ isValidBranchSlug raw =
     Regex.contains re raw
 
 
-{-| Don't use outside of testing
--}
-unsafeFromString : String -> BranchRef
-unsafeFromString raw =
-    let
-        parts =
-            raw
-                |> String.replace "@" ""
-                |> String.split "/"
-    in
-    case parts of
-        [ h, s ] ->
-            BranchRef
-                { handle = Just (UserHandle.unsafeFromString h)
-                , slug = BranchSlug s
-                }
-
-        _ ->
-            BranchRef { handle = Nothing, slug = BranchSlug raw }
-
-
 
 -- VIEW
 
@@ -193,13 +230,21 @@ toTag : BranchRef -> Tag msg
 toTag branchRef_ =
     let
         tag =
-            case toParts branchRef_ of
-                ( Just handle_, branchSlug ) ->
+            case branchRef_ of
+                ProjectBranchRef branchSlug ->
+                    Tag.tag (branchSlugToString branchSlug)
+
+                ContributorBranchRef handle_ branchSlug ->
                     Tag.tag (branchSlugToString branchSlug)
                         |> Tag.withLeftText (UserHandle.toString handle_ ++ "/")
 
-                ( Nothing, branchSlug ) ->
-                    Tag.tag (branchSlugToString branchSlug)
+                ReleaseBranchRef version ->
+                    Tag.tag (Version.toString version)
+                        |> Tag.withLeftText "releases/"
+
+                ReleaseDraftBranchRef version ->
+                    Tag.tag (Version.toString version)
+                        |> Tag.withLeftText "releases/drafts/"
     in
     Tag.withIcon Icon.branch tag
 

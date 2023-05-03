@@ -199,7 +199,7 @@ view { content, color, click, size, isActive } =
                     ( "content-icon-then-label", [ I.view i, text l ] )
 
                 IconThenLabelThenIcon i1 l i2 ->
-                    ( "content-icon-then-label-then", [ I.view i1, text l, I.view i2 ] )
+                    ( "content-icon-then-label-then-icon", [ I.view i1, text l, I.view i2 ] )
 
                 LabelThenIcon l i ->
                     ( "content-label-then-icon", [ text l, I.view i ] )

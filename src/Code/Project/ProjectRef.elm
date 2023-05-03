@@ -1,5 +1,6 @@
 module Code.Project.ProjectRef exposing
     ( ProjectRef
+    , decode
     , equals
     , fromString
     , handle
@@ -20,7 +21,9 @@ import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, label, span, text)
 import Html.Attributes exposing (class)
+import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
+import Lib.Util as Util
 
 
 type ProjectRef
@@ -104,3 +107,22 @@ view (ProjectRef p) =
         , span [ class "project-ref_separator" ] [ text "/" ]
         , span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]
         ]
+
+
+
+-- DECODE
+
+
+decode : Decode.Decoder ProjectRef
+decode =
+    let
+        fromString_ s =
+            case String.split "/" s of
+                [ handle_, slug_ ] ->
+                    fromString handle_ slug_
+
+                _ ->
+                    Nothing
+    in
+    Decode.map fromString_ Decode.string
+        |> Decode.andThen (Util.decodeFailInvalid "Invalid ProjectRef")

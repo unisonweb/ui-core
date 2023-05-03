@@ -77,6 +77,14 @@
   gap: 0.5rem;
 }
 
+.page-content .page-title .page-title_with-action {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .page-content .page-title .text {
   display: flex;
   flex-direction: column;
