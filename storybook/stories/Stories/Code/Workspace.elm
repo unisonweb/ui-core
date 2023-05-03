@@ -3,16 +3,21 @@ module Stories.Code.Workspace exposing (..)
 import Browser
 import Code.DefinitionSummaryTooltip
 import Code.Syntax exposing (..)
-import Code.Workspace exposing (Model, Msg(..))
+import Code.Workspace exposing (Msg(..))
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
-import Code.Workspace.WorkspaceItems exposing (empty, fromItems)
-import Code.Workspace.Zoom exposing (Zoom(..))
+import Code.Workspace.WorkspaceItems as WorkspaceItems
+import Dict exposing (Dict, insert)
 import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
 import Http
 import Lib.OperatingSystem
 import UI.KeyboardShortcut
 import UI.ViewMode
+
+
+type alias Model =
+    { workspaceItemDict : Dict Int WorkspaceItem
+    }
 
 
 main : Program () Model Message
@@ -27,17 +32,26 @@ main =
 
 init : () -> ( Model, Cmd Message )
 init _ =
-    ( initWorkspaceModel
-    , Http.get
-        { url = "/increment_term_def.json"
-        , expect = Http.expectJson GotItem (decodeItem sampleReference)
-        }
+    ( { workspaceItemDict = Dict.empty }
+    , Cmd.batch
+        [ getSampleResponse 0 "/increment_term_def.json"
+        , getSampleResponse 1 "/nat_gt_term_def.json"
+        , getSampleResponse 2 "/base_readme.json"
+        ]
     )
+
+
+getSampleResponse : Int -> String -> Cmd Message
+getSampleResponse index url =
+    Http.get
+        { url = url
+        , expect = Http.expectJson (GotItem index) (decodeItem sampleReference)
+        }
 
 
 type Message
     = WorkspaceMsg Msg
-    | GotItem (Result Http.Error Item)
+    | GotItem Int (Result Http.Error Item)
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -46,7 +60,7 @@ update message model =
         WorkspaceMsg _ ->
             ( model, Cmd.none )
 
-        GotItem result ->
+        GotItem index result ->
             case result of
                 Err error ->
                     Debug.log (Debug.toString error)
@@ -57,28 +71,30 @@ update message model =
                         workspaceItem =
                             fromItem sampleReference item
 
-                        workspaceItems =
-                            fromItems [ workspaceItem ] workspaceItem [ workspaceItem, workspaceItem ]
+                        newDict =
+                            insert index workspaceItem model.workspaceItemDict
                     in
-                    ( { model | workspaceItems = workspaceItems }, Cmd.none )
-
-
-sampleKeyboardShortcut : UI.KeyboardShortcut.Model
-sampleKeyboardShortcut =
-    UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS
-
-
-initWorkspaceModel : Model
-initWorkspaceModel =
-    { workspaceItems = empty
-    , keyboardShortcut = sampleKeyboardShortcut
-    , definitionSummaryTooltip = Code.DefinitionSummaryTooltip.init
-    }
+                    ( { model | workspaceItemDict = newDict }, Cmd.none )
 
 
 view : Model -> Html Message
 view model =
-    Html.map WorkspaceMsg <|
-        Code.Workspace.view
-            UI.ViewMode.Regular
-            model
+    case Dict.values model.workspaceItemDict of
+        [] ->
+            Html.text "no items"
+
+        x :: xs ->
+            let
+                workspaceItems =
+                    WorkspaceItems.fromItems [] x xs
+
+                workspaceModel =
+                    { workspaceItems = workspaceItems
+                    , keyboardShortcut = UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS -- just a sample
+                    , definitionSummaryTooltip = Code.DefinitionSummaryTooltip.init
+                    }
+            in
+            Code.Workspace.view
+                UI.ViewMode.Regular
+                workspaceModel
+                |> Html.map WorkspaceMsg
