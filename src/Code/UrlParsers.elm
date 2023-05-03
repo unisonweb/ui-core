@@ -102,6 +102,7 @@ codebaseRef =
     Parser.oneOf
         [ b (succeed Relative |. s "latest")
         , b (succeed Absolute |= hash)
+        , b (succeed Relative)
         ]
 
 
