@@ -520,7 +520,8 @@ view viewMode model =
             case viewMode of
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ section
+                        [ miniMapView model.workspaceItems
+                        , section
                             [ id "workspace-content" ]
                             [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
                         ]
@@ -541,3 +542,25 @@ viewItem definitionSummaryTooltip viewMode workspaceItem isFocused =
 viewWorkspaceItems : DefinitionSummaryTooltip.Model -> WorkspaceItems -> List (Html Msg)
 viewWorkspaceItems definitionSummaryTooltip =
     WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)
+
+
+miniMapView : WorkspaceItems -> Html msg
+miniMapView workspaceItems =
+    workspaceItems
+        |> WorkspaceItems.toList
+        |> List.map miniMapItemView
+        |> Html.tbody []
+        |> List.singleton
+        |> Html.table []
+
+
+miniMapItemView : WorkspaceItem -> Html msg
+miniMapItemView item =
+    item
+        |> WorkspaceItem.reference
+        |> Reference.toHumanString
+        |> Html.text
+        |> List.singleton
+        |> Html.td []
+        |> List.singleton
+        |> Html.tr []
