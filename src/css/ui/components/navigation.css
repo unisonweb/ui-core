@@ -23,6 +23,7 @@
 .navigation .nav-item_content {
   display: flex;
   flex-direction: row;
+  height: 100%;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
