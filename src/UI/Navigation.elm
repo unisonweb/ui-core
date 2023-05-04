@@ -199,11 +199,14 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
             MaybeE.unwrap c (Tooltip.view c) tooltip
     in
     case secondaryContent of
-        Just s ->
+        Just secondary_ ->
             div [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ]
                 [ span [ class "nav-item_content" ]
-                    [ Click.view [] [ withTooltip (span [] [ icon_, text label ]) ] click
-                    , s
+                    [ Click.view
+                        [ class "nav-item_click-target" ]
+                        [ withTooltip (span [] [ icon_, text label ]) ]
+                        click
+                    , secondary_
                     , Nudge.view nudge
                     ]
                 ]
@@ -218,7 +221,12 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
                         ]
             in
             Click.view
-                [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ]
+                [ classList
+                    [ ( "nav-item", True )
+                    , ( "nav-item_click-target", True )
+                    , ( "selected", isSelected )
+                    ]
+                ]
                 [ withTooltip content ]
                 click
 

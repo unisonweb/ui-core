@@ -15,9 +15,9 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  color: var(--u-color_c_text-on-navigation-item);
   background: var(--u-color_c_navigation-item);
   transition: background 0.2s;
+  cursor: pointer;
 }
 
 .navigation .nav-item_content {
@@ -27,6 +27,11 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+}
+
+.navigation .nav-item_click-target {
+  color: var(--u-color_c_text-on-navigation-item);
+  height: 100%;
 }
 
 .navigation .nav-item.selected {
