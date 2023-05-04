@@ -18,7 +18,8 @@
   cursor: pointer;
 }
 
-.navigation .nav-item_content {
+.navigation .nav-item_content,
+.navigation .nav-item_inner-content {
   display: flex;
   flex-direction: row;
   height: 100%;

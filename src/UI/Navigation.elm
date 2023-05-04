@@ -204,7 +204,7 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
                 [ span [ class "nav-item_content" ]
                     [ Click.view
                         [ class "nav-item_click-target" ]
-                        [ withTooltip (span [] [ icon_, text label ]) ]
+                        [ withTooltip (span [ class "nav-item_inner-content" ] [ icon_, text label ]) ]
                         click
                     , secondary_
                     , Nudge.view nudge
