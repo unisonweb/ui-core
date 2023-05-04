@@ -221,6 +221,25 @@ isValidBranchSlug raw =
     Regex.contains re raw
 
 
+equals : BranchRef -> BranchRef -> Bool
+equals brA brB =
+    case ( brA, brB ) of
+        ( ProjectBranchRef (BranchSlug slugA), ProjectBranchRef (BranchSlug slugB) ) ->
+            slugA == slugB
+
+        ( ContributorBranchRef handleA (BranchSlug slugA), ContributorBranchRef handleB (BranchSlug slugB) ) ->
+            UserHandle.equals handleA handleB && slugA == slugB
+
+        ( ReleaseBranchRef versionA, ReleaseBranchRef versionB ) ->
+            Version.equals versionA versionB
+
+        ( ReleaseDraftBranchRef versionA, ReleaseDraftBranchRef versionB ) ->
+            Version.equals versionA versionB
+
+        _ ->
+            False
+
+
 
 -- VIEW
 
