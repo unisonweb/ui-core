@@ -34,8 +34,8 @@
 }
 
 .page-header.view-mode_regular .project-listing {
-  --c-color_project-listing_private-icon: var(--color-blue-4);
-  --c-color_project-listing_private-icon_background: var(--color-blue-4-25pct);
+  --c-color_project-listing_private-icon: var(--color-blue-3);
+  --c-color_project-listing_private-icon_background: var(--color-blue-3-25pct);
 }
 
 .page-header.view-mode_regular .navigation {
