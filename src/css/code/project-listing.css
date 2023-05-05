@@ -7,6 +7,9 @@
   color: var(--u-color_text);
   font-size: var(--font-size-medium);
   height: 1.5rem;
+
+  --c-color_project-listing_private-icon: var(--u-color_icon);
+  --c-color_project-listing_private-icon_background: var(--u-color_element_subdued);
 }
 
 .project-listing.project-listing-size_large {
@@ -49,8 +52,8 @@ a.project-listing:hover {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 0.75rem;
-  background: var(--u-color_element_subdued);
-  color: var(--u-color_text_subdued);
+  color: var(--c-color_project-listing_private-icon);
+  background: var(--c-color_project-listing_private-icon_background);
   display: inline-flex;
   place-content: center;
   place-items: center;
