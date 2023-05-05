@@ -52,9 +52,12 @@ a.project-listing:hover {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 0.75rem;
-  color: var(--c-color_project-listing_private-icon);
   background: var(--c-color_project-listing_private-icon_background);
   display: inline-flex;
   place-content: center;
   place-items: center;
+}
+
+.project-listing .project-listing_private-icon .icon {
+  color: var(--c-color_project-listing_private-icon);
 }
