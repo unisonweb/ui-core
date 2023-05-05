@@ -8,8 +8,12 @@
   font-size: var(--font-size-medium);
   height: 1.5rem;
 
-  --c-color_project-listing_private-icon: var(--u-color_info_icon-on-element_subdued);
-  --c-color_project-listing_private-icon_background: var(--u-color_info_element_subdued);
+  --c-color_project-listing_private-icon: var(
+    --u-color_info_icon-on-element_subdued
+  );
+  --c-color_project-listing_private-icon_background: var(
+    --u-color_info_element_subdued
+  );
 }
 
 .project-listing.project-listing-size_large {
