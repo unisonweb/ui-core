@@ -546,12 +546,27 @@ viewWorkspaceItems definitionSummaryTooltip =
 
 miniMapView : WorkspaceItems -> Html msg
 miniMapView workspaceItems =
-    workspaceItems
-        |> WorkspaceItems.toList
-        |> List.map miniMapItemView
-        |> Html.tbody []
-        |> List.singleton
-        |> Html.table []
+    let
+        header =
+            Html.header []
+                [ Html.text "MAP    "
+                , Html.text "Close all"
+                ]
+
+        section =
+            workspaceItems
+                |> WorkspaceItems.toList
+                |> List.map miniMapItemView
+                |> Html.tbody []
+                |> List.singleton
+                |> Html.table []
+                |> List.singleton
+                |> Html.section []
+    in
+    div []
+        [ header
+        , section
+        ]
 
 
 miniMapItemView : WorkspaceItem -> Html msg

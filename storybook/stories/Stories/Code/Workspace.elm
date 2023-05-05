@@ -1,7 +1,10 @@
 module Stories.Code.Workspace exposing (..)
 
 import Browser
+import Code.Definition.Reference as Reference
 import Code.DefinitionSummaryTooltip
+import Code.FullyQualifiedName as FQN
+import Code.HashQualified exposing (HashQualified(..))
 import Code.Syntax exposing (..)
 import Code.Workspace exposing (Msg(..))
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
@@ -34,24 +37,35 @@ init : () -> ( Model, Cmd Message )
 init _ =
     ( { workspaceItemDict = Dict.empty }
     , Cmd.batch
-        [ getSampleResponse 0 "/increment_term_def.json"
-        , getSampleResponse 1 "/nat_gt_term_def.json"
-        , getSampleResponse 2 "/base_readme.json"
+        [ getSampleResponse 0 "/increment_term_def.json" "increment"
+        , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
+        , getSampleResponse 2 "/base_readme.json" "base_readme"
         ]
     )
 
 
-getSampleResponse : Int -> String -> Cmd Message
-getSampleResponse index url =
+getSampleResponse : Int -> String -> String -> Cmd Message
+getSampleResponse index url termName =
+    let
+        reference =
+            termName
+                |> FQN.fromString
+                |> NameOnly
+                |> Reference.TypeReference
+
+        decoder =
+            reference
+                |> decodeItem
+    in
     Http.get
         { url = url
-        , expect = Http.expectJson (GotItem index) (decodeItem sampleReference)
+        , expect = Http.expectJson (GotItem index reference) decoder
         }
 
 
 type Message
     = WorkspaceMsg Msg
-    | GotItem Int (Result Http.Error Item)
+    | GotItem Int Reference.Reference (Result Http.Error Item)
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -60,7 +74,7 @@ update message model =
         WorkspaceMsg _ ->
             ( model, Cmd.none )
 
-        GotItem index result ->
+        GotItem index reference result ->
             case result of
                 Err error ->
                     Debug.log (Debug.toString error)
@@ -69,7 +83,7 @@ update message model =
                 Ok item ->
                     let
                         workspaceItem =
-                            fromItem sampleReference item
+                            fromItem reference item
 
                         newDict =
                             insert index workspaceItem model.workspaceItemDict
