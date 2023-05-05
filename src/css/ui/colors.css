@@ -55,7 +55,7 @@
   --color-blue-3: #9ec5ff;
   --color-blue-4: #cbe0ff;
   --color-blue-5: #ecf2fa;
-  --color-blue-5: rgba(236, 242, 250, 0.25);
+  --color-blue-5-25pct: rgba(236, 242, 250, 0.25);
 
   /* Oranges */
   --color-orange-0: #B87120;

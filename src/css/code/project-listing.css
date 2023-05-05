@@ -9,7 +9,7 @@
   height: 1.5rem;
 
   --c-color_project-listing_private-icon: var(--u-color_info_icon-on-element_subdued);
-  --c-color_project-listing_private-icon_background: var(--u-color_nfo_element_sudued);
+  --c-color_project-listing_private-icon_background: var(--u-color_info_element_sudued);
 }
 
 .project-listing.project-listing-size_large {
