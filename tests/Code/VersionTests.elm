@@ -350,3 +350,79 @@ descending =
                 in
                 Expect.equal result expected
         ]
+
+
+isANextValid : Test
+isANextValid =
+    describe "Version.isANextValid"
+        [ test "compares versions for use in List.sortWith" <|
+            \_ ->
+                let
+                    input =
+                        [ version 1 1 99
+                        , version 3 1 2
+                        , version 2 0 9
+                        , version 3 1 1
+                        ]
+
+                    result =
+                        input
+                            |> List.sortWith Version.descending
+                            |> List.map Version.toString
+
+                    expected =
+                        [ "3.1.2"
+                        , "3.1.1"
+                        , "2.0.9"
+                        , "1.1.99"
+                        ]
+                in
+                Expect.equal result expected
+        ]
+
+
+{-| Given a candidate, find the next and nearest valid version
+
+
+## Examples:
+
+  - clampToNextValid (Version 1 0 0) (Version 0 0 1)
+    -> Version 2 0 0
+
+  - clampToNextValid (Version 1 0 0) (Version 1.1.0)
+    -> Version 1.1.0
+
+  - clampToNextValid (Version 1 0 0) (Version 1.5.0)
+    -> Version 1.1.0
+
+  - clampToNextValid (Version 1 0 0) (Version 1.0.3)
+    -> Version 1.0.1
+
+-}
+clampToNextValid : Test
+clampToNextValid =
+    describe "Version.clampToNextValid"
+        [ test "compares versions for use in List.sortWith" <|
+            \_ ->
+                let
+                    input =
+                        [ version 1 1 99
+                        , version 3 1 2
+                        , version 2 0 9
+                        , version 3 1 1
+                        ]
+
+                    result =
+                        input
+                            |> List.sortWith Version.descending
+                            |> List.map Version.toString
+
+                    expected =
+                        [ "3.1.2"
+                        , "3.1.1"
+                        , "2.0.9"
+                        , "1.1.99"
+                        ]
+                in
+                Expect.equal result expected
+        ]
