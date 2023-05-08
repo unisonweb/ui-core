@@ -196,22 +196,22 @@ search =
 
 caretDown : Icon msg
 caretDown =
-    Icon "caret-down" [] [ path [ fill "currentColor", d "M3.363 4.182l3.636 6.182 3.636-6.182H3.363z" ] [] ]
+    Icon "caret-down" [] [ path [ fill "currentColor", d "M4.23677 4.18182C3.85006 4.18182 3.60974 4.60201 3.80581 4.93533L6.56796 9.63099C6.76129 9.95964 7.23657 9.95964 7.42989 9.63099L10.1921 4.93533C10.3881 4.60201 10.1478 4.18182 9.76108 4.18182H4.23677Z" ] [] ]
 
 
 caretLeft : Icon msg
 caretLeft =
-    Icon "caret-left" [] [ path [ fill "currentColor", d "M9.908 10.727V3.455L3.726 7.09l6.182 3.636z" ] [] ]
+    Icon "caret-left" [] [ path [ fill "currentColor", d "M9.15451 10.284C9.48783 10.4801 9.90802 10.2398 9.90802 9.85306V4.32875C9.90802 3.94204 9.48783 3.70172 9.15451 3.89779L4.45885 6.65994C4.13019 6.85327 4.13019 7.32855 4.45885 7.52188L9.15451 10.284Z" ] [] ]
 
 
 caretRight : Icon msg
 caretRight =
-    Icon "caret-right" [] [ path [ fill "currentColor", d "M4.09 10.727l6.182-3.636L4.09 3.455v7.272z" ] [] ]
+    Icon "caret-right" [] [ path [ fill "currentColor", d "M4.08984 9.85306C4.08984 10.2398 4.51004 10.4801 4.84335 10.284L9.53902 7.52188C9.86767 7.32855 9.86767 6.85327 9.53902 6.65994L4.84335 3.89779C4.51004 3.70172 4.08984 3.94204 4.08984 4.32875V9.85306Z" ] [] ]
 
 
 caretUp : Icon msg
 caretUp =
-    Icon "caret-up" [] [ path [ fill "currentColor", d "M3.363 10h7.272L7 3.818 3.363 10z" ] [] ]
+    Icon "caret-up" [] [ path [ fill "currentColor", d "M3.80581 9.24649C3.60974 9.5798 3.85006 10 4.23677 10H9.76108C10.1478 10 10.3881 9.57981 10.1921 9.24649L7.42989 4.55082C7.23657 4.22217 6.76129 4.22217 6.56796 4.55082L3.80581 9.24649Z" ] [] ]
 
 
 arrowDown : Icon msg
