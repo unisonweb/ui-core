@@ -19,7 +19,7 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..), viewItemName)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
@@ -563,7 +563,13 @@ miniMapView workspaceItems =
                 |> List.singleton
                 |> Html.section []
     in
-    div []
+    div
+        [ Html.Attributes.style "position" "fixed"
+        , Html.Attributes.style "z-index" "50"
+        , Html.Attributes.style "top" "0"
+        , Html.Attributes.style "right" "0"
+        , Html.Attributes.style "background-color" "white"
+        ]
         [ header
         , section
         ]
@@ -572,9 +578,7 @@ miniMapView workspaceItems =
 miniMapItemView : WorkspaceItem -> Html msg
 miniMapItemView item =
     item
-        |> WorkspaceItem.reference
-        |> Reference.toHumanString
-        |> Html.text
+        |> viewItemName
         |> List.singleton
         |> Html.td []
         |> List.singleton

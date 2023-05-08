@@ -756,6 +756,37 @@ viewClosableRow ref attrs header contentItems =
     viewRow ref attrs [ close ] ( UI.nothing, header ) contentItems
 
 
+getFQN : Item -> FQN
+getFQN item =
+    case item of
+        TermItem (Term _ _ detail) ->
+            detail.info.name
+
+        TypeItem (Type _ _ detail) ->
+            detail.info.name
+
+        DataConstructorItem (DataConstructor _ detail) ->
+            detail.info.name
+
+        AbilityConstructorItem (AbilityConstructor _ detail) ->
+            detail.info.name
+
+
+viewItemName : WorkspaceItem -> Html msg
+viewItemName item =
+    case item of
+        Success _ itemData ->
+            itemData.item
+                |> getFQN
+                |> FQN.view
+
+        Failure _ _ ->
+            Html.text "Failure"
+
+        Loading _ ->
+            Html.text "Loading"
+
+
 
 -- JSON DECODERS
 
