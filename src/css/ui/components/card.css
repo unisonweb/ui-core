@@ -29,8 +29,8 @@
 .card .card-title {
   color: var(--color-card-title);
   text-transform: uppercase;
-  font-size: var(--font-size-small);
-  font-weight: normal;
+  font-size: var(--font-size-extra-small);
+  font-weight: bold;
   display: flex;
   align-items: center;
   height: 2rem;
