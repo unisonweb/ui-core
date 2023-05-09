@@ -187,6 +187,14 @@ viewPageTitle { icon, title, description, action } =
                         ]
                     ]
 
+        hasIconClass =
+            case icon of
+                Just _ ->
+                    [ class "has_icon" ]
+
+                Nothing ->
+                    []
+
         items =
             case action of
                 Just b ->
@@ -195,7 +203,7 @@ viewPageTitle { icon, title, description, action } =
                 Nothing ->
                     items_
     in
-    header [ class "page-title" ] items
+    header (class "page-title" :: hasIconClass) items
 
 
 viewColumn : List (Html msg) -> Html msg

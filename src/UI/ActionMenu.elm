@@ -263,26 +263,27 @@ viewSheet (ActionItems items_) =
             case i of
                 Option o ->
                     let
-                        viewSubtext st =
-                            case st of
+                        ( subtext, attrs ) =
+                            case o.subtext of
                                 NoSubtext ->
-                                    UI.nothing
+                                    ( UI.nothing, [] )
 
                                 SimpleSubtext t ->
-                                    div [ class "action-menu_action-item-option_subtext" ] [ text t ]
+                                    ( div [ class "action-menu_action-item-option_subtext" ] [ text t ], [ class "has_action-menu_action-item-option_subtext" ] )
 
                                 DateTimeSubtext f t ->
-                                    div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f t ]
+                                    ( div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f t ], [ class "has_action-menu_action-item-option_subtext" ] )
                     in
                     Click.view
-                        [ class "action-menu_action-item action-menu_action-item-option"
-                        ]
+                        (class "action-menu_action-item action-menu_action-item-option"
+                            :: attrs
+                        )
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon
                         , div [ class "action-menu_action-item-option_text" ]
                             [ label
                                 [ class "action-menu_action-item-option_label" ]
                                 [ text o.label ]
-                            , viewSubtext o.subtext
+                            , subtext
                             ]
                         , Nudge.view o.nudge
                         ]

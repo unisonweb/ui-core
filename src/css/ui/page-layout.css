@@ -158,7 +158,9 @@
   padding: 3rem 0 1.5rem 0;
 }
 
-.page.centered-layout .page-content .page-title:has(.icon) {
+/* @todo :has */
+/* .page.centered-layout .page-content .page-title:has(.icon) { */
+.page.centered-layout .page-content .page-title.has_icon) {
   margin-left: -0.75rem;
 }
 
@@ -168,7 +170,9 @@
   padding: 3rem 0 1.5rem 0;
 }
 
-.page.presentation-layout .page-content .page-title:has(.icon) {
+/* @todo :has */
+/* .page.presentation-layout .page-content .page-title:has(.icon) { */
+.page.presentation-layout .page-content .page-title.has_icon) {
   margin-left: -0.75rem;
 }
 
