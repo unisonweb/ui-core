@@ -78,7 +78,7 @@ fromString s =
 fromUrlString : String -> Maybe Version
 fromUrlString s =
     s
-        |> String.split "_"
+        |> String.split "."
         |> List.map String.toInt
         |> MaybeE.combine
         |> Maybe.map fromList
