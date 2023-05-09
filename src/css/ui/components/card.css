@@ -24,7 +24,7 @@
 
 /* @todo :has */
 /*.card:has(.card-title) {*/
-.card.has_card-title) {
+.card.has_card-title {
   padding-top: 1rem;
 }
 
