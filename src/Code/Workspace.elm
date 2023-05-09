@@ -19,8 +19,8 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..), viewItemName)
-import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..), viewMinimapEntry)
+import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems(..))
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -554,14 +554,25 @@ miniMapView workspaceItems =
                 ]
 
         section =
-            workspaceItems
-                |> WorkspaceItems.toList
-                |> List.map miniMapItemView
-                |> Html.tbody []
-                |> List.singleton
-                |> Html.table []
-                |> List.singleton
-                |> Html.section []
+            case workspaceItems of
+                Empty ->
+                    Html.text "empty"
+
+                WorkspaceItems items ->
+                    let
+                        itemViews =
+                            (items.before
+                                |> List.map (miniMapItemView False)
+                            )
+                                ++ (items.focus |> miniMapItemView True)
+                                :: (items.after |> List.map (miniMapItemView False))
+                    in
+                    itemViews
+                        |> Html.tbody []
+                        |> List.singleton
+                        |> Html.table []
+                        |> List.singleton
+                        |> Html.section []
     in
     div
         [ Html.Attributes.style "position" "fixed"
@@ -575,10 +586,10 @@ miniMapView workspaceItems =
         ]
 
 
-miniMapItemView : WorkspaceItem -> Html msg
-miniMapItemView item =
+miniMapItemView : Bool -> WorkspaceItem -> Html msg
+miniMapItemView focused item =
     item
-        |> viewItemName
+        |> viewMinimapEntry focused
         |> List.singleton
         |> Html.td []
         |> List.singleton

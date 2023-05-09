@@ -787,6 +787,38 @@ viewItemName item =
             Html.text "Loading"
 
 
+viewMinimapEntry_ : Info -> Category -> Bool -> Html msg
+viewMinimapEntry_ info category focused =
+    div [ class "info", classList [ ( "focused", focused ) ] ]
+        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
+        , h3 [ class "name" ] [ FQN.view info.name ]
+        ]
+
+
+viewMinimapEntry : Bool -> WorkspaceItem -> Html msg
+viewMinimapEntry focused item =
+    case item of
+        Success _ itemData ->
+            case itemData.item of
+                TermItem (Term _ category detail) ->
+                    viewMinimapEntry_ detail.info (Category.Term category) focused
+
+                TypeItem (Type _ category detail) ->
+                    viewMinimapEntry_ detail.info (Category.Type category) focused
+
+                DataConstructorItem (DataConstructor _ detail) ->
+                    viewMinimapEntry_ detail.info (Category.Type Type.DataType) focused
+
+                AbilityConstructorItem (AbilityConstructor _ detail) ->
+                    viewMinimapEntry_ detail.info (Category.Type Type.AbilityType) focused
+
+        Failure _ _ ->
+            Html.text "Failure"
+
+        Loading _ ->
+            Html.text "Loading"
+
+
 
 -- JSON DECODERS
 
