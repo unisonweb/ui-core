@@ -19,6 +19,7 @@ module Code.FullyQualifiedName exposing
     , namespace
     , namespaceOf
     , numSegments
+    , root
     , segments
     , snoc
     , stripPrefix
@@ -52,6 +53,11 @@ type FQN
 
 
 -- HELPERS
+
+
+root : FQN
+root =
+    fromList [ "." ]
 
 
 {-| Turn a string, like "base.List.map" into FQN ["base", "List", "map"]
