@@ -145,7 +145,7 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page-header {
-    padding: 0;
+    padding: 0 0.5rem 0 0;
   }
 
   .page-header .page-header_page-context,
