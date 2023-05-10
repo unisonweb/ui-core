@@ -145,7 +145,7 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page-header {
-    padding: 0 0.5rem 0 0;
+    padding: 0 1rem 0 0;
   }
 
   .page-header .page-header_page-context,
@@ -158,6 +158,7 @@
   .page-header .profile-snippet .profile-snippet_name {
     display: none;
   }
+
   .page-header .profile-snippet .profile-snippet_handle {
     font-size: var(--c-size_profile-snippet_name);
     font-weight: bold;
