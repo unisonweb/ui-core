@@ -121,4 +121,4 @@ codebasePerspective : Maybe Perspective
 codebasePerspective =
     Hash.fromString "#testhash"
         |> Maybe.map Perspective.Absolute
-        |> Maybe.map Perspective.Root
+        |> Maybe.map (\abs -> Perspective.Root { root = abs, details = NotAsked })

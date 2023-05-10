@@ -29,7 +29,7 @@ type
     Perspective
     -- The Root can refer to several things; the root of the codebase,
     -- the root of a project, or a users codebase.
-    = Root RootPerspective
+    = Root { root : RootPerspective, details : WebData NamespaceDetails }
     | Namespace
         { root : RootPerspective
         , fqn : FQN
@@ -39,12 +39,12 @@ type
 
 relativeRootPerspective : Perspective
 relativeRootPerspective =
-    Root Relative
+    Root { root = Relative, details = NotAsked }
 
 
 toRootPerspective : Perspective -> Perspective
 toRootPerspective perspective =
-    Root (rootPerspective perspective)
+    Root { root = rootPerspective perspective, details = NotAsked }
 
 
 toNamespacePerspective : Perspective -> FQN -> Perspective
@@ -65,8 +65,8 @@ namespacePerspective_ root fqn_ =
 rootPerspective : Perspective -> RootPerspective
 rootPerspective perspective =
     case perspective of
-        Root p ->
-            p
+        Root r ->
+            r.root
 
         Namespace d ->
             d.root
@@ -86,17 +86,19 @@ upOneLevel pers =
                 namespacePerspective_ d.root (FQN.dropLast d.fqn)
 
             else
-                Root d.root
+                Root { root = d.root, details = NotAsked }
 
 
 rootHash : Perspective -> Maybe Hash
 rootHash perspective =
     case perspective of
-        Root Relative ->
-            Nothing
+        Root r ->
+            case r.root of
+                Relative ->
+                    Nothing
 
-        Root (Absolute h) ->
-            Just h
+                Absolute h ->
+                    Just h
 
         Namespace d ->
             case d.root of
@@ -134,7 +136,7 @@ equals : Perspective -> Perspective -> Bool
 equals a b =
     case ( a, b ) of
         ( Root ap, Root bp ) ->
-            rootPerspectiveEquals ap bp
+            rootPerspectiveEquals ap.root bp.root
 
         ( Namespace ans, Namespace bns ) ->
             rootPerspectiveEquals ans.root bns.root && FQN.equals ans.fqn bns.fqn
@@ -161,7 +163,7 @@ fromParams : PerspectiveParams -> Perspective
 fromParams params =
     case params of
         ByRoot p ->
-            Root p
+            Root { root = p, details = NotAsked }
 
         ByNamespace p fqn_ ->
             Namespace { root = p, fqn = fqn_, details = NotAsked }
