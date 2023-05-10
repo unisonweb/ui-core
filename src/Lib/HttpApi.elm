@@ -230,17 +230,15 @@ perform api (ApiRequest { endpoint, expect, headers }) =
     in
     case endpoint of
         GET _ ->
-            Debug.log "GET"
-                (request_
-                    { method = "GET"
-                    , headers = api.headers ++ headers
-                    , body = Http.emptyBody
-                    , url = toUrl api.url endpoint
-                    , expect = expect_
-                    , timeout = Just timeout
-                    , tracker = Nothing
-                    }
-                )
+            request_
+                { method = "GET"
+                , headers = api.headers ++ headers
+                , body = Http.emptyBody
+                , url = Debug.log "url" (toUrl api.url endpoint)
+                , expect = expect_
+                , timeout = Just timeout
+                , tracker = Nothing
+                }
 
         POST c ->
             request_
