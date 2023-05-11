@@ -20,7 +20,6 @@ import Html.Attributes exposing (class, classList, id, title)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (field, index)
-import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
 import Lib.Util as Util
 import List.Nonempty as NEL
 import Maybe.Extra as MaybeE
@@ -30,8 +29,6 @@ import UI.Button as Button
 import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
-import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
-import UI.KeyboardShortcut.Key as Key
 import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip
 import UI.ViewMode as ViewMode exposing (ViewMode)
@@ -757,75 +754,6 @@ viewClosableRow ref attrs header contentItems =
             a [ class "close", onClick (Close ref) ] [ Icon.view Icon.x ]
     in
     viewRow ref attrs [ close ] ( UI.nothing, header ) contentItems
-
-
-getFQN : Item -> FQN
-getFQN item =
-    case item of
-        TermItem (Term _ _ detail) ->
-            detail.info.name
-
-        TypeItem (Type _ _ detail) ->
-            detail.info.name
-
-        DataConstructorItem (DataConstructor _ detail) ->
-            detail.info.name
-
-        AbilityConstructorItem (AbilityConstructor _ detail) ->
-            detail.info.name
-
-
-viewItemName : WorkspaceItem -> Html msg
-viewItemName item =
-    case item of
-        Success _ itemData ->
-            itemData.item
-                |> getFQN
-                |> FQN.view
-
-        Failure _ _ ->
-            Html.text "Failure"
-
-        Loading _ ->
-            Html.text "Loading"
-
-
-viewMinimapEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html msg
-viewMinimapEntryKeyboardShortcut keyboardShortcut index =
-    KeyboardShortcut.view keyboardShortcut (Chord (Key.fromString "J") (Key.fromString (String.fromInt index)))
-
-
-viewMinimapEntry_ : Int -> Info -> Category -> Bool -> Html msg
-viewMinimapEntry_ index info category focused =
-    div [ class "workspace-minimap-entry", classList [ ( "focused", focused ) ] ]
-        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
-        , h3 [ class "name" ] [ FQN.view info.name ]
-        , viewMinimapEntryKeyboardShortcut (KeyboardShortcut.init OperatingSystem.MacOS) index
-        ]
-
-
-viewMinimapEntry : Int -> Bool -> WorkspaceItem -> Html msg
-viewMinimapEntry index focused item =
-    case item of
-        Success _ itemData ->
-            case itemData.item of
-                TermItem (Term _ category detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Term category) focused
-
-                TypeItem (Type _ category detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Type category) focused
-
-                DataConstructorItem (DataConstructor _ detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Type Type.DataType) focused
-
-                AbilityConstructorItem (AbilityConstructor _ detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Type Type.AbilityType) focused
-
-        Failure _ _ ->
-            Html.text "Failure"
-
-        Loading _ ->
-            Html.text "Loading"
 
 
 

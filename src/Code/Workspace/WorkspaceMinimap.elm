@@ -1,9 +1,20 @@
 module Code.Workspace.WorkspaceMinimap exposing (viewWorkspaceMinimap)
 
-import Code.Workspace.WorkspaceItem exposing (WorkspaceItem, viewMinimapEntry)
+import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..))
+import Code.Definition.Category as Category exposing (Category)
+import Code.Definition.DataConstructor exposing (DataConstructor(..))
+import Code.Definition.Info exposing (Info)
+import Code.Definition.Term exposing (Term(..))
+import Code.Definition.Type as Type exposing (Type(..))
+import Code.FullyQualifiedName as FQN
+import Code.Workspace.WorkspaceItem exposing (Item(..), WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems exposing (WorkspaceItems(..))
-import Html exposing (Html, div)
-import Html.Attributes exposing (class, id)
+import Html exposing (Html, div, h3)
+import Html.Attributes exposing (class, classList)
+import Lib.OperatingSystem as OperatingSystem
+import UI.Icon as Icon
+import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
+import UI.KeyboardShortcut.Key as Key
 
 
 viewWorkspaceMinimap : WorkspaceItems -> Html msg
@@ -51,24 +62,42 @@ viewWorkspaceMinimapItem item focused index =
         |> Html.tr [ class "workspace-minimap-entry" ]
 
 
+viewMinimapEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html msg
+viewMinimapEntryKeyboardShortcut keyboardShortcut index =
+    KeyboardShortcut.view keyboardShortcut (Chord (Key.fromString "J") (Key.fromString (String.fromInt index)))
 
--- mapWorkspaceItems :
---     (workspaceItem -> a)
---     ->
---         { before : List WorkspaceItem
---         , focus : WorkspaceItem
---         , after : List WorkspaceItem
---         }
---     ->
---         { before : List a
---         , focus : a
---         , after : List a
---         }
--- mapWorkspaceItems f items =
---     { before = List.map f items.before
---     , focus = f items.focus
---     , after = List.map f items.after
---     }
+
+viewMinimapEntry_ : Int -> Info -> Category -> Bool -> Html msg
+viewMinimapEntry_ index info category focused =
+    div [ class "workspace-minimap-entry", classList [ ( "focused", focused ) ] ]
+        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
+        , h3 [ class "name" ] [ FQN.view info.name ]
+        , viewMinimapEntryKeyboardShortcut (KeyboardShortcut.init OperatingSystem.MacOS) index
+        ]
+
+
+viewMinimapEntry : Int -> Bool -> WorkspaceItem -> Html msg
+viewMinimapEntry index focused item =
+    case item of
+        Success _ itemData ->
+            case itemData.item of
+                TermItem (Term _ category detail) ->
+                    viewMinimapEntry_ index detail.info (Category.Term category) focused
+
+                TypeItem (Type _ category detail) ->
+                    viewMinimapEntry_ index detail.info (Category.Type category) focused
+
+                DataConstructorItem (DataConstructor _ detail) ->
+                    viewMinimapEntry_ index detail.info (Category.Type Type.DataType) focused
+
+                AbilityConstructorItem (AbilityConstructor _ detail) ->
+                    viewMinimapEntry_ index detail.info (Category.Type Type.AbilityType) focused
+
+        Failure _ _ ->
+            Html.text "Failure"
+
+        Loading _ ->
+            Html.text "Loading"
 
 
 workspaceItemsToListWithFocus :
@@ -79,5 +108,6 @@ workspaceItemsToListWithFocus :
     -> List ( Bool, a )
 workspaceItemsToListWithFocus items =
     List.map (\item -> ( False, item )) items.before
-        ++ [ ( True, items.focus ) ]
-        ++ List.map (\item -> ( False, item )) items.after
+        ++ (( True, items.focus )
+                :: List.map (\item -> ( False, item )) items.after
+           )
