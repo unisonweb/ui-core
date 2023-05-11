@@ -190,16 +190,20 @@ view pageHeader_ =
                 PageHeaderNav n ->
                     let
                         selectedItem =
-                            Nav.selected n.navigation
-                                |> Maybe.map (Nav.viewItem True)
-                                |> Maybe.withDefault UI.nothing
+                            case Nav.selected n.navigation of
+                                Just navItem ->
+                                    div [ class "max-md" ]
+                                        [ Nav.empty
+                                            |> Nav.withItems [] navItem []
+                                            |> Nav.view
+                                        ]
 
-                        fullNav =
-                            Nav.view n.navigation
+                                Nothing ->
+                                    UI.nothing
                     in
                     ( div [ class "page-header_navigation" ]
-                        [ div [ class "min-md" ] [ fullNav ]
-                        , div [ class "max-md" ] [ selectedItem ]
+                        [ div [ class "min-md" ] [ Nav.view n.navigation ]
+                        , selectedItem
                         ]
                     , viewMobileNav n
                     )
