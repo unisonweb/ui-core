@@ -141,7 +141,6 @@ viewMobileNav cfg =
     let
         button =
             Button.icon cfg.mobileNavToggleMsg Icon.dots
-                |> Button.subdued
                 |> Button.withIsActive cfg.mobileNavIsOpen
                 |> Button.view
 
