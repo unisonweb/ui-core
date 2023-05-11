@@ -1,6 +1,6 @@
 module UI.PageHeader exposing (..)
 
-import Html exposing (Html, div, header, text)
+import Html exposing (Html, div, header)
 import Html.Attributes exposing (class, classList)
 import UI
 import UI.AnchoredOverlay as AnchoredOverlay
@@ -188,7 +188,16 @@ view pageHeader_ =
         ( nav, mobileNav ) =
             case pageHeader_.navigation of
                 PageHeaderNav n ->
-                    ( div [ class "min-md" ] [ Nav.view n.navigation ], viewMobileNav n )
+                    let
+                        selectedItem =
+                            Nav.selected n.navigation
+                                |> Maybe.map (Nav.viewItem True)
+                                |> Maybe.withDefault UI.nothing
+
+                        fullNav =
+                            Nav.view n.navigation
+                    in
+                    ( div [] [ div [ class "min-md" ] [ fullNav ], div [ class "max-md" ] [ selectedItem ] ], viewMobileNav n )
 
                 NoNav ->
                     ( UI.nothing, UI.nothing )

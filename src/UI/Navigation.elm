@@ -10,7 +10,9 @@ module UI.Navigation exposing
     , navItemWithNudge
     , navItemWithTag
     , navItemWithTooltip
+    , selected
     , view
+    , viewItem
     , withItems
     , withNoSelectedItems
     )
@@ -166,6 +168,20 @@ map toMsg navA =
 
         WithSelected items ->
             WithSelected (Zipper.map (mapNavItem toMsg) items)
+
+
+
+-- QUERY
+
+
+selected : Navigation msg -> Maybe (NavItem msg)
+selected nav =
+    case nav of
+        WithSelected z ->
+            Just (Zipper.current z)
+
+        WithoutSelected _ ->
+            Nothing
 
 
 
