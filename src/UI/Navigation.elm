@@ -275,7 +275,7 @@ view_ condensed navigation =
                     List.map (viewItem condensed False) (Zipper.before items)
 
                 current =
-                    viewItem True (Zipper.current items)
+                    viewItem condensed True (Zipper.current items)
 
                 after =
                     List.map (viewItem condensed False) (Zipper.after items)
