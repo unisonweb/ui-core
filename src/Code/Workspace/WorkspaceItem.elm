@@ -20,6 +20,7 @@ import Html.Attributes exposing (class, classList, id, title)
 import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (field, index)
+import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
 import Lib.Util as Util
 import List.Nonempty as NEL
 import Maybe.Extra as MaybeE
@@ -29,6 +30,8 @@ import UI.Button as Button
 import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
+import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
+import UI.KeyboardShortcut.Key as Key
 import UI.PlaceholderShape as PlaceholderShape
 import UI.Tooltip as Tooltip
 import UI.ViewMode as ViewMode exposing (ViewMode)
@@ -787,30 +790,36 @@ viewItemName item =
             Html.text "Loading"
 
 
-viewMinimapEntry_ : Info -> Category -> Bool -> Html msg
-viewMinimapEntry_ info category focused =
-    div [ class "info", classList [ ( "focused", focused ) ] ]
+viewMinimapEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html msg
+viewMinimapEntryKeyboardShortcut keyboardShortcut index =
+    KeyboardShortcut.view keyboardShortcut (Chord (Key.fromString "J") (Key.fromString (String.fromInt index)))
+
+
+viewMinimapEntry_ : Int -> Info -> Category -> Bool -> Html msg
+viewMinimapEntry_ index info category focused =
+    div [ class "workspace-minimap-entry", classList [ ( "focused", focused ) ] ]
         [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
         , h3 [ class "name" ] [ FQN.view info.name ]
+        , viewMinimapEntryKeyboardShortcut (KeyboardShortcut.init OperatingSystem.MacOS) index
         ]
 
 
-viewMinimapEntry : Bool -> WorkspaceItem -> Html msg
-viewMinimapEntry focused item =
+viewMinimapEntry : Int -> Bool -> WorkspaceItem -> Html msg
+viewMinimapEntry index focused item =
     case item of
         Success _ itemData ->
             case itemData.item of
                 TermItem (Term _ category detail) ->
-                    viewMinimapEntry_ detail.info (Category.Term category) focused
+                    viewMinimapEntry_ index detail.info (Category.Term category) focused
 
                 TypeItem (Type _ category detail) ->
-                    viewMinimapEntry_ detail.info (Category.Type category) focused
+                    viewMinimapEntry_ index detail.info (Category.Type category) focused
 
                 DataConstructorItem (DataConstructor _ detail) ->
-                    viewMinimapEntry_ detail.info (Category.Type Type.DataType) focused
+                    viewMinimapEntry_ index detail.info (Category.Type Type.DataType) focused
 
                 AbilityConstructorItem (AbilityConstructor _ detail) ->
-                    viewMinimapEntry_ detail.info (Category.Type Type.AbilityType) focused
+                    viewMinimapEntry_ index detail.info (Category.Type Type.AbilityType) focused
 
         Failure _ _ ->
             Html.text "Failure"

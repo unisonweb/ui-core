@@ -19,8 +19,9 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..), viewMinimapEntry)
-import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems(..))
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
+import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
+import Code.Workspace.WorkspaceMinimap exposing (viewWorkspaceMinimap)
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -520,7 +521,10 @@ view viewMode model =
             case viewMode of
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ miniMapView model.workspaceItems
+                        [ div
+                            [ id "workspace-minimap" ]
+                            [ viewWorkspaceMinimap model.workspaceItems
+                            ]
                         , section
                             [ id "workspace-content" ]
                             [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
@@ -542,55 +546,3 @@ viewItem definitionSummaryTooltip viewMode workspaceItem isFocused =
 viewWorkspaceItems : DefinitionSummaryTooltip.Model -> WorkspaceItems -> List (Html Msg)
 viewWorkspaceItems definitionSummaryTooltip =
     WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)
-
-
-miniMapView : WorkspaceItems -> Html msg
-miniMapView workspaceItems =
-    let
-        header =
-            Html.header []
-                [ Html.text "MAP    "
-                , Html.text "Close all"
-                ]
-
-        section =
-            case workspaceItems of
-                Empty ->
-                    Html.text "empty"
-
-                WorkspaceItems items ->
-                    let
-                        itemViews =
-                            (items.before
-                                |> List.map (miniMapItemView False)
-                            )
-                                ++ (items.focus |> miniMapItemView True)
-                                :: (items.after |> List.map (miniMapItemView False))
-                    in
-                    itemViews
-                        |> Html.tbody []
-                        |> List.singleton
-                        |> Html.table []
-                        |> List.singleton
-                        |> Html.section []
-    in
-    div
-        [ Html.Attributes.style "position" "fixed"
-        , Html.Attributes.style "z-index" "50"
-        , Html.Attributes.style "top" "0"
-        , Html.Attributes.style "right" "0"
-        , Html.Attributes.style "background-color" "white"
-        ]
-        [ header
-        , section
-        ]
-
-
-miniMapItemView : Bool -> WorkspaceItem -> Html msg
-miniMapItemView focused item =
-    item
-        |> viewMinimapEntry focused
-        |> List.singleton
-        |> Html.td []
-        |> List.singleton
-        |> Html.tr []

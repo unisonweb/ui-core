@@ -1,4 +1,5 @@
 @import "./workspace-item.css";
+@import "./workspace-minimap.css";
 
 #workspace {
   --color-workspace-gutter: var(--u-color_container_subdued);
@@ -63,4 +64,12 @@
     height: auto;
     width: auto;
   }
+}
+
+#workspace #workspace-minimap {
+  position: fixed;
+  z-index: 50;
+  top: 1rem;
+  right: 2rem;
+  background-color: lightgray;
 }
