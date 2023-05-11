@@ -150,7 +150,7 @@ viewMobileNav cfg =
                 button
 
         sheet =
-            AnchoredOverlay.customSheet (Nav.view cfg.navigation)
+            AnchoredOverlay.customSheet (Nav.viewCondensed cfg.navigation)
 
         anchoredOverlay =
             if cfg.mobileNavIsOpen then

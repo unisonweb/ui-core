@@ -12,7 +12,7 @@ module UI.Navigation exposing
     , navItemWithTooltip
     , selected
     , view
-    , viewItem
+    , viewCondensed
     , withItems
     , withNoSelectedItems
     )
@@ -188,25 +188,29 @@ selected nav =
 -- VIEW
 
 
-viewItem : Bool -> NavItem msg -> Html msg
-viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
+viewItem : Bool -> Bool -> NavItem msg -> Html msg
+viewItem condensed isSelected { icon, label, secondary, nudge, tooltip, click } =
     let
         secondaryContent =
-            case secondary of
-                TagContent tag ->
-                    Just (Tag.view tag)
+            if condensed then
+                Nothing
 
-                ButtonContent button ->
-                    button
-                        |> Button.stopPropagation
-                        |> Button.view
-                        |> Just
+            else
+                case secondary of
+                    TagContent tag ->
+                        Just (Tag.view tag)
 
-                AnchoredOverlayContent ao ->
-                    Just (AnchoredOverlay.view ao)
+                    ButtonContent button ->
+                        button
+                            |> Button.stopPropagation
+                            |> Button.view
+                            |> Just
 
-                NoContent ->
-                    Nothing
+                    AnchoredOverlayContent ao ->
+                        Just (AnchoredOverlay.view ao)
+
+                    NoContent ->
+                        Nothing
 
         icon_ =
             MaybeE.unwrap UI.nothing Icon.view icon
@@ -249,19 +253,31 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
 
 view : Navigation msg -> Html msg
 view navigation =
+    view_ False navigation
+
+
+{-| like `view`, but discards any secondary nav item content
+-}
+viewCondensed : Navigation msg -> Html msg
+viewCondensed navigation =
+    view_ True navigation
+
+
+view_ : Bool -> Navigation msg -> Html msg
+view_ condensed navigation =
     case navigation of
         WithoutSelected items ->
-            nav [ class "navigation" ] (List.map (viewItem False) items)
+            nav [ class "navigation" ] (List.map (viewItem condensed False) items)
 
         WithSelected items ->
             let
                 before =
-                    List.map (viewItem False) (Zipper.before items)
+                    List.map (viewItem condensed False) (Zipper.before items)
 
                 current =
                     viewItem True (Zipper.current items)
 
                 after =
-                    List.map (viewItem False) (Zipper.after items)
+                    List.map (viewItem condensed False) (Zipper.after items)
             in
             nav [ class "navigation" ] (before ++ (current :: after))
