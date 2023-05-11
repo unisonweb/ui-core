@@ -140,7 +140,7 @@ viewMobileNav : NavigationConfig msg -> Html msg
 viewMobileNav cfg =
     let
         button =
-            Button.icon cfg.mobileNavToggleMsg Icon.dots
+            Button.icon cfg.mobileNavToggleMsg Icon.list
                 |> Button.withIsActive cfg.mobileNavIsOpen
                 |> Button.view
 
