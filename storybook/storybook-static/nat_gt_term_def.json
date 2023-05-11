@@ -1,0 +1,122 @@
+{
+  "termDefinitions": {
+    "##Nat.>": {
+      "termNames": [
+        "base.Nat.gt",
+        "base.Nat.>",
+        "lab.lib.base.Nat.>",
+        "lab.lib.base.Nat.gt"
+      ],
+      "bestTermName": "Nat.gt",
+      "defnTermTag": "Plain",
+      "termDefinition": {
+        "tag": "BuiltinObject",
+        "contents": [
+          {
+            "annotation": {
+              "contents": "##Nat",
+              "tag": "TypeReference"
+            },
+            "segment": "Nat"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "tag": "TypeOperator"
+            },
+            "segment": "->"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Nat",
+              "tag": "TypeReference"
+            },
+            "segment": "Nat"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "tag": "TypeOperator"
+            },
+            "segment": "->"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Boolean",
+              "tag": "TypeReference"
+            },
+            "segment": "Boolean"
+          }
+        ]
+      },
+      "signature": [
+        {
+          "annotation": {
+            "contents": "##Nat",
+            "tag": "TypeReference"
+          },
+          "segment": "Nat"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "tag": "TypeOperator"
+          },
+          "segment": "->"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "contents": "##Nat",
+            "tag": "TypeReference"
+          },
+          "segment": "Nat"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "tag": "TypeOperator"
+          },
+          "segment": "->"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "contents": "##Boolean",
+            "tag": "TypeReference"
+          },
+          "segment": "Boolean"
+        }
+      ],
+      "termDocs": []
+    }
+  },
+  "typeDefinitions": {},
+  "missingDefinitions": []
+}

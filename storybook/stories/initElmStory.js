@@ -3,8 +3,10 @@ export const initElmStory = (elmApp) => {
   const innerDiv = document.createElement("div");
 
   containerDiv.appendChild(innerDiv);
+
   elmApp.init({
     node: innerDiv,
   });
+
   return containerDiv;
 };
