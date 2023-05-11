@@ -197,7 +197,12 @@ view pageHeader_ =
                         fullNav =
                             Nav.view n.navigation
                     in
-                    ( div [] [ div [ class "min-md" ] [ fullNav ], div [ class "max-md" ] [ selectedItem ] ], viewMobileNav n )
+                    ( div [ class "page-header_navigation" ]
+                        [ div [ class "min-md" ] [ fullNav ]
+                        , div [ class "max-md" ] [ selectedItem ]
+                        ]
+                    , viewMobileNav n
+                    )
 
                 NoNav ->
                     ( UI.nothing, UI.nothing )
