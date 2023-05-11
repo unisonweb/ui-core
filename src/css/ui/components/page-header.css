@@ -200,9 +200,3 @@
     white-space: nowrap;
   }
 }
-
-@media only screen and (--u-viewport_max-sm) {
-  .page-header .profile-snippet .profile-snippet_text {
-    display: none;
-  }
-}
