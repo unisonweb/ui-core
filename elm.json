@@ -16,6 +16,7 @@
         "UI.Button",
         "UI.Modal",
         "UI.Tooltip",
+        "UI.Navigation",
         "UI.Card",
         "UI.FoldToggle",
         "UI.PageLayout",

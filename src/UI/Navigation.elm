@@ -120,8 +120,8 @@ empty =
 
 
 withItems : List (NavItem msg) -> NavItem msg -> List (NavItem msg) -> Navigation msg -> Navigation msg
-withItems before selected after _ =
-    WithSelected (Zipper.from before selected after)
+withItems before selected_ after _ =
+    WithSelected (Zipper.from before selected_ after)
 
 
 withNoSelectedItems : List (NavItem msg) -> Navigation msg -> Navigation msg
