@@ -24,22 +24,22 @@ type alias PageTitle msg =
 -- CREATE
 
 
-pageTitle : String -> PageTitle msg
-pageTitle title_ =
+title : String -> PageTitle msg
+title title_ =
     let
-        title =
+        title__ =
             Title { icon = Nothing, title = title_, description = Nothing }
     in
-    { title = title, rightSide = [] }
+    { title = title__, rightSide = [] }
 
 
 custom : List (Html msg) -> PageTitle msg
 custom items =
     let
-        title =
+        title_ =
             CustomTitle items
     in
-    { title = title, rightSide = [] }
+    { title = title_, rightSide = [] }
 
 
 
