@@ -74,6 +74,7 @@
   display: flex;
   flex: 1;
   flex-direction: row;
+  flex-grow: 0;
   align-items: center;
   justify-content: space-between;
 }
@@ -112,6 +113,10 @@
   height: 1.5rem;
   align-items: center;
   color: var(--u-color_text_subdued);
+}
+
+.page-content .page-title .page-title_custom-title {
+  display: flex;
 }
 
 .page-content .page-title .page-title_right-side {
