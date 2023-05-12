@@ -356,7 +356,6 @@
 
   .page .page-content .with-page-aside {
     flex-direction: column;
-    padding: 0 2rem;
   }
 
   .page .page-content .with-page-aside > .page-aside {
@@ -411,12 +410,8 @@
     width: initial;
   }
 
-  .page.sidebar-left-content-layout .page-content .page-title,
-  .page.centered-layout .page-content .page-title,
-  .page.centered-narrow-layout .page-content .page-title,
-  .page.presentation-layout .page-content .page-title,
-  .page-content .page-title {
-    margin: 0 1.5rem;
+  .page .page-content .page-title {
+    margin: 0;
   }
 
   .page .page-footer {
@@ -439,24 +434,12 @@
 }
 
 @media only screen and (--u-viewport_max-sm) {
-  .page.sidebar-left-content-layout .page-content .page-title,
-  .page.centered-layout .page-content .page-title,
-  .page.centered-narrow-layout .page-content .page-title,
-  .page.presentation-layout .page-content .page-title,
-  .page-content .page-title {
-    margin: 0 1rem;
-  }
-
   .page.centered-layout .page-content,
   .page.centered-narrow-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.presentation-layout .page-content {
     padding: 3rem 1rem;
-  }
-
-  .page .page-content .with-page-aside {
-    padding: 0 1rem;
   }
 
   .page.sidebar-edge-to-edge-layout.sidebar-toggled,
