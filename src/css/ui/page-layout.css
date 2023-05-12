@@ -439,11 +439,11 @@
     position: relative;
   }
 
-  .page. .page-content .with-page-aside {
+  .page .page-content .with-page-aside {
     flex-direction: column;
   }
 
-  .page. .page-content .with-page-aside > .page-aside {
+  .page .page-content .with-page-aside > .page-aside {
     width: 100%;
   }
 
