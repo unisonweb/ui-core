@@ -399,8 +399,8 @@
     width: 100%;
   }
 
-  .page.page-centered-layout .page-content,
-  .page.page-centered-narrow-layout .page-content,
+  .page.centered-layout .page-content,
+  .page.centered-narrow-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.presentation-layout .page-content {
@@ -447,8 +447,8 @@
     margin: 0 1rem;
   }
 
-  .page.page-centered-layout .page-content,
-  .page.page-centered-narrow-layout .page-content,
+  .page.centered-layout .page-content,
+  .page.centered-narrow-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.presentation-layout .page-content {
