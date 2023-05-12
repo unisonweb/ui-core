@@ -72,13 +72,6 @@
 
 .page-content .page-title {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.page-content .page-title .page-title_with-action {
-  display: flex;
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -160,7 +153,7 @@
 
 /* @todo :has */
 /* .page.centered-layout .page-content .page-title:has(.icon) { */
-.page.centered-layout .page-content .page-title.has_icon {
+.page.centered-layout .page-content .page-title .has_icon {
   margin-left: -0.75rem;
 }
 
@@ -172,7 +165,7 @@
 
 /* @todo :has */
 /* .page.presentation-layout .page-content .page-title:has(.icon) { */
-.page.presentation-layout .page-content .page-title.has_icon {
+.page.presentation-layout .page-content .page-title .has_icon {
   margin-left: -0.75rem;
 }
 
