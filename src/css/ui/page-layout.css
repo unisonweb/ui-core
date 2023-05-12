@@ -114,6 +114,14 @@
   color: var(--u-color_text_subdued);
 }
 
+.page-content .page-title .page-title_right-side {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+
 .page-content .with-page-aside {
   display: flex;
   flex-direction: row;
