@@ -431,6 +431,16 @@
   }
 }
 
+
+@media only screen and (--u-viewport_max-md) {
+  .page .page-content .page-title {
+    flex-direction: column;
+    align-items: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
 @media only screen and (--u-viewport_max-sm) {
   .page.sidebar-left-content-layout .page-content .page-title,
   .page.centered-layout .page-content .page-title,
@@ -438,13 +448,6 @@
   .page.presentation-layout .page-content .page-title,
   .page-content .page-title {
     margin: 0 1rem 0 1rem;
-  }
-
-  .page .page-content .page-title {
-    flex-direction: column;
-    align-items: flex;
-    align-items: flex-start;
-    gap: 1rem;
   }
 
   .page .page-content .with-page-aside {
