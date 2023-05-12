@@ -106,7 +106,7 @@ view { singularLabel, pluralLabel, kpi, icon, click, tooltip } =
         ( content_, hasTooltip ) =
             case tooltip of
                 Just tooltip_ ->
-                    ( [ Tooltip.view (span [] content) tooltip_ ], True )
+                    ( [ Tooltip.view (span [ class "kpi-tag_inner" ] content) tooltip_ ], True )
 
                 Nothing ->
                     ( content, False )
