@@ -402,12 +402,9 @@
   .page-centered-layout .page-content,
   .page-centered-narrow-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
-  .page.hero-layout .page-content {
-    padding: 3rem 0 3rem 0;
-  }
-
+  .page.hero-layout .page-content,
   .page.presentation-layout .page-content {
-    padding: 3rem 1rem;
+    padding: 3rem 1.5rem;
   }
 
   .page.sidebar-left-content-layout .page-content .columns {
@@ -419,7 +416,7 @@
   .page.centered-narrow-layout .page-content .page-title,
   .page.presentation-layout .page-content .page-title,
   .page-content .page-title {
-    margin: 0 1.5rem 0 1.5rem;
+    margin: 0 1.5rem;
   }
 
   .page .page-footer {
@@ -447,7 +444,15 @@
   .page.centered-narrow-layout .page-content .page-title,
   .page.presentation-layout .page-content .page-title,
   .page-content .page-title {
-    margin: 0 1rem 0 1rem;
+    margin: 0 1rem;
+  }
+
+  .page-centered-layout .page-content,
+  .page-centered-narrow-layout .page-content,
+  .page.sidebar-left-content-layout .page-content,
+  .page.hero-layout .page-content,
+  .page.presentation-layout .page-content {
+    padding: 3rem 1rem;
   }
 
   .page .page-content .with-page-aside {
