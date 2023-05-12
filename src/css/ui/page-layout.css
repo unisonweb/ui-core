@@ -356,6 +356,7 @@
 
   .page .page-content .with-page-aside {
     flex-direction: column;
+    padding: 0 2rem;
   }
 
   .page .page-content .with-page-aside > .page-aside {
@@ -427,6 +428,12 @@
 
   .page .page-footer .separator:first-of-type {
     display: none;
+  }
+}
+
+@media only screen and (--u-viewport_max-sm) {
+  .page .page-content .page-title {
+    flex-direction: column;
   }
 }
 
