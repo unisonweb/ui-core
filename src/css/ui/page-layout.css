@@ -354,6 +354,14 @@
     border-radius: var(--border-radius-base);
   }
 
+  .page .page-content .with-page-aside {
+    flex-direction: column;
+  }
+
+  .page .page-content .with-page-aside > .page-aside {
+    width: 100%;
+  }
+
   .page:not(.sidebar-toggled) #main-sidebar .sidebar_expanded {
     display: none;
   }
@@ -437,14 +445,6 @@
     grid-template-columns: 1fr;
     grid-template-areas: "main-sidebar";
     position: relative;
-  }
-
-  .page .page-content .with-page-aside {
-    flex-direction: column;
-  }
-
-  .page .page-content .with-page-aside > .page-aside {
-    width: 100%;
   }
 
   .page.sidebar-toggled {
