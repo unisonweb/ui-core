@@ -21,9 +21,9 @@ viewWorkspaceMinimap : WorkspaceItems -> Html msg
 viewWorkspaceMinimap workspaceItems =
     let
         header =
-            Html.header []
-                [ Html.text "MAP    "
-                , Html.text "Close all"
+            Html.header [ class "workspace-minimap-header" ]
+                [ Html.div [] [ Html.text "MAP" ]
+                , Html.div [] [ Html.text "Close all" ]
                 ]
 
         section =
@@ -46,7 +46,7 @@ viewWorkspaceMinimap workspaceItems =
                         |> Html.section []
     in
     div
-        []
+        [ class "workspace-minimap-content" ]
         [ header
         , section
         ]
@@ -70,8 +70,10 @@ viewMinimapEntryKeyboardShortcut keyboardShortcut index =
 viewMinimapEntry_ : Int -> Info -> Category -> Bool -> Html msg
 viewMinimapEntry_ index info category focused =
     div [ class "workspace-minimap-entry", classList [ ( "focused", focused ) ] ]
-        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
-        , h3 [ class "name" ] [ FQN.view info.name ]
+        [ div [ class "workspace-minimap-entry-content" ]
+            [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
+            , h3 [ class "name" ] [ FQN.view info.name ]
+            ]
         , viewMinimapEntryKeyboardShortcut (KeyboardShortcut.init OperatingSystem.MacOS) index
         ]
 

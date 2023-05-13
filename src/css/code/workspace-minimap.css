@@ -6,14 +6,34 @@
     padding: 0.75rem;
 }
 
+.workspace-minimap-content table {
+    width: 100%;
+}
+
+.workspace-minimap-content table td {
+    width: 100%;
+}
+
+.workspace-minimap-header {
+    display: flex;
+    justify-content: space-between;
+}
+
 .workspace-minimap-entry {
+    width: 100%;
     display: flex;
     align-items: center;
     height: 1.5rem;
     padding-top: 1.0rem;
     padding-bottom: 1.0rem;
+    justify-content: space-between;
 }
 
 .workspace-minimap-entry .focused {
-    background-color: lightgray;
+    background-color: var(--color-gray-lighten-55);
+}
+
+.workspace-minimap-entry-content {
+    display: flex;
+    align-items: center;
 }
