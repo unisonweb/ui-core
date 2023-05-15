@@ -94,4 +94,6 @@ projectDetails isFaved numFavs =
     , summary = Just "hi i'm a summary"
     , tags = Set.empty
     , visibility = Project.Public
+    , latestVersion = Nothing
+    , defaultBranch = Nothing
     }

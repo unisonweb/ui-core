@@ -126,7 +126,6 @@
   align-items: center;
 }
 
-
 .page-content .with-page-aside {
   display: flex;
   flex-direction: row;
@@ -422,7 +421,6 @@
     display: none;
   }
 }
-
 
 @media only screen and (--u-viewport_max-md) {
   .page .page-content .page-title {
