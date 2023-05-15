@@ -213,12 +213,13 @@
 
   .page-header .page-header_page-context,
   .page-header .page-header_navigation {
+  .page-header .page-header_navigation .nav-item {
     height: calc(var(--c-height_page-header) / 2);
   }
 
   .page-header .page-header_right-side {
     position: absolute;
-    top: 1rem;
+    bottom: 1rem;
     right: 1rem;
   }
 }
