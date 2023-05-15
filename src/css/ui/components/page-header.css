@@ -207,5 +207,18 @@
   .page-header {
     --c-height_page-header: 7rem;
     flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  .page-header .page-header_page-context,
+  .page-header .page-header .navigation {
+    height: calc(var(--c-height_page-header) / 2);
+  }
+
+  .page-header .page-header_right-side {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
   }
 }
