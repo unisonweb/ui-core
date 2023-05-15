@@ -29,15 +29,6 @@ type ProjectVisibility
     | Private
 
 
-type alias ProjectListItem =
-    Project
-        { summary : Maybe String
-        , tags : Set String
-        , createdAt : DateTime
-        , updatedAt : DateTime
-        }
-
-
 type alias ProjectSummary =
     Project
         { summary : Maybe String
@@ -199,30 +190,22 @@ decodeDetails =
         |> required "updatedAt" DateTime.decode
 
 
-decodeListItem : Decode.Decoder ProjectListItem
-decodeListItem =
+decode : Decode.Decoder (Project {})
+decode =
     let
-        makeProjectListItem handle_ slug_ visibility summary tags createdAt updatedAt =
+        makeProject handle_ slug_ visibility =
             let
                 ref_ =
                     ProjectRef.projectRef handle_ slug_
             in
             { ref = ref_
             , visibility = visibility
-            , summary = summary
-            , tags = Set.fromList tags
-            , createdAt = createdAt
-            , updatedAt = updatedAt
             }
     in
-    Decode.succeed makeProjectListItem
+    Decode.succeed makeProject
         |> requiredAt [ "owner", "handle" ] UserHandle.decode
         |> required "slug" ProjectSlug.decode
         |> required "visibility" decodeVisibility
-        |> required "summary" (nullable string)
-        |> required "tags" (Decode.list string)
-        |> required "createdAt" DateTime.decode
-        |> required "updatedAt" DateTime.decode
 
 
 decodeSummary : Decode.Decoder ProjectSummary

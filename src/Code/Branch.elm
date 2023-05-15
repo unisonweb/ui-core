@@ -35,7 +35,7 @@ decodeSummary =
     in
     Decode.succeed makeBranch
         |> required "branchRef" BranchRef.decode
-        |> required "project" Project.decodeSummary
+        |> required "project" Project.decode
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
         |> required "causalHash" Hash.decode
