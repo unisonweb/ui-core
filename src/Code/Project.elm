@@ -14,12 +14,7 @@ import UI.DateTime as DateTime exposing (DateTime)
 
 
 type alias Project a =
-    { a
-        | ref : ProjectRef
-        , visibility : ProjectVisibility
-        , createdAt : DateTime
-        , updatedAt : DateTime
-    }
+    { a | ref : ProjectRef, visibility : ProjectVisibility }
 
 
 type IsFaved
@@ -38,6 +33,8 @@ type alias ProjectListItem =
     Project
         { summary : Maybe String
         , tags : Set String
+        , createdAt : DateTime
+        , updatedAt : DateTime
         }
 
 
@@ -48,6 +45,8 @@ type alias ProjectSummary =
         , numFavs : Int
         , numWeeklyDownloads : Int
         , isFaved : IsFaved
+        , createdAt : DateTime
+        , updatedAt : DateTime
         }
 
 
@@ -60,6 +59,8 @@ type alias ProjectDetails =
         , isFaved : IsFaved
         , latestVersion : Maybe Version
         , defaultBranch : Maybe BranchRef
+        , createdAt : DateTime
+        , updatedAt : DateTime
         }
 
 
