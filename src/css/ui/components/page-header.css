@@ -12,7 +12,6 @@
   --c-color_page-header_border: var(--color-gray-darken-10);
   --c-color_page-header_active-nav-item: var(--color-blue-3);
   --c-color_page-header_hover-nav-item: var(--color-gray-base);
-  --c-height_page-header: 3.5rem;
 }
 
 .page-header.view-mode_regular .profile-snippet {
@@ -73,12 +72,15 @@
 }
 
 .page-header {
+  --c-height_page-header: 3.5rem;
+
   grid-area: page-header;
   padding: 0 1.5rem 0 0;
   background: var(--c-color_page-header_bg);
   color: var(--c-color_page-header_text);
   box-shadow: inset 0 -1px 0 0 var(--c-color_page-header_border);
   display: flex;
+  flex-direction: row;
   align-items: center;
   font-size: 1rem;
   height: var(--c-height_page-header);
@@ -198,5 +200,12 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+}
+
+@media only screen and (--u-viewport_max-sm) {
+  .page-header {
+    --c-height_page-header: 7rem;
+    flex-direction: column;
   }
 }
