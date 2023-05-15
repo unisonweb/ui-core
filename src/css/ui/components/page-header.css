@@ -212,7 +212,7 @@
   }
 
   .page-header .page-header_page-context,
-  .page-header .page-header_navigation {
+  .page-header .page-header_navigation,
   .page-header .page-header_navigation .nav-item {
     height: calc(var(--c-height_page-header) / 2);
   }
