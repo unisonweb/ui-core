@@ -21,7 +21,7 @@ import Code.Hash as Hash
 import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
-import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap exposing (viewWorkspaceMinimap)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap exposing (Msg(..), viewWorkspaceMinimap)
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -272,9 +272,18 @@ update config viewMode msg ({ workspaceItems } as model) =
             in
             ( { model | keyboardShortcut = keyboardShortcut }, Cmd.map KeyboardShortcutMsg cmd, None )
 
-        WorkspaceMinimapMsg _ ->
-            Debug.todo "handle focus change"
-                ( model, Cmd.none, None )
+        WorkspaceMinimapMsg mMsg ->
+            case mMsg of
+                CloseAll ->
+                    let
+                        nextModel =
+                            { model | workspaceItems = WorkspaceItems.empty }
+                    in
+                    ( nextModel, Cmd.none, openDefinitionsFocusToOutMsg nextModel.workspaceItems )
+
+                SelectItem _ ->
+                    Debug.todo "handle focus change"
+                        ( model, Cmd.none, None )
 
 
 

@@ -20,6 +20,7 @@ import UI.KeyboardShortcut.Key as Key
 
 type Msg
     = SelectItem WorkspaceItem
+    | CloseAll
 
 
 viewWorkspaceMinimap : WorkspaceItems -> Html Msg
@@ -112,7 +113,7 @@ viewHeader : Html Msg
 viewHeader =
     Html.header [ class "workspace-minimap-header" ]
         [ Html.div [] [ Html.text "MAP" ]
-        , Html.div [] [ Html.text "Close all" ]
+        , Html.a [ onClick CloseAll ] [ Html.text "Close all" ]
         ]
 
 
