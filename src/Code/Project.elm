@@ -184,7 +184,7 @@ decodeDetails =
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
         |> optional "isFaved" decodeIsFaved Unknown
-        |> required "latestVersion" (nullable Version.decode)
+        |> required "latestRelease" (nullable Version.decode)
         |> required "defaultBranch" (nullable BranchRef.decode)
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
