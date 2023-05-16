@@ -21,7 +21,7 @@ import Code.Hash as Hash
 import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
-import Code.Workspace.WorkspaceMinimap exposing (viewWorkspaceMinimap)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap exposing (viewWorkspaceMinimap)
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -78,6 +78,7 @@ type Msg
     | KeyboardShortcutMsg KeyboardShortcut.Msg
     | WorkspaceItemMsg WorkspaceItem.Msg
     | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
+    | WorkspaceMinimapMsg WorkspaceMinimap.Msg
 
 
 type OutMsg
@@ -270,6 +271,10 @@ update config viewMode msg ({ workspaceItems } as model) =
                     KeyboardShortcut.update kMsg model.keyboardShortcut
             in
             ( { model | keyboardShortcut = keyboardShortcut }, Cmd.map KeyboardShortcutMsg cmd, None )
+
+        WorkspaceMinimapMsg _ ->
+            Debug.todo "handle focus change"
+                ( model, Cmd.none, None )
 
 
 
@@ -524,6 +529,7 @@ view viewMode model =
                         [ div
                             [ id "workspace-minimap" ]
                             [ viewWorkspaceMinimap model.workspaceItems
+                                |> Html.map WorkspaceMinimapMsg
                             ]
                         , section
                             [ id "workspace-content" ]

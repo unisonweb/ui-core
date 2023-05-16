@@ -8,7 +8,7 @@ import Code.Syntax exposing (..)
 import Code.Workspace exposing (Msg(..))
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
-import Code.Workspace.WorkspaceMinimap exposing (viewWorkspaceMinimap)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap exposing (viewWorkspaceMinimap)
 import Dict exposing (Dict, insert)
 import Html exposing (Html)
 import Http
@@ -62,6 +62,7 @@ getSampleResponse index url termName =
 type Message
     = WorkspaceMsg Msg
     | GotItem Int Reference.Reference (Result Http.Error Item)
+    | WorkspaceMinimapMsg WorkspaceMinimap.Msg
 
 
 update : Message -> Model -> ( Model, Cmd Message )
@@ -86,8 +87,11 @@ update message model =
                     in
                     ( { model | workspaceItemDict = newDict }, Cmd.none )
 
+        WorkspaceMinimapMsg mMsg ->
+            ( model, Cmd.none )
 
-view : Model -> Html msg
+
+view : Model -> Html Message
 view model =
     case Dict.values model.workspaceItemDict of
         [] ->
@@ -98,4 +102,4 @@ view model =
                 workspaceItems =
                     WorkspaceItems.fromItems [] x xs
             in
-            viewWorkspaceMinimap workspaceItems
+            viewWorkspaceMinimap workspaceItems |> Html.map WorkspaceMinimapMsg

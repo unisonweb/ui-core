@@ -1,4 +1,4 @@
-module Code.Workspace.WorkspaceMinimap exposing (viewWorkspaceMinimap)
+module Code.Workspace.WorkspaceMinimap exposing (Msg(..), viewWorkspaceMinimap)
 
 import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..))
 import Code.Definition.Category as Category exposing (Category)
@@ -11,20 +11,22 @@ import Code.Workspace.WorkspaceItem exposing (Item(..), WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems exposing (WorkspaceItems(..))
 import Html exposing (Html, div, h3)
 import Html.Attributes exposing (class, classList)
+import Html.Events exposing (onClick)
 import Lib.OperatingSystem as OperatingSystem
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key as Key
 
 
-viewWorkspaceMinimap : WorkspaceItems -> Html msg
+type Msg
+    = SelectItem WorkspaceItem
+
+
+viewWorkspaceMinimap : WorkspaceItems -> Html Msg
 viewWorkspaceMinimap workspaceItems =
     let
         header =
-            Html.header [ class "workspace-minimap-header" ]
-                [ Html.div [] [ Html.text "MAP" ]
-                , Html.div [] [ Html.text "Close all" ]
-                ]
+            viewHeader
 
         section =
             case workspaceItems of
@@ -52,7 +54,7 @@ viewWorkspaceMinimap workspaceItems =
         ]
 
 
-viewWorkspaceMinimapItem : WorkspaceItem -> Bool -> Int -> Html msg
+viewWorkspaceMinimapItem : WorkspaceItem -> Bool -> Int -> Html Msg
 viewWorkspaceMinimapItem item focused index =
     item
         |> viewMinimapEntry index focused
@@ -62,14 +64,18 @@ viewWorkspaceMinimapItem item focused index =
         |> Html.tr [ class "workspace-minimap-entry" ]
 
 
-viewMinimapEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html msg
+viewMinimapEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html Msg
 viewMinimapEntryKeyboardShortcut keyboardShortcut index =
     KeyboardShortcut.view keyboardShortcut (Chord (Key.fromString "J") (Key.fromString (String.fromInt index)))
 
 
-viewMinimapEntry_ : Int -> Info -> Category -> Bool -> Html msg
-viewMinimapEntry_ index info category focused =
-    div [ class "workspace-minimap-entry", classList [ ( "focused", focused ) ] ]
+viewMinimapEntry_ : WorkspaceItem -> Int -> Info -> Category -> Bool -> Html Msg
+viewMinimapEntry_ item index info category focused =
+    div
+        [ class "workspace-minimap-entry"
+        , classList [ ( "focused", focused ) ]
+        , onClick (SelectItem item)
+        ]
         [ div [ class "workspace-minimap-entry-content" ]
             [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
             , h3 [ class "name" ] [ FQN.view info.name ]
@@ -78,28 +84,36 @@ viewMinimapEntry_ index info category focused =
         ]
 
 
-viewMinimapEntry : Int -> Bool -> WorkspaceItem -> Html msg
+viewMinimapEntry : Int -> Bool -> WorkspaceItem -> Html Msg
 viewMinimapEntry index focused item =
     case item of
         Success _ itemData ->
             case itemData.item of
                 TermItem (Term _ category detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Term category) focused
+                    viewMinimapEntry_ item index detail.info (Category.Term category) focused
 
                 TypeItem (Type _ category detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Type category) focused
+                    viewMinimapEntry_ item index detail.info (Category.Type category) focused
 
                 DataConstructorItem (DataConstructor _ detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Type Type.DataType) focused
+                    viewMinimapEntry_ item index detail.info (Category.Type Type.DataType) focused
 
                 AbilityConstructorItem (AbilityConstructor _ detail) ->
-                    viewMinimapEntry_ index detail.info (Category.Type Type.AbilityType) focused
+                    viewMinimapEntry_ item index detail.info (Category.Type Type.AbilityType) focused
 
         Failure _ _ ->
             Html.text "Failure"
 
         Loading _ ->
             Html.text "Loading"
+
+
+viewHeader : Html Msg
+viewHeader =
+    Html.header [ class "workspace-minimap-header" ]
+        [ Html.div [] [ Html.text "MAP" ]
+        , Html.div [] [ Html.text "Close all" ]
+        ]
 
 
 workspaceItemsToListWithFocus :

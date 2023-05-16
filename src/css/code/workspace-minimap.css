@@ -27,6 +27,7 @@
     padding-top: 1.0rem;
     padding-bottom: 1.0rem;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .workspace-minimap-entry .focused {
