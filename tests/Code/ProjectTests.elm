@@ -7,6 +7,8 @@ import Expect
 import Lib.UserHandle as UserHandle
 import Set
 import Test exposing (..)
+import Time
+import UI.DateTime as DateTime
 
 
 ref : Test
@@ -96,4 +98,6 @@ projectDetails isFaved numFavs =
     , visibility = Project.Public
     , latestVersion = Nothing
     , defaultBranch = Nothing
+    , createdAt = DateTime.fromPosix (Time.millisToPosix 1)
+    , updatedAt = DateTime.fromPosix (Time.millisToPosix 1)
     }

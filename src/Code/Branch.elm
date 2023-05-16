@@ -19,7 +19,7 @@ type alias Branch b p =
 
 
 type alias BranchSummary =
-    Branch {} { visibility : Project.ProjectVisibility }
+    Branch {} {}
 
 
 decodeSummary : Decode.Decoder BranchSummary
