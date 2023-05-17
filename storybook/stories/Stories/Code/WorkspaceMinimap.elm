@@ -3,23 +3,28 @@ module Stories.Code.WorkspaceMinimap exposing (..)
 import Browser
 import Code.Definition.Reference as Reference
 import Code.FullyQualifiedName as FQN
-import Code.HashQualified exposing (HashQualified(..))
-import Code.Syntax exposing (..)
-import Code.Workspace exposing (Msg(..))
-import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
+import Code.HashQualified as HashQualified
+import Code.Workspace as Workspace
+import Code.Workspace.WorkspaceItem as WorkspaceItem
 import Code.Workspace.WorkspaceItems as WorkspaceItems
-import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap exposing (viewWorkspaceMinimap)
-import Dict exposing (Dict, insert)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
+import Dict exposing (Dict, empty, insert, remove)
 import Html exposing (Html)
 import Http
 
 
 type alias Model =
-    { workspaceItemDict : Dict Int WorkspaceItem
+    { workspaceItemDict : Dict Int WorkspaceItem.WorkspaceItem
     }
 
 
-main : Program () Model Message
+type Msg
+    = WorkspaceMsg Workspace.Msg
+    | GotItem Int Reference.Reference (Result Http.Error WorkspaceItem.Item)
+    | WorkspaceMinimapMsg WorkspaceMinimap.Msg
+
+
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
@@ -29,7 +34,7 @@ main =
         }
 
 
-init : () -> ( Model, Cmd Message )
+init : () -> ( Model, Cmd Msg )
 init _ =
     ( { workspaceItemDict = Dict.empty }
     , Cmd.batch
@@ -40,18 +45,18 @@ init _ =
     )
 
 
-getSampleResponse : Int -> String -> String -> Cmd Message
+getSampleResponse : Int -> String -> String -> Cmd Msg
 getSampleResponse index url termName =
     let
         reference =
             termName
                 |> FQN.fromString
-                |> NameOnly
+                |> HashQualified.NameOnly
                 |> Reference.TypeReference
 
         decoder =
             reference
-                |> decodeItem
+                |> WorkspaceItem.decodeItem
     in
     Http.get
         { url = url
@@ -59,13 +64,7 @@ getSampleResponse index url termName =
         }
 
 
-type Message
-    = WorkspaceMsg Msg
-    | GotItem Int Reference.Reference (Result Http.Error Item)
-    | WorkspaceMinimapMsg WorkspaceMinimap.Msg
-
-
-update : Message -> Model -> ( Model, Cmd Message )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
         WorkspaceMsg _ ->
@@ -80,7 +79,7 @@ update message model =
                 Ok item ->
                     let
                         workspaceItem =
-                            fromItem reference item
+                            WorkspaceItem.fromItem reference item
 
                         newDict =
                             insert index workspaceItem model.workspaceItemDict
@@ -88,10 +87,15 @@ update message model =
                     ( { model | workspaceItemDict = newDict }, Cmd.none )
 
         WorkspaceMinimapMsg mMsg ->
-            ( model, Cmd.none )
+            case mMsg of
+                WorkspaceMinimap.SelectItem _ ->
+                    ( model, Cmd.none )
+
+                WorkspaceMinimap.CloseAll ->
+                    ( { workspaceItemDict = empty }, Cmd.none )
 
 
-view : Model -> Html Message
+view : Model -> Html Msg
 view model =
     case Dict.values model.workspaceItemDict of
         [] ->
@@ -102,4 +106,4 @@ view model =
                 workspaceItems =
                     WorkspaceItems.fromItems [] x xs
             in
-            viewWorkspaceMinimap workspaceItems |> Html.map WorkspaceMinimapMsg
+            WorkspaceMinimap.viewWorkspaceMinimap workspaceItems |> Html.map WorkspaceMinimapMsg
