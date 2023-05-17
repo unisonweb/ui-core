@@ -21,7 +21,7 @@ import Code.Hash as Hash
 import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
-import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap exposing (Msg(..), viewWorkspaceMinimap)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -274,14 +274,14 @@ update config viewMode msg ({ workspaceItems } as model) =
 
         WorkspaceMinimapMsg mMsg ->
             case mMsg of
-                CloseAll ->
+                WorkspaceMinimap.CloseAll ->
                     let
                         nextModel =
                             { model | workspaceItems = WorkspaceItems.empty }
                     in
                     ( nextModel, Cmd.none, openDefinitionsFocusToOutMsg nextModel.workspaceItems )
 
-                SelectItem _ ->
+                WorkspaceMinimap.SelectItem _ ->
                     Debug.todo "handle focus change"
                         ( model, Cmd.none, None )
 
@@ -537,7 +537,7 @@ view viewMode model =
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ div
                             [ id "workspace-minimap" ]
-                            [ viewWorkspaceMinimap model.workspaceItems
+                            [ WorkspaceMinimap.view model.workspaceItems
                                 |> Html.map WorkspaceMinimapMsg
                             ]
                         , section

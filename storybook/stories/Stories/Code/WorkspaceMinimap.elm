@@ -106,4 +106,4 @@ view model =
                 workspaceItems =
                     WorkspaceItems.fromItems [] x xs
             in
-            WorkspaceMinimap.viewWorkspaceMinimap workspaceItems |> Html.map WorkspaceMinimapMsg
+            WorkspaceMinimap.view workspaceItems |> Html.map WorkspaceMinimapMsg

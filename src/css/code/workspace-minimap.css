@@ -1,9 +1,11 @@
-#workspace-minimap header {
-    margin-bottom: 0.5rem;
-}
-
-#workspace-minimap {
-    padding: 0.75rem;
+.workspace-minimap-content {
+    width: 15rem;
+    background-color: white;
+    padding: 1rem;
+    border-width: 1px;
+    border-color: var(--color-gray-lighten-50);
+    border-style: solid;
+    border-radius: 5px;
 }
 
 .workspace-minimap-content table {
@@ -17,24 +19,37 @@
 .workspace-minimap-header {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.workspace-minimap-header .workspace-minimap-title {
+    color: var(--color-gray-lighten-30);
+    font-weight: 300;
 }
 
 .workspace-minimap-entry {
     width: 100%;
     display: flex;
     align-items: center;
-    height: 1.5rem;
-    padding-top: 1.0rem;
-    padding-bottom: 1.0rem;
+    height: 2.5rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
     justify-content: space-between;
     cursor: pointer;
+    border-radius: 5px;
 }
 
-.workspace-minimap-entry .focused {
-    background-color: var(--color-gray-lighten-55);
+.workspace-minimap-entry.focused {
+    background-color: var(--color-blue-5);
 }
 
-.workspace-minimap-entry-content {
+.workspace-minimap-entry .workspace-minimap-entry-content {
     display: flex;
     align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.workspace-minimap-entry .keyboard-shortcut {
+    padding-right: 0.5rem;
 }

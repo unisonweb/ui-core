@@ -1,4 +1,4 @@
-module Code.Workspace.WorkspaceMinimap exposing (Msg(..), viewWorkspaceMinimap)
+module Code.Workspace.WorkspaceMinimap exposing (Msg(..), view)
 
 import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..))
 import Code.Definition.Category as Category exposing (Category)
@@ -23,8 +23,8 @@ type Msg
     | CloseAll
 
 
-viewWorkspaceMinimap : WorkspaceItems -> Html Msg
-viewWorkspaceMinimap workspaceItems =
+view : WorkspaceItems -> Html Msg
+view workspaceItems =
     let
         header =
             viewHeader
@@ -62,7 +62,7 @@ viewWorkspaceMinimapItem item focused index =
         |> List.singleton
         |> Html.td []
         |> List.singleton
-        |> Html.tr [ class "workspace-minimap-entry" ]
+        |> Html.tr []
 
 
 viewMinimapEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html Msg
@@ -73,8 +73,10 @@ viewMinimapEntryKeyboardShortcut keyboardShortcut index =
 viewMinimapEntry_ : WorkspaceItem -> Int -> Info -> Category -> Bool -> Html Msg
 viewMinimapEntry_ item index info category focused =
     div
-        [ class "workspace-minimap-entry"
-        , classList [ ( "focused", focused ) ]
+        [ classList
+            [ ( "workspace-minimap-entry", True )
+            , ( "focused", focused )
+            ]
         , onClick (SelectItem item)
         ]
         [ div [ class "workspace-minimap-entry-content" ]
@@ -89,18 +91,22 @@ viewMinimapEntry : Int -> Bool -> WorkspaceItem -> Html Msg
 viewMinimapEntry index focused item =
     case item of
         Success _ itemData ->
-            case itemData.item of
-                TermItem (Term _ category detail) ->
-                    viewMinimapEntry_ item index detail.info (Category.Term category) focused
+            let
+                ( info, category ) =
+                    case itemData.item of
+                        TermItem (Term _ category_ detail) ->
+                            ( detail.info, Category.Term category_ )
 
-                TypeItem (Type _ category detail) ->
-                    viewMinimapEntry_ item index detail.info (Category.Type category) focused
+                        TypeItem (Type _ category_ detail) ->
+                            ( detail.info, Category.Type category_ )
 
-                DataConstructorItem (DataConstructor _ detail) ->
-                    viewMinimapEntry_ item index detail.info (Category.Type Type.DataType) focused
+                        DataConstructorItem (DataConstructor _ detail) ->
+                            ( detail.info, Category.Type Type.DataType )
 
-                AbilityConstructorItem (AbilityConstructor _ detail) ->
-                    viewMinimapEntry_ item index detail.info (Category.Type Type.AbilityType) focused
+                        AbilityConstructorItem (AbilityConstructor _ detail) ->
+                            ( detail.info, Category.Type Type.AbilityType )
+            in
+            viewMinimapEntry_ item index info category focused
 
         Failure _ _ ->
             Html.text "Failure"
@@ -112,8 +118,8 @@ viewMinimapEntry index focused item =
 viewHeader : Html Msg
 viewHeader =
     Html.header [ class "workspace-minimap-header" ]
-        [ Html.div [] [ Html.text "MAP" ]
-        , Html.a [ onClick CloseAll ] [ Html.text "Close all" ]
+        [ Html.div [ class "workspace-minimap-title" ] [ Html.text "MAP" ]
+        , Html.a [ class "close", onClick CloseAll ] [ Html.text "Close all" ]
         ]
 
 
