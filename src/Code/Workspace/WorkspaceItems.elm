@@ -505,3 +505,18 @@ toList wItems =
 
         WorkspaceItems items ->
             items.before ++ (items.focus :: items.after)
+
+
+{-| Converting the workspace items to a list, without losing the focus indicator
+-}
+toListWithFocus : WorkspaceItems -> List ( Bool, WorkspaceItem )
+toListWithFocus wItems =
+    case wItems of
+        Empty ->
+            []
+
+        WorkspaceItems items ->
+            List.map (\item -> ( False, item )) items.before
+                ++ (( True, items.focus )
+                        :: List.map (\item -> ( False, item )) items.after
+                   )
