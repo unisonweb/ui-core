@@ -52,8 +52,15 @@
   background: var(--c-color_anchored-overlay_sheet_bg);
   color: var(--c-color_anchored-overlay_sheet_text);
   z-index: var(--layer-popover);
-  right: 0;
   margin-top: 0.25rem;
+}
+
+.anchored-overlay_sheet.anchored-overlay_sheet_position_bottom-left {
+  left: 0;
+}
+
+.anchored-overlay_sheet.anchored-overlay_sheet_position_bottom-right {
+  right: 0;
 }
 
 .anchored-overlay_sheet.anchored-overlay_sheet_default {

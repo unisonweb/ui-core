@@ -15,10 +15,16 @@ type Sheet msg
     | CustomSheet (Html msg)
 
 
+type Position
+    = BottomLeft
+    | BottomRight
+
+
 type alias AnchoredOverlay msg =
     { closeSheetMsg : msg
     , anchor : Html msg
     , sheet : SheetState msg
+    , sheetPosition : Position
     }
 
 
@@ -31,6 +37,7 @@ anchoredOverlay closeSheetMsg anchor =
     { closeSheetMsg = closeSheetMsg
     , anchor = anchor
     , sheet = Closed
+    , sheetPosition = BottomRight
     }
 
 
@@ -66,6 +73,7 @@ map f anchoredOverlay_ =
     { closeSheetMsg = f anchoredOverlay_.closeSheetMsg
     , anchor = Html.map f anchoredOverlay_.anchor
     , sheet = mapOverlaySheet f anchoredOverlay_.sheet
+    , sheetPosition = anchoredOverlay_.sheetPosition
     }
 
 
@@ -76,6 +84,11 @@ map f anchoredOverlay_ =
 withSheet : Sheet msg -> AnchoredOverlay msg -> AnchoredOverlay msg
 withSheet sheet_ anchoredOverlay_ =
     { anchoredOverlay_ | sheet = OpenSheet sheet_ }
+
+
+withSheetPosition : Position -> AnchoredOverlay msg -> AnchoredOverlay msg
+withSheetPosition position anchoredOverlay_ =
+    { anchoredOverlay_ | sheetPosition = position }
 
 
 
@@ -95,6 +108,14 @@ view anchoredOverlay_ =
 
                 OpenSheet sheet_ ->
                     let
+                        positionCls =
+                            case anchoredOverlay_.sheetPosition of
+                                BottomLeft ->
+                                    class "anchored-overlay_sheet_position_bottom-left"
+
+                                BottomRight ->
+                                    class "anchored-overlay_sheet_position_bottom-right"
+
                         ( sheet__, sheetCls ) =
                             case sheet_ of
                                 DefaultSheet s ->
@@ -108,7 +129,7 @@ view anchoredOverlay_ =
                         (div
                             []
                             [ anchor
-                            , div [ class "anchored-overlay_sheet", sheetCls ]
+                            , div [ class "anchored-overlay_sheet", sheetCls, positionCls ]
                                 [ sheet__ ]
                             ]
                         )

@@ -7,6 +7,7 @@ import Lib.Util as Util
 import Regex
 import UI.Icon as Icon
 import UI.Tag as Tag exposing (Tag)
+import Url
 
 
 type BranchSlug
@@ -72,12 +73,10 @@ toApiUrlString br =
             UserHandle.toString h ++ "%2F" ++ slug_
 
         ReleaseDraftBranchRef v ->
-            -- Escape "/" as "%2F"
-            "releases%2Fdrafts%2F" ++ Version.toUrlString v
+            Url.percentEncode ("releases/drafts/" ++ Version.toString v)
 
         ReleaseBranchRef v ->
-            -- Escape "/" as "%2F"
-            "releases%2F" ++ Version.toUrlString v
+            Url.percentEncode ("releases/" ++ Version.toString v)
 
 
 toUrlPath : BranchRef -> List String
@@ -220,6 +219,25 @@ isValidBranchSlug raw =
                 Regex.fromString "^[\\w-]+$"
     in
     Regex.contains re raw
+
+
+equals : BranchRef -> BranchRef -> Bool
+equals brA brB =
+    case ( brA, brB ) of
+        ( ProjectBranchRef (BranchSlug slugA), ProjectBranchRef (BranchSlug slugB) ) ->
+            slugA == slugB
+
+        ( ContributorBranchRef handleA (BranchSlug slugA), ContributorBranchRef handleB (BranchSlug slugB) ) ->
+            UserHandle.equals handleA handleB && slugA == slugB
+
+        ( ReleaseBranchRef versionA, ReleaseBranchRef versionB ) ->
+            Version.equals versionA versionB
+
+        ( ReleaseDraftBranchRef versionA, ReleaseDraftBranchRef versionB ) ->
+            Version.equals versionA versionB
+
+        _ ->
+            False
 
 
 

@@ -257,7 +257,17 @@ toApiUrlString =
                             |> Maybe.withDefault "FAIL"
                 in
                 Expect.equal "@owner%2Fmybranch" result
-        , test "releases branch ref" <|
+        , test "release draft branch ref" <|
+            \_ ->
+                let
+                    result =
+                        "releases/drafts/2.1.0"
+                            |> BranchRef.fromString
+                            |> Maybe.map BranchRef.toApiUrlString
+                            |> Maybe.withDefault "FAIL"
+                in
+                Expect.equal "releases%2Fdrafts%2F2.1.0" result
+        , test "release branch ref" <|
             \_ ->
                 let
                     result =
@@ -266,5 +276,5 @@ toApiUrlString =
                             |> Maybe.map BranchRef.toApiUrlString
                             |> Maybe.withDefault "FAIL"
                 in
-                Expect.equal "releases%2F2_1_0" result
+                Expect.equal "releases%2F2.1.0" result
         ]

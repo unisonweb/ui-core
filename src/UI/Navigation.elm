@@ -15,10 +15,11 @@ module UI.Navigation exposing
     , withNoSelectedItems
     )
 
-import Html exposing (Html, nav, span, text)
+import Html exposing (Html, div, nav, span, text)
 import Html.Attributes exposing (class, classList)
 import List.Zipper as Zipper exposing (Zipper)
 import Maybe.Extra as MaybeE
+import UI
 import UI.AnchoredOverlay as AnchoredOverlay exposing (AnchoredOverlay)
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
@@ -191,25 +192,43 @@ viewItem isSelected { icon, label, secondary, nudge, tooltip, click } =
                 NoContent ->
                     Nothing
 
-        content =
-            span [ class "nav-item_content" ]
-                ([ Maybe.map Icon.view icon
-                 , Just (text label)
-                 , secondaryContent
-                 , Just (Nudge.view nudge)
-                 ]
-                    |> MaybeE.values
-                )
+        icon_ =
+            MaybeE.unwrap UI.nothing Icon.view icon
 
-        item =
-            case tooltip of
-                Just t ->
-                    Tooltip.view content t
-
-                Nothing ->
-                    content
+        withTooltip c =
+            MaybeE.unwrap c (Tooltip.view c) tooltip
     in
-    Click.view [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ] [ item ] click
+    case secondaryContent of
+        Just secondary_ ->
+            div [ classList [ ( "nav-item", True ), ( "selected", isSelected ) ] ]
+                [ span [ class "nav-item_content" ]
+                    [ Click.view
+                        [ class "nav-item_click-target" ]
+                        [ withTooltip (span [ class "nav-item_inner-content" ] [ icon_, text label ]) ]
+                        click
+                    , secondary_
+                    , Nudge.view nudge
+                    ]
+                ]
+
+        Nothing ->
+            let
+                content =
+                    span [ class "nav-item_content" ]
+                        [ MaybeE.unwrap UI.nothing Icon.view icon
+                        , text label
+                        , Nudge.view nudge
+                        ]
+            in
+            Click.view
+                [ classList
+                    [ ( "nav-item", True )
+                    , ( "nav-item_click-target", True )
+                    , ( "selected", isSelected )
+                    ]
+                ]
+                [ withTooltip content ]
+                click
 
 
 view : Navigation msg -> Html msg
