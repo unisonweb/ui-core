@@ -11,6 +11,8 @@ import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Dict exposing (Dict, empty, insert, remove)
 import Html exposing (Html)
 import Http
+import Lib.OperatingSystem as OperatingSystem
+import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 
 
 type alias Model =
@@ -106,4 +108,4 @@ view model =
                 workspaceItems =
                     WorkspaceItems.fromItems [] x xs
             in
-            WorkspaceMinimap.view workspaceItems |> Html.map WorkspaceMinimapMsg
+            WorkspaceMinimap.view (KeyboardShortcut.init OperatingSystem.MacOS) workspaceItems |> Html.map WorkspaceMinimapMsg

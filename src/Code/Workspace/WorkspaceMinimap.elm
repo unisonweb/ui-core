@@ -11,7 +11,6 @@ import Code.Workspace.WorkspaceItems exposing (WorkspaceItems, toListWithFocus)
 import Html exposing (Html, a, div, h3, header, text)
 import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onClick)
-import Lib.OperatingSystem as OperatingSystem
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key as Key
@@ -22,8 +21,8 @@ type Msg
     | CloseAll
 
 
-view : WorkspaceItems -> Html Msg
-view workspaceItems =
+view : KeyboardShortcut.Model -> WorkspaceItems -> Html Msg
+view keyboardShortcut workspaceItems =
     let
         header =
             viewHeader
@@ -31,7 +30,7 @@ view workspaceItems =
         section =
             workspaceItems
                 |> toListWithFocus
-                |> List.indexedMap viewTableRow
+                |> List.indexedMap (viewTableRow keyboardShortcut)
                 |> Html.tbody []
                 |> List.singleton
                 |> Html.table []
@@ -58,18 +57,18 @@ viewHeader =
         ]
 
 
-viewTableRow : Int -> ( Bool, WorkspaceItem ) -> Html Msg
-viewTableRow index ( focused, item ) =
+viewTableRow : KeyboardShortcut.Model -> Int -> ( Bool, WorkspaceItem ) -> Html Msg
+viewTableRow keyboardShortcut index ( focused, item ) =
     item
-        |> viewEntry index focused
+        |> viewEntry keyboardShortcut index focused
         |> List.singleton
         |> Html.td []
         |> List.singleton
         |> Html.tr []
 
 
-viewEntry : Int -> Bool -> WorkspaceItem -> Html Msg
-viewEntry index focused item =
+viewEntry : KeyboardShortcut.Model -> Int -> Bool -> WorkspaceItem -> Html Msg
+viewEntry keyboardShortcut index focused item =
     let
         content =
             case item of
@@ -96,7 +95,7 @@ viewEntry index focused item =
                                     ( detail.info, Category.Type Type.AbilityType )
                     in
                     [ viewEntryContent category info.name
-                    , viewEntryKeyboardShortcut (KeyboardShortcut.init OperatingSystem.MacOS) index
+                    , viewEntryKeyboardShortcut keyboardShortcut index
                     ]
     in
     div

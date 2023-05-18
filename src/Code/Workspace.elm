@@ -537,7 +537,7 @@ view viewMode model =
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ div
                             [ id "workspace-minimap" ]
-                            [ WorkspaceMinimap.view model.workspaceItems
+                            [ WorkspaceMinimap.view model.keyboardShortcut model.workspaceItems
                                 |> Html.map WorkspaceMinimapMsg
                             ]
                         , section
