@@ -61,8 +61,8 @@
 }
 
 #workspace #workspace-minimap {
-  position: fixed;
-  z-index: 50;
-  top: 1rem;
-  right: 2rem;
+  position: absolute;
+  z-index: 25;
+  margin: 0.5rem;
+  right: 0.5rem;
 }

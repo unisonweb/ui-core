@@ -22,7 +22,7 @@ import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
-import Html exposing (Html, article, div, section)
+import Html exposing (Html, article, aside, div, section)
 import Html.Attributes exposing (class, id)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
@@ -535,7 +535,7 @@ view viewMode model =
             case viewMode of
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ div
+                        [ aside
                             [ id "workspace-minimap" ]
                             [ WorkspaceMinimap.view model.keyboardShortcut model.workspaceItems
                                 |> Html.map WorkspaceMinimapMsg
