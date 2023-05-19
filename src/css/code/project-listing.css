@@ -33,7 +33,7 @@
   transition: all 0.2s;
 }
 
-.project-listing. a > .hashvatar:hover {
+.project-listing a > .hashvatar:hover {
   transform: scale3d(0.8, 0.8, 0.8);
 }
 
