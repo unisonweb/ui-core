@@ -22,7 +22,7 @@ import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, label, span, text)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, title)
 import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Lib.Util as Util
@@ -132,7 +132,7 @@ view_ handleClick slugClick ((ProjectRef p) as projectRef_) =
                 Nothing ->
                     span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]
     in
-    label [ class "project-ref" ]
+    label [ class "project-ref", title (toString projectRef_) ]
         [ handle_
         , span [ class "project-ref_separator" ] [ text "/" ]
         , slug_
