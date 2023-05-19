@@ -27,5 +27,5 @@
 .project-ref a.project-ref_slug:hover {
   background: var(--u-color_element_hovered);
   box-shadow: 0 0 0 0.25rem var(--u-color_element_hovered);
+  border-radius: calc(var(--border-radius-base) / 2);
 }
-
