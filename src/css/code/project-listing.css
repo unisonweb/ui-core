@@ -37,9 +37,10 @@
 }
 
 .project-listing a > .hashvatar:hover {
-  transform: scale3d(0.9, 0.9, 0.9);
+  transform: scale3d(1.1, 1.1, 1.1);
 }
-.project-listing a:has(.hashvatar:hover) + .project-ref_slug {
+
+.project-listing a:has(.hashvatar:hover) + .project-ref .project-ref_slug {
   color: var(--u-color_interactive_hovered);
 }
 
