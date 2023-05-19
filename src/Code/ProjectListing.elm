@@ -10,19 +10,21 @@ import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
 
 
-
--- TODO: Merge with ProjectRef
-
-
 type ProjectListingSize
     = Medium
     | Large
     | Huge
 
 
+type ProjectListingClick msg
+    = NoClick
+    | ProjectClick (Click msg)
+    | ProjectAndHandleClick { ref : Click msg, handle : Click msg }
+
+
 type alias ProjectListing p msg =
     { project : Project p
-    , click : Maybe (Click msg)
+    , click : ProjectListingClick msg
     , size : ProjectListingSize
     , subdued : Bool
     }
@@ -34,16 +36,21 @@ type alias ProjectListing p msg =
 
 projectListing : Project p -> ProjectListing p msg
 projectListing project =
-    { project = project, click = Nothing, size = Medium, subdued = False }
+    { project = project, click = NoClick, size = Medium, subdued = False }
 
 
 
 -- MODIFY
 
 
-withClick : Click msg -> ProjectListing p msg -> ProjectListing p msg
-withClick click p =
-    { p | click = Just click }
+withClick : Click msg -> Click msg -> ProjectListing p msg -> ProjectListing p msg
+withClick projectClick handleClick p =
+    { p | click = ProjectAndHandleClick { ref = projectClick, handle = handleClick } }
+
+
+withProjectClick : Click msg -> ProjectListing p msg -> ProjectListing p msg
+withProjectClick click p =
+    { p | click = ProjectClick click }
 
 
 withSize : ProjectListingSize -> ProjectListing p msg -> ProjectListing p msg
@@ -75,10 +82,26 @@ subdued p =
 -- MAP
 
 
+mapClick : (aMsg -> bMsg) -> ProjectListingClick aMsg -> ProjectListingClick bMsg
+mapClick f click =
+    case click of
+        NoClick ->
+            NoClick
+
+        ProjectClick c ->
+            ProjectClick (Click.map f c)
+
+        ProjectAndHandleClick c ->
+            ProjectAndHandleClick
+                { ref = Click.map f c.ref
+                , handle = Click.map f c.handle
+                }
+
+
 map : (aMsg -> bMsg) -> ProjectListing p aMsg -> ProjectListing p bMsg
 map f p =
     { project = p.project
-    , click = Maybe.map (Click.map f) p.click
+    , click = mapClick f p.click
     , size = p.size
     , subdued = p.subdued
     }
@@ -106,18 +129,26 @@ viewSubdued { project, size, click } =
     let
         attrs =
             [ class "project-listing project-listing_subdued", class (sizeClass size) ]
-
-        content =
-            [ Hashvatar.empty
-            , ProjectRef.view project.ref
-            ]
     in
     case click of
-        Just c ->
-            Click.view attrs content c
+        NoClick ->
+            div attrs
+                [ Hashvatar.empty
+                , ProjectRef.view project.ref
+                ]
 
-        Nothing ->
-            div attrs content
+        ProjectClick c ->
+            Click.view attrs
+                [ Hashvatar.empty
+                , ProjectRef.view project.ref
+                ]
+                c
+
+        ProjectAndHandleClick c ->
+            div attrs
+                [ Click.view [] [ Hashvatar.empty ] c.ref
+                , ProjectRef.viewClickable c.handle c.ref project.ref
+                ]
 
 
 view : ProjectListing p msg -> Html msg
@@ -143,16 +174,26 @@ view p =
 
                 _ ->
                     UI.nothing
-
-        content =
-            [ hashvatar
-            , ProjectRef.view p.project.ref
-            , privateIcon
-            ]
     in
     case p.click of
-        Just c ->
-            Click.view attrs content c
+        NoClick ->
+            div attrs
+                [ hashvatar
+                , ProjectRef.view p.project.ref
+                , privateIcon
+                ]
 
-        Nothing ->
-            div attrs content
+        ProjectClick c ->
+            Click.view attrs
+                [ hashvatar
+                , ProjectRef.view p.project.ref
+                , privateIcon
+                ]
+                c
+
+        ProjectAndHandleClick c ->
+            div attrs
+                [ Click.view [] [ hashvatar ] c.ref
+                , ProjectRef.viewClickable c.handle c.ref p.project.ref
+                , privateIcon
+                ]

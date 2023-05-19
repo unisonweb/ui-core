@@ -13,6 +13,7 @@ module Code.Project.ProjectRef exposing
     , toUrlPath
     , unsafeFromString
     , view
+    , viewClickable
     , viewHashvatar
     )
 
@@ -24,6 +25,7 @@ import Html.Attributes exposing (class)
 import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Lib.Util as Util
+import UI.Click as Click exposing (Click)
 
 
 type ProjectRef
@@ -101,11 +103,38 @@ viewHashvatar ref =
 
 
 view : ProjectRef -> Html msg
-view (ProjectRef p) =
+view projectRef_ =
+    view_ Nothing Nothing projectRef_
+
+
+viewClickable : Click msg -> Click msg -> ProjectRef -> Html msg
+viewClickable handleClick slugClick projectRef_ =
+    view_ (Just handleClick) (Just slugClick) projectRef_
+
+
+view_ : Maybe (Click msg) -> Maybe (Click msg) -> ProjectRef -> Html msg
+view_ handleClick slugClick (ProjectRef p) =
+    let
+        handle_ =
+            case handleClick of
+                Just c ->
+                    Click.view [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ] c
+
+                Nothing ->
+                    span [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ]
+
+        slug_ =
+            case slugClick of
+                Just c ->
+                    Click.view [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ] c
+
+                Nothing ->
+                    span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]
+    in
     label [ class "project-ref" ]
-        [ span [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ]
+        [ handle_
         , span [ class "project-ref_separator" ] [ text "/" ]
-        , span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]
+        , slug_
         ]
 
 
