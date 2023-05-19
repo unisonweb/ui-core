@@ -15,6 +15,7 @@ module Code.Project.ProjectRef exposing
     , view
     , viewClickable
     , viewHashvatar
+    , view_
     )
 
 import Code.Hash as Hash
@@ -107,18 +108,18 @@ view projectRef_ =
     view_ Nothing Nothing projectRef_
 
 
-viewClickable : Click msg -> Click msg -> ProjectRef -> Html msg
+viewClickable : (UserHandle -> Click msg) -> (ProjectRef -> Click msg) -> ProjectRef -> Html msg
 viewClickable handleClick slugClick projectRef_ =
     view_ (Just handleClick) (Just slugClick) projectRef_
 
 
-view_ : Maybe (Click msg) -> Maybe (Click msg) -> ProjectRef -> Html msg
-view_ handleClick slugClick (ProjectRef p) =
+view_ : Maybe (UserHandle -> Click msg) -> Maybe (ProjectRef -> Click msg) -> ProjectRef -> Html msg
+view_ handleClick slugClick ((ProjectRef p) as projectRef_) =
     let
         handle_ =
             case handleClick of
                 Just c ->
-                    Click.view [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ] c
+                    Click.view [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ] (c p.handle)
 
                 Nothing ->
                     span [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ]
@@ -126,7 +127,7 @@ view_ handleClick slugClick (ProjectRef p) =
         slug_ =
             case slugClick of
                 Just c ->
-                    Click.view [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ] c
+                    Click.view [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ] (c projectRef_)
 
                 Nothing ->
                     span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]

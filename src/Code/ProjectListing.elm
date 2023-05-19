@@ -2,9 +2,10 @@ module Code.ProjectListing exposing (..)
 
 import Code.Hashvatar as Hashvatar
 import Code.Project as Project exposing (Project)
-import Code.Project.ProjectRef as ProjectRef
+import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
+import Lib.UserHandle exposing (UserHandle)
 import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
@@ -18,8 +19,11 @@ type ProjectListingSize
 
 type ProjectListingClick msg
     = NoClick
-    | ProjectClick (Click msg)
-    | ProjectAndHandleClick { ref : Click msg, handle : Click msg }
+    | ProjectClick (ProjectRef -> Click msg)
+    | ProjectAndHandleClick
+        { handle : UserHandle -> Click msg
+        , ref : ProjectRef -> Click msg
+        }
 
 
 type alias ProjectListing p msg =
@@ -43,12 +47,16 @@ projectListing project =
 -- MODIFY
 
 
-withClick : Click msg -> Click msg -> ProjectListing p msg -> ProjectListing p msg
-withClick projectClick handleClick p =
-    { p | click = ProjectAndHandleClick { ref = projectClick, handle = handleClick } }
+withClick : (UserHandle -> Click msg) -> (ProjectRef -> Click msg) -> ProjectListing p msg -> ProjectListing p msg
+withClick handleClick projectClick p =
+    { p
+        | click =
+            ProjectAndHandleClick
+                { handle = handleClick, ref = projectClick }
+    }
 
 
-withProjectClick : Click msg -> ProjectListing p msg -> ProjectListing p msg
+withProjectClick : (ProjectRef -> Click msg) -> ProjectListing p msg -> ProjectListing p msg
 withProjectClick click p =
     { p | click = ProjectClick click }
 
@@ -89,12 +97,12 @@ mapClick f click =
             NoClick
 
         ProjectClick c ->
-            ProjectClick (Click.map f c)
+            ProjectClick (c >> Click.map f)
 
         ProjectAndHandleClick c ->
             ProjectAndHandleClick
-                { ref = Click.map f c.ref
-                , handle = Click.map f c.handle
+                { handle = c.handle >> Click.map f
+                , ref = c.ref >> Click.map f
                 }
 
 
@@ -142,11 +150,11 @@ viewSubdued { project, size, click } =
                 [ Hashvatar.empty
                 , ProjectRef.view project.ref
                 ]
-                c
+                (c project.ref)
 
         ProjectAndHandleClick c ->
             div attrs
-                [ Click.view [] [ Hashvatar.empty ] c.ref
+                [ Click.view [] [ Hashvatar.empty ] (c.ref project.ref)
                 , ProjectRef.viewClickable c.handle c.ref project.ref
                 ]
 
@@ -189,11 +197,11 @@ view p =
                 , ProjectRef.view p.project.ref
                 , privateIcon
                 ]
-                c
+                (c p.project.ref)
 
         ProjectAndHandleClick c ->
             div attrs
-                [ Click.view [] [ hashvatar ] c.ref
+                [ Click.view [] [ hashvatar ] (c.ref p.project.ref)
                 , ProjectRef.viewClickable c.handle c.ref p.project.ref
                 , privateIcon
                 ]
