@@ -30,6 +30,11 @@
 .project-listing.project-listing-size_huge .hashvatar {
   width: 2rem;
   height: 2rem;
+  transition: all 0.2s;
+}
+
+.project-listing.project-listing-size_huge a.hashvatar:hover {
+  transform: scale3d(0.8, 0.8, 0.8);
 }
 
 a.project-listing {

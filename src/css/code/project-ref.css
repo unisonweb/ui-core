@@ -25,5 +25,5 @@
 
 .project-ref a.project-ref_handle:hover,
 .project-ref a.project-ref_slug:hover {
-  color: var(--u-color-interactive_hovered);
+  color: var(--u-color_interactive_hovered);
 }
