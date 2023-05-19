@@ -1,4 +1,4 @@
-module Code.Workspace.WorkspaceMinimap exposing (Msg(..), view)
+module Code.Workspace.WorkspaceMinimap exposing (Model, Msg(..), init, update, view)
 
 import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..))
 import Code.Definition.Category as Category exposing (Category)
@@ -6,8 +6,8 @@ import Code.Definition.DataConstructor exposing (DataConstructor(..))
 import Code.Definition.Term exposing (Term(..))
 import Code.Definition.Type as Type exposing (Type(..))
 import Code.FullyQualifiedName as FQN
-import Code.Workspace.WorkspaceItem exposing (Item(..), WorkspaceItem(..))
-import Code.Workspace.WorkspaceItems exposing (WorkspaceItems, toListWithFocus)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..))
+import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems, toListWithFocus)
 import Html exposing (Html, a, div, h3, header, text)
 import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onClick)
@@ -16,21 +16,50 @@ import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key as Key
 
 
+type alias Model =
+    { keyboardShortcut : KeyboardShortcut.Model
+    , workspaceItems : WorkspaceItems
+    }
+
+
 type Msg
     = SelectItem WorkspaceItem
     | CloseAll
 
 
-view : KeyboardShortcut.Model -> WorkspaceItems -> Html Msg
-view keyboardShortcut workspaceItems =
+init : KeyboardShortcut.Model -> WorkspaceItems -> Model
+init keyboardShortcut workspaceItems =
+    { keyboardShortcut = keyboardShortcut
+    , workspaceItems = workspaceItems
+    }
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        SelectItem workspaceItem ->
+            let
+                newWorkspaceItems =
+                    WorkspaceItems.focusOn model.workspaceItems (workspaceItem |> WorkspaceItem.reference)
+            in
+            ( { model | workspaceItems = newWorkspaceItems }
+            , Cmd.none
+            )
+
+        CloseAll ->
+            ( { model | workspaceItems = WorkspaceItems.empty }, Cmd.none )
+
+
+view : Model -> Html Msg
+view model =
     let
         header =
             viewHeader
 
         section =
-            workspaceItems
+            model.workspaceItems
                 |> toListWithFocus
-                |> List.indexedMap (viewTableRow keyboardShortcut)
+                |> List.indexedMap (viewTableRow model.keyboardShortcut)
                 |> Html.tbody []
                 |> List.singleton
                 |> Html.table []

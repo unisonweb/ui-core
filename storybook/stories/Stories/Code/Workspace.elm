@@ -9,6 +9,7 @@ import Code.Syntax exposing (..)
 import Code.Workspace exposing (Msg(..))
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Dict exposing (Dict, insert)
 import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
@@ -106,6 +107,7 @@ view model =
                     { workspaceItems = workspaceItems
                     , keyboardShortcut = UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS -- just a sample
                     , definitionSummaryTooltip = Code.DefinitionSummaryTooltip.init
+                    , minimap = WorkspaceMinimap.init (UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS) workspaceItems
                     }
             in
             Code.Workspace.view

@@ -42,6 +42,7 @@ type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
     , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
+    , minimap : WorkspaceMinimap.Model
     }
 
 
@@ -52,6 +53,7 @@ init config mRef =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+            , minimap = WorkspaceMinimap.init (KeyboardShortcut.init config.operatingSystem) (WorkspaceItems.init Nothing)
             }
     in
     case mRef of
@@ -273,17 +275,15 @@ update config viewMode msg ({ workspaceItems } as model) =
             ( { model | keyboardShortcut = keyboardShortcut }, Cmd.map KeyboardShortcutMsg cmd, None )
 
         WorkspaceMinimapMsg mMsg ->
-            case mMsg of
-                WorkspaceMinimap.CloseAll ->
-                    let
-                        nextModel =
-                            { model | workspaceItems = WorkspaceItems.empty }
-                    in
-                    ( nextModel, Cmd.none, openDefinitionsFocusToOutMsg nextModel.workspaceItems )
-
-                WorkspaceMinimap.SelectItem _ ->
-                    Debug.todo "handle focus change"
-                        ( model, Cmd.none, None )
+            let
+                ( minimap, mCmd ) =
+                    WorkspaceMinimap.update mMsg model.minimap
+            in
+            ( { model | minimap = minimap }
+            , Cmd.map WorkspaceMinimapMsg mCmd
+            , None
+              -- Is this right?
+            )
 
 
 
@@ -537,7 +537,7 @@ view viewMode model =
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ aside
                             [ id "workspace-minimap" ]
-                            [ WorkspaceMinimap.view model.keyboardShortcut model.workspaceItems
+                            [ WorkspaceMinimap.view model.minimap
                                 |> Html.map WorkspaceMinimapMsg
                             ]
                         , section

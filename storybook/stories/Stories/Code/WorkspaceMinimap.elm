@@ -107,5 +107,9 @@ view model =
             let
                 workspaceItems =
                     WorkspaceItems.fromItems [] x xs
+
+                minimapModel =
+                    { keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS, workspaceItems = workspaceItems }
             in
-            WorkspaceMinimap.view (KeyboardShortcut.init OperatingSystem.MacOS) workspaceItems |> Html.map WorkspaceMinimapMsg
+            WorkspaceMinimap.view minimapModel
+                |> Html.map WorkspaceMinimapMsg
