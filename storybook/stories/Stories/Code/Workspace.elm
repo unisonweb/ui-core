@@ -39,7 +39,6 @@ init _ =
     ( { workspaceItems = WorkspaceItems.empty
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
       , definitionSummaryTooltip = DefinitionSummaryTooltip.init
-      , minimap = WorkspaceMinimap.init (KeyboardShortcut.init OperatingSystem.MacOS) WorkspaceItems.empty
       }
     , Cmd.batch
         [ getSampleResponse 0 "/increment_term_def.json" "increment"
@@ -117,14 +116,8 @@ update message model =
                                 |> fromItem reference
                                 |> WorkspaceItems.prependWithFocus model.workspaceItems
 
-                        originalMinimapModel =
-                            model.minimap
-
-                        newMinimap =
-                            { originalMinimapModel | workspaceItems = newWorkspaceItems }
-
                         newModel =
-                            { model | workspaceItems = newWorkspaceItems, minimap = newMinimap }
+                            { model | workspaceItems = newWorkspaceItems }
                     in
                     ( newModel, Cmd.none )
 

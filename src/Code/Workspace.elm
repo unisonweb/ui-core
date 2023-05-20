@@ -42,7 +42,6 @@ type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
     , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
-    , minimap : WorkspaceMinimap.Model
     }
 
 
@@ -53,7 +52,6 @@ init config mRef =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , definitionSummaryTooltip = DefinitionSummaryTooltip.init
-            , minimap = WorkspaceMinimap.init (KeyboardShortcut.init config.operatingSystem) (WorkspaceItems.init Nothing)
             }
     in
     case mRef of
@@ -145,16 +143,8 @@ update config viewMode msg ({ workspaceItems } as model) =
 
                         nextWorkspaceItems =
                             WorkspaceItems.replace deduped ref (WorkspaceItem.fromItem ref i)
-
-                        originalMinimap =
-                            model.minimap
-
-                        nextMinimap =
-                            { originalMinimap
-                                | workspaceItems = nextWorkspaceItems
-                            }
                     in
-                    ( { model | workspaceItems = nextWorkspaceItems, minimap = nextMinimap }, cmd, None )
+                    ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
         IsDocCropped ref res ->
             let
@@ -284,9 +274,6 @@ update config viewMode msg ({ workspaceItems } as model) =
 
         WorkspaceMinimapMsg mMsg ->
             let
-                ( minimap, mCmd ) =
-                    WorkspaceMinimap.update mMsg model.minimap
-
                 nextWorkspaceItems =
                     case mMsg of
                         WorkspaceMinimap.SelectItem item ->
@@ -300,18 +287,14 @@ update config viewMode msg ({ workspaceItems } as model) =
                 nextCmd =
                     case mMsg of
                         WorkspaceMinimap.SelectItem item ->
-                            Cmd.batch [
-                                item
+                            item
                                 |> WorkspaceItem.reference
-                                |> scrollToDefinition,
-                                Cmd.map WorkspaceMinimapMsg mCmd
-                            ]
+                                |> scrollToDefinition
 
                         _ ->
-                            Cmd.map WorkspaceMinimapMsg mCmd
-
+                            Cmd.none
             in
-            ( { model | workspaceItems = nextWorkspaceItems, minimap = minimap }
+            ( { model | workspaceItems = nextWorkspaceItems }
             , nextCmd
             , None
             )
@@ -568,7 +551,9 @@ view viewMode model =
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ aside
                             [ id "workspace-minimap" ]
-                            [ WorkspaceMinimap.view model.minimap
+                            [ model
+                                |> makeMinimapModel
+                                |> WorkspaceMinimap.view
                                 |> Html.map WorkspaceMinimapMsg
                             ]
                         , section
@@ -592,3 +577,10 @@ viewItem definitionSummaryTooltip viewMode workspaceItem isFocused =
 viewWorkspaceItems : DefinitionSummaryTooltip.Model -> WorkspaceItems -> List (Html Msg)
 viewWorkspaceItems definitionSummaryTooltip =
     WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)
+
+
+makeMinimapModel : Model -> WorkspaceMinimap.Model
+makeMinimapModel model =
+    { keyboardShortcut = model.keyboardShortcut
+    , workspaceItems = model.workspaceItems
+    }
