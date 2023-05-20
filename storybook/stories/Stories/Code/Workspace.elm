@@ -1,19 +1,20 @@
 module Stories.Code.Workspace exposing (..)
 
 import Browser
+import Code.Config exposing (Config)
 import Code.Definition.Reference as Reference
 import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName as FQN
 import Code.HashQualified exposing (HashQualified(..))
+import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
-import Code.Workspace as Workspace exposing (Msg(..))
+import Code.Workspace as Workspace
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
-import Dict exposing (Dict, insert)
-import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
 import Http
+import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.ViewMode
@@ -23,12 +24,7 @@ type alias Model =
     Workspace.Model
 
 
-
--- { workspaceItemDict : Dict Int WorkspaceItem
--- }
-
-
-main : Program () Model Message
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
@@ -38,7 +34,7 @@ main =
         }
 
 
-init : () -> ( Model, Cmd Message )
+init : () -> ( Model, Cmd Msg )
 init _ =
     ( { workspaceItems = WorkspaceItems.empty
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
@@ -53,7 +49,7 @@ init _ =
     )
 
 
-getSampleResponse : Int -> String -> String -> Cmd Message
+getSampleResponse : Int -> String -> String -> Cmd Msg
 getSampleResponse index url termName =
     let
         reference =
@@ -72,18 +68,43 @@ getSampleResponse index url termName =
         }
 
 
-type Message
-    = WorkspaceMsg Msg
+type Msg
+    = WorkspaceMsg Workspace.Msg
     | GotItem Int Reference.Reference (Result Http.Error Item)
 
 
-update : Message -> Model -> ( Model, Cmd Message )
+codebaseHash : Endpoint
+codebaseHash =
+    GET { path = [ "list" ], queryParams = [] }
+
+
+api : HttpApi.HttpApi
+api =
+    { url = SameOrigin []
+    , headers = []
+    }
+
+
+config : Config
+config =
+    { operatingSystem = OperatingSystem.MacOS
+    , perspective = Perspective.relativeRootPerspective
+    , toApiEndpoint = \_ -> codebaseHash
+    , api = api
+    }
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
-        WorkspaceMsg _ ->
-            ( model, Cmd.none )
+        WorkspaceMsg wMsg ->
+            let
+                ( newModel, cmd, _ ) =
+                    Workspace.update config UI.ViewMode.Regular wMsg model
+            in
+            ( newModel, Cmd.map WorkspaceMsg cmd )
 
-        GotItem index reference result ->
+        GotItem _ reference result ->
             case result of
                 Err error ->
                     Debug.log (Debug.toString error)
@@ -91,40 +112,26 @@ update message model =
 
                 Ok item ->
                     let
-                        workspaceItem =
-                            fromItem reference item
+                        newWorkspaceItems =
+                            item
+                                |> fromItem reference
+                                |> WorkspaceItems.prependWithFocus model.workspaceItems
 
-                        TODO: write some here
-                        newDict =
-                            insert index workspaceItem model.workspaceItemDict
+                        originalMinimapModel =
+                            model.minimap
+
+                        newMinimap =
+                            { originalMinimapModel | workspaceItems = newWorkspaceItems }
+
+                        newModel =
+                            { model | workspaceItems = newWorkspaceItems, minimap = newMinimap }
                     in
-                    ( { model | workspaceItemDict = newDict }, Cmd.none )
+                    ( newModel, Cmd.none )
 
 
-view : Model -> Html Message
+view : Model -> Html Msg
 view model =
     Workspace.view
         UI.ViewMode.Regular
         model
         |> Html.map WorkspaceMsg
-
-
-
--- case Dict.values model.workspaceItemDict of
---     [] ->
---         Html.text "no items"
---     x :: xs ->
---         let
---             workspaceItems =
---                 WorkspaceItems.fromItems [] x xs
---             workspaceModel =
---                 { workspaceItems = workspaceItems
---                 , keyboardShortcut = UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS -- just a sample
---                 , definitionSummaryTooltip = Code.DefinitionSummaryTooltip.init
---                 , minimap = WorkspaceMinimap.init (UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS) workspaceItems
---                 }
---         in
---         Code.Workspace.view
---             UI.ViewMode.Regular
---             workspaceModel
---             |> Html.map WorkspaceMsg

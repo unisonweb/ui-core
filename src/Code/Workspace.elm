@@ -278,11 +278,20 @@ update config viewMode msg ({ workspaceItems } as model) =
             let
                 ( minimap, mCmd ) =
                     WorkspaceMinimap.update mMsg model.minimap
+
+                newWorkspaceItems =
+                    case mMsg of
+                        WorkspaceMinimap.SelectItem item ->
+                            item
+                                |> WorkspaceItem.reference
+                                |> WorkspaceItems.focusOn model.workspaceItems
+
+                        _ ->
+                            model.workspaceItems
             in
-            ( { model | minimap = minimap }
+            ( { model | workspaceItems = newWorkspaceItems, minimap = minimap }
             , Cmd.map WorkspaceMinimapMsg mCmd
             , None
-              -- Is this right?
             )
 
 
