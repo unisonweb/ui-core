@@ -145,8 +145,16 @@ update config viewMode msg ({ workspaceItems } as model) =
 
                         nextWorkspaceItems =
                             WorkspaceItems.replace deduped ref (WorkspaceItem.fromItem ref i)
+
+                        originalMinimap =
+                            model.minimap
+
+                        nextMinimap =
+                            { originalMinimap
+                                | workspaceItems = nextWorkspaceItems
+                            }
                     in
-                    ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
+                    ( { model | workspaceItems = nextWorkspaceItems, minimap = nextMinimap }, cmd, None )
 
         IsDocCropped ref res ->
             let
