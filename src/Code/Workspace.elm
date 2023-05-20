@@ -288,9 +288,27 @@ update config viewMode msg ({ workspaceItems } as model) =
 
                         _ ->
                             model.workspaceItems
+
+                ref =
+                    case mMsg of
+                        WorkspaceMinimap.SelectItem item ->
+                            item
+                                |> WorkspaceItem.reference
+                                |> Maybe.Just
+
+                        _ ->
+                            Maybe.Nothing
+
+                newCmds =
+                    case ref of
+                        Nothing ->
+                            Cmd.map WorkspaceMinimapMsg mCmd
+
+                        Just ref_ ->
+                            Cmd.batch [ scrollToDefinition ref_, Cmd.map WorkspaceMinimapMsg mCmd ]
             in
             ( { model | workspaceItems = newWorkspaceItems, minimap = minimap }
-            , Cmd.map WorkspaceMinimapMsg mCmd
+            , newCmds
             , None
             )
 
