@@ -287,36 +287,32 @@ update config viewMode msg ({ workspaceItems } as model) =
                 ( minimap, mCmd ) =
                     WorkspaceMinimap.update mMsg model.minimap
 
-                newWorkspaceItems =
+                nextWorkspaceItems =
                     case mMsg of
                         WorkspaceMinimap.SelectItem item ->
                             item
                                 |> WorkspaceItem.reference
                                 |> WorkspaceItems.focusOn model.workspaceItems
 
-                        _ ->
-                            model.workspaceItems
+                        WorkspaceMinimap.CloseAll ->
+                            WorkspaceItems.empty
 
-                ref =
+                nextCmd =
                     case mMsg of
                         WorkspaceMinimap.SelectItem item ->
-                            item
+                            Cmd.batch [
+                                item
                                 |> WorkspaceItem.reference
-                                |> Maybe.Just
+                                |> scrollToDefinition,
+                                Cmd.map WorkspaceMinimapMsg mCmd
+                            ]
 
                         _ ->
-                            Maybe.Nothing
-
-                newCmds =
-                    case ref of
-                        Nothing ->
                             Cmd.map WorkspaceMinimapMsg mCmd
 
-                        Just ref_ ->
-                            Cmd.batch [ scrollToDefinition ref_, Cmd.map WorkspaceMinimapMsg mCmd ]
             in
-            ( { model | workspaceItems = newWorkspaceItems, minimap = minimap }
-            , newCmds
+            ( { model | workspaceItems = nextWorkspaceItems, minimap = minimap }
+            , nextCmd
             , None
             )
 
