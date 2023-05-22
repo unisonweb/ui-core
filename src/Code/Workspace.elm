@@ -296,7 +296,7 @@ update config viewMode msg ({ workspaceItems } as model) =
             in
             ( { model | workspaceItems = nextWorkspaceItems }
             , nextCmd
-            , None
+            , openDefinitionsFocusToOutMsg nextWorkspaceItems
             )
 
 
