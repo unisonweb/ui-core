@@ -9,7 +9,7 @@ import Code.FullyQualifiedName as FQN
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems, toListWithFocus)
 import Html exposing (Html, a, div, h3, header, text)
-import Html.Attributes exposing (class, classList)
+import Html.Attributes exposing (class, classList, hidden)
 import Html.Events exposing (onClick)
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
@@ -102,10 +102,16 @@ viewEntry keyboardShortcut index focused item =
         content =
             case item of
                 Loading _ ->
-                    [ text "Loading" ]
+                    [ div
+                        [ class "name" ]
+                        [ text "Loading" ]
+                    ]
 
                 Failure _ _ ->
-                    [ text "Failure" ]
+                    [ div
+                        [ class "name" ]
+                        [ text "Failure" ]
+                    ]
 
                 Success _ itemData ->
                     let
@@ -124,7 +130,10 @@ viewEntry keyboardShortcut index focused item =
                                     ( detail.info, Category.Type Type.AbilityType )
                     in
                     [ viewEntryContent category info.name
-                    , viewEntryKeyboardShortcut keyboardShortcut index
+                    , div
+                        [ hidden True ]
+                        -- currently hidden as feature is not supported yet
+                        [ viewEntryKeyboardShortcut keyboardShortcut index ]
                     ]
     in
     div

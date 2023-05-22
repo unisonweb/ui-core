@@ -62,7 +62,7 @@
 
 #workspace #workspace-minimap {
   position: absolute;
-  z-index: var(--layer-popover);
+  z-index: var(--layer-tooltip);
   margin: 0.5rem;
   right: 0.5rem;
 }
