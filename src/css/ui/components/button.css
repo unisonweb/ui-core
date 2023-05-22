@@ -1,6 +1,9 @@
 .button {
+  /* @todo: move subdued colors up here */
+  /* note that icons take the color of "text" when they are standalone */
   --color-button-default-text: var(--u-color_text-on-action);
   --color-button-default-icon: var(--u-color_icon-on-action);
+  --color-button-default-icon-only: var(--u-color_text-on-action);
   --color-button-default-bg: var(--u-color_action);
   --color-button-default-hover-text: var(--u-color_text-on-action_hovered);
   --color-button-default-hover-icon: var(--u-color_icon-on-action_hovered);
@@ -8,6 +11,7 @@
 
   --color-button-emphasized-text: var(--u-color_text-on-action-emphasized);
   --color-button-emphasized-icon: var(--u-color_icon-on-action-emphasized);
+  --color-button-emphasized-icon-only: var(--u-color_text-on-action-emphasized);
   --color-button-emphasized-bg: var(--u-color_action_emphasized);
   --color-button-emphasized-hover-text: var(
     --u-color_text-on-action-emphasized_hovered
@@ -15,10 +19,14 @@
   --color-button-emphasized-hover-icon: var(
     --u-color_icon-on-action-emphasized_hovered
   );
+  --color-button-emphasized-hover-icon-only: var(
+    --u-color-text-on-action-emphasized_hovered
+  );
   --color-button-emphasized-hover-bg: var(--u-color_action_emphasized_hovered);
 
   --color-button-outlined-text: var(--u-color_text-on-action-outlined);
   --color-button-outlined-icon: var(--u-color_icon-on-action-outlined);
+  --color-button-outlined-icon-only: var(--u-color_text-on-action-outlined);
   --color-button-outlined-border: var(--u-color_border-on-action-outlined);
   --color-button-outlined-bg: var(--u-color_action_outlined);
   --color-button-outlined-hover-text: var(
@@ -27,6 +35,9 @@
   --color-button-outlined-hover-icon: var(
     --u-color_icon-on-action-outlined_hovered
   );
+  --color-button-outlined-hover-icon-only: var(
+    --u-color_text-on-action-outlined_hovered
+  );
   --color-button-outlined-hover-bg: var(--u-color_action_outlined_hovered);
   --color-button-outlined-hover-border: var(
     --u-color_border-on-action-outlined_hovered
@@ -34,6 +45,7 @@
 
   --color-button-critical-text: var(--u-color_critical_text-on-action);
   --color-button-critical-icon: var(--u-color_critical_icon-on-action);
+  --color-button-critical-icon-only: var(--u-color_critical_text-on-action);
   --color-button-critical-bg: var(--u-color_critical_action);
   --color-button-critical-hover-text: var(
     --u-color_critical_text-on-action_hovered
@@ -41,16 +53,23 @@
   --color-button-critical-hover-icon: var(
     --u-color_critical_icon-on-action_hovered
   );
+  --color-button-critical-hover-icon-only: var(
+    --u-color_critical_text-on-action_hovered
+  );
   --color-button-critical-hover-bg: var(--u-color_critical_action_hovered);
 
   --color-button-positive-text: var(--u-color_positive_text-on-action);
   --color-button-positive-icon: var(--u-color_positive_icon-on-action);
+  --color-button-positive-icon-only: var(--u-color_positive_text-on-action);
   --color-button-positive-bg: var(--u-color_positive_action);
   --color-button-positive-hover-text: var(
     --u-color_positive_text-on-action_hovered
   );
   --color-button-positive-hover-icon: var(
     --u-color_positive_icon-on-action_hovered
+  );
+  --color-button-positive-hover-icon-only: var(
+    --u-color_positive_text-on-action_hovered
   );
   --color-button-positive-hover-bg: var(--u-color_positive_action_hovered);
 
@@ -59,11 +78,13 @@
   --color-button-decorative-blue-text: var(--color-gray-lighten-60);
   --color-button-decorative-blue-bg: var(--color-blue-2);
   --color-button-decorative-blue-icon: var(--color-blue-3);
+  --color-button-decorative-blue-icon-only: var(--color-gray-lighten-60);
   --color-button-decorative-blue-hover-text: var(--color-gray-lighten-60);
   --color-button-decorative-blue-hover-bg: var(--color-blue-1);
 
   --color-button-decorative-purple-text: var(--color-purple-1);
   --color-button-decorative-purple-icon: var(--color-purple-2);
+  --color-button-decorative-purple-icon-only: var(--color-purple-1);
   --color-button-decorative-purple-bg: var(--color-purple-4);
   --color-button-decorative-purple-hover-text: var(--color-purple-2);
   --color-button-decorative-purple-hover-bg: var(--color-purple-4);
@@ -165,6 +186,10 @@ a.button:hover {
   color: var(--color-button-default-icon);
 }
 
+.button.default.content-icon .icon {
+  color: var(--color-button-default-icon);
+}
+
 .button.default:not(.disabled):hover,
 .button.default.button_active {
   color: var(--color-button-default-hover-text);
@@ -176,12 +201,22 @@ a.button:hover {
   color: var(--color-button-default-hover-icon);
 }
 
+.button.default.content-icon:not(.disabled):hover .icon,
+.button.default.content-icon.button_active .icon {
+  color: var(--color-button-default-hover-icon-only);
+}
+
 .button.emphasized {
   color: var(--color-button-emphasized-text);
   background: var(--color-button-emphasized-bg);
 }
+
 .button.emphasized .icon {
   color: var(--color-button-emphasized-icon);
+}
+
+.button.emphasized.content-icon .icon {
+  color: var(--color-button-emphasized-icon-only);
 }
 
 .button.emphasized:not(.disabled):hover,
@@ -195,14 +230,25 @@ a.button:hover {
   color: var(--color-button-emphasized-hover-icon);
 }
 
+.button.emphasized.content-icon:not(.disabled):hover .icon,
+.button.emphasized.content-icon.button_active .icon {
+  color: var(--color-button-emphasized-hover-icon-only);
+}
+
 .button.outlined {
   color: var(--color-button-outlined-text);
   box-shadow: 0 0 0 1px var(--color-button-outlined-border);
   background: var(--color-button-outlined-bg);
 }
+
 .button.outlined .icon {
   color: var(--color-button-outlined-icon);
 }
+
+.button.outlined.content-icon .icon {
+  color: var(--color-button-outlined-icon-only);
+}
+
 
 .button.outlined:not(.disabled):hover,
 .button.outlined.button_active {
@@ -216,6 +262,11 @@ a.button:hover {
   color: var(--color-button-outlined-hover-icon);
 }
 
+.button.outlined.content-icon:not(.disabled):hover .icon,
+.button.outlined.content-icon.button_active .icon {
+  color: var(--color-button-outlined-hover-icon-only);
+}
+
 .button.critical {
   color: var(--color-button-critical-text);
   background: var(--color-button-critical-bg);
@@ -225,14 +276,24 @@ a.button:hover {
   color: var(--color-button-critical-icon);
 }
 
+.button.critical.content-icon .icon {
+  color: var(--color-button-critical-icon-only);
+}
+
 .button.critical:not(.disabled):hover,
 .button.critical.button_active {
   color: var(--color-button-critical-hover-text);
   background: var(--color-button-critical-hover-bg);
 }
+
 .button.critical:not(.disabled):hover .icon,
 .button.critical.button_active .icon {
   color: var(--color-button-critical-hover-icon);
+}
+
+.button.critical.content-icon:not(.disabled):hover .icon,
+.button.critical.content-icon.button_active .icon {
+  color: var(--color-button-critical-hover-icon-only);
 }
 
 .button.positive {
@@ -244,14 +305,24 @@ a.button:hover {
   color: var(--color-button-positive-icon);
 }
 
+.button.positive.content-icon .icon {
+  color: var(--color-button-positive-icon-only);
+}
+
 .button.positive:not(.disabled):hover,
 .button.positive.button_active {
   color: var(--color-button-positive-hover-text);
   background: var(--color-button-positive-hover-bg);
 }
+
 .button.positive:not(.disabled):hover .icon,
 .button.positive.button_active .icon {
   color: var(--color-button-positive-hover-icon);
+}
+
+.button.positive.content-icon:not(.disabled):hover .icon,
+.button.positive.content-icon.button_active .icon {
+  color: var(--color-button-positive-hover-icon-only);
 }
 
 .button.decorative-purple {
@@ -261,6 +332,10 @@ a.button:hover {
 
 .button.decorative-purple .icon {
   color: var(--color-button-decorative-purple-icon);
+}
+
+.button.decorative-purple.conten-icon .icon {
+  color: var(--color-button-decorative-purple-icon-only);
 }
 
 .button.decorative-purple:not(.disabled):hover,
@@ -281,6 +356,10 @@ a.button:hover {
 
 .button.decorative-blue .icon {
   color: var(--color-button-decorative-blue-icon);
+}
+
+.button.decorative-blue.content-icon .icon {
+  color: var(--color-button-decorative-blue-icon-only);
 }
 
 .button.decorative-blue:not(.disabled):hover,
