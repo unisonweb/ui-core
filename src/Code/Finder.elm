@@ -125,9 +125,6 @@ type OutMsg
 update : Config -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
 update config msg model =
     let
-        debounceDelay =
-            300
-
         exit =
             ( model, Cmd.none, Exit )
 
@@ -147,6 +144,9 @@ update config msg model =
 
         UpdateInput input ->
             let
+                debounceDelay =
+                    300
+
                 isSequenceShortcutInput =
                     String.contains ";" input
 

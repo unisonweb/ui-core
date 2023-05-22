@@ -326,6 +326,10 @@
   .page.sidebar-toggled #main-sidebar .sidebar_expanded {
     display: none;
   }
+
+  .page.sidebar-toggled #main-sidebar:has(.sidebar_collapsed:empty) {
+    display: none;
+  }
 }
 
 @media only screen and (--u-viewport_max-lg) {
@@ -351,6 +355,10 @@
     padding: 0;
     margin: 0.5rem;
     border-radius: var(--border-radius-base);
+  }
+
+  .page:not(sidebar-toggled) #main-sidebar:has(.sidebar_collapsed:empty) {
+    display: none;
   }
 
   .page .page-content .with-page-aside {
