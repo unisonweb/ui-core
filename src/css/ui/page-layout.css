@@ -357,7 +357,8 @@
     border-radius: var(--border-radius-base);
   }
 
-  .page:not(sidebar-toggled) #main-sidebar:has(.sidebar_collapsed_actions:empty) {
+  .page:not(sidebar-toggled)
+    #main-sidebar:has(.sidebar_collapsed_actions:empty) {
     display: none;
   }
 
