@@ -249,7 +249,6 @@ a.button:hover {
   color: var(--color-button-outlined-icon-only);
 }
 
-
 .button.outlined:not(.disabled):hover,
 .button.outlined.button_active {
   color: var(--color-button-outlined-hover-text);

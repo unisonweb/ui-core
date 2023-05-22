@@ -85,7 +85,9 @@
 .sidebar .button {
   --color-button-default-text: var(--color-sidebar-button-default-text);
   --color-button-default-icon: var(--color-sidebar-button-default-icon);
-  --color-button-default-icon-only: var(--color-sidebar-button-default-icon-only);
+  --color-button-default-icon-only: var(
+    --color-sidebar-button-default-icon-only
+  );
   --color-button-default-bg: var(--color-sidebar-button-default-bg);
   --color-button-default-hover-text: var(
     --color-sidebar-button-default-hover-text

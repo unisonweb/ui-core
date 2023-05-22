@@ -38,7 +38,7 @@
         "UI.ErrorCard",
         "UI.ProfileSnippet",
         "UI.StatusBanner",
-        "UI.StatusMessageCard",
+        "UI.StatusMessage",
         "UI.Steps",
         "UI.Tag",
         "UI.KpiTag",
