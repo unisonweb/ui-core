@@ -327,7 +327,7 @@
     display: none;
   }
 
-  .page.sidebar-toggled #main-sidebar:has(.sidebar_collapsed:empty) {
+  .page.sidebar-toggled #main-sidebar:has(.sidebar_collapsed_actions:empty) {
     display: none;
   }
 }
@@ -357,7 +357,7 @@
     border-radius: var(--border-radius-base);
   }
 
-  .page:not(sidebar-toggled) #main-sidebar:has(.sidebar_collapsed:empty) {
+  .page:not(sidebar-toggled) #main-sidebar:has(.sidebar_collapsed_actions:empty) {
     display: none;
   }
 
