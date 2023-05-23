@@ -27,7 +27,10 @@
   font-size: var(--font-size-base);
 }
 
-#workspace.view-mode_presentation #workspace-content .definition-doc h1:first-child {
+#workspace.view-mode_presentation
+  #workspace-content
+  .definition-doc
+  h1:first-child {
   font-size: 2.5rem;
   margin-bottom: 2rem;
   font-weight: 900;
@@ -38,7 +41,10 @@
   font-size: 1.5rem;
 }
 
-#workspace.view-mode_presentation #workspace-content .definition-doc :is(h3, h4, h5) {
+#workspace.view-mode_presentation
+  #workspace-content
+  .definition-doc
+  :is(h3, h4, h5) {
   font-size: 1.25rem;
 }
 
