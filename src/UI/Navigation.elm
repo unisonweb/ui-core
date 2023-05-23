@@ -226,7 +226,7 @@ viewItem condensed isSelected { icon, label, secondary, nudge, tooltip, click } 
                         [ class "nav-item_click-target" ]
                         [ withTooltip (span [ class "nav-item_inner-content" ] [ icon_, text label ]) ]
                         click
-                    , secondary_
+                    , div [ class "nav-item_secondary" ] [ secondary_ ]
                     , Nudge.view nudge
                     ]
                 ]
