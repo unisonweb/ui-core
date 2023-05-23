@@ -12,5 +12,5 @@ module.exports = {
   core: {
     builder: "webpack5",
   },
-  staticDirs:["../static"]
+  staticDirs: ["../static"],
 };

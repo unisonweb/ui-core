@@ -33,6 +33,11 @@
   --c-color_project-ref_slug: var(--c-color_page-header_text);
 }
 
+.page-header.view-mode_regular .project-listing {
+  --c-color_project-listing_private-icon: var(--color-blue-3);
+  --c-color_project-listing_private-icon_background: var(--color-blue-3-25pct);
+}
+
 .page-header.view-mode_regular .navigation {
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
   --u-color_c_navigation-item: var(--color-transparent);

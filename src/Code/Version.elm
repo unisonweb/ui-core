@@ -180,7 +180,7 @@ toString v =
 
 toUrlString : Version -> String
 toUrlString v =
-    toString_ "_" v
+    toString_ "." v
 
 
 toString_ : String -> Version -> String

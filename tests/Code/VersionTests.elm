@@ -125,11 +125,11 @@ toString =
 toUrlString : Test
 toUrlString =
     describe "Version.toUrlString"
-        [ test "Returns a url string version of the version" <|
+        [ test "Returns a url string version of the version (dots are supported)" <|
             \_ ->
                 version 2 3 4
                     |> Version.toUrlString
-                    |> Expect.equal "2_3_4"
+                    |> Expect.equal "2.3.4"
         ]
 
 

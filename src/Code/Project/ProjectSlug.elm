@@ -4,12 +4,14 @@ module Code.Project.ProjectSlug exposing
     , equals
     , fromString
     , isValidProjectSlug
+    , toNamespaceString
     , toString
     , unsafeFromString
     )
 
 import Json.Decode as Decode exposing (string)
 import Regex
+import String.Extra exposing (camelize)
 
 
 type ProjectSlug
@@ -41,6 +43,15 @@ unsafeFromString raw =
 toString : ProjectSlug -> String
 toString (ProjectSlug raw) =
     raw
+
+
+{-| namespaces and project slugs don't completely overlap in their validity.
+convert slugs into namespaces, making sure to camelize any underscore or dash
+separated words
+-}
+toNamespaceString : ProjectSlug -> String
+toNamespaceString =
+    toString >> camelize
 
 
 equals : ProjectSlug -> ProjectSlug -> Bool

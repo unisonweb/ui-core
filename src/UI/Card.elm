@@ -2,7 +2,6 @@ module UI.Card exposing (..)
 
 import Html exposing (Html, div, h3, text)
 import Html.Attributes exposing (class)
-import Maybe.Extra as MaybeE
 
 
 type CardType
@@ -13,7 +12,7 @@ type CardType
 
 type alias Card msg =
     { type_ : CardType
-    , className : Maybe String
+    , classNames : List String
     , title : Maybe String
     , items : List (Html msg)
     }
@@ -25,12 +24,12 @@ type alias Card msg =
 
 card : List (Html msg) -> Card msg
 card items =
-    { type_ = Uncontained, className = Nothing, title = Nothing, items = items }
+    { type_ = Uncontained, classNames = [], title = Nothing, items = items }
 
 
 titled : String -> List (Html msg) -> Card msg
 titled title items =
-    { type_ = Uncontained, className = Nothing, title = Just title, items = items }
+    { type_ = Uncontained, classNames = [], title = Just title, items = items }
 
 
 
@@ -44,7 +43,12 @@ withType type_ card_ =
 
 withClassName : String -> Card msg -> Card msg
 withClassName className card_ =
-    { card_ | className = Just className }
+    { card_ | classNames = className :: card_.classNames }
+
+
+withTightPadding : Card msg -> Card msg
+withTightPadding card_ =
+    withClassName "card_tight-padding" card_
 
 
 asContained : Card msg -> Card msg
@@ -79,7 +83,7 @@ withItem item card_ =
 map : (a -> msg) -> Card a -> Card msg
 map toMsg cardA =
     { type_ = cardA.type_
-    , className = cardA.className
+    , classNames = cardA.classNames
     , title = cardA.title
     , items = List.map (Html.map toMsg) cardA.items
     }
@@ -92,8 +96,9 @@ map toMsg cardA =
 view : Card msg -> Html msg
 view card_ =
     let
-        className_ =
-            MaybeE.unwrap [] (\c -> [ class c ]) card_.className
+        classNames =
+            card_.classNames
+                |> List.map class
 
         items =
             case card_.title of
@@ -114,4 +119,4 @@ view card_ =
                 Uncontained ->
                     "uncontained"
     in
-    div ([ class "card", class typeClass ] ++ className_) items
+    div ([ class "card", class typeClass ] ++ classNames) items
