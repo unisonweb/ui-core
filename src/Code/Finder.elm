@@ -562,7 +562,7 @@ view model =
 
         content =
             Modal.CustomContent
-                (div
+                (Html.node "search"
                     [ classList [ ( "is-searching", isSearching ) ] ]
                     [ SearchOptions.view RemoveWithinOption model.options
                     , header []
