@@ -7,7 +7,7 @@ import Code.Definition.Term exposing (Term(..))
 import Code.Definition.Type as Type exposing (Type(..))
 import Code.FullyQualifiedName as FQN
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item(..), WorkspaceItem(..))
-import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems, toListWithFocus)
+import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems, mapToList)
 import Html exposing (Html, a, div, h3, header, text)
 import Html.Attributes exposing (class, classList, hidden)
 import Html.Events exposing (onClick)
@@ -58,7 +58,7 @@ view model =
 
         section =
             model.workspaceItems
-                |> toListWithFocus
+                |> mapToList Tuple.pair
                 |> List.indexedMap (viewTableRow model.keyboardShortcut)
                 |> Html.tbody []
                 |> List.singleton
@@ -86,8 +86,8 @@ viewHeader =
         ]
 
 
-viewTableRow : KeyboardShortcut.Model -> Int -> ( Bool, WorkspaceItem ) -> Html Msg
-viewTableRow keyboardShortcut index ( focused, item ) =
+viewTableRow : KeyboardShortcut.Model -> Int -> ( WorkspaceItem, Bool ) -> Html Msg
+viewTableRow keyboardShortcut index ( item, focused ) =
     item
         |> viewEntry keyboardShortcut index focused
         |> List.singleton
