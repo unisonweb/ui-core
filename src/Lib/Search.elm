@@ -14,6 +14,8 @@ module Lib.Search exposing
     , search
     , searchDebounce
     , searchResults
+    , searchResultsNext
+    , searchResultsPrev
     , toFailure
     , toSearching
     , toSuccess
@@ -168,6 +170,26 @@ query search_ =
 
         Failure q _ ->
             q
+
+
+searchResultsPrev : Search a -> Search a
+searchResultsPrev s =
+    case s of
+        Success q r ->
+            Success q (SearchResults.prev r)
+
+        _ ->
+            s
+
+
+searchResultsNext : Search a -> Search a
+searchResultsNext s =
+    case s of
+        Success q r ->
+            Success q (SearchResults.next r)
+
+        _ ->
+            s
 
 
 debounce : msg -> Cmd msg
