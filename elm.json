@@ -68,6 +68,7 @@
         "Lib.Util",
         "Lib.Paginated",
         "Lib.OperatingSystem",
+        "Lib.Search",
         "Lib.SearchResults",
         "Lib.TreePath",
         "Lib.Color.Harmony",
