@@ -2,6 +2,9 @@
 
 /* @color-todo @inverse */
 .page-header.view-mode_regular {
+  --u-color_interactive: var(--color-blue-3);
+  --u-color_interactive_hovered: var(--color-blue-4);
+  --u-color_interactive_pressed: var(--color-pink-4);
   --c-color_page-header_text: var(--color-gray-lighten-100);
   --c-color_page-header_text_very-subdued: var(--color-gray-lighten-20);
   --c-color_page-header_text_subdued: var(--color-gray-lighten-30);
