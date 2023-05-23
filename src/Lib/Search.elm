@@ -17,7 +17,7 @@ module Lib.Search exposing
     , toFailure
     , toSearching
     , toSuccess
-    , updateQuery
+    , withQuery
     )
 
 import Http
@@ -91,6 +91,22 @@ toFailure error search_ =
     Failure (query search_) error
 
 
+withQuery : String -> Search a -> Search a
+withQuery q search_ =
+    case search_ of
+        NotAsked _ ->
+            NotAsked q
+
+        Searching _ r ->
+            Searching q r
+
+        Success _ r ->
+            Success q r
+
+        Failure _ e ->
+            Failure q e
+
+
 
 -- HELPERS
 
@@ -152,22 +168,6 @@ query search_ =
 
         Failure q _ ->
             q
-
-
-updateQuery : Search a -> String -> Search a
-updateQuery search_ q =
-    case search_ of
-        NotAsked _ ->
-            NotAsked q
-
-        Searching _ r ->
-            Searching q r
-
-        Success _ r ->
-            Success q r
-
-        Failure _ e ->
-            Failure q e
 
 
 debounce : msg -> Cmd msg
