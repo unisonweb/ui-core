@@ -6,6 +6,8 @@ module Lib.Search exposing
     , empty
     , fromResult
     , hasSubstantialQuery
+    , isEmptyQuery
+    , isSearching
     , queriesEquals
     , query
     , queryEquals
@@ -170,6 +172,21 @@ query search_ =
 
         Failure q _ ->
             q
+
+
+isEmptyQuery : Search a -> Bool
+isEmptyQuery =
+    query >> String.isEmpty
+
+
+isSearching : Search a -> Bool
+isSearching search_ =
+    case search_ of
+        Searching _ _ ->
+            True
+
+        _ ->
+            False
 
 
 searchResultsPrev : Search a -> Search a
