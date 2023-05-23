@@ -5,8 +5,11 @@ module Lib.Search exposing
     , debounce_
     , empty
     , fromResult
+    , hasSubstantialQuery
+    , queriesEquals
     , query
     , queryEquals
+    , queryGreaterThan
     , reset
     , search
     , searchDebounce
@@ -105,8 +108,8 @@ searchResults search_ =
             Nothing
 
 
-fromResult : HttpResult (List a) -> Search a -> Search a
-fromResult result search_ =
+fromResult : Search a -> HttpResult (List a) -> Search a
+fromResult search_ result =
     case result of
         Ok r ->
             Success (query search_) (SearchResults.fromList r)
@@ -115,9 +118,24 @@ fromResult result search_ =
             Failure (query search_) e
 
 
-queryEquals : Search a -> Search a -> Bool
-queryEquals a b =
+queryEquals : String -> Search a -> Bool
+queryEquals q s =
+    q == query s
+
+
+queriesEquals : Search a -> Search a -> Bool
+queriesEquals a b =
     query a == query b
+
+
+queryGreaterThan : Int -> Search a -> Bool
+queryGreaterThan n s =
+    String.length (query s) > n
+
+
+hasSubstantialQuery : Search a -> Bool
+hasSubstantialQuery s =
+    queryGreaterThan 2 s
 
 
 query : Search a -> String
