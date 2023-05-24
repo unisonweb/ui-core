@@ -3,6 +3,7 @@
   --color-modal-fg: var(--u-color_text);
   --color-modal-mg: var(--u-color_element_subdued);
   --color-modal-bg: var(--u-color_container);
+  --color-modal-bg-faded: var(--u-color_container_faded);
   --color-modal-inner-border: var(--color-gray-lighten-50);
   --color-modal-separator: var(--u-color_divider);
   --color-modal-shadow: var(--u-shadow);
