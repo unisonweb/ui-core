@@ -37,7 +37,7 @@
   overflow-x: clip;
 
   --c-width_workspace-item_inner-content: min(
-    var(--readable-column-width),
+    var(--readable-column-width-medium),
     calc(100vw - 4rem)
   );
 

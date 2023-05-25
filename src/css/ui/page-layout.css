@@ -204,7 +204,7 @@
 }
 
 .page.sidebar-left-content-layout .page-content .columns {
-  width: var(--readable-column-width);
+  width: var(--readable-column-width-medium);
 }
 
 .page.sidebar-left-content-layout .page-content .page-title {
