@@ -54,7 +54,7 @@
 }
 
 .definition-doc .doc_group .doc_join {
-  white-space: nowrap;
+  white-space: pre-line;
 }
 
 .definition-doc .source.code,
