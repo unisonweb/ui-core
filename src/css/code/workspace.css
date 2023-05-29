@@ -66,7 +66,7 @@
   }
 }
 
-#workspace #workspace-minimap {
+#workspace .workspace-minimap {
   position: absolute;
   z-index: var(--layer-tooltip);
   margin: 0.5rem;

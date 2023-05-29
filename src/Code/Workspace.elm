@@ -548,7 +548,7 @@ view viewMode model =
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ aside
-                            [ id "workspace-minimap" ]
+                            [ class "workspace-minimap" ]
                             [ model
                                 |> makeMinimapModel
                                 |> WorkspaceMinimap.view

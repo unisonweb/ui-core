@@ -8,9 +8,10 @@ import Code.Definition.Type as Type exposing (Type(..))
 import Code.FullyQualifiedName as FQN
 import Code.Workspace.WorkspaceItem exposing (Item(..), WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems exposing (WorkspaceItems, mapToList)
-import Html exposing (Html, a, div, h3, header, text)
+import Html exposing (Html, div, h3, header, text)
 import Html.Attributes exposing (class, classList, hidden)
 import Html.Events exposing (onClick)
+import UI.Click as Click
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key as Key
@@ -54,9 +55,10 @@ viewHeader closeAllMsg =
         [ div
             [ class "workspace-minimap-title" ]
             [ text "MAP" ]
-        , a
-            [ class "close", onClick closeAllMsg ]
+        , Click.view
+            [ class "close" ]
             [ text "Close all" ]
+            (Click.onClick closeAllMsg)
         ]
 
 
