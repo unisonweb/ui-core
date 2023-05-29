@@ -12,6 +12,8 @@ import FoldToggle from "./FoldToggle.elm";
 import KeyboardShortcut from "./KeyboardShortcut.elm";
 import Modal from "./Modal.elm";
 import Navigation from "./Navigation.elm";
+import PlaceholderShape from "./PlaceholderShape.elm";
+import StatusBanner from "./StatusBanner.elm";
 
 export const banner = () => {
   return initElmStory(Banner.Elm.Stories.UI.Banner);
@@ -42,4 +44,10 @@ export const modal = () => {
 };
 export const navigation = () => {
   return initElmStory(Navigation.Elm.Stories.UI.Navigation);
+};
+export const placeholderShape = () => {
+  return initElmStory(PlaceholderShape.Elm.Stories.UI.PlaceholderShape);
+};
+export const statusBanner = () => {
+  return initElmStory(StatusBanner.Elm.Stories.UI.StatusBanner);
 };
