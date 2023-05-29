@@ -1,57 +1,57 @@
 .workspace-minimap-content {
-    min-width: 10rem;
-    background-color: white;
-    padding: 1rem;
-    border-width: 1px;
-    border-color: var(--color-gray-lighten-50);
-    border-style: solid;
-    border-radius: 5px;
+  min-width: 10rem;
+  background-color: white;
+  padding: 1rem;
+  border-width: 1px;
+  border-color: var(--color-gray-lighten-50);
+  border-style: solid;
+  border-radius: 5px;
 }
 
 .workspace-minimap-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    font-size: var(--font-size-medium);
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-medium);
 }
 
 .workspace-minimap-header .workspace-minimap-title {
-    color: var(--color-gray-lighten-30);
-    font-weight: 300;
+  color: var(--color-gray-lighten-30);
+  font-weight: 300;
 }
 
 .workspace-minimap-entry {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    height: 2rem;
-    margin-top: 0.1rem;
-    margin-bottom: 0.1rem;
-    justify-content: space-between;
-    cursor: pointer;
-    border-radius: 5px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .workspace-minimap-entry.focused {
-    background-color: var(--color-blue-5);
+  background-color: var(--color-blue-5);
 }
 
 .workspace-minimap-entry .workspace-minimap-entry-content {
-    display: flex;
-    align-items: center;
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
 }
 
 .workspace-minimap-entry .workspace-minimap-entry-content .category-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    width: 1.5rem;
-    line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 1.5rem;
+  line-height: 1;
 }
 
 .workspace-minimap-entry .keyboard-shortcut {
-    padding-right: 0.5rem;
+  padding-right: 0.5rem;
 }
