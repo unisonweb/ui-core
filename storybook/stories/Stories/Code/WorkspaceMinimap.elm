@@ -14,11 +14,12 @@ import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 
 
 type alias Model =
-    WorkspaceMinimap.Model
+    WorkspaceMinimap.Minimap Msg
 
 
 type Msg
-    = WorkspaceMinimapMsg WorkspaceMinimap.Msg
+    = SelectItem WorkspaceItem.WorkspaceItem
+    | CloseAll
     | GotItem Int Reference.Reference (Result Http.Error WorkspaceItem.Item)
 
 
@@ -34,7 +35,11 @@ main =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( WorkspaceMinimap.init (KeyboardShortcut.init OperatingSystem.MacOS) WorkspaceItems.empty
+    ( { keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
+      , workspaceItems = WorkspaceItems.empty
+      , selectItemMsg = SelectItem
+      , closeAllMsg = CloseAll
+      }
     , Cmd.batch
         [ getSampleResponse 0 "/increment_term_def.json" "increment"
         , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
@@ -65,12 +70,25 @@ getSampleResponse index url termName =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
-        WorkspaceMinimapMsg mMsg ->
+        SelectItem item ->
             let
-                ( updatedModel, cmd ) =
-                    WorkspaceMinimap.update mMsg model
+                nextWorkspaceItems =
+                    item
+                        |> WorkspaceItem.reference
+                        |> WorkspaceItems.focusOn model.workspaceItems
             in
-            ( updatedModel, Cmd.map WorkspaceMinimapMsg cmd )
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
+            )
+
+        CloseAll ->
+            let
+                nextWorkspaceItems =
+                    WorkspaceItems.empty
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
+            )
 
         GotItem _ reference result ->
             case result of
@@ -91,4 +109,3 @@ update message model =
 view : Model -> Html Msg
 view model =
     WorkspaceMinimap.view model
-        |> Html.map WorkspaceMinimapMsg

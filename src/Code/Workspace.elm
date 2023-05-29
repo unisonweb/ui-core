@@ -78,7 +78,8 @@ type Msg
     | KeyboardShortcutMsg KeyboardShortcut.Msg
     | WorkspaceItemMsg WorkspaceItem.Msg
     | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
-    | WorkspaceMinimapMsg WorkspaceMinimap.Msg
+    | SelectItem WorkspaceItem
+    | CloseAll
 
 
 type OutMsg
@@ -272,30 +273,27 @@ update config viewMode msg ({ workspaceItems } as model) =
             in
             ( { model | keyboardShortcut = keyboardShortcut }, Cmd.map KeyboardShortcutMsg cmd, None )
 
-        WorkspaceMinimapMsg mMsg ->
+        SelectItem item ->
             let
                 nextWorkspaceItems =
-                    case mMsg of
-                        WorkspaceMinimap.SelectItem item ->
-                            item
-                                |> WorkspaceItem.reference
-                                |> WorkspaceItems.focusOn model.workspaceItems
-
-                        WorkspaceMinimap.CloseAll ->
-                            WorkspaceItems.empty
-
-                nextCmd =
-                    case mMsg of
-                        WorkspaceMinimap.SelectItem item ->
-                            item
-                                |> WorkspaceItem.reference
-                                |> scrollToDefinition
-
-                        _ ->
-                            Cmd.none
+                    item
+                        |> WorkspaceItem.reference
+                        |> WorkspaceItems.focusOn model.workspaceItems
             in
             ( { model | workspaceItems = nextWorkspaceItems }
-            , nextCmd
+            , item
+                |> WorkspaceItem.reference
+                |> scrollToDefinition
+            , openDefinitionsFocusToOutMsg nextWorkspaceItems
+            )
+
+        CloseAll ->
+            let
+                nextWorkspaceItems =
+                    WorkspaceItems.empty
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
             , openDefinitionsFocusToOutMsg nextWorkspaceItems
             )
 
@@ -554,7 +552,6 @@ view viewMode model =
                             [ model
                                 |> makeMinimapModel
                                 |> WorkspaceMinimap.view
-                                |> Html.map WorkspaceMinimapMsg
                             ]
                         , section
                             [ id "workspace-content" ]
@@ -579,8 +576,10 @@ viewWorkspaceItems definitionSummaryTooltip =
     WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)
 
 
-makeMinimapModel : Model -> WorkspaceMinimap.Model
+makeMinimapModel : Model -> WorkspaceMinimap.Minimap Msg
 makeMinimapModel model =
     { keyboardShortcut = model.keyboardShortcut
     , workspaceItems = model.workspaceItems
+    , selectItemMsg = SelectItem
+    , closeAllMsg = CloseAll
     }
