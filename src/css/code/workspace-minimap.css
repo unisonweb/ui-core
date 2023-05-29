@@ -8,14 +8,6 @@
     border-radius: 5px;
 }
 
-.workspace-minimap-content table {
-    width: 100%;
-}
-
-.workspace-minimap-content table td {
-    width: 100%;
-}
-
 .workspace-minimap-header {
     display: flex;
     justify-content: space-between;

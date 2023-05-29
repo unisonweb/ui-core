@@ -34,11 +34,7 @@ view model =
         section =
             model.workspaceItems
                 |> mapToList Tuple.pair
-                |> List.indexedMap (viewTableRow model.selectItemMsg model.keyboardShortcut)
-                |> Html.tbody []
-                |> List.singleton
-                |> Html.table []
-                |> List.singleton
+                |> List.indexedMap (viewEntry model.selectItemMsg model.keyboardShortcut)
                 |> Html.section []
     in
     div
@@ -62,18 +58,8 @@ viewHeader closeAllMsg =
         ]
 
 
-viewTableRow : (WorkspaceItem -> msg) -> KeyboardShortcut.Model -> Int -> ( WorkspaceItem, Bool ) -> Html msg
-viewTableRow selectItem keyboardShortcut index ( item, focused ) =
-    item
-        |> viewEntry selectItem keyboardShortcut index focused
-        |> List.singleton
-        |> Html.td []
-        |> List.singleton
-        |> Html.tr []
-
-
-viewEntry : (WorkspaceItem -> msg) -> KeyboardShortcut.Model -> Int -> Bool -> WorkspaceItem -> Html msg
-viewEntry selectItem keyboardShortcut index focused item =
+viewEntry : (WorkspaceItem -> msg) -> KeyboardShortcut.Model -> Int -> ( WorkspaceItem, Bool ) -> Html msg
+viewEntry selectItem keyboardShortcut index ( item, focused ) =
     let
         content =
             case item of
