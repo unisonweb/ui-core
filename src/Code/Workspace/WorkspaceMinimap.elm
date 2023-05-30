@@ -15,6 +15,8 @@ import UI.Click as Click
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key as Key
+import UI.PlaceholderShape as PlaceholderShape
+import UI.StatusBanner as StatusBanner
 
 
 type alias Minimap msg =
@@ -64,16 +66,16 @@ viewEntry selectItem keyboardShortcut index ( item, focused ) =
         content =
             case item of
                 Loading _ ->
-                    [ div
-                        [ class "name" ]
-                        [ text "Loading" ]
-                    ]
+                    div
+                        [ class "workspace-minimap-entry-content" ]
+                        [ PlaceholderShape.text
+                            |> PlaceholderShape.view
+                        ]
 
                 Failure _ _ ->
-                    [ div
-                        [ class "name" ]
-                        [ text "Failure" ]
-                    ]
+                    div
+                        [ class "workspace-minimap-entry-content" ]
+                        [ StatusBanner.bad "fetch error" ]
 
                 Success _ itemData ->
                     let
@@ -91,12 +93,7 @@ viewEntry selectItem keyboardShortcut index ( item, focused ) =
                                 AbilityConstructorItem (AbilityConstructor _ detail) ->
                                     ( detail.info, Category.Type Type.AbilityType )
                     in
-                    [ viewEntryContent category info.name
-                    , div
-                        [ hidden True ]
-                        -- currently hidden as feature is not supported yet
-                        [ viewEntryKeyboardShortcut keyboardShortcut index ]
-                    ]
+                    viewEntryContent category info.name
     in
     div
         [ classList
@@ -105,7 +102,12 @@ viewEntry selectItem keyboardShortcut index ( item, focused ) =
             ]
         , onClick (selectItem item)
         ]
-        content
+        [ content
+        , div
+            [ hidden True ]
+            -- currently hidden as feature is not supported yet
+            [ viewEntryKeyboardShortcut keyboardShortcut index ]
+        ]
 
 
 viewEntryContent : Category -> FQN.FQN -> Html msg
