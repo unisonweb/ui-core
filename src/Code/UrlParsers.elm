@@ -15,7 +15,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective exposing (PerspectiveParams(..), RootPerspective(..))
-import Parser exposing ((|.), (|=), Parser, backtrackable, end, keyword, succeed)
+import Parser exposing ((|.), (|=), Parser, backtrackable, keyword, succeed)
 
 
 
@@ -124,9 +124,12 @@ slash =
     Parser.symbol "/"
 
 
-optionalEndSlash : Parser ()
-optionalEndSlash =
-    Parser.oneOf [ b slash |. end, b end ]
+{-| Support ending the route "bare": like `/foo`, or with a with a trailing
+slash: `/foo/`.
+-}
+end : Parser ()
+end =
+    Parser.oneOf [ b slash |. Parser.end, b Parser.end ]
 
 
 b : Parser a -> Parser a
