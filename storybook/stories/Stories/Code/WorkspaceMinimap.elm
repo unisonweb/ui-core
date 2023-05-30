@@ -20,7 +20,7 @@ type alias Model =
 type Msg
     = SelectItem WorkspaceItem.WorkspaceItem
     | CloseAll
-    | GotItem Int Reference.Reference (Result Http.Error WorkspaceItem.Item)
+    | GotItem Reference.Reference (Result Http.Error WorkspaceItem.Item)
 
 
 main : Program () Model Msg
@@ -36,34 +36,55 @@ main =
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
-      , workspaceItems = WorkspaceItems.empty
+      , workspaceItems =
+            WorkspaceItems.fromItems []
+                ("increment" |> loadingItem)
+                ([ "nat_gt"
+                 , "base_readme"
+                 , "not_exist"
+                 , "loading"
+                 ]
+                    |> List.map loadingItem
+                )
       , selectItemMsg = SelectItem
       , closeAllMsg = CloseAll
       }
     , Cmd.batch
-        [ getSampleResponse 0 "/increment_term_def.json" "increment"
-        , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
-        , getSampleResponse 2 "/base_readme.json" "base_readme"
+        [ getSampleResponse "/increment_term_def.json" "increment"
+        , getSampleResponse "/nat_gt_term_def.json" "nat_gt"
+        , getSampleResponse "/base_readme.json" "base_readme"
+        , getSampleResponse "/not_exist.json" "not_exist"
         ]
     )
 
 
-getSampleResponse : Int -> String -> String -> Cmd Msg
-getSampleResponse index url termName =
+loadingItem : String -> WorkspaceItem.WorkspaceItem
+loadingItem termName =
+    termName
+        |> termReference
+        |> WorkspaceItem.Loading
+
+
+termReference : String -> Reference.Reference
+termReference termName =
+    termName
+        |> FQN.fromString
+        |> HashQualified.NameOnly
+        |> Reference.TypeReference
+
+
+getSampleResponse : String -> String -> Cmd Msg
+getSampleResponse url termName =
     let
         reference =
-            termName
-                |> FQN.fromString
-                |> HashQualified.NameOnly
-                |> Reference.TypeReference
+            termName |> termReference
 
         decoder =
-            reference
-                |> WorkspaceItem.decodeItem
+            reference |> WorkspaceItem.decodeItem
     in
     Http.get
         { url = url
-        , expect = Http.expectJson (GotItem index reference) decoder
+        , expect = Http.expectJson (GotItem reference) decoder
         }
 
 
@@ -90,18 +111,22 @@ update message model =
             , Cmd.none
             )
 
-        GotItem _ reference result ->
+        GotItem reference result ->
             case result of
                 Err error ->
-                    Debug.log (Debug.toString error)
-                        ( model, Cmd.none )
+                    let
+                        newWorkspaceItems =
+                            WorkspaceItem.Failure reference error
+                                |> WorkspaceItems.replace model.workspaceItems reference
+                    in
+                    ( { model | workspaceItems = newWorkspaceItems }, Cmd.none )
 
                 Ok item ->
                     let
                         newWorkspaceItems =
                             item
                                 |> WorkspaceItem.fromItem reference
-                                |> WorkspaceItems.prependWithFocus model.workspaceItems
+                                |> WorkspaceItems.replace model.workspaceItems reference
                     in
                     ( { model | workspaceItems = newWorkspaceItems }, Cmd.none )
 
