@@ -215,11 +215,20 @@
     align-items: flex-start;
     position: relative;
   }
-
   .page-header .page-header_page-context,
   .page-header .page-header_navigation,
   .page-header .page-header_navigation .nav-item {
     height: calc(var(--c-height_page-header) / 2);
+  }
+
+  /* if the page context is active, then only that is visible and we should
+   * show 2 lines for navigation */
+  .page-header:has(.page-header_page-context_is-active) {
+    --c-height_page-header: 3.5rem;
+  }
+
+  .page-header .page-header_page-context_is-active {
+    height: calc(var(--c-height_page-header));
   }
 
   .page-header .page-header_right-side {
