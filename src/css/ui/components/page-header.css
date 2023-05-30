@@ -227,7 +227,7 @@
     --c-height_page-header: 3.5rem;
   }
 
-  .page-header .page-header_page-context_is-active {
+  .page-header .page-header_page-context.page-header_page-context_is-active {
     height: calc(var(--c-height_page-header));
   }
 
