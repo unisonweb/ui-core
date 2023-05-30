@@ -15,7 +15,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective exposing (PerspectiveParams(..), RootPerspective(..))
-import Parser exposing ((|.), (|=), Parser, backtrackable, keyword, succeed)
+import Parser exposing ((|.), (|=), Parser, backtrackable, end, keyword, succeed)
 
 
 
@@ -122,6 +122,11 @@ perspectiveParams =
 slash : Parser ()
 slash =
     Parser.symbol "/"
+
+
+optionalEndSlash : Parser ()
+optionalEndSlash =
+    Parser.oneOf [ b slash |. end, b end ]
 
 
 b : Parser a -> Parser a
