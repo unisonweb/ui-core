@@ -1,9 +1,9 @@
 .workspace-minimap-content {
   min-width: 10rem;
-  background-color: white;
+  background-color: var(--u-color_container);
   padding: 1rem;
   border-width: 1px;
-  border-color: var(--color-gray-lighten-50);
+  border-color: var(--u-color_border);
   border-style: solid;
   border-radius: 5px;
 }
@@ -29,7 +29,7 @@
   margin-bottom: 0.1rem;
   justify-content: space-between;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: var(--border-radius-base);
 }
 
 .workspace-minimap-entry.focused {
@@ -39,8 +39,8 @@
 .workspace-minimap-entry .workspace-minimap-entry-content {
   display: flex;
   align-items: center;
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .workspace-minimap-entry .workspace-minimap-entry-content .category-icon {
