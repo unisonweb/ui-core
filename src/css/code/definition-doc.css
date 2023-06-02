@@ -73,6 +73,16 @@
   max-width: var(--c-width_doc_inner-content);
 }
 
+/* We don't want margin on .eval .source since its 2 very close source blocks */
+.definition-doc .source.code,
+.definition-doc .sources .source,
+.definition-doc .folded-sources .source,
+.definition-doc .source.example,
+.definition-doc .source.signatures .signature {
+  margin-bottom: 1rem;
+}
+
+
 .definition-doc .folded-sources .source {
   padding: 0.5rem;
 }
@@ -161,10 +171,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-}
-
-.definition-doc .eval .source:first-child {
-  margin-bottom: 0;
+  margin-bottom: 1rem;
 }
 
 .definition-doc .eval .result  {
