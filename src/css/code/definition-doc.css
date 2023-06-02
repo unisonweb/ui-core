@@ -6,7 +6,7 @@
   --color-doc-callout-bg: var(--u-color_info_container_subdued);
   --color-doc-callout-source-bg: var(--u-color_element_emphasized);
   --color-doc-subtle-text: var(--u-color_text_very-subdued);
-  --color-doc-source-bg: var(--u-color_container_subdued);
+  --color-doc-source-bg: var(--u-color_element_subdued);
   --color-doc-content-border: var(--u-color_border_subdued);
   --color-doc-divider: var(--u-color_divider);
 
@@ -173,7 +173,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-doc-source-bg);
+  background: var(--u-color_element_emphasized);
   border: 2px solid var(--color-doc-bg);
   line-height: 1;
 }
