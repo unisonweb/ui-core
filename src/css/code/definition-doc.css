@@ -66,7 +66,6 @@
   padding: 0.5rem 0.75rem;
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
-  margin-bottom: 1rem;
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
@@ -270,7 +269,7 @@
 .definition-doc aside .sources .source,
 .definition-doc aside .folded-sources .source,
 .definition-doc aside .source.example,
-.definition-doc aside .source.eval,
+.definition-doc aside .eval .source,
 .definition-doc aside .source.signatures .signature {
   background: var(--color-doc-aside-source-bg);
   padding: 0.375rem;
@@ -317,7 +316,7 @@
 .definition-doc .doc_callout .sources .source,
 .definition-doc .doc_callout .folded-sources .source,
 .definition-doc .doc_callout .source.example,
-.definition-doc .doc_callout .source.eval,
+.definition-doc .doc_callout .eval .source,
 .definition-doc .doc_callout .source.signatures .signature,
 .definition-doc
   .doc_callout
@@ -510,7 +509,7 @@
   .definition-doc .sources .source,
   .definition-doc .folded-sources .source,
   .definition-doc .source.example,
-  .definition-doc .source.eval,
+  .definition-doc .eval .source,
   .definition-doc .source.signatures .signature,
   .definition-doc .mermaid-diagram {
     width: calc(100vw - 4rem);
@@ -521,7 +520,7 @@
   .definition-doc aside .sources .source,
   .definition-doc aside .folded-sources .source,
   .definition-doc aside .source.example,
-  .definition-doc aside .source.eval,
+  .definition-doc aside .eval .source,
   .definition-doc aside .source.signatures .signature {
     max-width: none;
     width: calc(100vw - 4rem);
@@ -531,7 +530,7 @@
   .definition-doc .doc_callout .sources .source,
   .definition-doc .doc_callout .folded-sources .source,
   .definition-doc .doc_callout .source.example,
-  .definition-doc .doc_callout .source.eval,
+  .definition-doc .doc_callout .eval .source,
   .definition-doc .doc_callout .source.signatures .signature {
     width: calc(100vw - 4rem);
   }
@@ -540,7 +539,7 @@
   .definition-doc .doc_callout .folded .sources .source,
   .definition-doc .doc_callout .folded .folded-sources .source,
   .definition-doc .doc_callout .folded .source.example,
-  .definition-doc .doc_callout .folded .source.eval,
+  .definition-doc .doc_callout .folded .eval .source,
   .definition-doc .doc_callout .folded .source.signatures .signature {
     width: calc(100vw - 4rem);
   }
