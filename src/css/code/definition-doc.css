@@ -166,14 +166,20 @@
 
 .definition-doc .eval .result {
   position: absolute;
-  left: -0.75rem;
+  margin-left: -0.75rem;
+  margin-top: 0.75rem;
   height: 1.5rem;
   width: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--color-doc-source-bg);
-  border: 0.25rem solid var(--color-doc-bg);
+  border: 2px solid var(--color-doc-bg);
+  line-height: 1;
+}
+
+.definition-doc .eval .result .icon {
+  font-size: var(--font-size-medium);
 }
 
 .definition-doc strong {
