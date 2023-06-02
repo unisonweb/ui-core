@@ -7,7 +7,7 @@ import Code.Definition.Term exposing (Term(..))
 import Code.Definition.Type as Type exposing (Type(..))
 import Code.FullyQualifiedName as FQN
 import Code.Workspace.WorkspaceItem exposing (Item(..), WorkspaceItem(..))
-import Code.Workspace.WorkspaceItems exposing (WorkspaceItems, mapToList)
+import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems, focus, mapToList)
 import Html exposing (Html, div, h3, header, text)
 import Html.Attributes exposing (class, classList, hidden)
 import Html.Events exposing (onClick)
@@ -24,14 +24,66 @@ type alias Minimap msg =
     , workspaceItems : WorkspaceItems
     , selectItemMsg : WorkspaceItem -> msg
     , closeAllMsg : msg
+    , isExpanded : Bool
+    , toggleMinimapMsg : msg
     }
 
 
 view : Minimap msg -> Html msg
 view model =
+    div
+        [ class "workspace-minimap-content" ]
+        [ if model.isExpanded then
+            viewExpanded model
+
+          else
+            viewCollapsed model
+        ]
+
+
+viewCollapsed : Minimap msg -> Html msg
+viewCollapsed model =
+    let
+        viewContent : WorkspaceItem -> List (Html msg)
+        viewContent item =
+            let
+                focusIndex =
+                    model.workspaceItems
+                        |> WorkspaceItems.focusIndex
+                        |> Maybe.withDefault 0
+
+                icon =
+                    div
+                        [ class "workspace-minimap-icon" ]
+                        [ Icon.unfoldedMap
+                            |> Icon.view
+                        ]
+            in
+            [ icon
+            , viewEntry
+                model.selectItemMsg
+                model.keyboardShortcut
+                focusIndex
+                ( item, True )
+            ]
+
+        content =
+            model.workspaceItems
+                |> WorkspaceItems.focus
+                |> Maybe.map viewContent
+                |> Maybe.withDefault []
+    in
+    Click.view
+        [ class "workspace-minimap-collapsed" ]
+        content
+        (Click.onClick model.toggleMinimapMsg)
+
+
+viewExpanded : Minimap msg -> Html msg
+viewExpanded model =
     let
         header =
-            viewHeader model.closeAllMsg
+            viewHeader model.toggleMinimapMsg model.closeAllMsg
 
         section =
             model.workspaceItems
@@ -40,19 +92,18 @@ view model =
                 |> Html.section []
     in
     div
-        [ class "workspace-minimap-content" ]
-        [ header
-        , section
-        ]
+        [ class "workspace-minimap-expanded" ]
+        [ header, section ]
 
 
-viewHeader : msg -> Html msg
-viewHeader closeAllMsg =
+viewHeader : msg -> msg -> Html msg
+viewHeader toggleMinimapMsg closeAllMsg =
     header
         [ class "workspace-minimap-header" ]
-        [ div
+        [ Click.view
             [ class "workspace-minimap-title" ]
             [ text "MAP" ]
+            (Click.onClick toggleMinimapMsg)
         , Click.view
             [ class "close" ]
             [ text "Close all" ]

@@ -42,6 +42,7 @@ type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
     , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
+    , isMinimapExpanded : Bool
     }
 
 
@@ -52,6 +53,7 @@ init config mRef =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+            , isMinimapExpanded = True
             }
     in
     case mRef of
@@ -80,6 +82,7 @@ type Msg
     | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
     | SelectItem WorkspaceItem
     | CloseAll
+    | ToggleMinimap
 
 
 type OutMsg
@@ -295,6 +298,12 @@ update config viewMode msg ({ workspaceItems } as model) =
             ( { model | workspaceItems = nextWorkspaceItems }
             , Cmd.none
             , openDefinitionsFocusToOutMsg nextWorkspaceItems
+            )
+
+        ToggleMinimap ->
+            ( { model | isMinimapExpanded = not model.isMinimapExpanded }
+            , Cmd.none
+            , None
             )
 
 
@@ -582,4 +591,6 @@ makeMinimapModel model =
     , workspaceItems = model.workspaceItems
     , selectItemMsg = SelectItem
     , closeAllMsg = CloseAll
+    , isExpanded = model.isMinimapExpanded
+    , toggleMinimapMsg = ToggleMinimap
     }

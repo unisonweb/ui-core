@@ -39,6 +39,7 @@ init _ =
     ( { workspaceItems = WorkspaceItems.empty
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
       , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+      , isMinimapExpanded = True
       }
     , Cmd.batch
         [ getSampleResponse 0 "/increment_term_def.json" "increment"

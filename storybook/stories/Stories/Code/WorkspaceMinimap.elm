@@ -20,6 +20,7 @@ type alias Model =
 type Msg
     = SelectItem WorkspaceItem.WorkspaceItem
     | CloseAll
+    | ToggleMinimap
     | GotItem Reference.Reference (Result Http.Error WorkspaceItem.Item)
 
 
@@ -48,6 +49,8 @@ init _ =
                 )
       , selectItemMsg = SelectItem
       , closeAllMsg = CloseAll
+      , isExpanded = True
+      , toggleMinimapMsg = ToggleMinimap
       }
     , Cmd.batch
         [ getSampleResponse "/increment_term_def.json" "increment"
@@ -108,6 +111,11 @@ update message model =
                     WorkspaceItems.empty
             in
             ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
+            )
+
+        ToggleMinimap ->
+            ( { model | isExpanded = not model.isExpanded }
             , Cmd.none
             )
 
