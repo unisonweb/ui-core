@@ -658,7 +658,7 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                             div
                                 [ class "eval" ]
                                 [ div [ class "source rich" ] [ UI.codeBlock [] (viewSyntax source) ]
-                                , div [ class "result" ] [ Icon.view Icon.arrowDown ]
+                                , div [ class "result" ] [ div [ class "result-indicator" ] [ Icon.view Icon.arrowDown ] ]
                                 , div [ class "source rich" ] [ UI.codeBlock [] (viewSyntax result) ]
                                 ]
 

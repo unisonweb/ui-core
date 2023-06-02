@@ -163,7 +163,15 @@
   gap: 0.25rem;
 }
 
-.definition-doc .eval .result {
+.definition-doc .eval .source:first-child {
+  margin-bottom: 0;
+}
+
+.definition-doc .eval .result  {
+  position: relative;
+}
+
+.definition-doc .eval .result-indicator {
   position: absolute;
   margin-left: -0.75rem;
   margin-top: 0.75rem;
