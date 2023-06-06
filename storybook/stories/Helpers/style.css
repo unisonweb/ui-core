@@ -1,4 +1,15 @@
-.col {
+.columns {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+
+.rows {
+  display: flex;
+  flex-direction: rows;
+  gap: 1rem;
+}
+
+.padded {
+  padding: 2rem;
 }

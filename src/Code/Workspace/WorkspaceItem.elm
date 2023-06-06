@@ -29,7 +29,7 @@ import UI.Button as Button
 import UI.Click as Click
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
-import UI.PlaceholderShape as PlaceholderShape
+import UI.Placeholder as Placeholder
 import UI.Tooltip as Tooltip
 import UI.ViewMode as ViewMode exposing (ViewMode)
 
@@ -638,31 +638,31 @@ view sourceTooltip viewMode workspaceItem isFocused =
                         attrs
                         []
                         ( UI.nothing
-                        , PlaceholderShape.text
-                            |> PlaceholderShape.withSize PlaceholderShape.Large
-                            |> PlaceholderShape.withLength PlaceholderShape.Medium
-                            |> PlaceholderShape.view
+                        , Placeholder.text
+                            |> Placeholder.withSize Placeholder.Large
+                            |> Placeholder.withLength Placeholder.Medium
+                            |> Placeholder.view
                         )
                         [ ( UI.nothing
-                          , PlaceholderShape.text
-                                |> PlaceholderShape.withSize PlaceholderShape.Large
-                                |> PlaceholderShape.withLength PlaceholderShape.Large
-                                |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
-                                |> PlaceholderShape.view
+                          , Placeholder.text
+                                |> Placeholder.withSize Placeholder.Large
+                                |> Placeholder.withLength Placeholder.Large
+                                |> Placeholder.withIntensity Placeholder.Subdued
+                                |> Placeholder.view
                           )
                         ]
 
                 ViewMode.Presentation ->
                     div [ class "loading" ]
-                        [ PlaceholderShape.text
-                            |> PlaceholderShape.withSize PlaceholderShape.Large
-                            |> PlaceholderShape.withLength PlaceholderShape.Medium
-                            |> PlaceholderShape.view
-                        , PlaceholderShape.text
-                            |> PlaceholderShape.withSize PlaceholderShape.Large
-                            |> PlaceholderShape.withLength PlaceholderShape.Large
-                            |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
-                            |> PlaceholderShape.view
+                        [ Placeholder.text
+                            |> Placeholder.withSize Placeholder.Large
+                            |> Placeholder.withLength Placeholder.Medium
+                            |> Placeholder.view
+                        , Placeholder.text
+                            |> Placeholder.withSize Placeholder.Large
+                            |> Placeholder.withLength Placeholder.Large
+                            |> Placeholder.withIntensity Placeholder.Subdued
+                            |> Placeholder.view
                         ]
 
         Failure ref err ->

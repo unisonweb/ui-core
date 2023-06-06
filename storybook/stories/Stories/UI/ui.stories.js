@@ -13,6 +13,7 @@ import KeyboardShortcut from "./KeyboardShortcut.elm";
 import Modal from "./Modal.elm";
 import Navigation from "./Navigation.elm";
 import PageHeader from "./PageHeader.elm";
+import Tooltip from "./Tooltip.elm";
 
 export const banner = () => {
   return initElmStory(Banner.Elm.Stories.UI.Banner);
@@ -56,4 +57,8 @@ export const navigation = () => {
 
 export const pageHeader = () => {
   return initElmStory(PageHeader.Elm.Stories.UI.PageHeader);
+};
+
+export const tooltip = () => {
+  return initElmStory(Tooltip.Elm.Stories.UI.Tooltip);
 };

@@ -1,7 +1,7 @@
 module Stories.UI.FoldToggle exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.FoldToggle as F
 
@@ -30,5 +30,4 @@ elements =
 
 view : Html Msg
 view =
-    (elements |> List.map F.view)
-        |> col []
+    columns [] (elements |> List.map F.view)

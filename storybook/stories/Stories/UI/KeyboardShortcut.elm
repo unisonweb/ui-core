@@ -1,7 +1,7 @@
 module Stories.UI.KeyboardShortcut exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import Lib.OperatingSystem
 import UI.KeyboardShortcut as K
@@ -45,5 +45,4 @@ model =
 
 view : Html Msg
 view =
-    (elements |> List.map (K.view model))
-        |> col []
+    columns [] (elements |> List.map (K.view model))

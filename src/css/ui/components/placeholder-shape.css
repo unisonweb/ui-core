@@ -30,7 +30,9 @@
   --c-length_placeholder-shape_text: var(
     --c-size_placeholder-shape_length_medium
   );
+}
 
+.placeholder-shape.placeholder-shape_text .placeholder-shape_shape {
   border-radius: calc(var(--c-size_placeholder-shape_text) / 2);
   height: var(--c-size_placeholder-shape_text);
   width: var(--c-length_placeholder-shape_text);

@@ -34,7 +34,7 @@ import UI.DateTime as DateTime exposing (DateTime, DateTimeFormat)
 import UI.Divider as Divider
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge(..))
-import UI.PlaceholderShape as PlaceholderShape
+import UI.Placeholder as Placeholder
 
 
 type OpenState
@@ -300,10 +300,10 @@ viewSheet (ActionItems items_) =
 
                 Loading ->
                     div [ class "action-menu_action-item action-menu_action-item-loading" ]
-                        [ PlaceholderShape.text
-                            |> PlaceholderShape.small
-                            |> PlaceholderShape.subdued
-                            |> PlaceholderShape.view
+                        [ Placeholder.text
+                            |> Placeholder.small
+                            |> Placeholder.subdued
+                            |> Placeholder.view
                         ]
 
                 Title t ->

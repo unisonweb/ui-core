@@ -81,7 +81,6 @@
   margin-bottom: 1rem;
 }
 
-
 .definition-doc .folded-sources .source {
   padding: 0.5rem;
 }
@@ -176,11 +175,11 @@
   flex-direction: column;
   /* really we want 0.25rem, but because .result is a "blank" element inbetween
    * the 2 sources we collapse to 0.125rem */
-  gap: 0.125rem; 
+  gap: 0.125rem;
   margin-bottom: 1rem;
 }
 
-.definition-doc .eval .result  {
+.definition-doc .eval .result {
   position: relative;
 }
 

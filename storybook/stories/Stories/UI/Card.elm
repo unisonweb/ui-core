@@ -1,7 +1,7 @@
 module Stories.UI.Card exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.Card as C
 
@@ -35,5 +35,4 @@ elements =
 
 view : Html Msg
 view =
-    (elements |> List.map C.view)
-        |> col []
+    columns [] (elements |> List.map C.view)

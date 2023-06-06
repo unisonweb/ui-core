@@ -1,7 +1,7 @@
 module Stories.UI.Button exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.Button as B
 import UI.Icon as I
@@ -33,5 +33,4 @@ elements =
 
 view : Html Msg
 view =
-    (elements |> List.map B.view)
-        |> col []
+    columns [] (elements |> List.map B.view)
