@@ -260,7 +260,7 @@
 
 .workspace-item .content .workspace-item_definition-doc .doc-column {
   max-height: 12rem;
-  overflow: hidden;
+  overflow-y: clip;
   flex-grow: 1;
 }
 
