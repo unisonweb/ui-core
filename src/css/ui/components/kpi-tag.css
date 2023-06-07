@@ -60,3 +60,11 @@
 .kpi-tag .tooltip:is(.left-of, .right-of).arrow-middle .tooltip-bubble {
   transform: none;
 }
+
+.kpi-tag .tooltip.left-of .tooltip-bubble {
+  right: 1.5rem;
+}
+
+.kpi-tag .tooltip.right-of .tooltip-bubble {
+  left: 1.5rem;
+}
