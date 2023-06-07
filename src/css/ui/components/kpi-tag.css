@@ -57,6 +57,6 @@
   place-content: center;
 }
 
-.kpi-tag .tooltip.left-of.arrow-middle .tooltip-bubble {
+.kpi-tag .tooltip:is(.left-of, .right-of).arrow-middle .tooltip-bubble {
   transform: none;
 }
