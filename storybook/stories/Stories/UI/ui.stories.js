@@ -62,3 +62,7 @@ export const pageHeader = () => {
 export const tooltip = () => {
   return initElmStory(Tooltip.Elm.Stories.UI.Tooltip);
 };
+
+export const placeholder = () => {
+  return initElmStory(Placeholder.Elm.Stories.UI.Placeholder);
+};

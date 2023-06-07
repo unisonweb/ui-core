@@ -56,3 +56,7 @@
   place-items: center;
   place-content: center;
 }
+
+.kpi-tag .tooltip.left-of.arrow-middle .tooltip-bubble {
+  transform: none;
+}
