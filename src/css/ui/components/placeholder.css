@@ -10,7 +10,7 @@
   opacity: 1;
 }
 
-/* -- PlaceholderShape.Text ------------------------------------------------ */
+/* -- Placeholder.Text ------------------------------------------------ */
 
 .placeholder.placeholder_text {
   --c-color_placeholder_text: var(--u-color_text_very-subdued);
@@ -27,7 +27,7 @@
   --c-length_placeholder_text_huge: 20rem;
 
   --c-size_placeholder_text: var(--c-size_placeholder_text_medium);
-  --c-length_placeholder_text: var(--c-size_placeholder_length_medium);
+  --c-length_placeholder_text: var(--c-length_placeholder_text_medium);
 }
 
 .placeholder.placeholder_text .placeholder_shape {
