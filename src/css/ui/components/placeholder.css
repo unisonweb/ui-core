@@ -27,9 +27,7 @@
   --c-length_placeholder_text_huge: 20rem;
 
   --c-size_placeholder_text: var(--c-size_placeholder_text_medium);
-  --c-length_placeholder_text: var(
-    --c-size_placeholder_length_medium
-  );
+  --c-length_placeholder_text: var(--c-size_placeholder_length_medium);
 }
 
 .placeholder.placeholder_text .placeholder_shape {
@@ -56,27 +54,17 @@
 }
 
 .placeholder.placeholder_text.placeholder_length_tiny {
-  --c-length_placeholder_text: var(
-    --c-length_placeholder_text_tiny
-  );
+  --c-length_placeholder_text: var(--c-length_placeholder_text_tiny);
 }
 .placeholder.placeholder_text.placeholder_length_small {
-  --c-length_placeholder_text: var(
-    --c-length_placeholder_text_small
-  );
+  --c-length_placeholder_text: var(--c-length_placeholder_text_small);
 }
 .placeholder.placeholder_text.placeholder_length_medium {
-  --c-length_placeholder_text: var(
-    --c-length_placeholder_text_medium
-  );
+  --c-length_placeholder_text: var(--c-length_placeholder_text_medium);
 }
 .placeholder.placeholder_text.placeholder_length_large {
-  --c-length_placeholder_text: var(
-    --c-length_placeholder_text_large
-  );
+  --c-length_placeholder_text: var(--c-length_placeholder_text_large);
 }
 .placeholder.placeholder_text.placeholder_length_huge {
-  --c-length_placeholder_text: var(
-    --c-length_placeholder_text_huge
-  );
+  --c-length_placeholder_text: var(--c-length_placeholder_text_huge);
 }

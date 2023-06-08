@@ -7,15 +7,17 @@ module Lib.HttpApi exposing
     , HttpApi
     , HttpResult
     , apiUrlFromString
+    , defaultTimeout
     , httpApi
     , httpApi_
     , perform
-    , timeout
     , toRequest
     , toRequestWithEmptyResponse
     , toTask
     , toUrl
     , withHeader
+    , withTimeout
+    , withoutTimeout
     )
 
 import Http
@@ -191,26 +193,40 @@ type ApiRequest a msg
         { endpoint : Endpoint
         , expect : ExpectedResponse a msg
         , headers : List Http.Header
+        , timeout : Maybe Float
         }
 
 
 toRequest : Decode.Decoder a -> (HttpResult a -> msg) -> Endpoint -> ApiRequest a msg
 toRequest decoder toMsg endpoint =
-    ApiRequest { endpoint = endpoint, expect = JsonBody toMsg decoder, headers = [] }
+    ApiRequest { endpoint = endpoint, expect = JsonBody toMsg decoder, headers = [], timeout = Just defaultTimeout }
 
 
 toRequestWithEmptyResponse : (HttpResult () -> msg) -> Endpoint -> ApiRequest a msg
 toRequestWithEmptyResponse toMsg endpoint =
-    ApiRequest { endpoint = endpoint, expect = EmptyBody toMsg, headers = [] }
+    ApiRequest { endpoint = endpoint, expect = EmptyBody toMsg, headers = [], timeout = Just defaultTimeout }
 
 
 withHeader : ( String, String ) -> ApiRequest a msg -> ApiRequest a msg
 withHeader ( name, value ) (ApiRequest req) =
-    ApiRequest { req | headers = Http.header name value :: req.headers }
+    ApiRequest { req | headers = Http.header name value :: req.headers, timeout = Just defaultTimeout }
+
+
+withTimeout : Float -> ApiRequest a msg -> ApiRequest a msg
+withTimeout t (ApiRequest req) =
+    ApiRequest { req | timeout = Just t }
+
+
+{-| ⚠️ Try and avoid using this, we generally never want the user to wait for an
+unbounded time.
+-}
+withoutTimeout : ApiRequest a msg -> ApiRequest a msg
+withoutTimeout (ApiRequest req) =
+    ApiRequest { req | timeout = Nothing }
 
 
 perform : HttpApi -> ApiRequest a msg -> Cmd msg
-perform api (ApiRequest { endpoint, expect, headers }) =
+perform api (ApiRequest { endpoint, expect, headers, timeout }) =
     let
         request_ =
             case api.url of
@@ -236,7 +252,7 @@ perform api (ApiRequest { endpoint, expect, headers }) =
                 , body = Http.emptyBody
                 , url = toUrl api.url endpoint
                 , expect = expect_
-                , timeout = Just timeout
+                , timeout = timeout
                 , tracker = Nothing
                 }
 
@@ -247,7 +263,7 @@ perform api (ApiRequest { endpoint, expect, headers }) =
                 , body = c.body
                 , url = toUrl api.url endpoint
                 , expect = expect_
-                , timeout = Just timeout
+                , timeout = timeout
                 , tracker = Nothing
                 }
 
@@ -258,7 +274,7 @@ perform api (ApiRequest { endpoint, expect, headers }) =
                 , body = c.body
                 , url = toUrl api.url endpoint
                 , expect = expect_
-                , timeout = Just timeout
+                , timeout = timeout
                 , tracker = Nothing
                 }
 
@@ -269,7 +285,7 @@ perform api (ApiRequest { endpoint, expect, headers }) =
                 , body = c.body
                 , url = toUrl api.url endpoint
                 , expect = expect_
-                , timeout = Just timeout
+                , timeout = timeout
                 , tracker = Nothing
                 }
 
@@ -280,7 +296,7 @@ perform api (ApiRequest { endpoint, expect, headers }) =
                 , body = Http.emptyBody
                 , url = toUrl api.url endpoint
                 , expect = expect_
-                , timeout = Just timeout
+                , timeout = timeout
                 , tracker = Nothing
                 }
 
@@ -321,7 +337,7 @@ toTask_ apiUrl decoder headers endpoint =
             task_
                 { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-                , timeout = Just timeout
+                , timeout = Just defaultTimeout
                 , url = toUrl apiUrl endpoint
                 , method = "GET"
                 , body = Http.emptyBody
@@ -331,7 +347,7 @@ toTask_ apiUrl decoder headers endpoint =
             task_
                 { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-                , timeout = Just timeout
+                , timeout = Just defaultTimeout
                 , url = toUrl apiUrl endpoint
                 , method = "POST"
                 , body = c.body
@@ -341,7 +357,7 @@ toTask_ apiUrl decoder headers endpoint =
             task_
                 { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-                , timeout = Just timeout
+                , timeout = Just defaultTimeout
                 , url = toUrl apiUrl endpoint
                 , method = "PUT"
                 , body = c.body
@@ -351,7 +367,7 @@ toTask_ apiUrl decoder headers endpoint =
             task_
                 { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-                , timeout = Just timeout
+                , timeout = Just defaultTimeout
                 , url = toUrl apiUrl endpoint
                 , method = "PATCH"
                 , body = c.body
@@ -361,7 +377,7 @@ toTask_ apiUrl decoder headers endpoint =
             task_
                 { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
-                , timeout = Just timeout
+                , timeout = Just defaultTimeout
                 , url = toUrl apiUrl endpoint
                 , method = "DELETE"
                 , body = Http.emptyBody
@@ -394,6 +410,6 @@ httpJsonBodyResolver decoder resp =
 -- HELPERS
 
 
-timeout : Float
-timeout =
+defaultTimeout : Float
+defaultTimeout =
     30000
