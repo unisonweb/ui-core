@@ -69,7 +69,7 @@ viewCollapsed model =
 
         content =
             model.workspaceItems
-                |> WorkspaceItems.focus
+                |> focus
                 |> Maybe.map viewContent
                 |> Maybe.withDefault []
     in
