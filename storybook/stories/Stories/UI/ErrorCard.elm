@@ -1,7 +1,7 @@
 module Stories.UI.ErrorCard exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.ErrorCard as E
 
@@ -29,5 +29,4 @@ elements =
 
 view : Html Msg
 view =
-    (elements |> List.map E.view)
-        |> col []
+    columns [] (elements |> List.map E.view)

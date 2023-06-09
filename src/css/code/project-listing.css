@@ -7,6 +7,7 @@
   color: var(--u-color_text);
   font-size: var(--font-size-medium);
   height: 1.5rem;
+  line-height: 0;
 
   --c-color_project-listing_private-icon: var(
     --u-color_info_icon-on-element_subdued
@@ -29,6 +30,18 @@
 .project-listing.project-listing-size_huge .hashvatar {
   width: 2rem;
   height: 2rem;
+}
+
+.project-listing .hashvatar {
+  transition: all 0.2s;
+}
+
+.project-listing a > .hashvatar:hover {
+  transform: scale3d(1.1, 1.1, 1.1);
+}
+
+.project-listing a:has(.hashvatar:hover) + .project-ref .project-ref_slug {
+  color: var(--u-color_interactive_hovered);
 }
 
 a.project-listing {

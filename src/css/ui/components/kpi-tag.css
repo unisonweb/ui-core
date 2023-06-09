@@ -22,6 +22,14 @@
   background: var(--c-color_kpi-tag_bg_hovered);
 }
 
+.kpi-tag .kpi-tag_inner {
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  place-items: center;
+  place-content: center;
+}
+
 .kpi-tag .kpi-tag_kpi {
   font-weight: bold;
   font-family: var(--font-monospace);
@@ -47,4 +55,16 @@
   line-height: 1;
   place-items: center;
   place-content: center;
+}
+
+.kpi-tag .tooltip:is(.left-of, .right-of).arrow-middle .tooltip-bubble {
+  transform: none;
+}
+
+.kpi-tag .tooltip.left-of .tooltip-bubble {
+  right: 1.5rem;
+}
+
+.kpi-tag .tooltip.right-of .tooltip-bubble {
+  left: 1.5rem;
 }

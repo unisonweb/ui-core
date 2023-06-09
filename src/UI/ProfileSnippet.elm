@@ -6,7 +6,7 @@ import Lib.UserHandle as UserHandle exposing (UserHandle)
 import UI
 import UI.Avatar as Avatar
 import UI.Icon as Icon
-import UI.PlaceholderShape as PlaceholderShape
+import UI.Placeholder as Placeholder
 import Url exposing (Url)
 
 
@@ -91,14 +91,14 @@ view { size, profile } =
                 Loading ->
                     { avatar = Avatar.empty |> Avatar.withIcon Icon.user
                     , name =
-                        PlaceholderShape.text
-                            |> PlaceholderShape.withLength PlaceholderShape.Small
-                            |> PlaceholderShape.view
+                        Placeholder.text
+                            |> Placeholder.withLength Placeholder.Small
+                            |> Placeholder.view
                     , handle =
-                        PlaceholderShape.text
-                            |> PlaceholderShape.subdued
-                            |> PlaceholderShape.withLength PlaceholderShape.Tiny
-                            |> PlaceholderShape.view
+                        Placeholder.text
+                            |> Placeholder.subdued
+                            |> Placeholder.withLength Placeholder.Tiny
+                            |> Placeholder.view
                     , attrs = [ class "profile-snippet profile-snippet_loading" ]
                     }
 

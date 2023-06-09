@@ -1,6 +1,7 @@
 module Code.Version exposing
     ( Version
     , ascending
+    , clampToNextValid
     , compare
     , decode
     , descending
@@ -10,6 +11,7 @@ module Code.Version exposing
     , fromString
     , fromUrlString
     , greaterThan
+    , isANextValid
     , lessThan
     , major
     , minor
@@ -76,7 +78,7 @@ fromString s =
 fromUrlString : String -> Maybe Version
 fromUrlString s =
     s
-        |> String.split "_"
+        |> String.split "."
         |> List.map String.toInt
         |> MaybeE.combine
         |> Maybe.map fromList
@@ -162,6 +164,64 @@ nextMinor (Version v) =
 nextPatch : Version -> Version
 nextPatch (Version v) =
     version v.major v.minor (v.patch + 1)
+
+
+isANextValid : Version -> Version -> Bool
+isANextValid current candidate =
+    let
+        major_ =
+            nextMajor current
+
+        minor_ =
+            nextMinor current
+
+        patch_ =
+            nextPatch current
+    in
+    equals major_ candidate || equals minor_ candidate || equals patch_ candidate
+
+
+{-| Given a candidate, find the next and nearest valid version
+
+
+## Examples:
+
+  - clampToNextValid (Version 1 0 0) (Version 0 0 1)
+    -> Version 2 0 0
+
+  - clampToNextValid (Version 1 0 0) (Version 1.1.0)
+    -> Version 1.1.0
+
+  - clampToNextValid (Version 1 0 0) (Version 1.5.0)
+    -> Version 1.1.0
+
+  - clampToNextValid (Version 1 0 0) (Version 1.0.3)
+    -> Version 1.0.1
+
+-}
+clampToNextValid : Version -> Version -> Version
+clampToNextValid current candidate =
+    let
+        major_ =
+            nextMajor current
+
+        minor_ =
+            nextMinor current
+
+        patch_ =
+            nextPatch current
+    in
+    if isANextValid current candidate then
+        candidate
+
+    else if greaterThan candidate major_ then
+        major_
+
+    else if greaterThan candidate minor_ then
+        minor_
+
+    else
+        patch_
 
 
 

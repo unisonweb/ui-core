@@ -1,7 +1,7 @@
 module Stories.UI.Modal exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.Modal as M
 
@@ -31,5 +31,4 @@ elements =
 
 view : Html Msg
 view =
-    (elements |> List.map M.view)
-        |> col []
+    columns [] (elements |> List.map M.view)

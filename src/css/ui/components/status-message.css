@@ -1,4 +1,4 @@
-.status-message-card {
+.status-message {
   font-size: var(--font-size-base);
   display: flex;
   flex-direction: column;
@@ -6,12 +6,12 @@
   text-align: center;
 }
 
-.status-message-card .status-message-card_title {
+.status-message .status-message-card_title {
   font-size: 1.125rem;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
 
-.status-message-card .button {
+.status-message .button {
   margin-top: 2rem;
 }

@@ -11,6 +11,7 @@
 
 .project-ref .project-ref_handle {
   color: var(--c-color_project-ref_handle);
+  white-space: nowrap;
 }
 
 .project-ref .project-ref_separator {
@@ -19,4 +20,10 @@
 
 .project-ref .project-ref_slug {
   color: var(--c-color_project-ref_slug);
+  white-space: nowrap;
+}
+
+.project-ref a.project-ref_handle:hover,
+.project-ref a.project-ref_slug:hover {
+  color: var(--u-color_interactive_hovered);
 }

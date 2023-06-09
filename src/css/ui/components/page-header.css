@@ -2,6 +2,9 @@
 
 /* @color-todo @inverse */
 .page-header.view-mode_regular {
+  --u-color_interactive: var(--color-blue-3);
+  --u-color_interactive_hovered: var(--color-blue-4);
+  --u-color_interactive_pressed: var(--color-pink-4);
   --c-color_page-header_text: var(--color-gray-lighten-100);
   --c-color_page-header_text_very-subdued: var(--color-gray-lighten-20);
   --c-color_page-header_text_subdued: var(--color-gray-lighten-30);
@@ -12,7 +15,6 @@
   --c-color_page-header_border: var(--color-gray-darken-10);
   --c-color_page-header_active-nav-item: var(--color-blue-3);
   --c-color_page-header_hover-nav-item: var(--color-gray-base);
-  --c-height_page-header: 3.5rem;
 }
 
 .page-header.view-mode_regular .profile-snippet {
@@ -73,12 +75,15 @@
 }
 
 .page-header {
+  --c-height_page-header: 3.5rem;
+
   grid-area: page-header;
   padding: 0 1.5rem 0 0;
   background: var(--c-color_page-header_bg);
   color: var(--c-color_page-header_text);
   box-shadow: inset 0 -1px 0 0 var(--c-color_page-header_border);
   display: flex;
+  flex-direction: row;
   align-items: center;
   font-size: 1rem;
   height: var(--c-height_page-header);
@@ -90,9 +95,11 @@
   /* @color-todo @inverse */
   --color-button-default-text: var(--color-gray-lighten-30);
   --color-button-default-icon: var(--color-gray-lighten-20);
+  --color-button-default-icon-only: var(--color-gray-lighten-30);
   --color-button-default-bg: var(--color-gray-base);
   --color-button-default-hover-text: var(--color-gray-lighten-50);
   --color-button-default-hover-icon: var(--color-gray-lighten-30);
+  --color-button-default-hover-icon-only: var(--color-gray-lighten-50);
   --color-button-default-hover-bg: var(--color-gray-base);
 }
 
@@ -101,6 +108,7 @@
   align-items: center;
   padding: 0 1.5rem;
   height: var(--c-height_page-header);
+  color: var(--c-color_page-header_text);
 }
 
 .page-header .page-header_page-context_is-active,
@@ -132,6 +140,35 @@
   color: var(--c-color_page-header_icon_subdued);
 }
 
+.page-header .mobile-nav .anchored-overlay_sheet {
+  border-radius: var(--border-radius-base);
+  padding: 0.5rem;
+}
+
+.page-header .mobile-nav .navigation {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.page-header .mobile-nav .navigation .nav-item {
+  width: 100%;
+  padding: 0.5rem;
+  justify-content: flex-start;
+  height: 2rem;
+  border-radius: var(--border-radius-base);
+}
+
+/* @color-todo @inverse */
+.page-header .mobile-nav .navigation .nav-item.selected,
+.page-header .mobile-nav .navigation .nav-item:hover {
+  background: var(--color-gray-darken-10);
+  box-shadow: none;
+}
+.page-header .mobile-nav .navigation .nav-item.selected .icon,
+.page-header .mobile-nav .navigation .nav-item:hover .icon {
+  color: var(--color-gray-lighten-30);
+}
+
 .page-header .page-header_right-side {
   display: flex;
   flex-direction: row;
@@ -145,7 +182,7 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page-header {
-    padding: 0;
+    padding: 0 1rem 0 0;
   }
 
   .page-header .page-header_page-context,
@@ -158,6 +195,7 @@
   .page-header .profile-snippet .profile-snippet_name {
     display: none;
   }
+
   .page-header .profile-snippet .profile-snippet_handle {
     font-size: var(--c-size_profile-snippet_name);
     font-weight: bold;
@@ -171,7 +209,32 @@
 }
 
 @media only screen and (--u-viewport_max-sm) {
-  .page-header .profile-snippet .profile-snippet_text {
-    display: none;
+  .page-header {
+    --c-height_page-header: 7rem;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+  }
+
+  /* if the page context is active, then only that is visible and we should
+   * show 2 lines for navigation */
+  .page-header:has(.page-header_page-context_is-active) {
+    --c-height_page-header: 3.5rem;
+  }
+
+  .page-header:not(:has(.page-header_page-context_is-active))
+    .page-header_page-context,
+  .page-header:not(:has(.page-header_page-context_is-active))
+    .page-header_navigation,
+  .page-header:not(:has(.page-header_page-context_is-active))
+    .page-header_navigation
+    .nav-item {
+    height: calc(var(--c-height_page-header) / 2);
+  }
+
+  .page-header .page-header_right-side {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
   }
 }

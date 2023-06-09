@@ -1,12 +1,16 @@
 module Code.Project exposing (..)
 
+import Code.BranchRef as BranchRef exposing (BranchRef)
 import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
+import Code.Version as Version exposing (Version)
 import Json.Decode as Decode exposing (bool, int, nullable, string)
 import Json.Decode.Extra exposing (when)
 import Json.Decode.Pipeline exposing (optional, required, requiredAt)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
+import Maybe.Extra as MaybeE
 import Set exposing (Set)
+import UI.DateTime as DateTime exposing (DateTime)
 
 
 type alias Project a =
@@ -26,17 +30,28 @@ type ProjectVisibility
 
 
 type alias ProjectSummary =
-    Project {}
+    Project
+        { summary : Maybe String
+        , tags : Set String
+        , numFavs : Int
+        , numWeeklyDownloads : Int
+        , isFaved : IsFaved
+        , createdAt : DateTime
+        , updatedAt : DateTime
+        }
 
 
 type alias ProjectDetails =
     Project
         { summary : Maybe String
         , tags : Set String
-        , visibility : ProjectVisibility
         , numFavs : Int
         , numWeeklyDownloads : Int
         , isFaved : IsFaved
+        , latestVersion : Maybe Version
+        , defaultBranch : Maybe BranchRef
+        , createdAt : DateTime
+        , updatedAt : DateTime
         }
 
 
@@ -48,6 +63,14 @@ ref project =
 handle : Project a -> UserHandle
 handle p =
     ProjectRef.handle p.ref
+
+
+defaultBrowsingBranch : ProjectDetails -> BranchRef
+defaultBrowsingBranch p =
+    p.latestVersion
+        |> Maybe.map BranchRef.releaseBranchRef
+        |> MaybeE.orElse p.defaultBranch
+        |> Maybe.withDefault BranchRef.main_
 
 
 slug : Project a -> ProjectSlug
@@ -126,10 +149,15 @@ decodeVisibility =
         ]
 
 
+decodeIsFaved : Decode.Decoder IsFaved
+decodeIsFaved =
+    Decode.map isFavedFromBool bool
+
+
 decodeDetails : Decode.Decoder ProjectDetails
 decodeDetails =
     let
-        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved_ =
+        makeProjectDetails handle_ slug_ summary tags visibility numFavs numWeeklyDownloads isFaved_ latestVersion defaultBranch createdAt updatedAt =
             let
                 ref_ =
                     ProjectRef.projectRef handle_ slug_
@@ -141,11 +169,11 @@ decodeDetails =
             , numFavs = numFavs
             , numWeeklyDownloads = numWeeklyDownloads
             , isFaved = isFaved_
+            , latestVersion = latestVersion
+            , defaultBranch = defaultBranch
+            , createdAt = createdAt
+            , updatedAt = updatedAt
             }
-
-        decodeIsFaved : Decode.Decoder IsFaved
-        decodeIsFaved =
-            Decode.map isFavedFromBool bool
     in
     Decode.succeed makeProjectDetails
         |> requiredAt [ "owner", "handle" ] UserHandle.decode
@@ -156,12 +184,16 @@ decodeDetails =
         |> optional "numFavs" int 0
         |> optional "numWeeklyDownloads" int 0
         |> optional "isFaved" decodeIsFaved Unknown
+        |> required "latestRelease" (nullable Version.decode)
+        |> required "defaultBranch" (nullable BranchRef.decode)
+        |> required "createdAt" DateTime.decode
+        |> required "updatedAt" DateTime.decode
 
 
-decodeSummary : Decode.Decoder ProjectSummary
-decodeSummary =
+decode : Decode.Decoder (Project {})
+decode =
     let
-        makeProjectSummary handle_ slug_ visibility =
+        makeProject handle_ slug_ visibility =
             let
                 ref_ =
                     ProjectRef.projectRef handle_ slug_
@@ -170,7 +202,39 @@ decodeSummary =
             , visibility = visibility
             }
     in
+    Decode.succeed makeProject
+        |> requiredAt [ "owner", "handle" ] UserHandle.decode
+        |> required "slug" ProjectSlug.decode
+        |> required "visibility" decodeVisibility
+
+
+decodeSummary : Decode.Decoder ProjectSummary
+decodeSummary =
+    let
+        makeProjectSummary handle_ slug_ visibility summary tags numFavs numDownloads isFaved_ createdAt updatedAt =
+            let
+                ref_ =
+                    ProjectRef.projectRef handle_ slug_
+            in
+            { ref = ref_
+            , visibility = visibility
+            , summary = summary
+            , tags = Set.fromList tags
+            , numFavs = numFavs
+            , numWeeklyDownloads = numDownloads
+            , isFaved = isFaved_
+            , createdAt = createdAt
+            , updatedAt = updatedAt
+            }
+    in
     Decode.succeed makeProjectSummary
         |> requiredAt [ "owner", "handle" ] UserHandle.decode
         |> required "slug" ProjectSlug.decode
         |> required "visibility" decodeVisibility
+        |> required "summary" (nullable string)
+        |> required "tags" (Decode.list string)
+        |> required "numFavs" int
+        |> optional "numWeeklyDownloads" int 0
+        |> optional "isFaved" decodeIsFaved Unknown
+        |> required "createdAt" DateTime.decode
+        |> required "updatedAt" DateTime.decode

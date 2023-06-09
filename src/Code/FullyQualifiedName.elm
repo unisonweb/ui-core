@@ -12,12 +12,14 @@ module Code.FullyQualifiedName exposing
     , fromString
     , fromUrlList
     , fromUrlString
+    , isRoot
     , isSuffixOf
     , isValidSegmentChar
     , isValidUrlSegmentChar
     , namespace
     , namespaceOf
     , numSegments
+    , root
     , segments
     , snoc
     , stripPrefix
@@ -51,6 +53,11 @@ type FQN
 
 
 -- HELPERS
+
+
+root : FQN
+root =
+    fromList [ "." ]
 
 
 {-| Turn a string, like "base.List.map" into FQN ["base", "List", "map"]
@@ -277,6 +284,16 @@ base.List.map)
 isSuffixOf : FQN -> FQN -> Bool
 isSuffixOf suffixName fqn =
     String.endsWith (toString suffixName) (toString fqn)
+
+
+isRoot : FQN -> Bool
+isRoot (FQN segments_) =
+    case NEL.toList segments_ of
+        [ "." ] ->
+            True
+
+        _ ->
+            False
 
 
 {-| TODO: We should distinquish between FQN, Namespace and SuffixName on a type

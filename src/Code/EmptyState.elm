@@ -5,21 +5,21 @@ import Html.Attributes exposing (class)
 import UI.Button as Button
 import UI.Click exposing (Click)
 import UI.Icon as Icon
-import UI.PlaceholderShape as PlaceholderShape
+import UI.Placeholder as Placeholder
 
 
 viewFauxDefinition : Html msg
 viewFauxDefinition =
     div [ class "code_empty-state_faux-definition" ]
-        [ PlaceholderShape.text
-            |> PlaceholderShape.withSize PlaceholderShape.Large
-            |> PlaceholderShape.withLength PlaceholderShape.Medium
-            |> PlaceholderShape.view
-        , PlaceholderShape.text
-            |> PlaceholderShape.withSize PlaceholderShape.Large
-            |> PlaceholderShape.withLength PlaceholderShape.Large
-            |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
-            |> PlaceholderShape.view
+        [ Placeholder.text
+            |> Placeholder.withSize Placeholder.Large
+            |> Placeholder.withLength Placeholder.Medium
+            |> Placeholder.view
+        , Placeholder.text
+            |> Placeholder.withSize Placeholder.Large
+            |> Placeholder.withLength Placeholder.Large
+            |> Placeholder.withIntensity Placeholder.Subdued
+            |> Placeholder.view
         ]
 
 

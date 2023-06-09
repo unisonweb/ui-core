@@ -26,6 +26,7 @@
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 }
 
 .navigation .nav-item_click-target {
@@ -49,4 +50,8 @@
 .navigation .nav-item:hover {
   color: var(--u-color_c_text-on-navigation-item_hovered);
   background: var(--u-color_c_navigation-item_hovered);
+}
+
+.navigation .nav-item_secondary {
+  line-height: var(--line-height-base);
 }

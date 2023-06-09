@@ -1,0 +1,70 @@
+.placeholder.placeholder_intensity_subdued {
+  opacity: 0.3;
+}
+
+.placeholder.placeholder_intensity_normal {
+  opacity: 0.6;
+}
+
+.placeholder.placeholder_intensity_emphasized {
+  opacity: 1;
+}
+
+/* -- Placeholder.Text ------------------------------------------------ */
+
+.placeholder.placeholder_text {
+  --c-color_placeholder_text: var(--u-color_text_very-subdued);
+  --c-size_placeholder_text_tiny: 0.375rem;
+  --c-size_placeholder_text_small: 0.5rem;
+  --c-size_placeholder_text_medium: 0.5rem;
+  --c-size_placeholder_text_large: 1rem;
+  --c-size_placeholder_text_huge: 0.5rem;
+
+  --c-length_placeholder_text_tiny: 2rem;
+  --c-length_placeholder_text_small: 8rem;
+  --c-length_placeholder_text_medium: 10rem;
+  --c-length_placeholder_text_large: 16rem;
+  --c-length_placeholder_text_huge: 20rem;
+
+  --c-size_placeholder_text: var(--c-size_placeholder_text_medium);
+  --c-length_placeholder_text: var(--c-length_placeholder_text_medium);
+}
+
+.placeholder.placeholder_text .placeholder_shape {
+  border-radius: calc(var(--c-size_placeholder_text) / 2);
+  height: var(--c-size_placeholder_text);
+  width: var(--c-length_placeholder_text);
+  background: var(--c-color_placeholder_text);
+}
+
+.placeholder.placeholder_text.placeholder_size_tiny {
+  --c-size_placeholder_text: var(--c-size_placeholder_text_tiny);
+}
+.placeholder.placeholder_text.placeholder_size_small {
+  --c-size_placeholder_text: var(--c-size_placeholder_text_small);
+}
+.placeholder.placeholder_text.placeholder_size_medium {
+  --c-size_placeholder_text: var(--c-size_placeholder_text_medium);
+}
+.placeholder.placeholder_text.placeholder_size_large {
+  --c-size_placeholder_text: var(--c-size_placeholder_text_large);
+}
+.placeholder.placeholder_text.placeholder_size_huge {
+  --c-size_placeholder_text: var(--c-size_placeholder_text_huge);
+}
+
+.placeholder.placeholder_text.placeholder_length_tiny {
+  --c-length_placeholder_text: var(--c-length_placeholder_text_tiny);
+}
+.placeholder.placeholder_text.placeholder_length_small {
+  --c-length_placeholder_text: var(--c-length_placeholder_text_small);
+}
+.placeholder.placeholder_text.placeholder_length_medium {
+  --c-length_placeholder_text: var(--c-length_placeholder_text_medium);
+}
+.placeholder.placeholder_text.placeholder_length_large {
+  --c-length_placeholder_text: var(--c-length_placeholder_text_large);
+}
+.placeholder.placeholder_text.placeholder_length_huge {
+  --c-length_placeholder_text: var(--c-length_placeholder_text_huge);
+}

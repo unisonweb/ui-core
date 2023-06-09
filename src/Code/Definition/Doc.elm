@@ -656,8 +656,11 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
 
                         Eval source result ->
                             div
-                                [ class "source rich eval" ]
-                                [ UI.codeBlock [] (div [] [ viewSyntax source, div [ class "result" ] [ Icon.view Icon.arrowDown, div [] [ viewSyntax result ] ] ]) ]
+                                [ class "eval" ]
+                                [ div [ class "source rich" ] [ UI.codeBlock [] (viewSyntax source) ]
+                                , div [ class "result" ] [ div [ class "result-indicator" ] [ Icon.view Icon.arrowDown ] ]
+                                , div [ class "source rich" ] [ UI.codeBlock [] (viewSyntax result) ]
+                                ]
 
                         EvalInline source result ->
                             span [ class "source rich eval-inline" ]

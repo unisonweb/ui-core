@@ -350,3 +350,65 @@ descending =
                 in
                 Expect.equal result expected
         ]
+
+
+isANextValid : Test
+isANextValid =
+    describe "Version.isANextValid"
+        [ test "has to be immediately next to be valid" <|
+            \_ ->
+                let
+                    input =
+                        [ Version.isANextValid (version 1 0 0) (version 2 0 0)
+                        , Version.isANextValid (version 1 0 0) (version 1 1 0)
+                        , Version.isANextValid (version 1 0 0) (version 1 0 1)
+                        , Version.isANextValid (version 1 0 0) (version 3 0 0)
+                        , Version.isANextValid (version 1 0 0) (version 1 2 0)
+                        , Version.isANextValid (version 1 0 0) (version 1 0 2)
+                        , Version.isANextValid (version 1 0 0) (version 1 2 1)
+                        , Version.isANextValid (version 1 0 0) (version 0 4 0)
+                        ]
+
+                    expected =
+                        [ True
+                        , True
+                        , True
+                        , False
+                        , False
+                        , False
+                        , False
+                        , False
+                        ]
+                in
+                Expect.equal input expected
+        ]
+
+
+clampToNextValid : Test
+clampToNextValid =
+    describe "Version.clampToNextValid"
+        [ test "has to be immediately next to be valid" <|
+            \_ ->
+                let
+                    input =
+                        [ Version.clampToNextValid (version 1 0 0) (version 2 0 0)
+                        , Version.clampToNextValid (version 1 0 0) (version 1 1 0)
+                        , Version.clampToNextValid (version 1 0 0) (version 1 0 1)
+                        , Version.clampToNextValid (version 1 0 0) (version 1 1 1)
+                        , Version.clampToNextValid (version 1 0 0) (version 3 0 0)
+                        , Version.clampToNextValid (version 1 0 0) (version 2 5 0)
+                        , Version.clampToNextValid (version 1 0 0) (version 1 2 3)
+                        ]
+
+                    expected =
+                        [ version 2 0 0
+                        , version 1 1 0
+                        , version 1 0 1
+                        , version 1 1 0
+                        , version 2 0 0
+                        , version 2 0 0
+                        , version 1 1 0
+                        ]
+                in
+                Expect.equal input expected
+        ]

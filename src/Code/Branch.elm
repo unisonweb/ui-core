@@ -19,7 +19,7 @@ type alias Branch b p =
 
 
 type alias BranchSummary =
-    Branch {} { visibility : Project.ProjectVisibility }
+    Branch {} {}
 
 
 decodeSummary : Decode.Decoder BranchSummary
@@ -35,7 +35,7 @@ decodeSummary =
     in
     Decode.succeed makeBranch
         |> required "branchRef" BranchRef.decode
-        |> required "project" Project.decodeSummary
+        |> required "project" Project.decode
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
         |> required "causalHash" Hash.decode

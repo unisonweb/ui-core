@@ -6,10 +6,11 @@
   font-size: var(--font-size-small);
   color: var(--u-color_text_subdued);
   font-family: var(--font-monospace);
-  font-weight: lighter;
 }
 
 .hash .icon {
+  /* Slight alignment hack for being shown next to text */
+  padding-bottom: 1px;
   font-size: var(--font-size-medium);
   color: var(--u-color_icon_subdued);
 }

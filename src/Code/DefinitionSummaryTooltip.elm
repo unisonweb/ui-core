@@ -17,7 +17,7 @@ import Json.Decode as Decode exposing (at, field)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
 import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
-import UI.PlaceholderShape as PlaceholderShape
+import UI.Placeholder as Placeholder
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
@@ -169,11 +169,11 @@ viewSummary summary =
 
         loading =
             Tooltip.rich
-                (PlaceholderShape.text
-                    |> PlaceholderShape.withSize PlaceholderShape.Small
-                    |> PlaceholderShape.withLength PlaceholderShape.Small
-                    |> PlaceholderShape.withIntensity PlaceholderShape.Subdued
-                    |> PlaceholderShape.view
+                (Placeholder.text
+                    |> Placeholder.withSize Placeholder.Small
+                    |> Placeholder.withLength Placeholder.Small
+                    |> Placeholder.withIntensity Placeholder.Subdued
+                    |> Placeholder.view
                 )
     in
     case summary of

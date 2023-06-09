@@ -13,17 +13,20 @@ module Code.Project.ProjectRef exposing
     , toUrlPath
     , unsafeFromString
     , view
+    , viewClickable
     , viewHashvatar
+    , view_
     )
 
 import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
 import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, label, span, text)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, title)
 import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Lib.Util as Util
+import UI.Click as Click exposing (Click)
 
 
 type ProjectRef
@@ -101,11 +104,38 @@ viewHashvatar ref =
 
 
 view : ProjectRef -> Html msg
-view (ProjectRef p) =
-    label [ class "project-ref" ]
-        [ span [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ]
+view projectRef_ =
+    view_ Nothing Nothing projectRef_
+
+
+viewClickable : (UserHandle -> Click msg) -> (ProjectRef -> Click msg) -> ProjectRef -> Html msg
+viewClickable handleClick slugClick projectRef_ =
+    view_ (Just handleClick) (Just slugClick) projectRef_
+
+
+view_ : Maybe (UserHandle -> Click msg) -> Maybe (ProjectRef -> Click msg) -> ProjectRef -> Html msg
+view_ handleClick slugClick ((ProjectRef p) as projectRef_) =
+    let
+        handle_ =
+            case handleClick of
+                Just c ->
+                    Click.view [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ] (c p.handle)
+
+                Nothing ->
+                    span [ class "project-ref_handle" ] [ text (UserHandle.toString p.handle) ]
+
+        slug_ =
+            case slugClick of
+                Just c ->
+                    Click.view [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ] (c projectRef_)
+
+                Nothing ->
+                    span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]
+    in
+    label [ class "project-ref", title (toString projectRef_) ]
+        [ handle_
         , span [ class "project-ref_separator" ] [ text "/" ]
-        , span [ class "project-ref_slug" ] [ text (ProjectSlug.toString p.slug) ]
+        , slug_
         ]
 
 

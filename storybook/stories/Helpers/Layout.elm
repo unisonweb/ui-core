@@ -1,9 +1,14 @@
 module Helpers.Layout exposing (..)
 
 import Html exposing (Attribute, Html)
-import Html.Attributes
+import Html.Attributes exposing (class)
 
 
-col : List (Attribute msg) -> List (Html msg) -> Html msg
-col attrs children =
-    Html.div (Html.Attributes.class "col" :: attrs) children
+columns : List (Attribute msg) -> List (Html msg) -> Html msg
+columns attrs children =
+    Html.div (class "columns" :: attrs) children
+
+
+rows : List (Attribute msg) -> List (Html msg) -> Html msg
+rows attrs children =
+    Html.div (class "rows" :: attrs) children

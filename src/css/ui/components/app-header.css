@@ -67,9 +67,11 @@
   /* @color-todo @inverse */
   --color-button-default-text: var(--color-gray-lighten-30);
   --color-button-default-icon: var(--color-gray-lighten-20);
+  --color-button-default-icon-only: var(--color-gray-lighten-30);
   --color-button-default-bg: var(--color-gray-base);
   --color-button-default-hover-text: var(--color-gray-lighten-50);
   --color-button-default-hover-icon: var(--color-gray-lighten-30);
+  --color-button-default-hover-icon-only: var(--color-gray-lighten-50);
   --color-button-default-hover-bg: var(--color-gray-base);
 }
 

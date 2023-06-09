@@ -52,7 +52,8 @@ import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
 import Lib.OperatingSystem as OperatingSystem exposing (OperatingSystem)
 import Lib.ScrollTo as ScrollTo
-import Lib.SearchResults as SearchResults exposing (SearchResults(..))
+import Lib.Search as Search exposing (Search)
+import Lib.SearchResults as SearchResults
 import Lib.Util as Util
 import List.Nonempty as NEL
 import Maybe.Extra as MaybeE
@@ -69,20 +70,12 @@ import UI.Modal as Modal
 -- MODEL
 
 
-type FinderSearch
-    = NotAsked
-    | Searching String (Maybe FinderSearchResults)
-    | Success String FinderSearchResults
-    | Failure String Http.Error
-
-
-type alias FinderSearchResults =
-    SearchResults FinderMatch
+type alias FinderSearch =
+    Search FinderMatch
 
 
 type alias Model =
-    { input : String
-    , search : FinderSearch
+    { search : FinderSearch
     , keyboardShortcut : KeyboardShortcut.Model
     , options : SearchOptions
     }
@@ -90,8 +83,7 @@ type alias Model =
 
 init : Config -> SearchOptions -> ( Model, Cmd Msg )
 init config options =
-    ( { input = ""
-      , search = NotAsked
+    ( { search = Search.empty
       , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
       , options = options
       }
@@ -105,7 +97,7 @@ init config options =
 
 type Msg
     = NoOp
-    | UpdateInput String
+    | UpdateQuery String
     | PerformSearch String
     | ResetOrClose
     | Close
@@ -125,17 +117,14 @@ type OutMsg
 update : Config -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
 update config msg model =
     let
-        debounceDelay =
-            300
-
         exit =
             ( model, Cmd.none, Exit )
 
         reset =
-            ( { model | input = "", search = NotAsked }, focusSearchInput, Remain )
+            ( { model | search = Search.reset model.search }, focusSearchInput, Remain )
 
         resetOrClose =
-            if model.input == "" then
+            if Search.isEmptyQuery model.search then
                 exit
 
             else
@@ -145,31 +134,33 @@ update config msg model =
         NoOp ->
             ( model, Cmd.none, Remain )
 
-        UpdateInput input ->
+        UpdateQuery query ->
             let
-                isSequenceShortcutInput =
-                    String.contains ";" input
+                isSequenceShortcut =
+                    String.contains ";" query
 
                 isShowFinderShortcut =
-                    input == "/"
+                    query == "/"
 
-                isValidInput =
-                    not isSequenceShortcutInput && not isShowFinderShortcut
+                isValidQuery =
+                    not isSequenceShortcut && not isShowFinderShortcut
             in
-            if String.isEmpty input then
-                ( { model | input = input, search = NotAsked }, Cmd.none, Remain )
+            if isValidQuery then
+                let
+                    search =
+                        Search.withQuery query model.search
+                in
+                if Search.queryGreaterThan 1 search then
+                    ( { model | search = search }, Search.debounce (PerformSearch query), Remain )
 
-            else if String.length input > 1 && isValidInput then
-                ( { model | input = input }, Util.delayMsg debounceDelay (PerformSearch input), Remain )
-
-            else if isValidInput then
-                ( { model | input = input }, Cmd.none, Remain )
+                else
+                    ( { model | search = search }, Cmd.none, Remain )
 
             else
                 ( model, Cmd.none, Remain )
 
         PerformSearch query ->
-            if query == model.input then
+            if Search.queryEquals query model.search then
                 let
                     ( search, fetch ) =
                         performSearch config model.options model.search query
@@ -183,17 +174,8 @@ update config msg model =
             exit
 
         FetchMatchesFinished query matches ->
-            let
-                search =
-                    case matches of
-                        Err e ->
-                            Failure query e
-
-                        Ok ms ->
-                            Success query (SearchResults.fromList ms)
-            in
-            if query == model.input then
-                ( { model | search = search }, Cmd.none, Remain )
+            if Search.queryEquals query model.search then
+                ( { model | search = Search.fromResult model.search matches }, Cmd.none, Remain )
 
             else
                 ( model, Cmd.none, Remain )
@@ -205,10 +187,10 @@ update config msg model =
 
                 -- Don't perform search when the query is empty.
                 ( search, cmd ) =
-                    if not (String.isEmpty model.input) then
+                    if not (Search.isEmptyQuery model.search) then
                         let
                             ( search_, fetch ) =
-                                performSearch config options model.search model.input
+                                performSearch config options model.search (Search.query model.search)
                         in
                         ( search_, HttpApi.perform config.api fetch )
 
@@ -247,11 +229,11 @@ update config msg model =
                 Sequence _ ArrowUp ->
                     let
                         newSearch =
-                            finderSearchMap SearchResults.prev model.search
+                            Search.searchResultsPrev model.search
 
                         scrollToCmd =
                             newSearch
-                                |> finderSearchToMaybe
+                                |> Search.searchResults
                                 |> Maybe.andThen SearchResults.focus
                                 |> Maybe.map FinderMatch.reference
                                 |> Maybe.map scrollToMatch
@@ -262,11 +244,11 @@ update config msg model =
                 Sequence _ ArrowDown ->
                     let
                         newSearch =
-                            finderSearchMap SearchResults.next model.search
+                            Search.searchResultsNext model.search
 
                         scrollToCmd =
                             newSearch
-                                |> finderSearchToMaybe
+                                |> Search.searchResults
                                 |> Maybe.andThen SearchResults.focus
                                 |> Maybe.map FinderMatch.reference
                                 |> Maybe.map scrollToMatch
@@ -284,7 +266,7 @@ update config msg model =
 
                         out =
                             case model.search of
-                                Success _ r ->
+                                Search.Success _ r ->
                                     openFocused r
 
                                 _ ->
@@ -298,7 +280,7 @@ update config msg model =
                             let
                                 out =
                                     model.search
-                                        |> finderSearchToMaybe
+                                        |> Search.searchResults
                                         |> Maybe.andThen (SearchResults.getAt (n - 1))
                                         |> Maybe.map FinderMatch.reference
                                         |> Maybe.map OpenDefinition
@@ -322,26 +304,6 @@ update config msg model =
 
 
 -- Helpers
-
-
-finderSearchMap : (FinderSearchResults -> FinderSearchResults) -> FinderSearch -> FinderSearch
-finderSearchMap f finderSearch =
-    case finderSearch of
-        Success q r ->
-            Success q (f r)
-
-        _ ->
-            finderSearch
-
-
-finderSearchToMaybe : FinderSearch -> Maybe FinderSearchResults
-finderSearchToMaybe fs =
-    case fs of
-        Success _ r ->
-            Just r
-
-        _ ->
-            Nothing
 
 
 isShowFinderKeyboardShortcut : OperatingSystem -> KeyboardShortcut -> Bool
@@ -373,15 +335,7 @@ performSearch :
 performSearch { toApiEndpoint, perspective } options search query =
     let
         search_ =
-            case search of
-                Success _ r ->
-                    Searching query (Just r)
-
-                Searching _ (Just r) ->
-                    Searching query (Just r)
-
-                _ ->
-                    Searching query Nothing
+            Search.toSearching search
 
         fetch =
             case options of
@@ -579,21 +533,21 @@ view model =
     let
         viewResults query res =
             case res of
-                Empty ->
+                SearchResults.Empty ->
                     UI.emptyStateMessage ("No matching definitions found for \"" ++ query ++ "\"")
 
-                SearchResults matches ->
+                SearchResults.SearchResults matches ->
                     viewMatches model.keyboardShortcut matches
 
         results =
             case model.search of
-                Success q res ->
+                Search.Success q res ->
                     viewResults q res
 
-                Searching q (Just res) ->
+                Search.Searching q (Just res) ->
                     viewResults q res
 
-                Failure query error ->
+                Search.Failure query error ->
                     div [ class "error" ]
                         [ h3 [ title (Util.httpErrorToString error) ] [ Icon.view Icon.warn, text "Unable to search" ]
                         , p [] [ text ("Something went wrong trying to find \"" ++ query ++ "\"") ]
@@ -604,16 +558,11 @@ view model =
                     UI.nothing
 
         isSearching =
-            case model.search of
-                Searching _ _ ->
-                    True
-
-                _ ->
-                    False
+            Search.isSearching model.search
 
         content =
             Modal.CustomContent
-                (div
+                (Html.node "search"
                     [ classList [ ( "is-searching", isSearching ) ] ]
                     [ SearchOptions.view RemoveWithinOption model.options
                     , header []
@@ -624,8 +573,8 @@ view model =
                             , autocomplete False
                             , spellcheck False
                             , placeholder "Search by name and/or namespace"
-                            , onInput UpdateInput
-                            , value model.input
+                            , onInput UpdateQuery
+                            , value (Search.query model.search)
                             ]
                             []
                         , a [ class "reset", onClick ResetOrClose ] [ Icon.view Icon.x ]

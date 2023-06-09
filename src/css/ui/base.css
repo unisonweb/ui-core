@@ -38,7 +38,7 @@ html {
 
 body {
   font-size: 1rem;
-  line-height: 1.4;
+  line-height: var(--line-height-base);
   background: var(--u-color_background);
   color: var(--u-color_text);
   overflow: overlay; /* helps with transparent scrollbar tracks (technically deprecated property) */

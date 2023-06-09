@@ -1,9 +1,7 @@
 module UI.PageContent exposing
     ( PageContent
-    , PageTitle
     , empty
     , map
-    , mapPageTitle
     , oneColumn
     , threeColumns
     , twoColumns
@@ -11,23 +9,13 @@ module UI.PageContent exposing
     , view_
     , withLeftAside
     , withPageTitle
-    , withPageTitleText
     , withRightAside
     )
 
-import Html exposing (Html, aside, div, h1, header, p, section, text)
+import Html exposing (Html, aside, div, section)
 import Html.Attributes exposing (class, id)
 import UI
-import UI.Button as Button exposing (Button)
-import UI.Icon as Icon exposing (Icon)
-
-
-type alias PageTitle msg =
-    { icon : Maybe (Icon msg)
-    , title : String
-    , description : Maybe String
-    , action : Maybe (Button msg)
-    }
+import UI.PageTitle as PageTitle exposing (PageTitle)
 
 
 type PageAside msg
@@ -99,17 +87,6 @@ withPageTitle pageTitle (PageContent cfg) =
     PageContent { cfg | title = Just pageTitle }
 
 
-withPageTitleText : String -> PageContent msg -> PageContent msg
-withPageTitleText pageTitleText pageContent =
-    withPageTitle
-        { icon = Nothing
-        , title = pageTitleText
-        , description = Nothing
-        , action = Nothing
-        }
-        pageContent
-
-
 withLeftAside : List (Html msg) -> PageContent msg -> PageContent msg
 withLeftAside asideContent (PageContent cfg) =
     PageContent { cfg | aside = LeftAside asideContent }
@@ -127,7 +104,7 @@ withRightAside asideContent (PageContent cfg) =
 map : (a -> msg) -> PageContent a -> PageContent msg
 map toMsg (PageContent pageContentA) =
     PageContent
-        { title = Maybe.map (mapPageTitle toMsg) pageContentA.title
+        { title = Maybe.map (PageTitle.map toMsg) pageContentA.title
         , content = List.map (List.map (Html.map toMsg)) pageContentA.content
         , aside = mapPageAside toMsg pageContentA.aside
         }
@@ -146,56 +123,8 @@ mapPageAside toMsg pageAside =
             RightAside (List.map (Html.map toMsg) content)
 
 
-mapPageTitle : (a -> msg) -> PageTitle a -> PageTitle msg
-mapPageTitle toMsg pageTitleA =
-    { icon = Maybe.map (Icon.map toMsg) pageTitleA.icon
-    , title = pageTitleA.title
-    , description = pageTitleA.description
-    , action = Maybe.map (Button.map toMsg) pageTitleA.action
-    }
-
-
 
 -- VIEW
-
-
-viewPageTitle : PageTitle msg -> Html msg
-viewPageTitle { icon, title, description, action } =
-    let
-        items_ =
-            case ( icon, description ) of
-                ( Nothing, Nothing ) ->
-                    [ h1 [] [ text title ] ]
-
-                ( Nothing, Just d ) ->
-                    [ div [ class "text" ]
-                        [ h1 [] [ text title ]
-                        , p [ class "description" ] [ text d ]
-                        ]
-                    ]
-
-                ( Just i, Nothing ) ->
-                    [ div [ class "icon-badge" ] [ Icon.view i ]
-                    , h1 [] [ text title ]
-                    ]
-
-                ( Just i, Just d ) ->
-                    [ div [ class "icon-badge" ] [ Icon.view i ]
-                    , div [ class "text" ]
-                        [ h1 [] [ text title ]
-                        , p [ class "description" ] [ text d ]
-                        ]
-                    ]
-
-        items =
-            case action of
-                Just b ->
-                    [ div [ class "page-title_with-action" ] [ div [] items_, Button.view b ] ]
-
-                Nothing ->
-                    items_
-    in
-    header [ class "page-title" ] items
 
 
 viewColumn : List (Html msg) -> Html msg
@@ -235,8 +164,8 @@ view_ footer (PageContent p) =
 
         pageContent =
             case p.title of
-                Just h ->
-                    [ viewPageTitle h, inner, footer ]
+                Just t ->
+                    [ PageTitle.view t, inner, footer ]
 
                 Nothing ->
                     [ inner, footer ]

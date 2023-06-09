@@ -1,4 +1,4 @@
-module UI.PlaceholderShape exposing (..)
+module UI.Placeholder exposing (..)
 
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
@@ -7,8 +7,8 @@ import Html.Attributes exposing (class)
 
 {-
 
-   PlaceholderShape
-   ================
+   Placeholder
+   ===========
 
    Various shapes used to indicator real page elements for loading states and
    empty states.
@@ -29,7 +29,7 @@ type Intensity
     | Subdued
 
 
-type PlaceholderShape
+type Placeholder
     = Text { size : Size, length : Size, intensity : Intensity }
 
 
@@ -37,12 +37,12 @@ type PlaceholderShape
 -- CREATE
 
 
-text : PlaceholderShape
+text : Placeholder
 text =
     Text { size = Medium, length = Medium, intensity = Normal }
 
 
-text_ : Size -> Size -> Intensity -> PlaceholderShape
+text_ : Size -> Size -> Intensity -> Placeholder
 text_ size length intensity =
     Text { size = size, length = length, intensity = intensity }
 
@@ -51,57 +51,57 @@ text_ size length intensity =
 -- MODIFY
 
 
-withSize : Size -> PlaceholderShape -> PlaceholderShape
+withSize : Size -> Placeholder -> Placeholder
 withSize size (Text t) =
     Text { t | size = size }
 
 
-withLength : Size -> PlaceholderShape -> PlaceholderShape
+withLength : Size -> Placeholder -> Placeholder
 withLength length (Text t) =
     Text { t | length = length }
 
 
-withIntensity : Intensity -> PlaceholderShape -> PlaceholderShape
+withIntensity : Intensity -> Placeholder -> Placeholder
 withIntensity intensity (Text t) =
     Text { t | intensity = intensity }
 
 
-tiny : PlaceholderShape -> PlaceholderShape
+tiny : Placeholder -> Placeholder
 tiny ps =
     withSize Tiny ps
 
 
-small : PlaceholderShape -> PlaceholderShape
+small : Placeholder -> Placeholder
 small ps =
     withSize Small ps
 
 
-medium : PlaceholderShape -> PlaceholderShape
+medium : Placeholder -> Placeholder
 medium ps =
     withSize Medium ps
 
 
-large : PlaceholderShape -> PlaceholderShape
+large : Placeholder -> Placeholder
 large ps =
     withSize Large ps
 
 
-huge : PlaceholderShape -> PlaceholderShape
+huge : Placeholder -> Placeholder
 huge ps =
     withSize Huge ps
 
 
-emphasized : PlaceholderShape -> PlaceholderShape
+emphasized : Placeholder -> Placeholder
 emphasized ps =
     withIntensity Emphasized ps
 
 
-normal : PlaceholderShape -> PlaceholderShape
+normal : Placeholder -> Placeholder
 normal ps =
     withIntensity Normal ps
 
 
-subdued : PlaceholderShape -> PlaceholderShape
+subdued : Placeholder -> Placeholder
 subdued ps =
     withIntensity Subdued ps
 
@@ -110,25 +110,25 @@ subdued ps =
 -- VIEW
 
 
-view : PlaceholderShape -> Html msg
+view : Placeholder -> Html msg
 view (Text t) =
     let
         sizeClass =
-            "placeholder-shape_size_" ++ sizeToClassName t.size
+            "placeholder_size_" ++ sizeToClassName t.size
 
         lengthClass =
-            "placeholder-shape_length_" ++ sizeToClassName t.length
+            "placeholder_length_" ++ sizeToClassName t.length
 
         intensityClass =
-            "placeholder-shape_intensity_" ++ intensityToClassName t.intensity
+            "placeholder_intensity_" ++ intensityToClassName t.intensity
     in
     div
-        [ class "placeholder-shape placeholder-shape_text"
+        [ class "placeholder placeholder_text"
         , class sizeClass
         , class lengthClass
         , class intensityClass
         ]
-        []
+        [ div [ class "placeholder_shape" ] [] ]
 
 
 sizeToClassName : Size -> String

@@ -124,6 +124,14 @@ slash =
     Parser.symbol "/"
 
 
+{-| Support ending the route "bare": like `/foo`, or with a with a trailing
+slash: `/foo/`.
+-}
+end : Parser ()
+end =
+    Parser.oneOf [ b slash |. Parser.end, b Parser.end ]
+
+
 b : Parser a -> Parser a
 b =
     backtrackable

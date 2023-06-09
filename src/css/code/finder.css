@@ -1,7 +1,7 @@
 #finder {
   --c-spacing_finder_top: 7rem;
   --c-height_finder_search-field: 3rem;
-  --c-width_finder: 50rem;
+  --c-width_finder: min(50rem, calc(100vw - 2rem));
 
   --color-search-field: var(--u-color_element_subdued);
   position: relative;

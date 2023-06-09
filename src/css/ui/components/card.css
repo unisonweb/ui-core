@@ -22,15 +22,17 @@
   border: 1px solid var(--color-card-border);
 }
 
-.card:has(.card-title) {
+/* @todo :has */
+/*.card:has(.card-title) {*/
+.card.has_card-title {
   padding-top: 1rem;
 }
 
 .card .card-title {
   color: var(--color-card-title);
   text-transform: uppercase;
-  font-size: var(--font-size-small);
-  font-weight: normal;
+  font-size: var(--font-size-extra-small);
+  font-weight: bold;
   display: flex;
   align-items: center;
   height: 2rem;

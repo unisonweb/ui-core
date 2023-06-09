@@ -2,16 +2,13 @@ module Code.ProjectListing exposing (..)
 
 import Code.Hashvatar as Hashvatar
 import Code.Project as Project exposing (Project)
-import Code.Project.ProjectRef as ProjectRef
+import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
+import Lib.UserHandle exposing (UserHandle)
 import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
-
-
-
--- TODO: Merge with ProjectRef
 
 
 type ProjectListingSize
@@ -20,9 +17,18 @@ type ProjectListingSize
     | Huge
 
 
+type ProjectListingClick msg
+    = NoClick
+    | ProjectClick (ProjectRef -> Click msg)
+    | ProjectAndHandleClick
+        { handle : UserHandle -> Click msg
+        , ref : ProjectRef -> Click msg
+        }
+
+
 type alias ProjectListing p msg =
     { project : Project p
-    , click : Maybe (Click msg)
+    , click : ProjectListingClick msg
     , size : ProjectListingSize
     , subdued : Bool
     }
@@ -34,16 +40,25 @@ type alias ProjectListing p msg =
 
 projectListing : Project p -> ProjectListing p msg
 projectListing project =
-    { project = project, click = Nothing, size = Medium, subdued = False }
+    { project = project, click = NoClick, size = Medium, subdued = False }
 
 
 
 -- MODIFY
 
 
-withClick : Click msg -> ProjectListing p msg -> ProjectListing p msg
-withClick click p =
-    { p | click = Just click }
+withClick : (UserHandle -> Click msg) -> (ProjectRef -> Click msg) -> ProjectListing p msg -> ProjectListing p msg
+withClick handleClick projectClick p =
+    { p
+        | click =
+            ProjectAndHandleClick
+                { handle = handleClick, ref = projectClick }
+    }
+
+
+withProjectClick : (ProjectRef -> Click msg) -> ProjectListing p msg -> ProjectListing p msg
+withProjectClick click p =
+    { p | click = ProjectClick click }
 
 
 withSize : ProjectListingSize -> ProjectListing p msg -> ProjectListing p msg
@@ -75,10 +90,26 @@ subdued p =
 -- MAP
 
 
+mapClick : (aMsg -> bMsg) -> ProjectListingClick aMsg -> ProjectListingClick bMsg
+mapClick f click =
+    case click of
+        NoClick ->
+            NoClick
+
+        ProjectClick c ->
+            ProjectClick (c >> Click.map f)
+
+        ProjectAndHandleClick c ->
+            ProjectAndHandleClick
+                { handle = c.handle >> Click.map f
+                , ref = c.ref >> Click.map f
+                }
+
+
 map : (aMsg -> bMsg) -> ProjectListing p aMsg -> ProjectListing p bMsg
 map f p =
     { project = p.project
-    , click = Maybe.map (Click.map f) p.click
+    , click = mapClick f p.click
     , size = p.size
     , subdued = p.subdued
     }
@@ -106,18 +137,26 @@ viewSubdued { project, size, click } =
     let
         attrs =
             [ class "project-listing project-listing_subdued", class (sizeClass size) ]
-
-        content =
-            [ Hashvatar.empty
-            , ProjectRef.view project.ref
-            ]
     in
     case click of
-        Just c ->
-            Click.view attrs content c
+        NoClick ->
+            div attrs
+                [ Hashvatar.empty
+                , ProjectRef.view project.ref
+                ]
 
-        Nothing ->
-            div attrs content
+        ProjectClick c ->
+            Click.view attrs
+                [ Hashvatar.empty
+                , ProjectRef.view project.ref
+                ]
+                (c project.ref)
+
+        ProjectAndHandleClick c ->
+            div attrs
+                [ Click.view [] [ Hashvatar.empty ] (c.ref project.ref)
+                , ProjectRef.viewClickable c.handle c.ref project.ref
+                ]
 
 
 view : ProjectListing p msg -> Html msg
@@ -143,16 +182,26 @@ view p =
 
                 _ ->
                     UI.nothing
-
-        content =
-            [ hashvatar
-            , ProjectRef.view p.project.ref
-            , privateIcon
-            ]
     in
     case p.click of
-        Just c ->
-            Click.view attrs content c
+        NoClick ->
+            div attrs
+                [ hashvatar
+                , ProjectRef.view p.project.ref
+                , privateIcon
+                ]
 
-        Nothing ->
-            div attrs content
+        ProjectClick c ->
+            Click.view attrs
+                [ hashvatar
+                , ProjectRef.view p.project.ref
+                , privateIcon
+                ]
+                (c p.project.ref)
+
+        ProjectAndHandleClick c ->
+            div attrs
+                [ Click.view [] [ hashvatar ] (c.ref p.project.ref)
+                , ProjectRef.viewClickable c.handle c.ref p.project.ref
+                , privateIcon
+                ]
