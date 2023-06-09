@@ -1,7 +1,7 @@
 module Stories.UI.StatusBanner exposing (..)
 
 import Browser
-import Helpers.Layout exposing (col)
+import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.StatusBanner as S
 
@@ -28,4 +28,4 @@ elements =
 view : Html msg
 view =
     elements
-        |> col []
+        |> columns []

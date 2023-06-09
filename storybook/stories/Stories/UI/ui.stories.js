@@ -14,7 +14,7 @@ import Modal from "./Modal.elm";
 import Navigation from "./Navigation.elm";
 import PageHeader from "./PageHeader.elm";
 import Tooltip from "./Tooltip.elm";
-import PlaceholderShape from "./PlaceholderShape.elm";
+import Placeholder from "./Placeholder.elm";
 import StatusBanner from "./StatusBanner.elm";
 
 export const banner = () => {
@@ -67,10 +67,6 @@ export const tooltip = () => {
 
 export const placeholder = () => {
   return initElmStory(Placeholder.Elm.Stories.UI.Placeholder);
-};
-
-export const placeholderShape = () => {
-  return initElmStory(PlaceholderShape.Elm.Stories.UI.PlaceholderShape);
 };
 
 export const statusBanner = () => {

@@ -15,7 +15,7 @@ import UI.Click as Click
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key as Key
-import UI.PlaceholderShape as PlaceholderShape
+import UI.Placeholder as Placeholder
 import UI.StatusBanner as StatusBanner
 
 
@@ -119,8 +119,8 @@ viewEntry selectItem keyboardShortcut index ( item, focused ) =
                 Loading _ ->
                     div
                         [ class "workspace-minimap-entry-content" ]
-                        [ PlaceholderShape.text
-                            |> PlaceholderShape.view
+                        [ Placeholder.text
+                            |> Placeholder.view
                         ]
 
                 Failure _ _ ->
