@@ -83,7 +83,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.125rem;
+  gap: 0.25rem;
 }
 
 .page-content .page-title .page-title_default-title .icon-badge {
@@ -113,6 +113,7 @@
   height: 1.5rem;
   align-items: center;
   color: var(--u-color_text_subdued);
+  font-size: var(--font-size-medium);
 }
 
 .page-content .page-title .page-title_custom-title {
