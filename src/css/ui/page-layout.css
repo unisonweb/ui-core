@@ -166,6 +166,12 @@
 }
 
 /* @todo :has */
+.page .page-content .page-title .has_icon {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
 /* .page.centered-layout .page-content .page-title:has(.icon) { */
 .page.centered-layout .page-content .page-title .has_icon {
   margin-left: -0.75rem;
