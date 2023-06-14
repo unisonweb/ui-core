@@ -126,7 +126,7 @@ viewEntry selectItem keyboardShortcut index ( item, focused ) =
                 Failure _ _ ->
                     div
                         [ class "workspace-minimap-entry-content" ]
-                        [ StatusBanner.bad "fetch error" ]
+                        [ StatusBanner.bad "Couldn't fetch definition" ]
 
                 Success _ itemData ->
                     let
