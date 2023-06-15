@@ -558,13 +558,15 @@ view viewMode model =
                 ViewMode.Regular ->
                     let
                         minimap =
-                            if WorkspaceItems.length model.workspaceItems > 1 then
-                                model
-                                    |> toMinimap
-                                    |> WorkspaceMinimap.view
+                            {-
+                               if WorkspaceItems.length model.workspaceItems > 1 then
+                                   model
+                                       |> toMinimap
+                                       |> WorkspaceMinimap.view
 
-                            else
-                                UI.nothing
+                               else
+                            -}
+                            UI.nothing
                     in
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ minimap
