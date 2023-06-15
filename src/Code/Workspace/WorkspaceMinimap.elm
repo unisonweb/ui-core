@@ -11,6 +11,7 @@ import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems,
 import Html exposing (Html, div, h3, header, text)
 import Html.Attributes exposing (class, classList, hidden)
 import Html.Events exposing (onClick)
+import UI.Button as Button
 import UI.Click as Click
 import UI.Icon as Icon
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
@@ -51,15 +52,10 @@ viewCollapsed model =
                     model.workspaceItems
                         |> WorkspaceItems.focusIndex
                         |> Maybe.withDefault 0
-
-                icon =
-                    div
-                        [ class "workspace-minimap-icon" ]
-                        [ Icon.unfoldedMap
-                            |> Icon.view
-                        ]
             in
-            [ icon
+            [ Button.icon model.toggleMinimapMsg Icon.unfoldedMap
+                |> Button.small
+                |> Button.view
             , viewEntry
                 model.selectItemMsg
                 model.keyboardShortcut
@@ -73,10 +69,7 @@ viewCollapsed model =
                 |> Maybe.map viewContent
                 |> Maybe.withDefault []
     in
-    Click.view
-        [ class "workspace-minimap-collapsed" ]
-        content
-        (Click.onClick model.toggleMinimapMsg)
+    div [ class "workspace-minimap-collapsed" ] content
 
 
 viewExpanded : Minimap msg -> Html msg
@@ -85,15 +78,15 @@ viewExpanded model =
         header =
             viewHeader model.toggleMinimapMsg model.closeAllMsg
 
-        section =
+        entries =
             model.workspaceItems
                 |> mapToList Tuple.pair
                 |> List.indexedMap (viewEntry model.selectItemMsg model.keyboardShortcut)
-                |> Html.section []
+                |> div [ class "workspace-minimap_entries" ]
     in
     div
         [ class "workspace-minimap-expanded" ]
-        [ header, section ]
+        [ header, entries ]
 
 
 viewHeader : msg -> msg -> Html msg
