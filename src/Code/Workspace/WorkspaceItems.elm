@@ -71,6 +71,13 @@ isEmpty workspaceItems =
             False
 
 
+length : WorkspaceItems -> Int
+length items =
+    items
+        |> toList
+        |> List.length
+
+
 singleton : WorkspaceItem -> WorkspaceItems
 singleton item =
     WorkspaceItems { before = [], focus = item, after = [] }

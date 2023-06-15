@@ -28,6 +28,7 @@ import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
 import Lib.ScrollTo as ScrollTo
 import Task
+import UI
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
 import UI.KeyboardShortcut.KeyboardEvent as KeyboardEvent exposing (KeyboardEvent)
@@ -555,10 +556,18 @@ view viewMode model =
         WorkspaceItems.WorkspaceItems { focus } ->
             case viewMode of
                 ViewMode.Regular ->
+                    let
+                        minimap =
+                            if WorkspaceItems.length model.workspaceItems > 1 then
+                                model
+                                    |> toMinimap
+                                    |> WorkspaceMinimap.view
+
+                            else
+                                UI.nothing
+                    in
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ model
-                            |> toMinimap
-                            |> WorkspaceMinimap.view
+                        [ minimap
                         , section
                             [ id "workspace-content" ]
                             [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]

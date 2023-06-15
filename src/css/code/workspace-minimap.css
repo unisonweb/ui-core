@@ -115,7 +115,7 @@
 
 /* -- Responsive ----------------------------------------------------------- */
 
-@media only screen and (--u-viewport_min-md) {
+@media only screen and (--u-viewport_min-sm) {
   .workspace-minimap:not(.workspace-minimap_toggled)
     .workspace-minimap_collapsed {
     display: none;
