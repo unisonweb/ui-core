@@ -5,7 +5,6 @@ import WorkspaceItem from "./WorkspaceItem.elm";
 import Workspace from "./Workspace.elm";
 import WorkspaceMinimap from "./WorkspaceMinimap.elm";
 
-
 export const workspace = () => {
   return initElmStory(Workspace.Elm.Stories.Code.Workspace);
 };
