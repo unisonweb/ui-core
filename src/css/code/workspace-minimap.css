@@ -5,9 +5,10 @@
   --c-color_workspace-minimap_item_selected: var(--color-gray-darken-10);
   --c-color_workspace-minimap_text: var(--color-gray-lighten-100);
   --c-color_workspace-minimap_text_subdued: var(--color-gray-lighten-30);
+  --c-color_workspace-minimap_interactive: var(--color-blue-4);
 
   --u-color_text: var(--c-color_workspace-minimap_text);
-  --u-color_interactive: var(--color-blue-4);
+  --u-color_interactive: var(--c-color_workspace-minimap_interactive);
 
   background: var(--c-color_workspace-minimap_background);
   border-radius: var(--border-radius-base);
@@ -51,6 +52,10 @@
   color: var(--c-color_workspace-minimap_text_subdued);
 }
 
+.workspace-minimap-header .workspace-minimap-title:hover {
+  color: var(--c-color_workspace-minimap_interactive);
+}
+
 .workspace-minimap-header .close {
   font-weight: bold;
 }
@@ -83,7 +88,7 @@
 
 .workspace-minimap-entry:not(.focused):hover {
   background: var(--c-color_workspace-minimap_item_hovered);
-  --u-color_text: var(--u-color_interactive);
+  --u-color_text: var(--c-color_workspace-minimap_interactive);
 }
 
 .workspace-minimap-entry .workspace-minimap-entry-content {
