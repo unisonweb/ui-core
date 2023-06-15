@@ -12,7 +12,7 @@
 
   background: var(--c-color_workspace-minimap_background);
   border-radius: var(--border-radius-base);
-  
+
   font-size: var(--font-size-medium);
 }
 
@@ -101,7 +101,7 @@
   gap: 0.375rem;
 }
 
-.workspace-minimap_item .workspace-minimap_item_content  .fully-qualified-name {
+.workspace-minimap_item .workspace-minimap_item_content .fully-qualified-name {
   font-weight: normal;
 }
 
@@ -128,12 +128,14 @@
 }
 
 @media only screen and (--u-viewport_max-sm) {
-  .workspace-minimap:not(.workspace-minimap_toggled) .workspace-minimap_collapsed {
+  .workspace-minimap:not(.workspace-minimap_toggled)
+    .workspace-minimap_collapsed {
     display: flex;
     opacity: 1;
   }
 
-  .workspace-minimap:not(.workspace-minimap_toggled) .workspace-minimap_expanded {
+  .workspace-minimap:not(.workspace-minimap_toggled)
+    .workspace-minimap_expanded {
     display: none;
     opacity: 0;
   }
