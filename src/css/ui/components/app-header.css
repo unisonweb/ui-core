@@ -1,17 +1,17 @@
 /* -- App Header ---------------------------------------------------------- */
 
-/* @color-todo @inverse */
 #app-header.view-mode_regular {
-  --color-app-header-text: var(--color-gray-lighten-100);
-  --color-app-header-bg: var(--color-gray-darken-10);
-  --color-app-header-subtle-text: var(--color-gray-lighten-20);
-  --color-app-header-subtle-text-em: var(--color-gray-lighten-50);
+  --color-app-header-text: var(--u-color_chrome_text);
+  --color-app-header-bg: var(--u-color_chrome_background);
+  --color-app-header-icon: var(--u-color_chrome_icon_subdued);
+  --color-app-header-icon-hovered: var(--u-color_chrome_icon_subdued_hovered);
   --color-app-header-context-unison-share-text: var(--color-purple-4);
   --color-app-header-context-unison-cloud-text: var(--color-blue-3);
   --color-app-header-context-unison-local-text: var(--color-pink-3);
   --color-app-header-border: transparent;
 }
 
+/* @color-todo @inverse */
 #app-header.view-mode_regular .navigation {
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
   --u-color_c_navigation-item: var(--color-transparent);
@@ -23,12 +23,14 @@
 }
 
 /* In Presentation Mode the header gets a light theme treatment and made semi
- * transparent */
+ * transparent 
+ * @color-todo
+ * */
 #app-header.view-mode_presentation {
   --color-app-header-text: var(--u-color_text);
   --color-app-header-bg: var(--u-color_background);
-  --color-app-header-subtle-text: var(--u-color_text_very-subdued);
-  --color-app-header-subtle-text-em: var(--u-color_text_subdued);
+  --color-app-header-icon: var(--u-color_text_very-subdued);
+  --color-app-header-icon-hovered: var(--u-color_text_subdued);
   --color-app-header-context-unison-share-text: var(--color-purple-4);
   --color-app-header-context-unison-cloud-text: var(--color-blue-2);
   --color-app-header-context-unison-local-text: var(--color-pink-3);
@@ -87,11 +89,11 @@
 }
 
 #app-header .menu-toggle .icon {
-  color: var(--color-app-header-subtle-text);
+  color: var(--color-app-header-icon);
   font-size: 1.5rem;
 }
 #app-header .menu-toggle:hover .icon {
-  color: var(--color-app-header-subtle-text-em);
+  color: var(--color-app-header-icon-hovered);
 }
 
 #app-header .app-title {

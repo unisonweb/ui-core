@@ -1,7 +1,19 @@
 :root {
   /*
+   
+  Token format:
 
-  --u-color_[sentiment]_[target]_[emphasis]_[state]
+    --u-color_[level]_[sentiment]_[target]_[emphasis]_[state]
+
+  -----------------------------------------------------------------------------
+
+  chrome
+  ------
+  none, chrome
+
+  Default is `none` which is for content. `chrome` is used for tooltips, app
+  headers, app sidebars, page headers etc. Things that sit "above" the content
+  level.
 
   sentiment
   ---------
@@ -9,11 +21,9 @@
 
   target 
   ------
-  background, text, text-on-[token], icon, icon-on-[token], border, container,
-  element, interactive, focus-border, focus-outline, divider, caret, backdrop,
-  scrollbar, scrollbar-track
-
-  text-on-action vs action-text
+  background, text, text-on-[token], syntax, icon, icon-on-[token], border,
+  container, element, interactive, focus-border, focus-outline, divider, caret,
+  backdrop, scrollbar, scrollbar-track
 
   emphasis
   --------
@@ -23,7 +33,9 @@
   -----
   none, hovered, pressed, selected, disabled
 
-  "none" are left off from the token when applicable.
+  -----------------------------------------------------------------------------
+
+  💡 "none" are left off from the token when applicable.
 
   */
 
@@ -149,6 +161,263 @@
   --u-color_working_icon-on-element: var(--color-purple-2);
   --u-color_working_element_subdued: var(--color-gray-lighten-60);
   --u-color_working_text-on-element_subdued: var(--u-color_text);
+
+  /* Chrome */
+
+  --u-color_chrome_background: var(--color-gray-darken-10);
+  --u-color_chrome_text: var(--color-gray-lighten-100);
+  --u-color_chrome_text_subdued: var(--color-gray-lighten-30);
+  --u-color_chrome_text_subdued_hovered: var(--color-gray-lighten-50);
+  --u-color_chrome_text_very-subdued: var(--color-gray-lighten-20);
+  --u-color_chrome_text_very-subdued_hovered: var(--color-gray-lighten-50);
+
+  --u-color_chrome_icon: var(--color-gray-lighten-30);
+  --u-color_chrome_icon_hovered: var(--color-gray-lighten-60);
+  --u-color_chrome_icon_subdued: var(--color-gray-lighten-20);
+  --u-color_chrome_icon_subdued_hovered: var(--color-gray-lighten-50);
+
+  /*
+  -- app/brand color
+  app header 
+
+  -- background
+  hero
+
+
+  --container
+  page header
+
+  --container
+  sidebar
+
+  -- elements_emphasized
+  tooltip
+  anchored overlay
+  minimap
+
+  What about navigational elements?
+  */
+
+  #app-header.view-mode_regular .navigation {
+    --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
+    --u-color_c_navigation-item: var(--color-transparent);
+    --u-color_c_navigation-item_hovered: var(--color-gray-base);
+    --u-color_c_text-on-navigation-item_hovered: var(--color-gray-lighten-60);
+    --u-color_c_navigation-item: var(--color-transparent);
+    --u-color_c_navigation-item_selected: var(--color-gray-darken-20);
+    --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
+  }
+
+  .anchored-overlay {
+    --u-color_text: var(--color-gray-lighten-100);
+    --u-color_text_subdued: var(--color-gray-lighten-30);
+    --u-color_text_very-subdued: var(--color-gray-lighten-20);
+
+    --c-color_anchored-overlay_sheet_bg: var(--color-gray-darken-30);
+    --c-color_anchored-overlay_sheet_border: var(--color-gray-darken-10);
+    --c-color_anchored-overlay_sheet_text_subdued: var(--u-color_text_subdued);
+    --c-color_anchored-overlay_sheet_text_very-subdued: var(
+      --u-color_text_very-subdued
+    );
+    --c-color_anchored-overlay_sheet_text: var(--u-color_text);
+  }
+
+  .anchored-overlay .form-field {
+    --u-color_caret: var(--color-blue-5);
+
+    --c-color_form-field_text: var(--color-gray-lighten-100);
+    --c-color_form-field_text_subdued: var(--color-gray-lighten-20);
+    --c-color_form-field_border: var(--color-gray-base);
+    --c-color_form-field_border_hovered: var(--u-color_border_hovered);
+    --c-color_form-field_focus-border: var(--u-color_focus-border);
+    --c-color_form-field_focus-outline: var(--u-color_focus-outline);
+    --c-color_form-field_icon_subdued: var(--color-gray-lighten-20);
+    --c-color_form-field_clear: var(--color-gray-lighten-20);
+    --c-color_form-field_clear_hovered: var(--color-gray-lighten-100);
+    --c-color_form-field_background: var(--color-gray-darken-20);
+    --c-color_form-field_background_hovered: var(--color-gray-darken-10);
+  }
+
+  .anchored-overlay .tag {
+    --c-color_tag_bg: var(--color-gray-darken-20);
+    --c-color_tag_text: var(--color-gray-lighten-100);
+    --c-color_tag_text_subdued: var(--color-gray-lighten-20);
+    --c-color_tag_icon: var(--color-gray-lighten-40);
+    --c-color_tag_icon_hovered: var(--color-gray-lighten-100);
+    --c-color_tag_icon_subdued: var(--color-gray-lighten-30);
+  }
+
+  .button {
+    --color-button-default-text: var(--color-gray-lighten-30);
+    --color-button-default-icon: var(--color-gray-lighten-20);
+    --color-button-default-icon-only: var(--color-gray-lighten-30);
+    --color-button-default-bg: var(--color-gray-base);
+    --color-button-default-hover-text: var(--color-gray-lighten-50);
+    --color-button-default-hover-icon: var(--color-gray-lighten-30);
+    --color-button-default-hover-icon-only: var(--color-gray-lighten-50);
+    --color-button-default-hover-bg: var(--color-gray-base);
+  }
+
+  .tooltip {
+    --color-tooltip-text: var(--color-gray-lighten-60);
+    --color-tooltip-subtle-text: var(--color-gray-lighten-20);
+    --color-tooltip-bg: var(--color-gray-darken-30);
+    --color-tooltip-border: var(--color-gray-darken-30);
+    --color-tooltip-source-bg: var(--color-gray-darken-20);
+    --color-tooltip-source-mg: var(--color-gray-darken-10);
+    --color-tooltip-fold-hover-bg: var(--color-gray-darken-10);
+    --color-tooltip-link: var(--color-blue-3);
+    --color-tooltip-link-active: var(--color-pink-2);
+    --color-tooltip-link-hover: var(--color-pink-3);
+    --color-tooltip-syntax-base: var(--color-gray-lighten-60);
+    --color-tooltip-syntax-subtle: var(--color-gray-lighten-20);
+    --color-tooltip-syntax-subtle-em: var(--color-gray-lighten-30);
+    --color-tooltip-syntax-keyword: var(--color-pink-3);
+    --color-tooltip-syntax-operator: var(--color-gray-lighten-20);
+    --color-tooltip-syntax-term: var(--color-purple-3);
+    --color-tooltip-syntax-term-namespace: var(--color-purple-4);
+    --color-tooltip-syntax-ability: var(--color-pink-2);
+    --color-tooltip-syntax-type: var(--color-blue-2);
+    --color-tooltip-syntax-type-namespace: var(--color-blue-3);
+    --color-tooltip-syntax-constructor: var(--color-blue-2);
+    --color-tooltip-syntax-constructor-namespace: var(--color-blue-3);
+    --color-tooltip-syntax-text: var(--color-green-2);
+    --color-tooltip-syntax-monochrome-base: var(--color-gray-lighten-30);
+    --color-tooltip-syntax-monochrome-em: var(--color-gray-lighten-60);
+    --color-tooltip-syntax-monochrome-subtle: var(--color-gray-lighten-20);
+
+    /* ActionMenu (should probably be moved out of tooltip) */
+    --color-tooltip-item-text: var(--color-gray-lighten-60);
+    --color-tooltip-item-subtle-text: var(--color-gray-lighten-20);
+    --color-tooltip-item-bg: var(--color-transparent);
+    --color-tooltip-item-hover-text: var(--color-gray-lighten-60);
+    --color-tooltip-item-hover-subtle-text: var(--color-gray-lighten-30);
+    --color-tooltip-item-hover-bg: var(--color-gray-darken-10);
+    --u-color_interactive: var(--color-blue-2);
+    --u-color_interactive_hovered: var(--color-blue-3);
+
+    --color-doc-link: var(--color-tooltip-link);
+    --color-doc-link-active: var(--color-tooltip-link-active);
+    --color-doc-link-hover: var(--color-tooltip-link-hover);
+    --color-doc-source-bg: var(--color-tooltip-source-bg);
+
+    --color-syntax-base: var(--color-tooltip-syntax-base);
+    --color-syntax-subtle: var(--color-tooltip-syntax-subtle);
+    --color-syntax-subtle-em: var(--color-tooltip-syntax-subtle-em);
+    --color-syntax-keyword: var(--color-tooltip-syntax-keyword);
+    --color-syntax-operator: var(--color-tooltip-syntax-operator);
+    --color-syntax-term: var(--color-tooltip-syntax-term);
+    --color-syntax-term-namespace: var(--color-tooltip-syntax-term-namespace);
+    --color-syntax-ability: var(--color-tooltip-syntax-ability);
+    --color-syntax-type: var(--color-tooltip-syntax-type);
+    --color-syntax-type-namespace: var(--color-tooltip-syntax-type-namespace);
+    --color-syntax-constructor: var(--color-tooltip-syntax-constructor);
+    --color-syntax-constructor-namespace: var(
+      --color-tooltip-syntax-constructor-namespace
+    );
+    --color-syntax-text: var(--color-tooltip-syntax-text);
+    --color-syntax-monochrome-base: var(--color-tooltip-syntax-monochrome-base);
+    --color-syntax-monochrome-em: var(--color-tooltip-syntax-monochrome-em);
+    --color-syntax-monochrome-subtle: var(
+      --color-tooltip-syntax-monochrome-subtle
+    );
+  }
+
+  .action-menu {
+    --c-color_action-menu_sheet: var(--color-gray-darken-30);
+    --c-color_action-menu_action-items_text: var(--color-gray-lighten-100);
+    --c-color_action-menu_action-items_text_subdued: var(--color-gray-lighten-20);
+    --c-color_action-menu_action-items_icon: var(--color-gray-lighten-20);
+    --c-color_action-menu_action_action-item-option_hover: var(--color-gray-base);
+  }
+
+  .sidebar {
+    --color-sidebar-fg: var(--color-gray-lighten-50);
+    --color-sidebar-fg-em: var(--color-gray-lighten-100);
+    --color-sidebar-bg: var(--color-gray-darken-25);
+    --color-sidebar-bg-transparent: var(--color-gray-darken-20-transparent);
+    --color-sidebar-border: var(--color-gray-base);
+    --color-sidebar-subtle-fg: var(--color-gray-lighten-20);
+    --color-sidebar-subtle-fg-em: var(--color-gray-lighten-30);
+    --color-sidebar-subtle-bg: var(--color-transparent);
+    --color-sidebar-focus-fg: var(--color-gray-lighten-60);
+    --color-sidebar-focus-bg: var(--color-gray-darken-10);
+    --color-sidebar-button-default-text: var(--color-gray-lighten-30);
+    --color-sidebar-button-default-icon: var(--color-gray-lighten-20);
+    --color-sidebar-button-default-icon-only: var(--color-gray-lighten-30);
+    --color-sidebar-button-default-bg: var(--color-gray-base);
+    --color-sidebar-button-default-hover-text: var(--color-gray-lighten-50);
+    --color-sidebar-button-default-hover-icon: var(--color-gray-lighten-30);
+    --color-sidebar-button-default-hover-icon-only: var(--color-gray-lighten-50);
+    --color-sidebar-button-default-hover-bg: var(--color-gray-base);
+    --color-sidebar-divider: var(--color-gray-darken-10);
+
+    --color-sidebar-tooltip-fg: var(--color-gray-lighten-60);
+    --color-sidebar-tooltip-bg: var(--color-gray-darken-10);
+    --color-sidebar-tooltip-border: var(--color-gray-base);
+
+    --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-lighten-30);
+    --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-darken-10);
+    --color-sidebar-keyboard-shortcut-key-border: var(--color-gray-lighten-20);
+    --color-sidebar-keyboard-shortcut-key-shadow: var(--color-gray-base);
+
+    --u-color_text: var(--color-sidebar-fg);
+    --u-color_text_subdued: var(--color-sidebar-subtle-fg);
+    --u-color_interactive: var(--color-blue-2);
+    --u-color_interactive_hovered: var(--color-blue-3);
+
+    --u-color_divider: var(--color-sidebar-divider);
+  }
+
+  .sidebar .tooltip {
+    --color-tooltip-text: var(--color-sidebar-tooltip-fg);
+    --color-tooltip-bg: var(--color-sidebar-tooltip-bg);
+    --color-tooltip-border: var(--color-sidebar-tooltip-border);
+  }
+
+  .sidebar .keyboard-shortcut {
+    --color-keyboard-shortcut-key-text: var(
+      --color-sidebar-keyboard-shortcut-key-text
+    );
+    --color-keyboard-shortcut-key-bg: var(
+      --color-sidebar-keyboard-shortcut-key-bg
+    );
+    --color-keyboard-shortcut-key-border: var(
+      --color-sidebar-keyboard-shortcut-key-border
+    );
+    --color-keyboard-shortcut-key-shadow: var(
+      --color-sidebar-keyboard-shortcut-key-shadow
+    );
+  }
+
+  .sidebar .button {
+    --color-button-default-text: var(--color-sidebar-button-default-text);
+    --color-button-default-icon: var(--color-sidebar-button-default-icon);
+    --color-button-default-icon-only: var(
+      --color-sidebar-button-default-icon-only
+    );
+    --color-button-default-bg: var(--color-sidebar-button-default-bg);
+    --color-button-default-hover-text: var(
+      --color-sidebar-button-default-hover-text
+    );
+    --color-button-default-hover-icon: var(
+      --color-sidebar-button-default-hover-icon
+    );
+    --color-button-default-hover-icon-only: var(
+      --color-sidebar-button-default-hover-icon-only
+    );
+    --color-button-default-hover-bg: var(--color-sidebar-button-default-hover-bg);
+  }
+
+  .option-badge {
+    --color-option-badge-text: var(--color-gray-lighten-40);
+    --color-option-badge-subtle-text: var(--color-gray-lighten-20);
+    --color-option-badge-icon: var(--color-gray-lighten-30);
+    --color-option-badge-hover-icon: var(--color-gray-lighten-100);
+    --color-option-badge-bg: var(--color-gray-darken-30);
+    --color-option-badge-border: var(--color-transparent);
+  }
+  /* ----------------------------------------------------------------------- */
 
   /* Syntax */
   --color-syntax-plain: var(--u-color_text);

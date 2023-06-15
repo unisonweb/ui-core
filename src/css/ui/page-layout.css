@@ -49,9 +49,8 @@
 }
 
 .page.hero-layout {
-  /* @color-todo @inverse */
-  --color-page-hero-fg: var(--color-gray-lighten-100);
-  --color-page-hero-bg: var(--color-gray-darken-10);
+  --color-page-hero-fg: var(--u-color_chrome_text);
+  --color-page-hero-bg: var(--u-color_chrome_background);
 
   grid-template-rows: var(--page-hero-height) 1fr;
   grid-template-columns: 1fr;
