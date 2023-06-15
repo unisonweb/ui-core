@@ -1,26 +1,30 @@
 module Stories.Code.Workspace exposing (..)
 
 import Browser
-import Code.DefinitionSummaryTooltip
+import Code.Config exposing (Config)
+import Code.Definition.Reference as Reference
+import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
+import Code.FullyQualifiedName as FQN
+import Code.HashQualified exposing (HashQualified(..))
+import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
-import Code.Workspace exposing (Msg(..))
+import Code.Workspace as Workspace
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
-import Dict exposing (Dict, insert)
-import Helpers.ReferenceHelper exposing (sampleReference)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html)
 import Http
-import Lib.OperatingSystem
-import UI.KeyboardShortcut
+import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
+import Lib.OperatingSystem as OperatingSystem
+import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.ViewMode
 
 
 type alias Model =
-    { workspaceItemDict : Dict Int WorkspaceItem
-    }
+    Workspace.Model
 
 
-main : Program () Model Message
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
@@ -30,37 +34,77 @@ main =
         }
 
 
-init : () -> ( Model, Cmd Message )
+init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { workspaceItemDict = Dict.empty }
+    ( { workspaceItems = WorkspaceItems.empty
+      , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
+      , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+      , isMinimapExpanded = True
+      }
     , Cmd.batch
-        [ getSampleResponse 0 "/increment_term_def.json"
-        , getSampleResponse 1 "/nat_gt_term_def.json"
-        , getSampleResponse 2 "/base_readme.json"
+        [ getSampleResponse 0 "/increment_term_def.json" "increment"
+        , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
+        , getSampleResponse 2 "/base_readme.json" "base_readme"
         ]
     )
 
 
-getSampleResponse : Int -> String -> Cmd Message
-getSampleResponse index url =
+getSampleResponse : Int -> String -> String -> Cmd Msg
+getSampleResponse index url termName =
+    let
+        reference =
+            termName
+                |> FQN.fromString
+                |> NameOnly
+                |> Reference.TypeReference
+
+        decoder =
+            reference
+                |> decodeItem
+    in
     Http.get
         { url = url
-        , expect = Http.expectJson (GotItem index) (decodeItem sampleReference)
+        , expect = Http.expectJson (GotItem index reference) decoder
         }
 
 
-type Message
-    = WorkspaceMsg Msg
-    | GotItem Int (Result Http.Error Item)
+type Msg
+    = WorkspaceMsg Workspace.Msg
+    | GotItem Int Reference.Reference (Result Http.Error Item)
 
 
-update : Message -> Model -> ( Model, Cmd Message )
+codebaseHash : Endpoint
+codebaseHash =
+    GET { path = [ "list" ], queryParams = [] }
+
+
+api : HttpApi.HttpApi
+api =
+    { url = SameOrigin []
+    , headers = []
+    }
+
+
+config : Config
+config =
+    { operatingSystem = OperatingSystem.MacOS
+    , perspective = Perspective.relativeRootPerspective
+    , toApiEndpoint = \_ -> codebaseHash
+    , api = api
+    }
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
-        WorkspaceMsg _ ->
-            ( model, Cmd.none )
+        WorkspaceMsg wMsg ->
+            let
+                ( newModel, cmd, _ ) =
+                    Workspace.update config UI.ViewMode.Regular wMsg model
+            in
+            ( newModel, Cmd.map WorkspaceMsg cmd )
 
-        GotItem index result ->
+        GotItem _ reference result ->
             case result of
                 Err error ->
                     Debug.log (Debug.toString error)
@@ -68,33 +112,20 @@ update message model =
 
                 Ok item ->
                     let
-                        workspaceItem =
-                            fromItem sampleReference item
+                        newWorkspaceItems =
+                            item
+                                |> fromItem reference
+                                |> WorkspaceItems.prependWithFocus model.workspaceItems
 
-                        newDict =
-                            insert index workspaceItem model.workspaceItemDict
+                        newModel =
+                            { model | workspaceItems = newWorkspaceItems }
                     in
-                    ( { model | workspaceItemDict = newDict }, Cmd.none )
+                    ( newModel, Cmd.none )
 
 
-view : Model -> Html Message
+view : Model -> Html Msg
 view model =
-    case Dict.values model.workspaceItemDict of
-        [] ->
-            Html.text "no items"
-
-        x :: xs ->
-            let
-                workspaceItems =
-                    WorkspaceItems.fromItems [] x xs
-
-                workspaceModel =
-                    { workspaceItems = workspaceItems
-                    , keyboardShortcut = UI.KeyboardShortcut.init Lib.OperatingSystem.MacOS -- just a sample
-                    , definitionSummaryTooltip = Code.DefinitionSummaryTooltip.init
-                    }
-            in
-            Code.Workspace.view
-                UI.ViewMode.Regular
-                workspaceModel
-                |> Html.map WorkspaceMsg
+    Workspace.view
+        UI.ViewMode.Regular
+        model
+        |> Html.map WorkspaceMsg

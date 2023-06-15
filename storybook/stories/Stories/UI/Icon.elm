@@ -98,6 +98,7 @@ elements =
     , I.mapPin
     , I.mail
     , I.graduationCap
+    , I.unfoldedMap
     ]
 
 

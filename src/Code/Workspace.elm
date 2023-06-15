@@ -21,7 +21,8 @@ import Code.Hash as Hash
 import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
-import Html exposing (Html, article, div, section)
+import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
+import Html exposing (Html, article, aside, div, section)
 import Html.Attributes exposing (class, id)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
@@ -41,6 +42,7 @@ type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
     , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
+    , isMinimapExpanded : Bool
     }
 
 
@@ -51,6 +53,7 @@ init config mRef =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+            , isMinimapExpanded = True
             }
     in
     case mRef of
@@ -77,6 +80,9 @@ type Msg
     | KeyboardShortcutMsg KeyboardShortcut.Msg
     | WorkspaceItemMsg WorkspaceItem.Msg
     | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
+    | SelectItem WorkspaceItem
+    | CloseAll
+    | ToggleMinimap
 
 
 type OutMsg
@@ -269,6 +275,36 @@ update config viewMode msg ({ workspaceItems } as model) =
                     KeyboardShortcut.update kMsg model.keyboardShortcut
             in
             ( { model | keyboardShortcut = keyboardShortcut }, Cmd.map KeyboardShortcutMsg cmd, None )
+
+        SelectItem item ->
+            let
+                nextWorkspaceItems =
+                    item
+                        |> WorkspaceItem.reference
+                        |> WorkspaceItems.focusOn model.workspaceItems
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , item
+                |> WorkspaceItem.reference
+                |> scrollToDefinition
+            , openDefinitionsFocusToOutMsg nextWorkspaceItems
+            )
+
+        CloseAll ->
+            let
+                nextWorkspaceItems =
+                    WorkspaceItems.empty
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
+            , openDefinitionsFocusToOutMsg nextWorkspaceItems
+            )
+
+        ToggleMinimap ->
+            ( { model | isMinimapExpanded = not model.isMinimapExpanded }
+            , Cmd.none
+            , None
+            )
 
 
 
@@ -520,7 +556,13 @@ view viewMode model =
             case viewMode of
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ section
+                        [ aside
+                            [ class "workspace-minimap" ]
+                            [ model
+                                |> makeMinimapModel
+                                |> WorkspaceMinimap.view
+                            ]
+                        , section
                             [ id "workspace-content" ]
                             [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
                         ]
@@ -541,3 +583,14 @@ viewItem definitionSummaryTooltip viewMode workspaceItem isFocused =
 viewWorkspaceItems : DefinitionSummaryTooltip.Model -> WorkspaceItems -> List (Html Msg)
 viewWorkspaceItems definitionSummaryTooltip =
     WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)
+
+
+makeMinimapModel : Model -> WorkspaceMinimap.Minimap Msg
+makeMinimapModel model =
+    { keyboardShortcut = model.keyboardShortcut
+    , workspaceItems = model.workspaceItems
+    , selectItemMsg = SelectItem
+    , closeAllMsg = CloseAll
+    , isExpanded = model.isMinimapExpanded
+    , toggleMinimapMsg = ToggleMinimap
+    }

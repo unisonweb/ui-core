@@ -332,6 +332,18 @@ isFocused workspaceItems ref =
         |> Maybe.withDefault False
 
 
+focusIndex : WorkspaceItems -> Maybe Int
+focusIndex workspaceItems =
+    case workspaceItems of
+        Empty ->
+            Nothing
+
+        WorkspaceItems items ->
+            items.before
+                |> List.length
+                |> Maybe.Just
+
+
 {-| Moves the focused item up before the previous item, keeps focus |
 -}
 moveUp : WorkspaceItems -> WorkspaceItems
