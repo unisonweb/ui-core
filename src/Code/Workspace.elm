@@ -556,10 +556,11 @@ view viewMode model =
             case viewMode of
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ model
-                            |> toMinimap
-                            |> WorkspaceMinimap.view
-                        , section
+                        [ {- model
+                             |> toMinimap
+                             |> WorkspaceMinimap.view,
+                          -}
+                          section
                             [ id "workspace-content" ]
                             [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
                         ]
