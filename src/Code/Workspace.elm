@@ -42,7 +42,7 @@ type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
     , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
-    , isMinimapExpanded : Bool
+    , isMinimapToggled : Bool
     }
 
 
@@ -53,7 +53,7 @@ init config mRef =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , definitionSummaryTooltip = DefinitionSummaryTooltip.init
-            , isMinimapExpanded = True
+            , isMinimapToggled = False
             }
     in
     case mRef of
@@ -301,7 +301,7 @@ update config viewMode msg ({ workspaceItems } as model) =
             )
 
         ToggleMinimap ->
-            ( { model | isMinimapExpanded = not model.isMinimapExpanded }
+            ( { model | isMinimapToggled = not model.isMinimapToggled }
             , Cmd.none
             , None
             )
@@ -556,12 +556,9 @@ view viewMode model =
             case viewMode of
                 ViewMode.Regular ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ aside
-                            [ class "workspace-minimap" ]
-                            [ model
-                                |> makeMinimapModel
-                                |> WorkspaceMinimap.view
-                            ]
+                        [ model
+                            |> toMinimap
+                            |> WorkspaceMinimap.view
                         , section
                             [ id "workspace-content" ]
                             [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
@@ -585,12 +582,12 @@ viewWorkspaceItems definitionSummaryTooltip =
     WorkspaceItems.mapToList (viewItem definitionSummaryTooltip ViewMode.Regular)
 
 
-makeMinimapModel : Model -> WorkspaceMinimap.Minimap Msg
-makeMinimapModel model =
+toMinimap : Model -> WorkspaceMinimap.Minimap Msg
+toMinimap model =
     { keyboardShortcut = model.keyboardShortcut
     , workspaceItems = model.workspaceItems
     , selectItemMsg = SelectItem
     , closeAllMsg = CloseAll
-    , isExpanded = model.isMinimapExpanded
+    , isToggled = model.isMinimapToggled
     , toggleMinimapMsg = ToggleMinimap
     }

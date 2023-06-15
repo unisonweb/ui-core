@@ -49,7 +49,7 @@ init _ =
                 )
       , selectItemMsg = SelectItem
       , closeAllMsg = CloseAll
-      , isExpanded = True
+      , isToggled = False
       , toggleMinimapMsg = ToggleMinimap
       }
     , Cmd.batch
@@ -115,7 +115,7 @@ update message model =
             )
 
         ToggleMinimap ->
-            ( { model | isExpanded = not model.isExpanded }
+            ( { model | isToggled = not model.isToggled }
             , Cmd.none
             )
 

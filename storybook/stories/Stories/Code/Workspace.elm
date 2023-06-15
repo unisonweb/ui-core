@@ -11,7 +11,6 @@ import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
 import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
-import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
@@ -39,7 +38,7 @@ init _ =
     ( { workspaceItems = WorkspaceItems.empty
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
       , definitionSummaryTooltip = DefinitionSummaryTooltip.init
-      , isMinimapExpanded = True
+      , isMinimapToggled = False
       }
     , Cmd.batch
         [ getSampleResponse 0 "/increment_term_def.json" "increment"

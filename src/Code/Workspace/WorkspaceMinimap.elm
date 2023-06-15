@@ -8,7 +8,7 @@ import Code.Definition.Type as Type exposing (Type(..))
 import Code.FullyQualifiedName as FQN
 import Code.Workspace.WorkspaceItem exposing (Item(..), WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems, focus, mapToList)
-import Html exposing (Html, div, h3, header, text)
+import Html exposing (Html, div, header, text)
 import Html.Attributes exposing (class, classList, hidden)
 import Html.Events exposing (onClick)
 import UI.Button as Button
@@ -25,7 +25,7 @@ type alias Minimap msg =
     , workspaceItems : WorkspaceItems
     , selectItemMsg : WorkspaceItem -> msg
     , closeAllMsg : msg
-    , isExpanded : Bool
+    , isToggled : Bool
     , toggleMinimapMsg : msg
     }
 
@@ -33,12 +33,9 @@ type alias Minimap msg =
 view : Minimap msg -> Html msg
 view model =
     div
-        [ class "workspace-minimap-content" ]
-        [ if model.isExpanded then
-            viewExpanded model
-
-          else
-            viewCollapsed model
+        [ classList [ ( "workspace-minimap", True ), ( "workspace-minimap_toggled", model.isToggled ) ] ]
+        [ viewExpanded model
+        , viewCollapsed model
         ]
 
 
@@ -56,7 +53,7 @@ viewCollapsed model =
             [ Button.icon model.toggleMinimapMsg Icon.unfoldedMap
                 |> Button.small
                 |> Button.view
-            , viewEntry
+            , viewItem
                 model.selectItemMsg
                 model.keyboardShortcut
                 focusIndex
@@ -69,7 +66,7 @@ viewCollapsed model =
                 |> Maybe.map viewContent
                 |> Maybe.withDefault []
     in
-    div [ class "workspace-minimap-collapsed" ] content
+    div [ class "workspace-minimap_collapsed" ] content
 
 
 viewExpanded : Minimap msg -> Html msg
@@ -81,44 +78,44 @@ viewExpanded model =
         entries =
             model.workspaceItems
                 |> mapToList Tuple.pair
-                |> List.indexedMap (viewEntry model.selectItemMsg model.keyboardShortcut)
+                |> List.indexedMap (viewItem model.selectItemMsg model.keyboardShortcut)
                 |> div [ class "workspace-minimap_entries" ]
     in
     div
-        [ class "workspace-minimap-expanded" ]
+        [ class "workspace-minimap_expanded" ]
         [ header, entries ]
 
 
 viewHeader : msg -> msg -> Html msg
 viewHeader toggleMinimapMsg closeAllMsg =
     header
-        [ class "workspace-minimap-header" ]
+        [ class "workspace-minimap_header" ]
         [ Click.view
-            [ class "workspace-minimap-title" ]
+            [ class "workspace-minimap_header_title" ]
             [ text "MAP" ]
             (Click.onClick toggleMinimapMsg)
         , Click.view
-            [ class "close" ]
+            [ class "workspace-minimap_close" ]
             [ text "Close all" ]
             (Click.onClick closeAllMsg)
         ]
 
 
-viewEntry : (WorkspaceItem -> msg) -> KeyboardShortcut.Model -> Int -> ( WorkspaceItem, Bool ) -> Html msg
-viewEntry selectItem keyboardShortcut index ( item, focused ) =
+viewItem : (WorkspaceItem -> msg) -> KeyboardShortcut.Model -> Int -> ( WorkspaceItem, Bool ) -> Html msg
+viewItem selectItem keyboardShortcut index ( item, focused ) =
     let
         content =
             case item of
                 Loading _ ->
                     div
-                        [ class "workspace-minimap-entry-content" ]
+                        [ class "workspace-minimap_item_content" ]
                         [ Placeholder.text
                             |> Placeholder.view
                         ]
 
                 Failure _ _ ->
                     div
-                        [ class "workspace-minimap-entry-content" ]
+                        [ class "workspace-minimap_item_content" ]
                         [ StatusBanner.bad "Couldn't fetch definition" ]
 
                 Success _ itemData ->
@@ -137,36 +134,29 @@ viewEntry selectItem keyboardShortcut index ( item, focused ) =
                                 AbilityConstructorItem (AbilityConstructor _ detail) ->
                                     ( detail.info, Category.Type Type.AbilityType )
                     in
-                    viewEntryContent category info.name
+                    viewItemContent category info.name
     in
     div
-        [ classList
-            [ ( "workspace-minimap-entry", True )
-            , ( "focused", focused )
-            ]
+        [ classList [ ( "workspace-minimap_item", True ), ( "focused", focused ) ]
         , onClick (selectItem item)
         ]
         [ content
         , div
             [ hidden True ]
             -- currently hidden as feature is not supported yet
-            [ viewEntryKeyboardShortcut keyboardShortcut index ]
+            [ viewItemKeyboardShortcut keyboardShortcut index ]
         ]
 
 
-viewEntryContent : Category -> FQN.FQN -> Html msg
-viewEntryContent category name =
+viewItemContent : Category -> FQN.FQN -> Html msg
+viewItemContent category name =
     div
-        [ class "workspace-minimap-entry-content" ]
-        [ div
-            [ class "category-icon" ]
-            [ Icon.view (Category.icon category) ]
-        , h3
-            [ class "name" ]
-            [ FQN.view name ]
+        [ class "workspace-minimap_item_content" ]
+        [ Icon.view (Category.icon category)
+        , FQN.view name
         ]
 
 
-viewEntryKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html msg
-viewEntryKeyboardShortcut model index =
+viewItemKeyboardShortcut : KeyboardShortcut.Model -> Int -> Html msg
+viewItemKeyboardShortcut model index =
     KeyboardShortcut.view model (Chord (Key.fromString "J") (Key.fromString (String.fromInt index)))
