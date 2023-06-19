@@ -113,6 +113,13 @@
   color: var(--u-color_text_subdued);
 }
 
+.workspace-item.zoom-level-far .workspace-item_other-names {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .workspace-item .workspace-item_header .workspace-item_info-item .icon {
   color: var(--u-color_icon_subdued);
 }
@@ -160,4 +167,3 @@
 .workspace-item .definition-doc-columns .icon-column .icon {
   color: var(--u-color_icon_subdued);
 }
-
