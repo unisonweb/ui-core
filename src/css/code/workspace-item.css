@@ -115,7 +115,7 @@
   color: var(--u-color_text_subdued);
 }
 
-.workspace-item.zoom-level-far .workspace-item_other-names {
+.workspace-item .workspace-item_other-names {
   display: flex;
   flex-direction: column;
   align-items: center;
