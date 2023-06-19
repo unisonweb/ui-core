@@ -17,7 +17,6 @@ import Code.Syntax as Syntax
 import Code.Workspace.Zoom as Zoom exposing (Zoom(..))
 import Html exposing (Attribute, Html, a, div, h3, header, label, section, span, strong, text)
 import Html.Attributes exposing (class, classList, id, title)
-import Html.Events exposing (onClick)
 import Http
 import Json.Decode as Decode exposing (field, index)
 import Lib.Util as Util
@@ -27,9 +26,11 @@ import String.Extra exposing (pluralize)
 import UI
 import UI.Button as Button
 import UI.Click as Click
+import UI.Divider as Divider
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon exposing (Icon)
 import UI.Placeholder as Placeholder
+import UI.Tag as Tag
 import UI.Tooltip as Tooltip
 import UI.ViewMode as ViewMode exposing (ViewMode)
 
@@ -299,19 +300,20 @@ itemHash item =
 -- VIEW
 
 
-viewBuiltinBadge : FQN -> Category -> Html msg
-viewBuiltinBadge name_ category =
+viewBuiltinTag : FQN -> Category -> Html msg
+viewBuiltinTag name_ category =
     let
         content =
-            span
-                []
-                [ strong [] [ text (FQN.toString name_) ]
-                , text " is a "
-                , strong [] [ text ("built-in " ++ Category.name category) ]
-                , text " provided by the Unison runtime"
-                ]
+            FQN.toString name_
+                ++ " is a "
+                ++ "built-in "
+                ++ Category.name category
+                ++ " provided by the Unison runtime"
     in
-    UI.badge content
+    content
+        |> Tag.tag
+        |> Tag.withIcon Icon.unisonMark
+        |> Tag.view
 
 
 viewBuiltin : Item -> Maybe (Html msg)
@@ -321,8 +323,8 @@ viewBuiltin item =
             case detail.source of
                 Term.Builtin _ ->
                     Just
-                        (div [ class "built-in" ]
-                            [ viewBuiltinBadge detail.info.name (Category.Term category) ]
+                        (div [ class "workspace-item_built-in" ]
+                            [ viewBuiltinTag detail.info.name (Category.Term category) ]
                         )
 
                 Term.Source _ _ ->
@@ -332,8 +334,8 @@ viewBuiltin item =
             case detail.source of
                 Type.Builtin ->
                     Just
-                        (div [ class "built-in" ]
-                            [ viewBuiltinBadge detail.info.name (Category.Type category) ]
+                        (div [ class "workspace-item_built-in" ]
+                            [ viewBuiltinTag detail.info.name (Category.Type category) ]
                         )
 
                 Type.Source _ ->
@@ -343,8 +345,8 @@ viewBuiltin item =
             case detail.source of
                 Type.Builtin ->
                     Just
-                        (div [ class "built-in" ]
-                            [ viewBuiltinBadge detail.info.name (Category.Type Type.DataType) ]
+                        (div [ class "workspace-item_built-in" ]
+                            [ viewBuiltinTag detail.info.name (Category.Type Type.DataType) ]
                         )
 
                 Type.Source _ ->
@@ -354,17 +356,17 @@ viewBuiltin item =
             case detail.source of
                 Type.Builtin ->
                     Just
-                        (div [ class "built-in" ]
-                            [ viewBuiltinBadge detail.info.name (Category.Type Type.AbilityType) ]
+                        (div [ class "workspace-item_built-in" ]
+                            [ viewBuiltinTag detail.info.name (Category.Type Type.AbilityType) ]
                         )
 
                 Type.Source _ ->
                     Nothing
 
 
-viewInfoItem : Icon msg -> String -> Html msg
-viewInfoItem icon label_ =
-    div [ class "info-item" ] [ Icon.view icon, label [] [ text label_ ] ]
+viewInfoItem : List (Html msg) -> Html msg
+viewInfoItem content =
+    div [ class "workspace-item_info-item" ] content
 
 
 viewInfoItems : Hash -> Info -> Html Msg
@@ -385,7 +387,7 @@ viewInfoItems hash_ info =
                     in
                     Tooltip.tooltip namespaceMenu
                         |> Tooltip.withArrow Tooltip.Start
-                        |> Tooltip.view (viewInfoItem Icon.folderOutlined ns)
+                        |> Tooltip.view (viewInfoItem [ Icon.view Icon.folderOutlined, text ns, Icon.view Icon.caretDown ])
 
                 Nothing ->
                     UI.nothing
@@ -404,20 +406,20 @@ viewInfoItems hash_ info =
                 in
                 Tooltip.tooltip otherNamesTooltipContent
                     |> Tooltip.withArrow Tooltip.Start
-                    |> Tooltip.view (viewInfoItem Icon.tagsOutlined otherNamesLabel)
+                    |> Tooltip.view (viewInfoItem [ Icon.view Icon.tagsOutlined, text otherNamesLabel ])
 
             else
                 UI.nothing
 
         hashInfoItem =
-            hash_ |> Hash.toShortString |> Hash.stripHashPrefix |> viewInfoItem Icon.hash
+            Hash.view hash_
     in
-    div [ class "info-items" ] [ hashInfoItem, namespace, otherNames ]
+    div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace ]
 
 
 viewInfo : Zoom -> Msg -> Hash -> Info -> Category -> Html Msg
 viewInfo zoom onClick_ hash_ info category =
-    div [ class "info" ]
+    div [ class "workspace-item_info" ]
         [ FoldToggle.foldToggle onClick_ |> FoldToggle.isOpen (zoom /= Far) |> FoldToggle.view
         , div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
         , h3 [ class "name" ] [ FQN.view info.name ]
@@ -470,20 +472,11 @@ viewDoc syntaxConfig ref docVisibility docFoldToggles doc =
 
 {-| TODO: Yikes, this isn't great. Needs cleanup
 -}
-viewSource : Zoom -> Msg -> Source.ViewConfig Msg -> Item -> ( Html msg, Html Msg )
+viewSource : Zoom -> Msg -> Source.ViewConfig Msg -> Item -> Html Msg
 viewSource zoom onSourceToggleClick sourceConfig item =
     let
-        viewLineGutter numLines =
-            let
-                lines =
-                    numLines
-                        |> List.range 1
-                        |> List.map (String.fromInt >> text >> List.singleton >> div [])
-            in
-            UI.codeBlock [] (div [] lines)
-
         viewToggableSource foldToggle renderedSource =
-            div [ class "workspace-item_inner-content definition-source" ]
+            div [ class "definition-source" ]
                 [ FoldToggle.view foldToggle, renderedSource ]
 
         isBuiltin_ =
@@ -492,17 +485,13 @@ viewSource zoom onSourceToggleClick sourceConfig item =
     case item of
         TermItem (Term _ _ detail) ->
             let
-                ( numLines, source ) =
+                source =
                     case zoom of
                         Near ->
-                            ( Source.numTermLines detail.source
-                            , Source.viewTermSource sourceConfig detail.info.name detail.source
-                            )
+                            Source.viewTermSource sourceConfig detail.info.name detail.source
 
                         _ ->
-                            ( Source.numTermSignatureLines detail.source
-                            , Source.viewNamedTermSignature sourceConfig detail.info.name (Term.termSignature detail.source)
-                            )
+                            Source.viewNamedTermSignature sourceConfig detail.info.name (Term.termSignature detail.source)
 
                 foldToggle =
                     if isBuiltin_ then
@@ -511,23 +500,22 @@ viewSource zoom onSourceToggleClick sourceConfig item =
                     else
                         FoldToggle.foldToggle onSourceToggleClick |> FoldToggle.isOpen (zoom == Near)
             in
-            ( numLines, source )
-                |> Tuple.mapBoth viewLineGutter (viewToggableSource foldToggle)
+            viewToggableSource foldToggle source
 
         TypeItem (Type _ _ detail) ->
-            ( detail.source, detail.source )
-                |> Tuple.mapBoth Source.numTypeLines (Source.viewTypeSource sourceConfig)
-                |> Tuple.mapBoth viewLineGutter (viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_))
+            detail.source
+                |> Source.viewTypeSource sourceConfig
+                |> viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_)
 
         DataConstructorItem (DataConstructor _ detail) ->
-            ( detail.source, detail.source )
-                |> Tuple.mapBoth Source.numTypeLines (Source.viewTypeSource sourceConfig)
-                |> Tuple.mapBoth viewLineGutter (viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_))
+            detail.source
+                |> Source.viewTypeSource sourceConfig
+                |> viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_)
 
         AbilityConstructorItem (AbilityConstructor _ detail) ->
-            ( detail.source, detail.source )
-                |> Tuple.mapBoth Source.numTypeLines (Source.viewTypeSource sourceConfig)
-                |> Tuple.mapBoth viewLineGutter (viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_))
+            detail.source
+                |> Source.viewTypeSource sourceConfig
+                |> viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_)
 
 
 viewItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Bool -> Html Msg
@@ -545,7 +533,7 @@ viewItem syntaxConfig ref data isFocused =
                     ( "zoom-level-near", UpdateZoom ref Far, UpdateZoom ref Medium )
 
         attrs =
-            [ class zoomClass, classList [ ( "focused", isFocused ) ] ]
+            [ class zoomClass, classList [ ( "workspace-item_is-focused", isFocused ) ] ]
 
         sourceConfig =
             Source.Rich syntaxConfig
@@ -553,18 +541,18 @@ viewItem syntaxConfig ref data isFocused =
         viewDoc_ doc =
             doc
                 |> Maybe.map (viewDoc syntaxConfig ref data.docVisibility data.docFoldToggles)
-                |> Maybe.map (\d -> ( UI.nothing, d ))
-
-        viewBuiltin_ item =
-            viewBuiltin item
-                |> Maybe.map (\b -> ( UI.nothing, b ))
+                |> Maybe.map
+                    (\d ->
+                        [ Divider.divider |> Divider.small |> Divider.withoutMargin |> Divider.view
+                        , d
+                        ]
+                    )
+                |> Maybe.withDefault []
 
         viewContent doc =
-            [ Just (viewSource data.zoom sourceZoomToggle sourceConfig data.item)
-            , viewBuiltin_ data.item
-            , viewDoc_ doc
-            ]
-                |> MaybeE.values
+            viewSource data.zoom sourceZoomToggle sourceConfig data.item
+                :: MaybeE.unwrap [] (\i -> [ i ]) (viewBuiltin data.item)
+                ++ viewDoc_ doc
 
         viewInfo_ hash_ info cat =
             viewInfo data.zoom infoZoomToggle hash_ info cat
@@ -637,23 +625,20 @@ view sourceTooltip viewMode workspaceItem isFocused =
                     viewRow ref
                         attrs
                         []
-                        ( UI.nothing
-                        , Placeholder.text
+                        (Placeholder.text
                             |> Placeholder.withSize Placeholder.Large
                             |> Placeholder.withLength Placeholder.Medium
                             |> Placeholder.view
                         )
-                        [ ( UI.nothing
-                          , Placeholder.text
-                                |> Placeholder.withSize Placeholder.Large
-                                |> Placeholder.withLength Placeholder.Large
-                                |> Placeholder.withIntensity Placeholder.Subdued
-                                |> Placeholder.view
-                          )
+                        [ Placeholder.text
+                            |> Placeholder.withSize Placeholder.Large
+                            |> Placeholder.withLength Placeholder.Large
+                            |> Placeholder.withIntensity Placeholder.Subdued
+                            |> Placeholder.view
                         ]
 
                 ViewMode.Presentation ->
-                    div [ class "loading" ]
+                    div [ class "workspace-item_loading" ]
                         [ Placeholder.text
                             |> Placeholder.withSize Placeholder.Large
                             |> Placeholder.withLength Placeholder.Medium
@@ -669,20 +654,18 @@ view sourceTooltip viewMode workspaceItem isFocused =
             viewClosableRow
                 ref
                 attrs
-                (div [ class "error-header" ]
+                (div [ class "workspace-item_error-header" ]
                     [ Icon.view Icon.warn
                     , Icon.view (Reference.toIcon ref)
                     , h3 [ title (Util.httpErrorToString err) ] [ text (HQ.toString (Reference.hashQualified ref)) ]
                     ]
                 )
-                [ ( UI.nothing
-                  , div
-                        [ class "error" ]
-                        [ text "Unable to load definition: "
-                        , span [ class "definition-with-error" ] [ text (Reference.toHumanString ref) ]
-                        , text " —  please try again."
-                        ]
-                  )
+                [ div
+                    [ class "error" ]
+                    [ text "Unable to load definition: "
+                    , span [ class "definition-with-error" ] [ text (Reference.toHumanString ref) ]
+                    , text " —  please try again."
+                    ]
                 ]
 
         Success ref data ->
@@ -707,38 +690,29 @@ view sourceTooltip viewMode workspaceItem isFocused =
 -- VIEW HELPERS
 
 
-viewGutter : Html msg -> Html msg
-viewGutter content =
-    div [ class "gutter" ] [ content ]
-
-
 viewRow :
     Reference
     -> List (Attribute msg)
     -> List (Html msg)
-    -> ( Html msg, Html msg )
-    -> List ( Html msg, Html msg )
     -> Html msg
-viewRow ref attrs actionsContent ( headerGutter, headerContent ) content =
+    -> List (Html msg)
+    -> Html msg
+viewRow ref attrs actionsContent headerContent content =
     let
-        headerItems =
-            [ viewGutter headerGutter, headerContent ]
-
-        contentRows =
-            List.map (\( g, c ) -> div [ class "inner-row" ] [ viewGutter g, c ]) content
-
         actions =
             if not (List.isEmpty actionsContent) then
                 div [ class "actions" ] actionsContent
 
             else
                 UI.nothing
+
+        headerItems =
+            [ headerContent, actions ]
     in
     div
         (class "workspace-item" :: id ("definition-" ++ Reference.toString ref) :: attrs)
-        [ actions
-        , header [ class "inner-row" ] headerItems
-        , section [ class "content" ] contentRows
+        [ header [ class "workspace-item_header" ] headerItems
+        , section [ class "workspace-item_content" ] content
         ]
 
 
@@ -746,14 +720,17 @@ viewClosableRow :
     Reference
     -> List (Attribute Msg)
     -> Html Msg
-    -> List ( Html Msg, Html Msg )
+    -> List (Html Msg)
     -> Html Msg
-viewClosableRow ref attrs header contentItems =
+viewClosableRow ref attrs header content =
     let
         close =
-            a [ class "close", onClick (Close ref) ] [ Icon.view Icon.x ]
+            Button.icon (Close ref) Icon.x
+                |> Button.subdued
+                |> Button.small
+                |> Button.view
     in
-    viewRow ref attrs [ close ] ( UI.nothing, header ) contentItems
+    viewRow ref attrs [ close ] header content
 
 
 

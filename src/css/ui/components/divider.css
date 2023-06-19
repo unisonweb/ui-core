@@ -3,6 +3,7 @@
   height: 2px;
   border-radius: 1px;
   width: 100%;
+  margin: 0;
 }
 
 .divider.divider_size_small {

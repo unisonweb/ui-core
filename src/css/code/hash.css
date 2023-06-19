@@ -10,7 +10,7 @@
 
 .hash .icon {
   /* Slight alignment hack for being shown next to text */
-  padding-bottom: 1px;
+  margin-bottom: 1px;
   font-size: var(--font-size-medium);
   color: var(--u-color_icon_subdued);
 }

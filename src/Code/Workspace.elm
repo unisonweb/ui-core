@@ -558,28 +558,26 @@ view viewMode model =
                 ViewMode.Regular ->
                     let
                         minimap =
-                            {-
-                               if WorkspaceItems.length model.workspaceItems > 1 then
-                                   model
-                                       |> toMinimap
-                                       |> WorkspaceMinimap.view
+                            if WorkspaceItems.length model.workspaceItems > 1 then
+                                model
+                                    |> toMinimap
+                                    |> WorkspaceMinimap.view
 
-                               else
-                            -}
-                            UI.nothing
+                            else
+                                UI.nothing
                     in
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ minimap
                         , section
                             [ id "workspace-content" ]
-                            [ section [ class "definitions-pane" ] (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems) ]
+                            (viewWorkspaceItems model.definitionSummaryTooltip model.workspaceItems)
                         ]
 
                 ViewMode.Presentation ->
                     article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
                         [ section
                             [ id "workspace-content" ]
-                            [ section [ class "definitions-pane" ] [ viewItem model.definitionSummaryTooltip ViewMode.Presentation focus True ] ]
+                            [ viewItem model.definitionSummaryTooltip ViewMode.Presentation focus True ]
                         ]
 
 
