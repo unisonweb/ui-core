@@ -74,6 +74,14 @@
   line-height: 1;
 }
 
+.workspace-item.zoom-level-far .workspace-item_content {
+  display: none;
+}
+
+.workspace-item.zoom-level-far .workspace-item_header {
+  border-bottom: 0;
+}
+
 .workspace-item .workspace-item_header .category-icon {
   margin-bottom: -1px;
 }

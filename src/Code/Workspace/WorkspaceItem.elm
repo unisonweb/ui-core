@@ -15,7 +15,7 @@ import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
 import Code.Syntax as Syntax
 import Code.Workspace.Zoom as Zoom exposing (Zoom(..))
-import Html exposing (Attribute, Html, a, div, h3, header, label, section, span, strong, text)
+import Html exposing (Attribute, Html, a, div, h3, header, section, span, text)
 import Html.Attributes exposing (class, classList, id, title)
 import Http
 import Json.Decode as Decode exposing (field, index)
@@ -28,7 +28,7 @@ import UI.Button as Button
 import UI.Click as Click
 import UI.Divider as Divider
 import UI.FoldToggle as FoldToggle
-import UI.Icon as Icon exposing (Icon)
+import UI.Icon as Icon
 import UI.Placeholder as Placeholder
 import UI.Tag as Tag
 import UI.Tooltip as Tooltip
@@ -470,8 +470,6 @@ viewDoc syntaxConfig ref docVisibility docFoldToggles doc =
         ]
 
 
-{-| TODO: Yikes, this isn't great. Needs cleanup
--}
 viewSource : Zoom -> Msg -> Source.ViewConfig Msg -> Item -> Html Msg
 viewSource zoom onSourceToggleClick sourceConfig item =
     let
