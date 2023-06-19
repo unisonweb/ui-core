@@ -46,10 +46,12 @@
   --color-workspace-item-source-bg: var(--color-workspace-item-focus-source-bg);
   --color-workspace-item-subtle-fg: var(--color-workspace-item-focus-subtle-fg);
   --c-color_workspace-item_border: var(--color-workspace-item-focus-border);
-  --c-color_workspace-item_header_bg: var(--c-color_workspace-item_focus_header_bg);
+  --c-color_workspace-item_header_bg: var(
+    --c-color_workspace-item_focus_header_bg
+  );
 
-  box-shadow: 0 0 0 1px var(--color-workspace-item-focus-border), 
-              0 0 0 3px var(--color-blue-2-25pct);
+  box-shadow: 0 0 0 1px var(--color-workspace-item-focus-border),
+    0 0 0 3px var(--color-blue-2-25pct);
 }
 
 .workspace-item .workspace-item_header {
@@ -142,7 +144,7 @@
   padding: 0 1rem 1rem 1rem;
 }
 
-.workspace-item .definition-source ,
+.workspace-item .definition-source,
 .workspace-item .definition-doc-columns {
   display: flex;
   flex-direction: row;
