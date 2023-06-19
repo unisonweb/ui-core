@@ -80,6 +80,7 @@
 
 .workspace-item.zoom-level-far .workspace-item_header {
   border-bottom: 0;
+  border-radius: var(--border-radius-base);
 }
 
 .workspace-item .workspace-item_header .category-icon {
