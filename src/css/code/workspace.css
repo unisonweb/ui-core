@@ -59,11 +59,25 @@
   gap: 0.75rem;
 }
 
+
+/* sidebar */
+.page.sidebar-toggled #workspace {
+  padding-top: 1.5rem;
+}
+
 @media only screen and (--u-viewport_max-lg) {
   #workspace-content {
     box-shadow: none;
     height: auto;
     width: auto;
+  }
+
+  #workspace {
+    padding-top: 1.5rem;
+  }
+
+  .page.sidebar-toggled #workspace {
+    padding-top: 0;
   }
 }
 
@@ -73,3 +87,4 @@
   margin: 0.5rem;
   right: 0.5rem;
 }
+
