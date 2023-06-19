@@ -41,6 +41,14 @@ type alias ProjectSummary =
         }
 
 
+{-| TODO: This should maybe include more fields and be more like ProjectSummary
+-}
+type alias ProjectSearchMatch =
+    Project
+        { summary : Maybe String
+        }
+
+
 type alias ProjectDetails =
     Project
         { summary : Maybe String
@@ -238,3 +246,23 @@ decodeSummary =
         |> optional "isFaved" decodeIsFaved Unknown
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
+
+
+decodeSearchMatch : Decode.Decoder ProjectSearchMatch
+decodeSearchMatch =
+    let
+        makeProjectSearchMatch handle_ slug_ visibility summary =
+            let
+                ref_ =
+                    ProjectRef.projectRef handle_ slug_
+            in
+            { ref = ref_
+            , visibility = visibility
+            , summary = summary
+            }
+    in
+    Decode.succeed makeProjectSearchMatch
+        |> requiredAt [ "owner", "handle" ] UserHandle.decode
+        |> required "slug" ProjectSlug.decode
+        |> required "visibility" decodeVisibility
+        |> required "summary" (nullable string)
