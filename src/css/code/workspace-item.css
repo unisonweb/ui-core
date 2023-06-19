@@ -28,21 +28,11 @@
   --color-workspace-item-focus-border: var(--u-color_focus-border);
   --c-color_workspace-item_focus_header_bg: var(--color-gray-lighten-60);
 
-  --c-width_workspace-item_inner-content: min(
-    var(--readable-column-width-medium),
-    calc(100vw - 4rem)
-  );
-
-  --c-width_workspace-item_outer: calc(
-    var(--c-width_page-content_outer, 100vw) - 4rem
-  );
-
   position: relative;
   color: var(--color-workspace-item-fg);
   background: var(--color-workspace-item-bg);
   border: 1px solid var(--c-color_workspace-item_border);
   font-size: var(--font-size-medium);
-  max-width: 100vw;
   border-radius: var(--border-radius-base);
   display: flex;
   gap: 1rem;
@@ -67,7 +57,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0.75rem;
+  padding: 0.75rem;
   border-bottom: 1px solid var(--c-color_workspace-item_header_border);
   background: var(--c-color_workspace-item_header_bg);
   border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
