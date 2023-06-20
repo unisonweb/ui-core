@@ -115,7 +115,7 @@
 
 /* -- Responsive ----------------------------------------------------------- */
 
-@media only screen and (--u-viewport_min-sm) {
+@media only screen and (--u-viewport_min-md) {
   .workspace-minimap:not(.workspace-minimap_toggled)
     .workspace-minimap_collapsed {
     display: none;
@@ -139,7 +139,7 @@
   }
 }
 
-@media only screen and (--u-viewport_max-sm) {
+@media only screen and (--u-viewport_max-md) {
   .workspace-minimap:not(.workspace-minimap_toggled)
     .workspace-minimap_collapsed {
     display: flex;
