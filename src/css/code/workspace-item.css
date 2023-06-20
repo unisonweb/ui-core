@@ -37,6 +37,7 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
+  scroll-padding-top: 1rem;
 }
 
 .workspace-item.workspace-item_is-focused {
