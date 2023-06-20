@@ -156,6 +156,7 @@
   justify-content: flex-start;
   height: 2rem;
   border-radius: var(--border-radius-base);
+  white-space: nowrap;
 }
 
 /* @color-todo @inverse */
