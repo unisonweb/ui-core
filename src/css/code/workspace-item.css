@@ -94,6 +94,7 @@
   border: 1px solid var(--u-color_border_subdued);
 }
 
+.workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
 .workspace-item:hover .workspace-item_header .workspace-item_info .fold-toggle {
   opacity: 1;
 }
@@ -131,6 +132,7 @@
   transition: all 0.2s;
 }
 
+.workspace-item.workspace-item_is-focused .workspace-item_header .actions,
 .workspace-item:hover .workspace-item_header .actions {
   opacity: 1;
 }
