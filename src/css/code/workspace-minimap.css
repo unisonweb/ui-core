@@ -131,8 +131,6 @@
   .workspace-minimap.workspace-minimap_toggled .workspace-minimap_collapsed {
     display: flex;
     opacity: 1;
-    top: -3rem;
-    right: -2.5rem;
   }
 
   .workspace-minimap.workspace-minimap_toggled .workspace-minimap_expanded {
@@ -146,8 +144,6 @@
     .workspace-minimap_collapsed {
     display: flex;
     opacity: 1;
-    top: -3rem;
-    right: -2.5rem;
   }
 
   .workspace-minimap:not(.workspace-minimap_toggled)

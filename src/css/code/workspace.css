@@ -57,6 +57,6 @@
 #workspace .workspace-minimap {
   position: absolute;
   z-index: var(--layer-tooltip);
-  margin-top: -3rem;
+  margin-top: -2.5rem;
   right: 1rem;
 }
