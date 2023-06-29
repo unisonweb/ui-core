@@ -96,8 +96,10 @@
   left: -1.75rem;
   opacity: 0;
   transition: all 0.2s;
-  background: var(--color-gray-lighten-60);
-  border: 1px solid var(--u-color_border_subdued);
+}
+
+.workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover {
+  background: var(--u-color_action);
 }
 
 .workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
