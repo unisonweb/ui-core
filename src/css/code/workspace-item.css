@@ -97,11 +97,16 @@
   width: 2rem;
   height: 2rem;
   opacity: 0;
-  transition: all 0.2s;
+  background: none;
+}
+
+.workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover {
+  background: none;
 }
 
 .workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover .icon {
   color: var(--u-color_interactive);
+  background: none;
 }
 
 .workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
