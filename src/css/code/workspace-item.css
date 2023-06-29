@@ -104,9 +104,14 @@
   background: none;
 }
 
+.workspace-item .workspace-item_header .workspace-item_info .fold-toggle .icon {
+  transition: all 0.2s;
+}
+
 .workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover .icon {
-  color: var(--u-color_interactive);
+  color: var(--u-color_interactive_hovered);
   background: none;
+  transform: scale(1.25);
 }
 
 .workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
