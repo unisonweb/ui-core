@@ -42,7 +42,9 @@
 
 .workspace-item .definition-doc {
   --c-width_doc_outer: var(--readable-column-width-medium);
-  --c-width_doc_inner-content: calc(var(--readable-column-width-medium) - 1.5rem);
+  --c-width_doc_inner-content: calc(
+    var(--readable-column-width-medium) - 1.5rem
+  );
 }
 
 .workspace-item.workspace-item_is-focused {
@@ -57,7 +59,7 @@
   );
 
   box-shadow: 0 0 0 1px var(--color-workspace-item-focus-border),
-    0 0 0 3px var(--color-blue-2-25pct);
+    0 0 0 4px var(--color-blue-2-25pct);
 }
 
 .workspace-item .workspace-item_header {
@@ -99,7 +101,10 @@
   opacity: 0;
 }
 
-.workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
+.workspace-item.workspace-item_is-focused
+  .workspace-item_header
+  .workspace-item_info
+  .fold-toggle,
 .workspace-item:hover .workspace-item_header .workspace-item_info .fold-toggle {
   opacity: 1;
 }
