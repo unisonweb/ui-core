@@ -33,5 +33,5 @@
 
 .fold-toggle:not(.disabled):hover .icon {
   color: var(--color-fold-toggle-hover-icon);
-  transition: scale(1.25);
+  transform: scale(1.25);
 }
