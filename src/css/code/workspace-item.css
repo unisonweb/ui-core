@@ -98,8 +98,8 @@
   transition: all 0.2s;
 }
 
-.workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover {
-  background: var(--u-color_action);
+.workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover .icon {
+  background: var(--u-color_interactive);
 }
 
 .workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
