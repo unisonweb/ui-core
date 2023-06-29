@@ -1,8 +1,6 @@
 .fold-toggle {
-  --color-fold-toggle-icon: var(--u-color_icon-on-action-subdued);
-  --color-fold-toggle-bg: var(--u-color_action_subdued);
-  --color-fold-toggle-hover-icon: var(--u-color_icon-on-action-subdued_hovered);
-  --color-fold-toggle-hover-bg: var(--u-color_action_subdued_hovered);
+  --color-fold-toggle-icon: var(--u-color_icon);
+  --color-fold-toggle-hover-icon: var(--u-color_interactive_hovered);
 
   display: inline-flex;
   align-items: center;
@@ -15,7 +13,6 @@
   border-radius: var(--border-radius-base);
   transition: all 0.2s;
   cursor: pointer;
-  background: var(--color-fold-toggle-bg);
 }
 
 .fold-toggle.disabled {
@@ -26,7 +23,7 @@
 /* ▶ */
 .fold-toggle .icon {
   color: var(--color-fold-toggle-icon);
-  transition: color 0.2s, transform 0.1s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 /* rotate ▶ to ▼ */
@@ -34,10 +31,7 @@
   transform: rotate(90deg);
 }
 
-.fold-toggle:not(.disabled):hover {
-  background: var(--color-fold-toggle-hover-bg);
-}
-
 .fold-toggle:not(.disabled):hover .icon {
   color: var(--color-fold-toggle-hover-icon);
+  transition: scale(1.25);
 }
