@@ -93,13 +93,15 @@
 
 .workspace-item .workspace-item_header .workspace-item_info .fold-toggle {
   position: absolute;
-  left: -1.75rem;
+  left: -2.25rem;
+  width: 2rem;
+  height: 2rem;
   opacity: 0;
   transition: all 0.2s;
 }
 
 .workspace-item .workspace-item_header .workspace-item_info .fold-toggle:hover .icon {
-  background: var(--u-color_interactive);
+  color: var(--u-color_interactive);
 }
 
 .workspace-item.workspace-item_is-focused .workspace-item_header .workspace-item_info .fold-toggle,
