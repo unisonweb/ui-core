@@ -142,8 +142,11 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  overflow-x: clip;
   padding: 0 1rem 1rem 1rem;
+}
+
+.workspace-item .definition-source {
+  overflow-x: auto;
 }
 
 .workspace-item .definition-source,
