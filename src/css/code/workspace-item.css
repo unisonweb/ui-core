@@ -40,6 +40,11 @@
   scroll-margin: 1rem;
 }
 
+.workspace-item .definition-doc {
+  --c-width_doc_outer: var(--readable-column-width-medium);
+  --c-width_doc_inner-content: calc(var(--readable-column-width-medium) - 1.5rem);
+}
+
 .workspace-item.workspace-item_is-focused {
   --color-workspace-item-fg: var(--color-workspace-item-focus-fg);
   --color-workspace-item-bg: var(--color-workspace-item-focus-bg);
