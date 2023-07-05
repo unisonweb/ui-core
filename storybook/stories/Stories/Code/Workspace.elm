@@ -38,6 +38,7 @@ init _ =
     ( { workspaceItems = WorkspaceItems.empty
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
       , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+      , showPerspectiveActionMenu = Nothing
       , isMinimapToggled = False
       }
     , Cmd.batch

@@ -43,6 +43,7 @@ type alias Model =
     { workspaceItems : WorkspaceItems
     , keyboardShortcut : KeyboardShortcut.Model
     , definitionSummaryTooltip : DefinitionSummaryTooltip.Model
+    , showPerspectiveActionMenu : Maybe Reference
     , isMinimapToggled : Bool
     }
 
@@ -54,6 +55,7 @@ init config mRef =
             { workspaceItems = WorkspaceItems.init Nothing
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , definitionSummaryTooltip = DefinitionSummaryTooltip.init
+            , showPerspectiveActionMenu = Nothing
             , isMinimapToggled = False
             }
     in

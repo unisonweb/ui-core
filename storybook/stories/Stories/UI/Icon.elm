@@ -55,9 +55,11 @@ elements =
     , I.warn
     , I.x
     , I.dot
+    , I.boldDot
     , I.largeDot
     , I.dots
     , I.dash
+    , I.boldDash
     , I.github
     , I.twitter
     , I.slack
@@ -73,6 +75,7 @@ elements =
     , I.pencilRuler
     , I.exitDoor
     , I.documentCertificate
+    , I.documentCode
     , I.certificate
     , I.leftSidebarOn
     , I.leftSidebarOff

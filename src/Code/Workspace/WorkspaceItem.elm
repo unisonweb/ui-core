@@ -417,11 +417,10 @@ viewInfoItems hash_ info =
     div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace ]
 
 
-viewInfo : Zoom -> Msg -> Hash -> Info -> Category -> Html Msg
-viewInfo zoom onClick_ hash_ info category =
+viewInfo : Hash -> Info -> Category -> Html Msg
+viewInfo hash_ info category =
     div [ class "workspace-item_info" ]
-        [ FoldToggle.foldToggle onClick_ |> FoldToggle.isOpen (zoom /= Far) |> FoldToggle.view
-        , div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
+        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
         , h3 [ class "name" ] [ FQN.view info.name ]
         , viewInfoItems hash_ info
         ]
@@ -519,7 +518,7 @@ viewSource zoom onSourceToggleClick sourceConfig item =
 viewItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Bool -> Html Msg
 viewItem syntaxConfig ref data isFocused =
     let
-        ( zoomClass, infoZoomToggle, sourceZoomToggle ) =
+        ( zoomClass, rowZoomToggle, sourceZoomToggle ) =
             case data.zoom of
                 Far ->
                     ( "zoom-level-far", UpdateZoom ref Medium, UpdateZoom ref Near )
@@ -553,7 +552,10 @@ viewItem syntaxConfig ref data isFocused =
                 ++ viewDoc_ doc
 
         viewInfo_ hash_ info cat =
-            viewInfo data.zoom infoZoomToggle hash_ info cat
+            viewInfo hash_ info cat
+
+        foldRow =
+            Just { zoom = data.zoom, toggle = rowZoomToggle }
     in
     case data.item of
         TermItem (Term h category detail) ->
@@ -562,6 +564,7 @@ viewItem syntaxConfig ref data isFocused =
                 attrs
                 (viewInfo_ h detail.info (Category.Term category))
                 (viewContent detail.doc)
+                foldRow
 
         TypeItem (Type h category detail) ->
             viewClosableRow
@@ -569,6 +572,7 @@ viewItem syntaxConfig ref data isFocused =
                 attrs
                 (viewInfo_ h detail.info (Category.Type category))
                 (viewContent detail.doc)
+                foldRow
 
         DataConstructorItem (DataConstructor h detail) ->
             viewClosableRow
@@ -576,6 +580,7 @@ viewItem syntaxConfig ref data isFocused =
                 attrs
                 (viewInfo_ h detail.info (Category.Type Type.DataType))
                 (viewContent Nothing)
+                foldRow
 
         AbilityConstructorItem (AbilityConstructor h detail) ->
             viewClosableRow
@@ -583,6 +588,7 @@ viewItem syntaxConfig ref data isFocused =
                 attrs
                 (viewInfo_ h detail.info (Category.Type Type.AbilityType))
                 (viewContent Nothing)
+                foldRow
 
 
 viewPresentationItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Html Msg
@@ -665,6 +671,7 @@ view sourceTooltip viewMode workspaceItem isFocused =
                     , text " —  please try again."
                     ]
                 ]
+                Nothing
 
         Success ref data ->
             let
@@ -719,16 +726,35 @@ viewClosableRow :
     -> List (Attribute Msg)
     -> Html Msg
     -> List (Html Msg)
+    -> Maybe { zoom : Zoom, toggle : Msg }
     -> Html Msg
-viewClosableRow ref attrs header content =
+viewClosableRow ref attrs header content foldRow =
     let
+        foldIcon zoom =
+            if zoom /= Far then
+                Icon.arrowsToLine
+
+            else
+                Icon.arrowsTopBottomToLine
+
+        foldButton fr =
+            Button.icon fr.toggle (foldIcon fr.zoom)
+                |> Button.subdued
+                |> Button.small
+                |> Button.view
+
+        toggleFold =
+            foldRow
+                |> Maybe.map foldButton
+                |> Maybe.withDefault UI.nothing
+
         close =
             Button.icon (Close ref) Icon.x
                 |> Button.subdued
                 |> Button.small
                 |> Button.view
     in
-    viewRow ref attrs [ close ] header content
+    viewRow ref attrs [ toggleFold, close ] header content
 
 
 
