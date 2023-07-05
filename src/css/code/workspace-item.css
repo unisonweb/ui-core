@@ -93,22 +93,6 @@
   align-items: center;
 }
 
-.workspace-item .workspace-item_header .workspace-item_info .fold-toggle {
-  position: absolute;
-  left: -2.25rem;
-  width: 2rem;
-  height: 2rem;
-  opacity: 0;
-}
-
-.workspace-item.workspace-item_is-focused
-  .workspace-item_header
-  .workspace-item_info
-  .fold-toggle,
-.workspace-item:hover .workspace-item_header .workspace-item_info .fold-toggle {
-  opacity: 1;
-}
-
 .workspace-item .workspace-item_header .workspace-item_info-items {
   display: flex;
   flex-direction: row;
@@ -182,10 +166,4 @@
 
 .workspace-item .definition-doc-columns .icon-column .icon {
   color: var(--u-color_icon_subdued);
-}
-
-@media only screen and (--u-viewport_max-lg) {
-  .workspace-item .workspace-item_header .workspace-item_info .fold-toggle {
-    left: -0.75rem;
-  }
 }
