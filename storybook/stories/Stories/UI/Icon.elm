@@ -41,6 +41,8 @@ elements =
     , I.arrowRight
     , I.arrowUp
     , I.arrowLeftUp
+    , I.arrowsToLine
+    , I.arrowsFromLine
     , I.checkmark
     , I.chevronDown
     , I.chevronUp
@@ -96,7 +98,8 @@ elements =
     , I.keyboardKey
     , I.presentation
     , I.presentationSlash
-    , I.box
+    , I.window
+    , I.keyboard
     , I.wireframeGlobe
     , I.mapPin
     , I.mail
