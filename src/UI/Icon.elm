@@ -729,9 +729,9 @@ presentationSlash =
         ]
 
 
-box : Icon msg
-box =
-    Icon "box"
+window : Icon msg
+window =
+    Icon "window"
         []
         [ path [ fill "currentColor", fillRule "evenodd", d "M11 2H7.5V6.5H12V3C12 2.44772 11.5523 2 11 2ZM12 7.5H7.5V12H11C11.5523 12 12 11.5523 12 11V7.5ZM6.5 6.5V2H3C2.44772 2 2 2.44772 2 3V6.5H6.5ZM2 7.5V11C2 11.5523 2.44772 12 3 12H6.5V7.5H2ZM3 1C1.89543 1 1 1.89543 1 3V11C1 12.1046 1.89543 13 3 13H11C12.1046 13 13 12.1046 13 11V3C13 1.89543 12.1046 1 11 1H3Z" ] []
         ]
