@@ -57,6 +57,12 @@
 #workspace .workspace-minimap {
   position: absolute;
   z-index: var(--layer-tooltip);
-  margin-top: -2.5rem;
   right: 1rem;
+  margin-top: -0.5rem;
+}
+
+@media only screen and (--u-viewport_max-lg) {
+  #workspace .workspace-minimap {
+    margin-top: -2.5rem;
+  }
 }
