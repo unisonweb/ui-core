@@ -64,5 +64,6 @@
 @media only screen and (--u-viewport_max-lg) {
   #workspace .workspace-minimap {
     margin-top: -2.5rem;
+    right: 0.5rem;
   }
 }
