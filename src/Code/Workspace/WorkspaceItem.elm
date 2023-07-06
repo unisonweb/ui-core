@@ -735,7 +735,7 @@ viewClosableRow ref attrs header content foldRow =
                 Icon.arrowsToLine
 
             else
-                Icon.arrowsFromLine
+                Icon.arrowsTopBottomToLine
 
         foldButton fr =
             Button.icon fr.toggle (foldIcon fr.zoom)
