@@ -243,9 +243,9 @@ arrowsToLine : Icon msg
 arrowsToLine =
     Icon "arrows-to-line"
         []
-        [ rect [ fill "currentColor", Attrs.x "1", y "6.25", width "12", height "1.5", rx "0.75" ] []
-        , path [ fill "currentColor", fillRule "evenodd", d "M7.75 0.75C7.75 0.335786 7.41422 0 7 0C6.58579 0 6.25 0.335786 6.25 0.75L6.25 3.16422L5.80545 2.71967C5.6648 2.57902 5.47404 2.5 5.27512 2.5C4.60695 2.5 4.27232 3.30786 4.74479 3.78033L7 6.03553L9.2552 3.78033C9.72768 3.30786 9.39305 2.5 8.72487 2.5C8.52596 2.5 8.33519 2.57902 8.19454 2.71967L7.75 3.16421L7.75 0.75Z" ] []
-        , path [ fill "currentColor", fillRule "evenodd", d "M7.74999 10.8358L8.19454 11.2803C8.33519 11.421 8.52596 11.5 8.72487 11.5C9.39305 11.5 9.72768 10.6921 9.2552 10.2197L7 7.96446L4.74479 10.2197C4.27232 10.6921 4.60695 11.5 5.27512 11.5C5.47404 11.5 5.6648 11.421 5.80545 11.2803L6.24999 10.8358L6.24999 13.25C6.24999 13.6642 6.58578 14 6.99999 14C7.41421 14 7.74999 13.6642 7.74999 13.25L7.74999 10.8358Z" ] []
+        [ rect [ fill "currentColor", Attrs.x "1", y "6.5", width "12", height "1", rx "0.5" ] []
+        , path [ fill "currentColor", d "M8.62579 13C9.0125 13 9.25283 12.5798 9.05676 12.2465L7.43097 9.48264C7.23764 9.15399 6.76236 9.15399 6.56903 9.48264L4.94324 12.2465C4.74717 12.5798 4.9875 13 5.37421 13L8.62579 13Z" ] []
+        , path [ fill "currentColor", d "M5.37421 1C4.9875 1 4.74717 1.42019 4.94324 1.75351L6.56903 4.51736C6.76236 4.84601 7.23764 4.84601 7.43097 4.51736L9.05676 1.75351C9.25283 1.42019 9.0125 1 8.62579 1L5.37421 1Z" ] []
         ]
 
 
@@ -253,19 +253,30 @@ arrowsFromLine : Icon msg
 arrowsFromLine =
     Icon "arrows-from-line"
         []
-        [ rect [ fill "currentColor", Attrs.x "1", y "6.25", width "12", height "1.5", rx "0.75" ] []
-        , path [ fill "currentColor", fillRule "evenodd", d "M6.25 5.28554C6.25 5.69975 6.58578 6.03554 7 6.03554C7.41421 6.03554 7.75 5.69975 7.75 5.28554L7.75 2.87132L8.19455 3.31587C8.3352 3.45652 8.52596 3.53554 8.72488 3.53554C9.39305 3.53554 9.72768 2.72768 9.25521 2.25521L7 3.59821e-06L4.7448 2.25521C4.27232 2.72768 4.60695 3.53554 5.27513 3.53554C5.47404 3.53554 5.66481 3.45652 5.80546 3.31587L6.25 2.87133L6.25 5.28554Z" ] []
-        , path [ fill "currentColor", fillRule "evenodd", d "M6.25001 11.1287L5.80546 10.6841C5.66481 10.5435 5.47404 10.4645 5.27513 10.4645C4.60695 10.4645 4.27232 11.2723 4.7448 11.7448L7 14L9.25521 11.7448C9.72768 11.2723 9.39305 10.4645 8.72488 10.4645C8.52596 10.4645 8.3352 10.5435 8.19455 10.6841L7.75001 11.1287L7.75001 8.71446C7.75001 8.30024 7.41422 7.96446 7.00001 7.96446C6.58579 7.96446 6.25001 8.30025 6.25001 8.71446L6.25001 11.1287Z" ] []
+        [ rect [ fill "currentColor", Attrs.x "1", y "6.5", width "12", height "1", rx "0.5" ] []
+        , path [ fill "currentColor", d "M5.37421 8.75C4.9875 8.75 4.74717 9.17019 4.94324 9.50351L6.56903 12.2674C6.76236 12.596 7.23764 12.596 7.43097 12.2674L9.05676 9.50351C9.25283 9.17019 9.0125 8.75 8.62579 8.75H5.37421Z" ] []
+        , path [ fill "currentColor", d "M8.62579 5.25C9.0125 5.25 9.25283 4.82981 9.05676 4.49649L7.43097 1.73264C7.23764 1.40399 6.76236 1.40399 6.56903 1.73264L4.94324 4.49649C4.74717 4.82981 4.9875 5.25 5.37421 5.25L8.62579 5.25Z" ] []
         ]
 
 
-arrowsTopBottomToLine : Icon msg
-arrowsTopBottomToLine =
-    Icon "arrows-top-bottom-to-line"
+keyboard : Icon msg
+keyboard =
+    Icon "keyboard"
         []
-        [ rect [ fill "currentColor", Attrs.x "1", y "12.5", width "12", height "1.5", rx "0.75" ] []
-        , rect [ fill "currentColor", Attrs.x "1", width "12", height "1.5", rx "0.75" ] []
-        , path [ fill "currentColor", fillRule "evenodd", d "M8.19454 5.77586L7.74999 5.33132V6.2421C7.75 6.24324 7.75 6.24439 7.75 6.24554L7.75 8.65975L8.19454 8.21521C8.33519 8.07455 8.52596 7.99554 8.72487 7.99554C9.39305 7.99554 9.72768 8.80339 9.2552 9.27587L7 11.5311L4.74479 9.27587C4.27232 8.80339 4.60695 7.99554 5.27512 7.99554C5.47404 7.99554 5.6648 8.07455 5.80545 8.21521L6.25 8.65975V7.74893C6.25 7.74779 6.24999 7.74666 6.24999 7.74553L6.24999 5.33132L5.80545 5.77586C5.6648 5.91652 5.47404 5.99553 5.27512 5.99553C4.60695 5.99553 4.27232 5.18768 4.74479 4.7152L7 2.46L9.2552 4.7152C9.72768 5.18768 9.39305 5.99553 8.72487 5.99553C8.52596 5.99553 8.33519 5.91652 8.19454 5.77586Z" ] []
+        [ rect [ stroke "currentColor", Attrs.x "0.5", y "2.5", width "13", height "8", rx "1.5" ] []
+        , rect [ fill "currentColor", Attrs.x "2", y "6", width "2", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "5", y "6", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "7", y "6", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "9", y "6", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "11", y "6", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "2", y "8", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "4", y "8", width "5", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "10", y "8", width "2", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "2", y "4", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "4", y "4", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "6", y "4", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "8", y "4", width "1", height "1" ] []
+        , rect [ fill "currentColor", Attrs.x "10", y "4", width "2", height "1" ] []
         ]
 
 
