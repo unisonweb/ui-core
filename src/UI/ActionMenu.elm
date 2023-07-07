@@ -289,9 +289,15 @@ buttonWithIcon icon button =
             button
 
 
-viewSheet : ActionItems msg -> Html msg
-viewSheet (ActionItems items_) =
+viewSheet : Maybe Rem -> ActionItems msg -> Html msg
+viewSheet maxWidth (ActionItems items_) =
     let
+        maxWidthStyle =
+            maxWidth
+                |> Maybe.map (\(Rem mw) -> style "max-width" (String.fromFloat mw ++ "rem"))
+                |> Maybe.map List.singleton
+                |> Maybe.withDefault []
+
         viewItem i =
             case i of
                 Option o ->
@@ -342,7 +348,7 @@ viewSheet (ActionItems items_) =
                 Title t ->
                     div [ class "action-menu_action-item action-menu_action-item-title" ] [ text t ]
     in
-    div [ class "action-menu_sheet" ] (items_ |> Nonempty.toList |> List.map viewItem)
+    div (class "action-menu_sheet" :: maxWidthStyle) (items_ |> Nonempty.toList |> List.map viewItem)
 
 
 view : ActionMenu msg -> Html msg
@@ -354,7 +360,7 @@ view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
                     ( UI.nothing, False )
 
                 Open ->
-                    ( viewSheet actionItems, True )
+                    ( viewSheet maxWidth actionItems, True )
 
         trigger_ =
             case trigger of
@@ -386,19 +392,15 @@ view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
                     Click.view [] [ toHtml isOpen ] (Click.onClick toggleMsg)
 
         attrs =
-            [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
-
-        attrs_ =
-            case maxWidth of
-                Nothing ->
-                    attrs
-
-                Just (Rem mw) ->
-                    attrs ++ [ class "action-menu_with-max-width", style "max-width" (String.fromFloat mw) ]
+            [ classList
+                [ ( "action-menu", True )
+                , ( "action-menu_is-open", isOpen )
+                , ( "action-menu_with-max-width", MaybeE.isJust maxWidth )
+                ]
+            ]
 
         actionMenu_ =
-            div attrs_
-                [ trigger_, Nudge.view nudge, menu ]
+            div attrs [ trigger_, Nudge.view nudge, menu ]
     in
     if isOpen then
         onClickOutside toggleMsg actionMenu_
