@@ -260,20 +260,20 @@ close menu =
 -- VIEW
 
 
-chevron : OpenState -> Icon msg
-chevron state =
+caret : OpenState -> Icon msg
+caret state =
     case state of
         Open ->
-            Icon.chevronUp
+            Icon.caretUp
 
         Closed ->
-            Icon.chevronDown
+            Icon.caretDown
 
 
 viewButton : msg -> String -> Maybe (Icon msg) -> Button.Color -> OpenState -> Button msg
 viewButton toggleMsg label icon color state =
     Button.button toggleMsg label
-        |> Button.withIconAfterLabel (chevron state)
+        |> Button.withIconAfterLabel (caret state)
         |> Button.withColor color
         |> Button.small
         |> buttonWithIcon icon
@@ -373,7 +373,7 @@ view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
                     let
                         b_ =
                             Button.icon toggleMsg icon
-                                |> Button.withIconAfterLabel (chevron state)
+                                |> Button.withIconAfterLabel (caret state)
                                 |> Button.small
                     in
                     if isOpen then
