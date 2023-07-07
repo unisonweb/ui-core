@@ -37,8 +37,7 @@ init : () -> ( Model, Cmd Msg )
 init _ =
     ( { workspaceItems = WorkspaceItems.empty
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
-      , definitionSummaryTooltip = DefinitionSummaryTooltip.init
-      , showPerspectiveActionMenu = Nothing
+      , workspaceItemViewState = Code.Workspace.WorkspaceItem.viewState
       , isMinimapToggled = False
       }
     , Cmd.batch

@@ -28,7 +28,6 @@
   animation: slide-down 0.2s var(--anim-elastic);
   z-index: var(--layer-popover);
   overflow: hidden;
-  max-width: 14rem;
 }
 
 .action-menu .action-menu_action-item {
@@ -81,7 +80,7 @@
   gap: 0.125rem;
 }
 
-.action-menu .action-menu_action-item-option::after {
+.action-menu.action-menu_with-max-width .action-menu_action-item-option::after {
   position: absolute;
   top: 0;
   right: 0;
@@ -95,7 +94,7 @@
   );
   width: 2rem;
 }
-.action-menu .action-menu_action-item-option:hover::after {
+.action-menu.action-menu_with-max-width .action-menu_action-item-option:hover::after {
   background: linear-gradient(
     90deg,
     var(--color-transparent),

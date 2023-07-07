@@ -2,6 +2,7 @@ module UI.ActionMenu exposing
     ( ActionItem
     , ActionItems
     , ActionMenu
+    , Rem(..)
     , Subtext(..)
     , close
     , dividerItem
@@ -18,12 +19,14 @@ module UI.ActionMenu exposing
     , titleItem
     , view
     , withActionItem
+    , withButtonColor
     , withButtonIcon
+    , withMaxWidth
     , withNudge
     )
 
 import Html exposing (Html, div, label, text)
-import Html.Attributes exposing (class, classList)
+import Html.Attributes exposing (class, classList, style)
 import Lib.OnClickOutside exposing (onClickOutside)
 import List.Nonempty as Nonempty exposing (Nonempty(..))
 import Maybe.Extra as MaybeE
@@ -48,6 +51,12 @@ type Subtext
     | DateTimeSubtext DateTimeFormat DateTime
 
 
+{-| TODO: Support everywhere
+-}
+type Rem
+    = Rem Float
+
+
 type alias ActionOption msg =
     { icon : Maybe (Icon msg)
     , label : String
@@ -69,7 +78,7 @@ type ActionItems msg
 
 
 type ActionMenuTrigger msg
-    = ButtonTrigger { icon : Maybe (Icon msg), label : String }
+    = ButtonTrigger { icon : Maybe (Icon msg), label : String, color : Button.Color }
     | IconButtonTrigger (Icon msg)
     | CustomTrigger { toHtml : Bool -> Html msg }
 
@@ -80,6 +89,7 @@ type alias ActionMenu msg =
     , trigger : ActionMenuTrigger msg
     , actionItems : ActionItems msg
     , nudge : Nudge msg
+    , maxWidth : Maybe Rem
     }
 
 
@@ -91,9 +101,10 @@ fromButton : msg -> String -> ActionItems msg -> ActionMenu msg
 fromButton toggleMsg buttonLabel actionItems =
     { toggleMsg = toggleMsg
     , state = Closed
-    , trigger = ButtonTrigger { icon = Nothing, label = buttonLabel }
+    , trigger = ButtonTrigger { icon = Nothing, label = buttonLabel, color = Button.Default }
     , actionItems = actionItems
     , nudge = NoNudge
+    , maxWidth = Nothing
     }
 
 
@@ -104,6 +115,7 @@ fromIconButton toggleMsg icon actionItems =
     , trigger = IconButtonTrigger icon
     , actionItems = actionItems
     , nudge = NoNudge
+    , maxWidth = Nothing
     }
 
 
@@ -114,6 +126,7 @@ fromCustom toggleMsg toHtml actionItems =
     , trigger = CustomTrigger { toHtml = toHtml }
     , actionItems = actionItems
     , nudge = NoNudge
+    , maxWidth = Nothing
     }
 
 
@@ -189,6 +202,20 @@ withButtonIcon icon actionMenu_ =
             actionMenu_
 
 
+withButtonColor : Button.Color -> ActionMenu msg -> ActionMenu msg
+withButtonColor color actionMenu_ =
+    case actionMenu_.trigger of
+        ButtonTrigger b ->
+            let
+                bt =
+                    ButtonTrigger { b | color = color }
+            in
+            { actionMenu_ | trigger = bt }
+
+        _ ->
+            actionMenu_
+
+
 withActionItem : ActionItem msg -> ActionMenu msg -> ActionMenu msg
 withActionItem item_ actionMenu_ =
     let
@@ -203,6 +230,11 @@ withActionItem item_ actionMenu_ =
 withNudge : Nudge msg -> ActionMenu msg -> ActionMenu msg
 withNudge nudge actionMenu_ =
     { actionMenu_ | nudge = nudge }
+
+
+withMaxWidth : Rem -> ActionMenu msg -> ActionMenu msg
+withMaxWidth maxWidth actionMenu_ =
+    { actionMenu_ | maxWidth = Just maxWidth }
 
 
 shouldBeOpen : Bool -> ActionMenu msg -> ActionMenu msg
@@ -238,10 +270,11 @@ chevron state =
             Icon.chevronDown
 
 
-viewButton : msg -> String -> Maybe (Icon msg) -> OpenState -> Button msg
-viewButton toggleMsg label icon state =
+viewButton : msg -> String -> Maybe (Icon msg) -> Button.Color -> OpenState -> Button msg
+viewButton toggleMsg label icon color state =
     Button.button toggleMsg label
         |> Button.withIconAfterLabel (chevron state)
+        |> Button.withColor color
         |> Button.small
         |> buttonWithIcon icon
 
@@ -313,7 +346,7 @@ viewSheet (ActionItems items_) =
 
 
 view : ActionMenu msg -> Html msg
-view { toggleMsg, nudge, state, trigger, actionItems } =
+view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
     let
         ( menu, isOpen ) =
             case state of
@@ -325,10 +358,10 @@ view { toggleMsg, nudge, state, trigger, actionItems } =
 
         trigger_ =
             case trigger of
-                ButtonTrigger { label, icon } ->
+                ButtonTrigger { label, icon, color } ->
                     let
                         b_ =
-                            viewButton toggleMsg label icon state
+                            viewButton toggleMsg label icon color state
                     in
                     if isOpen then
                         b_ |> Button.active |> Button.view
@@ -352,8 +385,19 @@ view { toggleMsg, nudge, state, trigger, actionItems } =
                 CustomTrigger { toHtml } ->
                     Click.view [] [ toHtml isOpen ] (Click.onClick toggleMsg)
 
+        attrs =
+            [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
+
+        attrs_ =
+            case maxWidth of
+                Nothing ->
+                    attrs
+
+                Just (Rem mw) ->
+                    attrs ++ [ class "action-menu_with-max-width", style "max-width" (String.fromFloat mw) ]
+
         actionMenu_ =
-            div [ classList [ ( "action-menu", True ), ( "action-menu_is-open", isOpen ) ] ]
+            div attrs_
                 [ trigger_, Nudge.view nudge, menu ]
     in
     if isOpen then

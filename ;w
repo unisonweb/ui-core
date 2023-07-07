@@ -270,9 +270,8 @@ update config viewMode msg ({ workspaceItems } as model) =
                         workspaceItemViewState =
                             model.workspaceItemViewState
                     in
-                    ( { model
-                        | workspaceItemViewState = WorkspaceItem.toggleNamespaceActionMenu workspaceItemViewState ref
-                      }
+                    ( { model | 
+                      workspaceItemViewState = WorkspaceItem.toggleNamespaceActionMenu workspaceItemViewState ref }
                     , Cmd.none
                     , None
                     )

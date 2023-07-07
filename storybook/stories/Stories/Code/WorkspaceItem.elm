@@ -93,7 +93,7 @@ view model =
 
         Just item ->
             Code.Workspace.WorkspaceItem.view
-                { activeTooltip = Nothing, summaries = Dict.empty }
+                Code.Workspace.WorkspaceItem.viewState
                 UI.ViewMode.Regular
                 item
                 True

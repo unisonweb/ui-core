@@ -1,5 +1,6 @@
 module UI.Button exposing
     ( Button
+    , Color(..)
     , Size(..)
     , active
     , button
@@ -31,6 +32,7 @@ module UI.Button exposing
     , subdued
     , view
     , withClick
+    , withColor
     , withIconAfterLabel
     , withIconBeforeLabel
     , withIconsBeforeAndAfterLabel

@@ -24,6 +24,7 @@ import List.Nonempty as NEL
 import Maybe.Extra as MaybeE
 import String.Extra exposing (pluralize)
 import UI
+import UI.ActionMenu as ActionMenu
 import UI.Button as Button
 import UI.Click as Click
 import UI.Divider as Divider
@@ -77,6 +78,43 @@ type Item
     | AbilityConstructorItem AbilityConstructorDetail
 
 
+type NamespaceActionMenu
+    = NotVisible
+    | Visible Reference
+
+
+type alias WorkspaceItemViewState =
+    { definitionSummaryTooltip : DefinitionSummaryTooltip.Model
+    , namespaceActionMenu : NamespaceActionMenu
+    }
+
+
+viewState : WorkspaceItemViewState
+viewState =
+    { definitionSummaryTooltip = DefinitionSummaryTooltip.init
+    , namespaceActionMenu = NotVisible
+    }
+
+
+toggleNamespaceActionMenu : WorkspaceItemViewState -> Reference -> WorkspaceItemViewState
+toggleNamespaceActionMenu viewState_ ref =
+    let
+        namespaceActionMenu =
+            case viewState_.namespaceActionMenu of
+                Visible _ ->
+                    NotVisible
+
+                NotVisible ->
+                    Visible ref
+    in
+    { viewState_ | namespaceActionMenu = namespaceActionMenu }
+
+
+isNamespaceActionMenuOpen : NamespaceActionMenu -> Reference -> Bool
+isNamespaceActionMenuOpen actionMenu ref =
+    actionMenu == Visible ref
+
+
 {-| WorkspaceItem doesn't manage state itself, but has a limited set of actions
 -}
 type Msg
@@ -88,6 +126,7 @@ type Msg
     | FindWithinNamespace FQN
     | ShowFullDoc Reference
     | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
+    | ToggleNamespaceActionMenu Reference
     | NoOp
 
 
@@ -369,8 +408,8 @@ viewInfoItem content =
     div [ class "workspace-item_info-item" ] content
 
 
-viewInfoItems : Hash -> Info -> Html Msg
-viewInfoItems hash_ info =
+viewInfoItems : NamespaceActionMenu -> Reference -> Hash -> Info -> Html Msg
+viewInfoItems namespaceActionMenu ref hash_ info =
     let
         namespace =
             case info.namespace of
@@ -378,16 +417,15 @@ viewInfoItems hash_ info =
                     let
                         ns =
                             FQN.toString fqn
-
-                        namespaceMenu =
-                            Tooltip.menu
-                                [ ( Icon.browse, "Find within " ++ ns, Click.onClick (FindWithinNamespace fqn) )
-                                , ( Icon.intoFolder, "Change perspective to " ++ ns, Click.onClick (ChangePerspectiveToSubNamespace fqn) )
-                                ]
                     in
-                    Tooltip.tooltip namespaceMenu
-                        |> Tooltip.withArrow Tooltip.Start
-                        |> Tooltip.view (viewInfoItem [ Icon.view Icon.folderOutlined, text ns, Icon.view Icon.caretDown ])
+                    ActionMenu.items
+                        (ActionMenu.optionItem Icon.browse ("Find within " ++ ns) (Click.onClick (FindWithinNamespace fqn)))
+                        [ ActionMenu.optionItem Icon.intoFolder ("Change perspective to " ++ ns) (Click.onClick (ChangePerspectiveToSubNamespace fqn)) ]
+                        |> ActionMenu.fromButton (ToggleNamespaceActionMenu ref) ns
+                        |> ActionMenu.withButtonIcon Icon.folderOutlined
+                        |> ActionMenu.withButtonColor Button.Subdued
+                        |> ActionMenu.shouldBeOpen (isNamespaceActionMenuOpen namespaceActionMenu ref)
+                        |> ActionMenu.view
 
                 Nothing ->
                     UI.nothing
@@ -417,12 +455,12 @@ viewInfoItems hash_ info =
     div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace ]
 
 
-viewInfo : Hash -> Info -> Category -> Html Msg
-viewInfo hash_ info category =
+viewInfo : NamespaceActionMenu -> Reference -> Hash -> Info -> Category -> Html Msg
+viewInfo namespaceActionMenu ref hash_ info category =
     div [ class "workspace-item_info" ]
         [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
         , h3 [ class "name" ] [ FQN.view info.name ]
-        , viewInfoItems hash_ info
+        , viewInfoItems namespaceActionMenu ref hash_ info
         ]
 
 
@@ -515,8 +553,8 @@ viewSource zoom onSourceToggleClick sourceConfig item =
                 |> viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_)
 
 
-viewItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Bool -> Html Msg
-viewItem syntaxConfig ref data isFocused =
+viewItem : Syntax.LinkedWithTooltipConfig Msg -> NamespaceActionMenu -> Reference -> ItemData -> Bool -> Html Msg
+viewItem syntaxConfig namespaceActionMenu ref data isFocused =
     let
         ( zoomClass, rowZoomToggle, sourceZoomToggle ) =
             case data.zoom of
@@ -552,7 +590,7 @@ viewItem syntaxConfig ref data isFocused =
                 ++ viewDoc_ doc
 
         viewInfo_ hash_ info cat =
-            viewInfo hash_ info cat
+            viewInfo namespaceActionMenu ref hash_ info cat
 
         foldRow =
             Just { zoom = data.zoom, toggle = rowZoomToggle }
@@ -614,8 +652,8 @@ viewPresentationItem syntaxConfig ref data =
             UI.nothing
 
 
-view : DefinitionSummaryTooltip.Model -> ViewMode -> WorkspaceItem -> Bool -> Html Msg
-view sourceTooltip viewMode workspaceItem isFocused =
+view : WorkspaceItemViewState -> ViewMode -> WorkspaceItem -> Bool -> Html Msg
+view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem isFocused =
     let
         attrs =
             [ classList [ ( "focused", isFocused && ViewMode.isRegular viewMode ) ]
@@ -680,12 +718,12 @@ view sourceTooltip viewMode workspaceItem isFocused =
                         (OpenReference ref >> Click.onClick)
                         (DefinitionSummaryTooltip.tooltipConfig
                             DefinitionSummaryTooltipMsg
-                            sourceTooltip
+                            definitionSummaryTooltip
                         )
             in
             case viewMode of
                 ViewMode.Regular ->
-                    viewItem linkedWithTooltipConfig ref data isFocused
+                    viewItem linkedWithTooltipConfig namespaceActionMenu ref data isFocused
 
                 ViewMode.Presentation ->
                     viewPresentationItem linkedWithTooltipConfig ref data
