@@ -94,7 +94,8 @@
   );
   width: 2rem;
 }
-.action-menu.action-menu_with-max-width .action-menu_action-item-option:hover::after {
+.action-menu.action-menu_with-max-width
+  .action-menu_action-item-option:hover::after {
   background: linear-gradient(
     90deg,
     var(--color-transparent),
