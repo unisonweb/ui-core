@@ -16,6 +16,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective exposing (PerspectiveParams(..), RootPerspective(..))
+import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Code.Version as Version exposing (Version)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Parser exposing ((|.), (|=), Parser, backtrackable, keyword, succeed)
@@ -120,6 +121,23 @@ branchSlug =
     Parser.chompUntilEndOr "/"
         |> Parser.getChompedString
         |> Parser.map BranchRef.branchSlugFromString
+        |> Parser.andThen parseMaybe
+
+
+projectSlug : Parser ProjectSlug
+projectSlug =
+    let
+        parseMaybe mslug =
+            case mslug of
+                Just s_ ->
+                    Parser.succeed s_
+
+                Nothing ->
+                    Parser.problem "Invalid slug"
+    in
+    Parser.chompUntilEndOr "/"
+        |> Parser.getChompedString
+        |> Parser.map ProjectSlug.fromString
         |> Parser.andThen parseMaybe
 
 
