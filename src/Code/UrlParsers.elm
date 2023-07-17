@@ -10,11 +10,14 @@
 
 module Code.UrlParsers exposing (..)
 
+import Code.BranchRef as BranchRef exposing (BranchRef, BranchSlug)
 import Code.Definition.Reference exposing (Reference(..))
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective exposing (PerspectiveParams(..), RootPerspective(..))
+import Code.Version as Version exposing (Version)
+import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Parser exposing ((|.), (|=), Parser, backtrackable, keyword, succeed)
 
 
@@ -57,6 +60,67 @@ fqn =
 fqnEnd : Parser ()
 fqnEnd =
     Parser.symbol ";"
+
+
+userHandle : Parser UserHandle
+userHandle =
+    let
+        parseMaybe mhandle =
+            case mhandle of
+                Just u ->
+                    Parser.succeed u
+
+                Nothing ->
+                    Parser.problem "Invalid handle"
+    in
+    Parser.chompUntilEndOr "/"
+        |> Parser.getChompedString
+        |> Parser.map UserHandle.fromString
+        |> Parser.andThen parseMaybe
+
+
+version : Parser Version
+version =
+    let
+        parseMaybe mversion =
+            case mversion of
+                Just s_ ->
+                    Parser.succeed s_
+
+                Nothing ->
+                    Parser.problem "Invalid Version"
+    in
+    Parser.chompUntilEndOr "/"
+        |> Parser.getChompedString
+        |> Parser.map Version.fromUrlString
+        |> Parser.andThen parseMaybe
+
+
+branchRef : Parser BranchRef
+branchRef =
+    Parser.oneOf
+        [ b (succeed BranchRef.releaseDraftBranchRef |. s "releases" |. slash |. s "drafts" |. slash |= version)
+        , b (succeed BranchRef.releaseBranchRef |. s "releases" |. slash |= version)
+        , b (succeed BranchRef.contributorBranchRef |= userHandle |. slash |= branchSlug)
+        , b (succeed BranchRef.projectBranchRef |= branchSlug)
+        ]
+
+
+branchSlug : Parser BranchSlug
+branchSlug =
+    let
+        parseMaybe mslug =
+            case mslug of
+                Just s_ ->
+                    Parser.succeed s_
+
+                Nothing ->
+                    Parser.problem "Invalid Slug"
+    in
+    Parser.chompUntilEndOr "/"
+        |> Parser.getChompedString
+        |> Parser.map BranchRef.branchSlugFromString
+        |> Parser.andThen parseMaybe
 
 
 {-| Hash example url segment: "@asd123".

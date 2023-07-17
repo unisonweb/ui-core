@@ -8,10 +8,9 @@ import Json.Decode.Pipeline exposing (required)
 import UI.DateTime as DateTime exposing (DateTime)
 
 
-type alias Branch b p =
+type alias Branch b =
     { b
         | ref : BranchRef
-        , project : Project p
         , createdAt : DateTime
         , updatedAt : DateTime
         , causalHash : Hash
@@ -19,7 +18,7 @@ type alias Branch b p =
 
 
 type alias BranchSummary =
-    Branch {} {}
+    Branch { project : Project {} }
 
 
 decodeSummary : Decode.Decoder BranchSummary
