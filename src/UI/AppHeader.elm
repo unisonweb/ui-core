@@ -48,7 +48,12 @@ withViewMode viewMode appHeader_ =
 
 withMenuToggle : msg -> AppHeader msg -> AppHeader msg
 withMenuToggle menuToggleMsg appHeader_ =
-    { appHeader_ | menuToggle = Just menuToggleMsg }
+    withMenuToggle_ (Just menuToggleMsg) appHeader_
+
+
+withMenuToggle_ : Maybe msg -> AppHeader msg -> AppHeader msg
+withMenuToggle_ menuToggleMsg appHeader_ =
+    { appHeader_ | menuToggle = menuToggleMsg }
 
 
 withLeftSide : List (Html msg) -> AppHeader msg -> AppHeader msg
