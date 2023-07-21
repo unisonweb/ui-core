@@ -1,4 +1,4 @@
-module UI.Spacing exposing (..)
+module UI.Sizing exposing (..)
 
 
 type Rem
