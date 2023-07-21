@@ -8,6 +8,7 @@
         "UI.AppDocument",
         "UI.AppHeader",
         "UI.Color",
+        "UI.Spacing",
         "UI.Sidebar",
         "UI.Banner",
         "UI.CopyField",

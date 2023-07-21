@@ -38,6 +38,7 @@ import UI.Divider as Divider
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge(..))
 import UI.Placeholder as Placeholder
+import UI.Spacing as Spacing exposing (Rem)
 
 
 type OpenState
@@ -49,12 +50,6 @@ type Subtext
     = NoSubtext
     | SimpleSubtext String
     | DateTimeSubtext DateTimeFormat DateTime
-
-
-{-| TODO: Support everywhere
--}
-type Rem
-    = Rem Float
 
 
 type alias ActionOption msg =
