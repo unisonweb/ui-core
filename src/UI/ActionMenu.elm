@@ -2,7 +2,6 @@ module UI.ActionMenu exposing
     ( ActionItem
     , ActionItems
     , ActionMenu
-    , Rem(..)
     , Subtext(..)
     , close
     , dividerItem
@@ -38,7 +37,7 @@ import UI.Divider as Divider
 import UI.Icon as Icon exposing (Icon)
 import UI.Nudge as Nudge exposing (Nudge(..))
 import UI.Placeholder as Placeholder
-import UI.Spacing as Spacing exposing (Rem)
+import UI.Sizing exposing (Rem(..))
 
 
 type OpenState

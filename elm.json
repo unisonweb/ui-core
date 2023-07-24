@@ -11,6 +11,7 @@
         "UI.Sizing",
         "UI.Sidebar",
         "UI.Banner",
+        "UI.ReadmeCard",
         "UI.CopyField",
         "UI.EmptyStateCard",
         "UI.Toolbar",
