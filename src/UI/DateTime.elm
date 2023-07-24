@@ -1,3 +1,6 @@
+-- Include ui/FormatDateTime.js in the bundle to be able to call DateTime.view
+
+
 module UI.DateTime exposing
     ( DateTime
     , DateTimeFormat(..)
@@ -23,6 +26,7 @@ type DateTimeFormat
     = ShortDate
     | LongDate
     | Distance
+    | TimeWithSeconds
 
 
 fromPosix : Posix -> DateTime
@@ -47,6 +51,9 @@ toISO8601 (DateTime t) =
     Iso8601.fromTime t
 
 
+{-| Note: requires the web component ui/FormatDateTime.js to
+be part of the bundle
+-}
 view : DateTimeFormat -> DateTime -> Html msg
 view format d =
     let
@@ -60,6 +67,9 @@ view format d =
 
                 Distance ->
                     "distance"
+
+                TimeWithSeconds ->
+                    "timeWithSeconds"
     in
     node "format-date-time"
         [ attribute "format" (formatToString format) ]
