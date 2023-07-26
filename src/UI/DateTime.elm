@@ -37,7 +37,7 @@ not, perhaps it should just be a posix alias...
 -}
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
 isSameDay zone (DateTime a) (DateTime b) =
-    TimeE.diff TimeE.Day zone a b /= 0
+    TimeE.diff TimeE.Day zone a b == 0
 
 
 fromPosix : Posix -> DateTime
