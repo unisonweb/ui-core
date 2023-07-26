@@ -7,7 +7,9 @@ module UI.DateTime exposing
     , decode
     , fromPosix
     , fromString
+    , isSameDay
     , toISO8601
+    , toPosix
     , view
     )
 
@@ -16,6 +18,7 @@ import Html.Attributes exposing (attribute)
 import Iso8601
 import Json.Decode as Decode
 import Time exposing (Posix)
+import Time.Extra as TimeE
 
 
 type DateTime
@@ -29,9 +32,22 @@ type DateTimeFormat
     | TimeWithSeconds
 
 
+{-| TODO: Refactor this, and make a decision if this module should exist or
+not, perhaps it should just be a posix alias...
+-}
+isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
+isSameDay zone (DateTime a) (DateTime b) =
+    TimeE.diff TimeE.Day zone a b /= 0
+
+
 fromPosix : Posix -> DateTime
 fromPosix p =
     DateTime p
+
+
+toPosix : DateTime -> Posix
+toPosix (DateTime p) =
+    p
 
 
 decode : Decode.Decoder DateTime

@@ -97,6 +97,7 @@
         "elm-community/list-extra": "8.2.0 <= v < 9.0.0",
         "elm-community/maybe-extra": "5.2.0 <= v < 6.0.0",
         "elm-community/string-extra": "4.0.0 <= v < 5.0.0",
+        "justinmimbs/time-extra": "1.1.1 <= v < 2.0.0",
         "krisajenkins/remotedata": "6.0.0 <= v < 7.0.0",
         "mgold/elm-nonempty-list": "4.1.0 <= v < 5.0.0",
         "noahzgordon/elm-color-extra": "1.0.0 <= v < 2.0.0",
