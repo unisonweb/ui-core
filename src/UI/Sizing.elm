@@ -5,6 +5,11 @@ type Rem
     = Rem Float
 
 
+times : Int -> Rem -> Rem
+times i (Rem r) =
+    Rem (toFloat i * r)
+
+
 multiply : Rem -> Rem -> Rem
 multiply (Rem a) (Rem b) =
     Rem (a * b)
