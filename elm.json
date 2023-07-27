@@ -76,7 +76,9 @@
         "Lib.TreePath",
         "Lib.Color.Harmony",
         "Lib.UnicodeSort",
-        "Lib.HttpApi"
+        "Lib.HttpApi",
+        "Lib.ScrollEvent",
+        "Lib.ScrollTo"
     ],
     "elm-version": "0.19.0 <= v < 0.20.0",
     "dependencies": {
