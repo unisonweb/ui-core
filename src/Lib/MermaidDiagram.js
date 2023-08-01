@@ -8,7 +8,7 @@ class MermaidDiagram extends HTMLElement {
     super();
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     const diagram = this.getAttribute("diagram");
     const themeName = this.getAttribute("theme-name");
 
