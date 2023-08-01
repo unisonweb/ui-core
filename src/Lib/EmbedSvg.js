@@ -15,7 +15,7 @@ class EmbedSvg extends HTMLElement {
     // Always render in an iframe as SVGs can do all sort of nasty stuff like
     // run JavaScript and its CSS can effect the rest of the page.
     const iframe = document.createElement("iframe");
-    iframe.setAttribute("srcdoc", markup);
+    iframe.setAttribute("srcdoc", `<body style='margin:0;'>${markup}</body>`);
     iframe.setAttribute("sandbox", true);
     iframe.setAttribute("scrolling", "no");
     iframe.classList.add("embed-svg");
@@ -23,9 +23,8 @@ class EmbedSvg extends HTMLElement {
     this.innerHTML = "";
     this.appendChild(iframe);
 
-    iframe.querySelector("body")?.style?.margin = 0;
-
-    const height = iframe.querySelector("svg")?.getBoundingClientRect();
+    const iframe_ = iframe.contentWindow.document;
+    const height = iframe_.querySelector("svg")?.getBoundingClientRect();
 
     if (height) {
       iframe.setAttribute("height", height);
