@@ -17,6 +17,8 @@ class EmbedSvg extends HTMLElement {
     const iframe = document.createElement("iframe");
     iframe.setAttribute("srcdoc", markup);
     iframe.setAttribute("sandbox", true);
+    iframe.setAttribute("scrolling", "no");
+    iframe.classList.add("embed-svg");
 
     this.innerHTML = "";
     this.appendChild(iframe);

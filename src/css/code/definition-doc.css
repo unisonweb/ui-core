@@ -89,7 +89,7 @@
 .definition-doc .sources .source::-webkit-scrollbar,
 .definition-doc .folded-sources .source::-webkit-scrollbar,
 .definition-doc .source.example::-webkit-scrollbar,
-.definition-doc eval .source::-webkit-scrollbar,
+.definition-doc .eval .source::-webkit-scrollbar,
 .definition-doc .source.signatures .signature::-webkit-scrollbar,
 .definition-doc .doc_table::-webkit-scrollbar {
   height: 0.375rem;
@@ -164,6 +164,7 @@
 .definition-doc .eval-inline .result .icon {
   color: var(--color-doc-subtle-text);
 }
+
 
 .definition-doc .eval .result .icon svg {
   stroke-width: 1px;
@@ -347,6 +348,11 @@
   vertical-align: top;
 }
 
+.definition-doc .embed-svg {
+  max-width: var(--c-width_doc_inner-content);
+  border: 0;
+}
+
 .definition-doc .folded {
   margin-bottom: 1rem;
   display: flex;
@@ -517,7 +523,8 @@
   .definition-doc .source.example,
   .definition-doc .eval .source,
   .definition-doc .source.signatures .signature,
-  .definition-doc .mermaid-diagram {
+  .definition-doc .mermaid-diagram,
+  .definition-doc .embed-svg {
     width: calc(100vw - 4rem);
     overflow: auto;
   }
