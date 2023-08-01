@@ -26,7 +26,7 @@ class EmbedSvg extends HTMLElement {
       const height = this.contentWindow?.document?.body?.offsetHeight;
       if (height) iframe.setAttribute("height", height);
       iframe.removeEventListener('load', syncHeight)
-    })
+    }
 
     iframe.addEventListener('load', syncHeight);
 
