@@ -16,13 +16,14 @@ class EmbedSvg extends HTMLElement {
     // run JavaScript and its CSS can effect the rest of the page.
     const iframe = document.createElement("iframe");
     iframe.setAttribute("srcdoc", `<body style='margin:0;'>${markup}</body>`);
-    iframe.setAttribute("sandbox", "sandbox");
+    iframe.setAttribute("sandbox", "");
     iframe.setAttribute("scrolling", "no");
     iframe.classList.add("embed-svg");
 
     // Sync the height of the iframe contents with the height of the iframe
     iframe.addEventListener('load', () => {
-      const height = this.contentWindow.document.body.offsetHeight;
+      console.log(this);
+      const height = this?.contentWindow?.document?.body?.offsetHeight;
       if (height) iframe.setAttribute("height", height);
       iframe.removeEventListener('load', syncHeight)
     })
