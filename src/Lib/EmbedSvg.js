@@ -21,12 +21,14 @@ class EmbedSvg extends HTMLElement {
     iframe.classList.add("embed-svg");
 
     // Sync the height of the iframe contents with the height of the iframe
-    iframe.addEventListener('load', () => {
+    function syncHeight() {
       console.log(this);
-      const height = this?.contentWindow?.document?.body?.offsetHeight;
+      const height = this.contentWindow?.document?.body?.offsetHeight;
       if (height) iframe.setAttribute("height", height);
       iframe.removeEventListener('load', syncHeight)
     })
+
+    iframe.addEventListener('load', syncHeight);
 
     this.innerHTML = "";
     this.appendChild(iframe);
