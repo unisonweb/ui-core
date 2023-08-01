@@ -16,7 +16,7 @@ class EmbedSvg extends HTMLElement {
     // run JavaScript and its CSS can effect the rest of the page.
     const iframe = document.createElement("iframe");
     iframe.setAttribute("srcdoc", `<body style='margin:0;'>${markup}<body>`);
-    iframe.setAttribute("sandbox", "allow-same-origin");
+    iframe.setAttribute("sandbox", ""); 
     iframe.setAttribute("frameborder", "0");
     iframe.setAttribute("scrolling", "no");
     iframe.classList.add("embed-svg");
@@ -24,7 +24,13 @@ class EmbedSvg extends HTMLElement {
     this.innerHTML = "";
     this.appendChild(iframe);
 
-    console.log(iframe.contentWindow.document.body.offsetHeight);
+    /*
+    allow-same-origin is needed to sync height... gotta explore alternatives
+    const height = iframe?.contentDocument?.querySelector("svg")?.getBBox()?.height;
+    if (height) {
+      iframe.setAttribute('height', height);
+    }
+    */
   }
 }
 
