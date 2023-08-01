@@ -22,6 +22,14 @@ class EmbedSvg extends HTMLElement {
 
     this.innerHTML = "";
     this.appendChild(iframe);
+
+    iframe.querySelector("body")?.style?.margin = 0;
+
+    const height = iframe.querySelector("svg")?.getBoundingClientRect();
+
+    if (height) {
+      iframe.setAttribute("height", height);
+    }
   }
 }
 
