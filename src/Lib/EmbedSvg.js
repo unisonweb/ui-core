@@ -12,31 +12,19 @@ class EmbedSvg extends HTMLElement {
   connectedCallback() {
     const markup = this.textContent;
 
-    // Sync the height of the iframe contents with the height of the iframe.
-    window.addEventListener('message', (evt) => {
-      if (evt.data) iframe.setAttribute("height", parseInt(evt.data));
-    }, false);
-
-    const relayHeight = `
-    <script>
-    (() => {
-      const height = document.body.offsetHeight;
-      window.parent.postMessage(height.toString(), '*');
-    }());
-    </script>
-    `;
-
     // Always render in an iframe as SVGs can do all sort of nasty stuff like
     // run JavaScript and its CSS can effect the rest of the page.
     const iframe = document.createElement("iframe");
-    iframe.setAttribute("srcdoc", `<body style='margin:0;'>${markup}${relayHeight}</body>`);
-    iframe.setAttribute("sandbox", "");
+    iframe.setAttribute("srcdoc", `<body style='margin:0;'>${markup}<body>`);
+    iframe.setAttribute("sandbox", "allow-same-origin");
     iframe.setAttribute("frameborder", "0");
     iframe.setAttribute("scrolling", "no");
     iframe.classList.add("embed-svg");
 
     this.innerHTML = "";
     this.appendChild(iframe);
+
+    console.log(iframe.contentWindow.document.body.offsetHeight);
   }
 }
 
