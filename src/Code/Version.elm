@@ -22,6 +22,7 @@ module Code.Version exposing
     , toList
     , toString
     , toUrlString
+    , unsafeFromString
     , version
     , view
     )
@@ -73,6 +74,19 @@ fromString s =
         |> MaybeE.combine
         |> Maybe.map fromList
         |> MaybeE.join
+
+
+{-| ⚠️ Don't use outside of testing--defaults to 1.0.0
+-}
+unsafeFromString : String -> Version
+unsafeFromString s =
+    s
+        |> String.split "."
+        |> List.map String.toInt
+        |> MaybeE.combine
+        |> Maybe.map fromList
+        |> MaybeE.join
+        |> Maybe.withDefault (version 1 0 0)
 
 
 fromUrlString : String -> Maybe Version

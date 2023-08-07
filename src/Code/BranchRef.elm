@@ -192,7 +192,7 @@ branchSlugFromString raw =
         Nothing
 
 
-{-| Don't use outside of testing
+{-| ⚠️ Don't use outside of testing
 -}
 unsafeBranchSlugFromString : String -> BranchSlug
 unsafeBranchSlugFromString raw =
@@ -202,6 +202,30 @@ unsafeBranchSlugFromString raw =
 branchSlugToString : BranchSlug -> String
 branchSlugToString (BranchSlug s) =
     s
+
+
+{-| ⚠️ Don't use outside of testing
+-}
+unsafeFromString : String -> BranchRef
+unsafeFromString raw =
+    let
+        parts =
+            String.split "/" raw
+    in
+    case parts of
+        [ "releases", "drafts", v ] ->
+            ReleaseDraftBranchRef (Version.unsafeFromString v)
+
+        [ "releases", v ] ->
+            ReleaseBranchRef (Version.unsafeFromString v)
+
+        [ h, s ] ->
+            ContributorBranchRef
+                (UserHandle.unsafeFromString h)
+                (unsafeBranchSlugFromString s)
+
+        _ ->
+            ProjectBranchRef (unsafeBranchSlugFromString raw)
 
 
 {-| Requirements
