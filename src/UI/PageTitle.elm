@@ -9,7 +9,7 @@ type Title msg
     = Title
         { icon : Maybe (Icon msg)
         , title : String
-        , description : Maybe String
+        , description : Maybe (Html msg)
         }
     | CustomTitle (List (Html msg))
 
@@ -62,6 +62,11 @@ withIcon icon pageTitle_ =
 
 withDescription : String -> PageTitle msg -> PageTitle msg
 withDescription description pageTitle_ =
+    withDescription_ (text description) pageTitle_
+
+
+withDescription_ : Html msg -> PageTitle msg -> PageTitle msg
+withDescription_ description pageTitle_ =
     case pageTitle_.title of
         Title t ->
             let
@@ -90,7 +95,7 @@ mapTitle f title_ =
             Title
                 { icon = Maybe.map (Icon.map f) t.icon
                 , title = t.title
-                , description = t.description
+                , description = Maybe.map (Html.map f) t.description
                 }
 
         CustomTitle items ->
@@ -124,7 +129,7 @@ viewTitle title_ =
                     viewTitle_ []
                         [ div [ class "text" ]
                             [ h1 [] [ text t.title ]
-                            , p [ class "description" ] [ text d ]
+                            , p [ class "description" ] [ d ]
                             ]
                         ]
 
@@ -139,7 +144,7 @@ viewTitle title_ =
                         [ div [ class "icon-badge" ] [ Icon.view i ]
                         , div [ class "text" ]
                             [ h1 [] [ text t.title ]
-                            , p [ class "description" ] [ text d ]
+                            , p [ class "description" ] [ d ]
                             ]
                         ]
 
