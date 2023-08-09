@@ -1,0 +1,7 @@
+.by-at {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem; /* TODO: should be 0.5rem when there's an avatar instead of handle */
+  font-size: var(--font-size-small);
+  color: var(--u-color_text_subdued);
+}
