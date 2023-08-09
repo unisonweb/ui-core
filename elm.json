@@ -10,6 +10,7 @@
         "UI.Color",
         "UI.Sizing",
         "UI.Sidebar",
+        "UI.ByAt",
         "UI.Banner",
         "UI.CopyField",
         "UI.EmptyStateCard",

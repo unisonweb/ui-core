@@ -16,7 +16,7 @@ class EmbedSvg extends HTMLElement {
     // run JavaScript and its CSS can effect the rest of the page.
     const iframe = document.createElement("iframe");
     iframe.setAttribute("srcdoc", `<body style='margin:0;'>${markup}<body>`);
-    iframe.setAttribute("sandbox", ""); 
+    iframe.setAttribute("sandbox", "");
     iframe.setAttribute("frameborder", "0");
     iframe.setAttribute("scrolling", "no");
     iframe.classList.add("embed-svg");
