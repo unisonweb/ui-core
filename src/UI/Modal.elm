@@ -6,15 +6,17 @@ module UI.Modal exposing
     , modal
     , modal_
     , view
+    , withActions
     , withAttributes
     , withHeader
     )
 
-import Html exposing (Attribute, Html, a, div, h2, header, section, text)
+import Html exposing (Attribute, Html, a, div, footer, h2, header, section, text)
 import Html.Attributes exposing (class, id, tabindex)
 import Html.Events exposing (on, onClick)
 import Json.Decode as Decode
 import UI
+import UI.Button as Button exposing (Button)
 import UI.Icon as Icon
 
 
@@ -28,6 +30,10 @@ type alias Modal msg =
     , closeMsg : Maybe msg
     , attributes : List (Attribute msg)
     , header : Maybe (Html msg)
+    , footer :
+        { leftSide : List (Html msg)
+        , actions : List (Button msg)
+        }
     , content : Content msg
     }
 
@@ -43,6 +49,7 @@ modal_ id content_ =
     , closeMsg = Nothing
     , attributes = []
     , header = Nothing
+    , footer = { leftSide = [], actions = [] }
     , content = content_
     }
 
@@ -65,6 +72,15 @@ withClose closeMsg modal__ =
 withHeader : String -> Modal msg -> Modal msg
 withHeader title modal__ =
     { modal__ | header = Just (text title) }
+
+
+withActions : List (Button msg) -> Modal msg -> Modal msg
+withActions actions modal__ =
+    let
+        footer_ =
+            modal__.footer
+    in
+    { modal__ | footer = { footer_ | actions = actions } }
 
 
 withAttributes : List (Attribute msg) -> Modal msg -> Modal msg
@@ -92,6 +108,19 @@ view modal__ =
                     )
                 |> Maybe.withDefault UI.nothing
 
+        footer_ =
+            if List.isEmpty modal__.footer.actions && List.isEmpty modal__.footer.leftSide then
+                UI.nothing
+
+            else
+                footer [ class "modal-footer" ]
+                    [ div [ class "modal-footer_left-side" ]
+                        modal__.footer.leftSide
+                    , div
+                        [ class "modal-footer_actions" ]
+                        (List.map Button.view modal__.footer.actions)
+                    ]
+
         content_ =
             case modal__.content of
                 Content c ->
@@ -100,7 +129,10 @@ view modal__ =
                 CustomContent c ->
                     c
     in
-    view_ modal__.closeMsg (id modal__.id :: modal__.attributes) [ header_, content_ ]
+    view_
+        modal__.closeMsg
+        (id modal__.id :: modal__.attributes)
+        [ header_, content_, footer_ ]
 
 
 
