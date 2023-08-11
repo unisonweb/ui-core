@@ -14,6 +14,7 @@ module Code.Hash exposing
     , toShortString
     , toString
     , toUnprefixedShortString
+    , toUnprefixedString
     , toUrlString
     , unsafeFromString
     , urlParser
@@ -96,6 +97,11 @@ toShortString_ p h =
 toShortString : Hash -> String
 toShortString h =
     toShortString_ prefix h
+
+
+toUnprefixedString : Hash -> String
+toUnprefixedString h =
+    toString_ "" identity h
 
 
 toUnprefixedShortString : Hash -> String
