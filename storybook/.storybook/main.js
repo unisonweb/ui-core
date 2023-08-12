@@ -3,14 +3,21 @@ module.exports = {
     "../stories/**/*.stories.mdx",
     "../stories/**/*.stories.@(js|jsx|ts|tsx)",
   ],
+
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
   ],
-  framework: "@storybook/html",
-  core: {
-    builder: "webpack5",
+
+  framework: {
+    name: "@storybook/html-webpack5",
+    options: {}
   },
+
   staticDirs: ["../static"],
+
+  docs: {
+    autodocs: true
+  }
 };
