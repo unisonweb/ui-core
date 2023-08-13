@@ -1,23 +1,26 @@
 {
   "name": "unison-uicore-storybook",
   "scripts": {
-    "start": "start-storybook -p 6006",
-    "build": "build-storybook"
+    "start": "storybook dev -p 6006",
+    "build": "storybook build"
   },
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.21.0",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/html": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@babel/preset-env": "^7.22.10",
+    "@storybook/addon-actions": "^7.2.3",
+    "@storybook/addon-essentials": "^7.2.3",
+    "@storybook/addon-interactions": "^7.2.3",
+    "@storybook/addon-links": "^7.2.3",
+    "@storybook/cli": "^7.2.3",
+    "@storybook/html": "^7.2.3",
+    "@storybook/html-webpack5": "^7.2.3",
+    "@storybook/testing-library": "^0.2.0",
     "babel-loader": "^8.3.0",
     "elm-webpack-loader": "^8.0.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "storybook": "^7.2.3",
+    "storybook-dark-mode": "^3.0.1"
   }
 }
