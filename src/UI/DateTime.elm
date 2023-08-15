@@ -5,8 +5,8 @@ module UI.DateTime exposing
     ( DateTime
     , DateTimeFormat(..)
     , decode
+    , fromISO8601
     , fromPosix
-    , fromString
     , isSameDay
     , toISO8601
     , toPosix
@@ -55,10 +55,11 @@ decode =
     Decode.map DateTime Iso8601.decoder
 
 
-fromString : String -> Maybe DateTime
-fromString s =
+fromISO8601 : String -> Maybe DateTime
+fromISO8601 s =
     s
-        |> Decode.decodeString decode
+        |> Iso8601.toTime
+        |> Result.map DateTime
         |> Result.toMaybe
 
 
