@@ -18,9 +18,11 @@ import Html.Attributes exposing (attribute)
 import Iso8601
 import Json.Decode as Decode
 import Time exposing (Posix)
-import Time.Extra as TimeE
 
 
+{-| TODO: Refactor this, and make a decision if this module should exist or
+not, perhaps it should just be a posix alias...
+-}
 type DateTime
     = DateTime Posix
 
@@ -32,12 +34,9 @@ type DateTimeFormat
     | TimeWithSeconds
 
 
-{-| TODO: Refactor this, and make a decision if this module should exist or
-not, perhaps it should just be a posix alias...
--}
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
 isSameDay zone (DateTime a) (DateTime b) =
-    TimeE.diff TimeE.Day zone a b == 0
+    Time.toDay zone a == Time.toDay zone b && Time.toMonth zone a == Time.toMonth zone b && Time.toYear zone a == Time.toYear zone b
 
 
 fromPosix : Posix -> DateTime
