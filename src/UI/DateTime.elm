@@ -8,6 +8,8 @@ module UI.DateTime exposing
     , fromISO8601
     , fromPosix
     , isSameDay
+    , millisSinceEpoch
+    , secondsSinceEpoch
     , toISO8601
     , toPosix
     , view
@@ -20,9 +22,6 @@ import Json.Decode as Decode
 import Time exposing (Posix)
 
 
-{-| TODO: Refactor this, and make a decision if this module should exist or
-not, perhaps it should just be a posix alias...
--}
 type DateTime
     = DateTime Posix
 
@@ -47,6 +46,16 @@ fromPosix p =
 toPosix : DateTime -> Posix
 toPosix (DateTime p) =
     p
+
+
+millisSinceEpoch : DateTime -> Int
+millisSinceEpoch (DateTime p) =
+    Time.posixToMillis p
+
+
+secondsSinceEpoch : DateTime -> Int
+secondsSinceEpoch d =
+    millisSinceEpoch d // 1000
 
 
 decode : Decode.Decoder DateTime
