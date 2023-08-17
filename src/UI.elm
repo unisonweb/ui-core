@@ -27,6 +27,16 @@ nothing =
     text ""
 
 
+viewMaybe : (a -> Html msg) -> Maybe a -> Html msg
+viewMaybe f a =
+    case a of
+        Just a_ ->
+            f a_
+
+        Nothing ->
+            nothing
+
+
 badge : Html msg -> Html msg
 badge content =
     span [ class "badge" ] [ content ]
