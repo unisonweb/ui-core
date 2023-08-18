@@ -13,6 +13,7 @@ module UI.DateTime exposing
     , toISO8601
     , toPosix
     , toString
+    , unsafeFromISO8601
     , view
     )
 
@@ -70,6 +71,19 @@ fromISO8601 s =
         |> Iso8601.toTime
         |> Result.map DateTime
         |> Result.toMaybe
+
+
+{-| !! Don't use outside of testing !!
+-}
+unsafeFromISO8601 : String -> DateTime
+unsafeFromISO8601 s =
+    let
+        fallbackDateTime =
+            fromPosix (Time.millisToPosix 1)
+    in
+    s
+        |> fromISO8601
+        |> Maybe.withDefault fallbackDateTime
 
 
 toISO8601 : DateTime -> String
