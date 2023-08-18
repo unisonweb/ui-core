@@ -12,6 +12,7 @@ module UI.DateTime exposing
     , secondsSinceEpoch
     , toISO8601
     , toPosix
+    , toString
     , view
     )
 
@@ -74,6 +75,21 @@ fromISO8601 s =
 toISO8601 : DateTime -> String
 toISO8601 (DateTime t) =
     Iso8601.fromTime t
+
+
+toString : DateTimeFormat -> Time.Zone -> DateTime -> String
+toString format zone (DateTime p) =
+    case format of
+        TimeWithSeconds ->
+            [ Time.toHour zone p
+            , Time.toMinute zone p
+            , Time.toSecond zone p
+            ]
+                |> List.map String.fromInt
+                |> String.join ":"
+
+        _ ->
+            ""
 
 
 {-| Note: requires the web component ui/FormatDateTime.js to
