@@ -100,6 +100,7 @@ toString format zone (DateTime p) =
             , Time.toSecond zone p
             ]
                 |> List.map String.fromInt
+                |> List.map (String.padLeft 2 '0')
                 |> String.join ":"
 
         _ ->
