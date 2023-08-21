@@ -21,6 +21,7 @@
   color: var(--u-color_text);
   font-weight: bold;
   font-family: var(--font-monospace);
+  line-height: 1;
 }
 
 .nudge.pulsate .nudge_circle {
