@@ -1,8 +1,7 @@
 module UI.Nudge exposing (..)
 
 import Html exposing (Html, div, text)
-import Html.Attributes exposing (class)
-import Maybe.Extra as MaybeE
+import Html.Attributes exposing (class, classList)
 import UI
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
@@ -92,18 +91,20 @@ map toMsg nudgeA =
 viewNudgeDot : Bool -> Maybe Int -> Html msg
 viewNudgeDot pulsate_ withNumber_ =
     let
-        num =
-            MaybeE.unwrap UI.nothing (String.fromInt >> text) withNumber_
+        ( num, hasNumber ) =
+            withNumber_
+                |> Maybe.map (String.fromInt >> text)
+                |> Maybe.map (\n -> ( n, True ))
+                |> Maybe.withDefault ( UI.nothing, False )
     in
     div
-        [ if pulsate_ then
-            class "nudge pulsate"
-
-          else
-            class "nudge"
+        [ class "nudge_circle"
+        , classList
+            [ ( "pulsate", pulsate_ )
+            , ( "with-number", hasNumber )
+            ]
         ]
-        [ div [ class "nudge_circle" ] [ num ]
-        ]
+        [ num ]
 
 
 view : Nudge msg -> Html msg

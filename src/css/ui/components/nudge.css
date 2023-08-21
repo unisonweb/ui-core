@@ -1,9 +1,6 @@
 .nudge {
   position: relative;
   display: inline-flex;
-  font-size: var(--font-size-small);
-  color: var(--u-color_info_text);
-  font-family: var(--font-monospace);
 }
 
 .nudge .nudge_circle {
@@ -11,6 +8,18 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 0.25rem;
+}
+
+.nudge.with-number .nudge_circle {
+  min-width: 1rem;
+  height: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-extra-small);
+  color: var(--u-color_info_text);
+  font-family: var(--font-monospace);
 }
 
 .nudge.pulsate .nudge_circle {
