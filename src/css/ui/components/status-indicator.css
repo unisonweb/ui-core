@@ -8,7 +8,9 @@
     --u-color_critical_icon-on-element
   );
   --c-color_status-indicator_info: var(--u-color_info_element_emphasized);
-  --c-color_status-indicator_icon-on-info: var(--u-color_info_icon-on-element_emphasized);
+  --c-color_status-indicator_icon-on-info: var(
+    --u-color_info_icon-on-element_emphasized
+  );
   --c-color_status-indicator_working: var(--u-color_working_element);
   --c-color_status-indicator_icon-on-working: var(
     --u-color_working_icon-on-element
