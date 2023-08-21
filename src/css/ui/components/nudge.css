@@ -1,6 +1,9 @@
 .nudge {
   position: relative;
   display: inline-flex;
+  font-size: var(--font-size-small);
+  color: var(--u-color_info_text);
+  font-family: var(--font-monospace);
 }
 
 .nudge .nudge_circle {

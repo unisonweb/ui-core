@@ -1,7 +1,8 @@
 module UI.Nudge exposing (..)
 
-import Html exposing (Html, div)
+import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
+import Maybe.Extra as MaybeE
 import UI
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
@@ -11,6 +12,7 @@ type Nudge msg
     | Nudge
         { withTooltip : Maybe (Tooltip msg)
         , pulsate : Bool
+        , withNumber : Maybe Int
         }
 
 
@@ -25,7 +27,7 @@ empty =
 
 nudge : Nudge msg
 nudge =
-    Nudge { withTooltip = Nothing, pulsate = False }
+    Nudge { withTooltip = Nothing, pulsate = False, withNumber = Nothing }
 
 
 
@@ -36,6 +38,7 @@ withTooltip : Tooltip msg -> Nudge msg -> Nudge msg
 withTooltip tooltip nudge_ =
     case nudge_ of
         NoNudge ->
+            -- create a new Nudge with the default settings
             withTooltip tooltip nudge
 
         Nudge n ->
@@ -46,10 +49,22 @@ pulsate : Nudge msg -> Nudge msg
 pulsate nudge_ =
     case nudge_ of
         NoNudge ->
+            -- create a new Nudge with the default settings
             pulsate nudge
 
         Nudge n ->
             Nudge { n | pulsate = True }
+
+
+withNumber : Int -> Nudge msg -> Nudge msg
+withNumber n nudge_ =
+    case nudge_ of
+        NoNudge ->
+            -- create a new Nudge with the default settings
+            withNumber n nudge
+
+        Nudge n_ ->
+            Nudge { n_ | withNumber = Just n }
 
 
 
@@ -66,6 +81,7 @@ map toMsg nudgeA =
             Nudge
                 { withTooltip = Maybe.map (Tooltip.map toMsg) n.withTooltip
                 , pulsate = n.pulsate
+                , withNumber = n.withNumber
                 }
 
 
@@ -73,8 +89,12 @@ map toMsg nudgeA =
 -- VIEW
 
 
-viewNudgeDot : Bool -> Html msg
-viewNudgeDot pulsate_ =
+viewNudgeDot : Bool -> Maybe Int -> Html msg
+viewNudgeDot pulsate_ withNumber_ =
+    let
+        num =
+            MaybeE.unwrap UI.nothing (String.fromInt >> text) withNumber_
+    in
     div
         [ if pulsate_ then
             class "nudge pulsate"
@@ -82,7 +102,7 @@ viewNudgeDot pulsate_ =
           else
             class "nudge"
         ]
-        [ div [ class "nudge_circle" ] []
+        [ div [ class "nudge_circle" ] [ num ]
         ]
 
 
@@ -95,7 +115,7 @@ view nudge_ =
         Nudge settings ->
             case settings.withTooltip of
                 Nothing ->
-                    viewNudgeDot settings.pulsate
+                    viewNudgeDot settings.pulsate settings.withNumber
 
                 Just tooltip ->
-                    Tooltip.view (viewNudgeDot settings.pulsate) tooltip
+                    Tooltip.view (viewNudgeDot settings.pulsate settings.withNumber) tooltip
