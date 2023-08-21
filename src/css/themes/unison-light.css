@@ -122,9 +122,12 @@
   --u-color_info_text_emphasized: var(--color-blue-1);
   --u-color_info_icon: var(--color-blue-3);
   --u-color_info_icon_emphasized: var(--color-blue-2);
-  --u-color_info_element: var(--color-blue-2);
-  --u-color_info_text-on-element: var(--color-gray-lighten-100);
-  --u-color_info_icon-on-element: var(--color-gray-lighten-100);
+  --u-color_info_element: var(--color-blue-4);
+  --u-color_info_text-on-element: var(--u-color_text);
+  --u-color_info_icon-on-element: var(--color-blue-2);
+  --u-color_info_element_empasized: var(--color-blue-2);
+  --u-color_info_text-on-element_empasized: var(--color-gray-lighten-100);
+  --u-color_info_icon-on-element_empasized: var(--color-gray-lighten-100);
   --u-color_info_element_subdued: var(--color-blue-5);
   --u-color_info_text-on-element_subdued: var(--u-color_text);
   --u-color_info_icon-on-element_subdued: var(--color-blue-1);
