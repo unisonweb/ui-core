@@ -18,7 +18,8 @@
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-extra-small);
-  color: var(--u-color_info_text);
+  color: var(--u-color_text);
+  font-weight: bold;
   font-family: var(--font-monospace);
 }
 
