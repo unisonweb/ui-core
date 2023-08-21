@@ -97,15 +97,14 @@ viewNudgeDot pulsate_ withNumber_ =
                 |> Maybe.map (\n -> ( n, True ))
                 |> Maybe.withDefault ( UI.nothing, False )
     in
-    div [ class "nudge" ]
-        [ div
-            [ class "nudge_circle"
-            , classList
-                [ ( "pulsate", pulsate_ )
-                , ( "with-number", hasNumber )
-                ]
+    div
+        [ class "nudge"
+        , classList
+            [ ( "pulsate", pulsate_ )
+            , ( "with-number", hasNumber )
             ]
-            [ num ]
+        ]
+        [ div [ class "nudge_circle" ] [ num ]
         ]
 
 
