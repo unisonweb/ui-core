@@ -12,8 +12,8 @@ import { format, formatDistance, parseISO } from "date-fns";
 const FORMATS = {
   shortDate: (d) => format(d, "MMM d, yyyy"),
   longDate: (d) => format(d, "MMMM d, yyyy"),
-  timeWithSeconds: (d) => format(d, "HH:mm:ss"),
   distance: (d) => formatDistance(d, new Date()),
+  notSupported: (d) => "DATE FORMAT NOT SUPPORTED",
 };
 
 class FormatDateTime extends HTMLElement {

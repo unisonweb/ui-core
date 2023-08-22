@@ -17,6 +17,7 @@ module UI.DateTime exposing
     , view
     )
 
+import DateFormat
 import Html exposing (Html, node, text)
 import Html.Attributes exposing (attribute)
 import Iso8601
@@ -32,7 +33,9 @@ type DateTimeFormat
     = ShortDate
     | LongDate
     | Distance
-    | TimeWithSeconds
+    | TimeWithSeconds24Hour
+    | TimeWithSeconds12Hour
+    | FullDateTime
 
 
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
@@ -94,14 +97,65 @@ toISO8601 (DateTime t) =
 toString : DateTimeFormat -> Time.Zone -> DateTime -> String
 toString format zone (DateTime p) =
     case format of
-        TimeWithSeconds ->
-            [ Time.toHour zone p
-            , Time.toMinute zone p
-            , Time.toSecond zone p
-            ]
-                |> List.map String.fromInt
-                |> List.map (String.padLeft 2 '0')
-                |> String.join ":"
+        TimeWithSeconds24Hour ->
+            DateFormat.format
+                [ DateFormat.hourMilitaryFixed
+                , DateFormat.text ":"
+                , DateFormat.minuteFixed
+                , DateFormat.text ":"
+                , DateFormat.secondFixed
+                ]
+                zone
+                p
+
+        TimeWithSeconds12Hour ->
+            DateFormat.format
+                [ DateFormat.hourFixed
+                , DateFormat.text ":"
+                , DateFormat.minuteFixed
+                , DateFormat.text ":"
+                , DateFormat.secondFixed
+                , DateFormat.text " "
+                , DateFormat.amPmLowercase
+                ]
+                zone
+                p
+
+        ShortDate ->
+            DateFormat.format
+                [ DateFormat.monthNameAbbreviated
+                , DateFormat.dayOfMonthNumber
+                , DateFormat.text ", "
+                , DateFormat.yearNumber
+                ]
+                zone
+                p
+
+        LongDate ->
+            DateFormat.format
+                [ DateFormat.monthNameFull
+                , DateFormat.dayOfMonthNumber
+                , DateFormat.text ", "
+                , DateFormat.yearNumber
+                ]
+                zone
+                p
+
+        FullDateTime ->
+            DateFormat.format
+                [ DateFormat.monthNameAbbreviated
+                , DateFormat.dayOfMonthNumber
+                , DateFormat.text ", "
+                , DateFormat.yearNumber
+                , DateFormat.text " - "
+                , DateFormat.hourMilitaryFixed
+                , DateFormat.text ":"
+                , DateFormat.minuteFixed
+                , DateFormat.text ":"
+                , DateFormat.secondFixed
+                ]
+                zone
+                p
 
         _ ->
             ""
@@ -124,8 +178,8 @@ view format d =
                 Distance ->
                     "distance"
 
-                TimeWithSeconds ->
-                    "timeWithSeconds"
+                _ ->
+                    "notSupported"
     in
     node "format-date-time"
         [ attribute "format" (formatToString format) ]
