@@ -110,7 +110,7 @@ toString format zone (DateTime p) =
 
         TimeWithSeconds12Hour ->
             DateFormat.format
-                [ DateFormat.hourFixed
+                [ DateFormat.hourNumber
                 , DateFormat.text ":"
                 , DateFormat.minuteFixed
                 , DateFormat.text ":"
@@ -146,6 +146,7 @@ toString format zone (DateTime p) =
         FullDateTime ->
             DateFormat.format
                 [ DateFormat.monthNameAbbreviated
+                , DateFormat.text " "
                 , DateFormat.dayOfMonthNumber
                 , DateFormat.text ", "
                 , DateFormat.yearNumber

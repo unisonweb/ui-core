@@ -2,7 +2,8 @@ module UI.DateTimeTests exposing (..)
 
 import Expect
 import Test exposing (..)
-import UI.DateTime as DateTime
+import Time
+import UI.DateTime as DateTime exposing (DateTimeFormat(..))
 
 
 fromString : Test
@@ -18,4 +19,40 @@ fromString =
             \_ ->
                 DateTime.fromISO8601 "-----"
                     |> Expect.equal Nothing
+        ]
+
+
+toString : Test
+toString =
+    describe "DateTime.toString"
+        [ test "with format FullDateTime" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString FullDateTime Time.utc)
+                    |> Expect.equal (Just "Aug 15, 2023 - 15:00:00")
+        , test "with format ShortDate" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString ShortDate Time.utc)
+                    |> Expect.equal (Just "Aug 15, 2023")
+        , test "with format LongDate" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString LongDate Time.utc)
+                    |> Expect.equal (Just "August 15, 2023")
+        , test "with format TimeWithSeconds24Hour" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString TimeWithSeconds24Hour Time.utc)
+                    |> Expect.equal (Just "15:00:00")
+        , test "with format TimeWithSeconds12Hour" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString TimeWithSeconds12Hour Time.utc)
+                    |> Expect.equal (Just "3:00:00 pm")
         ]
