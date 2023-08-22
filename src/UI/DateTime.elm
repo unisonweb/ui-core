@@ -124,6 +124,7 @@ toString format zone (DateTime p) =
         ShortDate ->
             DateFormat.format
                 [ DateFormat.monthNameAbbreviated
+                , DateFormat.text " "
                 , DateFormat.dayOfMonthNumber
                 , DateFormat.text ", "
                 , DateFormat.yearNumber
@@ -134,6 +135,7 @@ toString format zone (DateTime p) =
         LongDate ->
             DateFormat.format
                 [ DateFormat.monthNameFull
+                , DateFormat.text " "
                 , DateFormat.dayOfMonthNumber
                 , DateFormat.text ", "
                 , DateFormat.yearNumber
