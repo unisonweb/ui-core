@@ -4,10 +4,14 @@ module UI.Tooltip exposing
     , MenuItem
     , Position(..)
     , Tooltip
+    , above
+    , below
     , hide
+    , leftOf
     , map
     , menu
     , rich
+    , rightOf
     , show
     , text
     , textMenu
@@ -113,6 +117,26 @@ withArrow arrow tooltip_ =
 withPosition : Position -> Tooltip msg -> Tooltip msg
 withPosition pos tooltip_ =
     { tooltip_ | position = pos }
+
+
+below : Tooltip msg -> Tooltip msg
+below tooltip_ =
+    { tooltip_ | position = Below }
+
+
+above : Tooltip msg -> Tooltip msg
+above tooltip_ =
+    { tooltip_ | position = Above }
+
+
+rightOf : Tooltip msg -> Tooltip msg
+rightOf tooltip_ =
+    { tooltip_ | position = RightOf }
+
+
+leftOf : Tooltip msg -> Tooltip msg
+leftOf tooltip_ =
+    { tooltip_ | position = LeftOf }
 
 
 withShow : Bool -> Tooltip msg -> Tooltip msg
