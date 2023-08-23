@@ -10,12 +10,14 @@ module UI.PageContent exposing
     , withLeftAside
     , withPageTitle
     , withRightAside
+    , withTabList
     )
 
 import Html exposing (Html, aside, div, section)
 import Html.Attributes exposing (class, id)
 import UI
 import UI.PageTitle as PageTitle exposing (PageTitle)
+import UI.TabList as TabList exposing (TabList)
 
 
 type PageAside msg
@@ -27,6 +29,7 @@ type PageAside msg
 type PageContent msg
     = PageContent
         { title : Maybe (PageTitle msg)
+        , tabList : Maybe (TabList msg)
         , content : List (List (Html msg))
         , aside : PageAside msg
         }
@@ -40,6 +43,7 @@ empty : PageContent msg
 empty =
     PageContent
         { title = Nothing
+        , tabList = Nothing
         , content = []
         , aside = NoAside
         }
@@ -51,6 +55,7 @@ oneColumn : List (Html msg) -> PageContent msg
 oneColumn rows =
     PageContent
         { title = Nothing
+        , tabList = Nothing
         , content = [ rows ]
         , aside = NoAside
         }
@@ -62,6 +67,7 @@ twoColumns : ( List (Html msg), List (Html msg) ) -> PageContent msg
 twoColumns ( one, two ) =
     PageContent
         { title = Nothing
+        , tabList = Nothing
         , content = [ one, two ]
         , aside = NoAside
         }
@@ -73,6 +79,7 @@ threeColumns : ( List (Html msg), List (Html msg), List (Html msg) ) -> PageCont
 threeColumns ( one, two, three ) =
     PageContent
         { title = Nothing
+        , tabList = Nothing
         , content = [ one, two, three ]
         , aside = NoAside
         }
@@ -97,6 +104,11 @@ withRightAside asideContent (PageContent cfg) =
     PageContent { cfg | aside = LeftAside asideContent }
 
 
+withTabList : TabList msg -> PageContent msg -> PageContent msg
+withTabList tabList (PageContent cfg) =
+    PageContent { cfg | tabList = Just tabList }
+
+
 
 -- MAP
 
@@ -105,6 +117,7 @@ map : (a -> msg) -> PageContent a -> PageContent msg
 map toMsg (PageContent pageContentA) =
     PageContent
         { title = Maybe.map (PageTitle.map toMsg) pageContentA.title
+        , tabList = Maybe.map (TabList.map toMsg) pageContentA.tabList
         , content = List.map (List.map (Html.map toMsg)) pageContentA.content
         , aside = mapPageAside toMsg pageContentA.aside
         }
@@ -162,12 +175,20 @@ view_ footer (PageContent p) =
                         , aside [ class "page-aside page-aside_right" ] asideItems
                         ]
 
+        tabList =
+            case p.tabList of
+                Just tl ->
+                    TabList.view tl
+
+                _ ->
+                    UI.nothing
+
         pageContent =
             case p.title of
                 Just t ->
-                    [ PageTitle.view t, inner, footer ]
+                    [ PageTitle.view t, tabList, inner, footer ]
 
                 Nothing ->
-                    [ inner, footer ]
+                    [ tabList, inner, footer ]
     in
     section [ id "page-content", class "page-content" ] pageContent
