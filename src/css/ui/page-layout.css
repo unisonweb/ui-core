@@ -46,7 +46,10 @@
 .page.tabbed-layout {
   grid-template-columns: 1fr;
   grid-template-rows: auto auto 1fr;
-  grid-template-areas: "tabbed-layout_header tabbed-layout_tab-list page-content";
+  grid-template-areas:
+    "tabbed-layout_header"
+    "tabbed-layout_tab-list"
+    "page-content";
   overflow: auto;
 }
 
@@ -186,7 +189,6 @@
   margin: auto;
   padding: 3rem 0 1.5rem 0;
 }
-
 
 /* @todo :has */
 .page .page-content .page-title .has_icon {
