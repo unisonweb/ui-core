@@ -56,11 +56,12 @@
 .page.tabbed-layout .tabbed-layout_header {
   grid-area: tabbed-layout_header;
   background: var(--u-color_background_subdued);
+  padding: 3.5rem 0 1.5rem;
 }
 
 .page.tabbed-layout .tabbed-layout_tab-list {
   grid-area: tabbed-layout_tab-list;
-  box-shadow: inset 0 -2px 0 -1px var(--c-color_tabs_border);
+  box-shadow: inset 0 -2px 0 -1px var(--c-color_border_subdued);
   background: var(--u-color_background_subdued);
 }
 
