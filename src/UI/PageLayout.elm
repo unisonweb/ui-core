@@ -366,12 +366,12 @@ view page =
                 -- the header and the TabList
                 [ header [ class "tabbed-layout_header" ]
                     [ div
-                        [ class "page-content" ]
+                        [ class "tabbed-layout_width" ]
                         [ PageTitle.view pageTitle ]
                     ]
                 , div [ class "tabbed-layout_tab-list" ]
                     [ div
-                        [ class "page-content" ]
+                        [ class "tabbed-layout_width" ]
                         [ TabList.view tabList ]
                     ]
                 , PageContent.view_ (viewPageFooter footer) content

@@ -192,6 +192,11 @@
   padding: 3rem 0 1.5rem 0;
 }
 
+.page.tabbed-layout .tabbed-layout_width {
+  width: 52.75rem;
+  margin: auto;
+}
+
 /* @todo :has */
 .page .page-content .page-title .has_icon {
   display: flex;
@@ -432,6 +437,7 @@
   .page.centered-layout .page-content,
   .page.centered-narrow-layout .page-content,
   .page.tabbed-layout .page-content,
+  .page.tabbed-layout .tabbed-layout_width,
   .page.presentation-layout .page-content {
     width: 100%;
     overflow: initial;
