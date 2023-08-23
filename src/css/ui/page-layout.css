@@ -61,7 +61,7 @@
 
 .page.tabbed-layout .tabbed-layout_tab-list {
   grid-area: tabbed-layout_tab-list;
-  box-shadow: inset 0 -2px 0 -1px var(--c-color_border_subdued);
+  box-shadow: inset 0 -2px 0 -1px var(--u-color_border_subdued);
   background: var(--u-color_background_subdued);
 }
 
