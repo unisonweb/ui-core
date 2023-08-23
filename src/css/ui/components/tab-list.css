@@ -29,10 +29,10 @@
 
 .tab-list .tab.tab_selected {
   color: var(--c-color_tabs_text_selected);
-  box-shadow: inset 0 -1px 0 1px var(--c-color_tabs_border_selected);
+  box-shadow: inset 0 -2px 0 -1px var(--c-color_tabs_border_selected);
 }
 
 .tab-list .tab:not(.tab_selected):hover {
   color: var(--c-color_tabs_text_hovered);
-  box-shadow: inset 0 -1px 0 1px var(--c-color_tabs_border_hovered);
+  box-shadow: inset 0 -2px 0 -1px var(--c-color_tabs_border_hovered);
 }
