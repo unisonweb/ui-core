@@ -12,6 +12,7 @@
 module UI.TabList exposing
     ( Tab
     , TabList
+    , map
     , tab
     , tabList
     , view
@@ -45,6 +46,20 @@ tab label click =
 tabList : List (Tab msg) -> Tab msg -> List (Tab msg) -> TabList msg
 tabList before selected_ after =
     TabList (Zipper.from before selected_ after)
+
+
+
+-- MAP
+
+
+mapTab : (a -> b) -> Tab a -> Tab b
+mapTab f (Tab a) =
+    Tab { label = a.label, click = Click.map f a.click }
+
+
+map : (a -> b) -> TabList a -> TabList b
+map f (TabList a) =
+    TabList (Zipper.map (mapTab f) a)
 
 
 
