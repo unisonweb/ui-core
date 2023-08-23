@@ -15,6 +15,7 @@
         "UI.CopyField",
         "UI.EmptyStateCard",
         "UI.Toolbar",
+        "UI.TabList",
         "UI.Button",
         "UI.Modal",
         "UI.Tooltip",
