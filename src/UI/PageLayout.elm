@@ -362,8 +362,18 @@ view page =
                 [ class "page tabbed-layout"
                 , bgClassName backgroundColor
                 ]
-                [ header [ class "tabbed-layout_header" ] [ PageTitle.view pageTitle ]
-                , div [ class "tabbed-layout_tab-list" ] [ TabList.view tabList ]
+                -- This is using the .page-content class to narrow the width of
+                -- the header and the TabList
+                [ header [ class "tabbed-layout_header" ]
+                    [ div
+                        [ class "page-content" ]
+                        [ PageTitle.view pageTitle ]
+                    ]
+                , div [ class "tabbed-layout_tab-list" ]
+                    [ div
+                        [ class "page-content" ]
+                        [ TabList.view tabList ]
+                    ]
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
