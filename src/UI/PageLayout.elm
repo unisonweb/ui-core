@@ -6,7 +6,9 @@ import Lib.OperatingSystem exposing (OperatingSystem)
 import UI.Click as Click
 import UI.CopyrightYear as CopyrightYear
 import UI.PageContent as PageContent exposing (PageContent)
+import UI.PageTitle as PageTitle exposing (PageTitle)
 import UI.Sidebar as Sidebar exposing (Sidebar)
+import UI.TabList as TabList exposing (TabList)
 
 
 type PageHero msg
@@ -50,6 +52,7 @@ type PageLayout msg
         )
     | CenteredLayout (Layout {} msg)
     | CenteredNarrowLayout (Layout {} msg)
+    | TabbedLayout (Layout { pageTitle : PageTitle msg, tabList : TabList msg } msg)
     | PresentationLayout (PageContent msg)
 
 
@@ -105,6 +108,17 @@ centeredNarrowLayout content footer =
         }
 
 
+tabbedLayout : PageTitle msg -> TabList msg -> PageContent msg -> PageFooter msg -> PageLayout msg
+tabbedLayout pageTitle tabList content footer =
+    TabbedLayout
+        { pageTitle = pageTitle
+        , tabList = tabList
+        , content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        }
+
+
 presentationLayout : PageContent msg -> PageLayout msg
 presentationLayout content =
     PresentationLayout content
@@ -136,6 +150,9 @@ withContent content pl =
         CenteredNarrowLayout l ->
             CenteredNarrowLayout (withContent_ l)
 
+        TabbedLayout l ->
+            TabbedLayout (withContent_ l)
+
         PresentationLayout _ ->
             PresentationLayout content
 
@@ -157,6 +174,9 @@ withBackgroundColor bg pl =
 
         CenteredNarrowLayout l ->
             CenteredNarrowLayout { l | backgroundColor = bg }
+
+        TabbedLayout _ ->
+            pl
 
         PresentationLayout _ ->
             pl
@@ -225,6 +245,15 @@ map toMsg pageLayout =
         CenteredNarrowLayout layout ->
             CenteredNarrowLayout
                 { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                , backgroundColor = layout.backgroundColor
+                }
+
+        TabbedLayout layout ->
+            TabbedLayout
+                { pageTitle = PageTitle.map toMsg layout.pageTitle
+                , tabList = TabList.map toMsg layout.tabList
+                , content = PageContent.map toMsg layout.content
                 , footer = mapPageFooter toMsg layout.footer
                 , backgroundColor = layout.backgroundColor
                 }
@@ -326,6 +355,16 @@ view page =
                 , bgClassName backgroundColor
                 ]
                 [ PageContent.view_ (viewPageFooter footer) content
+                ]
+
+        TabbedLayout { pageTitle, tabList, content, footer, backgroundColor } ->
+            div
+                [ class "page tabbed-layout"
+                , bgClassName backgroundColor
+                ]
+                [ header [ class "tabbed-layout_header" ] [ PageTitle.view pageTitle ]
+                , TabList.view tabList
+                , PageContent.view_ (viewPageFooter footer) content
                 ]
 
         PresentationLayout content ->
