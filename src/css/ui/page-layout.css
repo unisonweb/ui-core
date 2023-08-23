@@ -43,6 +43,21 @@
   overflow: auto;
 }
 
+.page.tabbed-layout {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+  grid-template-areas: "tabbed-layout_header tabbed-layout_tab-list page-content";
+  overflow: auto;
+}
+
+.page.tabbed-layout .tabbed-layout_header {
+  grid-area: tabbed-layout_header;
+}
+
+.page.tabbed-layout .tabbed-layout_tab-list {
+  grid-area: tabbed-layout_tab-list;
+}
+
 .page.presentation-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
@@ -166,6 +181,13 @@
   padding: 3rem 0 1.5rem 0;
 }
 
+.page.tabbed-layout .page-content {
+  width: 52.75rem;
+  margin: auto;
+  padding: 3rem 0 1.5rem 0;
+}
+
+
 /* @todo :has */
 .page .page-content .page-title .has_icon {
   display: flex;
@@ -262,6 +284,7 @@
 
 .page.centered-layout .page-footer,
 .page.centered-narrow-layout .page-footer,
+.page.tabbed-layout .page-footer,
 .page.presentation-layout .page-footer {
   justify-content: center;
 }
@@ -404,6 +427,7 @@
   .page.edge-to-edge-layout .page-content,
   .page.centered-layout .page-content,
   .page.centered-narrow-layout .page-content,
+  .page.tabbed-layout .page-content,
   .page.presentation-layout .page-content {
     width: 100%;
     overflow: initial;
@@ -416,6 +440,7 @@
 
   .page.centered-layout .page-content,
   .page.centered-narrow-layout .page-content,
+  .page.tabbed-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.presentation-layout .page-content {
@@ -451,6 +476,7 @@
 @media only screen and (--u-viewport_max-sm) {
   .page.centered-layout .page-content,
   .page.centered-narrow-layout .page-content,
+  .page.tabbed-layout .page-content,
   .page.sidebar-left-content-layout .page-content,
   .page.hero-layout .page-content,
   .page.presentation-layout .page-content {

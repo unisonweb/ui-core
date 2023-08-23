@@ -363,7 +363,7 @@ view page =
                 , bgClassName backgroundColor
                 ]
                 [ header [ class "tabbed-layout_header" ] [ PageTitle.view pageTitle ]
-                , TabList.view tabList
+                , div [ class "tabbed-layout_tab-list" ] [ TabList.view tabList ]
                 , PageContent.view_ (viewPageFooter footer) content
                 ]
 
