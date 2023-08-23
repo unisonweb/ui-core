@@ -48,6 +48,7 @@
   --u-color_border: var(--color-gray-lighten-40);
   --u-color_border_hovered: var(--color-gray-lighten-20);
   --u-color_border_subdued: var(--color-gray-lighten-45);
+  --u-color_border_emphasized: var(--color-gray-darken-30);
   --u-color_interactive: var(--color-blue-1);
   --u-color_interactive_hovered: var(--color-blue-2);
   --u-color_interactive_pressed: var(--color-pink-1);

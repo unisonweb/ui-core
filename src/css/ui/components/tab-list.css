@@ -1,0 +1,38 @@
+.tab-list {
+  --c-color_tabs_text: var(--u-color_text_subdued);
+  --c-color_tabs_border: var(--u-color_border_subdued);
+
+  --c-color_tabs_text_selected: var(--u-color_text_emphasized);
+  --c-color_tabs_border_selected: var(--u-color_border_emphasized);
+
+  --c-color_tabs_text_hovered: var(--u-color_interactive);
+  --c-color_tabs_border_hovered: var(--u-color_border_hovered);
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  align-items: center;
+  box-shadow: inset 0 -1px 0 1px var(--c-color_tabs_border);
+}
+
+.tab-list .tab {
+  height: 2rem;
+  padding: 0 0.75rem;
+  line-height: 1;
+  font-size: var(--font-size-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--c-color_tabs_text);
+}
+
+.tab-list .tab.tab_selected {
+  color: var(--c-color_tabs_text_selected);
+  box-shadow: inset 0 -1px 0 1px var(--c-color_tabs_border_selected);
+}
+
+.tab-list .tab:not(.tab_selected):hover {
+  color: var(--c-color_tabs_text_hovered);
+  box-shadow: inset 0 -1px 0 1px var(--c-color_tabs_border_hovered);
+}
