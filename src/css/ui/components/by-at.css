@@ -10,3 +10,8 @@
 .by-at .profile-snippet {
   --color_profile-snippet_text: var(--u-color_text_subdued);
 }
+
+.by-at .by-at_at {
+  /* Total hack, not sure why its 1px of..*/
+  padding-top: 1px;
+}

@@ -77,5 +77,5 @@ view (ByAt by at) =
     Keyed.node "div"
         [ class "by-at" ]
         [ by_
-        , ( DateTime.toISO8601 at, span [] [ DateTime.view DateTime.Distance at, text " ago" ] )
+        , ( DateTime.toISO8601 at, span [ class "by-at_at" ] [ DateTime.view DateTime.Distance at, text " ago" ] )
         ]
