@@ -13,6 +13,7 @@
 .nudge.with-number .nudge_circle {
   min-width: 1rem;
   width: auto;
+  padding: 0 0.25rem;
   height: 1rem;
   border-radius: 0.5rem;
   display: flex;
