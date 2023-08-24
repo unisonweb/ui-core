@@ -18,6 +18,7 @@ module UI.DateTime exposing
     )
 
 import DateFormat
+import DateFormat.Relative
 import Html exposing (Html, node, text)
 import Html.Attributes exposing (attribute)
 import Iso8601
@@ -33,6 +34,7 @@ type DateTimeFormat
     = ShortDate
     | LongDate
     | Distance
+    | DistanceFrom DateTime
     | TimeWithSeconds24Hour
     | TimeWithSeconds12Hour
     | FullDateTime
@@ -159,6 +161,9 @@ toString format zone (DateTime p) =
                 ]
                 zone
                 p
+
+        DistanceFrom (DateTime from) ->
+            DateFormat.Relative.relativeTime from p
 
         _ ->
             ""
