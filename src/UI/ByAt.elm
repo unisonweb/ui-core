@@ -11,12 +11,13 @@
 -}
 
 
-module UI.ByAt exposing (ByAt, byAt, handleOnly, view)
+module UI.ByAt exposing (ByAt, byAt, handleOnly, view, view_)
 
-import Html exposing (Html, span, text)
+import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class)
 import Html.Keyed as Keyed
 import Lib.UserHandle as UserHandle exposing (UserHandle)
+import Time
 import UI.DateTime as DateTime exposing (DateTime)
 import UI.ProfileSnippet as ProfileSnippet
 import Url exposing (Url)
@@ -52,8 +53,25 @@ handleOnly handle dateTime =
 -- VIEW
 
 
-view : ByAt u -> Html msg
-view (ByAt by at) =
+view : Time.Zone -> DateTime -> ByAt u -> Html msg
+view zone now (ByAt by at) =
+    let
+        profileSnippet =
+            by
+                |> ProfileSnippet.profileSnippet
+                |> ProfileSnippet.small
+                |> ProfileSnippet.view
+    in
+    div
+        [ class "by-at" ]
+        [ profileSnippet
+        , span [ class "by-at_at" ]
+            [ text (DateTime.toString (DateTime.DistanceFrom now) zone at) ]
+        ]
+
+
+view_ : ByAt u -> Html msg
+view_ (ByAt by at) =
     let
         handle =
             UserHandle.toString by.handle
@@ -77,5 +95,8 @@ view (ByAt by at) =
     Keyed.node "div"
         [ class "by-at" ]
         [ by_
-        , ( DateTime.toISO8601 at, span [ class "by-at_at" ] [ DateTime.view DateTime.Distance at, text " ago" ] )
+        , ( DateTime.toISO8601 at
+          , span [ class "by-at_at" ]
+                [ DateTime.view DateTime.Distance at, text " ago" ]
+          )
         ]

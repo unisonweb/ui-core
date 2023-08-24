@@ -96,6 +96,11 @@ toISO8601 (DateTime t) =
     Iso8601.fromTime t
 
 
+{-| TODO: This is kind of silly, but zone isn't needed for DistanceFrom', so maybe it
+should be inside the format instead of a param. Changing that will not work
+with the webcomponent. When the webcomponent can be deprecated, we can move to
+that
+-}
 toString : DateTimeFormat -> Time.Zone -> DateTime -> String
 toString format zone (DateTime p) =
     case format of
