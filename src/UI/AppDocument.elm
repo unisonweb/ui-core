@@ -78,10 +78,15 @@ viewAnnouncement content =
 
 
 view : AppDocument msg -> Document msg
-view { pageId, title, announcement, appHeader, pageHeader, page, modal } =
+view appDoc =
+    view_ appDoc []
+
+
+view_ : AppDocument msg -> List (Html msg) -> Document msg
+view_ { pageId, title, announcement, appHeader, pageHeader, page, modal } extra =
     { title = title ++ " | Unison Share"
     , body =
-        [ div
+        div
             [ id "app"
             , class pageId
             ]
@@ -91,5 +96,5 @@ view { pageId, title, announcement, appHeader, pageHeader, page, modal } =
             , page
             , Maybe.withDefault UI.nothing modal
             ]
-        ]
+            :: extra
     }
