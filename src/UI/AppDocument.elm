@@ -1,4 +1,4 @@
-module UI.AppDocument exposing (AppDocument, appDocument, map, view, withAnnouncement)
+module UI.AppDocument exposing (AppDocument, appDocument, map, view, view_, withAnnouncement)
 
 import Browser exposing (Document)
 import Html exposing (Html, div)
