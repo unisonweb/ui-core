@@ -4,9 +4,14 @@ import Html exposing (Html, div, h3, text)
 import Html.Attributes exposing (class)
 
 
+type SurfaceBackgroundColor
+    = SurfaceBackground
+    | SurfaceBackgroundSubdued
+
+
 type CardType
     = Contained
-    | ContainedWithFade
+    | ContainedWithFade SurfaceBackgroundColor
     | Uncontained
 
 
@@ -58,7 +63,12 @@ asContained card_ =
 
 asContainedWithFade : Card msg -> Card msg
 asContainedWithFade card_ =
-    { card_ | type_ = ContainedWithFade }
+    asContainedWithFade_ SurfaceBackgroundSubdued card_
+
+
+asContainedWithFade_ : SurfaceBackgroundColor -> Card msg -> Card msg
+asContainedWithFade_ surfaceBg card_ =
+    { card_ | type_ = ContainedWithFade surfaceBg }
 
 
 withTitle : String -> Card msg -> Card msg
@@ -113,8 +123,11 @@ view card_ =
                 Contained ->
                     "contained"
 
-                ContainedWithFade ->
-                    "contained-with-fade"
+                ContainedWithFade SurfaceBackground ->
+                    "contained-with-fade contained-with-fade_surface-background"
+
+                ContainedWithFade SurfaceBackgroundSubdued ->
+                    "contained-with-fade contained-with-fade_surface-background-subdued"
 
                 Uncontained ->
                     "uncontained"

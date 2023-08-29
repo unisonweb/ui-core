@@ -38,9 +38,15 @@
   height: 2rem;
 }
 
-.card.contained-with-fade {
-  /* @todo figure out how to configure this... */
+.card.contained-with-fade.contained-with-fade_surface-background {
+  --color-card-on-surface-bg: var(--u-color_background);
+}
+
+.card.contained-with-fade.contained-with-fade_surface-background-subdued {
   --color-card-on-surface-bg: var(--u-color_background_subdued);
+}
+
+.card.contained-with-fade {
   padding: 4rem 0;
   background: linear-gradient(
         var(--color-card-bg),
