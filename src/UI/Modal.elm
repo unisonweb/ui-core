@@ -3,6 +3,7 @@ module UI.Modal exposing
     , Modal
     , content
     , customContent
+    , map
     , modal
     , modal_
     , view
@@ -13,7 +14,7 @@ module UI.Modal exposing
     )
 
 import Html exposing (Attribute, Html, a, div, footer, h2, header, section, text)
-import Html.Attributes exposing (class, id, tabindex)
+import Html.Attributes as Attributes exposing (class, id, tabindex)
 import Html.Events exposing (on, onClick)
 import Json.Decode as Decode
 import UI
@@ -37,6 +38,10 @@ type alias Modal msg =
         }
     , content : Content msg
     }
+
+
+
+-- CREATE
 
 
 modal : String -> msg -> Content msg -> Modal msg
@@ -63,6 +68,38 @@ content =
 customContent : Html msg -> Content msg
 customContent =
     CustomContent
+
+
+
+-- MAP
+
+
+mapContent : (a -> b) -> Content a -> Content b
+mapContent f content_ =
+    case content_ of
+        Content h ->
+            Content (Html.map f h)
+
+        CustomContent h ->
+            CustomContent (Html.map f h)
+
+
+map : (a -> b) -> Modal a -> Modal b
+map f m =
+    { id = m.id
+    , closeMsg = Maybe.map f m.closeMsg
+    , attributes = List.map (Attributes.map f) m.attributes
+    , header = Maybe.map (Html.map f) m.header
+    , footer =
+        { leftSide = List.map (Html.map f) m.footer.leftSide
+        , actions = List.map (Button.map f) m.footer.actions
+        }
+    , content = mapContent f m.content
+    }
+
+
+
+-- MODIFY
 
 
 withClose : msg -> Modal msg -> Modal msg
@@ -96,6 +133,10 @@ withActions actions modal__ =
 withAttributes : List (Attribute msg) -> Modal msg -> Modal msg
 withAttributes attrs modal__ =
     { modal__ | attributes = modal__.attributes ++ attrs }
+
+
+
+-- VIEW
 
 
 view : Modal msg -> Html msg
