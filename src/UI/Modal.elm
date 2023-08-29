@@ -9,6 +9,7 @@ module UI.Modal exposing
     , withActions
     , withAttributes
     , withHeader
+    , withLeftSideFooter
     )
 
 import Html exposing (Attribute, Html, a, div, footer, h2, header, section, text)
@@ -72,6 +73,15 @@ withClose closeMsg modal__ =
 withHeader : String -> Modal msg -> Modal msg
 withHeader title modal__ =
     { modal__ | header = Just (text title) }
+
+
+withLeftSideFooter : List (Html msg) -> Modal msg -> Modal msg
+withLeftSideFooter leftSide modal__ =
+    let
+        footer_ =
+            modal__.footer
+    in
+    { modal__ | footer = { footer_ | leftSide = leftSide } }
 
 
 withActions : List (Button msg) -> Modal msg -> Modal msg
