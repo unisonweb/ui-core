@@ -7,6 +7,7 @@
     "exposed-modules": [
         "UI.AppDocument",
         "UI.AppHeader",
+        "UI.ExternalLinkIcon",
         "UI.Color",
         "UI.Sizing",
         "UI.Sidebar",
