@@ -257,6 +257,11 @@ toUrlString v =
     toString_ "." v
 
 
+toNamespaceString : Version -> String
+toNamespaceString v =
+    toString_ "_" v
+
+
 toString_ : String -> Version -> String
 toString_ sep v =
     v
