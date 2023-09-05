@@ -11,11 +11,10 @@
 -}
 
 
-module UI.ByAt exposing (ByAt, byAt, handleOnly, view, view_)
+module UI.ByAt exposing (ByAt, byAt, handleOnly, view)
 
 import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class)
-import Html.Keyed as Keyed
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Time
 import UI.DateTime as DateTime exposing (DateTime)
@@ -31,8 +30,13 @@ type alias User u =
     }
 
 
+type By u
+    = ByUser (User u)
+    | ByHandle UserHandle
+
+
 type ByAt u
-    = ByAt (User u) DateTime
+    = ByAt (By u) DateTime
 
 
 
@@ -41,12 +45,12 @@ type ByAt u
 
 byAt : User u -> DateTime -> ByAt u
 byAt =
-    ByAt
+    ByUser >> ByAt
 
 
 handleOnly : UserHandle -> DateTime -> ByAt {}
 handleOnly handle dateTime =
-    ByAt { handle = handle, name = Nothing, avatarUrl = Nothing } dateTime
+    ByAt (ByHandle handle) dateTime
 
 
 
@@ -57,46 +61,19 @@ view : Time.Zone -> DateTime -> ByAt u -> Html msg
 view zone now (ByAt by at) =
     let
         profileSnippet =
-            by
-                |> ProfileSnippet.profileSnippet
-                |> ProfileSnippet.small
-                |> ProfileSnippet.view
+            case by of
+                ByUser u ->
+                    u
+                        |> ProfileSnippet.profileSnippet
+                        |> ProfileSnippet.small
+                        |> ProfileSnippet.view
+
+                ByHandle h ->
+                    text (UserHandle.toString h)
     in
     div
         [ class "by-at" ]
         [ profileSnippet
         , span [ class "by-at_at" ]
             [ text (DateTime.toString (DateTime.DistanceFrom now) zone at) ]
-        ]
-
-
-view_ : ByAt u -> Html msg
-view_ (ByAt by at) =
-    let
-        handle =
-            UserHandle.toString by.handle
-
-        profileSnippet =
-            by
-                |> ProfileSnippet.profileSnippet
-                |> ProfileSnippet.small
-                |> ProfileSnippet.view
-
-        by_ =
-            ( handle, profileSnippet )
-    in
-    {-
-       Q: Why is this using Keyed?
-       A: Since DateTime.view uses a WebComponent under the hood to do the
-          distance rendering, Elm freaks out when this page changes after a
-          release is published an a runtime error happens. Keyed ensures that
-          Elm treats new DOM nodes correctly.
-    -}
-    Keyed.node "div"
-        [ class "by-at" ]
-        [ by_
-        , ( DateTime.toISO8601 at
-          , span [ class "by-at_at" ]
-                [ DateTime.view DateTime.Distance at, text " ago" ]
-          )
         ]
