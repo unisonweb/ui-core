@@ -20,6 +20,7 @@ module Code.Version exposing
     , nextPatch
     , patch
     , toList
+    , toNamespaceString
     , toString
     , toUrlString
     , unsafeFromString
