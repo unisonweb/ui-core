@@ -12,8 +12,6 @@ module UI.Modal exposing
     , withDimOverlay
     , withHeader
     , withLeftSideFooter
-    , withMaybeStatusBanner
-    , withStatusBanner
     )
 
 import Html exposing (Attribute, Html, a, div, footer, h2, header, section, text)
@@ -23,7 +21,6 @@ import Json.Decode as Decode
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Icon as Icon
-import UI.StatusBanner as StatusBanner exposing (StatusBanner)
 
 
 type Content msg
@@ -126,21 +123,6 @@ withLeftSideFooter leftSide modal__ =
             modal__.footer
     in
     { modal__ | footer = { footer_ | leftSide = leftSide } }
-
-
-withStatusBanner : StatusBanner -> Modal msg -> Modal msg
-withStatusBanner statusBanner modal__ =
-    withLeftSideFooter [ StatusBanner.view statusBanner ] modal__
-
-
-withMaybeStatusBanner : Maybe StatusBanner -> Modal msg -> Modal msg
-withMaybeStatusBanner mStatusBanner modal__ =
-    case mStatusBanner of
-        Just sb ->
-            withStatusBanner sb modal__
-
-        Nothing ->
-            modal__
 
 
 withDimOverlay : Bool -> Modal msg -> Modal msg
