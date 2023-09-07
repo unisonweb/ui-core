@@ -110,7 +110,7 @@
 }
 
 .text-field.text-field_is-invalid .help-text {
-  color: var(--u-color_text_critical);
+  color: var(--u-color_critical_text);
 }
 
 /* -- RadioField ----------------------------------------------------------- */
