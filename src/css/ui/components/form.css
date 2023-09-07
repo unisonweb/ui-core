@@ -109,6 +109,10 @@
   box-shadow: 0 0 0 2px var(--c-color_form-field_focus-outline);
 }
 
+.text-field.text-field_is-invalid .help-text {
+  color: var(--u-color_text_critical);
+}
+
 /* -- RadioField ----------------------------------------------------------- */
 
 .radio-field {
