@@ -255,12 +255,12 @@ view textField =
             MaybeE.unwrap UI.nothing (\ht -> small [ class "help-text" ] [ text ht ]) textField.helpText
 
         isInvalid =
-            case textField.isValid of
-                Nothing ->
-                    False
-
-                Just v ->
+            case ( String.isEmpty textField.value, textField.isValid ) of
+                ( False, Just v ) ->
                     not (v textField.value)
+
+                _ ->
+                    False
     in
     div
         [ class "form-field text-field"
