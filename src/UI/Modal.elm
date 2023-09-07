@@ -20,6 +20,7 @@ import Json.Decode as Decode
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Icon as Icon
+import UI.StatusBanner as StatusBanner exposing (StatusBanner)
 
 
 type Content msg
@@ -37,6 +38,7 @@ type alias Modal msg =
         , actions : List (Button msg)
         }
     , content : Content msg
+    , dimOverlay : Bool
     }
 
 
@@ -57,6 +59,7 @@ modal_ id content_ =
     , header = Nothing
     , footer = { leftSide = [], actions = [] }
     , content = content_
+    , dimOverlay = False
     }
 
 
@@ -95,6 +98,7 @@ map f m =
         , actions = List.map (Button.map f) m.footer.actions
         }
     , content = mapContent f m.content
+    , dimOverlay = m.dimOverlay
     }
 
 
@@ -119,6 +123,16 @@ withLeftSideFooter leftSide modal__ =
             modal__.footer
     in
     { modal__ | footer = { footer_ | leftSide = leftSide } }
+
+
+withStatusBanner : StatusBanner msg -> Modal msg -> Modal msg
+withStatusBanner statusBanner modal__ =
+    withLeftSideFooter [ StatusBanner.view statusBanner ] modal__
+
+
+withDimOverlay : Bool -> Modal msg -> Modal msg
+withDimOverlay dimOverlay_ modal__ =
+    { modal__ | dimOverlay = dimOverlay_ }
 
 
 withActions : List (Button msg) -> Modal msg -> Modal msg
@@ -182,7 +196,10 @@ view modal__ =
     in
     view_
         modal__.closeMsg
-        (id modal__.id :: modal__.attributes)
+        (id modal__.id
+            :: classList [ ( "modal_dim-overlay", modal__.dimOverlay ) ]
+            :: modal__.attributes
+        )
         [ header_, content_, footer_ ]
 
 

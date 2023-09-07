@@ -49,6 +49,18 @@
   font-size: var(--font-size-medium);
 }
 
+.modal.modal_dim-overlay:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-modal-bg);
+  opacity: 0.85;
+  content: " ";
+  border-radius: var(--border-radius-base);
+}
+
 .modal-header {
   padding: 1.5rem;
   display: flex;
@@ -102,6 +114,11 @@
   justify-self: flex-end;
   align-items: center;
   gap: 0.5rem;
+}
+
+.modal-footer .modal-footer_left-side .status-banner {
+  position: relative;
+  z-index: var(--layer-base);
 }
 
 .modal-footer .modal-footer_actions {
