@@ -9,12 +9,15 @@ module UI.Modal exposing
     , view
     , withActions
     , withAttributes
+    , withDimOverlay
     , withHeader
     , withLeftSideFooter
+    , withMaybeStatusBanner
+    , withStatusBanner
     )
 
 import Html exposing (Attribute, Html, a, div, footer, h2, header, section, text)
-import Html.Attributes as Attributes exposing (class, id, tabindex)
+import Html.Attributes as Attributes exposing (class, classList, id, tabindex)
 import Html.Events exposing (on, onClick)
 import Json.Decode as Decode
 import UI
