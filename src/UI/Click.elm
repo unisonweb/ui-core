@@ -3,15 +3,25 @@ module UI.Click exposing (..)
 import Html exposing (Attribute, Html, a)
 import Html.Attributes as Attrs exposing (class, rel, target)
 import Html.Events as Events
-import Html.Events.Extra exposing (onClickPreventDefault, onClickPreventDefaultAndStopPropagation, onClickStopPropagation)
+import Html.Events.Extra
+    exposing
+        ( onClickPreventDefault
+        , onClickPreventDefaultAndStopPropagation
+        , onClickStopPropagation
+        )
 
 
 type alias OnClickSettings =
     { stopPropagation : Bool, preventDefault : Bool }
 
 
+type Target
+    = Self
+    | Blank
+
+
 type Click msg
-    = ExternalHref String
+    = ExternalHref Target String
     | Href String -- Internal route
     | OnClick msg OnClickSettings
     | Disabled
@@ -33,7 +43,12 @@ onClick msg =
 
 externalHref : String -> Click msg
 externalHref href_ =
-    ExternalHref href_
+    ExternalHref Blank href_
+
+
+externalHref_ : Target -> String -> Click msg
+externalHref_ target href_ =
+    ExternalHref target href_
 
 
 href : String -> Click msg
@@ -53,8 +68,8 @@ disabled =
 map : (a -> msg) -> Click a -> Click msg
 map toMsg click_ =
     case click_ of
-        ExternalHref href_ ->
-            ExternalHref href_
+        ExternalHref target href_ ->
+            ExternalHref target href_
 
         Href href_ ->
             Href href_
@@ -115,8 +130,11 @@ withOnClickSettings settings click =
 attrs : Click msg -> List (Attribute msg)
 attrs click =
     case click of
-        ExternalHref href_ ->
+        ExternalHref Blank href_ ->
             [ Attrs.href href_, rel "noopener", target "_blank" ]
+
+        ExternalHref Self href_ ->
+            [ Attrs.href href_ ]
 
         Href href_ ->
             [ Attrs.href href_ ]
