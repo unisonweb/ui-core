@@ -26,15 +26,14 @@ type Msg
 
 sampleNavItem : N.NavItem Msg
 sampleNavItem =
-    N.navItem "some" (C.ExternalHref "some")
+    N.navItem "some" (C.ExternalHref C.Self "some")
 
 
 sampleNavItems : List (N.NavItem Msg)
 sampleNavItems =
-    [ C.ExternalHref "link 1" |> N.navItem "item 1"
-    , C.ExternalHref "link 2" |> N.navItem "item 2"
-    , C.ExternalHref "link 3" |> N.navItem "item 3"
-    , C.ExternalHref "link 4" |> N.navItem "item 4"
+    [ C.ExternalHref C.Self "link 1" |> N.navItem "item 1"
+    , C.ExternalHref C.Self "link 2" |> N.navItem "item 2"
+    , C.ExternalHref C.Self "link 3" |> N.navItem "item 3"
     ]
 
 
@@ -45,7 +44,7 @@ elements =
         N.empty
     , N.withItems
         (List.take 2 sampleNavItems)
-        (C.ExternalHref "link 3" |> N.navItem "item 3")
+        (C.ExternalHref C.Self "link 3" |> N.navItem "item 3")
         (List.drop 3 sampleNavItems)
         N.empty
     , N.withNoSelectedItems
