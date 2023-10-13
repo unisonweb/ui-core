@@ -1,4 +1,4 @@
-module UI.AppDocument exposing (AppDocument, appDocument, map, view, withAnnouncement)
+module UI.AppDocument exposing (AppDocument, appDocument, map, view, view_, withAnnouncement)
 
 import Browser exposing (Document)
 import Html exposing (Html, div)
@@ -78,10 +78,15 @@ viewAnnouncement content =
 
 
 view : AppDocument msg -> Document msg
-view { pageId, title, announcement, appHeader, pageHeader, page, modal } =
+view appDoc =
+    view_ appDoc []
+
+
+view_ : AppDocument msg -> List (Html msg) -> Document msg
+view_ { pageId, title, announcement, appHeader, pageHeader, page, modal } extra =
     { title = title ++ " | Unison Share"
     , body =
-        [ div
+        div
             [ id "app"
             , class pageId
             ]
@@ -91,5 +96,5 @@ view { pageId, title, announcement, appHeader, pageHeader, page, modal } =
             , page
             , Maybe.withDefault UI.nothing modal
             ]
-        ]
+            :: extra
     }

@@ -10,25 +10,13 @@ import UI.Icon as Icon
 type alias CopyField msg =
     { prefix : Maybe String
     , toCopy : String
-
-    -- TODO: hook up this to actually be called by something lol
-    , onCopy : Maybe (String -> msg)
+    , onCopy : String -> msg
     }
 
 
 copyField : (String -> msg) -> String -> CopyField msg
 copyField onCopy toCopy =
-    copyField_ (Just onCopy) toCopy
-
-
-copyField_ : Maybe (String -> msg) -> String -> CopyField msg
-copyField_ onCopy toCopy =
     { prefix = Nothing, toCopy = toCopy, onCopy = onCopy }
-
-
-withOnCopy : (String -> msg) -> CopyField msg -> CopyField msg
-withOnCopy onCopy field =
-    { field | onCopy = Just onCopy }
 
 
 withPrefix : String -> CopyField msg -> CopyField msg
@@ -63,7 +51,7 @@ view field =
                     []
                 ]
             ]
-        , copyButton field.toCopy
+        , copyButton field.onCopy field.toCopy
         ]
 
 
@@ -74,7 +62,8 @@ view field =
 {-| We're not using UI.Button here since a click handler is added from
 the webcomponent in JS land.
 -}
-copyButton : String -> Html msg
-copyButton toCopy =
-    CopyOnClick.view toCopy
+copyButton : (String -> msg) -> String -> Html msg
+copyButton onCopyMsg toCopy =
+    CopyOnClick.view onCopyMsg
+        toCopy
         (button [ class "button contained default" ] [ Icon.view Icon.clipboard ])

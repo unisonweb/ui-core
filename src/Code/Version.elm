@@ -20,6 +20,7 @@ module Code.Version exposing
     , nextPatch
     , patch
     , toList
+    , toNamespaceString
     , toString
     , toUrlString
     , unsafeFromString
@@ -255,6 +256,11 @@ toString v =
 toUrlString : Version -> String
 toUrlString v =
     toString_ "." v
+
+
+toNamespaceString : Version -> String
+toNamespaceString v =
+    toString_ "_" v
 
 
 toString_ : String -> Version -> String

@@ -18,6 +18,19 @@ asCard emptyState =
         |> Card.asContainedWithFade
 
 
+asCard_ : Card.SurfaceBackgroundColor -> EmptyState msg -> Card msg
+asCard_ surfaceBackground emptyState =
+    Card.card
+        [ div [ class "empty-state-card" ] [ EmptyState.view emptyState ]
+        ]
+        |> Card.asContainedWithFade_ surfaceBackground
+
+
 view : EmptyState msg -> Html msg
 view =
     asCard >> Card.view
+
+
+view_ : Card.SurfaceBackgroundColor -> EmptyState msg -> Html msg
+view_ surfaceBackground emptyState =
+    emptyState |> asCard_ surfaceBackground |> Card.view

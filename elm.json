@@ -7,10 +7,12 @@
     "exposed-modules": [
         "UI.AppDocument",
         "UI.AppHeader",
+        "UI.ExternalLinkIcon",
         "UI.Color",
         "UI.Sizing",
         "UI.Sidebar",
         "UI.ByAt",
+        "UI.MillerColumns",
         "UI.Banner",
         "UI.CopyField",
         "UI.EmptyStateCard",

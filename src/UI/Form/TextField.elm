@@ -5,6 +5,7 @@ import Html.Attributes
     exposing
         ( autofocus
         , class
+        , classList
         , maxlength
         , minlength
         , placeholder
@@ -37,6 +38,7 @@ type alias TextField msg =
     , minlength : Maybe Int
     , autofocus : Bool
     , value : String
+    , isValid : Maybe (String -> Bool)
     , clearMsg : Maybe msg
     }
 
@@ -67,6 +69,7 @@ field_ onInput label placeholder value =
     , minlength = Nothing
     , autofocus = False
     , value = value
+    , isValid = Nothing
     , clearMsg = Nothing
     }
 
@@ -112,6 +115,11 @@ withRows nl textField =
 withIcon : Icon msg -> TextField msg -> TextField msg
 withIcon icon tf =
     withTextFieldIcon (TextFieldIcon icon) tf
+
+
+withIsValid : (String -> Bool) -> TextField msg -> TextField msg
+withIsValid isValid tf =
+    { tf | isValid = Just isValid }
 
 
 withStatusIndicator : StatusIndicator -> TextField msg -> TextField msg
@@ -184,6 +192,7 @@ map f t =
     , minlength = t.minlength
     , autofocus = t.autofocus
     , value = t.value
+    , isValid = t.isValid
     , clearMsg = Maybe.map f t.clearMsg
     }
 
@@ -244,6 +253,17 @@ view textField =
 
         helpText_ =
             MaybeE.unwrap UI.nothing (\ht -> small [ class "help-text" ] [ text ht ]) textField.helpText
+
+        isInvalid =
+            case ( String.isEmpty textField.value, textField.isValid ) of
+                ( False, Just v ) ->
+                    not (v textField.value)
+
+                _ ->
+                    False
     in
-    div [ class "form-field text-field" ]
+    div
+        [ class "form-field text-field"
+        , classList [ ( "text-field_is-invalid", isInvalid ) ]
+        ]
         [ label_, input_, helpText_ ]

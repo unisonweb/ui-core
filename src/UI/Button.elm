@@ -221,7 +221,7 @@ view { content, color, click, size, isActive } =
         OnClick _ _ ->
             Html.button (Click.attrs click ++ attrs) content_
 
-        ExternalHref _ ->
+        ExternalHref _ _ ->
             a (attrs ++ Click.attrs click) content_
 
         Href _ ->
