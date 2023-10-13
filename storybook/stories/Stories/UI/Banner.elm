@@ -24,7 +24,7 @@ type alias Msg =
 elements : List (B.Banner Msg)
 elements =
     [ B.info "Info"
-    , B.promotion "Promotion ID" "Content" (C.ExternalHref "https://unison-lang.org") "Link"
+    , B.promotion "Promotion ID" "Content" (C.ExternalHref C.Blank "https://unison-lang.org") "Link"
     ]
 
 
