@@ -106,7 +106,6 @@ update message model =
         GotItem _ reference result ->
             case result of
                 Err error ->
-                    Debug.log (Debug.toString error)
                         ( model, Cmd.none )
 
                 Ok item ->

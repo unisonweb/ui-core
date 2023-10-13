@@ -12,6 +12,7 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "storybook-dark-mode",
+    'storybook-css-modules-preset',
     {
       name: "@storybook/addon-styling",
       options: {

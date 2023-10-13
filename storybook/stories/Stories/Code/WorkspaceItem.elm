@@ -74,7 +74,6 @@ update msg model =
         GotItem result ->
             case result of
                 Err error ->
-                    Debug.log (Debug.toString error)
                         ( model, Cmd.none )
 
                 Ok item ->
