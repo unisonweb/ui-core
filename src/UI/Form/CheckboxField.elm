@@ -19,9 +19,18 @@ type alias CheckboxField msg =
 -- CREATE
 
 
-field : String -> Maybe String -> msg -> Bool -> CheckboxField msg
-field =
-    CheckboxField
+field : String -> msg -> Bool -> CheckboxField msg
+field label onChange checked =
+    CheckboxField label Nothing onChange checked
+
+
+
+-- MODIFY
+
+
+withHelpText : String -> CheckboxField msg -> CheckboxField msg
+withHelpText helpText field_ =
+    { field_ | helpText = Just helpText }
 
 
 
