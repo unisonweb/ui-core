@@ -25,6 +25,7 @@
         "UI.Navigation",
         "UI.Card",
         "UI.FoldToggle",
+        "UI.Form.CheckboxField",
         "UI.Form.TextField",
         "UI.Form.RadioField",
         "UI.PageLayout",
