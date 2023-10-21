@@ -528,7 +528,12 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                             viewAtCurrentSectionLevel d
 
                         ds ->
-                            span [ class "span" ] (List.map viewAtCurrentSectionLevel (mergeWords " " ds))
+                            span [ class "span" ]
+                                (ds
+                                    |> mergeWords " "
+                                    |> List.map viewAtCurrentSectionLevel
+                                    |> List.intersperse (text " ")
+                                )
 
                 BulletedList items ->
                     let

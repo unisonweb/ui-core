@@ -45,14 +45,6 @@
   --color-doc-content-border: var(--color-doc-focus-content-border);
 }
 
-.definition-doc .word {
-  margin-right: 0.5ch;
-}
-
-.definition-doc .group .doc_join > :last-child {
-  margin-left: -0.5ch;
-}
-
 .definition-doc .doc_group .doc_join {
   white-space: pre-line;
 }
@@ -126,7 +118,6 @@
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
   display: inline-block;
   padding: 0 0.25rem;
-  margin-right: 0.5ch;
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   white-space: nowrap;
