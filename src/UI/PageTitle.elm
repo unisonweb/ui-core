@@ -8,7 +8,7 @@ import UI.Icon as Icon exposing (Icon)
 type Title msg
     = Title
         { icon : Maybe (Icon msg)
-        , title : String
+        , title : Html msg
         , description : Maybe (Html msg)
         }
     | CustomTitle (List (Html msg))
@@ -25,12 +25,23 @@ type alias PageTitle msg =
 
 
 title : String -> PageTitle msg
-title title_ =
-    let
-        title__ =
-            Title { icon = Nothing, title = title_, description = Nothing }
-    in
-    { title = title__, rightSide = [] }
+title title__ =
+    { title =
+        Title { icon = Nothing, title = text title__, description = Nothing }
+    , rightSide = []
+    }
+
+
+title_ : Html msg -> PageTitle msg
+title_ title__ =
+    { title =
+        Title
+            { icon = Nothing
+            , title = title__
+            , description = Nothing
+            }
+    , rightSide = []
+    }
 
 
 custom : List (Html msg) -> PageTitle msg
@@ -89,12 +100,12 @@ withRightSide rightSide pageTitle_ =
 
 
 mapTitle : (a -> b) -> Title a -> Title b
-mapTitle f title_ =
-    case title_ of
+mapTitle f title__ =
+    case title__ of
         Title t ->
             Title
                 { icon = Maybe.map (Icon.map f) t.icon
-                , title = t.title
+                , title = Html.map f t.title
                 , description = Maybe.map (Html.map f) t.description
                 }
 
@@ -114,8 +125,8 @@ map f pageTitle_ =
 
 
 viewTitle : Title msg -> Html msg
-viewTitle title_ =
-    case title_ of
+viewTitle title__ =
+    case title__ of
         Title t ->
             let
                 viewTitle_ attrs content =
@@ -123,12 +134,12 @@ viewTitle title_ =
             in
             case ( t.icon, t.description ) of
                 ( Nothing, Nothing ) ->
-                    viewTitle_ [] [ h1 [] [ text t.title ] ]
+                    viewTitle_ [] [ h1 [] [ t.title ] ]
 
                 ( Nothing, Just d ) ->
                     viewTitle_ []
                         [ div [ class "text" ]
-                            [ h1 [] [ text t.title ]
+                            [ h1 [] [ t.title ]
                             , p [ class "description" ] [ d ]
                             ]
                         ]
@@ -136,14 +147,14 @@ viewTitle title_ =
                 ( Just i, Nothing ) ->
                     viewTitle_ [ class "has_icon" ]
                         [ div [ class "icon-badge" ] [ Icon.view i ]
-                        , h1 [] [ text t.title ]
+                        , h1 [] [ t.title ]
                         ]
 
                 ( Just i, Just d ) ->
                     viewTitle_ [ class "has_icon" ]
                         [ div [ class "icon-badge" ] [ Icon.view i ]
                         , div [ class "text" ]
-                            [ h1 [] [ text t.title ]
+                            [ h1 [] [ t.title ]
                             , p [ class "description" ] [ d ]
                             ]
                         ]
