@@ -27,6 +27,13 @@ type TextFieldIcon msg
     | TextFieldStatusIndicator StatusIndicator
 
 
+type Validity
+    = None
+    | ValidityCheck (String -> Bool)
+    | MarkedAsValid
+    | MarkedAsInvalid
+
+
 type alias TextField msg =
     { onInput : String -> msg
     , icon : TextFieldIcon msg
@@ -38,7 +45,7 @@ type alias TextField msg =
     , minlength : Maybe Int
     , autofocus : Bool
     , value : String
-    , isValid : Maybe (String -> Bool)
+    , validity : Validity
     , clearMsg : Maybe msg
     }
 
@@ -69,7 +76,7 @@ field_ onInput label placeholder value =
     , minlength = Nothing
     , autofocus = False
     , value = value
-    , isValid = Nothing
+    , validity = None
     , clearMsg = Nothing
     }
 
@@ -117,9 +124,19 @@ withIcon icon tf =
     withTextFieldIcon (TextFieldIcon icon) tf
 
 
-withIsValid : (String -> Bool) -> TextField msg -> TextField msg
-withIsValid isValid tf =
-    { tf | isValid = Just isValid }
+withValidityCheck : (String -> Bool) -> TextField msg -> TextField msg
+withValidityCheck isValid tf =
+    { tf | validity = ValidityCheck isValid }
+
+
+markAsValid : TextField msg -> TextField msg
+markAsValid tf =
+    { tf | validity = MarkedAsValid }
+
+
+markAsInvalid : TextField msg -> TextField msg
+markAsInvalid tf =
+    { tf | validity = MarkedAsInvalid }
 
 
 withStatusIndicator : StatusIndicator -> TextField msg -> TextField msg
@@ -192,7 +209,7 @@ map f t =
     , minlength = t.minlength
     , autofocus = t.autofocus
     , value = t.value
-    , isValid = t.isValid
+    , validity = t.validity
     , clearMsg = Maybe.map f t.clearMsg
     }
 
@@ -255,12 +272,22 @@ view textField =
             MaybeE.unwrap UI.nothing (\ht -> small [ class "help-text" ] [ text ht ]) textField.helpText
 
         isInvalid =
-            case ( String.isEmpty textField.value, textField.isValid ) of
-                ( False, Just v ) ->
-                    not (v textField.value)
-
-                _ ->
+            case textField.validity of
+                None ->
                     False
+
+                MarkedAsValid ->
+                    False
+
+                MarkedAsInvalid ->
+                    True
+
+                ValidityCheck check ->
+                    if not (String.isEmpty textField.value) then
+                        not (check textField.value)
+
+                    else
+                        False
     in
     div
         [ class "form-field text-field"
