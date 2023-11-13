@@ -167,7 +167,6 @@ view p =
             [ class "project-listing"
             , class (sizeClass p.size)
             , classList [ ( "project-listing_subdued", p.subdued ) ]
-            , ariaLabel (ProjectRef.toString p.project.ref)
             ]
 
         hashvatar =
@@ -184,6 +183,9 @@ view p =
 
                 _ ->
                     UI.nothing
+
+        ariaLabel_ =
+            ariaLabel (ProjectRef.toString p.project.ref)
     in
     case p.click of
         NoClick ->
@@ -194,7 +196,7 @@ view p =
                 ]
 
         ProjectClick c ->
-            Click.view attrs
+            Click.view (ariaLabel_ :: attrs)
                 [ hashvatar
                 , ProjectRef.view p.project.ref
                 , privateIcon
@@ -203,7 +205,7 @@ view p =
 
         ProjectAndHandleClick c ->
             div attrs
-                [ Click.view [] [ hashvatar ] (c.ref p.project.ref)
+                [ Click.view [ ariaLabel_ ] [ hashvatar ] (c.ref p.project.ref)
                 , ProjectRef.viewClickable c.handle c.ref p.project.ref
                 , privateIcon
                 ]
