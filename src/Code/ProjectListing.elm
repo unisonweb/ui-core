@@ -5,6 +5,7 @@ import Code.Project as Project exposing (Project)
 import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
+import Lib.Aria exposing (ariaLabel)
 import Lib.UserHandle exposing (UserHandle)
 import UI
 import UI.Click as Click exposing (Click)
@@ -166,6 +167,7 @@ view p =
             [ class "project-listing"
             , class (sizeClass p.size)
             , classList [ ( "project-listing_subdued", p.subdued ) ]
+            , ariaLabel (ProjectRef.toString p.project.ref)
             ]
 
         hashvatar =
