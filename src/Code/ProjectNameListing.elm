@@ -37,8 +37,8 @@ type alias ProjectNameListing msg =
 -- CREATE
 
 
-projectListing : ProjectName -> ProjectNameListing msg
-projectListing projectName =
+projectNameListing : ProjectName -> ProjectNameListing msg
+projectNameListing projectName =
     { projectName = projectName, click = NoClick, size = Medium, subdued = False }
 
 
