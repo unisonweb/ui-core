@@ -65,8 +65,6 @@
         "src/Code/Namespace.elm",
         "src/Code/Namespace/NamespaceRef.elm",
         "src/Code/Perspective.elm",
-        "src/Code/Project.elm",
-        "src/Code/Project/ProjectRef.elm",
         "src/Code/BranchRef.elm",
         "src/Code/ProjectListing.elm",
         "src/Code/Syntax.elm",

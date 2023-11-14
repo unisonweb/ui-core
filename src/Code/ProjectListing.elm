@@ -1,15 +1,13 @@
 module Code.ProjectListing exposing (..)
 
 import Code.Hashvatar as Hashvatar
-import Code.Project as Project exposing (Project)
-import Code.Project.ProjectRef as ProjectRef exposing (ProjectRef)
+import Code.Project.ProjectName as ProjectName exposing (ProjectName)
+import Code.Project.ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
 import Lib.Aria exposing (ariaLabel)
 import Lib.UserHandle exposing (UserHandle)
-import UI
 import UI.Click as Click exposing (Click)
-import UI.Icon as Icon
 
 
 type ProjectListingSize
@@ -20,15 +18,15 @@ type ProjectListingSize
 
 type ProjectListingClick msg
     = NoClick
-    | ProjectClick (ProjectRef -> Click msg)
+    | ProjectClick (ProjectName -> Click msg)
     | ProjectAndHandleClick
         { handle : UserHandle -> Click msg
-        , ref : ProjectRef -> Click msg
+        , slug : ProjectSlug -> Click msg
         }
 
 
-type alias ProjectListing p msg =
-    { project : Project p
+type alias ProjectListing msg =
+    { projectName : ProjectName
     , click : ProjectListingClick msg
     , size : ProjectListingSize
     , subdued : Bool
@@ -39,50 +37,50 @@ type alias ProjectListing p msg =
 -- CREATE
 
 
-projectListing : Project p -> ProjectListing p msg
-projectListing project =
-    { project = project, click = NoClick, size = Medium, subdued = False }
+projectListing : ProjectName -> ProjectListing msg
+projectListing projectName =
+    { projectName = projectName, click = NoClick, size = Medium, subdued = False }
 
 
 
 -- MODIFY
 
 
-withClick : (UserHandle -> Click msg) -> (ProjectRef -> Click msg) -> ProjectListing p msg -> ProjectListing p msg
-withClick handleClick projectClick p =
+withClick : (UserHandle -> Click msg) -> (ProjectSlug -> Click msg) -> ProjectListing msg -> ProjectListing msg
+withClick handleClick projectSlugClick p =
     { p
         | click =
             ProjectAndHandleClick
-                { handle = handleClick, ref = projectClick }
+                { handle = handleClick, slug = projectSlugClick }
     }
 
 
-withProjectClick : (ProjectRef -> Click msg) -> ProjectListing p msg -> ProjectListing p msg
+withProjectClick : (ProjectName -> Click msg) -> ProjectListing msg -> ProjectListing msg
 withProjectClick click p =
     { p | click = ProjectClick click }
 
 
-withSize : ProjectListingSize -> ProjectListing p msg -> ProjectListing p msg
+withSize : ProjectListingSize -> ProjectListing msg -> ProjectListing msg
 withSize size p =
     { p | size = size }
 
 
-medium : ProjectListing p msg -> ProjectListing p msg
+medium : ProjectListing msg -> ProjectListing msg
 medium p =
     withSize Medium p
 
 
-large : ProjectListing p msg -> ProjectListing p msg
+large : ProjectListing msg -> ProjectListing msg
 large p =
     withSize Large p
 
 
-huge : ProjectListing p msg -> ProjectListing p msg
+huge : ProjectListing msg -> ProjectListing msg
 huge p =
     withSize Huge p
 
 
-subdued : ProjectListing p msg -> ProjectListing p msg
+subdued : ProjectListing msg -> ProjectListing msg
 subdued p =
     { p | subdued = True }
 
@@ -103,13 +101,13 @@ mapClick f click =
         ProjectAndHandleClick c ->
             ProjectAndHandleClick
                 { handle = c.handle >> Click.map f
-                , ref = c.ref >> Click.map f
+                , slug = c.slug >> Click.map f
                 }
 
 
-map : (aMsg -> bMsg) -> ProjectListing p aMsg -> ProjectListing p bMsg
+map : (aMsg -> bMsg) -> ProjectListing aMsg -> ProjectListing bMsg
 map f p =
-    { project = p.project
+    { projectName = p.projectName
     , click = mapClick f p.click
     , size = p.size
     , subdued = p.subdued
@@ -133,8 +131,8 @@ sizeClass size =
             "project-listing-size_huge"
 
 
-viewSubdued : ProjectListing p msg -> Html msg
-viewSubdued { project, size, click } =
+viewSubdued : ProjectListing msg -> Html msg
+viewSubdued { projectName, size, click } =
     let
         attrs =
             [ class "project-listing project-listing_subdued", class (sizeClass size) ]
@@ -143,24 +141,24 @@ viewSubdued { project, size, click } =
         NoClick ->
             div attrs
                 [ Hashvatar.empty
-                , ProjectRef.view project.ref
+                , ProjectName.view projectName
                 ]
 
         ProjectClick c ->
             Click.view attrs
                 [ Hashvatar.empty
-                , ProjectRef.view project.ref
+                , ProjectName.view projectName
                 ]
-                (c project.ref)
+                (c projectName)
 
         ProjectAndHandleClick c ->
             div attrs
-                [ Click.view [] [ Hashvatar.empty ] (c.ref project.ref)
-                , ProjectRef.viewClickable c.handle c.ref project.ref
+                [ Click.view [] [ Hashvatar.empty ] (c.slug (ProjectName.slug projectName))
+                , ProjectName.viewClickable c.handle c.slug projectName
                 ]
 
 
-view : ProjectListing p msg -> Html msg
+view : ProjectListing msg -> Html msg
 view p =
     let
         attrs =
@@ -174,38 +172,27 @@ view p =
                 Hashvatar.empty
 
             else
-                ProjectRef.viewHashvatar p.project.ref
-
-        privateIcon =
-            case p.project.visibility of
-                Project.Private ->
-                    div [ class "project-listing_private-icon" ] [ Icon.view Icon.eyeSlash ]
-
-                _ ->
-                    UI.nothing
+                ProjectName.viewHashvatar p.projectName
 
         ariaLabel_ =
-            ariaLabel (ProjectRef.toString p.project.ref)
+            ariaLabel (ProjectName.toString p.projectName)
     in
     case p.click of
         NoClick ->
             div attrs
                 [ hashvatar
-                , ProjectRef.view p.project.ref
-                , privateIcon
+                , ProjectName.view p.projectName
                 ]
 
         ProjectClick c ->
             Click.view (ariaLabel_ :: attrs)
                 [ hashvatar
-                , ProjectRef.view p.project.ref
-                , privateIcon
+                , ProjectName.view p.projectName
                 ]
-                (c p.project.ref)
+                (c p.projectName)
 
         ProjectAndHandleClick c ->
             div attrs
-                [ Click.view [ ariaLabel_ ] [ hashvatar ] (c.ref p.project.ref)
-                , ProjectRef.viewClickable c.handle c.ref p.project.ref
-                , privateIcon
+                [ Click.view [ ariaLabel_ ] [ hashvatar ] (c.slug (ProjectName.slug p.projectName))
+                , ProjectName.viewClickable c.handle c.slug p.projectName
                 ]

@@ -2,7 +2,6 @@ module Code.Branch exposing (..)
 
 import Code.BranchRef as BranchRef exposing (BranchRef)
 import Code.Hash as Hash exposing (Hash)
-import Code.Project as Project exposing (Project)
 import Json.Decode as Decode
 import Json.Decode.Pipeline exposing (required)
 import UI.DateTime as DateTime exposing (DateTime)
@@ -17,12 +16,12 @@ type alias Branch b =
     }
 
 
-type alias BranchSummary =
-    Branch { project : Project {} }
+type alias BranchSummary p =
+    Branch { project : p }
 
 
-decodeSummary : Decode.Decoder BranchSummary
-decodeSummary =
+decodeSummary : Decode.Decoder p -> Decode.Decoder (BranchSummary p)
+decodeSummary projectDecoder =
     let
         makeBranch branchRef project createdAt updatedAt causalHash =
             { ref = branchRef
@@ -34,7 +33,7 @@ decodeSummary =
     in
     Decode.succeed makeBranch
         |> required "branchRef" BranchRef.decode
-        |> required "project" Project.decode
+        |> required "project" projectDecoder
         |> required "createdAt" DateTime.decode
         |> required "updatedAt" DateTime.decode
         |> required "causalHash" Hash.decode

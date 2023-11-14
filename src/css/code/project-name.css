@@ -1,0 +1,29 @@
+.project-name {
+  --c-color_project-name_handle: var(--u-color_text_subdued);
+  --c-color_project-name_separator: var(--u-color_text_very-subdued);
+  --c-color_project-name_slug: var(--u-color_text);
+
+  font-weight: bold;
+  display: inline-flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.project-name .project-name_handle {
+  color: var(--c-color_project-name_handle);
+  white-space: nowrap;
+}
+
+.project-name .project-name_separator {
+  color: var(--c-color_project-name_separator);
+}
+
+.project-name .project-name_slug {
+  color: var(--c-color_project-name_slug);
+  white-space: nowrap;
+}
+
+.project-name a.project-name_handle:hover,
+.project-name a.project-name_slug:hover {
+  color: var(--u-color_interactive_hovered);
+}
