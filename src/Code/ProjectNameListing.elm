@@ -122,20 +122,20 @@ sizeClass : ProjectNameListingSize -> String
 sizeClass size =
     case size of
         Medium ->
-            "project-listing-size_medium"
+            "project-name-listing-size_medium"
 
         Large ->
-            "project-listing-size_large"
+            "project-name-listing-size_large"
 
         Huge ->
-            "project-listing-size_huge"
+            "project-name-listing-size_huge"
 
 
 viewSubdued : ProjectNameListing msg -> Html msg
 viewSubdued { projectName, size, click } =
     let
         attrs =
-            [ class "project-listing project-listing_subdued", class (sizeClass size) ]
+            [ class "project-name-listing project-name-listing_subdued", class (sizeClass size) ]
     in
     case click of
         NoClick ->
@@ -162,9 +162,9 @@ view : ProjectNameListing msg -> Html msg
 view p =
     let
         attrs =
-            [ class "project-listing"
+            [ class "project-name-listing"
             , class (sizeClass p.size)
-            , classList [ ( "project-listing_subdued", p.subdued ) ]
+            , classList [ ( "project-name-listing_subdued", p.subdued ) ]
             ]
 
         hashvatar =
