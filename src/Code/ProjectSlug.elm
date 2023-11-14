@@ -1,4 +1,4 @@
-module Code.Project.ProjectSlug exposing
+module Code.ProjectSlug exposing
     ( ProjectSlug
     , decode
     , equals

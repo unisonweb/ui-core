@@ -1,4 +1,4 @@
-.project-listing {
+.project-name-listing {
   display: inline-flex;
   width: fit-content;
   flex-direction: row;
@@ -9,72 +9,75 @@
   height: 1.5rem;
   line-height: 0;
 
-  --c-color_project-listing_private-icon: var(
+  --c-color_project-name-listing_private-icon: var(
     --u-color_info_icon-on-element_subdued
   );
-  --c-color_project-listing_private-icon_background: var(
+  --c-color_project-name-listing_private-icon_background: var(
     --u-color_info_element_subdued
   );
 }
 
-.project-listing.project-listing-size_large {
+.project-name-listing.project-name-listing-size_large {
   font-size: var(--font-size-base);
   gap: 0.625rem;
 }
 
-.project-listing.project-listing-size_huge {
+.project-name-listing.project-name-listing-size_huge {
   font-size: 1.125rem;
   gap: 0.75rem;
 }
 
-.project-listing.project-listing-size_huge .hashvatar {
+.project-name-listing.project-name-listing-size_huge .hashvatar {
   width: 2rem;
   height: 2rem;
 }
 
-.project-listing .hashvatar {
+.project-name-listing .hashvatar {
   transition: all 0.2s;
 }
 
-.project-listing a > .hashvatar:hover {
+.project-name-listing a > .hashvatar:hover {
   transform: scale3d(1.1, 1.1, 1.1);
 }
 
-.project-listing a:has(.hashvatar:hover) + .project-name .project-name_slug {
+.project-name-listing
+  a:has(.hashvatar:hover)
+  + .project-name
+  .project-name_slug {
   color: var(--u-color_interactive_hovered);
 }
 
-a.project-listing {
+a.project-name-listing {
   padding-right: 0.375rem;
   /* border-radius is halved, because it is going to appear as dobbled 
    * when applied via the box-shadow on hover */
   border-radius: calc(var(--border-radius-base) / 2);
 }
 
-a.project-listing * {
+a.project-name-listing * {
   cursor: pointer;
 }
 
-a.project-listing:hover {
+a.project-name-listing:hover {
   text-decoration: none;
   background: var(--u-color_element_hovered);
   box-shadow: 0 0 0 0.25rem var(--u-color_element_hovered);
 }
 
-.project-listing.project-listing_subdued {
+.project-name-listing.project-name-listing_subdued {
   color: var(--u-color_text_subdued);
 }
 
-.project-listing .project-listing_private-icon {
+.project-name-listing .project-name-listing_private-icon {
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 0.75rem;
-  background: var(--c-color_project-listing_private-icon_background);
+  background: var(--c-color_project-name-listing_private-icon_background);
   display: inline-flex;
   place-content: center;
   place-items: center;
 }
 
-.project-listing .project-listing_private-icon .icon {
-  color: var(--c-color_project-listing_private-icon);
+.project-name-listing .project-name-listing_private-icon .icon {
+  color: var(--c-color_project-name-listing_private-icon);
 }

@@ -1,8 +1,8 @@
-module Code.ProjectListing exposing (..)
+module Code.ProjectNameListing exposing (..)
 
 import Code.Hashvatar as Hashvatar
-import Code.Project.ProjectName as ProjectName exposing (ProjectName)
-import Code.Project.ProjectSlug exposing (ProjectSlug)
+import Code.ProjectName as ProjectName exposing (ProjectName)
+import Code.ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class, classList)
 import Lib.Aria exposing (ariaLabel)
@@ -10,13 +10,13 @@ import Lib.UserHandle exposing (UserHandle)
 import UI.Click as Click exposing (Click)
 
 
-type ProjectListingSize
+type ProjectNameListingSize
     = Medium
     | Large
     | Huge
 
 
-type ProjectListingClick msg
+type ProjectNameListingClick msg
     = NoClick
     | ProjectClick (ProjectName -> Click msg)
     | ProjectAndHandleClick
@@ -25,10 +25,10 @@ type ProjectListingClick msg
         }
 
 
-type alias ProjectListing msg =
+type alias ProjectNameListing msg =
     { projectName : ProjectName
-    , click : ProjectListingClick msg
-    , size : ProjectListingSize
+    , click : ProjectNameListingClick msg
+    , size : ProjectNameListingSize
     , subdued : Bool
     }
 
@@ -37,7 +37,7 @@ type alias ProjectListing msg =
 -- CREATE
 
 
-projectListing : ProjectName -> ProjectListing msg
+projectListing : ProjectName -> ProjectNameListing msg
 projectListing projectName =
     { projectName = projectName, click = NoClick, size = Medium, subdued = False }
 
@@ -46,7 +46,7 @@ projectListing projectName =
 -- MODIFY
 
 
-withClick : (UserHandle -> Click msg) -> (ProjectSlug -> Click msg) -> ProjectListing msg -> ProjectListing msg
+withClick : (UserHandle -> Click msg) -> (ProjectSlug -> Click msg) -> ProjectNameListing msg -> ProjectNameListing msg
 withClick handleClick projectSlugClick p =
     { p
         | click =
@@ -55,32 +55,32 @@ withClick handleClick projectSlugClick p =
     }
 
 
-withProjectClick : (ProjectName -> Click msg) -> ProjectListing msg -> ProjectListing msg
+withProjectClick : (ProjectName -> Click msg) -> ProjectNameListing msg -> ProjectNameListing msg
 withProjectClick click p =
     { p | click = ProjectClick click }
 
 
-withSize : ProjectListingSize -> ProjectListing msg -> ProjectListing msg
+withSize : ProjectNameListingSize -> ProjectNameListing msg -> ProjectNameListing msg
 withSize size p =
     { p | size = size }
 
 
-medium : ProjectListing msg -> ProjectListing msg
+medium : ProjectNameListing msg -> ProjectNameListing msg
 medium p =
     withSize Medium p
 
 
-large : ProjectListing msg -> ProjectListing msg
+large : ProjectNameListing msg -> ProjectNameListing msg
 large p =
     withSize Large p
 
 
-huge : ProjectListing msg -> ProjectListing msg
+huge : ProjectNameListing msg -> ProjectNameListing msg
 huge p =
     withSize Huge p
 
 
-subdued : ProjectListing msg -> ProjectListing msg
+subdued : ProjectNameListing msg -> ProjectNameListing msg
 subdued p =
     { p | subdued = True }
 
@@ -89,7 +89,7 @@ subdued p =
 -- MAP
 
 
-mapClick : (aMsg -> bMsg) -> ProjectListingClick aMsg -> ProjectListingClick bMsg
+mapClick : (aMsg -> bMsg) -> ProjectNameListingClick aMsg -> ProjectNameListingClick bMsg
 mapClick f click =
     case click of
         NoClick ->
@@ -105,7 +105,7 @@ mapClick f click =
                 }
 
 
-map : (aMsg -> bMsg) -> ProjectListing aMsg -> ProjectListing bMsg
+map : (aMsg -> bMsg) -> ProjectNameListing aMsg -> ProjectNameListing bMsg
 map f p =
     { projectName = p.projectName
     , click = mapClick f p.click
@@ -118,7 +118,7 @@ map f p =
 -- VIEW
 
 
-sizeClass : ProjectListingSize -> String
+sizeClass : ProjectNameListingSize -> String
 sizeClass size =
     case size of
         Medium ->
@@ -131,7 +131,7 @@ sizeClass size =
             "project-listing-size_huge"
 
 
-viewSubdued : ProjectListing msg -> Html msg
+viewSubdued : ProjectNameListing msg -> Html msg
 viewSubdued { projectName, size, click } =
     let
         attrs =
@@ -158,7 +158,7 @@ viewSubdued { projectName, size, click } =
                 ]
 
 
-view : ProjectListing msg -> Html msg
+view : ProjectNameListing msg -> Html msg
 view p =
     let
         attrs =

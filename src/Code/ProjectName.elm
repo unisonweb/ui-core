@@ -1,8 +1,8 @@
-module Code.Project.ProjectName exposing (..)
+module Code.ProjectName exposing (..)
 
 import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
-import Code.Project.ProjectSlug as ProjectSlug exposing (ProjectSlug)
+import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, label, span, text)
 import Html.Attributes exposing (class, title)
 import Json.Decode as Decode
@@ -18,6 +18,11 @@ type ProjectName
 
 
 -- CREATE
+
+
+projectName : Maybe UserHandle -> ProjectSlug -> ProjectName
+projectName =
+    ProjectName
 
 
 {-| ProjectNames can include a handle when being parsed.
