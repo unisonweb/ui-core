@@ -29,10 +29,10 @@
   --color_avatar: var(--color-gray-base);
 }
 
-.page-header.view-mode_regular .project-ref {
-  --c-color_project-ref_handle: var(--c-color_page-header_text_subdued);
-  --c-color_project-ref_separator: var(--c-color_page-header_text_very-subdued);
-  --c-color_project-ref_slug: var(--c-color_page-header_text);
+.page-header.view-mode_regular .project-name {
+  --c-color_project-name_handle: var(--c-color_page-header_text_subdued);
+  --c-color_project-name_separator: var(--c-color_page-header_text_very-subdued);
+  --c-color_project-name_slug: var(--c-color_page-header_text);
 }
 
 .page-header.view-mode_regular .project-name-listing {
