@@ -58,11 +58,19 @@
 }
 
 .empty-state .empty-state_icon-cloud_center-piece_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--u-color_element_emphasized);
+  position: absolute;
+  box-shadow: 0 0 0 0.25rem var(--u-color_element_emphasized);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -25%);
   width: 4rem;
   height: 4rem;
   border-radius: 2rem;
-  box-shadow: 0 0 0 0.25rem var(--u-color_element_emphasized);
-  display: flex;
+  font-size: 2rem;
   line-height: 1;
 }
 
