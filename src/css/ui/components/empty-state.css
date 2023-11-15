@@ -64,6 +64,19 @@
   box-shadow: 0 0 0 0.25rem var(--u-color_element_emphasized);
 }
 
+.empty-state .empty-state_icon-cloud_center-piece.center-piece_icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
+  box-shadow: 0 0 0 0.25rem var(--u-color_element_emphasized);
+  display: flex;
+  line-height: 1;
+}
+
+.empty-state .empty-state_icon-cloud_center-piece.center-piece_icon .icon {
+  font-size: 2rem;
+}
+
 /* -- Search --------------------------------------------------------------- */
 
 /* @todo :has */

@@ -2,12 +2,14 @@ module UI.EmptyState exposing (..)
 
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
+import UI.Icon as Icon exposing (Icon)
 import UI.OnSurface as OnSurface exposing (OnSurface)
 
 
 type CenterPiece msg
     = CircleCenterPiece (Html msg)
     | CustomCenterPiece (Html msg)
+    | IconCenterPiece (Icon msg)
 
 
 type IllustrationType msg
@@ -86,6 +88,14 @@ view es =
                             [ div [ class "empty-state_icon-cloud_center-piece_circle" ]
                                 [ content ]
                             ]
+                        ]
+                    , class "has_empty-state_icon-cloud"
+                    )
+
+                IconCloud (IconCenterPiece icon) ->
+                    ( div [ class "empty-state_icon-cloud" ]
+                        [ div [ class "empty-state_icon-cloud_center-piece_icon" ]
+                            [ Icon.view icon ]
                         ]
                     , class "has_empty-state_icon-cloud"
                     )
