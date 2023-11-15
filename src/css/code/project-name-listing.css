@@ -8,13 +8,6 @@
   font-size: var(--font-size-medium);
   height: 1.5rem;
   line-height: 0;
-
-  --c-color_project-name-listing_private-icon: var(
-    --u-color_info_icon-on-element_subdued
-  );
-  --c-color_project-name-listing_private-icon_background: var(
-    --u-color_info_element_subdued
-  );
 }
 
 .project-name-listing.project-name-listing-size_large {
@@ -66,18 +59,4 @@ a.project-name-listing:hover {
 
 .project-name-listing.project-name-listing_subdued {
   color: var(--u-color_text_subdued);
-}
-
-.project-name-listing .project-name-listing_private-icon {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 0.75rem;
-  background: var(--c-color_project-name-listing_private-icon_background);
-  display: inline-flex;
-  place-content: center;
-  place-items: center;
-}
-
-.project-name-listing .project-name-listing_private-icon .icon {
-  color: var(--c-color_project-name-listing_private-icon);
 }
