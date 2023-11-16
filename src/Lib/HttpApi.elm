@@ -7,6 +7,7 @@ module Lib.HttpApi exposing
     , HttpApi
     , HttpResult
     , apiUrlFromString
+    , baseApiUrl
     , defaultTimeout
     , httpApi
     , httpApi_
@@ -111,6 +112,11 @@ apiUrlFromString withCredentials s =
 
     else
         sameOrigin
+
+
+baseApiUrl : HttpApi -> String
+baseApiUrl api =
+    toUrl api.url (GET { path = [], queryParams = [] })
 
 
 {-| An Endpoint represents a description of an API Endpoint with Http Method,
