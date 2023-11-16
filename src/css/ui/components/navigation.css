@@ -18,6 +18,10 @@
   cursor: pointer;
 }
 
+.navigation .nav-item_content .nav-item_short-label {
+  display: none;
+}
+
 .navigation .nav-item_content,
 .navigation .nav-item_inner-content {
   display: flex;
@@ -54,4 +58,14 @@
 
 .navigation .nav-item_secondary {
   line-height: var(--line-height-base);
+}
+
+@media only screen and (--u-viewport_max-sm) {
+  .navigation .nav-item_content .nav-item_short-label {
+    display: flex;
+  }
+
+  .navigation .nav-item_content .nav-item_full-label {
+    display: none;
+  }
 }

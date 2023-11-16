@@ -8,6 +8,7 @@ module UI.Navigation exposing
     , navItemWithButton
     , navItemWithIcon
     , navItemWithNudge
+    , navItemWithShortLabel
     , navItemWithTag
     , navItemWithTooltip
     , selected
@@ -53,6 +54,9 @@ type NavItemSecondaryContent msg
 type alias NavItem msg =
     { icon : Maybe (Icon msg)
     , label : String
+
+    -- Renders on smaller screens
+    , shortLabel : String
     , secondary : NavItemSecondaryContent msg
     , nudge : Nudge msg
     , click : Click msg
@@ -73,6 +77,7 @@ navItem : String -> Click msg -> NavItem msg
 navItem label click =
     { icon = Nothing
     , label = label
+    , shortLabel = label
     , secondary = NoContent
     , nudge = Nudge.NoNudge
     , click = click
@@ -103,6 +108,11 @@ navItemWithTag tag item =
 navItemWithButton : Button msg -> NavItem msg -> NavItem msg
 navItemWithButton button item =
     { item | secondary = ButtonContent button }
+
+
+navItemWithShortLabel : String -> NavItem msg -> NavItem msg
+navItemWithShortLabel shortLabel item =
+    { item | shortLabel = shortLabel }
 
 
 navItemWithAnchoredOverlay : AnchoredOverlay msg -> NavItem msg -> NavItem msg
@@ -153,6 +163,7 @@ mapNavItem : (a -> msg) -> NavItem a -> NavItem msg
 mapNavItem toMsg navItemA =
     { icon = Maybe.map (Icon.map toMsg) navItemA.icon
     , label = navItemA.label
+    , shortLabel = navItemA.shortLabel
     , secondary = mapNavItemSecondaryContent toMsg navItemA.secondary
     , nudge = Nudge.map toMsg navItemA.nudge
     , click = Click.map toMsg navItemA.click
@@ -189,7 +200,7 @@ selected nav =
 
 
 viewItem : Bool -> Bool -> NavItem msg -> Html msg
-viewItem condensed isSelected { icon, label, secondary, nudge, tooltip, click } =
+viewItem condensed isSelected { icon, label, shortLabel, secondary, nudge, tooltip, click } =
     let
         secondaryContent =
             if condensed then
@@ -217,6 +228,12 @@ viewItem condensed isSelected { icon, label, secondary, nudge, tooltip, click } 
 
         withTooltip c =
             MaybeE.unwrap c (Tooltip.view c) tooltip
+
+        label_ =
+            span [ class "nav-item_label" ]
+                [ span [ class "nav-item_full-label" ] [ text label ]
+                , span [ class "nav-item_short-label" ] [ text shortLabel ]
+                ]
     in
     case secondaryContent of
         Just secondary_ ->
@@ -224,7 +241,7 @@ viewItem condensed isSelected { icon, label, secondary, nudge, tooltip, click } 
                 [ span [ class "nav-item_content" ]
                     [ Click.view
                         [ class "nav-item_click-target" ]
-                        [ withTooltip (span [ class "nav-item_inner-content" ] [ icon_, text label ]) ]
+                        [ withTooltip (span [ class "nav-item_inner-content" ] [ icon_, label_ ]) ]
                         click
                     , div [ class "nav-item_secondary" ] [ secondary_ ]
                     , Nudge.view nudge
@@ -236,7 +253,7 @@ viewItem condensed isSelected { icon, label, secondary, nudge, tooltip, click } 
                 content =
                     span [ class "nav-item_content" ]
                         [ MaybeE.unwrap UI.nothing Icon.view icon
-                        , text label
+                        , label_
                         , Nudge.view nudge
                         ]
             in
