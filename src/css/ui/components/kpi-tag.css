@@ -35,10 +35,11 @@
   font-family: var(--font-monospace);
   font-size: var(--font-size-small);
   color: var(--c-color_kpi-tag_kpi);
+  margin-top: 2px;
 }
 
 .kpi-tag .icon {
-  font-size: var(--font-size-small);
+  font-size: var(--font-size-base);
   color: var(--c-color_kpi-tag_icon);
 }
 
