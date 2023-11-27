@@ -315,9 +315,9 @@ isShowFinderKeyboardShortcut os shortcut =
         KeyboardShortcut.Chord Meta (K _) ->
             os == OperatingSystem.MacOS
 
-        {- Sequence _ ForwardSlash ->
-           True
-        -}
+        Sequence _ ForwardSlash ->
+            True
+
         _ ->
             False
 

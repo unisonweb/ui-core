@@ -47,10 +47,14 @@ import Html
 import Html.Attributes
     exposing
         ( alt
+        , attribute
+        , autoplay
         , class
         , classList
+        , controls
         , href
         , id
+        , loop
         , poster
         , rel
         , src
@@ -64,6 +68,7 @@ import Lib.EmbedKatex as EmbedKatex
 import Lib.EmbedSvg as EmbedSvg
 import Lib.MermaidDiagram as MermaidDiagram
 import Lib.TreePath as TreePath exposing (TreePath)
+import Maybe.Extra as MaybeE
 import Set exposing (Set)
 import UI
 import UI.Click as Click
@@ -695,14 +700,14 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                                     List.map viewMediaSource mediaSources
 
                                 videoAttrs =
-                                    case Dict.get "poster" attrs of
-                                        Just poster_ ->
-                                            [ poster poster_ ]
-
-                                        Nothing ->
-                                            []
+                                    [ Dict.get "poster" attrs |> Maybe.map poster
+                                    , Dict.get "controls" attrs |> Maybe.map (always (controls True))
+                                    , Dict.get "autoplay" attrs |> Maybe.map (always (autoplay True))
+                                    , Dict.get "muted" attrs |> Maybe.map (\_ -> attribute "muted" "muted")
+                                    , Dict.get "loop" attrs |> Maybe.map (always (loop True))
+                                    ]
                             in
-                            video videoAttrs sources
+                            video (MaybeE.values videoAttrs) sources
 
                         FrontMatter _ ->
                             -- FrontMatter shouldn't be shown when rendered
