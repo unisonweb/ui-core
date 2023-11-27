@@ -50,7 +50,7 @@
   --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
 
   /* @color-todo */
-  & .nav-item .tag {
+  & .nav-item_with-tag .tag {
     background: var(--color-gray-darken-30);
     color: var(--color-gray-lighten-100);
   }

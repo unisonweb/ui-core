@@ -209,7 +209,7 @@ viewItem condensed isSelected { icon, label, shortLabel, secondary, nudge, toolt
             else
                 case secondary of
                     TagContent tag ->
-                        Just (Tag.view tag)
+                        Just (div [ class "nav-item_with-tag" ] [ Tag.view tag ])
 
                     ButtonContent button ->
                         button
