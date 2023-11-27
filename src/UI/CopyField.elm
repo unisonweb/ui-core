@@ -67,3 +67,4 @@ copyButton onCopyMsg toCopy =
     CopyOnClick.view onCopyMsg
         toCopy
         (button [ class "button contained default" ] [ Icon.view Icon.clipboard ])
+        (div [ class "copy-field_success" ] [ Icon.view Icon.checkmark ])

@@ -10,6 +10,7 @@
 @import "./components/modal.css";
 @import "./components/codebase-tree.css";
 @import "./components/copy-field.css";
+@import "./components/copy-on-click.css";
 @import "./components/keyboard-shortcuts.css";
 @import "./components/badges.css";
 @import "./components/divider.css";

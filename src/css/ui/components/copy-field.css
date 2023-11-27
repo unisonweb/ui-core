@@ -15,6 +15,25 @@
   font-family: var(--font-monospace);
 
   --height-without-border: calc(2.25rem - 2px);
+
+  & .copy-field_success {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--u-color_positive_element);
+    border-radius: 0 var(--border-radius-base) var(--border-radius-base) 0;
+
+    & .icon {
+      font-size: 1.5rem;
+      color: var(--u-color_positive_icon-on-element);
+    }
+  }
 }
 
 .copy-field .copy-field-field {

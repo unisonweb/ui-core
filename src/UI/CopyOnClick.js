@@ -13,6 +13,10 @@ class CopyOnClick extends HTMLElement {
       // writeText returns a promise with success/failure that we should
       // probably do something with...
       navigator.clipboard.writeText(text);
+      this.classList.add("copy-success");
+      setTimeout(() => {
+        this.classList.remove("copy-success");
+      }, 1500);
     });
   }
 

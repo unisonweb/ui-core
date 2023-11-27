@@ -1,0 +1,15 @@
+.copy-on-click {
+  position: relative;
+
+  & .copy-on-click_success {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s;
+  }
+}
+
+.copy-on-click.copy-success {
+  & .copy-on-click_success {
+    opacity: 1;
+  }
+}
