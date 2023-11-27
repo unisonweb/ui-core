@@ -48,6 +48,12 @@
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_selected: var(--color-transparent);
   --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
+
+  /* @color-todo */
+  & .tag {
+    background: var(--color-gray-darken-30);
+    color: var(--color-gray-lighten-100);
+  }
 }
 
 /* In Presentation Mode the header gets a light theme treatment and made semi
