@@ -11,9 +11,9 @@
 -}
 
 
-module UI.ByAt exposing (ByAt, byAt, handleOnly, view)
+module UI.ByAt exposing (ByAt, byAt, byUnknown, handleOnly, view)
 
-import Html exposing (Html, div, span, text)
+import Html exposing (Html, div, em, span, text)
 import Html.Attributes exposing (class)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Time
@@ -33,6 +33,7 @@ type alias User u =
 type By u
     = ByUser (User u)
     | ByHandle UserHandle
+    | ByUnknown
 
 
 type ByAt u
@@ -53,6 +54,11 @@ handleOnly handle dateTime =
     ByAt (ByHandle handle) dateTime
 
 
+byUnknown : DateTime -> ByAt {}
+byUnknown dateTime =
+    ByAt ByUnknown dateTime
+
+
 
 -- VIEW
 
@@ -70,6 +76,9 @@ view zone now (ByAt by at) =
 
                 ByHandle h ->
                     text (UserHandle.toString h)
+
+                ByUnknown ->
+                    em [] [ text "Unknown user" ]
     in
     div
         [ class "by-at" ]
