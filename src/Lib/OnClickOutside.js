@@ -11,6 +11,8 @@ class OnClickOutside extends HTMLElement {
     this.onMouseDown = (e) => {
       const style = window.getComputedStyle(this);
 
+      console.log("click");
+
       // If the element isn't visible, there's no point in triggering the
       // clickoutside event. This is useful when multiple variants of a
       // clickoutside is active for the same UI (one for desktop and one for
@@ -19,13 +21,18 @@ class OnClickOutside extends HTMLElement {
         return;
       }
 
+
       const isOutside = !document
         .getElementById("on-click-outside")
         .contains(e.target)
 
       if (isOutside) {
+        console.log("its outside...");
         const event = new CustomEvent("clickOutside");
         this.dispatchEvent(event);
+      }
+      else {
+        console.log("its NOT outside...");
       }
     };
 
