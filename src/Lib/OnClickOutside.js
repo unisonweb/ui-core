@@ -11,7 +11,7 @@ class OnClickOutside extends HTMLElement {
     this.onMouseDown = (e) => {
       const style = window.getComputedStyle(this);
 
-      console.log(style, el.offsetParent);
+      console.log(style, this.offsetParent);
 
       // If the element isn't visible, there's no point in triggering the
       // clickoutside event. This is useful when multiple variants of a
