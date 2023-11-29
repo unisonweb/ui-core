@@ -24,7 +24,7 @@ class OnClickOutside extends HTMLElement {
         x = "max-md";
       }
       
-      console.log(x, "click");
+      console.log(x, "click", e.target);
 
       // If the element isn't visible, there's no point in triggering the
       // clickoutside event. This is useful when multiple variants of a
