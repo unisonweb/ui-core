@@ -33,7 +33,18 @@ toShortString =
                             |> Maybe.map Hash.toShortString
                             |> Maybe.withDefault "fail"
                 in
-                Expect.equal "#abc123de" result
+                Expect.equal "#abc123def4" result
+        , test "Returns a short version of the hash in 9 characters (including the #)" <|
+            \_ ->
+                let
+                    result =
+                        "#abc123def456"
+                            |> Hash.fromString
+                            |> Maybe.map Hash.toShortString
+                            |> Maybe.map String.length
+                            |> Maybe.withDefault 0
+                in
+                Expect.equal 11 result
         , test "doesn't shorten for builtins" <|
             \_ ->
                 let

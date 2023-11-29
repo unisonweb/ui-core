@@ -68,7 +68,7 @@ toString hash_ =
     toString_ prefix identity hash_
 
 
-{-| Converts a Hash to a shortened (9 characters including the `#` character)
+{-| Converts a Hash to a shortened (11 characters including the `#` character)
 of the raw hash value.
 
 Example:
@@ -89,7 +89,7 @@ toShortString_ p h =
                 s
 
             else
-                String.left 9 s
+                String.left 11 s
     in
     h |> toString_ p identity |> shorten
 
