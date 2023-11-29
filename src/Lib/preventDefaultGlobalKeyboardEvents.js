@@ -12,10 +12,13 @@
 
 function preventDefaultGlobalKeyboardEvents() {
   window.addEventListener("keydown", (ev) => {
+    const nodeName = ev.target.nodeName;
+    const isNotInput = nodeName !== "INPUT" && nodeName !== "TEXTAREA";
+
     if (
-      ev.key === "/" ||
-      (ev.metaKey && ev.key == "k") ||
-      (ev.ctrlKey && ev.key == "k")
+      (isNotInput && ev.key === "/") ||
+      (ev.metaKey && ev.key === "k") ||
+      (ev.ctrlKey && ev.key === "k")
     ) {
       ev.preventDefault();
     }

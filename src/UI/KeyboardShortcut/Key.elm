@@ -488,7 +488,7 @@ fromString str =
         "-" ->
             Minus
 
-        "_" ->
+        "/" ->
             ForwardSlash
 
         "?" ->
@@ -739,7 +739,7 @@ view os key =
             "-"
 
         ForwardSlash ->
-            "_"
+            "/"
 
         QuestionMark ->
             "?"
