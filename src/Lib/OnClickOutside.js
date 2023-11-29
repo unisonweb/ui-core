@@ -35,9 +35,11 @@ class OnClickOutside extends HTMLElement {
         return;
       }
 
-      const isOutside = !document
+        /*document
         .getElementById("on-click-outside")
-        .contains(e.target)
+        */
+      const isOutside = !this.contains
+        .contains(e.target);
 
       if (isOutside) {
         console.log(x, "its outside...");
