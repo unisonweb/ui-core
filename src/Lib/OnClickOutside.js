@@ -11,42 +11,19 @@ class OnClickOutside extends HTMLElement {
     this.onMouseDown = (e) => {
       const style = window.getComputedStyle(this);
 
-      const minMd = this.closest(".min-md");
-      const maxMd = this.closest(".max-md");
-
-      let x = "unknown";
-
-      if (minMd) {
-        x = "min-md";
-      }
-
-      if (maxMd) {
-        x = "max-md";
-      }
-      
-      console.log(x, "click", e.target);
-
       // If the element isn't visible, there's no point in triggering the
       // clickoutside event. This is useful when multiple variants of a
       // clickoutside is active for the same UI (one for desktop and one for
       // mobile for instance).
       if (style.display === 'none' || this.offsetParent === null) {
-        console.log(x, "is not visible");
         return;
       }
 
-        /*document
-        .getElementById("on-click-outside")
-        */
       const isOutside = !this.contains(e.target);
 
       if (isOutside) {
-        console.log(x, "its outside...");
         const event = new CustomEvent("clickOutside");
         this.dispatchEvent(event);
-      }
-      else {
-        console.log(x, "its NOT outside...");
       }
     };
 
