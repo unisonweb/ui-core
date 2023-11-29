@@ -200,11 +200,10 @@ view pageHeader_ =
                                 Nothing ->
                                     UI.nothing
                     in
-                    ( {- div [ class "page-header_navigation" ]
-                         [ div [ class "min-md" ] [ Nav.view n.navigation ]
-                         ]
-                      -}
-                      selectedItem
+                    ( div [ class "page-header_navigation" ]
+                        [ div [ class "min-md" ] [ Nav.view n.navigation ]
+                        , selectedItem
+                        ]
                     , viewMobileNav n
                     )
 

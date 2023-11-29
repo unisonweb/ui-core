@@ -62,52 +62,61 @@
 .min-sm,
 .max-sm {
   display: none;
+  pointer-events: none;
 }
 
 @media only screen and (--u-viewport_min-xl) {
   .min-xl {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_max-xl) {
   .max-xl {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_min-lg) {
   .min-lg {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_max-lg) {
   .max-lg {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_min-md) {
   .min-md {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_max-md) {
   .max-md {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_min-sm) {
   .min-sm {
     display: inherit;
+    pointer-events: initial;
   }
 }
 
 @media only screen and (--u-viewport_max-sm) {
   .max-sm {
     display: inherit;
+    pointer-events: initial;
   }
 }
