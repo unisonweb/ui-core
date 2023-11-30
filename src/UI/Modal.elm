@@ -16,8 +16,8 @@ module UI.Modal exposing
 
 import Html exposing (Attribute, Html, a, div, footer, h2, header, section, text)
 import Html.Attributes as Attributes exposing (class, classList, id, tabindex)
-import Html.Events exposing (on, onClick)
-import Json.Decode as Decode
+import Html.Events exposing (onClick)
+import Lib.OnClickOutside exposing (onClickOutside)
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Icon as Icon
@@ -209,9 +209,11 @@ view_ closeMsg attrs content_ =
         ( modalContent, onEsc ) =
             case closeMsg of
                 Just closeMsg_ ->
-                    -- TODO: this should be OnClickOutside instead?
-                    ( div [ id overlayId, on "click" (decodeOverlayClick closeMsg_) ]
-                        [ div (tabindex 0 :: class "modal" :: attrs) content_
+                    ( div [ id overlayId ]
+                        [ onClickOutside closeMsg_
+                            (div (tabindex 0 :: class "modal" :: attrs)
+                                content_
+                            )
                         ]
                     , Just closeMsg_
                     )
@@ -229,16 +231,3 @@ view_ closeMsg attrs content_ =
 overlayId : String
 overlayId =
     "modal-overlay"
-
-
-decodeOverlayClick : msg -> Decode.Decoder msg
-decodeOverlayClick closeMsg =
-    Decode.at [ "target", "id" ] Decode.string
-        |> Decode.andThen
-            (\c ->
-                if String.contains overlayId c then
-                    Decode.succeed closeMsg
-
-                else
-                    Decode.fail "ignoring"
-            )
