@@ -3,6 +3,7 @@ module UI.AnchoredOverlay exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Lib.OnClickOutside exposing (onClickOutside)
+import UI.ModalOverlay exposing (modalOverlay)
 
 
 type SheetState msg
@@ -124,14 +125,17 @@ view anchoredOverlay_ =
                                 CustomSheet s ->
                                     ( s, class "anchored-overlay_sheet_custom" )
                     in
+                    -- TODO: onClickOutside should be inside of modalOverlay...
                     [ onClickOutside
                         anchoredOverlay_.closeSheetMsg
-                        (div
-                            []
-                            [ anchor
-                            , div [ class "anchored-overlay_sheet", sheetCls, positionCls ]
-                                [ sheet__ ]
-                            ]
+                        (modalOverlay (Just anchoredOverlay_.closeSheetMsg)
+                            (div
+                                []
+                                [ anchor
+                                , div [ class "anchored-overlay_sheet", sheetCls, positionCls ]
+                                    [ sheet__ ]
+                                ]
+                            )
                         )
                     ]
     in
