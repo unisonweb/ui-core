@@ -1,7 +1,7 @@
 // Common modal WebComponent for both AnchoredOverlay and Modalmodal
-// which adds keyboard shortcuts and focus
+// which adds keyboard shortcuts.
 //
-// <modal-overlay on-escape="..." on-enter="...">
+// <modal-overlay on-escape="...">
 //   modal content
 // </modal-overlay>
 class ModalOverlay extends HTMLElement {
@@ -13,23 +13,21 @@ class ModalOverlay extends HTMLElement {
     super();
   }
 
-  onKeydown(ev) {
-    // If the element isn't visible, there's no point in triggering the escape event.
-    const style = window.getComputedStyle(this);
-    if (style.display === "none" || this.offsetParent === null) {
-      return;
-    }
-
-    if (ev.key === "Escape") {
-      ev.preventDefault();
-      ev.stopPropagation();
-
-      this.dispatchEvent(new CustomEvent("escape"));
-    }
-  }
-
   connectedCallback() {
-    this.firstChild.focus();
+    this.onKeydown = (ev) => {
+      // If the element isn't visible, there's no point in triggering the escape event.
+      const style = window.getComputedStyle(this);
+      if (style.display === "none" || this.offsetParent === null) {
+        return;
+      }
+
+      if (ev.key === "Escape") {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        this.dispatchEvent(new CustomEvent("escape"));
+      }
+    });
 
     window.addEventListener("keydown", this.onKeydown);
   }
