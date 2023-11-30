@@ -31,13 +31,17 @@
 
 .page-header.view-mode_regular .project-name {
   --c-color_project-name_handle: var(--c-color_page-header_text_subdued);
-  --c-color_project-name_separator: var(--c-color_page-header_text_very-subdued);
+  --c-color_project-name_separator: var(
+    --c-color_page-header_text_very-subdued
+  );
   --c-color_project-name_slug: var(--c-color_page-header_text);
 }
 
 .page-header.view-mode_regular .project-name-listing {
   --c-color_project-name-listing_private-icon: var(--color-blue-3);
-  --c-color_project-name-listing_private-icon_background: var(--color-blue-3-25pct);
+  --c-color_project-name-listing_private-icon_background: var(
+    --color-blue-3-25pct
+  );
 }
 
 .page-header.view-mode_regular .navigation {

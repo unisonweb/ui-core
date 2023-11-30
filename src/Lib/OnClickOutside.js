@@ -9,13 +9,13 @@ class OnClickOutside extends HTMLElement {
 
   connectedCallback() {
     this.onMouseDown = (e) => {
-      const style = window.getComputedStyle(this);
-
       // If the element isn't visible, there's no point in triggering the
       // clickoutside event. This is useful when multiple variants of a
       // clickoutside is active for the same UI (one for desktop and one for
       // mobile for instance).
-      if (style.display === 'none' || this.offsetParent === null) {
+      const style = window.getComputedStyle(this);
+
+      if (style.display === "none" || this.offsetParent === null) {
         return;
       }
 

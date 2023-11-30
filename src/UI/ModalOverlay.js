@@ -14,22 +14,28 @@ class ModalOverlay extends HTMLElement {
   }
 
   onKeydown(ev) {
+    // If the element isn't visible, there's no point in triggering the escape event.
+    const style = window.getComputedStyle(this);
+    if (style.display === "none" || this.offsetParent === null) {
+      return;
+    }
+
     if (ev.key === "Escape") {
       ev.preventDefault();
       ev.stopPropagation();
 
-      this.dispatchEvent(new CustomEvent('escape'));
+      this.dispatchEvent(new CustomEvent("escape"));
     }
   }
 
   connectedCallback() {
     this.firstChild.focus();
 
-    this.addEventListener("keydown", this.onKeydown);
+    window.addEventListener("keydown", this.onKeydown);
   }
 
   disconnectedCallback() {
-    this.removeEventListener("keydown", this.onKeydown);
+    window.removeEventListener("keydown", this.onKeydown);
   }
 }
 
