@@ -27,7 +27,7 @@ class ModalOverlay extends HTMLElement {
 
         this.dispatchEvent(new CustomEvent("escape"));
       }
-    });
+    };
 
     window.addEventListener("keydown", this.onKeydown);
   }
