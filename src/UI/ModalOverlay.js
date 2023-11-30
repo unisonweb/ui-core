@@ -1,4 +1,4 @@
-// Common modal WebComponent for both AnchoredOverlay and Modalmodal
+// Common modal WebComponent for both AnchoredOverlay and Modal
 // which adds keyboard shortcuts.
 //
 // <modal-overlay on-escape="...">
@@ -14,6 +14,9 @@ class ModalOverlay extends HTMLElement {
   }
 
   connectedCallback() {
+    // TODO, handle nested overlays better. Like if an AnchoredOverlay is
+    // inside of a Modal, we'd want the AnchoredOverlay to be dismissed, not
+    // the modal (unless no AnchoredOverlay is open)
     this.onKeydown = (ev) => {
       // If the element isn't visible, there's no point in triggering the escape event.
       const style = window.getComputedStyle(this);
