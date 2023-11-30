@@ -25,11 +25,11 @@ class ModalOverlay extends HTMLElement {
   connectedCallback() {
     this.focus();
 
-    this.addEventListener("keydown", onKeydown);
+    this.addEventListener("keydown", this.onKeydown);
   }
 
   disconnectedCallback() {
-    this.removeEventListener("keydown", this.onMouseDown);
+    this.removeEventListener("keydown", this.onKeydown);
   }
 }
 
