@@ -23,7 +23,7 @@ class ModalOverlay extends HTMLElement {
   }
 
   connectedCallback() {
-    this.focus();
+    this.firstChild.focus();
 
     this.addEventListener("keydown", this.onKeydown);
   }
