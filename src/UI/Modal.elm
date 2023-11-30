@@ -204,16 +204,25 @@ view modal__ =
 
 view_ : Maybe msg -> List (Attribute msg) -> List (Html msg) -> Html msg
 view_ closeMsg attrs content_ =
-    case closeMsg of
-        Just closeMsg_ ->
-            div [ id overlayId, on "click" (decodeOverlayClick closeMsg_) ]
-                [ div (tabindex 0 :: class "modal" :: attrs) content_
-                ]
+    let
+        ( modalContent, modalAttrs ) =
+            case closeMsg of
+                Just closeMsg_ ->
+                    -- TODO: this should be OnClickOutside instead?
+                    ( div [ id overlayId, on "click" (decodeOverlayClick closeMsg_) ]
+                        [ div (tabindex 0 :: class "modal" :: attrs) content_
+                        ]
+                    , [ on "escape" (Decode.succeed closeMsg_) ]
+                    )
 
-        Nothing ->
-            div [ id overlayId ]
-                [ div (tabindex 0 :: class "modal" :: attrs) content_
-                ]
+                Nothing ->
+                    ( div [ id overlayId ]
+                        [ div (tabindex 0 :: class "modal" :: attrs) content_
+                        ]
+                    , []
+                    )
+    in
+    Html.node "modal-overlay" modalAttrs [ modalContent ]
 
 
 overlayId : String
