@@ -915,6 +915,38 @@ conversationOutlined =
         ]
 
 
+speechBubbleFromRight : Icon msg
+speechBubbleFromRight =
+    Icon "speech-bubble-from-right"
+        []
+        [ path [ fill "currentColor", d "M2 3C2 1.89543 2.89543 1 4 1H10C11.1046 1 12 1.89543 12 3V7.5C12 8.32843 11.3284 9 10.5 9L11.1662 11.665C11.2795 12.1181 10.7648 12.4653 10.3871 12.1906L6 9H4C2.89543 9 2 8.10457 2 7V3Z" ] []
+        ]
+
+
+speechBubbleFromRightOutlined : Icon msg
+speechBubbleFromRightOutlined =
+    Icon "speech-bubble-from-right-outlined"
+        []
+        [ path [ stroke "currentColor", d "M10.5 8.5H9.85961L10.0149 9.12127L10.6812 11.7862L6.29409 8.59563L6.16259 8.5H6H4C3.17157 8.5 2.5 7.82843 2.5 7V3C2.5 2.17157 3.17157 1.5 4 1.5H10C10.8284 1.5 11.5 2.17157 11.5 3V7.5C11.5 8.05228 11.0523 8.5 10.5 8.5Z" ] []
+        ]
+
+
+speechBubbleFromLeft : Icon msg
+speechBubbleFromLeft =
+    Icon "speech-bubble-from-left"
+        []
+        [ path [ fill "currentColor", d "M12 3C12 1.89543 11.1046 1 10 1H4C2.89543 1 2 1.89543 2 3V7.5C2 8.32843 2.67157 9 3.5 9L2.83376 11.665C2.72047 12.1181 3.23517 12.4653 3.61291 12.1906L8 9H10C11.1046 9 12 8.10457 12 7V3Z" ] []
+        ]
+
+
+speechBubbleFromLeftOutlined : Icon msg
+speechBubbleFromLeftOutlined =
+    Icon "speech-bubble-from-left-outlined"
+        []
+        [ path [ stroke "currentColor", d "M3.5 8.5H4.14039L3.98507 9.12127L3.31883 11.7862L7.70591 8.59563L7.83741 8.5H8H10C10.8284 8.5 11.5 7.82843 11.5 7V3C11.5 2.17157 10.8284 1.5 10 1.5H4C3.17157 1.5 2.5 2.17157 2.5 3V7.5C2.5 8.05228 2.94771 8.5 3.5 8.5Z" ] []
+        ]
+
+
 archive : Icon msg
 archive =
     Icon "archive"
