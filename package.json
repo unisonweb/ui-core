@@ -32,6 +32,6 @@
   "dependencies": {
     "date-fns": "^2.29.3",
     "katex": "^0.16.4",
-    "mermaid": "^10.3.0"
+    "mermaid": "^10.6.1"
   }
 }
