@@ -47,12 +47,11 @@ class ModalOverlay extends HTMLElement {
     const autofocused = this.querySelector("[autofocus]");
     if (autofocused) {
       autofocused.focus();
-    }
-    else {
+    } else {
       const focusClassName = this.getAttribute("focusClassName");
       if (focusClassName) {
         this.querySelector(focusClassName)?.focus();
-      else {
+      } else {
         this.firstChild?.focus();
       }
     }
