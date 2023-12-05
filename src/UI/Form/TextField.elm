@@ -233,7 +233,6 @@ view textField =
 
         input__ =
             if textField.rows > 1 then
-                -- textarea (rows textField.rows :: attrs) [ text textField.value ]
                 textarea (value textField.value :: rows textField.rows :: attrs) []
 
             else
