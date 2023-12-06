@@ -1,6 +1,7 @@
 module UI.Modal exposing
     ( Content(..)
     , Modal
+    , confirm
     , content
     , customContent
     , map
@@ -72,6 +73,20 @@ content =
 customContent : Html msg -> Content msg
 customContent =
     CustomContent
+
+
+{-| Create a confirmation modal with a short message, a cancel and a confirm button
+-}
+confirm : String -> msg -> msg -> Modal msg
+confirm message cancelMsg confirmMsg =
+    content (text message)
+        |> modal "confirmation-modal" cancelMsg
+        |> withActions
+            [ Button.button cancelMsg "Cancel"
+                |> Button.subdued
+            , Button.button confirmMsg "Confirm"
+                |> Button.critical
+            ]
 
 
 
