@@ -87,6 +87,15 @@ withSheet sheet_ anchoredOverlay_ =
     { anchoredOverlay_ | sheet = OpenSheet sheet_ }
 
 
+withSheet_ : Bool -> Sheet msg -> AnchoredOverlay msg -> AnchoredOverlay msg
+withSheet_ isOpen sheet_ anchoredOverlay_ =
+    if isOpen then
+        { anchoredOverlay_ | sheet = OpenSheet sheet_ }
+
+    else
+        { anchoredOverlay_ | sheet = Closed }
+
+
 withSheetPosition : Position -> AnchoredOverlay msg -> AnchoredOverlay msg
 withSheetPosition position anchoredOverlay_ =
     { anchoredOverlay_ | sheetPosition = position }
