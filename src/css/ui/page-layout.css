@@ -124,9 +124,8 @@
 }
 
 .page-content .page-title .page-title_default-title h1 {
-  height: 1.75rem;
+  min-height: 1.75rem;
   font-size: 1.5rem;
-  align-items: center;
   line-height: 1.2;
   color: var(--u-color_text);
   display: flex;
@@ -135,7 +134,10 @@
 }
 
 .page-content .page-title .page-title_default-title h1 {
-  & .left-title-text,
+  & .left-title-text {
+    color: var(--u-color_text_subdued);
+  }
+
   & .right-title-text {
     color: var(--u-color_text_subdued);
   }
