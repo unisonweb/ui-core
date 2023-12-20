@@ -75,42 +75,32 @@ onLight es =
 view : EmptyState msg -> Html msg
 view es =
     let
-        ( illustration, hasClass ) =
+        illustration =
             case es.type_ of
                 Grid content ->
-                    ( div [ class "empty-state_grid" ] content
-                    , class "has_empty-state_grid"
-                    )
+                    div [ class "empty-state_grid" ] content
 
                 IconCloud (CircleCenterPiece content) ->
-                    ( div [ class "empty-state_icon-cloud" ]
+                    div [ class "empty-state_icon-cloud" ]
                         [ div [ class "empty-state_icon-cloud_center-piece" ]
                             [ div [ class "empty-state_icon-cloud_center-piece_circle" ]
                                 [ content ]
                             ]
                         ]
-                    , class "has_empty-state_icon-cloud"
-                    )
 
                 IconCloud (IconCenterPiece icon) ->
-                    ( div [ class "empty-state_icon-cloud" ]
+                    div [ class "empty-state_icon-cloud" ]
                         [ div [ class "empty-state_icon-cloud_center-piece_icon" ]
                             [ Icon.view icon ]
                         ]
-                    , class "has_empty-state_icon-cloud"
-                    )
 
                 IconCloud (CustomCenterPiece content) ->
-                    ( div [ class "empty-state_icon-cloud" ]
+                    div [ class "empty-state_icon-cloud" ]
                         [ div [ class "empty-state_icon-cloud_center-piece" ]
                             [ content ]
                         ]
-                    , class "has_empty-state_icon-cloud"
-                    )
 
                 Search ->
-                    ( div [ class "empty-state_search" ] []
-                    , class "has_empty-state_search"
-                    )
+                    div [ class "empty-state_search" ] []
     in
-    div [ class "empty-state", OnSurface.toClass es.onSurface, hasClass ] (illustration :: es.content)
+    div [ class "empty-state", OnSurface.toClass es.onSurface ] (illustration :: es.content)

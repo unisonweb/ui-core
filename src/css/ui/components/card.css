@@ -22,9 +22,7 @@
   border: 1px solid var(--color-card-border);
 }
 
-/* @todo :has */
-/*.card:has(.card-title) {*/
-.card.has_card-title {
+.card:has(.card-title) {
   padding-top: 1rem;
 }
 

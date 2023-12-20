@@ -20,18 +20,14 @@
 
 /* -- Icon Cloud ----------------------------------------------------------- */
 
-/* @todo :has */
-/*.empty-state:has(.empty-state_icon-cloud) {*/
-.empty-state.has_empty-state_icon-cloud {
+.empty-state:has(.empty-state_icon-cloud) {
   gap: 1.25rem;
   align-self: center;
   place-content: center;
   place-items: center;
 }
 
-/* @todo :has */
-/*.empty-state:has(.empty-state_icon-cloud) p {*/
-.empty-state.has_empty-state_icon-cloud p {
+.empty-state:has(.empty-state_icon-cloud) p {
   margin: 0;
 }
 
@@ -80,18 +76,14 @@
 
 /* -- Search --------------------------------------------------------------- */
 
-/* @todo :has */
-/*.empty-state:has(.empty-state_search) {*/
-.empty-state.has_empty-state_search {
+.empty-state:has(.empty-state_search) {
   gap: 1rem;
   place-content: center;
   align-items: center;
   align-self: center;
 }
 
-/* @todo :has */
-/*.empty-state:has(.empty-state_search) p */
-.empty-state: .has_empty-state_search p {
+.empty-state:has(.empty-state_search) p {
   margin-bottom: 0;
 }
 

@@ -110,13 +110,13 @@ view card_ =
             card_.classNames
                 |> List.map class
 
-        ( items, hasTitleClass ) =
+        items =
             case card_.title of
                 Just t ->
-                    ( h3 [ class "card-title" ] [ text t ] :: card_.items, [ class "has_card-title" ] )
+                    h3 [ class "card-title" ] [ text t ] :: card_.items
 
                 Nothing ->
-                    ( card_.items, [] )
+                    card_.items
 
         typeClass =
             case card_.type_ of
@@ -132,4 +132,4 @@ view card_ =
                 Uncontained ->
                     "uncontained"
     in
-    div ([ class "card", class typeClass ] ++ classNames ++ hasTitleClass) items
+    div ([ class "card", class typeClass ] ++ classNames) items

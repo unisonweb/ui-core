@@ -296,21 +296,19 @@ viewSheet maxWidth (ActionItems items_) =
             case i of
                 Option o ->
                     let
-                        ( subtext, attrs ) =
+                        subtext =
                             case o.subtext of
                                 NoSubtext ->
-                                    ( UI.nothing, [] )
+                                    UI.nothing
 
                                 SimpleSubtext t ->
-                                    ( div [ class "action-menu_action-item-option_subtext" ] [ text t ], [ class "has_action-menu_action-item-option_subtext" ] )
+                                    div [ class "action-menu_action-item-option_subtext" ] [ text t ]
 
                                 DateTimeSubtext f t ->
-                                    ( div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f t ], [ class "has_action-menu_action-item-option_subtext" ] )
+                                    div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f t ]
                     in
                     Click.view
-                        (class "action-menu_action-item action-menu_action-item-option"
-                            :: attrs
-                        )
+                        [ class "action-menu_action-item action-menu_action-item-option" ]
                         [ MaybeE.unwrap UI.nothing Icon.view o.icon
                         , div [ class "action-menu_action-item-option_text" ]
                             [ label

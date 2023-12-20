@@ -292,9 +292,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-/* @todo :has */
-/*.sidebar .sidebar_collapsed:has(.sidebar_collapsed_context) {*/
-.sidebar .sidebar_collapsed.has_sidebar_collapsed_context {
+.sidebar .sidebar_collapsed:has(.sidebar_collapsed_context) {
   padding-left: 0.5rem;
 }
 
