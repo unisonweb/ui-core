@@ -175,7 +175,7 @@ view : DateTimeFormat -> Time.Zone -> DateTime -> Html msg
 view format zone d =
     let
         viewed =
-            span [ class "datetime" ] [ text (toString format zone d) ]
+            span [ class "date-time" ] [ text (toString format zone d) ]
     in
     case format of
         DistanceFrom _ ->
