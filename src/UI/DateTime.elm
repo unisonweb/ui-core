@@ -24,6 +24,7 @@ import Html.Attributes exposing (class)
 import Iso8601
 import Json.Decode as Decode
 import Time exposing (Posix)
+import UI.Tooltip as Tooltip
 
 
 type DateTime
@@ -33,7 +34,6 @@ type DateTime
 type DateTimeFormat
     = ShortDate
     | LongDate
-    | Distance
     | DistanceFrom DateTime
     | TimeWithSeconds24Hour
     | TimeWithSeconds12Hour
@@ -170,10 +170,18 @@ toString format zone (DateTime p) =
         DistanceFrom (DateTime from) ->
             DateFormat.Relative.relativeTime from p
 
-        _ ->
-            ""
-
 
 view : DateTimeFormat -> Time.Zone -> DateTime -> Html msg
 view format zone d =
-    span [ class "datetime" ] [ text (toString format zone d) ]
+    let
+        viewed =
+            span [ class "datetime" ] [ text (toString format zone d) ]
+    in
+    case format of
+        DistanceFrom _ ->
+            Tooltip.text (toString FullDateTime zone d)
+                |> Tooltip.tooltip
+                |> Tooltip.view viewed
+
+        _ ->
+            viewed
