@@ -160,10 +160,10 @@ viewSummary summary =
             let
                 name_ =
                     case Hash.toString h of
-                        "@@Sequence" ->
+                        "##Sequence" ->
                             "List"
 
-                        "@@Tuple" ->
+                        "##Tuple" ->
                             "Tuple"
 
                         _ ->
