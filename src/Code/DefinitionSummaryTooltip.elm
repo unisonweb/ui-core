@@ -159,15 +159,25 @@ viewSummary summary =
         viewBuiltinType h name =
             let
                 name_ =
-                    case Hash.toString h of
-                        "##Sequence" ->
+                    -- Hash matching is preferable because the comma in
+                    -- `[1, 3]` also matches as List (or Tuple)
+                    case ( Hash.toString h, FQN.toString name ) of
+                        ( "##Sequence", _ ) ->
                             "List"
 
-                        "##Tuple" ->
+                        ( "#2lg4ah6ir6t129m33d7gssnigacral39qdamo20mn6r2vefliubpeqnjhejai9ekjckv0qnu9mlu3k9nbpfhl2schec4dohn7rjhjt8", _ ) ->
                             "Tuple"
 
-                        _ ->
-                            FQN.toString name
+                        -- We fall back to the naming of tuple if for whatever
+                        -- reason the hash changed
+                        ( _, "(" ) ->
+                            "Tuple"
+
+                        ( _, ")" ) ->
+                            "Tuple"
+
+                        ( _, n ) ->
+                            n
             in
             span
                 []
