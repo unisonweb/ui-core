@@ -157,11 +157,29 @@ viewSummary : WebData DefinitionSummary -> Maybe (Tooltip.Content msg)
 viewSummary summary =
     let
         viewBuiltinType name =
+            let
+                name_ =
+                    case FQN.toString name of
+                        "[" ->
+                            "List"
+
+                        "]" ->
+                            "List"
+
+                        "(" ->
+                            "Tuple"
+
+                        ")" ->
+                            "Tuple"
+
+                        n ->
+                            n
+            in
             span
                 []
                 [ span [ class "data-type-modifier" ] [ text "builtin " ]
                 , span [ class "data-type-keyword" ] [ text "type" ]
-                , span [ class "type-reference" ] [ text (" " ++ FQN.toString name) ]
+                , span [ class "type-reference" ] [ text (" " ++ name_) ]
                 ]
 
         viewSummary_ s =
