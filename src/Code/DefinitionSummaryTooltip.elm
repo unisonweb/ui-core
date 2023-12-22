@@ -76,14 +76,28 @@ update config msg model =
                     ( { model | activeTooltip = cached }, Cmd.none )
 
         FetchDefinition ref ->
+            let
+                fetchDef =
+                    ( { model | activeTooltip = Just ( ref, Loading ) }
+                    , fetchDefinition config ref |> HttpApi.perform config.api
+                    )
+            in
             case model.activeTooltip of
+                Just ( r, Loading ) ->
+                    if Reference.equals ref r then
+                        ( model, Cmd.none )
+
+                    else
+                        -- If we've moved on to hovering over a different
+                        -- definition while another was loading, discard the
+                        -- original request
+                        fetchDef
+
                 Just _ ->
                     ( model, Cmd.none )
 
                 Nothing ->
-                    ( { model | activeTooltip = Just ( ref, Loading ) }
-                    , fetchDefinition config ref |> HttpApi.perform config.api
-                    )
+                    fetchDef
 
         HideTooltip _ ->
             ( { model | activeTooltip = Nothing }, Cmd.none )
