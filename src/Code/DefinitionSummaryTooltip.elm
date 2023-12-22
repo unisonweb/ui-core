@@ -156,24 +156,18 @@ fetchDefinition { toApiEndpoint, perspective } ref =
 viewSummary : WebData DefinitionSummary -> Maybe (Tooltip.Content msg)
 viewSummary summary =
     let
-        viewBuiltinType name =
+        viewBuiltinType h name =
             let
                 name_ =
-                    case FQN.toString name of
-                        "[" ->
+                    case Hash.toString h of
+                        "@@Sequence" ->
                             "List"
 
-                        "]" ->
-                            "List"
-
-                        "(" ->
+                        "@@Tuple" ->
                             "Tuple"
 
-                        ")" ->
-                            "Tuple"
-
-                        n ->
-                            n
+                        _ ->
+                            FQN.toString name
             in
             span
                 []
@@ -187,11 +181,11 @@ viewSummary summary =
                 TermHover (Term _ _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
 
-                TypeHover (Type _ _ { fqn, source }) ->
+                TypeHover (Type h _ { fqn, source }) ->
                     source
                         |> typeSourceSyntax
                         |> Maybe.map (Syntax.view Syntax.NotLinked)
-                        |> Maybe.withDefault (viewBuiltinType fqn)
+                        |> Maybe.withDefault (viewBuiltinType h fqn)
 
                 AbilityConstructorHover (AbilityConstructor _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
