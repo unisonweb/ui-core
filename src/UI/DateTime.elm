@@ -19,8 +19,8 @@ module UI.DateTime exposing
 
 import DateFormat
 import DateFormat.Relative
-import Html exposing (Html, node, text)
-import Html.Attributes exposing (attribute)
+import Html exposing (Html, span, text)
+import Html.Attributes exposing (class)
 import Iso8601
 import Json.Decode as Decode
 import Time exposing (Posix)
@@ -174,26 +174,6 @@ toString format zone (DateTime p) =
             ""
 
 
-{-| Note: requires the web component ui/FormatDateTime.js to
-be part of the bundle
--}
-view : DateTimeFormat -> DateTime -> Html msg
-view format d =
-    let
-        formatToString f =
-            case f of
-                ShortDate ->
-                    "shortDate"
-
-                LongDate ->
-                    "longDate"
-
-                Distance ->
-                    "distance"
-
-                _ ->
-                    "notSupported"
-    in
-    node "format-date-time"
-        [ attribute "format" (formatToString format) ]
-        [ text (toISO8601 d) ]
+view : DateTimeFormat -> Time.Zone -> DateTime -> Html msg
+view format zone d =
+    span [ class "datetime" ] [ text (toString format zone d) ]
