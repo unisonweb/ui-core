@@ -10,6 +10,7 @@ import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceS
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Syntax as Syntax
+import Code.Syntax.SyntaxSegment as SyntaxSegment
 import Dict exposing (Dict)
 import Html exposing (div, span, text)
 import Html.Attributes exposing (class)
@@ -156,28 +157,23 @@ fetchDefinition { toApiEndpoint, perspective } ref =
 viewSummary : WebData DefinitionSummary -> Maybe (Tooltip.Content msg)
 viewSummary summary =
     let
+        isList h =
+            Hash.toString h == "##Sequence"
+
+        isTuple h n =
+            Hash.toString h
+                == "#2lg4ah6ir6t129m33d7gssnigacral39qdamo20mn6r2vefliubpeqnjhejai9ekjckv0qnu9mlu3k9nbpfhl2schec4dohn7rjhjt8"
+                || (FQN.toString n == ")")
+                || (FQN.toString n == "(")
+
         viewBuiltinType h name =
             let
                 name_ =
-                    -- Hash matching is preferable because the comma in
-                    -- `[1, 3]` also matches as List (or Tuple)
-                    case ( Hash.toString h, FQN.toString name ) of
-                        ( "##Sequence", _ ) ->
-                            "List"
+                    if isList h then
+                        "List"
 
-                        ( "#2lg4ah6ir6t129m33d7gssnigacral39qdamo20mn6r2vefliubpeqnjhejai9ekjckv0qnu9mlu3k9nbpfhl2schec4dohn7rjhjt8", _ ) ->
-                            "Tuple"
-
-                        -- We fall back to the naming of tuple if for whatever
-                        -- reason the hash changed
-                        ( _, "(" ) ->
-                            "Tuple"
-
-                        ( _, ")" ) ->
-                            "Tuple"
-
-                        ( _, n ) ->
-                            n
+                    else
+                        FQN.toString name
             in
             span
                 []
@@ -186,6 +182,25 @@ viewSummary summary =
                 , span [ class "type-reference" ] [ text (" " ++ name_) ]
                 ]
 
+        viewTypeSourceSyntax h fqn source =
+            if isTuple h fqn then
+                [ SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeModifier "structural"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeKeyword "type"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment (SyntaxSegment.HashQualifier "Tuple") "Tuple"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeParams "a"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeParams "b"
+                ]
+                    |> Syntax.fromList
+                    |> Maybe.map (Type.Source >> typeSourceSyntax)
+                    |> Maybe.withDefault (typeSourceSyntax source)
+
+            else
+                typeSourceSyntax source
+
         viewSummary_ s =
             case s of
                 TermHover (Term _ _ { signature }) ->
@@ -193,7 +208,7 @@ viewSummary summary =
 
                 TypeHover (Type h _ { fqn, source }) ->
                     source
-                        |> typeSourceSyntax
+                        |> viewTypeSourceSyntax h fqn
                         |> Maybe.map (Syntax.view Syntax.NotLinked)
                         |> Maybe.withDefault (viewBuiltinType h fqn)
 

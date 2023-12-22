@@ -8,6 +8,7 @@ module Code.Syntax exposing
     , decode
     , decodeSingleton
     , foldl
+    , fromList
     , linkedWithTooltipConfig
     , numLines
     , reference
@@ -64,6 +65,13 @@ type Linked msg
 
 
 -- HELPERS
+
+
+fromList : List SyntaxSegment -> Maybe Syntax
+fromList segments =
+    segments
+        |> NEL.fromList
+        |> Maybe.map Syntax
 
 
 linkedWithTooltipConfig :
