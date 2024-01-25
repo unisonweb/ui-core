@@ -84,5 +84,5 @@ view zone now (ByAt by at) =
         [ class "by-at" ]
         [ profileSnippet
         , span [ class "by-at_at" ]
-            [ text (DateTime.toString (DateTime.DistanceFrom now) zone at) ]
+            [ DateTime.view (DateTime.DistanceFrom now) zone at ]
         ]

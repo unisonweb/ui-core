@@ -7,7 +7,9 @@ module Code.Hash exposing
     , isAbilityConstructorHash
     , isAssumedBuiltin
     , isDataConstructorHash
+    , isList
     , isRawHash
+    , isTuple
     , prefix
     , stripHashPrefix
     , toApiUrlString
@@ -212,6 +214,16 @@ isRawHash str =
 isAssumedBuiltin : Hash -> Bool
 isAssumedBuiltin (Hash h) =
     h.isAssumedBuiltin
+
+
+isList : Hash -> Bool
+isList hash_ =
+    toString hash_ == "##Sequence"
+
+
+isTuple : Hash -> Bool
+isTuple hash_ =
+    toString hash_ == "#2lg4ah6ir6t129m33d7gssnigacral39qdamo20mn6r2vefliubpeqnjhejai9ekjckv0qnu9mlu3k9nbpfhl2schec4dohn7rjhjt8"
 
 
 fromUrlString : String -> Maybe Hash

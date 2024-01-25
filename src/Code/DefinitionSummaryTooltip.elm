@@ -10,6 +10,7 @@ import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceS
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Syntax as Syntax
+import Code.Syntax.SyntaxSegment as SyntaxSegment
 import Dict exposing (Dict)
 import Html exposing (div, span, text)
 import Html.Attributes exposing (class)
@@ -76,14 +77,28 @@ update config msg model =
                     ( { model | activeTooltip = cached }, Cmd.none )
 
         FetchDefinition ref ->
+            let
+                fetchDef =
+                    ( { model | activeTooltip = Just ( ref, Loading ) }
+                    , fetchDefinition config ref |> HttpApi.perform config.api
+                    )
+            in
             case model.activeTooltip of
+                Just ( r, Loading ) ->
+                    if Reference.equals ref r then
+                        ( model, Cmd.none )
+
+                    else
+                        -- If we've moved on to hovering over a different
+                        -- definition while another was loading, discard the
+                        -- original request
+                        fetchDef
+
                 Just _ ->
                     ( model, Cmd.none )
 
                 Nothing ->
-                    ( { model | activeTooltip = Just ( ref, Loading ) }
-                    , fetchDefinition config ref |> HttpApi.perform config.api
-                    )
+                    fetchDef
 
         HideTooltip _ ->
             ( { model | activeTooltip = Nothing }, Cmd.none )
@@ -142,24 +157,60 @@ fetchDefinition { toApiEndpoint, perspective } ref =
 viewSummary : WebData DefinitionSummary -> Maybe (Tooltip.Content msg)
 viewSummary summary =
     let
-        viewBuiltinType name =
+        isList h =
+            Hash.toString h == "##Sequence"
+
+        isTuple h n =
+            Hash.toString h
+                == "#2lg4ah6ir6t129m33d7gssnigacral39qdamo20mn6r2vefliubpeqnjhejai9ekjckv0qnu9mlu3k9nbpfhl2schec4dohn7rjhjt8"
+                || (FQN.toString n == ")")
+                || (FQN.toString n == "(")
+
+        viewBuiltinType h name =
+            let
+                name_ =
+                    if isList h then
+                        "List"
+
+                    else
+                        FQN.toString name
+            in
             span
                 []
                 [ span [ class "data-type-modifier" ] [ text "builtin " ]
                 , span [ class "data-type-keyword" ] [ text "type" ]
-                , span [ class "type-reference" ] [ text (" " ++ FQN.toString name) ]
+                , span [ class "type-reference" ] [ text (" " ++ name_) ]
                 ]
+
+        viewTypeSourceSyntax h fqn source =
+            if isTuple h fqn then
+                [ SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeModifier "structural"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeKeyword "type"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment (SyntaxSegment.HashQualifier "Tuple") "Tuple"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeParams "a"
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
+                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeParams "b"
+                ]
+                    |> Syntax.fromList
+                    |> Maybe.map (Type.Source >> typeSourceSyntax)
+                    |> Maybe.withDefault (typeSourceSyntax source)
+
+            else
+                typeSourceSyntax source
 
         viewSummary_ s =
             case s of
                 TermHover (Term _ _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
 
-                TypeHover (Type _ _ { fqn, source }) ->
+                TypeHover (Type h _ { fqn, source }) ->
                     source
-                        |> typeSourceSyntax
+                        |> viewTypeSourceSyntax h fqn
                         |> Maybe.map (Syntax.view Syntax.NotLinked)
-                        |> Maybe.withDefault (viewBuiltinType fqn)
+                        |> Maybe.withDefault (viewBuiltinType h fqn)
 
                 AbilityConstructorHover (AbilityConstructor _ { signature }) ->
                     Syntax.view Syntax.NotLinked (termSignatureSyntax signature)

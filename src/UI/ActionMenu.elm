@@ -29,6 +29,7 @@ import Html.Attributes exposing (class, classList, style)
 import Lib.OnClickOutside exposing (onClickOutside)
 import List.Nonempty as Nonempty exposing (Nonempty(..))
 import Maybe.Extra as MaybeE
+import Time
 import UI
 import UI.Button as Button exposing (Button)
 import UI.Click as Click exposing (Click)
@@ -48,7 +49,7 @@ type OpenState
 type Subtext
     = NoSubtext
     | SimpleSubtext String
-    | DateTimeSubtext DateTimeFormat DateTime
+    | DateTimeSubtext DateTimeFormat Time.Zone DateTime
 
 
 type alias ActionOption msg =
@@ -304,8 +305,9 @@ viewSheet maxWidth (ActionItems items_) =
                                 SimpleSubtext t ->
                                     div [ class "action-menu_action-item-option_subtext" ] [ text t ]
 
-                                DateTimeSubtext f t ->
-                                    div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f t ]
+                                DateTimeSubtext f z t ->
+                                    div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f z t ]
+
                     in
                     Click.view
                         [ class "action-menu_action-item action-menu_action-item-option" ]
