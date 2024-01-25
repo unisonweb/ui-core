@@ -44,6 +44,8 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
 .rich .bytes-literal,
 .rich .char-literal {
   color: var(--color-syntax-text);
+  /* Fixes issue #73 */
+  white-space: pre-wrap;
 }
 
 .rich .boolean-literal,
