@@ -180,13 +180,13 @@ viewTitle title_ =
                         ]
 
                 ( Just i, Nothing ) ->
-                    viewTitle_ [ class "has_icon" ]
+                    viewTitle_ []
                         [ div [ class "icon-badge" ] [ Icon.view i ]
                         , h1_
                         ]
 
                 ( Just i, Just d ) ->
-                    viewTitle_ [ class "has_icon" ]
+                    viewTitle_ []
                         [ div [ class "icon-badge" ] [ Icon.view i ]
                         , div [ class "text" ]
                             [ h1_

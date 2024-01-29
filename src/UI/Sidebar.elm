@@ -374,13 +374,13 @@ view os sidebar__ =
                         ]
                     )
 
-        ( context, hasContextAttrs ) =
-            MaybeE.unwrap ( UI.nothing, [] )
-                (\c -> ( div [ class "sidebar_collapsed_context" ] [ c ], [ class "has_sidebar_collapsed_context" ] ))
+        context =
+            MaybeE.unwrap UI.nothing
+                (\c -> div [ class "sidebar_collapsed_context" ] [ c ])
                 sidebar__.collapsedContext
 
         collapsed =
-            div (class "sidebar_collapsed" :: hasContextAttrs)
+            div [ class "sidebar_collapsed" ]
                 [ context
                 , div [ class "sidebar_collapsed_actions" ] (expand :: List.map Button.view sidebar__.collapsedActions)
                 ]
