@@ -3,9 +3,10 @@
   TreePath
   ========
     
-  Simple type for keeping tracking of a path down a tree of variants that
-  could have lists as data. Definition.Doc is the main example of a tree
-  structure that uses TreePath.
+  Simple type for keeping tracking of a path down a tree of variants that could
+  have lists as data. Definition.Doc is the main example of a tree structure
+  that uses TreePath. Definition.Doc uses TreePath for tracking if sub trees of
+  a Doc is folded or not.
 
 --}
 
