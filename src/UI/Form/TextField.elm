@@ -6,6 +6,7 @@ import Html.Attributes
         ( autofocus
         , class
         , classList
+        , id
         , maxlength
         , minlength
         , placeholder
@@ -47,6 +48,7 @@ type alias TextField msg =
     , value : String
     , validity : Validity
     , clearMsg : Maybe msg
+    , id : Maybe String
     }
 
 
@@ -78,6 +80,7 @@ field_ onInput label placeholder value =
     , value = value
     , validity = None
     , clearMsg = Nothing
+    , id = Nothing
     }
 
 
@@ -180,6 +183,11 @@ withClear clearMsg tf =
     { tf | clearMsg = Just clearMsg }
 
 
+withId : String -> TextField msg -> TextField msg
+withId id_ tf =
+    { tf | id = Just id_ }
+
+
 
 -- MAP
 
@@ -211,6 +219,7 @@ map f t =
     , value = t.value
     , validity = t.validity
     , clearMsg = Maybe.map f t.clearMsg
+    , id = t.id
     }
 
 
@@ -225,6 +234,7 @@ view textField =
             [ Maybe.map placeholder textField.placeholder
             , Maybe.map maxlength textField.maxlength
             , Maybe.map minlength textField.minlength
+            , Maybe.map id textField.id
             , Just (class "text-field-input")
             , Just (onInput textField.onInput)
             , Just (autofocus textField.autofocus)
