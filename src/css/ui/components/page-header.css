@@ -219,7 +219,7 @@
   }
 }
 
-@media only screen and (--u-viewport_max-sm) {
+@media only screen and (--u-viewport_max-md) {
   .page-header {
     --c-height_page-header: 7rem;
     flex-direction: column;
