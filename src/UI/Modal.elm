@@ -9,9 +9,11 @@ module UI.Modal exposing
     , modal_
     , view
     , withActions
+    , withActionsIf
     , withAttributes
     , withDimOverlay
     , withHeader
+    , withHeaderIf
     , withLeftSideFooter
     )
 
@@ -132,6 +134,15 @@ withHeader title modal__ =
     { modal__ | header = Just (text title) }
 
 
+withHeaderIf : String -> Bool -> Modal msg -> Modal msg
+withHeaderIf title showHeader modal__ =
+    if showHeader then
+        { modal__ | header = Just (text title) }
+
+    else
+        modal__
+
+
 withLeftSideFooter : List (Html msg) -> Modal msg -> Modal msg
 withLeftSideFooter leftSide modal__ =
     let
@@ -153,6 +164,19 @@ withActions actions modal__ =
             modal__.footer
     in
     { modal__ | footer = { footer_ | actions = actions } }
+
+
+withActionsIf : List (Button msg) -> Bool -> Modal msg -> Modal msg
+withActionsIf actions showActions modal__ =
+    if showActions then
+        let
+            footer_ =
+                modal__.footer
+        in
+        { modal__ | footer = { footer_ | actions = actions } }
+
+    else
+        modal__
 
 
 withAttributes : List (Attribute msg) -> Modal msg -> Modal msg
