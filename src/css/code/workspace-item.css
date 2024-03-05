@@ -167,3 +167,8 @@
 .workspace-item .definition-doc-columns .icon-column .icon {
   color: var(--u-color_icon_subdued);
 }
+
+.workspace-item:not(.shown-in-full) .doc-column {
+  overflow-y: hidden;
+  max-height: 4rem;
+}

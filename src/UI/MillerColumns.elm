@@ -1,7 +1,34 @@
+{-
+
+   Miller Columns: a browsing alternative to  tree views
+   =====================================================
+
+        ╭───────────┬──────────────┬────────────╮
+        │   Nat    │   fromUtf8  │   impl    │
+        │   Nat    │   fromUtf8  │   partial │
+        │   Text   │   gt        │   partial │
+        │   Text   │   gt        │   stream  │
+        │   Unit   │              │            │
+        │   Unit   │              │            │
+        ╰───────────┴──────────────┴────────────╯
+
+   Most commonly Miller Columns are found in the MacOS Finder.
+   Read more: https://en.wikipedia.org/wiki/Miller_columns
+
+   ## Data structures
+   The core data structure (from a intuition standpoint) is a list of Columns.
+   Each Column includes a list of Item, which in-turn can contain children
+   in the form of another column.
+   Selection in a Column is tracked with a Zipper and a Tree.
+-}
+
+
 module UI.MillerColumns exposing (..)
 
+import Code.CodebaseTree exposing (Msg)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class, classList)
+import RemoteData exposing (RemoteData(..), WebData)
 import UI.Click as Click
 
 
@@ -17,17 +44,26 @@ type Selection a
 
 
 type Column a
-    = NoSelection (List (Item a))
+    = NoSelection (WebData (List (Item a)))
     | WithSelection
-        { before : List (Item a)
-        , selected : Selection a
-        , after : List (Item a)
-        }
+        (WebData
+            { before : List (Item a)
+            , selected : Selection a
+            , after : List (Item a)
+            }
+        )
 
 
 type alias MillerColumns a msg =
     { root : Column a
     , onSelectMsg : a -> msg
+    }
+
+
+millerColumns : (a -> msg) -> WebData (List (Item a)) -> MillerColumns a msg
+millerColumns onSelectMsg items =
+    { root = NoSelection items
+    , onSelectMsg = onSelectMsg
     }
 
 
