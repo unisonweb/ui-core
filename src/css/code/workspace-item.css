@@ -173,7 +173,7 @@
   padding-left: 1rem;
 }
 
-.workspace-item .show-full-doc::before {
+.workspace-item .show-full-doc:before {
   position: absolute;
   top: -1rem;
   left: 0;
