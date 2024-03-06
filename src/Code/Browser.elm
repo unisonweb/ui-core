@@ -3,12 +3,11 @@ module Code.Browser exposing (..)
 import Code.CodebaseApi as CodebaseApi
 import Code.CodebaseTree.NamespaceListing as NamespaceListing exposing (NamespaceListing)
 import Code.Config exposing (Config)
-import Code.FullyQualifiedName as FQN exposing (FQN)
-import Code.Hash as Hash exposing (Hash)
+import Code.FullyQualifiedName exposing (FQN)
 import Code.Namespace.NamespaceRef as NamespaceRef
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
-import RemoteData exposing (RemoteData(..), WebData)
+import RemoteData exposing (RemoteData(..))
 import UI.MillerColumns as MillerColumns exposing (MillerColumns)
 
 

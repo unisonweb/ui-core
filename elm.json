@@ -49,6 +49,7 @@
         "UI.Steps",
         "UI.Tag",
         "UI.KpiTag",
+        "Code.Browser",
         "Code.CodebaseApi",
         "Code.CodebaseTree",
         "Code.Config",

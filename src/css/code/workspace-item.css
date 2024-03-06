@@ -168,7 +168,7 @@
   color: var(--u-color_icon_subdued);
 }
 
-.workspace-item:not(.shown-in-full) .doc-column {
+.workspace-item :not(.shown-in-full) .doc-column {
   overflow-y: hidden;
   max-height: 4rem;
 }

@@ -25,11 +25,9 @@
 
 module UI.MillerColumns exposing (..)
 
-import Code.CodebaseTree exposing (Msg)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class, classList)
-import RemoteData exposing (RemoteData(..), WebData)
-import UI.Click as Click
+import RemoteData exposing (WebData)
 
 
 type alias Item a =
@@ -78,43 +76,46 @@ viewColumn items =
     div [ class "column" ] items
 
 
-view : MillerColumns a msg -> Html msg
-view millerColumns_ =
-    let
-        viewUnselectedItems items =
-            List.map (viewItem False) items
 
-        viewSelectedItem i =
-            viewItem True i
+{-
+   view : MillerColumns a msg -> Html msg
+   view millerColumns_ =
+       let
+           viewUnselectedItems items =
+               List.map (viewItem False) items
 
-        go col =
-            case col of
-                NoSelection items ->
-                    [ viewColumn (viewUnselectedItems items) ]
+           viewSelectedItem i =
+               viewItem True i
 
-                WithSelection items ->
-                    let
-                        before =
-                            viewUnselectedItems items.before
+           go col =
+               case col of
+                   NoSelection items ->
+                       [ viewColumn (viewUnselectedItems items) ]
 
-                        after =
-                            viewUnselectedItems items.after
-                    in
-                    case items.selected of
-                        Node s ->
-                            viewColumn
-                                (before ++ viewSelectedItem s.item :: after)
-                                :: go s.children
+                   WithSelection items ->
+                       let
+                           before =
+                               viewUnselectedItems items.before
 
-                        Leaf i ->
-                            [ viewColumn
-                                (before
-                                    ++ Click.view [] [ viewSelectedItem i ] (Click.onClick (millerColumns_.onSelectMsg i.value))
-                                    :: after
-                                )
-                            ]
+                           after =
+                               viewUnselectedItems items.after
+                       in
+                       case items.selected of
+                           Node s ->
+                               viewColumn
+                                   (before ++ viewSelectedItem s.item :: after)
+                                   :: go s.children
 
-        columns =
-            go millerColumns_.root
-    in
-    div [ class "columns" ] columns
+                           Leaf i ->
+                               [ viewColumn
+                                   (before
+                                       ++ Click.view [] [ viewSelectedItem i ] (Click.onClick (millerColumns_.onSelectMsg i.value))
+                                       :: after
+                                   )
+                               ]
+
+           columns =
+               go millerColumns_.root
+       in
+       div [ class "columns" ] columns
+-}
