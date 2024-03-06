@@ -168,7 +168,21 @@
   color: var(--u-color_icon_subdued);
 }
 
+.workspace-item .show-full-doc {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.workspace-item .show-full-doc::before {
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  right: 0;
+  height: 1rem;
+  background: linear-gradient(transparent, var(--color-workspace-item-bg);
+}
+
 .workspace-item .workspace-item_inner-content:not(.shown-in-full) .doc-column {
   overflow-y: hidden;
-  max-height: 4rem;
+  max-height: 12rem;
 }
