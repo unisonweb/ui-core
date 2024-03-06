@@ -175,6 +175,7 @@
 
 .workspace-item .show-full-doc:before {
   position: absolute;
+  content: " ";
   top: -1rem;
   left: 0;
   right: 0;
