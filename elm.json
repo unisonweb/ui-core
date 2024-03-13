@@ -107,7 +107,7 @@
         "mgold/elm-nonempty-list": "4.1.0 <= v < 5.0.0",
         "noahzgordon/elm-color-extra": "1.0.0 <= v < 2.0.0",
         "rtfeldman/elm-iso8601-date-strings": "1.1.4 <= v < 2.0.0",
-        "ryannhg/date-format": "2.3.0 <= v < 3.0.0",
+        "ryan-haskell/date-format": "1.0.0 <= v < 2.0.0",
         "stoeffel/set-extra": "1.2.0 <= v < 2.0.0",
         "wernerdegroot/listzipper": "4.0.0 <= v < 5.0.0"
     },
