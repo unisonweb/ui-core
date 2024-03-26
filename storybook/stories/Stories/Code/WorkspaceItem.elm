@@ -35,7 +35,7 @@ init : () -> ( Model, Cmd Message )
 init _ =
     ( { workspaceItem = Nothing }
     , Http.get
-        { url = "/increment_term_def.json"
+        { url = "/long.json"
         , expect = Http.expectJson GotItem (decodeItem sampleReference)
         }
     )
