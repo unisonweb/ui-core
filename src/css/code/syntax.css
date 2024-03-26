@@ -37,6 +37,12 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
   display: none;
 }
 
+/* Fixes issues: #72, #73 */
+code .syntax {
+  display: block;
+  white-space: pre-wrap;
+}
+
 .rich .fqn .sep {
   color: var(--color-syntax-subtle);
 }
