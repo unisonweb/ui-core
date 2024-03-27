@@ -172,6 +172,9 @@
   width: 13rem;
   padding-top: 0.25rem;
   font-size: var(--font-size-medium);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .page-content .columns {
