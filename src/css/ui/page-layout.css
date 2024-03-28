@@ -186,6 +186,7 @@
   flex: 1;
   flex-direction: column;
   gap: 1.5rem;
+  min-width: 0;
 }
 
 .page.centered-layout .page-content {
