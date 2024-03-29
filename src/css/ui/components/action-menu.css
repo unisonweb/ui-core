@@ -26,7 +26,7 @@
   gap: 0;
   padding: 0.375rem;
   animation: slide-down 0.2s var(--anim-elastic);
-  z-index: var(--layer-floating-controls);
+  z-index: var(--layer-popover);
   overflow: hidden;
 }
 
