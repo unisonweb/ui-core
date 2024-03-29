@@ -1,0 +1,81 @@
+{
+  "missingDefinitions": [],
+  "termDefinitions": {
+    "#3tgadjo2kff3r8b0sfitdumiak0aoqkpkj87ueh41fudv2d079ek89bq7qog7dij99f7aqhug1271j5h5vuuf6ohk2u2m6eg374g6ag": {
+      "bestTermName": "assets.indexHtml",
+      "defnTermTag": "Plain",
+      "signature": [
+        {
+          "annotation": {
+            "contents": "##Text",
+            "tag": "TypeReference"
+          },
+          "segment": "Text"
+        }
+      ],
+      "termDefinition": {
+        "contents": [
+          {
+            "annotation": {
+              "contents": "assets.indexHtml",
+              "tag": "HashQualifier"
+            },
+            "segment": "assets.indexHtml"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": {
+              "contents": "assets.indexHtml",
+              "tag": "HashQualifier"
+            },
+            "segment": "assets.indexHtml"
+          },
+          {
+            "annotation": {
+              "tag": "BindingEquals"
+            },
+            "segment": " ="
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "\"<!DOCTYPE html>\\n  <html lang=\\\"en\\\">\\n  <head>\\n      <meta charset=\\\"UTF-8\\\">\\n      <meta name=\\\"viewport\\\" content=\\\"width=device-width, initial-scale=1.0\\\">\\n      <title>Unison Doodles</title>\\n      <link rel=\\\"stylesheet\\\" href=\\\"styles.css\\\">\\n  </head>\\n  <body>\\n    <div class=\\\"container\\\">\\n      <div class =\\\"row bg-primary text-white text-center py-5\\\">\\n        <h1 class=\\\"display-1\\\">🎨</h1>\\n        <h1 class=\\\"display-4 fw-bold\\\">Unison Doodles</h1>\\n        <p class=\\\"lead\\\">This test app was written with the Unison Cloud</p>\\n      </div>\\n\\n      <div class=\\\"row\\\">\\n        <div class=\\\"col pt-5\\\">\\n          <h2>🧑\\8205🎨 Draw something</h2>\\n        </div>\\n      </div>\\n\\n      <div class=\\\"row row-cols-2 g-1\\\">\\n\\n        <div class=\\\"col col-sm pt-2\\\">\\n          <canvas id =\\\"doodle-canvas-primary\\\" class=\\\"workspace doodle-canvas\\\"></canvas>\\n          <div id=\\\"canvas-palette\\\" class=\\\"palette\\\">\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"black\\\"></div>\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"red\\\"></div>\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"orange\\\"></div>\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"yellow\\\"></div>\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"green\\\"></div>\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"blue\\\"></div>\\n            <div class=\\\"inkwell p-2\\\" data-color=\\\"purple\\\"></div>\\n          </div>\\n        </div>\\n\\n        <div class=\\\"col col-sm px-3\\\">\\n          <form id=\\\"doodle-form\\\" onsubmit=\\\"return false\\\">\\n            <div class=\\\"form-group pb-3\\\">\\n              <label for =\\\"title\\\">Title</label>\\n              <input type=\\\"text\\\" class=\\\"form-control\\\" id=\\\"title\\\" name=\\\"title\\\" placeholder=\\\"Enter title\\\">\\n              <small id=\\\"titleHelp\\\" class=\\\"form-text text-muted\\\">Give your drawing a title</small>\\n            </div>\\n            <div class=\\\"form-group pb-3\\\">\\n              <label for=\\\"author\\\">Author</label>\\n              <input type=\\\"text\\\" class=\\\"form-control\\\" id=\\\"author\\\" name=\\\"author\\\" placeholder=\\\"Enter name\\\">\\n              <small id=\\\"authorHelp\\\" class=\\\"form-text text-muted\\\">Who made this work of art?</small>\\n              <div class=\\\"button-group py-3\\\">\\n                <button id=\\\"save-doodle\\\" type=\\\"submit\\\" class=\\\"btn btn-info\\\">Save</button>\\n                <button id=\\\"clear-doodle\\\" type=\\\"reset\\\" class=\\\"btn btn-warning\\\">Clear</button>\\n              </div>\\n            </div>\\n          </form>\\n        </div>\\n\\n      </div>\\n\\n    <div class=\\\"container pt-5\\\">\\n      <div id=\\\"doodle-log-holder\\\" class=\\\"row row-cols-1\\\">\\n            <h2>🖼 Gallery</h2>\\n            <h3>Everyone's work is here for now!</h3>\\n            <div class=\\\"album py-5 px-5 bg-light\\\">\\n              <div id=\\\"doodle-log\\\" class=\\\"row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3\\\"></div>\\n            </div>\\n      </div>\\n    </div>\\n    <script src=\\\"./script.js\\\"></script>\\n    <link href=\\\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css\\\" rel=\\\"stylesheet\\\" integrity=\\\"sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC\\\" crossorigin=\\\"anonymous\\\">\\n    </div>\\n  </body>\\n</html>\""
+          }
+        ],
+        "tag": "UserObject"
+      },
+      "termDocs": [],
+      "termNames": ["assets.indexHtml"]
+    }
+  },
+  "typeDefinitions": {}
+}

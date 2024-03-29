@@ -8,7 +8,6 @@
 }
 
 #workspace.view-mode_regular #workspace-content {
-  max-width: 100vw;
   /*overflow-x: hidden;*/
   display: flex;
   flex-direction: column;
