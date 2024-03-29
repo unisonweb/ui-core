@@ -58,6 +58,8 @@
   z-index: var(--layer-tooltip);
   right: 1rem;
   margin-top: -0.5rem;
+  max-height: 75%;
+  overflow: auto;
 }
 
 @media only screen and (--u-viewport_max-lg) {
