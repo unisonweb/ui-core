@@ -48,15 +48,25 @@
 
 .workspace-minimap_header {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   font-size: var(--font-size-medium);
+  align-items: center;
 }
 
 .workspace-minimap_header .workspace-minimap_header_title {
   color: var(--c-color_workspace-minimap_text_subdued);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  line-height: 1;
+  gap: 0.5rem;
 }
 
 .workspace-minimap_header .workspace-minimap_header_title:hover {
+  color: var(--c-color_workspace-minimap_interactive);
+}
+.workspace-minimap_header .workspace-minimap_header_title:hover .icon {
   color: var(--c-color_workspace-minimap_interactive);
 }
 
