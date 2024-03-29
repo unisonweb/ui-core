@@ -50,9 +50,11 @@ viewCollapsed model =
                         |> WorkspaceItems.focusIndex
                         |> Maybe.withDefault 0
             in
-            [ Button.icon model.toggleMinimapMsg Icon.unfoldedMap
+            [ Button.icon model.toggleMinimapMsg Icon.caretRight
                 |> Button.small
                 |> Button.view
+            , Icon.view
+                Icon.unfoldedMap
             , viewItem
                 model.selectItemMsg
                 model.keyboardShortcut
@@ -92,7 +94,7 @@ viewHeader toggleMinimapMsg closeAllMsg =
         [ class "workspace-minimap_header" ]
         [ Click.view
             [ class "workspace-minimap_header_title" ]
-            [ text "MAP" ]
+            [ Icon.view caretDown, Icon.view Icon.unfoldedMap ]
             (Click.onClick toggleMinimapMsg)
         , Click.view
             [ class "workspace-minimap_close" ]
