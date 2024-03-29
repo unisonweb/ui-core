@@ -26,11 +26,7 @@
   gap: 0;
   padding: 0.375rem;
   animation: slide-down 0.2s var(--anim-elastic);
-  /* 
-    It must be greater than `workspace-minimap` z-index value. 
-    Incrementing by 1 fixes issue #76.
-  */
-  z-index: calc(var(--layer-tooltip) + 1);
+  z-index: var(--layer-floating-controls);
   overflow: hidden;
 }
 
