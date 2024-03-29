@@ -94,7 +94,7 @@ viewHeader toggleMinimapMsg closeAllMsg =
         [ class "workspace-minimap_header" ]
         [ Click.view
             [ class "workspace-minimap_header_title" ]
-            [ Icon.view caretDown, Icon.view Icon.unfoldedMap ]
+            [ Icon.view Icon.caretDown, Icon.view Icon.unfoldedMap ]
             (Click.onClick toggleMinimapMsg)
         , Click.view
             [ class "workspace-minimap_close" ]
