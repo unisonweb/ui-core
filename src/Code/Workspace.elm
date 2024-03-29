@@ -78,6 +78,7 @@ type Msg
     | WorkspaceItemMsg WorkspaceItem.Msg
     | DefinitionSummaryTooltipMsg DefinitionSummaryTooltip.Msg
     | SelectItem WorkspaceItem
+    | CloseItem WorkspaceItem
     | CloseAll
     | ToggleMinimap
 
@@ -308,6 +309,18 @@ update config viewMode msg ({ workspaceItems } as model) =
             , item
                 |> WorkspaceItem.reference
                 |> scrollToDefinition
+            , openDefinitionsFocusToOutMsg nextWorkspaceItems
+            )
+
+        CloseItem item ->
+            let
+                nextWorkspaceItems =
+                    item
+                        |> WorkspaceItem.reference
+                        |> WorkspaceItems.remove model.workspaceItems
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
             , openDefinitionsFocusToOutMsg nextWorkspaceItems
             )
 
@@ -616,6 +629,7 @@ toMinimap model =
     { keyboardShortcut = model.keyboardShortcut
     , workspaceItems = model.workspaceItems
     , selectItemMsg = SelectItem
+    , closeItemMsg = CloseItem
     , closeAllMsg = CloseAll
     , isToggled = model.isMinimapToggled
     , toggleMinimapMsg = ToggleMinimap

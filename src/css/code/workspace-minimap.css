@@ -88,8 +88,12 @@
   cursor: pointer;
   border-radius: var(--border-radius-base);
   color: var(--c-color_workspace-minimap_text_subdued);
-  padding: 0 0.5rem;
+  padding: 0 0.25rem 0 0.5rem;
   transition: all 0.2s;
+}
+
+.workspace-minimap_item .button {
+  display: none;
 }
 
 .workspace-minimap_collapsed .workspace-minimap_item {
@@ -98,6 +102,10 @@
 
 .workspace-minimap_expanded .workspace-minimap_item.focused {
   background: var(--c-color_workspace-minimap_item_selected);
+}
+
+.workspace-minimap_expanded .workspace-minimap_item:hover .button {
+  display: inline-flex;
 }
 
 .workspace-minimap_item:not(.focused):hover {

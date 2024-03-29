@@ -25,6 +25,7 @@ type alias Minimap msg =
     , workspaceItems : WorkspaceItems
     , selectItemMsg : WorkspaceItem -> msg
     , closeAllMsg : msg
+    , closeItemMsg : WorkspaceItem -> msg
     , isToggled : Bool
     , toggleMinimapMsg : msg
     }
@@ -53,11 +54,7 @@ viewCollapsed model =
             [ Button.icon model.toggleMinimapMsg Icon.unfoldedMap
                 |> Button.small
                 |> Button.view
-            , viewItem
-                model.selectItemMsg
-                model.keyboardShortcut
-                focusIndex
-                ( item, True )
+            , viewItem model focusIndex ( item, True )
             ]
 
         content =
@@ -78,7 +75,7 @@ viewExpanded model =
         entries =
             model.workspaceItems
                 |> mapToList Tuple.pair
-                |> List.indexedMap (viewItem model.selectItemMsg model.keyboardShortcut)
+                |> List.indexedMap (viewItem model)
                 |> div [ class "workspace-minimap_entries" ]
     in
     div
@@ -101,8 +98,8 @@ viewHeader toggleMinimapMsg closeAllMsg =
         ]
 
 
-viewItem : (WorkspaceItem -> msg) -> KeyboardShortcut.Model -> Int -> ( WorkspaceItem, Bool ) -> Html msg
-viewItem selectItem keyboardShortcut index ( item, focused ) =
+viewItem : Minimap msg -> Int -> ( WorkspaceItem, Bool ) -> Html msg
+viewItem { selectItemMsg, closeItemMsg, keyboardShortcut } index ( item, focused ) =
     let
         content =
             case item of
@@ -138,9 +135,10 @@ viewItem selectItem keyboardShortcut index ( item, focused ) =
     in
     div
         [ classList [ ( "workspace-minimap_item", True ), ( "focused", focused ) ]
-        , onClick (selectItem item)
+        , onClick (selectItemMsg item)
         ]
         [ content
+        , Button.icon (closeItemMsg item) Icon.x |> Button.small |> Button.subdued |> Button.view
         , div
             [ hidden True ]
             -- currently hidden as feature is not supported yet

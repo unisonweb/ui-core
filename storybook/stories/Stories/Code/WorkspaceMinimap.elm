@@ -19,6 +19,7 @@ type alias Model =
 
 type Msg
     = SelectItem WorkspaceItem.WorkspaceItem
+    | CloseItem WorkspaceItem.WorkspaceItem
     | CloseAll
     | ToggleMinimap
     | GotItem Reference.Reference (Result Http.Error WorkspaceItem.Item)
@@ -48,6 +49,7 @@ init _ =
                     |> List.map loadingItem
                 )
       , selectItemMsg = SelectItem
+      , closeItemMsg = CloseItem
       , closeAllMsg = CloseAll
       , isToggled = False
       , toggleMinimapMsg = ToggleMinimap
@@ -100,6 +102,17 @@ update message model =
                     item
                         |> WorkspaceItem.reference
                         |> WorkspaceItems.focusOn model.workspaceItems
+            in
+            ( { model | workspaceItems = nextWorkspaceItems }
+            , Cmd.none
+            )
+
+        CloseItem item ->
+            let
+                nextWorkspaceItems =
+                    item
+                        |> WorkspaceItem.reference
+                        |> WorkspaceItems.remove model.workspaceItems
             in
             ( { model | workspaceItems = nextWorkspaceItems }
             , Cmd.none
