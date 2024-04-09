@@ -13,7 +13,7 @@
 
 module UI.ByAt exposing (ByAt, byAt, byUnknown, handleOnly, view)
 
-import Html exposing (Html, div, em, span, text)
+import Html exposing (Html, div, span, strong, text)
 import Html.Attributes exposing (class)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Time
@@ -75,10 +75,10 @@ view zone now (ByAt by at) =
                         |> ProfileSnippet.view
 
                 ByHandle h ->
-                    text (UserHandle.toString h)
+                    strong [] [ text (UserHandle.toString h) ]
 
                 ByUnknown ->
-                    em [] [ text "Unknown user" ]
+                    strong [] [ text "Unknown user" ]
     in
     div
         [ class "by-at" ]
