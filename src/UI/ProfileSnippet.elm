@@ -121,7 +121,7 @@ view { size, profile } =
         ( attrs, avatar, profileText ) =
             case size of
                 Small ->
-                    ( class "profile-snippet_size_small" :: cfg.attrs, cfg.avatar |> Avatar.small, [ cfg.name ] )
+                    ( class "profile-snippet_size_small" :: cfg.attrs, cfg.avatar |> Avatar.small, [ cfg.handle ] )
 
                 Medium ->
                     ( class "profile-snippet_size_medium" :: cfg.attrs, cfg.avatar |> Avatar.medium, [ cfg.name, cfg.handle ] )
