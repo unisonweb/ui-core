@@ -107,7 +107,9 @@ view { size, profile } =
                         cfg_ n class_ =
                             { avatar = Avatar.avatar user.avatarUrl (Maybe.map (String.left 1) user.name)
                             , name = n
-                            , handle = span [ class "profile-snippet_handle" ] [ text (UserHandle.toString user.handle) ]
+                            , handle =
+                                span [ class "profile-snippet_handle" ]
+                                    [ text (UserHandle.toString user.handle) ]
                             , attrs = [ class class_ ]
                             }
                     in

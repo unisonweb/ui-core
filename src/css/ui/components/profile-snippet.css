@@ -1,5 +1,6 @@
 .profile-snippet.profile-snippet_size_small {
   --c-size_profile-snippet_name: var(--font-size-small);
+  font-weight: bold;
 }
 
 .profile-snippet.profile-snippet_size_medium {
