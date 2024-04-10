@@ -8,12 +8,6 @@
 
 .fully-qualified-name .fully-qualified-name_segment {
   color: var(--u-color_text);
-  padding: 0 0.125ch;
-}
-
-.fully-qualified-name .fully-qualified-name_segment:first-child,
-.fully-qualified-name .fully-qualified-name_segment:last-child {
-  padding: 0;
 }
 
 .fully-qualified-name .fully-qualified-name_segment.clickable:hover {
@@ -25,4 +19,5 @@
    * .fully-qualified-name
   */
   color: var(--u-color_text_very-subdued);
+  padding: 0 0.125ch;
 }
