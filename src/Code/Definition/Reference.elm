@@ -18,6 +18,16 @@ type Reference
 -- CREATE
 
 
+fromFQN : (HashQualified -> Reference) -> FQN -> Reference
+fromFQN toRef fqn_ =
+    fqn_ |> HQ.fromFQN |> toRef
+
+
+fromHash : (HashQualified -> Reference) -> Hash -> Reference
+fromHash toRef hash_ =
+    hash_ |> HQ.fromHash |> toRef
+
+
 fromString : (HashQualified -> Reference) -> String -> Reference
 fromString toRef str =
     str |> HQ.fromString |> toRef

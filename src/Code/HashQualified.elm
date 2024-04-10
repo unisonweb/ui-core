@@ -1,6 +1,8 @@
 module Code.HashQualified exposing
     ( HashQualified(..)
     , equals
+    , fromFQN
+    , fromHash
     , fromString
     , fromUrlString
     , hash
@@ -43,6 +45,16 @@ type HashQualified
 
 
 -- CREATE
+
+
+fromFQN : FQN -> HashQualified
+fromFQN =
+    NameOnly
+
+
+fromHash : Hash -> HashQualified
+fromHash =
+    HashOnly
 
 
 fromString : String -> HashQualified
