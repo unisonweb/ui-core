@@ -71,7 +71,7 @@ init config mRef =
 
 type Msg
     = NoOp
-    | FetchItemFinished Reference (Result Http.Error Item)
+    | FetchItemFinished Reference (Result Http.Error (List Item))
     | IsDocCropped Reference (Result Dom.Error Bool)
     | Keydown KeyboardEvent
     | KeyboardShortcutMsg KeyboardShortcut.Msg
@@ -153,10 +153,10 @@ update config viewMode msg ({ workspaceItems } as model) =
                     , None
                     )
 
-                Ok i ->
+                Ok items ->
                     let
                         ( nextWorkspaceItems, cmd ) =
-                            updateOne ref i ( workspaceItems, Cmd.none )
+                            List.foldl (updateOne ref) ( workspaceItems, Cmd.none ) items
                     in
                     ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
@@ -543,7 +543,7 @@ handleKeyboardShortcut viewMode model shortcut =
 -- EFFECTS
 
 
-fetchDefinition : Config -> Reference -> ApiRequest Item Msg
+fetchDefinition : Config -> Reference -> ApiRequest (List Item) Msg
 fetchDefinition config ref =
     let
         endpoint =
@@ -554,7 +554,7 @@ fetchDefinition config ref =
     in
     endpoint
         |> config.toApiEndpoint
-        |> HttpApi.toRequest (WorkspaceItem.decodeItem ref) (FetchItemFinished ref)
+        |> HttpApi.toRequest (WorkspaceItem.decodeList ref) (FetchItemFinished ref)
 
 
 isDocCropped : Reference -> Cmd Msg
