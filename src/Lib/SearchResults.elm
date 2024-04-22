@@ -1,6 +1,8 @@
 module Lib.SearchResults exposing
     ( Matches
     , SearchResults(..)
+    , cycleNext
+    , cyclePrev
     , empty
     , focus
     , focusOn
@@ -120,9 +122,19 @@ next =
     map nextMatch
 
 
+cycleNext : SearchResults a -> SearchResults a
+cycleNext =
+    map cycleNextMatch
+
+
 prev : SearchResults a -> SearchResults a
 prev =
     map prevMatch
+
+
+cyclePrev : SearchResults a -> SearchResults a
+cyclePrev =
+    map cyclePrevMatch
 
 
 focusOn : (a -> Bool) -> SearchResults a -> SearchResults a
@@ -158,9 +170,27 @@ nextMatch ((Matches data) as matches) =
     unwrap matches Matches (Zipper.next data)
 
 
+{-| like `nextMatch`, but cycles back around to the start
+-}
+cycleNextMatch : Matches a -> Matches a
+cycleNextMatch (Matches data) =
+    Zipper.next data
+        |> Maybe.withDefault (Zipper.first data)
+        |> Matches
+
+
 prevMatch : Matches a -> Matches a
 prevMatch ((Matches data) as matches) =
     unwrap matches Matches (Zipper.previous data)
+
+
+{-| like `prevMatch`, but cycles back around to the end
+-}
+cyclePrevMatch : Matches a -> Matches a
+cyclePrevMatch (Matches data) =
+    Zipper.previous data
+        |> Maybe.withDefault (Zipper.last data)
+        |> Matches
 
 
 focusMatch : Matches a -> a

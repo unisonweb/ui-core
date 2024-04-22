@@ -50,6 +50,30 @@ next =
         ]
 
 
+cycleNext : Test
+cycleNext =
+    describe "SearchResults.cycleNext"
+        [ test "moves focus to the next element" <|
+            \_ ->
+                let
+                    result =
+                        SearchResults.from [ "a" ] "b" [ "c" ]
+                            |> SearchResults.cycleNext
+                            |> SearchResults.focus
+                in
+                Expect.equal (Just "c") result
+        , test "cycles around to the start if at the end" <|
+            \_ ->
+                let
+                    result =
+                        SearchResults.from [ "a", "b" ] "c" []
+                            |> SearchResults.cycleNext
+                            |> SearchResults.focus
+                in
+                Expect.equal (Just "a") result
+        ]
+
+
 prev : Test
 prev =
     describe "SearchResults.prev"
@@ -71,6 +95,30 @@ prev =
                             |> SearchResults.focus
                 in
                 Expect.equal (Just "a") result
+        ]
+
+
+cyclePrev : Test
+cyclePrev =
+    describe "SearchResults.cyclePrev"
+        [ test "moves focus to the prev element" <|
+            \_ ->
+                let
+                    result =
+                        SearchResults.from [ "a" ] "b" [ "c" ]
+                            |> SearchResults.cyclePrev
+                            |> SearchResults.focus
+                in
+                Expect.equal (Just "a") result
+        , test "cycles around to the end if at the start" <|
+            \_ ->
+                let
+                    result =
+                        SearchResults.from [] "a" [ "b", "c" ]
+                            |> SearchResults.cyclePrev
+                            |> SearchResults.focus
+                in
+                Expect.equal (Just "c") result
         ]
 
 
