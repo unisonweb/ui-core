@@ -38,6 +38,18 @@ a.tag:hover {
   border-radius: calc(1.5rem / 2);
 }
 
+.tag.tag_size_extra-large {
+  padding: 0 0.75rem;
+  gap: 0.5rem;
+  height: 2rem;
+  border-radius: calc(2rem / 2);
+  font-size: var(--font-size-medium);
+}
+
+.tag.tag_size_extra-large .icon {
+  font-size: var(--font-size-medium);
+}
+
 .tag .tag_text {
   display: inline-flex;
   flex-direction: row;

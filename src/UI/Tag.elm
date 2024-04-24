@@ -17,6 +17,7 @@ type TagAction msg
 type TagSize
     = Medium
     | Large
+    | ExtraLarge
 
 
 type alias Tag msg =
@@ -78,14 +79,19 @@ withDismissRight click t =
     { t | action = DismissRight click }
 
 
+medium : Tag msg -> Tag msg
+medium t =
+    { t | size = Medium }
+
+
 large : Tag msg -> Tag msg
 large t =
     { t | size = Large }
 
 
-medium : Tag msg -> Tag msg
-medium t =
-    { t | size = Medium }
+extraLarge : Tag msg -> Tag msg
+extraLarge t =
+    { t | size = ExtraLarge }
 
 
 
@@ -152,6 +158,9 @@ view t =
 
                 Large ->
                     class "tag_size_large"
+
+                ExtraLarge ->
+                    class "tag_size_extra-large"
 
         attrs =
             [ class "tag", sizeClass ]
