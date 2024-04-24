@@ -71,7 +71,7 @@ a.tag:hover {
   font-size: var(--font-size-small);
 }
 
-.tag .tag_dimiss .icon {
+.tag .tag_dismiss .icon {
   color: var(--c-color_tag_icon);
   font-size: var(--font-size-extra-small);
 }
