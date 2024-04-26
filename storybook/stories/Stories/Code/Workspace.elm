@@ -9,11 +9,10 @@ import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
-import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems as WorkspaceItems
 import Html exposing (Html, div)
 import Html.Events exposing (onClick)
-import Http
 import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
@@ -57,39 +56,8 @@ init _ =
     Tuple.mapSecond (Cmd.map WorkspaceMsg) openResult
 
 
-
--- ( model
--- , Cmd.batch
---     [ getSampleResponse 0 "/increment_term_def.json" "increment"
---     , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
---     , getSampleResponse 2 "/base_readme.json" "base_readme"
---     , getSampleResponse 3 "/long.json" "assets.indexHtml"
---     ]
--- )
-
-
-getSampleResponse : Int -> String -> String -> Cmd Msg
-getSampleResponse index url termName =
-    let
-        reference =
-            termName
-                |> FQN.fromString
-                |> NameOnly
-                |> Reference.TypeReference
-
-        decoder =
-            reference
-                |> decodeItem
-    in
-    Http.get
-        { url = url
-        , expect = Http.expectJson (GotItem index reference) decoder
-        }
-
-
 type Msg
     = WorkspaceMsg Workspace.Msg
-    | GotItem Int Reference.Reference (Result Http.Error Item)
     | OpenNext
 
 
@@ -167,23 +135,6 @@ update message model =
             in
             ( newModel, Cmd.map WorkspaceMsg cmd )
 
-        GotItem _ reference result ->
-            case result of
-                Err error ->
-                    ( model, Cmd.none )
-
-                Ok item ->
-                    let
-                        newWorkspaceItems =
-                            item
-                                |> fromItem reference
-                                |> WorkspaceItems.prependWithFocus model.workspaceItems
-
-                        newModel =
-                            { model | workspaceItems = newWorkspaceItems }
-                    in
-                    ( newModel, Cmd.none )
-
         OpenNext ->
             let
                 reference =
@@ -195,9 +146,7 @@ update message model =
                 openResult =
                     Workspace.open config model reference
             in
-            ( Tuple.first openResult
-            , Tuple.second openResult |> Cmd.map WorkspaceMsg
-            )
+            Tuple.mapSecond (Cmd.map WorkspaceMsg) openResult
 
 
 view : Model -> Html Msg
