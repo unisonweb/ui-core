@@ -121,6 +121,10 @@
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   white-space: nowrap;
+  max-width: var(--c-width_doc_inner-content);
+  scrollbar-width: auto;
+  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+  overflow: auto;
 }
 
 .definition-doc
