@@ -128,6 +128,16 @@
 }
 
 .definition-doc
+  .source:is(
+    .inline-code,
+    .example-inline,
+    .eval-inline,
+    .signature-inline
+  )::-webkit-scrollbar {
+  height: 0.25rem;
+}
+
+.definition-doc
   .doc_group
   .doc_join
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
