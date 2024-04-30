@@ -127,14 +127,11 @@
   overflow: auto;
 }
 
-.definition-doc
-  .source:is(
-    .inline-code,
-    .example-inline,
-    .eval-inline,
-    .signature-inline
-  )::-webkit-scrollbar {
-  height: 0.25rem;
+.definition-doc .source.inline-code::-webkit-scrollbar,
+.definition-doc .example-inline::-webkit-scrollbar,
+.definition-doc .eval-inline::-webkit-scrollbar,
+.definition-doc .signature-inline::-webkit-scrollbar {
+  height: 0.125rem;
 }
 
 .definition-doc
