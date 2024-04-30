@@ -116,7 +116,7 @@
 
 .definition-doc
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
-  display: inline-block;
+  display: inline-flex;
   padding: 0 0.25rem;
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
