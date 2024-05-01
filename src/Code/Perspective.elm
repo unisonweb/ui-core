@@ -42,6 +42,11 @@ relativeRootPerspective =
     Root { root = Relative, details = NotAsked }
 
 
+absoluteRootPerspective : Hash -> Perspective
+absoluteRootPerspective h =
+    Root { root = Absolute h, details = NotAsked }
+
+
 toRootPerspective : Perspective -> Perspective
 toRootPerspective perspective =
     Root { root = rootPerspective perspective, details = NotAsked }
