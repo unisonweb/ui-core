@@ -61,7 +61,7 @@
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
-  max-width: var(--c-width_doc_inner-content);
+  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -350,7 +350,7 @@
 }
 
 .definition-doc .embed-svg {
-  max-width: var(--c-width_doc_inner-content);
+  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
   border: 0;
 }
 
