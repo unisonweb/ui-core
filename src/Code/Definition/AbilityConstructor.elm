@@ -27,7 +27,7 @@ type AbilityConstructor a
 
 
 type alias AbilityConstructorDetail =
-    AbilityConstructor { info : Info, source : TypeSource }
+    AbilityConstructor { info : Info, source : TypeSource, signature : TermSignature }
 
 
 type alias AbilityConstructorSummary =
