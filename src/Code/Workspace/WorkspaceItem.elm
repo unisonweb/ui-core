@@ -13,6 +13,7 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
+import Code.Source.SourceViewConfig as SourceViewConfig exposing (SourceViewConfig)
 import Code.Syntax as Syntax
 import Code.Workspace.Zoom as Zoom exposing (Zoom(..))
 import Html exposing (Attribute, Html, div, h3, header, section, span, text)
@@ -507,7 +508,7 @@ viewDoc syntaxConfig ref docVisibility docFoldToggles doc =
         ]
 
 
-viewSource : Zoom -> Msg -> Source.ViewConfig Msg -> Item -> Html Msg
+viewSource : Zoom -> Msg -> SourceViewConfig Msg -> Item -> Html Msg
 viewSource zoom onSourceToggleClick sourceConfig item =
     let
         viewToggableSource foldToggle renderedSource =
@@ -571,7 +572,7 @@ viewItem syntaxConfig namespaceActionMenu ref data isFocused =
             [ class zoomClass, classList [ ( "workspace-item_is-focused", isFocused ) ] ]
 
         sourceConfig =
-            Source.Rich syntaxConfig
+            SourceViewConfig.rich syntaxConfig
 
         viewDoc_ doc =
             doc

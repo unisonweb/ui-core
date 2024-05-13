@@ -1,6 +1,5 @@
 module Code.Definition.Source exposing
     ( Source(..)
-    , ViewConfig(..)
     , isBuiltin
     , numTermLines
     , numTermSignatureLines
@@ -15,16 +14,11 @@ module Code.Definition.Source exposing
 import Code.Definition.Term as Term exposing (TermSignature(..), TermSource)
 import Code.Definition.Type as Type exposing (TypeSource)
 import Code.FullyQualifiedName as FQN exposing (FQN)
+import Code.Source.SourceViewConfig as SourceViewConfig exposing (SourceViewConfig)
 import Code.Syntax as Syntax
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import UI
-
-
-type ViewConfig msg
-    = Rich (Syntax.LinkedWithTooltipConfig msg)
-    | Monochrome
-    | Plain
 
 
 type
@@ -85,7 +79,7 @@ numTermSignatureLines source =
 -- VIEW
 
 
-view : ViewConfig msg -> Source -> Html msg
+view : SourceViewConfig msg -> Source -> Html msg
 view viewConfig source =
     case source of
         Type typeSource ->
@@ -95,7 +89,7 @@ view viewConfig source =
             viewTermSource viewConfig termName termSource
 
 
-viewTypeSource : ViewConfig msg -> TypeSource -> Html msg
+viewTypeSource : SourceViewConfig msg -> TypeSource -> Html msg
 viewTypeSource viewConfig source =
     let
         content =
@@ -113,17 +107,17 @@ viewTypeSource viewConfig source =
     viewCode viewConfig content
 
 
-viewTermSignature : ViewConfig msg -> TermSignature -> Html msg
+viewTermSignature : SourceViewConfig msg -> TermSignature -> Html msg
 viewTermSignature viewConfig (TermSignature syntax) =
     viewCode viewConfig (viewSyntax viewConfig syntax)
 
 
-viewNamedTermSignature : ViewConfig msg -> FQN -> TermSignature -> Html msg
+viewNamedTermSignature : SourceViewConfig msg -> FQN -> TermSignature -> Html msg
 viewNamedTermSignature viewConfig termName signature =
     viewCode viewConfig (viewNamedTermSignature_ viewConfig termName signature)
 
 
-viewNamedTermSignature_ : ViewConfig msg -> FQN -> TermSignature -> Html msg
+viewNamedTermSignature_ : SourceViewConfig msg -> FQN -> TermSignature -> Html msg
 viewNamedTermSignature_ viewConfig termName (TermSignature syntax) =
     span
         []
@@ -133,7 +127,7 @@ viewNamedTermSignature_ viewConfig termName (TermSignature syntax) =
         ]
 
 
-viewTermSource : ViewConfig msg -> FQN -> TermSource -> Html msg
+viewTermSource : SourceViewConfig msg -> FQN -> TermSource -> Html msg
 viewTermSource viewConfig termName source =
     let
         content =
@@ -151,36 +145,13 @@ viewTermSource viewConfig termName source =
 -- VIEW HELPERS
 
 
-viewCode : ViewConfig msg -> Html msg -> Html msg
+viewCode : SourceViewConfig msg -> Html msg -> Html msg
 viewCode viewConfig content =
     UI.codeBlock
-        [ class (viewConfigToClassName viewConfig) ]
+        [ class (SourceViewConfig.toClassName viewConfig) ]
         content
 
 
-viewConfigToClassName : ViewConfig msg -> String
-viewConfigToClassName viewConfig =
-    case viewConfig of
-        Rich _ ->
-            "rich"
-
-        Monochrome ->
-            "monochrome"
-
-        Plain ->
-            "plain"
-
-
-viewSyntax : ViewConfig msg -> (Syntax.Syntax -> Html msg)
+viewSyntax : SourceViewConfig msg -> (Syntax.Syntax -> Html msg)
 viewSyntax viewConfig =
-    Syntax.view (viewConfigToSyntaxLinked viewConfig)
-
-
-viewConfigToSyntaxLinked : ViewConfig msg -> Syntax.Linked msg
-viewConfigToSyntaxLinked viewConfig =
-    case viewConfig of
-        Rich cfg ->
-            Syntax.LinkedWithTooltip cfg
-
-        _ ->
-            Syntax.NotLinked
+    Syntax.view (SourceViewConfig.toSyntaxLinked viewConfig)

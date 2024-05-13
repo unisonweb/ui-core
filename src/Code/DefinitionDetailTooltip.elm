@@ -2,20 +2,20 @@ module Code.DefinitionDetailTooltip exposing (Model, Msg, init, tooltipConfig, u
 
 import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
-import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorDetail)
+import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorDetail)
 import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorDetail)
 import Code.Definition.Reference as Reference exposing (Reference(..))
 import Code.Definition.Source as Source
-import Code.Definition.Term as Term exposing (Term(..), TermDetail, termSignatureSyntax)
-import Code.Definition.Type as Type exposing (Type(..), TypeDetail, typeSourceSyntax)
+import Code.Definition.Term as Term exposing (Term(..), TermDetail)
+import Code.Definition.Type as Type exposing (Type(..), TypeDetail)
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
+import Code.Source.SourceViewConfig as SourceViewConfig
 import Code.Syntax as Syntax
-import Code.Syntax.SyntaxSegment as SyntaxSegment
 import Dict exposing (Dict)
-import Html exposing (div, span, text)
+import Html exposing (div)
 import Html.Attributes exposing (class)
-import Json.Decode as Decode exposing (at, field)
+import Json.Decode as Decode exposing (field)
 import Lib.HttpApi as HttpApi exposing (ApiRequest, HttpResult)
 import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
@@ -36,14 +36,14 @@ type DefinitionDetail
 
 type alias Model =
     { activeTooltip : Maybe ( Reference, WebData DefinitionDetail )
-    , summaries : Dict String ( Reference, WebData DefinitionDetail )
+    , definitions : Dict String ( Reference, WebData DefinitionDetail )
     }
 
 
 init : Model
 init =
     { activeTooltip = Nothing
-    , summaries = Dict.empty
+    , definitions = Dict.empty
     }
 
 
@@ -68,7 +68,7 @@ update config msg model =
         ShowTooltip ref ->
             let
                 cached =
-                    Dict.get (Reference.toString ref) model.summaries
+                    Dict.get (Reference.toString ref) model.definitions
             in
             case cached of
                 Nothing ->
@@ -113,9 +113,9 @@ update config msg model =
                                 ( r, RemoteData.fromResult d )
 
                             updatedAlreadyFetched =
-                                Dict.insert (Reference.toString ref) newActiveTooltip model.summaries
+                                Dict.insert (Reference.toString ref) newActiveTooltip model.definitions
                         in
-                        ( { model | activeTooltip = Just newActiveTooltip, summaries = updatedAlreadyFetched }, Cmd.none )
+                        ( { model | activeTooltip = Just newActiveTooltip, definitions = updatedAlreadyFetched }, Cmd.none )
 
                     else
                         ( { model | activeTooltip = Nothing }, Cmd.none )
@@ -158,66 +158,19 @@ fetchDefinition { toApiEndpoint, perspective } ref =
 viewDetail : WebData DefinitionDetail -> Maybe (Tooltip.Content msg)
 viewDetail detail =
     let
-        isList h =
-            Hash.toString h == "##Sequence"
-
-        isTuple h n =
-            Hash.toString h
-                == "#2lg4ah6ir6t129m33d7gssnigacral39qdamo20mn6r2vefliubpeqnjhejai9ekjckv0qnu9mlu3k9nbpfhl2schec4dohn7rjhjt8"
-                || (FQN.toString n == ")")
-                || (FQN.toString n == "(")
-
-        viewBuiltinType h name =
-            let
-                name_ =
-                    if isList h then
-                        "List"
-
-                    else
-                        FQN.toString name
-            in
-            span
-                []
-                [ span [ class "data-type-modifier" ] [ text "builtin " ]
-                , span [ class "data-type-keyword" ] [ text "type" ]
-                , span [ class "type-reference" ] [ text (" " ++ name_) ]
-                ]
-
-        viewTypeSourceSyntax h fqn source =
-            if isTuple h fqn then
-                [ SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeModifier "structural"
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeKeyword "type"
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
-                , SyntaxSegment.SyntaxSegment (SyntaxSegment.HashQualifier "Tuple") "Tuple"
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeParams "a"
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.Blank " "
-                , SyntaxSegment.SyntaxSegment SyntaxSegment.DataTypeParams "b"
-                ]
-                    |> Syntax.fromList
-                    |> Maybe.map (Type.Source >> typeSourceSyntax)
-                    |> Maybe.withDefault (typeSourceSyntax source)
-
-            else
-                typeSourceSyntax source
-
         viewDetail_ s =
             case s of
-                TermHover (Term _ _ { source }) ->
-                    Source.viewTermSource Syntax.NotLinked source
+                TermHover (Term _ _ { info, source }) ->
+                    Source.viewTermSource (SourceViewConfig.rich_ Syntax.NotLinked) info.name source
 
-                TypeHover (Type h _ { info, source }) ->
-                    source
-                        |> viewTypeSourceSyntax source
-                        |> Maybe.map (Syntax.view Syntax.NotLinked)
-                        |> Maybe.withDefault (viewBuiltinType h info.name)
+                TypeHover (Type _ _ { source }) ->
+                    Source.viewTypeSource (SourceViewConfig.rich_ Syntax.NotLinked) source
 
-                AbilityConstructorHover (AbilityConstructor _ { signature }) ->
-                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+                AbilityConstructorHover (AbilityConstructor _ { source }) ->
+                    Source.viewTypeSource (SourceViewConfig.rich_ Syntax.NotLinked) source
 
-                DataConstructorHover (DataConstructor _ { signature }) ->
-                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+                DataConstructorHover (DataConstructor _ { source }) ->
+                    Source.viewTypeSource (SourceViewConfig.rich_ Syntax.NotLinked) source
 
         loading =
             Tooltip.rich
@@ -272,86 +225,104 @@ view model reference =
 decodeTypeDetail : Decode.Decoder DefinitionDetail
 decodeTypeDetail =
     let
-        makeDetail fqn name_ source =
-            { fqn = fqn
-            , name = name_
-            , namespace = FQN.namespaceOf name_ fqn
-            , source = source
-            }
+        makeTypeDetail hash cat fqn name_ otherNames source =
+            let
+                info =
+                    { name = name_
+                    , namespace = Maybe.map FQN.fromString (FQN.namespaceOf name_ fqn)
+                    , otherNames = otherNames
+                    }
+            in
+            Type hash cat { info = info, source = source }
     in
     Decode.map TypeHover
-        (Decode.map3 Type
+        (Decode.map6 makeTypeDetail
             (field "hash" Hash.decode)
             (Type.decodeTypeCategory [ "tag" ])
-            (Decode.map3 makeDetail
-                (field "displayName" FQN.decode)
-                (field "displayName" FQN.decode)
-                (Type.decodeTypeSource [ "detail", "tag" ] [ "detail", "contents" ])
-            )
+            (field "name" FQN.decode)
+            (field "bestTypeName" FQN.decode)
+            (field "typeNames" (Decode.list FQN.decode))
+            (Type.decodeTypeSource [ "typeDefinition", "tag" ] [ "typeDefinition", "contents" ])
         )
 
 
 decodeTermDetail : Decode.Decoder DefinitionDetail
 decodeTermDetail =
     let
-        makeDetail fqn name_ signature =
-            { fqn = fqn
-            , name = name_
-            , namespace = FQN.namespaceOf name_ fqn
-            , signature = signature
-            }
+        makeTermDetail hash cat fqn name_ otherNames source =
+            let
+                info =
+                    { name = name_
+                    , namespace = Maybe.map FQN.fromString (FQN.namespaceOf name_ fqn)
+                    , otherNames = otherNames
+                    }
+            in
+            Term hash cat { info = info, source = source }
     in
     Decode.map TermHover
-        (Decode.map3 Term
+        (Decode.map6 makeTermDetail
             (field "hash" Hash.decode)
             (Term.decodeTermCategory [ "tag" ])
-            (Decode.map3 makeDetail
-                (field "displayName" FQN.decode)
-                (field "displayName" FQN.decode)
-                (Term.decodeSignature [ "detail", "contents" ])
-            )
+            (field "name" FQN.decode)
+            (field "bestTermName" FQN.decode)
+            (field "termNames" (Decode.list FQN.decode))
+            (Term.decodeTermSource [ "signature" ] [ "termDefinition", "tag" ] [ "termDefinition", "contents" ])
         )
 
 
 decodeAbilityConstructorDetail : Decode.Decoder DefinitionDetail
 decodeAbilityConstructorDetail =
     let
-        makeDetail fqn name_ signature =
-            { fqn = fqn
-            , name = name_
-            , namespace = FQN.namespaceOf name_ fqn
-            , signature = signature
-            }
+        makeAbilityConstructorDetail hash fqn name_ otherNames signature source =
+            let
+                info =
+                    { name = name_
+                    , namespace = Maybe.map FQN.fromString (FQN.namespaceOf name_ fqn)
+                    , otherNames = otherNames
+                    }
+            in
+            AbilityConstructor hash
+                { info = info
+                , signature = signature
+                , source = source
+                }
     in
     Decode.map AbilityConstructorHover
-        (Decode.map2 AbilityConstructor
+        (Decode.map6 makeAbilityConstructorDetail
             (field "hash" Hash.decode)
-            (Decode.map3 makeDetail
-                (field "displayName" FQN.decode)
-                (field "displayName" FQN.decode)
-                (DataConstructor.decodeSignature [ "detail", "contents" ])
-            )
+            (field "name" FQN.decode)
+            (field "bestTypeName" FQN.decode)
+            (field "typeNames" (Decode.list FQN.decode))
+            (AbilityConstructor.decodeSignature [ "detail", "contents" ])
+            (AbilityConstructor.decodeSource [ "typeDefinition", "tag" ] [ "typeDefinition", "contents" ])
         )
 
 
 decodeDataConstructorDetail : Decode.Decoder DefinitionDetail
 decodeDataConstructorDetail =
     let
-        makeDetail fqn name_ signature =
-            { fqn = fqn
-            , name = name_
-            , namespace = FQN.namespaceOf name_ fqn
-            , signature = signature
-            }
+        makeDataConstructorDetail hash fqn name_ otherNames signature source =
+            let
+                info =
+                    { name = name_
+                    , namespace = Maybe.map FQN.fromString (FQN.namespaceOf name_ fqn)
+                    , otherNames = otherNames
+                    }
+            in
+            DataConstructor hash
+                { info = info
+                , signature = signature
+                , source = source
+                }
     in
     Decode.map DataConstructorHover
-        (Decode.map2 DataConstructor
-            (at [ "hash" ] Hash.decode)
-            (Decode.map3 makeDetail
-                (field "displayName" FQN.decode)
-                (field "displayName" FQN.decode)
-                (DataConstructor.decodeSignature [ "detail", "contents" ])
-            )
+        (Decode.map6 makeDataConstructorDetail
+            (field "hash" Hash.decode)
+            (field "name" FQN.decode)
+            (field "bestTypeName" FQN.decode)
+            (field "typeNames" (Decode.list FQN.decode))
+            (DataConstructor.decodeSignature [ "detail", "contents" ])
+            (DataConstructor.decodeSource [ "typeDefinition", "tag" ] [ "typeDefinition", "contents" ])
         )
 
 

@@ -53,6 +53,7 @@
         "Code.CodebaseApi",
         "Code.CodebaseTree",
         "Code.Config",
+        "Code.DefinitionDetailTooltip",
         "Code.Finder",
         "Code.FullyQualifiedName",
         "Code.FullyQualifiedNameSet",

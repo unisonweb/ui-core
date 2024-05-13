@@ -2,7 +2,7 @@ module Code.DefinitionSummaryTooltip exposing (Model, Msg, init, tooltipConfig, 
 
 import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
-import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
+import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
 import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorSummary)
 import Code.Definition.Reference as Reference exposing (Reference(..))
 import Code.Definition.Term as Term exposing (Term(..), TermSummary, termSignatureSyntax)
@@ -328,7 +328,7 @@ decodeAbilityConstructorSummary =
             (Decode.map3 makeSummary
                 (field "displayName" FQN.decode)
                 (field "displayName" FQN.decode)
-                (DataConstructor.decodeSignature [ "summary", "contents" ])
+                (AbilityConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
 
