@@ -32,13 +32,13 @@ contributorBranchRef handle_ slug_ =
 
 
 releaseBranchRef : Version -> BranchRef
-releaseBranchRef version =
-    ReleaseBranchRef version
+releaseBranchRef v =
+    ReleaseBranchRef v
 
 
 releaseDraftBranchRef : Version -> BranchRef
-releaseDraftBranchRef version =
-    ReleaseDraftBranchRef version
+releaseDraftBranchRef v =
+    ReleaseDraftBranchRef v
 
 
 main_ : BranchRef
@@ -264,6 +264,19 @@ equals brA brB =
             False
 
 
+version : BranchRef -> Maybe Version
+version br =
+    case br of
+        ReleaseBranchRef v ->
+            Just v
+
+        ReleaseDraftBranchRef v ->
+            Just v
+
+        _ ->
+            Nothing
+
+
 
 -- VIEW
 
@@ -280,12 +293,12 @@ toTag branchRef_ =
                     Tag.tag (branchSlugToString branchSlug)
                         |> Tag.withLeftText (UserHandle.toString handle_ ++ "/")
 
-                ReleaseBranchRef version ->
-                    Tag.tag (Version.toString version)
+                ReleaseBranchRef v ->
+                    Tag.tag (Version.toString v)
                         |> Tag.withLeftText "releases/"
 
-                ReleaseDraftBranchRef version ->
-                    Tag.tag (Version.toString version)
+                ReleaseDraftBranchRef v ->
+                    Tag.tag (Version.toString v)
                         |> Tag.withLeftText "releases/drafts/"
     in
     Tag.withIcon Icon.branch tag
