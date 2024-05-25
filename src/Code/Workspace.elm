@@ -142,7 +142,9 @@ updateOne itemWithReference agg =
                 |> Maybe.map (WorkspaceItems.remove workspaceItems)
                 |> Maybe.withDefault workspaceItems
     in
-    ( WorkspaceItems.replace deduped ref (WorkspaceItem.fromItem ref i), Cmd.batch [ aggCmd, cmd ] )
+    ( WorkspaceItems.replaceOrPrependWithFocus deduped ref (WorkspaceItem.fromItem ref i)
+    , Cmd.batch [ aggCmd, cmd ]
+    )
 
 
 update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )

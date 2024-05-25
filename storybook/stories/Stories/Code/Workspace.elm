@@ -56,7 +56,7 @@ init _ =
 
 type Msg
     = WorkspaceMsg Workspace.Msg
-    | OpenNext
+    | Open Reference.Reference
 
 
 codebaseHash : Endpoint
@@ -136,15 +136,10 @@ update message model =
             in
             ( newModel, Cmd.map WorkspaceMsg cmd )
 
-        OpenNext ->
+        Open ref ->
             let
-                reference =
-                    -- "assets.indexHtml"
-                    "PositiveInt2"
-                        |> Reference.fromString Reference.TermReference
-
                 openResult =
-                    Workspace.open config model reference
+                    Workspace.open config model ref
             in
             Tuple.mapSecond (Cmd.map WorkspaceMsg) openResult
 
@@ -156,5 +151,22 @@ view model =
             UI.ViewMode.Regular
             model
             |> Html.map WorkspaceMsg
-        , Html.button [ onClick OpenNext ] [ Html.text "Open next" ]
+        , Html.br [] []
+        , Html.button
+            [ onClick
+                ("PositiveInt2"
+                    |> Reference.fromString Reference.TermReference
+                    |> Open
+                )
+            ]
+            [ Html.text "Open PositiveInt2" ]
+        , Html.br [] []
+        , Html.button
+            [ onClick
+                ("assets.indexHtml"
+                    |> Reference.fromString Reference.TermReference
+                    |> Open
+                )
+            ]
+            [ Html.text "Open assets.indexHtml" ]
         ]

@@ -204,6 +204,17 @@ replace items ref newItem =
     map replaceMatching items
 
 
+{-| Replace item if item with the same reference exist, or prepend as a new item|
+-}
+replaceOrPrependWithFocus : WorkspaceItems -> Reference -> WorkspaceItem -> WorkspaceItems
+replaceOrPrependWithFocus items ref newItem =
+    if member items ref then
+        replace items ref newItem
+
+    else
+        prependWithFocus items newItem
+
+
 remove : WorkspaceItems -> Reference -> WorkspaceItems
 remove items ref =
     case items of
