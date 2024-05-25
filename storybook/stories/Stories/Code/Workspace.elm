@@ -73,10 +73,10 @@ refToEndpoint ref =
                 "increment" ->
                     "increment_term_def.json"
 
-                "nat_gt" ->
+                "Nat.gt" ->
                     "/nat_gt_term_def.json"
 
-                "base_readme" ->
+                "base.README" ->
                     "/base_readme.json"
 
                 "assets.indexHtml" ->
@@ -152,21 +152,23 @@ view model =
             model
             |> Html.map WorkspaceMsg
         , Html.br [] []
-        , Html.button
-            [ onClick
-                ("PositiveInt2"
-                    |> Reference.fromString Reference.TermReference
-                    |> Open
-                )
-            ]
-            [ Html.text "Open PositiveInt2" ]
+        , sampleAddButton Reference.TermReference "PositiveInt2"
         , Html.br [] []
-        , Html.button
-            [ onClick
-                ("assets.indexHtml"
-                    |> Reference.fromString Reference.TermReference
-                    |> Open
-                )
-            ]
-            [ Html.text "Open assets.indexHtml" ]
+        , sampleAddButton Reference.TermReference "assets.indexHtml"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "base.README"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "Nat.gt"
         ]
+
+
+sampleAddButton : (HashQualified -> Reference.Reference) -> String -> Html Msg
+sampleAddButton toRef name =
+    Html.button
+        [ onClick
+            (name
+                |> Reference.fromString toRef
+                |> Open
+            )
+        ]
+        [ Html.text ("Open " ++ name) ]
