@@ -19,7 +19,7 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem, WorkspaceItemViewState)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, ItemWithReference, WorkspaceItem, WorkspaceItemViewState)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html, article, div, section)
@@ -71,7 +71,7 @@ init config mRef =
 
 type Msg
     = NoOp
-    | FetchItemFinished Reference (Result Http.Error (List Item))
+    | FetchItemFinished Reference (Result Http.Error (List ItemWithReference))
     | IsDocCropped Reference (Result Dom.Error Bool)
     | Keydown KeyboardEvent
     | KeyboardShortcutMsg KeyboardShortcut.Msg
@@ -91,9 +91,15 @@ type OutMsg
     | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
-updateOne : Reference -> Item -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
-updateOne ref i agg =
+updateOne : ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
+updateOne itemWithReference agg =
     let
+        i =
+            itemWithReference.item
+
+        ref =
+            itemWithReference.ref
+
         workspaceItems =
             Tuple.first agg
 
@@ -156,7 +162,7 @@ update config viewMode msg ({ workspaceItems } as model) =
                 Ok items ->
                     let
                         ( nextWorkspaceItems, cmd ) =
-                            List.foldl (updateOne ref) ( workspaceItems, Cmd.none ) items
+                            List.foldl updateOne ( workspaceItems, Cmd.none ) items
                     in
                     ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
@@ -543,7 +549,7 @@ handleKeyboardShortcut viewMode model shortcut =
 -- EFFECTS
 
 
-fetchDefinition : Config -> Reference -> ApiRequest (List Item) Msg
+fetchDefinition : Config -> Reference -> ApiRequest (List ItemWithReference) Msg
 fetchDefinition config ref =
     let
         endpoint =

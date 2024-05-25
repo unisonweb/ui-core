@@ -78,6 +78,12 @@ type Item
     | AbilityConstructorItem AbilityConstructorDetail
 
 
+type alias ItemWithReference =
+    { item : Item
+    , ref : Reference
+    }
+
+
 type NamespaceActionMenu
     = NotVisible
     | Visible Reference
@@ -855,6 +861,35 @@ decodeTypes ref =
     Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
 
 
+decodeTypesWithRef : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
+decodeTypesWithRef =
+    let
+        makeType ( hash_, d ) =
+            let
+                ref =
+                    Reference.fromFQN Reference.TypeReference d.name
+
+                typeDetailWithDoc =
+                    hash_
+                        |> Hash.fromString
+                        |> Maybe.map
+                            (\h ->
+                                Type h
+                                    d.category
+                                    { doc = d.doc
+                                    , info = Info.makeInfo ref d.name d.otherNames
+                                    , source = d.source
+                                    }
+                            )
+            in
+            Maybe.map (\t -> ( ref, t )) typeDetailWithDoc
+
+        buildTypes =
+            List.map makeType >> MaybeE.values
+    in
+    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+
+
 decodeTermDetails :
     Decode.Decoder
         { category : TermCategory
@@ -907,16 +942,46 @@ decodeTerms ref =
     Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
+decodeTermsWithRef : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
+decodeTermsWithRef =
+    let
+        makeTerm ( hash_, d ) =
+            let
+                ref =
+                    Reference.fromFQN Reference.TermReference d.name
+
+                termDetailWithDoc =
+                    hash_
+                        |> Hash.fromString
+                        |> Maybe.map
+                            (\h ->
+                                Term h
+                                    d.category
+                                    { doc = d.doc
+                                    , info = Info.makeInfo ref d.name d.otherNames
+                                    , source = d.source
+                                    }
+                            )
+            in
+            Maybe.map (\t -> ( ref, t )) termDetailWithDoc
+
+        buildTerms =
+            List.map makeTerm >> MaybeE.values
+    in
+    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
+
+
 {-| The server returns a list, but we only query for a single WorkspaceItem at a time.
 -}
-decodeList : Reference -> Decode.Decoder (List Item)
+decodeList : Reference -> Decode.Decoder (List ItemWithReference)
 decodeList ref =
-    Decode.map2 List.append
-        (Decode.map (List.map TermItem) (field "termDefinitions" (decodeTerms ref)))
-        (Decode.map (List.map TypeItem) (field "typeDefinitions" (decodeTypes ref)))
+    Decode.map2
+        List.append
+        (Decode.map (List.map (\( decodedRef, term ) -> { ref = decodedRef, item = TermItem term })) (field "termDefinitions" decodeTermsWithRef))
+        (Decode.map (List.map (\( decodedRef, typeDef ) -> { ref = decodedRef, item = TypeItem typeDef })) (field "typeDefinitions" decodeTypesWithRef))
 
 
-decodeItem : Reference -> Decode.Decoder Item
+decodeItem : Reference -> Decode.Decoder ItemWithReference
 decodeItem ref =
     Decode.map List.head (decodeList ref)
         |> Decode.andThen

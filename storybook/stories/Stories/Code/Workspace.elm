@@ -39,9 +39,7 @@ init _ =
     let
         reference =
             "increment"
-                |> FQN.fromString
-                |> NameOnly
-                |> Reference.TypeReference
+                |> Reference.fromString Reference.TermReference
 
         model =
             { workspaceItems = WorkspaceItems.empty
@@ -83,6 +81,9 @@ refToEndpoint ref =
 
                 "assets.indexHtml" ->
                     "/long.json"
+
+                "PositiveInt2" ->
+                    "/positive_int_2.json"
 
                 _ ->
                     ""
@@ -138,10 +139,9 @@ update message model =
         OpenNext ->
             let
                 reference =
-                    "assets.indexHtml"
-                        |> FQN.fromString
-                        |> NameOnly
-                        |> Reference.TypeReference
+                    -- "assets.indexHtml"
+                    "PositiveInt2"
+                        |> Reference.fromString Reference.TermReference
 
                 openResult =
                     Workspace.open config model reference

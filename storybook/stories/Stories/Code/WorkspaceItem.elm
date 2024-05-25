@@ -2,7 +2,7 @@ module Stories.Code.WorkspaceItem exposing (..)
 
 import Browser
 import Code.Syntax exposing (..)
-import Code.Workspace.WorkspaceItem exposing (Item, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReference, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.Zoom exposing (Zoom(..))
 import Dict
 import Helpers.ReferenceHelper exposing (sampleReference)
@@ -18,7 +18,7 @@ type alias Model =
 
 type Message
     = WorkspaceItemMsg Msg
-    | GotItem (Result Http.Error Item)
+    | GotItem (Result Http.Error ItemWithReference)
 
 
 main : Program () Model Message
@@ -74,11 +74,11 @@ update msg model =
         GotItem result ->
             case result of
                 Err error ->
-                        ( model, Cmd.none )
+                    ( model, Cmd.none )
 
                 Ok item ->
                     ( { model
-                        | workspaceItem = Just (fromItem sampleReference item)
+                        | workspaceItem = Just (fromItem sampleReference item.item)
                       }
                     , Cmd.none
                     )

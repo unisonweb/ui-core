@@ -9,6 +9,7 @@ import Code.Workspace.WorkspaceItems as WorkspaceItems
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html)
 import Http
+import Json.Decode as Decode
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 
@@ -85,7 +86,9 @@ getSampleResponse url termName =
             termName |> termReference
 
         decoder =
-            reference |> WorkspaceItem.decodeItem
+            Decode.map
+                (\itemWithRef -> itemWithRef.item)
+                (reference |> WorkspaceItem.decodeItem)
     in
     Http.get
         { url = url
