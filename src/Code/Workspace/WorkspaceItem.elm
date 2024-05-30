@@ -971,19 +971,34 @@ decodeTermsWithRef =
     Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
-{-| The server returns a list, but we only query for a single WorkspaceItem at a time.
--}
-decodeList : Reference -> Decode.Decoder (List ItemWithReference)
-decodeList ref =
+decodeList : Decode.Decoder (List ItemWithReference)
+decodeList =
+    let
+        termDefinitions =
+            field
+                "termDefinitions"
+                (decodeTermsWithRef
+                    |> Decode.map
+                        (List.map (\( decodedRef, term ) -> { ref = decodedRef, item = TermItem term }))
+                )
+
+        typeDefinitions =
+            field
+                "typeDefinitions"
+                (decodeTypesWithRef
+                    |> Decode.map
+                        (List.map (\( decodedRef, typeDef ) -> { ref = decodedRef, item = TypeItem typeDef }))
+                )
+    in
     Decode.map2
         List.append
-        (Decode.map (List.map (\( decodedRef, term ) -> { ref = decodedRef, item = TermItem term })) (field "termDefinitions" decodeTermsWithRef))
-        (Decode.map (List.map (\( decodedRef, typeDef ) -> { ref = decodedRef, item = TypeItem typeDef })) (field "typeDefinitions" decodeTypesWithRef))
+        termDefinitions
+        typeDefinitions
 
 
-decodeItem : Reference -> Decode.Decoder ItemWithReference
-decodeItem ref =
-    Decode.map List.head (decodeList ref)
+decodeItem : Decode.Decoder ItemWithReference
+decodeItem =
+    Decode.map List.head decodeList
         |> Decode.andThen
             (Maybe.map Decode.succeed
                 >> Maybe.withDefault (Decode.fail "Empty list")

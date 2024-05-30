@@ -19,7 +19,7 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, ItemWithReference, WorkspaceItem, WorkspaceItemViewState)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (ItemWithReference, WorkspaceItem, WorkspaceItemViewState)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html, article, div, section)
@@ -91,8 +91,8 @@ type OutMsg
     | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
-updateOne : ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
-updateOne itemWithReference agg =
+updateOneItem : ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
+updateOneItem itemWithReference agg =
     let
         i =
             itemWithReference.item
@@ -164,7 +164,7 @@ update config viewMode msg ({ workspaceItems } as model) =
                 Ok items ->
                     let
                         ( nextWorkspaceItems, cmd ) =
-                            List.foldl updateOne ( workspaceItems, Cmd.none ) items
+                            List.foldl updateOneItem ( workspaceItems, Cmd.none ) items
                     in
                     ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
@@ -562,7 +562,7 @@ fetchDefinition config ref =
     in
     endpoint
         |> config.toApiEndpoint
-        |> HttpApi.toRequest (WorkspaceItem.decodeList ref) (FetchItemFinished ref)
+        |> HttpApi.toRequest WorkspaceItem.decodeList (FetchItemFinished ref)
 
 
 isDocCropped : Reference -> Cmd Msg
