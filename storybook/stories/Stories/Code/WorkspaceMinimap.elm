@@ -88,7 +88,7 @@ getSampleResponse url termName =
         decoder =
             Decode.map
                 (\itemWithRef -> itemWithRef.item)
-                (reference |> WorkspaceItem.decodeItem)
+                WorkspaceItem.decodeItem
     in
     Http.get
         { url = url

@@ -65,7 +65,7 @@ getSampleResponse index url termName =
                 |> Reference.TypeReference
 
         decoder =
-            Decode.map (\itemWithRef -> itemWithRef.item) (reference |> decodeItem)
+            Decode.map (\itemWithRef -> itemWithRef.item) decodeItem
     in
     Http.get
         { url = url

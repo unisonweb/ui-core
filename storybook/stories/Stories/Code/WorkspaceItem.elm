@@ -36,7 +36,7 @@ init _ =
     ( { workspaceItem = Nothing }
     , Http.get
         { url = "/increment_term_def.json"
-        , expect = Http.expectJson GotItem (decodeItem sampleReference)
+        , expect = Http.expectJson GotItem decodeItem
         }
     )
 
