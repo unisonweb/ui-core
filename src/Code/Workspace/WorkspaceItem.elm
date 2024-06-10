@@ -867,7 +867,9 @@ decodeTypesWithRef =
         makeType ( hash_, d ) =
             let
                 ref =
-                    Reference.fromFQN Reference.TypeReference d.name
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TypeReference
 
                 typeDetailWithDoc =
                     hash_
@@ -948,7 +950,9 @@ decodeTermsWithRef =
         makeTerm ( hash_, d ) =
             let
                 ref =
-                    Reference.fromFQN Reference.TermReference d.name
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TermReference
 
                 termDetailWithDoc =
                     hash_
