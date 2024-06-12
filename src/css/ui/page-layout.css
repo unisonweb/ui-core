@@ -215,13 +215,13 @@
   margin: auto;
 }
 
-.page .page-content .page-title:has(.icon) {
+.page .page-content .page-title_title:has(.icon) {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
 }
 
-.page.centered-layout .page-content .page-title:has(.icon) {
+.page.centered-layout .page-content .page-title_title:has(.icon) {
   margin-left: -0.75rem;
 }
 
@@ -231,7 +231,7 @@
   padding: 3rem 0 1.5rem 0;
 }
 
-.page.presentation-layout .page-content .page-title:has(.icon) {
+.page.presentation-layout .page-content .page-title_title:has(.icon) {
   margin-left: -0.75rem;
 }
 
