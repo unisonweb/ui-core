@@ -29,6 +29,7 @@
   font-size: var(--font-size-medium);
   color: var(--color-doc-text);
   background: var(--color-doc-bg);
+  max-width: 100%;
 }
 
 /* When the parent wrapper (typically .workspace-item is focused and has a
