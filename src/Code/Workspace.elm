@@ -163,8 +163,13 @@ update config viewMode msg ({ workspaceItems } as model) =
 
                 Ok items ->
                     let
+                        -- remove loading element (with `ref` used for request)
+                        loadingRemoved =
+                            WorkspaceItems.remove workspaceItems ref
+
+                        -- update items with fetched result
                         ( nextWorkspaceItems, cmd ) =
-                            List.foldl updateOneItem ( workspaceItems, Cmd.none ) items
+                            List.foldl updateOneItem ( loadingRemoved, Cmd.none ) items
                     in
                     ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
