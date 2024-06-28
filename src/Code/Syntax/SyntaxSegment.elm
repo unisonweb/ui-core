@@ -149,11 +149,11 @@ simpleSyntaxTypeFromString rawType =
             Blank
 
 
-decodeOp : Decode.Decoder SyntaxType
-decodeOp =
+decodeOp : String -> Decode.Decoder SyntaxType
+decodeOp annotationField =
     let
         decodeOpTag =
-            at [ "annotation", "contents", "tag" ] Decode.string
+            at [ annotationField, "contents", "tag" ] Decode.string
     in
     Decode.map
         Op
@@ -165,16 +165,16 @@ decodeOp =
         )
 
 
-decodeTag : Decode.Decoder String
-decodeTag =
+decodeTag : String -> Decode.Decoder String
+decodeTag annotationField =
     Decode.oneOf
-        [ at [ "annotation", "tag" ] Decode.string
+        [ at [ annotationField, "tag" ] Decode.string
         , Decode.succeed "Blank"
         ]
 
 
-decode : Decode.Decoder SyntaxSegment
-decode =
+decode_ : { segmentField : String, annotationField : String } -> Decode.Decoder SyntaxSegment
+decode_ { segmentField, annotationField } =
     let
         hashToReference hash fqn =
             if Hash.isDataConstructorHash hash then
@@ -188,24 +188,32 @@ decode =
 
         decodeReference =
             Decode.map2 hashToReference
-                (at [ "annotation", "contents" ] Hash.decode)
+                (at [ annotationField, "contents" ] Hash.decode)
                 (Decode.maybe (field "segment" FQN.decode))
 
         decodeTypeReference =
             Decode.map2 TypeReference
-                (at [ "annotation", "contents" ] Hash.decode)
+                (at [ annotationField, "contents" ] Hash.decode)
                 (Decode.maybe (field "segment" FQN.decode))
 
         decodeHashQualifier =
-            Decode.map HashQualifier (at [ "annotation", "contents" ] Decode.string)
+            Decode.map HashQualifier (at [ annotationField, "contents" ] Decode.string)
+
+        decodeTag_ =
+            decodeTag annotationField
     in
     Decode.map2 SyntaxSegment
         (Decode.oneOf
-            [ when decodeTag ((==) "TermReference") decodeReference
-            , when decodeTag ((==) "TypeReference") decodeTypeReference
-            , when decodeTag ((==) "Op") decodeOp
-            , when decodeTag ((==) "HashQualifier") decodeHashQualifier
-            , decodeTag |> andThen (simpleSyntaxTypeFromString >> Decode.succeed)
+            [ when decodeTag_ ((==) "TermReference") decodeReference
+            , when decodeTag_ ((==) "TypeReference") decodeTypeReference
+            , when decodeTag_ ((==) "Op") (decodeOp annotationField)
+            , when decodeTag_ ((==) "HashQualifier") decodeHashQualifier
+            , decodeTag_ |> andThen (simpleSyntaxTypeFromString >> Decode.succeed)
             ]
         )
-        (field "segment" Decode.string)
+        (field segmentField Decode.string)
+
+
+decode : Decode.Decoder SyntaxSegment
+decode =
+    decode_ { segmentField = "segment", annotationField = "annotation" }
