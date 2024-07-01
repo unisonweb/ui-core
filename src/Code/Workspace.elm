@@ -19,7 +19,7 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem, WorkspaceItemViewState)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (ItemWithReference, WorkspaceItem, WorkspaceItemViewState)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html, article, div, section)
@@ -71,7 +71,7 @@ init config mRef =
 
 type Msg
     = NoOp
-    | FetchItemFinished Reference (Result Http.Error Item)
+    | FetchItemFinished Reference (Result Http.Error (List ItemWithReference))
     | IsDocCropped Reference (Result Dom.Error Bool)
     | Keydown KeyboardEvent
     | KeyboardShortcutMsg KeyboardShortcut.Msg
@@ -91,6 +91,62 @@ type OutMsg
     | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
+updateOneItem : ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
+updateOneItem itemWithReference agg =
+    let
+        i =
+            itemWithReference.item
+
+        ref =
+            itemWithReference.ref
+
+        workspaceItems =
+            Tuple.first agg
+
+        aggCmd =
+            Tuple.second agg
+
+        cmd =
+            -- Docs items are always shown in full and never cropped
+            if WorkspaceItem.isDocItem i then
+                Cmd.none
+
+            else
+                isDocCropped ref
+
+        isDupe wi =
+            let
+                ref_ =
+                    WorkspaceItem.reference wi
+
+                refEqs =
+                    Reference.equals ref ref_
+
+                hashEqs =
+                    wi
+                        |> WorkspaceItem.hash
+                        |> Maybe.map (Hash.equals (WorkspaceItem.itemHash i))
+                        |> Maybe.withDefault False
+            in
+            (Reference.same ref ref_ && not refEqs) || (hashEqs && not refEqs)
+
+        -- In some cases (like using the back button between
+        -- perspectives) we try and fetch the same item twice, not
+        -- knowing we've fetched it before since one was by hash
+        -- and the other by name. If found to already be fetched,
+        -- we favor the newly fetched item and discard the old
+        deduped =
+            workspaceItems
+                |> WorkspaceItems.find isDupe
+                |> Maybe.map WorkspaceItem.reference
+                |> Maybe.map (WorkspaceItems.remove workspaceItems)
+                |> Maybe.withDefault workspaceItems
+    in
+    ( WorkspaceItems.replaceOrPrependWithFocus deduped ref (WorkspaceItem.fromItem ref i)
+    , Cmd.batch [ aggCmd, cmd ]
+    )
+
+
 update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
 update config viewMode msg ({ workspaceItems } as model) =
     case msg of
@@ -105,46 +161,15 @@ update config viewMode msg ({ workspaceItems } as model) =
                     , None
                     )
 
-                Ok i ->
+                Ok items ->
                     let
-                        cmd =
-                            -- Docs items are always shown in full and never cropped
-                            if WorkspaceItem.isDocItem i then
-                                Cmd.none
+                        -- remove loading element (with `ref` used for request)
+                        loadingRemoved =
+                            WorkspaceItems.remove workspaceItems ref
 
-                            else
-                                isDocCropped ref
-
-                        isDupe wi =
-                            let
-                                ref_ =
-                                    WorkspaceItem.reference wi
-
-                                refEqs =
-                                    Reference.equals ref ref_
-
-                                hashEqs =
-                                    wi
-                                        |> WorkspaceItem.hash
-                                        |> Maybe.map (Hash.equals (WorkspaceItem.itemHash i))
-                                        |> Maybe.withDefault False
-                            in
-                            (Reference.same ref ref_ && not refEqs) || (hashEqs && not refEqs)
-
-                        -- In some cases (like using the back button between
-                        -- perspectives) we try and fetch the same item twice, not
-                        -- knowing we've fetched it before since one was by hash
-                        -- and the other by name. If found to already be fetched,
-                        -- we favor the newly fetched item and discard the old
-                        deduped =
-                            workspaceItems
-                                |> WorkspaceItems.find isDupe
-                                |> Maybe.map WorkspaceItem.reference
-                                |> Maybe.map (WorkspaceItems.remove workspaceItems)
-                                |> Maybe.withDefault workspaceItems
-
-                        nextWorkspaceItems =
-                            WorkspaceItems.replace deduped ref (WorkspaceItem.fromItem ref i)
+                        -- update items with fetched result
+                        ( nextWorkspaceItems, cmd ) =
+                            List.foldl updateOneItem ( loadingRemoved, Cmd.none ) items
                     in
                     ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
@@ -531,7 +556,7 @@ handleKeyboardShortcut viewMode model shortcut =
 -- EFFECTS
 
 
-fetchDefinition : Config -> Reference -> ApiRequest Item Msg
+fetchDefinition : Config -> Reference -> ApiRequest (List ItemWithReference) Msg
 fetchDefinition config ref =
     let
         endpoint =
@@ -542,7 +567,7 @@ fetchDefinition config ref =
     in
     endpoint
         |> config.toApiEndpoint
-        |> HttpApi.toRequest (WorkspaceItem.decodeItem ref) (FetchItemFinished ref)
+        |> HttpApi.toRequest WorkspaceItem.decodeList (FetchItemFinished ref)
 
 
 isDocCropped : Reference -> Cmd Msg
