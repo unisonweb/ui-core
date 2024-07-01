@@ -11,7 +11,7 @@
 -}
 
 
-module UI.ByAt exposing (ByAt, byAt, byUnknown, handleOnly, view)
+module UI.ByAt exposing (ByAt, byAt, byUnknown, view)
 
 import Html exposing (Html, div, span, strong, text)
 import Html.Attributes exposing (class)
@@ -49,12 +49,7 @@ byAt =
     ByUser >> ByAt
 
 
-handleOnly : UserHandle -> DateTime -> ByAt {}
-handleOnly handle dateTime =
-    ByAt (ByHandle handle) dateTime
-
-
-byUnknown : DateTime -> ByAt {}
+byUnknown : DateTime -> ByAt u
 byUnknown dateTime =
     ByAt ByUnknown dateTime
 
