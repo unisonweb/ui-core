@@ -36,6 +36,10 @@
   gap: 0.5rem;
 }
 
+.profile-snippet.profile-snippet_size_small {
+  gap: 0.25rem;
+}
+
 .profile-snippet.profile-snippet_size_large,
 .profile-snippet.profile-snippet_size_huge {
   gap: 0.75rem;
