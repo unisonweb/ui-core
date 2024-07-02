@@ -118,7 +118,7 @@
   background: var(--u-color_element_subdued);
 }
 
-.page-content .page-title .page-title_default-title .icon {
+.page-content .page-title .page-title_default-title .icon-badge .icon {
   color: var(--u-color_icon_subdued);
   font-size: 1.125rem;
 }
