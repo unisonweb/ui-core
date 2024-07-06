@@ -268,6 +268,12 @@ remove items ref =
 
 {-| TODO: Support NameOnly better
 -}
+
+
+
+-- TODO: update this member method, considering there's now refRequest and refResponse
+
+
 member : WorkspaceItems -> Reference -> Bool
 member items ref =
     items |> references |> List.member ref
@@ -455,9 +461,9 @@ updateData f ref wItems =
     let
         update_ workspaceItem =
             case workspaceItem of
-                WorkspaceItem.Success r d ->
-                    if ref == r then
-                        WorkspaceItem.Success r (f d)
+                WorkspaceItem.Success refRequest refResponse d ->
+                    if ref == refResponse then
+                        WorkspaceItem.Success refRequest refResponse (f d)
 
                     else
                         workspaceItem

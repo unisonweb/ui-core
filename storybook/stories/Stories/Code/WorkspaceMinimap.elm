@@ -88,7 +88,7 @@ getSampleResponse url termName =
         decoder =
             Decode.map
                 (\itemWithRef -> itemWithRef.item)
-                WorkspaceItem.decodeItem
+                (WorkspaceItem.decodeItem reference)
     in
     Http.get
         { url = url
@@ -149,7 +149,7 @@ update message model =
                     let
                         newWorkspaceItems =
                             item
-                                |> WorkspaceItem.fromItem reference
+                                |> WorkspaceItem.fromItem reference reference
                                 |> WorkspaceItems.replace model.workspaceItems reference
                     in
                     ( { model | workspaceItems = newWorkspaceItems }, Cmd.none )

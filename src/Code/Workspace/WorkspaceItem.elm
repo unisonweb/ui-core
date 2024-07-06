@@ -39,7 +39,7 @@ import UI.ViewMode as ViewMode exposing (ViewMode)
 type WorkspaceItem
     = Loading Reference
     | Failure Reference Http.Error
-    | Success Reference ItemData
+    | Success Reference Reference ItemData -- refRequest / refResponse
 
 
 type DocVisibility
@@ -81,6 +81,7 @@ type Item
 type alias ItemWithReference =
     { item : Item
     , ref : Reference
+    , refRequest : Reference
     }
 
 
@@ -136,8 +137,8 @@ type Msg
     | NoOp
 
 
-fromItem : Reference -> Item -> WorkspaceItem
-fromItem ref item =
+fromItem : Reference -> Reference -> Item -> WorkspaceItem
+fromItem refRequest refResponse item =
     let
         zoom =
             -- Doc items always have docs
@@ -157,7 +158,8 @@ fromItem ref item =
             else
                 Unknown
     in
-    Success ref
+    Success refRequest
+        refResponse
         { item = item
         , zoom = zoom
         , docFoldToggles = Doc.emptyDocFoldToggles
@@ -174,8 +176,8 @@ reference item =
         Failure r _ ->
             r
 
-        Success r _ ->
-            r
+        Success _ refResponse _ ->
+            refResponse
 
 
 {-| Convert the Reference of a WorkspaceItem to be HashOnly
@@ -195,8 +197,8 @@ toHashReference workspaceItem =
                     HQ.HashOnly h
     in
     case workspaceItem of
-        Success r d ->
-            Success (Reference.map (toHashOnly (itemHash d.item)) r) d
+        Success refRequest refResponse d ->
+            Success (Reference.map (toHashOnly (itemHash d.item)) refRequest) (Reference.map (toHashOnly (itemHash d.item)) refResponse) d
 
         -- Can't change references where we don't have hash information
         _ ->
@@ -313,7 +315,7 @@ hash wItem =
     let
         itemHash_ =
             case wItem of
-                Success _ d ->
+                Success _ _ d ->
                     Just (itemHash d.item)
 
                 _ ->
@@ -717,7 +719,7 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
                 ]
                 Nothing
 
-        Success ref data ->
+        Success _ ref data ->
             let
                 linkedWithTooltipConfig =
                     Syntax.linkedWithTooltipConfig
@@ -975,15 +977,22 @@ decodeTermsWithRef =
     Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
-decodeList : Decode.Decoder (List ItemWithReference)
-decodeList =
+decodeList : Reference -> Decode.Decoder (List ItemWithReference)
+decodeList refRequest =
     let
         termDefinitions =
             field
                 "termDefinitions"
                 (decodeTermsWithRef
                     |> Decode.map
-                        (List.map (\( decodedRef, term ) -> { ref = decodedRef, item = TermItem term }))
+                        (List.map
+                            (\( decodedRef, term ) ->
+                                { ref = decodedRef
+                                , item = TermItem term
+                                , refRequest = refRequest
+                                }
+                            )
+                        )
                 )
 
         typeDefinitions =
@@ -991,7 +1000,14 @@ decodeList =
                 "typeDefinitions"
                 (decodeTypesWithRef
                     |> Decode.map
-                        (List.map (\( decodedRef, typeDef ) -> { ref = decodedRef, item = TypeItem typeDef }))
+                        (List.map
+                            (\( decodedRef, typeDef ) ->
+                                { ref = decodedRef
+                                , item = TypeItem typeDef
+                                , refRequest = refRequest
+                                }
+                            )
+                        )
                 )
     in
     Decode.map2
@@ -1000,9 +1016,9 @@ decodeList =
         typeDefinitions
 
 
-decodeItem : Decode.Decoder ItemWithReference
-decodeItem =
-    Decode.map List.head decodeList
+decodeItem : Reference -> Decode.Decoder ItemWithReference
+decodeItem refRequest =
+    Decode.map List.head (decodeList refRequest)
         |> Decode.andThen
             (Maybe.map Decode.succeed
                 >> Maybe.withDefault (Decode.fail "Empty list")

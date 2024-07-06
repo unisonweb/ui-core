@@ -65,7 +65,7 @@ getSampleResponse index url termName =
                 |> Reference.TypeReference
 
         decoder =
-            Decode.map (\itemWithRef -> itemWithRef.item) decodeItem
+            Decode.map (\itemWithRef -> itemWithRef.item) (decodeItem reference)
     in
     Http.get
         { url = url
@@ -107,7 +107,8 @@ update message model =
             let
                 newWorkspaceItems =
                     item
-                        |> fromItem reference
+                        |> fromItem reference reference
+                        -- TODO: is this right?
                         |> WorkspaceItems.prependWithFocus model.workspaceItems
 
                 newModel =

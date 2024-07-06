@@ -91,13 +91,13 @@ type OutMsg
     | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
-updateOneItem : ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
-updateOneItem itemWithReference agg =
+updateOneItem : Reference -> ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
+updateOneItem refRequest itemWithReference agg =
     let
         i =
             itemWithReference.item
 
-        ref =
+        refResponse =
             itemWithReference.ref
 
         workspaceItems =
@@ -112,7 +112,7 @@ updateOneItem itemWithReference agg =
                 Cmd.none
 
             else
-                isDocCropped ref
+                isDocCropped refResponse
 
         isDupe wi =
             let
@@ -120,7 +120,7 @@ updateOneItem itemWithReference agg =
                     WorkspaceItem.reference wi
 
                 refEqs =
-                    Reference.equals ref ref_
+                    Reference.equals refResponse ref_
 
                 hashEqs =
                     wi
@@ -128,7 +128,7 @@ updateOneItem itemWithReference agg =
                         |> Maybe.map (Hash.equals (WorkspaceItem.itemHash i))
                         |> Maybe.withDefault False
             in
-            (Reference.same ref ref_ && not refEqs) || (hashEqs && not refEqs)
+            (Reference.same refResponse ref_ && not refEqs) || (hashEqs && not refEqs)
 
         -- In some cases (like using the back button between
         -- perspectives) we try and fetch the same item twice, not
@@ -142,7 +142,7 @@ updateOneItem itemWithReference agg =
                 |> Maybe.map (WorkspaceItems.remove workspaceItems)
                 |> Maybe.withDefault workspaceItems
     in
-    ( WorkspaceItems.replaceOrPrependWithFocus deduped ref (WorkspaceItem.fromItem ref i)
+    ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse (WorkspaceItem.fromItem refRequest refResponse i)
     , Cmd.batch [ aggCmd, cmd ]
     )
 
@@ -153,10 +153,10 @@ update config viewMode msg ({ workspaceItems } as model) =
         NoOp ->
             ( model, Cmd.none, None )
 
-        FetchItemFinished ref itemResult ->
+        FetchItemFinished refRequest itemResult ->
             case itemResult of
                 Err e ->
-                    ( { model | workspaceItems = WorkspaceItems.replace workspaceItems ref (WorkspaceItem.Failure ref e) }
+                    ( { model | workspaceItems = WorkspaceItems.replace workspaceItems refRequest (WorkspaceItem.Failure refRequest e) }
                     , Cmd.none
                     , None
                     )
@@ -165,11 +165,11 @@ update config viewMode msg ({ workspaceItems } as model) =
                     let
                         -- remove loading element (with `ref` used for request)
                         loadingRemoved =
-                            WorkspaceItems.remove workspaceItems ref
+                            WorkspaceItems.remove workspaceItems refRequest
 
                         -- update items with fetched result
                         ( nextWorkspaceItems, cmd ) =
-                            List.foldl updateOneItem ( loadingRemoved, Cmd.none ) items
+                            List.foldl (updateOneItem refRequest) ( loadingRemoved, Cmd.none ) items
                     in
                     ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
 
@@ -436,7 +436,10 @@ openItem config ({ workspaceItems } as model) relativeToRef ref =
                         WorkspaceItems.insertWithFocusBefore workspaceItems r toInsert
         in
         ( { model | workspaceItems = nextWorkspaceItems }
-        , Cmd.batch [ HttpApi.perform config.api (fetchDefinition config ref), scrollToDefinition ref ]
+        , Cmd.batch
+            [ HttpApi.perform config.api (fetchDefinition config ref)
+            , scrollToDefinition ref
+            ]
         )
 
 
@@ -567,7 +570,7 @@ fetchDefinition config ref =
     in
     endpoint
         |> config.toApiEndpoint
-        |> HttpApi.toRequest WorkspaceItem.decodeList (FetchItemFinished ref)
+        |> HttpApi.toRequest (WorkspaceItem.decodeList ref) (FetchItemFinished ref)
 
 
 isDocCropped : Reference -> Cmd Msg

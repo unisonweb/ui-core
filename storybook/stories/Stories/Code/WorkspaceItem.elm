@@ -1,6 +1,9 @@
 module Stories.Code.WorkspaceItem exposing (..)
 
 import Browser
+import Code.Definition.Reference as Reference
+import Code.FullyQualifiedName as FQN
+import Code.HashQualified exposing (HashQualified(..))
 import Code.Syntax exposing (..)
 import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReference, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.Zoom exposing (Zoom(..))
@@ -33,10 +36,17 @@ main =
 
 init : () -> ( Model, Cmd Message )
 init _ =
+    let
+        reference =
+            "increment"
+                |> FQN.fromString
+                |> NameOnly
+                |> Reference.TypeReference
+    in
     ( { workspaceItem = Nothing }
     , Http.get
         { url = "/increment_term_def.json"
-        , expect = Http.expectJson GotItem decodeItem
+        , expect = Http.expectJson GotItem (decodeItem reference)
         }
     )
 
@@ -53,14 +63,14 @@ update msg model =
 
                         Just item ->
                             case item of
-                                Success ref itemData ->
+                                Success refRequest refResponse itemData ->
                                     let
                                         updatedData =
                                             { itemData | zoom = zoom }
 
                                         updatedModel =
                                             { model
-                                                | workspaceItem = Just <| Success ref updatedData
+                                                | workspaceItem = Just <| Success refRequest refResponse updatedData
                                             }
                                     in
                                     ( updatedModel, Cmd.none )
@@ -78,7 +88,7 @@ update msg model =
 
                 Ok item ->
                     ( { model
-                        | workspaceItem = Just (fromItem sampleReference item.item)
+                        | workspaceItem = Just (fromItem sampleReference sampleReference item.item)
                       }
                     , Cmd.none
                     )
