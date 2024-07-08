@@ -1,7 +1,7 @@
 module Code.Definition.Readme exposing (..)
 
 import Code.Definition.Doc as Doc exposing (Doc, DocFoldToggles, FoldId)
-import Code.Syntax as Syntax
+import Code.Syntax.Linked exposing (LinkedWithTooltipConfig)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode
@@ -20,7 +20,7 @@ type Readme
 
 
 view :
-    Syntax.LinkedWithTooltipConfig msg
+    LinkedWithTooltipConfig msg
     -> (FoldId -> msg)
     -> DocFoldToggles
     -> Readme

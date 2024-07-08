@@ -14,7 +14,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
 import Code.Source.SourceViewConfig as SourceViewConfig exposing (SourceViewConfig)
-import Code.Syntax as Syntax
+import Code.Syntax.Linked exposing (LinkedWithTooltipConfig, linkedWithTooltipConfig)
 import Code.Workspace.Zoom as Zoom exposing (Zoom(..))
 import Html exposing (Attribute, Html, div, h3, header, section, span, text)
 import Html.Attributes exposing (class, classList, id, title)
@@ -465,7 +465,7 @@ viewInfo namespaceActionMenu ref hash_ info category =
         ]
 
 
-viewDoc : Syntax.LinkedWithTooltipConfig Msg -> Reference -> DocVisibility -> DocFoldToggles -> Doc -> Html Msg
+viewDoc : LinkedWithTooltipConfig Msg -> Reference -> DocVisibility -> DocFoldToggles -> Doc -> Html Msg
 viewDoc syntaxConfig ref docVisibility docFoldToggles doc =
     let
         ( showFullDoc, shownInFull ) =
@@ -554,7 +554,7 @@ viewSource zoom onSourceToggleClick sourceConfig item =
                 |> viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_)
 
 
-viewItem : Syntax.LinkedWithTooltipConfig Msg -> NamespaceActionMenu -> Reference -> ItemData -> Bool -> Html Msg
+viewItem : LinkedWithTooltipConfig Msg -> NamespaceActionMenu -> Reference -> ItemData -> Bool -> Html Msg
 viewItem syntaxConfig namespaceActionMenu ref data isFocused =
     let
         ( zoomClass, rowZoomToggle, sourceZoomToggle ) =
@@ -630,7 +630,7 @@ viewItem syntaxConfig namespaceActionMenu ref data isFocused =
                 foldRow
 
 
-viewPresentationItem : Syntax.LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Html Msg
+viewPresentationItem : LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Html Msg
 viewPresentationItem syntaxConfig ref data =
     case data.item of
         TermItem (Term _ category detail) ->
@@ -714,8 +714,8 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
 
         Success ref data ->
             let
-                linkedWithTooltipConfig =
-                    Syntax.linkedWithTooltipConfig
+                linkedWithTooltipConfig_ =
+                    linkedWithTooltipConfig
                         (OpenReference ref >> Click.onClick)
                         (DefinitionSummaryTooltip.tooltipConfig
                             DefinitionSummaryTooltipMsg
@@ -724,10 +724,10 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
             in
             case viewMode of
                 ViewMode.Regular ->
-                    viewItem linkedWithTooltipConfig namespaceActionMenu ref data isFocused
+                    viewItem linkedWithTooltipConfig_ namespaceActionMenu ref data isFocused
 
                 ViewMode.Presentation ->
-                    viewPresentationItem linkedWithTooltipConfig ref data
+                    viewPresentationItem linkedWithTooltipConfig_ ref data
 
 
 

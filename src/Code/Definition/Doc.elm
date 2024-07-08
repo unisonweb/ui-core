@@ -17,6 +17,7 @@ import Code.Definition.Source as Source
 import Code.Definition.Term exposing (TermSignature(..))
 import Code.Source.SourceViewConfig as SourceViewConfig
 import Code.Syntax as Syntax exposing (Syntax)
+import Code.Syntax.Linked exposing (Linked(..), LinkedWithTooltipConfig)
 import Dict exposing (Dict)
 import Html
     exposing
@@ -388,14 +389,14 @@ toString sep doc =
             ""
 
 
-view : Syntax.LinkedWithTooltipConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
+view : LinkedWithTooltipConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
 view linkedCfg toggleFoldMsg docFoldToggles document =
     let
         viewSignature =
             Source.viewTermSignature (SourceViewConfig.rich linkedCfg)
 
         linked =
-            Syntax.LinkedWithTooltip linkedCfg
+            LinkedWithTooltip linkedCfg
 
         viewSyntax =
             Syntax.view linked

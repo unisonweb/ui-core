@@ -11,7 +11,7 @@ import Code.Definition.Type as Type exposing (Type(..), TypeDetail)
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Source.SourceViewConfig as SourceViewConfig
-import Code.Syntax as Syntax
+import Code.Syntax.Linked exposing (Linked(..), TooltipConfig)
 import Dict exposing (Dict)
 import Html exposing (div)
 import Html.Attributes exposing (class)
@@ -130,7 +130,7 @@ update config msg model =
 
 {-| This is intended to be used over `view`, and comes with a way to map the msg.
 -}
-tooltipConfig : (Msg -> msg) -> Model -> Syntax.TooltipConfig msg
+tooltipConfig : (Msg -> msg) -> Model -> TooltipConfig msg
 tooltipConfig toMsg model =
     { toHoverStart = ShowTooltip >> toMsg
     , toHoverEnd = HideTooltip >> toMsg
@@ -161,16 +161,16 @@ viewDetail detail =
         viewDetail_ s =
             case s of
                 TermHover (Term _ _ { info, source }) ->
-                    Source.viewTermSource (SourceViewConfig.rich_ Syntax.NotLinked) info.name source
+                    Source.viewTermSource (SourceViewConfig.rich_ NotLinked) info.name source
 
                 TypeHover (Type _ _ { source }) ->
-                    Source.viewTypeSource (SourceViewConfig.rich_ Syntax.NotLinked) source
+                    Source.viewTypeSource (SourceViewConfig.rich_ NotLinked) source
 
                 AbilityConstructorHover (AbilityConstructor _ { source }) ->
-                    Source.viewTypeSource (SourceViewConfig.rich_ Syntax.NotLinked) source
+                    Source.viewTypeSource (SourceViewConfig.rich_ NotLinked) source
 
                 DataConstructorHover (DataConstructor _ { source }) ->
-                    Source.viewTypeSource (SourceViewConfig.rich_ Syntax.NotLinked) source
+                    Source.viewTypeSource (SourceViewConfig.rich_ NotLinked) source
 
         loading =
             Tooltip.rich
