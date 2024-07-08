@@ -12,7 +12,7 @@ module Code.Syntax exposing
 
 import Code.Definition.Reference as Reference exposing (Reference)
 import Code.HashQualified as HQ
-import Code.Syntax.Linked exposing (Linked(..))
+import Code.Syntax.Linked exposing (Linked)
 import Code.Syntax.SyntaxSegment as SyntaxSegment exposing (..)
 import Html exposing (Html, span)
 import Html.Attributes exposing (class)
