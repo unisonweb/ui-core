@@ -161,7 +161,7 @@ withContent content pl =
             CenteredNarrowLayout (withContent_ l)
 
         EdgeToEdgeLayout l ->
-            CenteredLayout (withContent_ l)
+            EdgeToEdgeLayout (withContent_ l)
 
         TabbedLayout l ->
             TabbedLayout (withContent_ l)
@@ -189,7 +189,7 @@ withBackgroundColor bg pl =
             CenteredNarrowLayout { l | backgroundColor = bg }
 
         EdgeToEdgeLayout l ->
-            CenteredNarrowLayout { l | backgroundColor = bg }
+            EdgeToEdgeLayout { l | backgroundColor = bg }
 
         TabbedLayout _ ->
             pl
