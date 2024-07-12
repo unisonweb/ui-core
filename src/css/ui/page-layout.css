@@ -25,12 +25,6 @@
   --c-width_page-content_outer: calc(100vw - var(--c-width_sidebar));
 }
 
-.page.edge-to-edge-layout {
-  grid-template-columns: 1fr;
-  grid-template-areas: "page-content";
-  overflow: auto;
-}
-
 .page.centered-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
@@ -38,6 +32,12 @@
 }
 
 .page.centered-narrow-layout {
+  grid-template-columns: 1fr;
+  grid-template-areas: "page-content";
+  overflow: auto;
+}
+
+.page.edge-to-edge-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
   overflow: auto;
@@ -235,7 +235,8 @@
   margin-left: -0.75rem;
 }
 
-.page.sidebar-edge-to-edge-layout .page-content {
+.page.sidebar-edge-to-edge-layout .page-content,
+.page.edge-to-edge-layout .page-content {
   padding: 0;
   width: 100%;
   align-items: normal;
@@ -246,7 +247,8 @@
  * TODO: This reset seems bad...
  * also depends on the .page-content reset of align-items ...
  */
-.page.sidebar-edge-to-edge-layout .page-content .column {
+.page.sidebar-edge-to-edge-layout .page-content .column,
+.page.edge-to-edge-layout .page-content .column {
   display: initial;
 }
 
