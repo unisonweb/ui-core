@@ -279,6 +279,11 @@ member items ref =
     items |> references |> List.member ref
 
 
+containsReference : WorkspaceItems -> Reference -> Bool
+containsReference items ref =
+    items |> allReferences |> List.member ref
+
+
 hashes : WorkspaceItems -> List Hash
 hashes items =
     items
@@ -292,6 +297,13 @@ references items =
     items
         |> toList
         |> List.map WorkspaceItem.reference
+
+
+allReferences : WorkspaceItems -> List Reference
+allReferences items =
+    items
+        |> toList
+        |> List.concatMap WorkspaceItem.allReferences
 
 
 head : WorkspaceItems -> Maybe WorkspaceItem

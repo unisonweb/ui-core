@@ -180,6 +180,19 @@ reference item =
             refResponse
 
 
+allReferences : WorkspaceItem -> List Reference
+allReferences item =
+    case item of
+        Loading r ->
+            [ r ]
+
+        Failure r _ ->
+            [ r ]
+
+        Success refRequest refResponse _ ->
+            [ refRequest, refResponse ]
+
+
 {-| Convert the Reference of a WorkspaceItem to be HashOnly
 -}
 toHashReference : WorkspaceItem -> WorkspaceItem

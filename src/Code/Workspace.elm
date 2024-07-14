@@ -409,7 +409,7 @@ openItem : Config -> WithWorkspaceItems m -> Maybe Reference -> Reference -> ( W
 openItem config ({ workspaceItems } as model) relativeToRef ref =
     -- We don't want to refetch or replace any already open definitions, but we
     -- do want to focus and scroll to it (unless its already currently focused)
-    if WorkspaceItems.member workspaceItems ref then
+    if WorkspaceItems.containsReference workspaceItems ref then
         if not (WorkspaceItems.isFocused workspaceItems ref) then
             let
                 nextWorkspaceItems =
