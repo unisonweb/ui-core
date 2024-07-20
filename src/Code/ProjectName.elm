@@ -3,7 +3,7 @@ module Code.ProjectName exposing (..)
 import Code.Hash as Hash
 import Code.Hashvatar as Hashvatar
 import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
-import Html exposing (Html, label, span, text)
+import Html exposing (Html, span, text)
 import Html.Attributes exposing (class, title)
 import Json.Decode as Decode
 import Lib.UserHandle as UserHandle exposing (UserHandle)
@@ -185,7 +185,7 @@ view_ handleClick slugClick ((ProjectName handle_ slug_) as projectName_) =
                 Nothing ->
                     span [ class "project-name_slug" ] [ text (ProjectSlug.toString slug_) ]
     in
-    label [ class "project-name", title (toString projectName_) ]
+    span [ class "project-name", title (toString projectName_) ]
         [ handle__
         , span [ class "project-name_separator" ] [ text "/" ]
         , slug__
