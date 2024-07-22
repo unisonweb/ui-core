@@ -310,8 +310,13 @@
 .page.centered-layout .page-footer,
 .page.centered-narrow-layout .page-footer,
 .page.tabbed-layout .page-footer,
-.page.presentation-layout .page-footer {
+.page.presentation-layout .page-footer,
+.page.edge-to-edge-layout .page-footer {
   justify-content: center;
+}
+
+.page.edge-to-edge-layout .page-footer {
+  padding: 1rem 0;
 }
 
 .page .page-footer .copyright {
