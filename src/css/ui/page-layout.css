@@ -316,7 +316,7 @@
 }
 
 .page.edge-to-edge-layout .page-footer {
-  padding: 1.5rem 0;
+  margin-bottom: 1.5rem;
 }
 
 .page .page-footer .copyright {
