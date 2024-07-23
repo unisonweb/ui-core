@@ -1,7 +1,7 @@
 module UI.Card exposing (..)
 
 import Html exposing (Html, div, h3, text)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, id)
 
 
 type SurfaceBackgroundColor
@@ -18,6 +18,7 @@ type CardType
 type alias Card msg =
     { type_ : CardType
     , classNames : List String
+    , domId : Maybe String
     , title : Maybe String
     , items : List (Html msg)
     }
@@ -29,12 +30,12 @@ type alias Card msg =
 
 card : List (Html msg) -> Card msg
 card items =
-    { type_ = Uncontained, classNames = [], title = Nothing, items = items }
+    { type_ = Uncontained, classNames = [], title = Nothing, items = items, domId = Nothing }
 
 
 titled : String -> List (Html msg) -> Card msg
 titled title items =
-    { type_ = Uncontained, classNames = [], title = Just title, items = items }
+    { type_ = Uncontained, classNames = [], title = Just title, items = items, domId = Nothing }
 
 
 
@@ -49,6 +50,11 @@ withType type_ card_ =
 withClassName : String -> Card msg -> Card msg
 withClassName className card_ =
     { card_ | classNames = className :: card_.classNames }
+
+
+withDomId : String -> Card msg -> Card msg
+withDomId domId card_ =
+    { card_ | domId = Just domId }
 
 
 withTightPadding : Card msg -> Card msg
@@ -96,6 +102,7 @@ map toMsg cardA =
     , classNames = cardA.classNames
     , title = cardA.title
     , items = List.map (Html.map toMsg) cardA.items
+    , domId = cardA.domId
     }
 
 
@@ -131,5 +138,13 @@ view card_ =
 
                 Uncontained ->
                     "uncontained"
+
+        domId =
+            case card_.domId of
+                Just domId_ ->
+                    [ id domId_ ]
+
+                Nothing ->
+                    []
     in
-    div ([ class "card", class typeClass ] ++ classNames) items
+    div ([ class "card", class typeClass ] ++ classNames ++ domId) items
