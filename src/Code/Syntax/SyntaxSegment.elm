@@ -326,23 +326,18 @@ helpForSegment (SyntaxSegment syntaxType segmentText) =
     case syntaxType of
         ControlKeyword ->
             case segmentText_ of
-                "let" ->
-                    Just (text "")
-
                 "handle" ->
-                    Just (text "")
-
-                "in" ->
-                    Just (text "")
+                    Just SyntaxSegmentHelp.handleWith
 
                 "where" ->
-                    Just (text "")
+                    Just SyntaxSegmentHelp.abilityWhere
 
                 "match" ->
                     Just SyntaxSegmentHelp.matchWith
 
                 "with" ->
-                    Just SyntaxSegmentHelp.matchWith
+                    -- We don't know if its match...with or handle...with
+                    Nothing
 
                 "cases" ->
                     Just SyntaxSegmentHelp.cases
@@ -356,11 +351,19 @@ helpForSegment (SyntaxSegment syntaxType segmentText) =
                 "else" ->
                     Just SyntaxSegmentHelp.ifElse
 
-                "and" ->
-                    Just (text "")
+                "do" ->
+                    Just SyntaxSegmentHelp.doKeyword
 
-                "or" ->
-                    Just (text "")
+                _ ->
+                    Nothing
+
+        DelayForceChar ->
+            case segmentText_ of
+                "'" ->
+                    Just SyntaxSegmentHelp.delayed
+
+                "()" ->
+                    Just SyntaxSegmentHelp.forceParens
 
                 _ ->
                     Nothing
@@ -378,7 +381,11 @@ helpForSegment (SyntaxSegment syntaxType segmentText) =
             Just SyntaxSegmentHelp.numericLiteral
 
         TextLiteral ->
-            Just SyntaxSegmentHelp.textLiteral
+            if String.startsWith "\"\"\"" segmentText_ then
+                Just SyntaxSegmentHelp.textLiteralMultiline
+
+            else
+                Just SyntaxSegmentHelp.textLiteral
 
         BytesLiteral ->
             Just SyntaxSegmentHelp.bytesLiteral
@@ -399,13 +406,26 @@ helpForSegment (SyntaxSegment syntaxType segmentText) =
             Just SyntaxSegmentHelp.unit
 
         DataTypeModifier ->
-            Just SyntaxSegmentHelp.uniqueKeyword
+            case segmentText_ of
+                "unique" ->
+                    Just SyntaxSegmentHelp.uniqueKeyword
+
+                "structural" ->
+                    Just SyntaxSegmentHelp.structuralKeyword
+
+                _ ->
+                    Nothing
 
         AbilityBraces ->
             Just SyntaxSegmentHelp.abilityBraces
 
         TypeOperator ->
-            Just SyntaxSegmentHelp.typeOperator
+            case segmentText_ of
+                "forall" ->
+                    Just SyntaxSegmentHelp.typeForall
+
+                _ ->
+                    Nothing
 
         TypeAscriptionColon ->
             Just SyntaxSegmentHelp.typeAscriptionColon
@@ -416,13 +436,24 @@ helpForSegment (SyntaxSegment syntaxType segmentText) =
                     Just SyntaxSegmentHelp.typeKeyword
 
                 "ability" ->
-                    Just SyntaxSegmentHelp.abilityKeyword
+                    Just SyntaxSegmentHelp.abilityWhere
 
                 _ ->
                     Nothing
 
         DataTypeParams ->
             Just SyntaxSegmentHelp.typeParams
+
+        DelimiterChar ->
+            case segmentText_ of
+                "@" ->
+                    Just SyntaxSegmentHelp.asPattern
+
+                "termLink" ->
+                    Just SyntaxSegmentHelp.termLink
+
+                _ ->
+                    Nothing
 
         LinkKeyword ->
             case segmentText_ of
