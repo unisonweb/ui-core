@@ -217,13 +217,13 @@ abilityWhere =
     help
         [ text "Introduces an ability definition. The name of the ability follows the keyword and the operations that the ability can perform are listed as function signatures after the "
         , inlineCode "where"
-        , text " keyword. "
+        , text " keyword."
         ]
 
 
 abilityBraces : Html msg
 abilityBraces =
-    help [ text "Defines the set of abilities that a function can perform. The abilities will appear in a comma-delimited list. " ]
+    help [ text "Defines the set of abilities that a function can perform. The abilities will appear in a comma-delimited list." ]
 
 
 handleWith : Html msg
@@ -256,7 +256,7 @@ delayed =
         , inlineCode "() -> a"
         , text ". In a function body, "
         , inlineCode "'"
-        , text " indicates that the term immediately to the right is delayed. "
+        , text " indicates that the term immediately to the right is delayed."
         ]
 
 
