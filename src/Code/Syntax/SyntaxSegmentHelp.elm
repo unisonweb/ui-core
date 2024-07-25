@@ -5,7 +5,18 @@
 
 module Code.Syntax.SyntaxSegmentHelp exposing (..)
 
-import Html exposing (Html, text)
+import Html exposing (Html, code, div, text)
+import Html.Attributes exposing (class)
+
+
+inlineCode : String -> Html msg
+inlineCode code_ =
+    code [ class "inline-code" ] [ text code_ ]
+
+
+help : List (Html msg) -> Html msg
+help content =
+    div [] content
 
 
 
@@ -14,12 +25,27 @@ import Html exposing (Html, text)
 
 numericLiteral : Html msg
 numericLiteral =
-    text "A numeric literal. Some common numeric types are `Nat`: `24`, `Float`: `4.5`, and `Int`: `-60`."
+    help
+        [ text "A numeric literal. Some common numeric types are "
+        , inlineCode "Nat"
+        , text ": "
+        , inlineCode "24"
+        , text ", "
+        , inlineCode "Float"
+        , text ": "
+        , inlineCode "4.5"
+        , text ", and  "
+        , inlineCode "Int"
+        , text ": "
+        , inlineCode "-60"
+        , text "."
+        ]
 
 
 textLiteral : Html msg
 textLiteral =
-    text "The value inside of the double quotes is a `Text` literal."
+    help
+        [ text "The value inside of the double quotes is a ", inlineCode "Text", text "literal." ]
 
 
 textLiteralMultiline : Html msg
