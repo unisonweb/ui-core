@@ -41,6 +41,10 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
   margin-left: -0.5rem;
 }
 
+.tooltip-trigger:has(> .syntax-help) .tooltip code {
+  display: inline-block;
+}
+
 .tooltip-trigger:has(> .syntax-help) .tooltip-bubble {
   max-width: 22rem;
   min-width: 22rem;
