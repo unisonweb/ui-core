@@ -47,6 +47,11 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
   white-space: pre-wrap;
 }
 
+/* Don't show double tooltips */
+.tooltip-trigger.tooltip_show .tooltip-trigger .tooltip {
+  display: none;
+}
+
 .rich .fqn .sep {
   color: var(--color-syntax-subtle);
 }
