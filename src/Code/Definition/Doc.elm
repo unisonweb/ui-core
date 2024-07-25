@@ -465,10 +465,12 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                     hr [ class "divider" ] []
 
                 Tooltip triggerContent tooltipContent ->
-                    Tooltip.tooltip
-                        (Tooltip.rich (viewAtCurrentSectionLevel tooltipContent))
-                        |> Tooltip.withArrow Tooltip.Start
-                        |> Tooltip.view (viewAtCurrentSectionLevel triggerContent)
+                    span [ class "doc-tooltip" ]
+                        [ Tooltip.tooltip
+                            (Tooltip.rich (viewAtCurrentSectionLevel tooltipContent))
+                            |> Tooltip.withArrow Tooltip.Start
+                            |> Tooltip.view (viewAtCurrentSectionLevel triggerContent)
+                        ]
 
                 Aside d ->
                     span [ class "doc_aside-anchor" ]

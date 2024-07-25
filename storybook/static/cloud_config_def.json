@@ -1,0 +1,599 @@
+{
+    "missingDefinitions": [],
+    "termDefinitions": {},
+    "typeDefinitions": {
+        "#3j6045jl1ngsop8a3m7va0pib6lp67bq503b76rkb62f4ku38eiud1i7pi47aet1kiahgim16bu8dkcufv8s1de7rcoa761steht9p0": {
+            "bestTypeName": "Config",
+            "defnTypeTag": "Ability",
+            "typeDefinition": {
+                "contents": [
+                    {
+                        "annotation": {
+                            "tag": "DataTypeKeyword"
+                        },
+                        "segment": "ability"
+                    },
+                    {
+                        "annotation": null,
+                        "segment": " "
+                    },
+                    {
+                        "annotation": {
+                            "contents": "Config",
+                            "tag": "HashQualifier"
+                        },
+                        "segment": "Config"
+                    },
+                    {
+                        "annotation": {
+                            "tag": "ControlKeyword"
+                        },
+                        "segment": " where"
+                    },
+                    {
+                        "annotation": null,
+                        "segment": " "
+                    },
+                    {
+                        "annotation": {
+                            "contents": "#3j6045jl1ngsop8a3m7va0pib6lp67bq503b76rkb62f4ku38eiud1i7pi47aet1kiahgim16bu8dkcufv8s1de7rcoa761steht9p0#a0",
+                            "tag": "TermReference"
+                        },
+                        "segment": "lookup"
+                    },
+                    {
+                        "annotation": {
+                            "tag": "TypeAscriptionColon"
+                        },
+                        "segment": " :"
+                    },
+                    {
+                        "annotation": null,
+                        "segment": " "
+                    },
+                    {
+                        "annotation": {
+                            "contents": "##Text",
+                            "tag": "TypeReference"
+                        },
+                        "segment": "Text"
+                    },
+                    {
+                        "annotation": null,
+                        "segment": " "
+                    },
+                    {
+                        "annotation": {
+                            "tag": "TypeOperator"
+                        },
+                        "segment": "->"
+                    },
+                    {
+                        "annotation": {
+                            "tag": "AbilityBraces"
+                        },
+                        "segment": "{"
+                    },
+                    {
+                        "annotation": {
+                            "contents": "#3j6045jl1ngsop8a3m7va0pib6lp67bq503b76rkb62f4ku38eiud1i7pi47aet1kiahgim16bu8dkcufv8s1de7rcoa761steht9p0",
+                            "tag": "TypeReference"
+                        },
+                        "segment": "Config"
+                    },
+                    {
+                        "annotation": {
+                            "tag": "AbilityBraces"
+                        },
+                        "segment": "}"
+                    },
+                    {
+                        "annotation": null,
+                        "segment": " "
+                    },
+                    {
+                        "annotation": {
+                            "contents": "#nirp5os0q69o4e1u9p3t6mmq6l6otluefi3ksm7dhm0diidjvkkgl8o9bvnflbj0sanuvdusf34f1qrins3ktcaglpcqv9oums2slsg",
+                            "tag": "TypeReference"
+                        },
+                        "segment": "Optional"
+                    },
+                    {
+                        "annotation": null,
+                        "segment": " "
+                    },
+                    {
+                        "annotation": {
+                            "contents": "##Text",
+                            "tag": "TypeReference"
+                        },
+                        "segment": "Text"
+                    }
+                ],
+                "tag": "UserObject"
+            },
+            "typeDocs": [
+                [
+                    "Config.doc",
+                    "#6dm3jle5g06psdrmgide8dtq3ai31s8bbvpalq3hcihciedl85imj2po3rar7ba6jhlsirthaaifo2ji4lilbu0mfihmtjs3l66ufj8",
+                    {
+                        "contents": [
+                            {
+                                "contents": [
+                                    {
+                                        "contents": "A",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "simple",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "ability",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "for",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "accessing",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "dynamic",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "configuration",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "of",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "a",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "service",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "or",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "batch",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "job.",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "Config",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "values",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "are",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "set",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "using",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": {
+                                            "contents": [
+                                                {
+                                                    "annotation": {
+                                                        "contents": "#560fdeg8gav3ivknchekjfq0hvvkk6mpvoef6oids40s8f44n5l6q4shhe1n4dhpkg4c43tejpqs4lo52nf6t8ijo9kahksr3bu2tq0",
+                                                        "tag": "TermReference"
+                                                    },
+                                                    "segment": "setValue"
+                                                }
+                                            ],
+                                            "tag": "Link"
+                                        },
+                                        "tag": "Special"
+                                    },
+                                    {
+                                        "contents": "and",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "unset",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "using",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": {
+                                            "contents": [
+                                                {
+                                                    "contents": {
+                                                        "contents": [
+                                                            {
+                                                                "annotation": {
+                                                                    "contents": "#ga99u34gdupednjk592ibu5qcte4lnm9qqpla99icna7b3qar74jilp48dlt0ijjfbe4ja3vf5q3a6pvv0b5ed2tsobim3pq5t8sc5o",
+                                                                    "tag": "TermReference"
+                                                                },
+                                                                "segment": "deleteValue"
+                                                            }
+                                                        ],
+                                                        "tag": "Link"
+                                                    },
+                                                    "tag": "Special"
+                                                },
+                                                {
+                                                    "contents": ".",
+                                                    "tag": "Word"
+                                                }
+                                            ],
+                                            "tag": "Join"
+                                        },
+                                        "tag": "Group"
+                                    }
+                                ],
+                                "tag": "Paragraph"
+                            },
+                            {
+                                "contents": {
+                                    "contents": [
+                                        {
+                                            "annotation": {
+                                                "contents": "env",
+                                                "tag": "HashQualifier"
+                                            },
+                                            "segment": "env"
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "BindingEquals"
+                                            },
+                                            "segment": " ="
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#757qudsft61ajvie9iulg36i94225i7n7qel0tm5qjtes5vtujl38kb4lrakirohm5h1fi1fburnmga3bh21prp191ek5kvtrt0ipgg",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "Environment.create"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "TextLiteral"
+                                            },
+                                            "segment": "\"my-env\""
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "\n"
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#560fdeg8gav3ivknchekjfq0hvvkk6mpvoef6oids40s8f44n5l6q4shhe1n4dhpkg4c43tejpqs4lo52nf6t8ijo9kahksr3bu2tq0",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "setValue"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "Var"
+                                            },
+                                            "segment": "env"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "TextLiteral"
+                                            },
+                                            "segment": "\"api-key\""
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "Parenthesis"
+                                            },
+                                            "segment": "("
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#lln30o1n6in87rdja6e9hmc8hd23egkueblnq033mslem41tmv8a5gdrauqi836ab5qc40od0i6n4buba9ia77thj16glib0elmedg0",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "getEnv"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "TextLiteral"
+                                            },
+                                            "segment": "\"SECRET_API_KEY\""
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "Parenthesis"
+                                            },
+                                            "segment": ")"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "\n"
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#jkuqt8djouerug9c6o08ukss9vk2cqnds2q76plsjorotdqc7fuiu0anepk0g1j2on29nvu58pq8j7s2e5np3bn330v9li9pd7vip6g",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "Cloud.submit"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "Var"
+                                            },
+                                            "segment": "env"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "ControlKeyword"
+                                            },
+                                            "segment": "do"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "\n"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "  "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "key",
+                                                "tag": "HashQualifier"
+                                            },
+                                            "segment": "key"
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "BindingEquals"
+                                            },
+                                            "segment": " ="
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "\n"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "  "
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "  "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#3j6045jl1ngsop8a3m7va0pib6lp67bq503b76rkb62f4ku38eiud1i7pi47aet1kiahgim16bu8dkcufv8s1de7rcoa761steht9p0#a0",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "Config.lookup"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "TextLiteral"
+                                            },
+                                            "segment": "\"api-key\""
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#ur2tossvhrmfo8h1o5ertf0dqn5mrprfsfca3fsal7ljm36am48k0un4bhsqr387s3v5s7vad74spmluikdo5pj0kt30dk76pmev5ko",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "|>"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "#74doikmgakdqto28tickaavqapviejn2uhtvgd2nncmd0gk2ait4avnj7uicjcvo968h1eo4bvfihq8l1gj7ehl2ilbjte367rveabg",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "getOrBug"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "TextLiteral"
+                                            },
+                                            "segment": "\"expected api-key in config\""
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "\n"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": "  "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "contents": "##todo",
+                                                "tag": "TermReference"
+                                            },
+                                            "segment": "todo"
+                                        },
+                                        {
+                                            "annotation": null,
+                                            "segment": " "
+                                        },
+                                        {
+                                            "annotation": {
+                                                "tag": "TextLiteral"
+                                            },
+                                            "segment": "\"do service logic using api-key\""
+                                        }
+                                    ],
+                                    "tag": "ExampleBlock"
+                                },
+                                "tag": "Special"
+                            },
+                            {
+                                "contents": [
+                                    {
+                                        "contents": "Config",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "values",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "are",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "stored",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "encrypted",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "on",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "Unison",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "Cloud",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "and",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "only",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "exist",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "unencrypted",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "in",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "memory",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "while",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "the",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "service",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "or",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "batch",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "job",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "is",
+                                        "tag": "Word"
+                                    },
+                                    {
+                                        "contents": "running.",
+                                        "tag": "Word"
+                                    }
+                                ],
+                                "tag": "Paragraph"
+                            }
+                        ],
+                        "tag": "UntitledSection"
+                    }
+                ]
+            ],
+            "typeNames": [
+                "Config"
+            ]
+        }
+    }
+}

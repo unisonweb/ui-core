@@ -259,62 +259,86 @@ view linked ((SyntaxSegment sType sText) as segment) =
         className =
             syntaxTypeToClassName sType
 
-        content =
+        content view_ =
             if String.contains "->" sText then
-                span [ class "arrow" ] [ text sText ]
+                view_ (span [ class "arrow" ] [ text sText ])
 
             else if isFQN then
-                viewFQN (FQN.fromString sText)
+                view_ (viewFQN (FQN.fromString sText))
+
+            else if sText /= " " && (String.startsWith " " sText || String.endsWith " " sText) then
+                -- If the text is not the empty string and is either prefixed
+                -- or suffixed with a space, we want that to not be part of a
+                -- hover background, so it gets separate to another dom node.
+                -- This results in cleaner looking hovers and tooltip
+                -- positionings
+                if String.startsWith " " sText && String.endsWith " " sText then
+                    span [] [ text " ", view_ (text (String.trim sText)), text " " ]
+
+                else if String.startsWith " " sText then
+                    span [] [ text " ", view_ (text (String.trim sText)) ]
+
+                else
+                    span [] [ view_ (text (String.trim sText)), text " " ]
 
             else
-                text sText
+                view_ (text sText)
     in
     case ( linked, ref ) of
         ( Linked click, Just r ) ->
-            Click.view
-                [ class className ]
-                [ content ]
-                (click r)
+            content
+                (\c ->
+                    Click.view
+                        [ class className ]
+                        [ c ]
+                        (click r)
+                )
 
         ( LinkedWithTooltip l, Just r ) ->
-            let
-                content_ =
-                    case l.tooltip.toTooltip r of
-                        Just t ->
-                            Tooltip.view content t
+            content
+                (\c ->
+                    let
+                        content_ =
+                            case l.tooltip.toTooltip r of
+                                Just t ->
+                                    Tooltip.view c t
 
-                        Nothing ->
-                            content
-            in
-            Click.view
-                [ class className
-                , onMouseEnter (l.tooltip.toHoverStart r)
-                , onMouseLeave (l.tooltip.toHoverEnd r)
-                ]
-                [ content_ ]
-                (l.toClick r)
+                                Nothing ->
+                                    c
+                    in
+                    Click.view
+                        [ class className
+                        , onMouseEnter (l.tooltip.toHoverStart r)
+                        , onMouseLeave (l.tooltip.toHoverEnd r)
+                        ]
+                        [ content_ ]
+                        (l.toClick r)
+                )
 
         _ ->
-            case helpForSegment segment of
-                Just help ->
-                    let
-                        tooltip =
-                            Tooltip.rich help
-                                |> Tooltip.tooltip
-                                |> Tooltip.withArrow Tooltip.Start
-                                |> Tooltip.withPosition Tooltip.Below
-                    in
-                    Tooltip.view
-                        (span
-                            [ class "syntax-help", class className ]
-                            [ content ]
-                        )
-                        tooltip
+            content
+                (\c ->
+                    case helpForSegment segment of
+                        Just help ->
+                            let
+                                tooltip =
+                                    Tooltip.rich help
+                                        |> Tooltip.tooltip
+                                        |> Tooltip.withArrow Tooltip.Start
+                                        |> Tooltip.withPosition Tooltip.Below
+                            in
+                            Tooltip.view
+                                (span
+                                    [ class "syntax-help", class className ]
+                                    [ c ]
+                                )
+                                tooltip
 
-                _ ->
-                    span
-                        [ class className ]
-                        [ content ]
+                        _ ->
+                            span
+                                [ class className ]
+                                [ c ]
+                )
 
 
 helpForSegment : SyntaxSegment -> Maybe (Html msg)

@@ -240,7 +240,7 @@
   margin: 1.5rem 0;
 }
 
-.definition-doc :not(code) .tooltip-trigger {
+.definition-doc .doc-tooltip .tooltip-trigger {
   text-decoration: underline dotted var(--color-doc-subtle-text);
   text-underline-offset: 2px;
   /* Other tooltip styling is handled by elements/tooltip */
