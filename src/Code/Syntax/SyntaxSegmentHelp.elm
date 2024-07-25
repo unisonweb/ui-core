@@ -5,7 +5,7 @@
 
 module Code.Syntax.SyntaxSegmentHelp exposing (..)
 
-import Html exposing (Html, code, div, text)
+import Html exposing (Html, code, span, text)
 import Html.Attributes exposing (class)
 
 
@@ -16,7 +16,7 @@ inlineCode code_ =
 
 help : List (Html msg) -> Html msg
 help content =
-    div [] content
+    span [] content
 
 
 
