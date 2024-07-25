@@ -5,6 +5,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
 import Code.Syntax.Linked exposing (Linked(..))
+import Code.Syntax.SyntaxSegmentHelp as SyntaxSegmentHelp
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onMouseEnter, onMouseLeave)
@@ -58,7 +59,7 @@ type SyntaxType
     | UseSuffix
       -- TODO: Should this be a HashQualified ?
     | HashQualifier String
-      -- ! '
+      -- ' ()
     | DelayForceChar
       -- ? , ` [ ] @ |
       -- Currently not all commas in the pretty-print output are marked up as DelimiterChar - we miss
@@ -317,8 +318,156 @@ view linked ((SyntaxSegment sType sText) as segment) =
 
 
 helpForSegment : SyntaxSegment -> Maybe (Html msg)
-helpForSegment _ =
-    Nothing
+helpForSegment (SyntaxSegment syntaxType segmentText) =
+    let
+        segmentText_ =
+            String.trim segmentText
+    in
+    case syntaxType of
+        ControlKeyword ->
+            case segmentText_ of
+                "handle" ->
+                    Just SyntaxSegmentHelp.handleWith
+
+                "where" ->
+                    Just SyntaxSegmentHelp.abilityWhere
+
+                "match" ->
+                    Just SyntaxSegmentHelp.matchWith
+
+                "with" ->
+                    -- We don't know if its match...with or handle...with
+                    Nothing
+
+                "cases" ->
+                    Just SyntaxSegmentHelp.cases
+
+                "if" ->
+                    Just SyntaxSegmentHelp.ifElse
+
+                "then" ->
+                    Just SyntaxSegmentHelp.ifElse
+
+                "else" ->
+                    Just SyntaxSegmentHelp.ifElse
+
+                "do" ->
+                    Just SyntaxSegmentHelp.doKeyword
+
+                _ ->
+                    Nothing
+
+        DelayForceChar ->
+            case segmentText_ of
+                "'" ->
+                    Just SyntaxSegmentHelp.delayed
+
+                "()" ->
+                    Just SyntaxSegmentHelp.forceParens
+
+                _ ->
+                    Nothing
+
+        UseKeyword ->
+            Just SyntaxSegmentHelp.use
+
+        UsePrefix ->
+            Just SyntaxSegmentHelp.use
+
+        UseSuffix ->
+            Just SyntaxSegmentHelp.use
+
+        NumericLiteral ->
+            Just SyntaxSegmentHelp.numericLiteral
+
+        TextLiteral ->
+            if String.startsWith "\"\"\"" segmentText_ then
+                Just SyntaxSegmentHelp.textLiteralMultiline
+
+            else
+                Just SyntaxSegmentHelp.textLiteral
+
+        BytesLiteral ->
+            Just SyntaxSegmentHelp.bytesLiteral
+
+        CharLiteral ->
+            Just SyntaxSegmentHelp.charLiteral
+
+        Op Cons ->
+            Just SyntaxSegmentHelp.cons
+
+        Op Snoc ->
+            Just SyntaxSegmentHelp.snoc
+
+        Op Concat ->
+            Just SyntaxSegmentHelp.concat
+
+        Unit ->
+            Just SyntaxSegmentHelp.unit
+
+        DataTypeModifier ->
+            case segmentText_ of
+                "unique" ->
+                    Just SyntaxSegmentHelp.uniqueKeyword
+
+                "structural" ->
+                    Just SyntaxSegmentHelp.structuralKeyword
+
+                _ ->
+                    Nothing
+
+        AbilityBraces ->
+            Just SyntaxSegmentHelp.abilityBraces
+
+        TypeOperator ->
+            case segmentText_ of
+                "forall" ->
+                    Just SyntaxSegmentHelp.typeForall
+
+                _ ->
+                    Nothing
+
+        TypeAscriptionColon ->
+            Just SyntaxSegmentHelp.typeAscriptionColon
+
+        DataTypeKeyword ->
+            case segmentText_ of
+                "type" ->
+                    Just SyntaxSegmentHelp.typeKeyword
+
+                "ability" ->
+                    Just SyntaxSegmentHelp.abilityWhere
+
+                _ ->
+                    Nothing
+
+        DataTypeParams ->
+            Just SyntaxSegmentHelp.typeParams
+
+        DelimiterChar ->
+            case segmentText_ of
+                "@" ->
+                    Just SyntaxSegmentHelp.asPattern
+
+                "termLink" ->
+                    Just SyntaxSegmentHelp.termLink
+
+                _ ->
+                    Nothing
+
+        LinkKeyword ->
+            case segmentText_ of
+                "typeLink" ->
+                    Just SyntaxSegmentHelp.typeLink
+
+                "termLink" ->
+                    Just SyntaxSegmentHelp.termLink
+
+                _ ->
+                    Nothing
+
+        _ ->
+            Nothing
 
 
 
