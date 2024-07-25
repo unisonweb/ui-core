@@ -37,11 +37,11 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
   display: none;
 }
 
-.tooltip-trigger:has(.syntax-help) .tooltip {
+.tooltip-trigger:has(> .syntax-help) .tooltip {
   margin-left: -0.5rem;
 }
 
-.tooltip-trigger:has(.syntax-help) .tooltip-bubble {
+.tooltip-trigger:has(> .syntax-help) .tooltip-bubble {
   max-width: 22rem;
   min-width: 22rem;
   white-space: pre-wrap;
