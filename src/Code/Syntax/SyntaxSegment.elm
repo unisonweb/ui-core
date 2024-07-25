@@ -306,7 +306,7 @@ view linked ((SyntaxSegment sType sText) as segment) =
                     in
                     Tooltip.view
                         (span
-                            [ class className ]
+                            [ class "syntax-help", class className ]
                             [ content ]
                         )
                         tooltip
