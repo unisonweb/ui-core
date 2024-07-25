@@ -161,10 +161,9 @@ cases =
         , inlineCode "(a -> match a with a1 -> ... )"
         , text ". "
         , br [] []
-        , inlineCode "cases"
+        , inlineCode "cases "
         , text "shortens this to "
         , inlineCode "cases a1 -> ..."
-        , text "."
         ]
 
 
