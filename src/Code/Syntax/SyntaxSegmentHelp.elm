@@ -45,7 +45,7 @@ numericLiteral =
 textLiteral : Html msg
 textLiteral =
     help
-        [ text "The value inside of the double quotes is a ", inlineCode "Text", text "literal." ]
+        [ text "The value inside of the double quotes is a ", inlineCode "Text", text " literal." ]
 
 
 textLiteralMultiline : Html msg
