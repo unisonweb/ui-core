@@ -5,7 +5,7 @@
 
 module Code.Syntax.SyntaxSegmentHelp exposing (..)
 
-import Html exposing (Html, code, span, text)
+import Html exposing (Html, br, code, span, text)
 import Html.Attributes exposing (class)
 
 
@@ -160,8 +160,9 @@ cases =
         [ text "It's common to pattern match on a function argument, like "
         , inlineCode "(a -> match a with a1 -> ... )"
         , text ". "
+        , br [] []
         , inlineCode "cases"
-        , text "shortens this to"
+        , text "shortens this to "
         , inlineCode "cases a1 -> ..."
         , text "."
         ]
