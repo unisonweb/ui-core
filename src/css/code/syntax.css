@@ -49,8 +49,14 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
 }
 
 .tooltip-trigger:has(> .syntax-help) .tooltip {
-  margin-left: -1rem;
   font-family: var(--font-sans-serif);
+}
+.tooltip-trigger:has(> .syntax-help) .tooltip {
+  margin-left: -0.5rem;
+}
+
+.tooltip-trigger:has(> .syntax-help.single-letter) .tooltip {
+  margin-left: -15px;
 }
 
 .tooltip-trigger:has(> .syntax-help) .tooltip code {

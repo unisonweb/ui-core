@@ -7,7 +7,7 @@ import Code.HashQualified as HQ
 import Code.Syntax.Linked exposing (Linked(..))
 import Code.Syntax.SyntaxSegmentHelp as SyntaxSegmentHelp
 import Html exposing (Html, span, text)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onMouseEnter, onMouseLeave)
 import Json.Decode as Decode exposing (andThen, at, field)
 import Json.Decode.Extra exposing (when)
@@ -329,7 +329,14 @@ view linked ((SyntaxSegment sType sText) as segment) =
                             in
                             Tooltip.view
                                 (span
-                                    [ class "syntax-help", class className ]
+                                    [ class "syntax-help"
+                                    , class className
+                                    , classList
+                                        [ ( "single-letter"
+                                          , String.length (String.trim sText) == 1
+                                          )
+                                        ]
+                                    ]
                                     [ c ]
                                 )
                                 tooltip
