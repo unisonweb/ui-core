@@ -250,7 +250,7 @@ delayed =
     help
         [ text "In a type signature, "
         , inlineCode "'"
-        , text "indicates an argument is delayed,  so "
+        , text " indicates an argument is delayed,  so "
         , inlineCode "'a"
         , text " means "
         , inlineCode "() -> a"
