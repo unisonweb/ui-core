@@ -150,7 +150,7 @@ matchWith =
         , inlineCode "match"
         , text " is the target value of the match, and the statement(s) following "
         , inlineCode "with"
-        , text "are the potential patterns."
+        , text " are the potential patterns."
         ]
 
 
@@ -172,7 +172,7 @@ asPattern =
     help
         [ text "In a pattern match, "
         , inlineCode "@"
-        , text "is an \"as-pattern\". It is a way of binding a variable to an element in the pattern match. The value to the left of the "
+        , text " is an \"as-pattern\". It is a way of binding a variable to an element in the pattern match. The value to the left of the "
         , inlineCode "@"
         , text " is the variable name and the value to the right is what the variable references."
         ]
@@ -187,7 +187,7 @@ ifElse =
     help
         [ text "A conditional statement. If the "
         , inlineCode "Boolean"
-        , text "expression argument is "
+        , text " expression argument is "
         , inlineCode "true"
         , text ", the first branch of the statement will be executed, if it is "
         , inlineCode "false"
@@ -264,7 +264,7 @@ forceParens : Html msg
 forceParens =
     help
         [ inlineCode "()"
-        , text "forces the evaluation of a delayed computation."
+        , text " forces the evaluation of a delayed computation."
         ]
 
 
