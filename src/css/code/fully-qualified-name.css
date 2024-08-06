@@ -15,9 +15,6 @@
 }
 
 .fully-qualified-name .fully-qualified-name_separator {
-  /* em instead of rem to have the margin be relative to the font-size of
-   * .fully-qualified-name
-  */
-  color: var(--u-color_text_very-subdued);
+  color: var(--u-color_text_subdued);
   padding: 0 0.125ch;
 }
