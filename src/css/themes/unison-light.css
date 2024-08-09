@@ -36,7 +36,7 @@
   --u-color_scrollbar: var(--color-gray-lighten-30);
   --u-color_scrollbar-track: var(--color-transparent);
 
-  --u-color_text: var(--color-gray-darken-20);
+  --u-color_text: var(--color-gray-darken-30);
   --u-color_text_very-subdued: var(--color-gray-lighten-30);
   --u-color_text_subdued: var(--color-gray-lighten-20);
   --u-color_text_emphasized: var(--color-gray-darken-30);
@@ -180,8 +180,8 @@
   --color-syntax-text: var(--color-green-1);
   --color-syntax-link-hover-bg: var(--color-gray-lighten-50);
 
-  --color-syntax-monochrome-subtle: var(--u-color_text_very-subdued);
-  --color-syntax-monochrome-base: var(--u-color_text_subdued);
+  --color-syntax-monochrome-subtle: var(--u-color_text_subdued);
+  --color-syntax-monochrome-base: var(--u-color_text);
   --color-syntax-monochrome-em: var(--u-color_text);
 }
 

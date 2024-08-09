@@ -189,6 +189,7 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
 .monochrome .hash-qualifier,
 .monochrome .ability-constructor-reference {
   color: var(--color-syntax-monochrome-em);
+  font-weight: 500;
 }
 
 .monochrome .delay-force-char {
