@@ -91,6 +91,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 0.25rem;
 }
 
 .workspace-item .workspace-item_header .workspace-item_info-items {
@@ -98,7 +99,7 @@
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 .workspace-item .workspace-item_header .workspace-item_info-item {

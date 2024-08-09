@@ -63,6 +63,7 @@
 
 #finder input::placeholder {
   font-weight: normal;
+  opacity: 1;
 }
 
 #finder input:focus {

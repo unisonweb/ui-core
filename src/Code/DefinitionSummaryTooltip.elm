@@ -2,7 +2,7 @@ module Code.DefinitionSummaryTooltip exposing (Model, Msg, init, tooltipConfig, 
 
 import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
-import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
+import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorSummary)
 import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorSummary)
 import Code.Definition.Reference as Reference exposing (Reference(..))
 import Code.Definition.Term as Term exposing (Term(..), TermSummary, termSignatureSyntax)
@@ -10,6 +10,7 @@ import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceS
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Syntax as Syntax
+import Code.Syntax.Linked exposing (Linked(..), TooltipConfig)
 import Code.Syntax.SyntaxSegment as SyntaxSegment
 import Dict exposing (Dict)
 import Html exposing (div, span, text)
@@ -129,7 +130,7 @@ update config msg model =
 
 {-| This is intended to be used over `view`, and comes with a way to map the msg.
 -}
-tooltipConfig : (Msg -> msg) -> Model -> Syntax.TooltipConfig msg
+tooltipConfig : (Msg -> msg) -> Model -> TooltipConfig msg
 tooltipConfig toMsg model =
     { toHoverStart = ShowTooltip >> toMsg
     , toHoverEnd = HideTooltip >> toMsg
@@ -204,19 +205,19 @@ viewSummary summary =
         viewSummary_ s =
             case s of
                 TermHover (Term _ _ { signature }) ->
-                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+                    Syntax.view NotLinked (termSignatureSyntax signature)
 
                 TypeHover (Type h _ { fqn, source }) ->
                     source
                         |> viewTypeSourceSyntax h fqn
-                        |> Maybe.map (Syntax.view Syntax.NotLinked)
+                        |> Maybe.map (Syntax.view NotLinked)
                         |> Maybe.withDefault (viewBuiltinType h fqn)
 
                 AbilityConstructorHover (AbilityConstructor _ { signature }) ->
-                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+                    Syntax.view NotLinked (termSignatureSyntax signature)
 
                 DataConstructorHover (DataConstructor _ { signature }) ->
-                    Syntax.view Syntax.NotLinked (termSignatureSyntax signature)
+                    Syntax.view NotLinked (termSignatureSyntax signature)
 
         loading =
             Tooltip.rich
@@ -328,7 +329,7 @@ decodeAbilityConstructorSummary =
             (Decode.map3 makeSummary
                 (field "displayName" FQN.decode)
                 (field "displayName" FQN.decode)
-                (DataConstructor.decodeSignature [ "summary", "contents" ])
+                (AbilityConstructor.decodeSignature [ "summary", "contents" ])
             )
         )
 

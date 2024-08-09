@@ -27,7 +27,7 @@ type DataConstructor a
 
 
 type alias DataConstructorDetail =
-    DataConstructor { info : Info, source : TypeSource }
+    DataConstructor { info : Info, source : TypeSource, signature : TermSignature }
 
 
 type alias DataConstructorSummary =

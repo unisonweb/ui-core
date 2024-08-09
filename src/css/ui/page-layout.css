@@ -25,12 +25,6 @@
   --c-width_page-content_outer: calc(100vw - var(--c-width_sidebar));
 }
 
-.page.edge-to-edge-layout {
-  grid-template-columns: 1fr;
-  grid-template-areas: "page-content";
-  overflow: auto;
-}
-
 .page.centered-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
@@ -38,6 +32,12 @@
 }
 
 .page.centered-narrow-layout {
+  grid-template-columns: 1fr;
+  grid-template-areas: "page-content";
+  overflow: auto;
+}
+
+.page.edge-to-edge-layout {
   grid-template-columns: 1fr;
   grid-template-areas: "page-content";
   overflow: auto;
@@ -118,7 +118,7 @@
   background: var(--u-color_element_subdued);
 }
 
-.page-content .page-title .page-title_default-title .icon {
+.page-content .page-title .page-title_default-title .icon-badge .icon {
   color: var(--u-color_icon_subdued);
   font-size: 1.125rem;
 }
@@ -215,13 +215,13 @@
   margin: auto;
 }
 
-.page .page-content .page-title:has(.icon) {
+.page .page-content .page-title_title:has(.icon) {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
 }
 
-.page.centered-layout .page-content .page-title:has(.icon) {
+.page.centered-layout .page-content .page-title_title:has(.icon) {
   margin-left: -0.75rem;
 }
 
@@ -231,11 +231,12 @@
   padding: 3rem 0 1.5rem 0;
 }
 
-.page.presentation-layout .page-content .page-title:has(.icon) {
+.page.presentation-layout .page-content .page-title_title:has(.icon) {
   margin-left: -0.75rem;
 }
 
-.page.sidebar-edge-to-edge-layout .page-content {
+.page.sidebar-edge-to-edge-layout .page-content,
+.page.edge-to-edge-layout .page-content {
   padding: 0;
   width: 100%;
   align-items: normal;
@@ -246,7 +247,8 @@
  * TODO: This reset seems bad...
  * also depends on the .page-content reset of align-items ...
  */
-.page.sidebar-edge-to-edge-layout .page-content .column {
+.page.sidebar-edge-to-edge-layout .page-content .column,
+.page.edge-to-edge-layout .page-content .column {
   display: initial;
 }
 
@@ -308,8 +310,13 @@
 .page.centered-layout .page-footer,
 .page.centered-narrow-layout .page-footer,
 .page.tabbed-layout .page-footer,
-.page.presentation-layout .page-footer {
+.page.presentation-layout .page-footer,
+.page.edge-to-edge-layout .page-footer {
   justify-content: center;
+}
+
+.page.edge-to-edge-layout .page-footer {
+  margin-bottom: 1.5rem;
 }
 
 .page .page-footer .copyright {

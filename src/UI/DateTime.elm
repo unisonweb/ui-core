@@ -1,12 +1,11 @@
--- Include ui/FormatDateTime.js in the bundle to be able to call DateTime.view
-
-
 module UI.DateTime exposing
     ( DateTime
     , DateTimeFormat(..)
     , decode
     , fromISO8601
     , fromPosix
+    , isAfter
+    , isBefore
     , isSameDay
     , millisSinceEpoch
     , secondsSinceEpoch
@@ -43,6 +42,20 @@ type DateTimeFormat
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
 isSameDay zone (DateTime a) (DateTime b) =
     Time.toDay zone a == Time.toDay zone b && Time.toMonth zone a == Time.toMonth zone b && Time.toYear zone a == Time.toYear zone b
+
+
+{-| is `b` (second arg) after `a` (first arg)
+-}
+isAfter : DateTime -> DateTime -> Bool
+isAfter a b =
+    millisSinceEpoch a < millisSinceEpoch b
+
+
+{-| is `b` (second arg) before `a` (first arg)
+-}
+isBefore : DateTime -> DateTime -> Bool
+isBefore a b =
+    millisSinceEpoch a > millisSinceEpoch b
 
 
 fromPosix : Posix -> DateTime

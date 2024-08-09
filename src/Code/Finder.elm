@@ -15,6 +15,7 @@ import Code.Finder.SearchOptions as SearchOptions exposing (SearchOptions(..), W
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective exposing (Perspective)
+import Code.Source.SourceViewConfig as SourceViewConfig
 import Code.Syntax as Syntax
 import Html
     exposing
@@ -492,28 +493,28 @@ viewMatch keyboardShortcut match isFocused shortcut =
                 (TypeReference (NameOnly fqn))
                 (Category.icon (Category.Type category))
                 (viewMarkedNaming match.matchPositions namespace name)
-                (Source.viewTypeSource Source.Monochrome source)
+                (Source.viewTypeSource SourceViewConfig.monochrome source)
 
         FinderMatch.TermItem (Term _ category { fqn, name, namespace, signature }) ->
             viewMatch_
                 (TermReference (NameOnly fqn))
                 (Category.icon (Category.Term category))
                 (viewMarkedNaming match.matchPositions namespace name)
-                (Source.viewTermSignature Source.Monochrome signature)
+                (Source.viewTermSignature SourceViewConfig.monochrome signature)
 
         FinderMatch.DataConstructorItem (DataConstructor _ { fqn, name, namespace, signature }) ->
             viewMatch_
                 (DataConstructorReference (NameOnly fqn))
                 Icon.dataConstructor
                 (viewMarkedNaming match.matchPositions namespace name)
-                (Source.viewTermSignature Source.Monochrome signature)
+                (Source.viewTermSignature SourceViewConfig.monochrome signature)
 
         FinderMatch.AbilityConstructorItem (AbilityConstructor _ { fqn, name, namespace, signature }) ->
             viewMatch_
                 (AbilityConstructorReference (NameOnly fqn))
                 Icon.abilityConstructor
                 (viewMarkedNaming match.matchPositions namespace name)
-                (Source.viewTermSignature Source.Monochrome signature)
+                (Source.viewTermSignature SourceViewConfig.monochrome signature)
 
 
 viewMatches : KeyboardShortcut.Model -> SearchResults.Matches FinderMatch -> Html Msg

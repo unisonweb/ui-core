@@ -267,11 +267,15 @@ extend a b =
         |> append a
 
 
+{-| prepend a single item onto the FQN segments
+-}
 cons : String -> FQN -> FQN
 cons s (FQN segments_) =
     FQN (NEL.cons s segments_)
 
 
+{-| append a single item onto the FQN segments
+-}
 snoc : FQN -> String -> FQN
 snoc (FQN segments_) s =
     FQN (NEL.append segments_ (NEL.fromElement s))

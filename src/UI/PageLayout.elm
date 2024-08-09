@@ -53,6 +53,7 @@ type PageLayout msg
     | CenteredLayout (Layout {} msg)
     | CenteredNarrowLayout (Layout {} msg)
     | TabbedLayout (Layout { pageTitle : PageTitle msg, tabList : TabList msg } msg)
+    | EdgeToEdgeLayout (Layout {} msg)
     | PresentationLayout (PageContent msg)
 
 
@@ -108,6 +109,15 @@ centeredNarrowLayout content footer =
         }
 
 
+edgeToEdgeLayout : PageContent msg -> PageFooter msg -> PageLayout msg
+edgeToEdgeLayout content footer =
+    EdgeToEdgeLayout
+        { content = content
+        , footer = footer
+        , backgroundColor = DefaultBackground
+        }
+
+
 tabbedLayout : PageTitle msg -> TabList msg -> PageContent msg -> PageFooter msg -> PageLayout msg
 tabbedLayout pageTitle tabList content footer =
     TabbedLayout
@@ -150,6 +160,9 @@ withContent content pl =
         CenteredNarrowLayout l ->
             CenteredNarrowLayout (withContent_ l)
 
+        EdgeToEdgeLayout l ->
+            EdgeToEdgeLayout (withContent_ l)
+
         TabbedLayout l ->
             TabbedLayout (withContent_ l)
 
@@ -174,6 +187,9 @@ withBackgroundColor bg pl =
 
         CenteredNarrowLayout l ->
             CenteredNarrowLayout { l | backgroundColor = bg }
+
+        EdgeToEdgeLayout l ->
+            EdgeToEdgeLayout { l | backgroundColor = bg }
 
         TabbedLayout _ ->
             pl
@@ -244,6 +260,13 @@ map toMsg pageLayout =
 
         CenteredNarrowLayout layout ->
             CenteredNarrowLayout
+                { content = PageContent.map toMsg layout.content
+                , footer = mapPageFooter toMsg layout.footer
+                , backgroundColor = layout.backgroundColor
+                }
+
+        EdgeToEdgeLayout layout ->
+            EdgeToEdgeLayout
                 { content = PageContent.map toMsg layout.content
                 , footer = mapPageFooter toMsg layout.footer
                 , backgroundColor = layout.backgroundColor
@@ -352,6 +375,14 @@ view page =
         CenteredNarrowLayout { content, footer, backgroundColor } ->
             div
                 [ class "page centered-narrow-layout"
+                , bgClassName backgroundColor
+                ]
+                [ PageContent.view_ (viewPageFooter footer) content
+                ]
+
+        EdgeToEdgeLayout { content, footer, backgroundColor } ->
+            div
+                [ class "page edge-to-edge-layout"
                 , bgClassName backgroundColor
                 ]
                 [ PageContent.view_ (viewPageFooter footer) content

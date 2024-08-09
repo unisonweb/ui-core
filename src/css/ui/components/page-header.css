@@ -140,7 +140,7 @@
 .page-header .navigation .nav-item {
   border-radius: 1rem;
   font-size: var(--font-size-medium);
-  padding: 0 1rem;
+  padding: 0 0.75rem;
   height: var(--c-height_page-header);
   display: flex;
   border-radius: 0;

@@ -54,6 +54,7 @@ textarea {
 
 ::placeholder {
   color: var(--u-color_text_subdued);
+  opacity: 1;
 }
 
 li::marker {

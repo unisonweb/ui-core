@@ -29,6 +29,7 @@
   font-size: var(--font-size-medium);
   color: var(--color-doc-text);
   background: var(--color-doc-bg);
+  max-width: 100%;
 }
 
 /* When the parent wrapper (typically .workspace-item is focused and has a
@@ -61,7 +62,7 @@
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
-  max-width: var(--c-width_doc_inner-content);
+  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -116,11 +117,22 @@
 
 .definition-doc
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
-  display: inline-block;
+  display: inline-flex;
   padding: 0 0.25rem;
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   white-space: nowrap;
+  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
+  scrollbar-width: auto;
+  scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
+  overflow: auto;
+}
+
+.definition-doc .source.inline-code::-webkit-scrollbar,
+.definition-doc .example-inline::-webkit-scrollbar,
+.definition-doc .eval-inline::-webkit-scrollbar,
+.definition-doc .signature-inline::-webkit-scrollbar {
+  height: 0.125rem;
 }
 
 .definition-doc
@@ -228,7 +240,7 @@
   margin: 1.5rem 0;
 }
 
-.definition-doc .tooltip-trigger {
+.definition-doc .doc-tooltip .tooltip-trigger {
   text-decoration: underline dotted var(--color-doc-subtle-text);
   text-underline-offset: 2px;
   /* Other tooltip styling is handled by elements/tooltip */
@@ -339,7 +351,7 @@
 }
 
 .definition-doc .embed-svg {
-  max-width: var(--c-width_doc_inner-content);
+  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
   border: 0;
 }
 

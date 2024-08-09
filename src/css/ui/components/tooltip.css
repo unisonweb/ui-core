@@ -282,8 +282,8 @@ positioned absolute within the overflow container.
   display: inline-flex;
 }
 
-.tooltip-trigger.tooltip_show .tooltip,
-.tooltip-trigger:hover .tooltip {
+.tooltip-trigger.tooltip_show > .tooltip,
+.tooltip-trigger:hover > .tooltip {
   animation: fade-in 0.2s;
   pointer-events: auto;
   opacity: 1;

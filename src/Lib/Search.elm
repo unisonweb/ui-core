@@ -16,6 +16,9 @@ module Lib.Search exposing
     , search
     , searchDebounce
     , searchResults
+    , searchResultsCycleNext
+    , searchResultsCyclePrev
+    , searchResultsFocus
     , searchResultsNext
     , searchResultsPrev
     , toFailure
@@ -189,6 +192,16 @@ isSearching search_ =
             False
 
 
+searchResultsFocus : Search a -> Maybe a
+searchResultsFocus s =
+    case s of
+        Success _ r ->
+            SearchResults.focus r
+
+        _ ->
+            Nothing
+
+
 searchResultsPrev : Search a -> Search a
 searchResultsPrev s =
     case s of
@@ -199,11 +212,31 @@ searchResultsPrev s =
             s
 
 
+searchResultsCyclePrev : Search a -> Search a
+searchResultsCyclePrev s =
+    case s of
+        Success q r ->
+            Success q (SearchResults.cyclePrev r)
+
+        _ ->
+            s
+
+
 searchResultsNext : Search a -> Search a
 searchResultsNext s =
     case s of
         Success q r ->
             Success q (SearchResults.next r)
+
+        _ ->
+            s
+
+
+searchResultsCycleNext : Search a -> Search a
+searchResultsCycleNext s =
+    case s of
+        Success q r ->
+            Success q (SearchResults.cycleNext r)
 
         _ ->
             s

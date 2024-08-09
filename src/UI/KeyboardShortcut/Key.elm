@@ -623,7 +623,7 @@ view os key =
             "Alt"
 
         Tab ->
-            "⇥ "
+            "Tab"
 
         Meta ->
             case os of

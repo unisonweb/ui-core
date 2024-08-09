@@ -15,7 +15,9 @@ module Code.Definition.Doc exposing
 import Code.Definition.Reference exposing (Reference)
 import Code.Definition.Source as Source
 import Code.Definition.Term exposing (TermSignature(..))
+import Code.Source.SourceViewConfig as SourceViewConfig
 import Code.Syntax as Syntax exposing (Syntax)
+import Code.Syntax.Linked exposing (Linked(..), LinkedWithTooltipConfig)
 import Dict exposing (Dict)
 import Html
     exposing
@@ -387,14 +389,14 @@ toString sep doc =
             ""
 
 
-view : Syntax.LinkedWithTooltipConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
+view : LinkedWithTooltipConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
 view linkedCfg toggleFoldMsg docFoldToggles document =
     let
         viewSignature =
-            Source.viewTermSignature (Source.Rich linkedCfg)
+            Source.viewTermSignature (SourceViewConfig.rich linkedCfg)
 
         linked =
-            Syntax.LinkedWithTooltip linkedCfg
+            LinkedWithTooltip linkedCfg
 
         viewSyntax =
             Syntax.view linked
@@ -463,10 +465,12 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                     hr [ class "divider" ] []
 
                 Tooltip triggerContent tooltipContent ->
-                    Tooltip.tooltip
-                        (Tooltip.rich (viewAtCurrentSectionLevel tooltipContent))
-                        |> Tooltip.withArrow Tooltip.Start
-                        |> Tooltip.view (viewAtCurrentSectionLevel triggerContent)
+                    span [ class "doc-tooltip" ]
+                        [ Tooltip.tooltip
+                            (Tooltip.rich (viewAtCurrentSectionLevel tooltipContent))
+                            |> Tooltip.withArrow Tooltip.Start
+                            |> Tooltip.view (viewAtCurrentSectionLevel triggerContent)
+                        ]
 
                 Aside d ->
                     span [ class "doc_aside-anchor" ]
