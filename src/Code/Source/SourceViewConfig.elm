@@ -5,24 +5,24 @@ module Code.Source.SourceViewConfig exposing
     , rich
     , rich_
     , toClassName
-    , toSyntaxLinked
+    , toSyntaxConfig
     )
 
-import Code.Syntax.Linked exposing (Linked(..), LinkedWithTooltipConfig)
+import Code.Syntax.SyntaxConfig as SyntaxConfig exposing (SyntaxConfig)
 
 
 type SourceViewConfig msg
-    = Rich (Linked msg)
+    = Rich (SyntaxConfig msg)
     | Monochrome
     | Plain
 
 
-rich : LinkedWithTooltipConfig msg -> SourceViewConfig msg
-rich linkedWithTooltip =
-    rich_ (LinkedWithTooltip linkedWithTooltip)
+rich : SyntaxConfig msg -> SourceViewConfig msg
+rich syntaxConfig =
+    rich_ syntaxConfig
 
 
-rich_ : Linked msg -> SourceViewConfig msg
+rich_ : SyntaxConfig msg -> SourceViewConfig msg
 rich_ =
     Rich
 
@@ -54,11 +54,11 @@ toClassName viewConfig =
             "plain"
 
 
-toSyntaxLinked : SourceViewConfig msg -> Linked msg
-toSyntaxLinked viewConfig =
+toSyntaxConfig : SourceViewConfig msg -> SyntaxConfig msg
+toSyntaxConfig viewConfig =
     case viewConfig of
-        Rich linked ->
-            linked
+        Rich syntaxConfig ->
+            syntaxConfig
 
         _ ->
-            NotLinked
+            SyntaxConfig.empty

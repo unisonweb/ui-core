@@ -16,7 +16,8 @@
   padding-top: 1px;
 }
 
-a.by-at, a.by-at:visited {
+a.by-at,
+a.by-at:visited {
   color: var(--u-color_text_subdued);
 }
 

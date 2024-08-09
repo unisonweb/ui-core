@@ -154,4 +154,4 @@ viewCode viewConfig content =
 
 viewSyntax : SourceViewConfig msg -> (Syntax.Syntax -> Html msg)
 viewSyntax viewConfig =
-    Syntax.view (SourceViewConfig.toSyntaxLinked viewConfig)
+    Syntax.view (SourceViewConfig.toSyntaxConfig viewConfig)

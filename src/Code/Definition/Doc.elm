@@ -17,7 +17,7 @@ import Code.Definition.Source as Source
 import Code.Definition.Term exposing (TermSignature(..))
 import Code.Source.SourceViewConfig as SourceViewConfig
 import Code.Syntax as Syntax exposing (Syntax)
-import Code.Syntax.Linked exposing (Linked(..), LinkedWithTooltipConfig)
+import Code.Syntax.SyntaxConfig exposing (SyntaxConfig)
 import Dict exposing (Dict)
 import Html
     exposing
@@ -389,17 +389,14 @@ toString sep doc =
             ""
 
 
-view : LinkedWithTooltipConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
-view linkedCfg toggleFoldMsg docFoldToggles document =
+view : SyntaxConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
+view syntaxConfig toggleFoldMsg docFoldToggles document =
     let
         viewSignature =
-            Source.viewTermSignature (SourceViewConfig.rich linkedCfg)
-
-        linked =
-            LinkedWithTooltip linkedCfg
+            Source.viewTermSignature (SourceViewConfig.rich syntaxConfig)
 
         viewSyntax =
-            Syntax.view linked
+            Syntax.view syntaxConfig
 
         view_ sectionLevel doc =
             let
@@ -577,7 +574,15 @@ view linkedCfg toggleFoldMsg docFoldToggles document =
                             a [ class "named-link", href h, rel "noopener", target "_blank" ] [ viewAtCurrentSectionLevel label ]
 
                         ReferenceHref ref ->
-                            Click.view [ class "named-link" ] [ viewAtCurrentSectionLevel label ] (linkedCfg.toClick ref)
+                            case syntaxConfig.toClick of
+                                Just toClick ->
+                                    Click.view [ class "named-link" ]
+                                        [ viewAtCurrentSectionLevel label ]
+                                        (toClick ref)
+
+                                _ ->
+                                    span [ class "named-link" ]
+                                        [ viewAtCurrentSectionLevel label ]
 
                         InvalidHref ->
                             span [ class "named-link invalid-href" ] [ viewAtCurrentSectionLevel label ]

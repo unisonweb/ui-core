@@ -4,7 +4,7 @@ import Code.Definition.Reference as Reference
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
-import Code.Syntax.Linked exposing (Linked(..))
+import Code.Syntax.SyntaxConfig exposing (SyntaxConfig)
 import Code.Syntax.SyntaxSegmentHelp as SyntaxSegmentHelp
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class, classList)
@@ -192,8 +192,8 @@ viewFQN fqn =
         |> span [ class "fqn" ]
 
 
-view : Linked msg -> SyntaxSegment -> Html msg
-view linked ((SyntaxSegment sType sText) as segment) =
+view : SyntaxConfig msg -> SyntaxSegment -> Html msg
+view syntaxConfig ((SyntaxSegment sType sText) as segment) =
     let
         ref =
             case sType of
@@ -284,42 +284,59 @@ view linked ((SyntaxSegment sType sText) as segment) =
             else
                 view_ (text sText)
     in
-    case ( linked, ref ) of
-        ( Linked click, Just r ) ->
-            content
-                (\c ->
-                    Click.view
-                        [ class className ]
-                        [ c ]
-                        (click r)
-                )
+    case ref of
+        Just r ->
+            let
+                toAttrsAndContent c =
+                    case syntaxConfig.dependencyTooltip of
+                        Just tooltip ->
+                            let
+                                content_ =
+                                    case tooltip.toTooltip r of
+                                        Just t ->
+                                            Tooltip.view c t
 
-        ( LinkedWithTooltip l, Just r ) ->
-            content
-                (\c ->
+                                        Nothing ->
+                                            c
+                            in
+                            ( [ class className
+                              , onMouseEnter (tooltip.toHoverStart r)
+                              , onMouseLeave (tooltip.toHoverEnd r)
+                              ]
+                            , [ content_ ]
+                            )
+
+                        _ ->
+                            ( [ class className ], [ c ] )
+            in
+            case syntaxConfig.toClick of
+                Just toClick ->
                     let
-                        content_ =
-                            case l.tooltip.toTooltip r of
-                                Just t ->
-                                    Tooltip.view c t
-
-                                Nothing ->
-                                    c
+                        f c =
+                            let
+                                ( attrs, content_ ) =
+                                    toAttrsAndContent c
+                            in
+                            Click.view attrs content_ (toClick r)
                     in
-                    Click.view
-                        [ class className
-                        , onMouseEnter (l.tooltip.toHoverStart r)
-                        , onMouseLeave (l.tooltip.toHoverEnd r)
-                        ]
-                        [ content_ ]
-                        (l.toClick r)
-                )
+                    content f
+
+                Nothing ->
+                    let
+                        f c =
+                            let
+                                ( attrs, content_ ) =
+                                    toAttrsAndContent c
+                            in
+                            span attrs content_
+                    in
+                    content f
 
         _ ->
             content
                 (\c ->
-                    case helpForSegment segment of
-                        Just help ->
+                    case ( syntaxConfig.showSyntaxHelpTooltip, helpForSegment segment ) of
+                        ( True, Just help ) ->
                             let
                                 tooltip =
                                     Tooltip.rich help
