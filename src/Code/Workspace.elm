@@ -19,9 +19,10 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (Item, WorkspaceItem, WorkspaceItemViewState)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (ItemWithReferences, WorkspaceItem, WorkspaceItemViewState)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
+import Dict exposing (Dict)
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -44,6 +45,7 @@ type alias Model =
     , keyboardShortcut : KeyboardShortcut.Model
     , workspaceItemViewState : WorkspaceItemViewState
     , isMinimapToggled : Bool
+    , referenceMap : Dict String (List Reference) -- Map of refRequest to list refResponse, to handle multiple-responses case for one request
     }
 
 
@@ -55,6 +57,7 @@ init config mRef =
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , workspaceItemViewState = WorkspaceItem.viewState
             , isMinimapToggled = False
+            , referenceMap = Dict.empty
             }
     in
     case mRef of
@@ -71,7 +74,7 @@ init config mRef =
 
 type Msg
     = NoOp
-    | FetchItemFinished Reference (Result Http.Error Item)
+    | FetchItemFinished Reference (Result Http.Error (List ItemWithReferences))
     | IsDocCropped Reference (Result Dom.Error Bool)
     | Keydown KeyboardEvent
     | KeyboardShortcutMsg KeyboardShortcut.Msg
@@ -91,62 +94,103 @@ type OutMsg
     | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
+updateOneItem :
+    Reference
+    -> ItemWithReferences
+    -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
+    -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
+updateOneItem refRequest { item, refResponse } ( ( workspaceItems, referenceMap ), aggCmd ) =
+    let
+        refReqeustKey =
+            Reference.toString refRequest
+
+        refResponseList =
+            referenceMap
+                |> Dict.get refReqeustKey
+                |> Maybe.withDefault []
+                |> (\list -> refResponse :: list)
+
+        updatedReferenceMap =
+            referenceMap
+                |> Dict.insert refReqeustKey refResponseList
+
+        cmd =
+            -- Docs items are always shown in full and never cropped
+            if WorkspaceItem.isDocItem item then
+                Cmd.none
+
+            else
+                isDocCropped refResponse
+
+        isDupe wi =
+            let
+                ref_ =
+                    WorkspaceItem.reference wi
+
+                refEqs =
+                    Reference.equals refResponse ref_
+
+                hashEqs =
+                    wi
+                        |> WorkspaceItem.hash
+                        |> Maybe.map (Hash.equals (WorkspaceItem.itemHash item))
+                        |> Maybe.withDefault False
+            in
+            (Reference.same refResponse ref_ && not refEqs) || (hashEqs && not refEqs)
+
+        -- In some cases (like using the back button between
+        -- perspectives) we try and fetch the same item twice, not
+        -- knowing we've fetched it before since one was by hash
+        -- and the other by name. If found to already be fetched,
+        -- we favor the newly fetched item and discard the old
+        deduped =
+            workspaceItems
+                |> WorkspaceItems.find isDupe
+                |> Maybe.map WorkspaceItem.reference
+                |> Maybe.map (WorkspaceItems.remove workspaceItems)
+                |> Maybe.withDefault workspaceItems
+
+        newWorkspaceItem =
+            WorkspaceItem.fromItem refResponse item
+    in
+    ( ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse newWorkspaceItem
+      , updatedReferenceMap
+      )
+    , Cmd.batch [ aggCmd, cmd ]
+    )
+
+
 update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
-update config viewMode msg ({ workspaceItems } as model) =
+update config viewMode msg ({ workspaceItems, referenceMap } as model) =
     case msg of
         NoOp ->
             ( model, Cmd.none, None )
 
-        FetchItemFinished ref itemResult ->
+        FetchItemFinished refRequest itemResult ->
             case itemResult of
                 Err e ->
-                    ( { model | workspaceItems = WorkspaceItems.replace workspaceItems ref (WorkspaceItem.Failure ref e) }
+                    ( { model | workspaceItems = WorkspaceItems.replace workspaceItems refRequest (WorkspaceItem.Failure refRequest e) }
                     , Cmd.none
                     , None
                     )
 
-                Ok i ->
+                Ok items ->
                     let
-                        cmd =
-                            -- Docs items are always shown in full and never cropped
-                            if WorkspaceItem.isDocItem i then
-                                Cmd.none
+                        -- remove loading element (with `ref` used for request)
+                        loadingRemoved =
+                            WorkspaceItems.remove workspaceItems refRequest
 
-                            else
-                                isDocCropped ref
-
-                        isDupe wi =
-                            let
-                                ref_ =
-                                    WorkspaceItem.reference wi
-
-                                refEqs =
-                                    Reference.equals ref ref_
-
-                                hashEqs =
-                                    wi
-                                        |> WorkspaceItem.hash
-                                        |> Maybe.map (Hash.equals (WorkspaceItem.itemHash i))
-                                        |> Maybe.withDefault False
-                            in
-                            (Reference.same ref ref_ && not refEqs) || (hashEqs && not refEqs)
-
-                        -- In some cases (like using the back button between
-                        -- perspectives) we try and fetch the same item twice, not
-                        -- knowing we've fetched it before since one was by hash
-                        -- and the other by name. If found to already be fetched,
-                        -- we favor the newly fetched item and discard the old
-                        deduped =
-                            workspaceItems
-                                |> WorkspaceItems.find isDupe
-                                |> Maybe.map WorkspaceItem.reference
-                                |> Maybe.map (WorkspaceItems.remove workspaceItems)
-                                |> Maybe.withDefault workspaceItems
-
-                        nextWorkspaceItems =
-                            WorkspaceItems.replace deduped ref (WorkspaceItem.fromItem ref i)
+                        -- update items with fetched result
+                        ( ( nextWorkspaceItems, nextReferenceMap ), cmd ) =
+                            List.foldl (updateOneItem refRequest) ( ( loadingRemoved, referenceMap ), Cmd.none ) items
                     in
-                    ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
+                    ( { model
+                        | workspaceItems = nextWorkspaceItems
+                        , referenceMap = nextReferenceMap
+                      }
+                    , cmd
+                    , None
+                    )
 
         IsDocCropped ref res ->
             let
@@ -346,7 +390,7 @@ update config viewMode msg ({ workspaceItems } as model) =
 
 
 type alias WithWorkspaceItems m =
-    { m | workspaceItems : WorkspaceItems }
+    { m | workspaceItems : WorkspaceItems, referenceMap : Dict String (List Reference) }
 
 
 replaceWorkspaceItemReferencesWithHashOnly : Model -> Model
@@ -381,17 +425,24 @@ openReference config model relativeToRef ref =
 
 
 openItem : Config -> WithWorkspaceItems m -> Maybe Reference -> Reference -> ( WithWorkspaceItems m, Cmd Msg )
-openItem config ({ workspaceItems } as model) relativeToRef ref =
+openItem config ({ workspaceItems, referenceMap } as model) relativeToRef ref =
     -- We don't want to refetch or replace any already open definitions, but we
     -- do want to focus and scroll to it (unless its already currently focused)
-    if WorkspaceItems.member workspaceItems ref then
-        if not (WorkspaceItems.isFocused workspaceItems ref) then
+    let
+        convertedRef =
+            referenceMap
+                |> Dict.get (Reference.toString ref)
+                |> Maybe.andThen List.head
+                |> Maybe.withDefault ref
+    in
+    if WorkspaceItems.member workspaceItems convertedRef then
+        if not (WorkspaceItems.isFocused workspaceItems convertedRef) then
             let
                 nextWorkspaceItems =
-                    WorkspaceItems.focusOn workspaceItems ref
+                    WorkspaceItems.focusOn workspaceItems convertedRef
             in
             ( { model | workspaceItems = nextWorkspaceItems }
-            , scrollToDefinition ref
+            , scrollToDefinition convertedRef
             )
 
         else
@@ -400,7 +451,7 @@ openItem config ({ workspaceItems } as model) relativeToRef ref =
     else
         let
             toInsert =
-                WorkspaceItem.Loading ref
+                WorkspaceItem.Loading convertedRef
 
             nextWorkspaceItems =
                 case relativeToRef of
@@ -411,7 +462,10 @@ openItem config ({ workspaceItems } as model) relativeToRef ref =
                         WorkspaceItems.insertWithFocusBefore workspaceItems r toInsert
         in
         ( { model | workspaceItems = nextWorkspaceItems }
-        , Cmd.batch [ HttpApi.perform config.api (fetchDefinition config ref), scrollToDefinition ref ]
+        , Cmd.batch
+            [ HttpApi.perform config.api (fetchDefinition config convertedRef)
+            , scrollToDefinition convertedRef
+            ]
         )
 
 
@@ -531,7 +585,7 @@ handleKeyboardShortcut viewMode model shortcut =
 -- EFFECTS
 
 
-fetchDefinition : Config -> Reference -> ApiRequest Item Msg
+fetchDefinition : Config -> Reference -> ApiRequest (List ItemWithReferences) Msg
 fetchDefinition config ref =
     let
         endpoint =
@@ -542,7 +596,7 @@ fetchDefinition config ref =
     in
     endpoint
         |> config.toApiEndpoint
-        |> HttpApi.toRequest (WorkspaceItem.decodeItem ref) (FetchItemFinished ref)
+        |> HttpApi.toRequest (WorkspaceItem.decodeList ref) (FetchItemFinished ref)
 
 
 isDocCropped : Reference -> Cmd Msg

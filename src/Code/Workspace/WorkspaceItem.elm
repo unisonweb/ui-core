@@ -40,7 +40,7 @@ import UI.ViewMode as ViewMode exposing (ViewMode)
 type WorkspaceItem
     = Loading Reference
     | Failure Reference Http.Error
-    | Success Reference ItemData
+    | Success Reference ItemData -- This Reference is based on API response (not request), to handle multiple-response case
 
 
 type DocVisibility
@@ -77,6 +77,13 @@ type Item
       -- rendered separate from TypeItem
     | DataConstructorItem DataConstructorDetail
     | AbilityConstructorItem AbilityConstructorDetail
+
+
+type alias ItemWithReferences =
+    { item : Item
+    , refRequest : Reference
+    , refResponse : Reference
+    }
 
 
 type NamespaceActionMenu
@@ -132,7 +139,7 @@ type Msg
 
 
 fromItem : Reference -> Item -> WorkspaceItem
-fromItem ref item =
+fromItem refResponse item =
     let
         zoom =
             -- Doc items always have docs
@@ -152,7 +159,7 @@ fromItem ref item =
             else
                 Unknown
     in
-    Success ref
+    Success refResponse
         { item = item
         , zoom = zoom
         , docFoldToggles = Doc.emptyDocFoldToggles
@@ -169,8 +176,8 @@ reference item =
         Failure r _ ->
             r
 
-        Success r _ ->
-            r
+        Success refResponse _ ->
+            refResponse
 
 
 {-| Convert the Reference of a WorkspaceItem to be HashOnly
@@ -190,8 +197,8 @@ toHashReference workspaceItem =
                     HQ.HashOnly h
     in
     case workspaceItem of
-        Success r d ->
-            Success (Reference.map (toHashOnly (itemHash d.item)) r) d
+        Success refResponse d ->
+            Success (Reference.map (toHashOnly (itemHash d.item)) refResponse) d
 
         -- Can't change references where we don't have hash information
         _ ->
@@ -856,6 +863,37 @@ decodeTypes ref =
     Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
 
 
+decodeTypesWithRef : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
+decodeTypesWithRef =
+    let
+        makeType ( hash_, d ) =
+            let
+                ref =
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TypeReference
+
+                typeDetailWithDoc =
+                    hash_
+                        |> Hash.fromString
+                        |> Maybe.map
+                            (\h ->
+                                Type h
+                                    d.category
+                                    { doc = d.doc
+                                    , info = Info.makeInfo ref d.name d.otherNames
+                                    , source = d.source
+                                    }
+                            )
+            in
+            Maybe.map (\t -> ( ref, t )) typeDetailWithDoc
+
+        buildTypes =
+            List.map makeType >> MaybeE.values
+    in
+    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+
+
 decodeTermDetails :
     Decode.Decoder
         { category : TermCategory
@@ -908,18 +946,83 @@ decodeTerms ref =
     Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
-{-| The server returns a list, but we only query for a single WorkspaceItem at a time.
--}
-decodeList : Reference -> Decode.Decoder (List Item)
-decodeList ref =
-    Decode.map2 List.append
-        (Decode.map (List.map TermItem) (field "termDefinitions" (decodeTerms ref)))
-        (Decode.map (List.map TypeItem) (field "typeDefinitions" (decodeTypes ref)))
+decodeTermsWithRef : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
+decodeTermsWithRef =
+    let
+        makeTerm ( hash_, d ) =
+            let
+                ref =
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TermReference
+
+                termDetailWithDoc =
+                    hash_
+                        |> Hash.fromString
+                        |> Maybe.map
+                            (\h ->
+                                Term h
+                                    d.category
+                                    { doc = d.doc
+                                    , info = Info.makeInfo ref d.name d.otherNames
+                                    , source = d.source
+                                    }
+                            )
+            in
+            Maybe.map (\t -> ( ref, t )) termDetailWithDoc
+
+        buildTerms =
+            List.map makeTerm >> MaybeE.values
+    in
+    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
-decodeItem : Reference -> Decode.Decoder Item
-decodeItem ref =
-    Decode.map List.head (decodeList ref)
+
+-- `getDefinition` API could return more than 1 result, e.g. when the same name elements exist as `term` and `type` (though this is rare). To handle this, this `decodeList` decodes the response into a list of `ItemWithReferences`, which have decoded items and decoded references based on the API response.
+
+
+decodeList : Reference -> Decode.Decoder (List ItemWithReferences)
+decodeList refRequest =
+    let
+        termDefinitions =
+            field
+                "termDefinitions"
+                (decodeTermsWithRef
+                    |> Decode.map
+                        (List.map
+                            (\( decodedRef, term ) ->
+                                { item = TermItem term
+                                , refRequest = refRequest
+                                , refResponse = decodedRef
+                                }
+                            )
+                        )
+                )
+
+        typeDefinitions =
+            field
+                "typeDefinitions"
+                (decodeTypesWithRef
+                    |> Decode.map
+                        (List.map
+                            (\( decodedRef, typeDef ) ->
+                                { item = TypeItem typeDef
+                                , refRequest = refRequest
+                                , refResponse = decodedRef
+                                }
+                            )
+                        )
+                )
+    in
+    Decode.map2
+        List.append
+        termDefinitions
+        typeDefinitions
+
+
+decodeItem : Reference -> Decode.Decoder ItemWithReferences
+decodeItem refRequest =
+    Decode.map List.head (decodeList refRequest)
         |> Decode.andThen
             (Maybe.map Decode.succeed
                 >> Maybe.withDefault (Decode.fail "Empty list")
