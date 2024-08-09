@@ -977,6 +977,10 @@ decodeTermsWithRef =
     Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
+
+-- `getDefinition` API could return more than 1 result, e.g. when the same name elements exist as `term` and `type` (though this is rare). To handle this, this `decodeList` decodes the response into a list of `ItemWithReferences`, which have decoded items and decoded references based on the API response.
+
+
 decodeList : Reference -> Decode.Decoder (List ItemWithReferences)
 decodeList refRequest =
     let
