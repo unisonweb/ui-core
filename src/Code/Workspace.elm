@@ -45,7 +45,7 @@ type alias Model =
     , keyboardShortcut : KeyboardShortcut.Model
     , workspaceItemViewState : WorkspaceItemViewState
     , isMinimapToggled : Bool
-    , referenceMap : Dict String (List Reference)
+    , referenceMap : Dict String (List Reference) -- Map of refRequest to list refResponse, to handle multiple-responses case for one request
     }
 
 
@@ -104,7 +104,7 @@ updateOneItem refRequest { item, refResponse } ( ( workspaceItems, referenceMap 
         refReqeustKey =
             Reference.toString refRequest
 
-        referenceArray =
+        refResponseList =
             referenceMap
                 |> Dict.get refReqeustKey
                 |> Maybe.withDefault []
@@ -112,7 +112,7 @@ updateOneItem refRequest { item, refResponse } ( ( workspaceItems, referenceMap 
 
         updatedReferenceMap =
             referenceMap
-                |> Dict.insert refReqeustKey referenceArray
+                |> Dict.insert refReqeustKey refResponseList
 
         cmd =
             -- Docs items are always shown in full and never cropped
