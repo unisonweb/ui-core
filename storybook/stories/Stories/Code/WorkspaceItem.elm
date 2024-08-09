@@ -88,7 +88,7 @@ update msg model =
 
                 Ok item ->
                     ( { model
-                        | workspaceItem = Just (fromItem sampleReference sampleReference item.item)
+                        | workspaceItem = Just (fromItem sampleReference item.item)
                       }
                     , Cmd.none
                     )

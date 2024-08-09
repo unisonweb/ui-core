@@ -109,8 +109,7 @@ update message model =
             let
                 newWorkspaceItems =
                     item
-                        |> fromItem reference reference
-                        -- TODO: is this right?
+                        |> fromItem reference
                         |> WorkspaceItems.prependWithFocus model.workspaceItems
 
                 newModel =

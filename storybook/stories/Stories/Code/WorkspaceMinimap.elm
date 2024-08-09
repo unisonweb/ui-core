@@ -149,7 +149,7 @@ update message model =
                     let
                         newWorkspaceItems =
                             item
-                                |> WorkspaceItem.fromItem reference reference
+                                |> WorkspaceItem.fromItem reference
                                 |> WorkspaceItems.replace model.workspaceItems reference
                     in
                     ( { model | workspaceItems = newWorkspaceItems }, Cmd.none )

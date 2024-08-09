@@ -138,8 +138,8 @@ type Msg
     | NoOp
 
 
-fromItem : Reference -> Reference -> Item -> WorkspaceItem
-fromItem refRequest refResponse item =
+fromItem : Reference -> Item -> WorkspaceItem
+fromItem refResponse item =
     let
         zoom =
             -- Doc items always have docs

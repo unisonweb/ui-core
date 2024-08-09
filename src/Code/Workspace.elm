@@ -151,7 +151,7 @@ updateOneItem refRequest { item, refResponse } ( ( workspaceItems, referenceMap 
                 |> Maybe.withDefault workspaceItems
 
         newWorkspaceItem =
-            WorkspaceItem.fromItem refRequest refResponse item
+            WorkspaceItem.fromItem refResponse item
     in
     ( ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse newWorkspaceItem
       , updatedReferenceMap
