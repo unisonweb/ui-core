@@ -87,6 +87,9 @@ refToEndpoint ref =
                 "PositiveInt2" ->
                     "/positive_int_2.json"
 
+                "Config" -> 
+                    "/cloud_config_def.json"
+
                 _ ->
                     ""
     in
@@ -161,6 +164,8 @@ view model =
         , sampleAddButton Reference.TermReference "base.README"
         , Html.br [] []
         , sampleAddButton Reference.TermReference "Nat.gt"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "Config"
         ]
 
 
