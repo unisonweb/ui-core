@@ -455,9 +455,9 @@ updateData f ref wItems =
     let
         update_ workspaceItem =
             case workspaceItem of
-                WorkspaceItem.Success refRequest refResponse d ->
+                WorkspaceItem.Success refResponse d ->
                     if ref == refResponse then
-                        WorkspaceItem.Success refRequest refResponse (f d)
+                        WorkspaceItem.Success refResponse (f d)
 
                     else
                         workspaceItem

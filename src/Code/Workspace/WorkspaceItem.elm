@@ -40,7 +40,7 @@ import UI.ViewMode as ViewMode exposing (ViewMode)
 type WorkspaceItem
     = Loading Reference
     | Failure Reference Http.Error
-    | Success Reference Reference ItemData -- refRequest / refResponse
+    | Success Reference ItemData -- This Reference is based on API response (not request), to handle multiple-response case
 
 
 type DocVisibility
@@ -159,8 +159,7 @@ fromItem refRequest refResponse item =
             else
                 Unknown
     in
-    Success refRequest
-        refResponse
+    Success refResponse
         { item = item
         , zoom = zoom
         , docFoldToggles = Doc.emptyDocFoldToggles
@@ -177,7 +176,7 @@ reference item =
         Failure r _ ->
             r
 
-        Success _ refResponse _ ->
+        Success refResponse _ ->
             refResponse
 
 
@@ -198,8 +197,8 @@ toHashReference workspaceItem =
                     HQ.HashOnly h
     in
     case workspaceItem of
-        Success refRequest refResponse d ->
-            Success (Reference.map (toHashOnly (itemHash d.item)) refRequest) (Reference.map (toHashOnly (itemHash d.item)) refResponse) d
+        Success refResponse d ->
+            Success (Reference.map (toHashOnly (itemHash d.item)) refResponse) d
 
         -- Can't change references where we don't have hash information
         _ ->
@@ -316,7 +315,7 @@ hash wItem =
     let
         itemHash_ =
             case wItem of
-                Success _ _ d ->
+                Success _ d ->
                     Just (itemHash d.item)
 
                 _ ->
@@ -720,7 +719,7 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
                 ]
                 Nothing
 
-        Success _ ref data ->
+        Success ref data ->
             let
                 linkedWithTooltipConfig_ =
                     linkedWithTooltipConfig

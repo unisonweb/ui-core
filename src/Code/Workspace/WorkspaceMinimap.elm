@@ -115,7 +115,7 @@ viewItem { selectItemMsg, closeItemMsg, keyboardShortcut } index ( item, focused
                         [ class "workspace-minimap_item_content" ]
                         [ StatusBanner.bad "Couldn't fetch definition" ]
 
-                Success _ _ itemData ->
+                Success _ itemData ->
                     let
                         ( info, category ) =
                             case itemData.item of

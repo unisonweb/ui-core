@@ -63,14 +63,14 @@ update msg model =
 
                         Just item ->
                             case item of
-                                Success refRequest refResponse itemData ->
+                                Success refResponse itemData ->
                                     let
                                         updatedData =
                                             { itemData | zoom = zoom }
 
                                         updatedModel =
                                             { model
-                                                | workspaceItem = Just <| Success refRequest refResponse updatedData
+                                                | workspaceItem = Just <| Success refResponse updatedData
                                             }
                                     in
                                     ( updatedModel, Cmd.none )
