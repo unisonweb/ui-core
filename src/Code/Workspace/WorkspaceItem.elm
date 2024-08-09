@@ -78,10 +78,10 @@ type Item
     | AbilityConstructorItem AbilityConstructorDetail
 
 
-type alias ItemWithReference =
+type alias ItemWithReferences =
     { item : Item
-    , ref : Reference
     , refRequest : Reference
+    , refResponse : Reference
     }
 
 
@@ -178,19 +178,6 @@ reference item =
 
         Success _ refResponse _ ->
             refResponse
-
-
-allReferences : WorkspaceItem -> List Reference
-allReferences item =
-    case item of
-        Loading r ->
-            [ r ]
-
-        Failure r _ ->
-            [ r ]
-
-        Success refRequest refResponse _ ->
-            [ refRequest, refResponse ]
 
 
 {-| Convert the Reference of a WorkspaceItem to be HashOnly
@@ -990,7 +977,7 @@ decodeTermsWithRef =
     Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
 
 
-decodeList : Reference -> Decode.Decoder (List ItemWithReference)
+decodeList : Reference -> Decode.Decoder (List ItemWithReferences)
 decodeList refRequest =
     let
         termDefinitions =
@@ -1000,9 +987,9 @@ decodeList refRequest =
                     |> Decode.map
                         (List.map
                             (\( decodedRef, term ) ->
-                                { ref = decodedRef
-                                , item = TermItem term
+                                { item = TermItem term
                                 , refRequest = refRequest
+                                , refResponse = decodedRef
                                 }
                             )
                         )
@@ -1015,9 +1002,9 @@ decodeList refRequest =
                     |> Decode.map
                         (List.map
                             (\( decodedRef, typeDef ) ->
-                                { ref = decodedRef
-                                , item = TypeItem typeDef
+                                { item = TypeItem typeDef
                                 , refRequest = refRequest
+                                , refResponse = decodedRef
                                 }
                             )
                         )
@@ -1029,7 +1016,7 @@ decodeList refRequest =
         typeDefinitions
 
 
-decodeItem : Reference -> Decode.Decoder ItemWithReference
+decodeItem : Reference -> Decode.Decoder ItemWithReferences
 decodeItem refRequest =
     Decode.map List.head (decodeList refRequest)
         |> Decode.andThen

@@ -5,7 +5,7 @@ import Code.Definition.Reference as Reference
 import Code.FullyQualifiedName as FQN
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Syntax exposing (..)
-import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReference, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.Zoom exposing (Zoom(..))
 import Dict
 import Helpers.ReferenceHelper exposing (sampleReference)
@@ -21,7 +21,7 @@ type alias Model =
 
 type Message
     = WorkspaceItemMsg Msg
-    | GotItem (Result Http.Error ItemWithReference)
+    | GotItem (Result Http.Error ItemWithReferences)
 
 
 main : Program () Model Message

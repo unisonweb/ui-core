@@ -8,8 +8,9 @@ import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
-import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReference, WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, WorkspaceItem(..), decodeItem, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
+import Dict exposing (Dict)
 import Html exposing (Html)
 import Http
 import Json.Decode as Decode
@@ -18,7 +19,6 @@ import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.PageContent as PageContent
 import UI.ViewMode
-import Dict exposing (Dict)
 
 
 type alias Model =

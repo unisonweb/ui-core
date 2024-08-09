@@ -19,7 +19,7 @@ import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash as Hash
 import Code.HashQualified as HQ
-import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (ItemWithReference, WorkspaceItem, WorkspaceItemViewState)
+import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (ItemWithReferences, WorkspaceItem, WorkspaceItemViewState)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Dict exposing (Dict)
@@ -74,7 +74,7 @@ init config mRef =
 
 type Msg
     = NoOp
-    | FetchItemFinished Reference (Result Http.Error (List ItemWithReference))
+    | FetchItemFinished Reference (Result Http.Error (List ItemWithReferences))
     | IsDocCropped Reference (Result Dom.Error Bool)
     | Keydown KeyboardEvent
     | KeyboardShortcutMsg KeyboardShortcut.Msg
@@ -96,7 +96,7 @@ type OutMsg
 
 updateOneItem :
     Reference
-    -> ItemWithReference
+    -> ItemWithReferences
     -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
     -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
 updateOneItem refRequest itemWithReference agg =
@@ -105,7 +105,7 @@ updateOneItem refRequest itemWithReference agg =
             itemWithReference.item
 
         refResponse =
-            itemWithReference.ref
+            itemWithReference.refResponse
 
         workspaceItems =
             Tuple.first (Tuple.first agg)
@@ -597,7 +597,7 @@ handleKeyboardShortcut viewMode model shortcut =
 -- EFFECTS
 
 
-fetchDefinition : Config -> Reference -> ApiRequest (List ItemWithReference) Msg
+fetchDefinition : Config -> Reference -> ApiRequest (List ItemWithReferences) Msg
 fetchDefinition config ref =
     let
         endpoint =
