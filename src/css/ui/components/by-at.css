@@ -12,6 +12,14 @@
 }
 
 .by-at .by-at_at {
-  /* Total hack, not sure why its 1px of..*/
+  /* Total hack, not sure why its 1px off..*/
   padding-top: 1px;
+}
+
+a.by-at:hover .profile-snippet {
+  --color_profile-snippet_text: var(--u-color_interactive);
+}
+
+a.by-at:hover .by-at_at {
+  color: var(--u-color_text_subdued);
 }
