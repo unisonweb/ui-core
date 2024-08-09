@@ -894,25 +894,18 @@ decodeTypesWithRef =
     Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
 
 
-decodeTermDetails :
-    Decode.Decoder
-        { category : TermCategory
-        , name : FQN
-        , otherNames : NEL.Nonempty FQN
-        , source : TermSource
-        , doc : Maybe Doc
-        }
-decodeTermDetails =
-    let
-        make cat name otherNames source doc =
-            { category = cat
-            , name = name
-            , otherNames = otherNames
-            , source = source
-            , doc = doc
-            }
-    in
-    Decode.map5 make
+type alias RawTermDetails =
+    { category : TermCategory
+    , name : FQN
+    , otherNames : NEL.Nonempty FQN
+    , source : TermSource
+    , doc : Maybe Doc
+    }
+
+
+decodeRawTermDetails : Decode.Decoder RawTermDetails
+decodeRawTermDetails =
+    Decode.map5 RawTermDetails
         (Term.decodeTermCategory [ "defnTermTag" ])
         (field "bestTermName" FQN.decode)
         (field "termNames" (Util.decodeNonEmptyList FQN.decode))
@@ -924,26 +917,38 @@ decodeTermDetails =
         (decodeDocs "termDocs")
 
 
+makeTermDetailWithDoc : Reference -> RawTermDetails -> Hash -> TermDetailWithDoc
+makeTermDetailWithDoc ref d hash_ =
+    let
+        info =
+            Info.makeInfo ref d.name d.otherNames
+
+        termDetailFieldsWithDoc =
+            { doc = d.doc
+            , info = info
+            , source = d.source
+            }
+    in
+    Term hash_
+        d.category
+        termDetailFieldsWithDoc
+
+
 decodeTerms : Reference -> Decode.Decoder (List TermDetailWithDoc)
 decodeTerms ref =
     let
+        makeTerm : ( String, RawTermDetails ) -> Maybe TermDetailWithDoc
         makeTerm ( hash_, d ) =
             hash_
                 |> Hash.fromString
-                |> Maybe.map
-                    (\h ->
-                        Term h
-                            d.category
-                            { doc = d.doc
-                            , info = Info.makeInfo ref d.name d.otherNames
-                            , source = d.source
-                            }
-                    )
+                |> Maybe.map (makeTermDetailWithDoc ref d)
 
+        buildTerms : List ( String, RawTermDetails ) -> List TermDetailWithDoc
         buildTerms =
             List.map makeTerm >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
+    Decode.keyValuePairs decodeRawTermDetails
+        |> Decode.map buildTerms
 
 
 decodeTermsWithRef : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
@@ -974,7 +979,7 @@ decodeTermsWithRef =
         buildTerms =
             List.map makeTerm >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
+    Decode.keyValuePairs decodeRawTermDetails |> Decode.map buildTerms
 
 
 
