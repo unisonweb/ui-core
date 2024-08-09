@@ -99,20 +99,8 @@ updateOneItem :
     -> ItemWithReferences
     -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
     -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
-updateOneItem refRequest itemWithReference agg =
+updateOneItem refRequest { item, refResponse } ( ( workspaceItems, referenceMap ), aggCmd ) =
     let
-        i =
-            itemWithReference.item
-
-        refResponse =
-            itemWithReference.refResponse
-
-        workspaceItems =
-            Tuple.first (Tuple.first agg)
-
-        referenceMap =
-            Tuple.second (Tuple.first agg)
-
         refReqeustKey =
             Reference.toString refRequest
 
@@ -126,12 +114,9 @@ updateOneItem refRequest itemWithReference agg =
             referenceMap
                 |> Dict.insert refReqeustKey referenceArray
 
-        aggCmd =
-            Tuple.second agg
-
         cmd =
             -- Docs items are always shown in full and never cropped
-            if WorkspaceItem.isDocItem i then
+            if WorkspaceItem.isDocItem item then
                 Cmd.none
 
             else
@@ -148,7 +133,7 @@ updateOneItem refRequest itemWithReference agg =
                 hashEqs =
                     wi
                         |> WorkspaceItem.hash
-                        |> Maybe.map (Hash.equals (WorkspaceItem.itemHash i))
+                        |> Maybe.map (Hash.equals (WorkspaceItem.itemHash item))
                         |> Maybe.withDefault False
             in
             (Reference.same refResponse ref_ && not refEqs) || (hashEqs && not refEqs)
@@ -164,8 +149,11 @@ updateOneItem refRequest itemWithReference agg =
                 |> Maybe.map WorkspaceItem.reference
                 |> Maybe.map (WorkspaceItems.remove workspaceItems)
                 |> Maybe.withDefault workspaceItems
+
+        newWorkspaceItem =
+            WorkspaceItem.fromItem refRequest refResponse item
     in
-    ( ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse (WorkspaceItem.fromItem refRequest refResponse i)
+    ( ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse newWorkspaceItem
       , updatedReferenceMap
       )
     , Cmd.batch [ aggCmd, cmd ]
