@@ -18,6 +18,7 @@ import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.ViewMode
 import Url
+import Dict exposing (Dict)
 
 
 type alias Model =
@@ -46,6 +47,7 @@ init _ =
             , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
             , workspaceItemViewState = Code.Workspace.WorkspaceItem.viewState
             , isMinimapToggled = False
+            , referenceMap = Dict.empty
             }
 
         openResult =

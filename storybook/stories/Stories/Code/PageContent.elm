@@ -18,6 +18,7 @@ import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.PageContent as PageContent
 import UI.ViewMode
+import Dict exposing (Dict)
 
 
 type alias Model =
@@ -45,6 +46,7 @@ init _ =
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
       , workspaceItemViewState = Code.Workspace.WorkspaceItem.viewState
       , isMinimapToggled = False
+      , referenceMap = Dict.empty
       }
     , Cmd.batch
         [ getSampleResponse 0 "/long.json" "assets.indexHtml"

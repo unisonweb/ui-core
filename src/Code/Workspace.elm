@@ -22,6 +22,7 @@ import Code.HashQualified as HQ
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (ItemWithReference, WorkspaceItem, WorkspaceItemViewState)
 import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
+import Dict exposing (Dict)
 import Html exposing (Html, article, div, section)
 import Html.Attributes exposing (class, id)
 import Http
@@ -44,6 +45,7 @@ type alias Model =
     , keyboardShortcut : KeyboardShortcut.Model
     , workspaceItemViewState : WorkspaceItemViewState
     , isMinimapToggled : Bool
+    , referenceMap : Dict String (List Reference)
     }
 
 
@@ -55,6 +57,7 @@ init config mRef =
             , keyboardShortcut = KeyboardShortcut.init config.operatingSystem
             , workspaceItemViewState = WorkspaceItem.viewState
             , isMinimapToggled = False
+            , referenceMap = Dict.empty
             }
     in
     case mRef of
@@ -91,7 +94,11 @@ type OutMsg
     | ChangePerspectiveToSubNamespace (Maybe Reference) FQN
 
 
-updateOneItem : Reference -> ItemWithReference -> ( WorkspaceItems, Cmd Msg ) -> ( WorkspaceItems, Cmd Msg )
+updateOneItem :
+    Reference
+    -> ItemWithReference
+    -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
+    -> ( ( WorkspaceItems, Dict String (List Reference) ), Cmd Msg )
 updateOneItem refRequest itemWithReference agg =
     let
         i =
@@ -101,7 +108,23 @@ updateOneItem refRequest itemWithReference agg =
             itemWithReference.ref
 
         workspaceItems =
-            Tuple.first agg
+            Tuple.first (Tuple.first agg)
+
+        referenceMap =
+            Tuple.second (Tuple.first agg)
+
+        refReqeustKey =
+            Reference.toString refRequest
+
+        referenceArray =
+            referenceMap
+                |> Dict.get refReqeustKey
+                |> Maybe.withDefault []
+                |> (\list -> refResponse :: list)
+
+        updatedReferenceMap =
+            referenceMap
+                |> Dict.insert refReqeustKey referenceArray
 
         aggCmd =
             Tuple.second agg
@@ -142,13 +165,15 @@ updateOneItem refRequest itemWithReference agg =
                 |> Maybe.map (WorkspaceItems.remove workspaceItems)
                 |> Maybe.withDefault workspaceItems
     in
-    ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse (WorkspaceItem.fromItem refRequest refResponse i)
+    ( ( WorkspaceItems.replaceOrPrependWithFocus deduped refResponse (WorkspaceItem.fromItem refRequest refResponse i)
+      , updatedReferenceMap
+      )
     , Cmd.batch [ aggCmd, cmd ]
     )
 
 
 update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
-update config viewMode msg ({ workspaceItems } as model) =
+update config viewMode msg ({ workspaceItems, referenceMap } as model) =
     case msg of
         NoOp ->
             ( model, Cmd.none, None )
@@ -168,10 +193,16 @@ update config viewMode msg ({ workspaceItems } as model) =
                             WorkspaceItems.remove workspaceItems refRequest
 
                         -- update items with fetched result
-                        ( nextWorkspaceItems, cmd ) =
-                            List.foldl (updateOneItem refRequest) ( loadingRemoved, Cmd.none ) items
+                        ( ( nextWorkspaceItems, nextReferenceMap ), cmd ) =
+                            List.foldl (updateOneItem refRequest) ( ( loadingRemoved, referenceMap ), Cmd.none ) items
                     in
-                    ( { model | workspaceItems = nextWorkspaceItems }, cmd, None )
+                    ( { model
+                        | workspaceItems = nextWorkspaceItems
+                        , referenceMap = nextReferenceMap
+                      }
+                    , cmd
+                    , None
+                    )
 
         IsDocCropped ref res ->
             let
@@ -371,7 +402,7 @@ update config viewMode msg ({ workspaceItems } as model) =
 
 
 type alias WithWorkspaceItems m =
-    { m | workspaceItems : WorkspaceItems }
+    { m | workspaceItems : WorkspaceItems, referenceMap : Dict String (List Reference) }
 
 
 replaceWorkspaceItemReferencesWithHashOnly : Model -> Model
@@ -406,17 +437,24 @@ openReference config model relativeToRef ref =
 
 
 openItem : Config -> WithWorkspaceItems m -> Maybe Reference -> Reference -> ( WithWorkspaceItems m, Cmd Msg )
-openItem config ({ workspaceItems } as model) relativeToRef ref =
+openItem config ({ workspaceItems, referenceMap } as model) relativeToRef ref =
     -- We don't want to refetch or replace any already open definitions, but we
     -- do want to focus and scroll to it (unless its already currently focused)
-    if WorkspaceItems.containsReference workspaceItems ref then
-        if not (WorkspaceItems.isFocused workspaceItems ref) then
+    let
+        convertedRef =
+            referenceMap
+                |> Dict.get (Reference.toString ref)
+                |> Maybe.andThen List.head
+                |> Maybe.withDefault ref
+    in
+    if WorkspaceItems.member workspaceItems convertedRef then
+        if not (WorkspaceItems.isFocused workspaceItems convertedRef) then
             let
                 nextWorkspaceItems =
-                    WorkspaceItems.focusOn workspaceItems ref
+                    WorkspaceItems.focusOn workspaceItems convertedRef
             in
             ( { model | workspaceItems = nextWorkspaceItems }
-            , scrollToDefinition ref
+            , scrollToDefinition convertedRef
             )
 
         else
@@ -425,7 +463,7 @@ openItem config ({ workspaceItems } as model) relativeToRef ref =
     else
         let
             toInsert =
-                WorkspaceItem.Loading ref
+                WorkspaceItem.Loading convertedRef
 
             nextWorkspaceItems =
                 case relativeToRef of
@@ -437,8 +475,8 @@ openItem config ({ workspaceItems } as model) relativeToRef ref =
         in
         ( { model | workspaceItems = nextWorkspaceItems }
         , Cmd.batch
-            [ HttpApi.perform config.api (fetchDefinition config ref)
-            , scrollToDefinition ref
+            [ HttpApi.perform config.api (fetchDefinition config convertedRef)
+            , scrollToDefinition convertedRef
             ]
         )
 
