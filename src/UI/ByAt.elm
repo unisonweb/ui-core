@@ -11,12 +11,13 @@
 -}
 
 
-module UI.ByAt exposing (ByAt, byAt, byUnknown, view)
+module UI.ByAt exposing (ByAt, byAt, byUnknown, view, withToClick)
 
 import Html exposing (Html, div, span, strong, text)
 import Html.Attributes exposing (class)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Time
+import UI.Click as Click exposing (Click)
 import UI.DateTime as DateTime exposing (DateTime)
 import UI.ProfileSnippet as ProfileSnippet
 import Url exposing (Url)
@@ -36,48 +37,72 @@ type By u
     | ByUnknown
 
 
-type ByAt u
-    = ByAt (By u) DateTime
+type ByAt u msg
+    = ByAt
+        { by : By u
+        , at : DateTime
+        , toClick : Maybe (UserHandle -> Click msg)
+        }
 
 
 
 -- CREATE
 
 
-byAt : User u -> DateTime -> ByAt u
-byAt =
-    ByUser >> ByAt
+byAt : User u -> DateTime -> ByAt u msg
+byAt by at =
+    ByAt { by = ByUser by, at = at, toClick = Nothing }
 
 
-byUnknown : DateTime -> ByAt u
-byUnknown dateTime =
-    ByAt ByUnknown dateTime
+byUnknown : DateTime -> ByAt u msg
+byUnknown at =
+    ByAt { by = ByUnknown, at = at, toClick = Nothing }
+
+
+
+-- MODIFY
+
+
+withToClick : (UserHandle -> Click msg) -> ByAt u msg -> ByAt u msg
+withToClick toClick (ByAt byAt_) =
+    ByAt { byAt_ | toClick = Just toClick }
 
 
 
 -- VIEW
 
 
-view : Time.Zone -> DateTime -> ByAt u -> Html msg
-view zone now (ByAt by at) =
+view : Time.Zone -> DateTime -> ByAt u msg -> Html msg
+view zone now (ByAt { by, at, toClick }) =
     let
-        profileSnippet =
+        ( profileSnippet, click_ ) =
             case by of
                 ByUser u ->
-                    u
+                    ( u
                         |> ProfileSnippet.profileSnippet
                         |> ProfileSnippet.small
                         |> ProfileSnippet.view
+                    , Maybe.map (\f -> f u.handle) toClick
+                    )
 
                 ByHandle h ->
-                    strong [] [ text (UserHandle.toString h) ]
+                    ( strong [] [ text (UserHandle.toString h) ], Maybe.map (\f -> f h) toClick )
 
                 ByUnknown ->
-                    strong [] [ text "Unknown user" ]
+                    ( strong [] [ text "Unknown user" ], Nothing )
+
+        attrs =
+            [ class "by-at" ]
+
+        content =
+            [ profileSnippet
+            , span [ class "by-at_at" ]
+                [ DateTime.view (DateTime.DistanceFrom now) zone at ]
+            ]
     in
-    div
-        [ class "by-at" ]
-        [ profileSnippet
-        , span [ class "by-at_at" ]
-            [ DateTime.view (DateTime.DistanceFrom now) zone at ]
-        ]
+    case click_ of
+        Nothing ->
+            div attrs content
+
+        Just c ->
+            Click.view attrs content c
