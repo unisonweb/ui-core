@@ -815,25 +815,18 @@ decodeDocs fieldName =
         ]
 
 
-decodeTypeDetails :
-    Decode.Decoder
-        { category : TypeCategory
-        , name : FQN
-        , otherNames : NEL.Nonempty FQN
-        , source : TypeSource
-        , doc : Maybe Doc
-        }
+type alias RawTypeDetails =
+    { category : TypeCategory
+    , name : FQN
+    , otherNames : NEL.Nonempty FQN
+    , source : TypeSource
+    , doc : Maybe Doc
+    }
+
+
+decodeTypeDetails : Decode.Decoder RawTypeDetails
 decodeTypeDetails =
-    let
-        make cat name otherNames source doc =
-            { category = cat
-            , doc = doc
-            , name = name
-            , otherNames = otherNames
-            , source = source
-            }
-    in
-    Decode.map5 make
+    Decode.map5 RawTypeDetails
         (Type.decodeTypeCategory [ "defnTypeTag" ])
         (field "bestTypeName" FQN.decode)
         (field "typeNames" (Util.decodeNonEmptyList FQN.decode))
@@ -841,78 +834,60 @@ decodeTypeDetails =
         (decodeDocs "typeDocs")
 
 
-decodeTypes : Reference -> Decode.Decoder (List TypeDetailWithDoc)
-decodeTypes ref =
+makeTypeDetailWithDoc : Reference -> RawTypeDetails -> Hash -> TypeDetailWithDoc
+makeTypeDetailWithDoc ref d hash_ =
     let
-        makeType ( hash_, d ) =
-            hash_
-                |> Hash.fromString
-                |> Maybe.map
-                    (\h ->
-                        Type h
-                            d.category
-                            { doc = d.doc
-                            , info = Info.makeInfo ref d.name d.otherNames
-                            , source = d.source
-                            }
-                    )
+        info =
+            Info.makeInfo ref d.name d.otherNames
 
-        buildTypes =
-            List.map makeType >> MaybeE.values
+        typeDetailFieldsWithDoc =
+            { doc = d.doc
+            , info = info
+            , source = d.source
+            }
     in
-    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+    Type hash_
+        d.category
+        typeDetailFieldsWithDoc
 
 
-decodeTypesWithRef : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
-decodeTypesWithRef =
+decodeTypes : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
+decodeTypes =
     let
+        makeType : ( String, RawTypeDetails ) -> Maybe ( Reference, TypeDetailWithDoc )
         makeType ( hash_, d ) =
             let
+                -- make ref based on response
                 ref =
                     d.otherNames
                         |> NEL.head
                         |> Reference.fromFQN Reference.TypeReference
-
-                typeDetailWithDoc =
-                    hash_
-                        |> Hash.fromString
-                        |> Maybe.map
-                            (\h ->
-                                Type h
-                                    d.category
-                                    { doc = d.doc
-                                    , info = Info.makeInfo ref d.name d.otherNames
-                                    , source = d.source
-                                    }
-                            )
             in
-            Maybe.map (\t -> ( ref, t )) typeDetailWithDoc
+            hash_
+                |> Hash.fromString
+                |> Maybe.map (makeTypeDetailWithDoc ref d)
+                |> Maybe.map (Tuple.pair ref)
 
+        buildTypes : List ( String, RawTypeDetails ) -> List ( Reference, TypeDetailWithDoc )
         buildTypes =
             List.map makeType >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+    Decode.keyValuePairs decodeTypeDetails
+        |> Decode.map buildTypes
 
 
-decodeTermDetails :
-    Decode.Decoder
-        { category : TermCategory
-        , name : FQN
-        , otherNames : NEL.Nonempty FQN
-        , source : TermSource
-        , doc : Maybe Doc
-        }
-decodeTermDetails =
-    let
-        make cat name otherNames source doc =
-            { category = cat
-            , name = name
-            , otherNames = otherNames
-            , source = source
-            , doc = doc
-            }
-    in
-    Decode.map5 make
+type alias RawTermDetails =
+    { category : TermCategory
+    , name : FQN
+    , otherNames : NEL.Nonempty FQN
+    , source : TermSource
+    , doc : Maybe Doc
+    }
+
+
+decodeRawTermDetails : Decode.Decoder RawTermDetails
+decodeRawTermDetails =
+    Decode.map5 RawTermDetails
         (Term.decodeTermCategory [ "defnTermTag" ])
         (field "bestTermName" FQN.decode)
         (field "termNames" (Util.decodeNonEmptyList FQN.decode))
@@ -924,57 +899,46 @@ decodeTermDetails =
         (decodeDocs "termDocs")
 
 
-decodeTerms : Reference -> Decode.Decoder (List TermDetailWithDoc)
-decodeTerms ref =
+makeTermDetailWithDoc : Reference -> RawTermDetails -> Hash -> TermDetailWithDoc
+makeTermDetailWithDoc ref d hash_ =
     let
-        makeTerm ( hash_, d ) =
-            hash_
-                |> Hash.fromString
-                |> Maybe.map
-                    (\h ->
-                        Term h
-                            d.category
-                            { doc = d.doc
-                            , info = Info.makeInfo ref d.name d.otherNames
-                            , source = d.source
-                            }
-                    )
+        info =
+            Info.makeInfo ref d.name d.otherNames
 
-        buildTerms =
-            List.map makeTerm >> MaybeE.values
+        termDetailFieldsWithDoc =
+            { doc = d.doc
+            , info = info
+            , source = d.source
+            }
     in
-    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
+    Term hash_
+        d.category
+        termDetailFieldsWithDoc
 
 
-decodeTermsWithRef : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
-decodeTermsWithRef =
+decodeTerms : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
+decodeTerms =
     let
+        makeTerm : ( String, RawTermDetails ) -> Maybe ( Reference, TermDetailWithDoc )
         makeTerm ( hash_, d ) =
             let
+                -- make ref based on response
                 ref =
                     d.otherNames
                         |> NEL.head
                         |> Reference.fromFQN Reference.TermReference
-
-                termDetailWithDoc =
-                    hash_
-                        |> Hash.fromString
-                        |> Maybe.map
-                            (\h ->
-                                Term h
-                                    d.category
-                                    { doc = d.doc
-                                    , info = Info.makeInfo ref d.name d.otherNames
-                                    , source = d.source
-                                    }
-                            )
             in
-            Maybe.map (\t -> ( ref, t )) termDetailWithDoc
+            hash_
+                |> Hash.fromString
+                |> Maybe.map (makeTermDetailWithDoc ref d)
+                |> Maybe.map (Tuple.pair ref)
 
+        buildTerms : List ( String, RawTermDetails ) -> List ( Reference, TermDetailWithDoc )
         buildTerms =
             List.map makeTerm >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
+    Decode.keyValuePairs decodeRawTermDetails
+        |> Decode.map buildTerms
 
 
 
@@ -985,34 +949,28 @@ decodeList : Reference -> Decode.Decoder (List ItemWithReferences)
 decodeList refRequest =
     let
         termDefinitions =
-            field
-                "termDefinitions"
-                (decodeTermsWithRef
-                    |> Decode.map
-                        (List.map
-                            (\( decodedRef, term ) ->
-                                { item = TermItem term
-                                , refRequest = refRequest
-                                , refResponse = decodedRef
-                                }
-                            )
+            field "termDefinitions" decodeTerms
+                |> Decode.map
+                    (List.map
+                        (\( decodedRef, term ) ->
+                            { item = TermItem term
+                            , refRequest = refRequest
+                            , refResponse = decodedRef
+                            }
                         )
-                )
+                    )
 
         typeDefinitions =
-            field
-                "typeDefinitions"
-                (decodeTypesWithRef
-                    |> Decode.map
-                        (List.map
-                            (\( decodedRef, typeDef ) ->
-                                { item = TypeItem typeDef
-                                , refRequest = refRequest
-                                , refResponse = decodedRef
-                                }
-                            )
+            field "typeDefinitions" decodeTypes
+                |> Decode.map
+                    (List.map
+                        (\( decodedRef, typeDef ) ->
+                            { item = TypeItem typeDef
+                            , refRequest = refRequest
+                            , refResponse = decodedRef
+                            }
                         )
-                )
+                    )
     in
     Decode.map2
         List.append
