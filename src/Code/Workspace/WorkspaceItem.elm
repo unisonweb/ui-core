@@ -815,25 +815,18 @@ decodeDocs fieldName =
         ]
 
 
-decodeTypeDetails :
-    Decode.Decoder
-        { category : TypeCategory
-        , name : FQN
-        , otherNames : NEL.Nonempty FQN
-        , source : TypeSource
-        , doc : Maybe Doc
-        }
+type alias RawTypeDetails =
+    { category : TypeCategory
+    , name : FQN
+    , otherNames : NEL.Nonempty FQN
+    , source : TypeSource
+    , doc : Maybe Doc
+    }
+
+
+decodeTypeDetails : Decode.Decoder RawTypeDetails
 decodeTypeDetails =
-    let
-        make cat name otherNames source doc =
-            { category = cat
-            , doc = doc
-            , name = name
-            , otherNames = otherNames
-            , source = source
-            }
-    in
-    Decode.map5 make
+    Decode.map5 RawTypeDetails
         (Type.decodeTypeCategory [ "defnTypeTag" ])
         (field "bestTypeName" FQN.decode)
         (field "typeNames" (Util.decodeNonEmptyList FQN.decode))
@@ -841,57 +834,46 @@ decodeTypeDetails =
         (decodeDocs "typeDocs")
 
 
-decodeTypes : Reference -> Decode.Decoder (List TypeDetailWithDoc)
-decodeTypes ref =
+makeTypeDetailWithDoc : Reference -> RawTypeDetails -> Hash -> TypeDetailWithDoc
+makeTypeDetailWithDoc ref d hash_ =
     let
-        makeType ( hash_, d ) =
-            hash_
-                |> Hash.fromString
-                |> Maybe.map
-                    (\h ->
-                        Type h
-                            d.category
-                            { doc = d.doc
-                            , info = Info.makeInfo ref d.name d.otherNames
-                            , source = d.source
-                            }
-                    )
+        info =
+            Info.makeInfo ref d.name d.otherNames
 
-        buildTypes =
-            List.map makeType >> MaybeE.values
+        typeDetailFieldsWithDoc =
+            { doc = d.doc
+            , info = info
+            , source = d.source
+            }
     in
-    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+    Type hash_
+        d.category
+        typeDetailFieldsWithDoc
 
 
-decodeTypesWithRef : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
-decodeTypesWithRef =
+decodeTypes : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
+decodeTypes =
     let
+        makeType : ( String, RawTypeDetails ) -> Maybe ( Reference, TypeDetailWithDoc )
         makeType ( hash_, d ) =
             let
+                -- make ref based on response
                 ref =
                     d.otherNames
                         |> NEL.head
                         |> Reference.fromFQN Reference.TypeReference
-
-                typeDetailWithDoc =
-                    hash_
-                        |> Hash.fromString
-                        |> Maybe.map
-                            (\h ->
-                                Type h
-                                    d.category
-                                    { doc = d.doc
-                                    , info = Info.makeInfo ref d.name d.otherNames
-                                    , source = d.source
-                                    }
-                            )
             in
-            Maybe.map (\t -> ( ref, t )) typeDetailWithDoc
+            hash_
+                |> Hash.fromString
+                |> Maybe.map (makeTypeDetailWithDoc ref d)
+                |> Maybe.map (Tuple.pair ref)
 
+        buildTypes : List ( String, RawTypeDetails ) -> List ( Reference, TypeDetailWithDoc )
         buildTypes =
             List.map makeType >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+    Decode.keyValuePairs decodeTypeDetails
+        |> Decode.map buildTypes
 
 
 type alias RawTermDetails =
@@ -979,7 +961,7 @@ decodeList refRequest =
                     )
 
         typeDefinitions =
-            field "typeDefinitions" decodeTypesWithRef
+            field "typeDefinitions" decodeTypes
                 |> Decode.map
                     (List.map
                         (\( decodedRef, typeDef ) ->
