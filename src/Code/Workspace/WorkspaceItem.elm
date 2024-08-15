@@ -934,52 +934,29 @@ makeTermDetailWithDoc ref d hash_ =
         termDetailFieldsWithDoc
 
 
-decodeTerms : Reference -> Decode.Decoder (List TermDetailWithDoc)
-decodeTerms ref =
+decodeTerms : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
+decodeTerms =
     let
-        makeTerm : ( String, RawTermDetails ) -> Maybe TermDetailWithDoc
+        makeTerm : ( String, RawTermDetails ) -> Maybe ( Reference, TermDetailWithDoc )
         makeTerm ( hash_, d ) =
+            let
+                -- make ref based on response
+                ref =
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TermReference
+            in
             hash_
                 |> Hash.fromString
                 |> Maybe.map (makeTermDetailWithDoc ref d)
+                |> Maybe.map (Tuple.pair ref)
 
-        buildTerms : List ( String, RawTermDetails ) -> List TermDetailWithDoc
+        buildTerms : List ( String, RawTermDetails ) -> List ( Reference, TermDetailWithDoc )
         buildTerms =
             List.map makeTerm >> MaybeE.values
     in
     Decode.keyValuePairs decodeRawTermDetails
         |> Decode.map buildTerms
-
-
-decodeTermsWithRef : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
-decodeTermsWithRef =
-    let
-        makeTerm ( hash_, d ) =
-            let
-                ref =
-                    d.otherNames
-                        |> NEL.head
-                        |> Reference.fromFQN Reference.TermReference
-
-                termDetailWithDoc =
-                    hash_
-                        |> Hash.fromString
-                        |> Maybe.map
-                            (\h ->
-                                Term h
-                                    d.category
-                                    { doc = d.doc
-                                    , info = Info.makeInfo ref d.name d.otherNames
-                                    , source = d.source
-                                    }
-                            )
-            in
-            Maybe.map (\t -> ( ref, t )) termDetailWithDoc
-
-        buildTerms =
-            List.map makeTerm >> MaybeE.values
-    in
-    Decode.keyValuePairs decodeRawTermDetails |> Decode.map buildTerms
 
 
 
@@ -990,34 +967,28 @@ decodeList : Reference -> Decode.Decoder (List ItemWithReferences)
 decodeList refRequest =
     let
         termDefinitions =
-            field
-                "termDefinitions"
-                (decodeTermsWithRef
-                    |> Decode.map
-                        (List.map
-                            (\( decodedRef, term ) ->
-                                { item = TermItem term
-                                , refRequest = refRequest
-                                , refResponse = decodedRef
-                                }
-                            )
+            field "termDefinitions" decodeTerms
+                |> Decode.map
+                    (List.map
+                        (\( decodedRef, term ) ->
+                            { item = TermItem term
+                            , refRequest = refRequest
+                            , refResponse = decodedRef
+                            }
                         )
-                )
+                    )
 
         typeDefinitions =
-            field
-                "typeDefinitions"
-                (decodeTypesWithRef
-                    |> Decode.map
-                        (List.map
-                            (\( decodedRef, typeDef ) ->
-                                { item = TypeItem typeDef
-                                , refRequest = refRequest
-                                , refResponse = decodedRef
-                                }
-                            )
+            field "typeDefinitions" decodeTypesWithRef
+                |> Decode.map
+                    (List.map
+                        (\( decodedRef, typeDef ) ->
+                            { item = TypeItem typeDef
+                            , refRequest = refRequest
+                            , refResponse = decodedRef
+                            }
                         )
-                )
+                    )
     in
     Decode.map2
         List.append
