@@ -5,7 +5,7 @@ import Code.Definition.Reference as Reference
 import Code.FullyQualifiedName as FQN
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Syntax exposing (..)
-import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, Msg(..), WorkspaceItem(..), decodeList, fromItem)
 import Code.Workspace.Zoom exposing (Zoom(..))
 import Dict
 import Helpers.ReferenceHelper exposing (sampleReference)
@@ -21,7 +21,7 @@ type alias Model =
 
 type Message
     = WorkspaceItemMsg Msg
-    | GotItem (Result Http.Error ItemWithReferences)
+    | GotItem (Result Http.Error (List ItemWithReferences))
 
 
 main : Program () Model Message
@@ -46,7 +46,7 @@ init _ =
     ( { workspaceItem = Nothing }
     , Http.get
         { url = "/increment_term_def.json"
-        , expect = Http.expectJson GotItem (decodeItem reference)
+        , expect = Http.expectJson GotItem (decodeList reference)
         }
     )
 
@@ -86,9 +86,11 @@ update msg model =
                 Err error ->
                     ( model, Cmd.none )
 
-                Ok item ->
+                Ok items ->
                     ( { model
-                        | workspaceItem = Just (fromItem sampleReference item.item)
+                        | workspaceItem =
+                            List.head items
+                                |> Maybe.map (\item -> fromItem sampleReference item.item)
                       }
                     , Cmd.none
                     )

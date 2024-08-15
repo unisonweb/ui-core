@@ -976,12 +976,3 @@ decodeList refRequest =
         List.append
         termDefinitions
         typeDefinitions
-
-
-decodeItem : Reference -> Decode.Decoder ItemWithReferences
-decodeItem refRequest =
-    Decode.map List.head (decodeList refRequest)
-        |> Decode.andThen
-            (Maybe.map Decode.succeed
-                >> Maybe.withDefault (Decode.fail "Empty list")
-            )

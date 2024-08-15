@@ -8,7 +8,7 @@ import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
-import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, WorkspaceItem(..), decodeList, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
 import Dict exposing (Dict)
 import Html exposing (Html)
@@ -27,7 +27,7 @@ type alias Model =
 
 type Msg
     = WorkspaceMsg Workspace.Msg
-    | GotItem Int Reference.Reference (Result Http.Error Item)
+    | GotItem Int Reference.Reference (Result Http.Error (List Item))
 
 
 main : Program () Model Msg
@@ -67,7 +67,9 @@ getSampleResponse index url termName =
                 |> Reference.TypeReference
 
         decoder =
-            Decode.map (\itemWithRef -> itemWithRef.item) (decodeItem reference)
+            Decode.map
+                (\itemWithRefList -> List.map (\itemWithRef -> itemWithRef.item) itemWithRefList)
+                (decodeList reference)
     in
     Http.get
         { url = url
@@ -105,12 +107,17 @@ update message model =
         GotItem _ reference (Err error) ->
             ( model, Cmd.none )
 
-        GotItem _ reference (Ok item) ->
+        GotItem _ reference (Ok items) ->
             let
                 newWorkspaceItems =
-                    item
-                        |> fromItem reference
-                        |> WorkspaceItems.prependWithFocus model.workspaceItems
+                    List.head items
+                        |> Maybe.map
+                            (\item ->
+                                item
+                                    |> fromItem reference
+                                    |> WorkspaceItems.prependWithFocus model.workspaceItems
+                            )
+                        |> Maybe.withDefault model.workspaceItems
 
                 newModel =
                     { model | workspaceItems = newWorkspaceItems }
