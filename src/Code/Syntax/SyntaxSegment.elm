@@ -472,6 +472,9 @@ helpForSegment (SyntaxSegment syntaxType segmentText) =
                 "forall" ->
                     Just SyntaxSegmentHelp.typeForall
 
+                "∀" ->
+                    Just SyntaxSegmentHelp.typeForall
+
                 _ ->
                     Nothing
 
