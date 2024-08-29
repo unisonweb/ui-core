@@ -459,8 +459,8 @@ viewInfoItems namespaceActionMenu ref hash_ rawSource info =
                 Just s ->
                     div [ class "copy-code" ]
                         [ CopyOnClick.view s
-                            (div [ class "button small outlined content-icon-then-label" ]
-                                [ Icon.view Icon.clipboard, text "Copy full source" ]
+                            (div [ class "button small outlined content-icon" ]
+                                [ Icon.view Icon.clipboard ]
                             )
                             (Icon.view Icon.checkmark)
                         ]
