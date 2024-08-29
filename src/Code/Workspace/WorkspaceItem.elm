@@ -454,21 +454,30 @@ viewInfoItems namespaceActionMenu ref hash_ rawSource info =
         hashInfoItem =
             Hash.view hash_
 
-        copyCodeToClipboard =
+        copySourceToClipboard =
             case rawSource of
                 Just s ->
                     div [ class "copy-code" ]
-                        [ CopyOnClick.view s
-                            (div [ class "button small outlined content-icon" ]
-                                [ Icon.view Icon.clipboard ]
-                            )
-                            (Icon.view Icon.checkmark)
+                        [ Tooltip.tooltip (Tooltip.text "Copy full source")
+                            |> Tooltip.withArrow Tooltip.Middle
+                            |> Tooltip.view
+                                (CopyOnClick.view s
+                                    (div [ class "button small outlined content-icon" ]
+                                        [ Icon.view Icon.clipboard ]
+                                    )
+                                    (Icon.view Icon.checkmark)
+                                )
                         ]
 
                 Nothing ->
                     UI.nothing
     in
-    div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace, copyCodeToClipboard ]
+    div [ class "workspace-item_info-items" ]
+        [ hashInfoItem
+        , otherNames
+        , namespace
+        , copySourceToClipboard
+        ]
 
 
 viewInfo : NamespaceActionMenu -> Reference -> Hash -> Maybe String -> Info -> Category -> Html Msg
