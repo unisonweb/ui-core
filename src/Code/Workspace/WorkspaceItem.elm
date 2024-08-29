@@ -425,7 +425,7 @@ viewInfoItems namespaceActionMenu ref hash_ rawSource info =
                         [ ActionMenu.optionItem Icon.intoFolder ("Change perspective to " ++ ns) (Click.onClick (ChangePerspectiveToSubNamespace fqn)) ]
                         |> ActionMenu.fromButton (ToggleNamespaceActionMenu ref) ns
                         |> ActionMenu.withButtonIcon Icon.folderOutlined
-                        |> ActionMenu.withButtonColor Button.Subdued
+                        |> ActionMenu.withButtonColor Button.Outlined
                         |> ActionMenu.shouldBeOpen (isNamespaceActionMenuOpen namespaceActionMenu ref)
                         |> ActionMenu.view
 
@@ -459,7 +459,7 @@ viewInfoItems namespaceActionMenu ref hash_ rawSource info =
                 Just s ->
                     div [ class "copy-code" ]
                         [ CopyOnClick.view s
-                            (div [ class "button small subdued content-icon-then-label" ]
+                            (div [ class "button small outlined content-icon-then-label" ]
                                 [ Icon.view Icon.clipboard, text "Copy full source" ]
                             )
                             (Icon.view Icon.checkmark)
