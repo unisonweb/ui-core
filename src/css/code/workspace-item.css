@@ -132,6 +132,20 @@
   opacity: 1;
 }
 
+.workspace-item .workspace-item_header .copy-code .copy-on-click {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.workspace-item .workspace-item_header .copy-code .copy-on-click .copy-on-click_success {
+  margin-top: 2px; 
+}
+.workspace-item .workspace-item_header .copy-code .copy-on-click .copy-on-click_success .icon {
+  color: var(--u-color_positive_icon-on-element_subdued);
+}
+
 .workspace-item .workspace-item_content {
   display: flex;
   flex-direction: column;

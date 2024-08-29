@@ -9,6 +9,7 @@ module Code.Definition.Type exposing
     , decodeTypeSource
     , isBuiltin
     , isBuiltinSource
+    , rawSource
     , typeSourceSyntax
     )
 
@@ -57,6 +58,16 @@ type alias TypeListing =
 
 
 -- HELPERS
+
+
+rawSource : TypeDetail d -> Maybe String
+rawSource (Type _ _ d) =
+    case d.source of
+        Source stx ->
+            Just (Syntax.toString stx)
+
+        Builtin ->
+            Nothing
 
 
 isBuiltin : TypeDetail d -> Bool

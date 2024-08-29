@@ -11,6 +11,7 @@ module Code.Definition.Term exposing
     , decodeTermSource
     , isBuiltin
     , isBuiltinSource
+    , rawSource
     , termSignature
     , termSignatureSyntax
     )
@@ -65,6 +66,16 @@ type alias TermListing =
 
 
 -- HELPERS
+
+
+rawSource : TermDetail d -> Maybe String
+rawSource (Term _ _ d) =
+    case d.source of
+        Source _ stx ->
+            Just (Syntax.toString stx)
+
+        Builtin _ ->
+            Nothing
 
 
 isBuiltin : TermDetail d -> Bool

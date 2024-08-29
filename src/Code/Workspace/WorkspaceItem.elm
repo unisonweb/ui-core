@@ -1,8 +1,8 @@
 module Code.Workspace.WorkspaceItem exposing (..)
 
-import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorDetail)
+import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorDetail)
 import Code.Definition.Category as Category exposing (Category)
-import Code.Definition.DataConstructor exposing (DataConstructor(..), DataConstructorDetail)
+import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorDetail)
 import Code.Definition.Doc as Doc exposing (Doc, DocFoldToggles)
 import Code.Definition.Info as Info exposing (Info)
 import Code.Definition.Reference as Reference exposing (Reference)
@@ -28,6 +28,7 @@ import UI
 import UI.ActionMenu as ActionMenu
 import UI.Button as Button
 import UI.Click as Click
+import UI.CopyOnClick as CopyOnClick
 import UI.Divider as Divider
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon
@@ -409,8 +410,8 @@ viewInfoItem content =
     div [ class "workspace-item_info-item" ] content
 
 
-viewInfoItems : NamespaceActionMenu -> Reference -> Hash -> Info -> Html Msg
-viewInfoItems namespaceActionMenu ref hash_ info =
+viewInfoItems : NamespaceActionMenu -> Reference -> Hash -> Maybe String -> Info -> Html Msg
+viewInfoItems namespaceActionMenu ref hash_ rawSource info =
     let
         namespace =
             case info.namespace of
@@ -452,16 +453,30 @@ viewInfoItems namespaceActionMenu ref hash_ info =
 
         hashInfoItem =
             Hash.view hash_
+
+        copyCodeToClipboard =
+            case rawSource of
+                Just s ->
+                    div [ class "copy-code" ]
+                        [ CopyOnClick.view s
+                            (div [ class "button small subdued content-icon-then-label" ]
+                                [ Icon.view Icon.clipboard, text "Copy full source" ]
+                            )
+                            (Icon.view Icon.checkmark)
+                        ]
+
+                Nothing ->
+                    UI.nothing
     in
-    div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace ]
+    div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace, copyCodeToClipboard ]
 
 
-viewInfo : NamespaceActionMenu -> Reference -> Hash -> Info -> Category -> Html Msg
-viewInfo namespaceActionMenu ref hash_ info category =
+viewInfo : NamespaceActionMenu -> Reference -> Hash -> Maybe String -> Info -> Category -> Html Msg
+viewInfo namespaceActionMenu ref hash_ rawSource info category =
     div [ class "workspace-item_info" ]
         [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
         , h3 [ class "name" ] [ FQN.view info.name ]
-        , viewInfoItems namespaceActionMenu ref hash_ info
+        , viewInfoItems namespaceActionMenu ref hash_ rawSource info
         ]
 
 
@@ -590,42 +605,42 @@ viewItem syntaxConfig namespaceActionMenu ref data isFocused =
                 :: MaybeE.unwrap [] (\i -> [ i ]) (viewBuiltin data.item)
                 ++ viewDoc_ doc
 
-        viewInfo_ hash_ info cat =
-            viewInfo namespaceActionMenu ref hash_ info cat
+        viewInfo_ hash_ rawSource info cat =
+            viewInfo namespaceActionMenu ref hash_ rawSource info cat
 
         foldRow =
             Just { zoom = data.zoom, toggle = rowZoomToggle }
     in
     case data.item of
-        TermItem (Term h category detail) ->
+        TermItem ((Term h category detail) as term) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Term category))
+                (viewInfo_ h (Term.rawSource term) detail.info (Category.Term category))
                 (viewContent detail.doc)
                 foldRow
 
-        TypeItem (Type h category detail) ->
+        TypeItem ((Type h category detail) as type_) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Type category))
+                (viewInfo_ h (Type.rawSource type_) detail.info (Category.Type category))
                 (viewContent detail.doc)
                 foldRow
 
-        DataConstructorItem (DataConstructor h detail) ->
+        DataConstructorItem ((DataConstructor h detail) as ctor) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Type Type.DataType))
+                (viewInfo_ h (DataConstructor.rawSource ctor) detail.info (Category.Type Type.DataType))
                 (viewContent Nothing)
                 foldRow
 
-        AbilityConstructorItem (AbilityConstructor h detail) ->
+        AbilityConstructorItem ((AbilityConstructor h detail) as ctor) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Type Type.AbilityType))
+                (viewInfo_ h (AbilityConstructor.rawSource ctor) detail.info (Category.Type Type.AbilityType))
                 (viewContent Nothing)
                 foldRow
 

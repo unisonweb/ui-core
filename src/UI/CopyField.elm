@@ -51,20 +51,5 @@ view field =
                     []
                 ]
             ]
-        , copyButton field.onCopy field.toCopy
+        , CopyOnClick.copyButton_ field.onCopy field.toCopy
         ]
-
-
-
--- HELPERS --------------------------------------------------------------------
-
-
-{-| We're not using UI.Button here since a click handler is added from
-the webcomponent in JS land.
--}
-copyButton : (String -> msg) -> String -> Html msg
-copyButton onCopyMsg toCopy =
-    CopyOnClick.view onCopyMsg
-        toCopy
-        (button [ class "button contained default" ] [ Icon.view Icon.clipboard ])
-        (div [ class "copy-field_success" ] [ Icon.view Icon.checkmark ])

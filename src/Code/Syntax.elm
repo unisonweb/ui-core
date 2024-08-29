@@ -7,6 +7,7 @@ module Code.Syntax exposing
     , fromList
     , numLines
     , reference
+    , toString
     , view
     )
 
@@ -97,6 +98,14 @@ reference (SyntaxSegment syntaxType _) =
 foldl : (SyntaxSegment -> b -> b) -> b -> Syntax -> b
 foldl f init (Syntax segments) =
     NEL.foldl f init segments
+
+
+toString : Syntax -> String
+toString (Syntax segments) =
+    segments
+        |> NEL.map SyntaxSegment.toString
+        |> NEL.toList
+        |> String.join ""
 
 
 

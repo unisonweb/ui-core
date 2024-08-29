@@ -73,6 +73,11 @@ type SyntaxType
     | DocKeyword
 
 
+toString : SyntaxSegment -> String
+toString (SyntaxSegment _ seg) =
+    seg
+
+
 
 -- VIEW
 
