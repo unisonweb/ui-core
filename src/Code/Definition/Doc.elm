@@ -74,6 +74,7 @@ import Maybe.Extra as MaybeE
 import Set exposing (Set)
 import UI
 import UI.Click as Click
+import UI.CopyOnClick as CopyOnClick
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon
 import UI.Tooltip as Tooltip
@@ -395,6 +396,19 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
         viewSignature =
             Source.viewTermSignature (SourceViewConfig.rich syntaxConfig)
 
+        viewCopyable toCopy content =
+            div [ class "copyable-source" ]
+                [ content
+                , CopyOnClick.view toCopy
+                    (div [ class "button small outlined content-icon" ]
+                        [ Icon.view Icon.clipboard ]
+                    )
+                    (Icon.view Icon.checkmark)
+                ]
+
+        viewCopyableSyntax syntax =
+            viewCopyable (Syntax.toString syntax) (viewSyntax syntax)
+
         viewSyntax =
             Syntax.view syntaxConfig
 
@@ -432,7 +446,13 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                 |> MermaidDiagram.view
 
                         _ ->
-                            div [ class "rich source code", lang |> stringToClass |> class ] [ UI.codeBlock [] (viewAtCurrentSectionLevel code) ]
+                            div
+                                [ class "rich source code"
+                                , lang |> stringToClass |> class
+                                ]
+                                [ UI.codeBlock []
+                                    (viewAtCurrentSectionLevel code)
+                                ]
 
                 Bold d ->
                     strong [] [ viewAtCurrentSectionLevel d ]
@@ -623,7 +643,7 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                                 [ UI.codeBlock [] (viewSyntax summary) ]
 
                                             else
-                                                [ UI.codeBlock [] (viewSyntax details) ]
+                                                [ UI.codeBlock [] (viewCopyableSyntax details) ]
                                     in
                                     case source of
                                         Builtin summary ->
@@ -653,43 +673,66 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                 (List.map viewFoldedSource sources)
 
                         Example syntax ->
-                            span [ class "source rich example-inline" ] [ UI.inlineCode [] (viewSyntax syntax) ]
+                            span [ class "source rich example-inline" ]
+                                [ UI.inlineCode [] (viewSyntax syntax)
+                                ]
 
                         ExampleBlock syntax ->
-                            div [ class "source rich example" ] [ UI.codeBlock [] (viewSyntax syntax) ]
+                            div [ class "source rich example" ]
+                                [ UI.codeBlock [] (viewCopyableSyntax syntax)
+                                ]
 
                         Link syntax ->
-                            UI.inlineCode [ class "rich source" ] (viewSyntax syntax)
+                            UI.inlineCode [ class "rich source" ]
+                                (viewSyntax syntax)
 
                         Signature signatures ->
                             UI.codeBlock [ class "rich source signatures" ]
                                 (div []
                                     (List.map
-                                        (\signature -> div [ class "signature" ] [ viewSignature signature ])
+                                        (\signature ->
+                                            div [ class "signature" ]
+                                                [ viewSignature signature
+                                                ]
+                                        )
                                         signatures
                                     )
                                 )
 
                         SignatureInline signature ->
-                            UI.inlineCode [ class "rich source signature-inline" ] (viewSignature signature)
+                            UI.inlineCode [ class "rich source signature-inline" ]
+                                (viewSignature signature)
 
                         Eval source result ->
                             div
                                 [ class "eval" ]
-                                [ div [ class "source rich" ] [ UI.codeBlock [] (viewSyntax source) ]
+                                [ div [ class "source rich" ]
+                                    [ UI.codeBlock [] (viewCopyableSyntax source)
+                                    ]
                                 , div [ class "result" ] [ div [ class "result-indicator" ] [ Icon.view Icon.arrowDown ] ]
-                                , div [ class "source rich" ] [ UI.codeBlock [] (viewSyntax result) ]
+                                , div [ class "source rich" ]
+                                    [ UI.codeBlock [] (viewSyntax result)
+                                    ]
                                 ]
 
                         EvalInline source result ->
                             span [ class "source rich eval-inline" ]
-                                [ UI.inlineCode [] (span [] [ viewSyntax source, span [ class "result" ] [ Icon.view Icon.arrowRight, viewSyntax result ] ]) ]
+                                [ UI.inlineCode []
+                                    (span []
+                                        [ viewSyntax source
+                                        , span [ class "result" ] [ Icon.view Icon.arrowRight, viewSyntax result ]
+                                        ]
+                                    )
+                                ]
 
                         Embed syntax ->
-                            div [ class "source rich embed" ] [ UI.codeBlock [] (viewSyntax syntax) ]
+                            div [ class "source rich embed" ]
+                                [ UI.codeBlock [] (viewCopyableSyntax syntax)
+                                ]
 
                         EmbedInline syntax ->
-                            span [ class "source rich embed-inline" ] [ UI.inlineCode [] (viewSyntax syntax) ]
+                            span [ class "source rich embed-inline" ]
+                                [ UI.inlineCode [] (viewSyntax syntax) ]
 
                         Video mediaSources attrs ->
                             let
