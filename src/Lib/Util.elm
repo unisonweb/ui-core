@@ -2,6 +2,7 @@ module Lib.Util exposing (..)
 
 import Http
 import Json.Decode as Decode
+import List.Extra as ListE
 import List.Nonempty as NEL
 import Process
 import Task

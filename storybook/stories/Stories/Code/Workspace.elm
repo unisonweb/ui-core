@@ -43,9 +43,10 @@ init _ =
     , Cmd.batch
         [ getSampleResponse 0 "/increment_term_def.json" "increment"
         , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
-        , getSampleResponse 2 "/base_readme.json" "base_readme"
-        , getSampleResponse 3 "/long.json" "assets.indexHtml"
-        , getSampleResponse 4 "/cloud_config_def.json" "Config"
+        , getSampleResponse 2 "/blog_def.json" "blog"
+        , getSampleResponse 3 "/base_readme.json" "base_readme"
+        , getSampleResponse 4 "/long.json" "assets.indexHtml"
+        , getSampleResponse 5 "/cloud_config_def.json" "Config"
         ]
     )
 

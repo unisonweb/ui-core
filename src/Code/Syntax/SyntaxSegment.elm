@@ -277,14 +277,29 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                 -- hover background, so it gets separate to another dom node.
                 -- This results in cleaner looking hovers and tooltip
                 -- positionings
-                if String.startsWith " " sText && String.endsWith " " sText then
-                    span [] [ text " ", view_ (text (String.trim sText)), text " " ]
+                let
+                    f c ( start, middle, end ) =
+                        let
+                            s =
+                                String.fromChar c
+                        in
+                        if c == ' ' || c == '\n' then
+                            if String.isEmpty middle then
+                                ( start ++ s, middle, end )
 
-                else if String.startsWith " " sText then
-                    span [] [ text " ", view_ (text (String.trim sText)) ]
+                            else
+                                ( start, middle, end ++ s )
 
-                else
-                    span [] [ view_ (text (String.trim sText)), text " " ]
+                        else
+                            ( start, middle ++ s, end )
+
+                    viewText ( start, middle, end ) =
+                        span [] [ text start, view_ (text middle), text end ]
+                in
+                sText
+                    |> String.toList
+                    |> List.foldl f ( "", "", "" )
+                    |> viewText
 
             else
                 view_ (text sText)
