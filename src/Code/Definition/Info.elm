@@ -22,10 +22,10 @@ type alias Info =
 
 
 makeInfo : Reference -> FQN -> NEL.Nonempty FQN -> Info
-makeInfo requestedRef suffixName allFqns =
+makeInfo ref suffixName allFqns =
     let
         ( namespace, otherNames ) =
-            namespaceAndOtherNames requestedRef suffixName allFqns
+            namespaceAndOtherNames ref suffixName allFqns
     in
     Info suffixName namespace otherNames
 

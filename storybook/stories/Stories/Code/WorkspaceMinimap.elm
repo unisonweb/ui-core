@@ -9,6 +9,7 @@ import Code.Workspace.WorkspaceItems as WorkspaceItems
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Html exposing (Html)
 import Http
+import Json.Decode as Decode
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 
@@ -22,7 +23,7 @@ type Msg
     | CloseItem WorkspaceItem.WorkspaceItem
     | CloseAll
     | ToggleMinimap
-    | GotItem Reference.Reference (Result Http.Error WorkspaceItem.Item)
+    | GotItem Reference.Reference (Result Http.Error (List WorkspaceItem.Item))
 
 
 main : Program () Model Msg
@@ -85,7 +86,9 @@ getSampleResponse url termName =
             termName |> termReference
 
         decoder =
-            reference |> WorkspaceItem.decodeItem
+            Decode.map
+                (\itemWithRefList -> List.map (\itemWithRef -> itemWithRef.item) itemWithRefList)
+                (WorkspaceItem.decodeList reference)
     in
     Http.get
         { url = url
@@ -142,12 +145,17 @@ update message model =
                     in
                     ( { model | workspaceItems = newWorkspaceItems }, Cmd.none )
 
-                Ok item ->
+                Ok items ->
                     let
                         newWorkspaceItems =
-                            item
-                                |> WorkspaceItem.fromItem reference
-                                |> WorkspaceItems.replace model.workspaceItems reference
+                            List.head items
+                                |> Maybe.map
+                                    (\item ->
+                                        item
+                                            |> WorkspaceItem.fromItem reference
+                                            |> WorkspaceItems.replace model.workspaceItems reference
+                                    )
+                                |> Maybe.withDefault model.workspaceItems
                     in
                     ( { model | workspaceItems = newWorkspaceItems }, Cmd.none )
 

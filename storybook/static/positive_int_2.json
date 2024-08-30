@@ -1,0 +1,439 @@
+{
+  "missingDefinitions": [],
+  "termDefinitions": {
+    "#sl0frdc21stq5ncv6kfpiuie4d7llqb12gvsg7nig0o7i3ovk3aa7oeo35d03dsas14o1hpap3mml336onaqrngncn9iabo9jedbf20": {
+      "bestTermName": "PositiveInt2",
+      "defnTermTag": "Plain",
+      "signature": [
+        {
+          "annotation": {
+            "contents": "#m75ereuhlkbf6lv1tn3d1rlaurbd1jpsm5and47mqs1l07qd3ikrk0ifiocaa87ksctoe9e1knak67td1ojt4vel0u6u7m201avbtu0",
+            "tag": "TypeReference"
+          },
+          "segment": "database.Type"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "contents": "#v7h0ofmeja130k6nv4gtg9mjvh3e9j712gqlkml3qnqpmt3je1lvlilp5gfd1vdv1hk09l2fonoolga4rg16pduvp7crt5nfg12qepo",
+            "tag": "TypeReference"
+          },
+          "segment": "Id"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "contents": "##Nat",
+            "tag": "TypeReference"
+          },
+          "segment": "Nat"
+        },
+        {
+          "annotation": null,
+          "segment": " "
+        },
+        {
+          "annotation": {
+            "contents": "#b5dihddithap8v4tlstv7ctv77oh4loa6krh72plg05isi4iih1309mlttb7d764mgqb31vft3m36mpci76h6or84878jm4ee82brvg",
+            "tag": "TypeReference"
+          },
+          "segment": "PositiveInt2"
+        }
+      ],
+      "termDefinition": {
+        "contents": [
+          {
+            "annotation": {
+              "contents": "examples.API.types.PositiveInt2",
+              "tag": "HashQualifier"
+            },
+            "segment": "examples.API.types.PositiveInt2"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#m75ereuhlkbf6lv1tn3d1rlaurbd1jpsm5and47mqs1l07qd3ikrk0ifiocaa87ksctoe9e1knak67td1ojt4vel0u6u7m201avbtu0",
+              "tag": "TypeReference"
+            },
+            "segment": "database.Type"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#v7h0ofmeja130k6nv4gtg9mjvh3e9j712gqlkml3qnqpmt3je1lvlilp5gfd1vdv1hk09l2fonoolga4rg16pduvp7crt5nfg12qepo",
+              "tag": "TypeReference"
+            },
+            "segment": "Id"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Nat",
+              "tag": "TypeReference"
+            },
+            "segment": "Nat"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#b5dihddithap8v4tlstv7ctv77oh4loa6krh72plg05isi4iih1309mlttb7d764mgqb31vft3m36mpci76h6or84878jm4ee82brvg",
+              "tag": "TypeReference"
+            },
+            "segment": "PositiveInt2"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": {
+              "contents": "examples.API.types.PositiveInt2",
+              "tag": "HashQualifier"
+            },
+            "segment": "examples.API.types.PositiveInt2"
+          },
+          {
+            "annotation": {
+              "tag": "BindingEquals"
+            },
+            "segment": " ="
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "contents": "codec",
+              "tag": "HashQualifier"
+            },
+            "segment": "codec"
+          },
+          {
+            "annotation": {
+              "tag": "BindingEquals"
+            },
+            "segment": " ="
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#rc5me5e9jgt8uqtk5bv1mekjpji558552svt5gjfoofvp6fbqu3pglca2jrua6aboha0l95vljrhsalb9hkbmo8e4kebgha2hc6gc80",
+              "tag": "TermReference"
+            },
+            "segment": "Type.codec"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#3lhsd43vvct2h1ia8uqte98gmvjm6eh2ipre4bdj82u0pcsvl2bvi802kd2funqu48vf8rjtngr7ijo2b5ckid7ofaoq7p9fn7lkjs8",
+              "tag": "TermReference"
+            },
+            "segment": "Int2"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "contents": "#m75ereuhlkbf6lv1tn3d1rlaurbd1jpsm5and47mqs1l07qd3ikrk0ifiocaa87ksctoe9e1knak67td1ojt4vel0u6u7m201avbtu0#d0",
+              "tag": "TermReference"
+            },
+            "segment": "database.Type.Type"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "\"positive_int_2\""
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "Parenthesis"
+            },
+            "segment": "("
+          },
+          {
+            "annotation": {
+              "contents": "#sa83dih198ihtng32vkrkkrm8fc62qvcnob400j9irnuvd2k6jals7iupvempo194a0suj113qv81tj2dehavt9b01ep6c9o56854h8#d0",
+              "tag": "TermReference"
+            },
+            "segment": "Codec"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "Parenthesis"
+            },
+            "segment": "("
+          },
+          {
+            "annotation": {
+              "contents": "#9d1chvc83e80pf1bgsafbi6doq55gtsin7hq76lscmdrtu6n5bgp55m45u7i2emr567givamglitf5tmpt29cp70qrjotu7d4agib60",
+              "tag": "TermReference"
+            },
+            "segment": "Codec.from"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "tag": "Var"
+            },
+            "segment": "codec"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#aq8i51tiaiav0ulii9gi0epdg9rkur7hkj2i0mcmj695hp186cutut2m23g972umu1pbh01uq4887b6p8vh3l9cuqgh3h7ntnp31s0g",
+              "tag": "TermReference"
+            },
+            "segment": ">>"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#php8nkjpuasci302ueg8vq83i7cge39rldrlbml3ctpm7o7tsvbonruse6i35gaglj45nhh5auka5222qig4eos2junh9ucsk90vho0",
+              "tag": "TermReference"
+            },
+            "segment": "Optional.flatMap"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#o5hmeal4holu5vajbtca6gt6nah81jcvjjslp5sedo1psavjcummkrqfnnp2h9assisajubi3e25c7apila7pv7f0g6irff0akn0h3g",
+              "tag": "TermReference"
+            },
+            "segment": "Int.toNat"
+          },
+          {
+            "annotation": {
+              "tag": "Parenthesis"
+            },
+            "segment": ")"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "Parenthesis"
+            },
+            "segment": "("
+          },
+          {
+            "annotation": {
+              "contents": "##Nat.toInt",
+              "tag": "TermReference"
+            },
+            "segment": "Nat.toInt"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#aq8i51tiaiav0ulii9gi0epdg9rkur7hkj2i0mcmj695hp186cutut2m23g972umu1pbh01uq4887b6p8vh3l9cuqgh3h7ntnp31s0g",
+              "tag": "TermReference"
+            },
+            "segment": ">>"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#le08l8rqnlta4o5updlms8eg1pukbi43258oehkc17vj3pkjpqs1bgoqfdgv2c15l793q37vs68ef68qd8693999letadn7b1eqfrko",
+              "tag": "TermReference"
+            },
+            "segment": "Codec.to"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "tag": "Var"
+            },
+            "segment": "codec"
+          },
+          {
+            "annotation": {
+              "tag": "Parenthesis"
+            },
+            "segment": ")"
+          },
+          {
+            "annotation": {
+              "tag": "Parenthesis"
+            },
+            "segment": ")"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "contents": "#db7obl2j48aq70gech3taglbg1spcdoutshg8i7bb3kk0u40mb8pkmeej79abd8bmo4if5990am9d6h56k66q8eqf74gj479f30eg98",
+              "tag": "TermReference"
+            },
+            "segment": "Modifier.notNullable"
+          }
+        ],
+        "tag": "UserObject"
+      },
+      "termDocs": [],
+      "termNames": ["examples.API.types.PositiveInt2"]
+    }
+  },
+  "typeDefinitions": {
+    "#b5dihddithap8v4tlstv7ctv77oh4loa6krh72plg05isi4iih1309mlttb7d764mgqb31vft3m36mpci76h6or84878jm4ee82brvg": {
+      "bestTypeName": "PositiveInt2",
+      "defnTypeTag": "Data",
+      "typeDefinition": {
+        "contents": [
+          {
+            "annotation": {
+              "tag": "DataTypeKeyword"
+            },
+            "segment": "type"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "examples.API.types.PositiveInt2",
+              "tag": "HashQualifier"
+            },
+            "segment": "examples.API.types.PositiveInt2"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": " = "
+          }
+        ],
+        "tag": "UserObject"
+      },
+      "typeDocs": [],
+      "typeNames": ["examples.API.types.PositiveInt2"]
+    }
+  }
+}
