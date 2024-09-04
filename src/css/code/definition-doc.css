@@ -123,6 +123,12 @@
   position: absolute;
   top: 0;
   right: 0;
+  display: none;
+  background: var(--u-color_action);
+}
+
+.definition-doc .copyable-source:hover .copy-on-click {
+  display: block;
 }
 
 .definition-doc .copyable-source .copy-on-click .copy-on-click_success {
