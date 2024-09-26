@@ -144,10 +144,19 @@
   margin-left: -1.25rem;
 }
 
-.workspace-item .workspace-item_header .copy-code .copy-on-click .copy-on-click_success {
-  margin-top: 2px; 
+.workspace-item
+  .workspace-item_header
+  .copy-code
+  .copy-on-click
+  .copy-on-click_success {
+  margin-top: 2px;
 }
-.workspace-item .workspace-item_header .copy-code .copy-on-click .copy-on-click_success .icon {
+.workspace-item
+  .workspace-item_header
+  .copy-code
+  .copy-on-click
+  .copy-on-click_success
+  .icon {
   color: var(--u-color_positive_icon-on-element_subdued);
 }
 
