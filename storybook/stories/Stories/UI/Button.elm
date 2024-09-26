@@ -27,7 +27,7 @@ elements =
     , B.icon UserClicked I.unisonMark
     , B.iconThenLabel UserClicked I.unisonMark "Icon then Label"
     , B.labelThenIcon UserClicked "Label then Icon" I.unisonMark
-    , B.iconThenLabelThenIcon UserClicked I.unisonMark "Icon then Label then Icon" I.unisonMark
+    , B.iconThenLabelThenIcon UserClicked I.unisonMark "Icon then Label then Icon" I.caretDown
     ]
 
 

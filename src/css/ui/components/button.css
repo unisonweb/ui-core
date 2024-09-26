@@ -118,6 +118,11 @@ a.button:hover {
   transform: translate(0, 0.1rem);
 }
 
+/* Fixes icon jitter on click in safari (and thus tauri) */
+.button .icon {
+  will-change: transform;
+}
+
 /* -- Sizes ---------------------------------------------------------------- */
 
 .button.small {
