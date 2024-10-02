@@ -1,10 +1,9 @@
 module UI.CopyField exposing (..)
 
-import Html exposing (Html, button, div, input, text)
+import Html exposing (Html, div, input, text)
 import Html.Attributes exposing (class, readonly, type_, value)
 import UI
 import UI.CopyOnClick as CopyOnClick
-import UI.Icon as Icon
 
 
 type alias CopyField msg =

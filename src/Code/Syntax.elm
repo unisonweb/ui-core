@@ -105,7 +105,7 @@ toString (Syntax segments) =
     segments
         |> NEL.map SyntaxSegment.toString
         |> NEL.toList
-        |> String.join ""
+        |> String.concat
 
 
 
