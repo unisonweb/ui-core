@@ -219,4 +219,8 @@
 .workspace-item .workspace-item_inner-content:not(.shown-in-full) .doc-column {
   overflow-y: hidden;
   max-height: 12rem;
+  /* compensate for overlaying evaluation error to avoid it being clipped for
+   * folded docs */
+  padding-left: 0.75rem;
+  margin-left: -0.75rem;
 }
