@@ -1,6 +1,6 @@
 /* @color-todo @inverse */
 .workspace-minimap {
-  --c-color_workspace-minimap_background: var(--color-gray-darken-25);
+  --c-color_workspace-minimap_background: var(--color-gray-darken-20);
   --c-color_workspace-minimap_item_hovered: var(--color-gray-darken-10);
   --c-color_workspace-minimap_item_selected: var(--color-gray-darken-10);
   --c-color_workspace-minimap_text: var(--color-gray-lighten-100);
