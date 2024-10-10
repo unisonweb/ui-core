@@ -238,13 +238,13 @@ viewDefinitionListing listing =
             viewListingRow Nothing p "patch" Icon.patch
 
 
-viewLoadedNamespaceListingContent : FQNSet -> NamespaceListingContent -> Html Msg
-viewLoadedNamespaceListingContent expandedNamespaceListings content =
+viewLoadedNamespaceListingContent : ViewConfig -> FQNSet -> NamespaceListingContent -> Html Msg
+viewLoadedNamespaceListingContent viewConfig expandedNamespaceListings content =
     let
         viewChild c =
             case c of
                 SubNamespace nl ->
-                    viewNamespaceListing expandedNamespaceListings nl
+                    viewNamespaceListing viewConfig expandedNamespaceListings nl
 
                 SubDefinition dl ->
                     viewDefinitionListing dl
@@ -252,11 +252,11 @@ viewLoadedNamespaceListingContent expandedNamespaceListings content =
     div [] (List.map viewChild content)
 
 
-viewNamespaceListingContent : FQNSet -> WebData NamespaceListingContent -> Html Msg
-viewNamespaceListingContent expandedNamespaceListings content =
+viewNamespaceListingContent : ViewConfig -> FQNSet -> WebData NamespaceListingContent -> Html Msg
+viewNamespaceListingContent viewConfig expandedNamespaceListings content =
     case content of
         Success loadedContent ->
-            viewLoadedNamespaceListingContent expandedNamespaceListings loadedContent
+            viewLoadedNamespaceListingContent viewConfig expandedNamespaceListings loadedContent
 
         Failure err ->
             viewError err
@@ -268,14 +268,15 @@ viewNamespaceListingContent expandedNamespaceListings content =
             viewLoading
 
 
-viewNamespaceListing : FQNSet -> NamespaceListing -> Html Msg
-viewNamespaceListing expandedNamespaceListings (NamespaceListing _ name content) =
+viewNamespaceListing : ViewConfig -> FQNSet -> NamespaceListing -> Html Msg
+viewNamespaceListing viewConfig expandedNamespaceListings (NamespaceListing _ name content) =
     let
         ( isExpanded, namespaceContent ) =
             if FQNSet.member name expandedNamespaceListings then
                 ( True
                 , div [ class "namespace-content" ]
                     [ viewNamespaceListingContent
+                        viewConfig
                         expandedNamespaceListings
                         content
                     ]
@@ -285,11 +286,15 @@ viewNamespaceListing expandedNamespaceListings (NamespaceListing _ name content)
                 ( False, UI.nothing )
 
         changePerspectiveTo =
-            Button.icon (Out (ChangePerspectiveToNamespace name)) Icon.intoFolder
-                |> Button.stopPropagation
-                |> Button.subdued
-                |> Button.small
-                |> Button.view
+            if viewConfig.withPerspective then
+                Button.icon (Out (ChangePerspectiveToNamespace name)) Icon.intoFolder
+                    |> Button.stopPropagation
+                    |> Button.subdued
+                    |> Button.small
+                    |> Button.view
+
+            else
+                UI.nothing
 
         fullName =
             FQN.toString name
@@ -335,13 +340,19 @@ viewLoading =
         ]
 
 
-view : Model -> Html Msg
-view model =
+type alias ViewConfig =
+    { withPerspective : Bool
+    }
+
+
+view : ViewConfig -> Model -> Html Msg
+view viewConfig model =
     let
         listings =
             case model.rootNamespaceListing of
                 Success (NamespaceListing _ _ content) ->
                     viewNamespaceListingContent
+                        viewConfig
                         model.expandedNamespaceListings
                         content
 
