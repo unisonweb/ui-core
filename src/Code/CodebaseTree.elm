@@ -17,7 +17,7 @@ import Code.HashQualified exposing (HashQualified(..))
 import Code.Namespace.NamespaceRef as NamespaceRef
 import Code.Perspective as Perspective
 import Html exposing (Html, a, div, label, span, text)
-import Html.Attributes exposing (class, title)
+import Html.Attributes exposing (class, classList, title)
 import Html.Events exposing (onClick)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
@@ -294,13 +294,22 @@ viewNamespaceListing expandedNamespaceListings (NamespaceListing _ name content)
 
         fullName =
             FQN.toString name
+
+        namespaceIcon =
+            div [ class "namespace-icon", classList [ ( "expanded", isExpanded ) ] ]
+                [ if isExpanded then
+                    Icon.view Icon.folderOpen
+
+                  else
+                    Icon.view Icon.folder
+                ]
     in
     div [ class "subtree" ]
         [ a
             [ class "node namespace"
             , onClick (ToggleExpandedNamespaceListing name)
             ]
-            [ Icon.caretRight |> Icon.withClassList [ ( "expanded", isExpanded ) ] |> Icon.view
+            [ namespaceIcon
             , viewListingLabel (unqualifiedName name)
             , Tooltip.tooltip (Tooltip.text ("Change perspective to " ++ fullName))
                 |> Tooltip.withArrow Tooltip.End

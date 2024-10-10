@@ -59,15 +59,16 @@
   flex-shrink: 0;
 }
 
-.codebase-tree .namespace-tree .node > .icon.expanded {
-  transform: rotate(90deg);
-}
-
-.codebase-tree .namespace-tree .node > .icon.caret-right {
+.codebase-tree .namespace-tree .node > .namespace-icon > .icon  {
+  font-size: 0.875rem;
+  text-align: center;
+  margin-right: 0.5rem;
+  transition: transform 0.1s ease-out;
+  flex-shrink: 0;
   color: var(--color-sidebar-subtle-fg);
 }
 
-.codebase-tree .namespace-tree .node:hover > .icon.caret-right {
+.codebase-tree .namespace-tree .node:hover > .namespace-icon > .icon {
   color: var(--color-sidebar-focus-fg);
 }
 
