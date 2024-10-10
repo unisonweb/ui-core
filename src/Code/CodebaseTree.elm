@@ -207,7 +207,6 @@ viewListingRow clickMsg label_ category icon =
         container
             [ Icon.view icon
             , viewListingLabel label_
-            , span [ class "definition-category" ] [ text category ]
             ]
 
 
