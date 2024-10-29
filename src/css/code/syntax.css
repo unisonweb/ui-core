@@ -24,6 +24,7 @@ code a {
   line-height: 1.4;
 }
 
+.rich a:hover,
 code a:hover {
   background: var(--color-syntax-link-hover-bg);
   color: var(--color-syntax-link-hover-fg);
