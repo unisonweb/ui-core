@@ -26,6 +26,7 @@ code a {
 
 code a:hover {
   background: var(--color-syntax-link-hover-bg);
+  color: var(--color-syntax-link-hover-fg);
   text-decoration: none;
 }
 

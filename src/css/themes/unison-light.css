@@ -179,6 +179,7 @@
   --color-syntax-constructor-namespace: var(--color-blue-2);
   --color-syntax-text: var(--color-green-1);
   --color-syntax-link-hover-bg: var(--color-gray-lighten-50);
+  --color-syntax-link-hover-fg: var(--color-blue-1);
 
   --color-syntax-monochrome-subtle: var(--u-color_text_subdued);
   --color-syntax-monochrome-base: var(--u-color_text);
