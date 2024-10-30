@@ -433,7 +433,8 @@
   margin-bottom: 0;
 }
 
-.definition-doc ul li {
+.definition-doc ul li,
+.definition-doc ol li {
   line-height: 1.75;
 }
 
