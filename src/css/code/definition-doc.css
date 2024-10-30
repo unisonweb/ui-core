@@ -426,16 +426,14 @@
 .definition-doc ul {
   margin-left: 1.5rem;
   margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .definition-doc ol:last-child,
 .definition-doc ul:last-child {
   margin-bottom: 0;
-}
-
-.definition-doc ul li,
-.definition-doc ol li {
-  line-height: 1.75;
 }
 
 .definition-doc section {
