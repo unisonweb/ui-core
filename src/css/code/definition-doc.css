@@ -433,6 +433,10 @@
   margin-bottom: 0;
 }
 
+.definition-doc ul li {
+  line-height: 1.75;
+}
+
 .definition-doc section {
   margin-bottom: 1rem;
   margin-top: 1.5rem;
