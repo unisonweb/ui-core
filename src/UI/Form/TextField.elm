@@ -3,7 +3,8 @@ module UI.Form.TextField exposing (..)
 import Html exposing (Html, div, input, label, small, text, textarea)
 import Html.Attributes
     exposing
-        ( autofocus
+        ( autocomplete
+        , autofocus
         , class
         , classList
         , id
@@ -238,6 +239,7 @@ view textField =
             , Just (class "text-field-input")
             , Just (onInput textField.onInput)
             , Just (autofocus textField.autofocus)
+            , Just (autocomplete False)
             ]
                 |> MaybeE.values
 
