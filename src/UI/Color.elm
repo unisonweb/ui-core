@@ -286,7 +286,12 @@ grayLighten100 =
 
 pinks : List Color
 pinks =
-    [ pink1, pink2, pink3, pink4, pink5 ]
+    [ pink0, pink1, pink2, pink3, pink4, pink5 ]
+
+
+pink0 : Color
+pink0 =
+    Color (C.rgb255 229 16 34)
 
 
 pink1 : Color
@@ -320,7 +325,12 @@ pink5 =
 
 greens : List Color
 greens =
-    [ green1, green2, green3, green4, green5 ]
+    [ green0, green1, green2, green3, green4, green5 ]
+
+
+green0 : Color
+green0 =
+    Color (C.rgb255 16 116 58)
 
 
 green1 : Color
@@ -355,7 +365,12 @@ green5 =
 
 blues : List Color
 blues =
-    [ blue1, blue2, blue3, blue4, blue5 ]
+    [ blue0, blue2, blue3, blue4, blue5 ]
+
+
+blue0 : Color
+blue0 =
+    Color (C.rgb255 11 56 128)
 
 
 blue1 : Color
@@ -389,7 +404,12 @@ blue5 =
 
 oranges : List Color
 oranges =
-    [ orange1, orange2, orange3, orange4, orange5 ]
+    [ orange0, orange1, orange2, orange3, orange4, orange5 ]
+
+
+orange0 : Color
+orange0 =
+    Color (C.rgb255 184 113 32)
 
 
 orange1 : Color
@@ -419,11 +439,12 @@ orange5 =
 
 
 -- Purples
+-- TODO: SHIFT THESE, 1 should be 0, 2 should be 1 etc..
 
 
 purples : List Color
 purples =
-    [ purple1, purple2, purple3, purple4, purple5 ]
+    [ purple1, purple2, purple3, purple4, purple5, purple6 ]
 
 
 purple1 : Color
@@ -449,3 +470,8 @@ purple4 =
 purple5 : Color
 purple5 =
     Color (C.rgb255 226 204 253)
+
+
+purple6 : Color
+purple6 =
+    Color (C.rgb255 241 229 255)
