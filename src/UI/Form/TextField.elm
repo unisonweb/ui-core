@@ -12,6 +12,7 @@ import Html.Attributes
         , minlength
         , placeholder
         , rows
+        , spellcheck
         , type_
         , value
         )
@@ -240,6 +241,7 @@ view textField =
             , Just (onInput textField.onInput)
             , Just (autofocus textField.autofocus)
             , Just (autocomplete False)
+            , Just (spellcheck False)
             ]
                 |> MaybeE.values
 
