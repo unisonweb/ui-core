@@ -53,6 +53,7 @@
   color: var(--c-color_anchored-overlay_sheet_text);
   z-index: var(--layer-popover);
   margin-top: 0.25rem;
+  border: 1px solid var(c-color_anchored-overlay_sheet_border)
 }
 
 .anchored-overlay_sheet.anchored-overlay_sheet_position_bottom-left {
