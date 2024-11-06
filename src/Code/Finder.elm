@@ -1,3 +1,6 @@
+{- Deprecated, prefer CommandPalette -}
+
+
 module Code.Finder exposing (Model, Msg, OutMsg(..), init, isShowFinderKeyboardShortcut, update, view)
 
 import Browser.Dom as Dom
