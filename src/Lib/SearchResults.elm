@@ -77,7 +77,7 @@ getAt index results =
     results |> toList |> ListE.getAt index
 
 
-map : (Matches a -> Matches a) -> SearchResults a -> SearchResults a
+map : (Matches a -> Matches b) -> SearchResults a -> SearchResults b
 map f results =
     case results of
         Empty ->

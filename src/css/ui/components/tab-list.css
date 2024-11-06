@@ -26,8 +26,8 @@
   justify-content: center;
   font-weight: bold;
   color: var(--c-color_tabs_text);
-  -webkit-user-select: none; 
-  user-select: none
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .tab-list .tab.tab_selected {

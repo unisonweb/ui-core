@@ -59,7 +59,7 @@
   flex-shrink: 0;
 }
 
-.codebase-tree .namespace-tree .node > .namespace-icon > .icon  {
+.codebase-tree .namespace-tree .node > .namespace-icon > .icon {
   font-size: 0.875rem;
   text-align: center;
   margin-right: 0.5rem;
