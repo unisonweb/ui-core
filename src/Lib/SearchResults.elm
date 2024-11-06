@@ -12,6 +12,7 @@ module Lib.SearchResults exposing
     , isEmpty
     , length
     , map
+    , mapMatches
     , mapMatchesToList
     , mapToList
     , matchesToList
@@ -85,6 +86,16 @@ map f results =
 
         SearchResults matches ->
             SearchResults (f matches)
+
+
+mapMatches : (a -> b) -> SearchResults a -> SearchResults b
+mapMatches f results =
+    case results of
+        Empty ->
+            Empty
+
+        SearchResults (Matches matches) ->
+            SearchResults (Matches (Zipper.map f matches))
 
 
 mapToList : (a -> Bool -> b) -> SearchResults a -> List b
