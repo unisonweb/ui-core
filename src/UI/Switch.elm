@@ -1,6 +1,6 @@
 module UI.Switch exposing (..)
 
-import UI.Icon as Icon exposing (Icon)
+import UI.Icon exposing (Icon)
 
 
 type SwitchState
