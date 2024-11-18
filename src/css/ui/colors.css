@@ -53,7 +53,9 @@
 
   /* Blues */
   --color-blue-0: #0b3880;
+  --color-blue-0-25pct: rgba(11, 56, 128, 0.25);
   --color-blue-1: #225ebe;
+  --color-blue-1-25pct: rgba(34, 94, 190, 0.25);
   --color-blue-2: #5695f4;
   --color-blue-2-25pct: rgba(85, 149, 255, 0.25);
   --color-blue-3: #9ec5ff;
