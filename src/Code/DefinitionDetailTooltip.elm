@@ -11,7 +11,7 @@ import Code.Definition.Type as Type exposing (Type(..), TypeDetail)
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Source.SourceViewConfig as SourceViewConfig
-import Code.Syntax.Linked exposing (Linked(..), TooltipConfig)
+import Code.Syntax.SyntaxConfig as SyntaxConfig exposing (TooltipConfig)
 import Dict exposing (Dict)
 import Html exposing (div)
 import Html.Attributes exposing (class)
@@ -161,16 +161,16 @@ viewDetail detail =
         viewDetail_ s =
             case s of
                 TermHover (Term _ _ { info, source }) ->
-                    Source.viewTermSource (SourceViewConfig.rich_ NotLinked) info.name source
+                    Source.viewTermSource (SourceViewConfig.rich_ SyntaxConfig.empty) info.name source
 
                 TypeHover (Type _ _ { source }) ->
-                    Source.viewTypeSource (SourceViewConfig.rich_ NotLinked) source
+                    Source.viewTypeSource (SourceViewConfig.rich_ SyntaxConfig.empty) source
 
                 AbilityConstructorHover (AbilityConstructor _ { source }) ->
-                    Source.viewTypeSource (SourceViewConfig.rich_ NotLinked) source
+                    Source.viewTypeSource (SourceViewConfig.rich_ SyntaxConfig.empty) source
 
                 DataConstructorHover (DataConstructor _ { source }) ->
-                    Source.viewTypeSource (SourceViewConfig.rich_ NotLinked) source
+                    Source.viewTypeSource (SourceViewConfig.rich_ SyntaxConfig.empty) source
 
         loading =
             Tooltip.rich

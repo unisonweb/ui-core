@@ -115,6 +115,39 @@
   flex: 1;
 }
 
+.definition-doc .copyable-source {
+  position: relative;
+}
+
+.definition-doc .copyable-source .copy-on-click {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  background: var(--u-color_action);
+}
+
+.definition-doc .copyable-source:hover .copy-on-click {
+  display: block;
+}
+
+.definition-doc .copyable-source .copy-on-click .copy-on-click_success {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--u-color_positive_action);
+  border-radius: var(--border-radius-base);
+}
+
+.definition-doc .copyable-source .copy-on-click .copy-on-click_success .icon {
+  color: var(--u-color_positive_icon-on-action);
+}
+
 .definition-doc
   .source:is(.inline-code, .example-inline, .eval-inline, .signature-inline) {
   display: inline-flex;
@@ -294,6 +327,14 @@
   white-space: wrap;
 }
 
+.definition-doc aside:has(.doc_callout:only-child) {
+  padding: 0;
+}
+
+.definition-doc aside .doc_callout:last-child {
+  margin: 0;
+}
+
 .definition-doc .doc_callout {
   background: var(--color-doc-callout-bg);
   padding: 0.75rem 1rem;
@@ -393,6 +434,9 @@
 .definition-doc ul {
   margin-left: 1.5rem;
   margin-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .definition-doc ol:last-child,

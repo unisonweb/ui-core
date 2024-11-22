@@ -66,6 +66,25 @@ decodeFailInvalid failMessage m =
             Decode.succeed a
 
 
+pipeMaybe : (b -> a -> a) -> Maybe b -> a -> a
+pipeMaybe f may a =
+    case may of
+        Just b ->
+            f b a
+
+        Nothing ->
+            a
+
+
+pipeIf : (a -> a) -> Bool -> a -> a
+pipeIf f cond a =
+    if cond then
+        f a
+
+    else
+        a
+
+
 decodeTag : Decode.Decoder String
 decodeTag =
     Decode.field "tag" Decode.string

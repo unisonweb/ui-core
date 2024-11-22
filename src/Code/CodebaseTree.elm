@@ -17,7 +17,7 @@ import Code.HashQualified exposing (HashQualified(..))
 import Code.Namespace.NamespaceRef as NamespaceRef
 import Code.Perspective as Perspective
 import Html exposing (Html, a, div, label, span, text)
-import Html.Attributes exposing (class, title)
+import Html.Attributes exposing (class, classList, title)
 import Html.Events exposing (onClick)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
@@ -207,7 +207,6 @@ viewListingRow clickMsg label_ category icon =
         container
             [ Icon.view icon
             , viewListingLabel label_
-            , span [ class "definition-category" ] [ text category ]
             ]
 
 
@@ -239,13 +238,13 @@ viewDefinitionListing listing =
             viewListingRow Nothing p "patch" Icon.patch
 
 
-viewLoadedNamespaceListingContent : FQNSet -> NamespaceListingContent -> Html Msg
-viewLoadedNamespaceListingContent expandedNamespaceListings content =
+viewLoadedNamespaceListingContent : ViewConfig -> FQNSet -> NamespaceListingContent -> Html Msg
+viewLoadedNamespaceListingContent viewConfig expandedNamespaceListings content =
     let
         viewChild c =
             case c of
                 SubNamespace nl ->
-                    viewNamespaceListing expandedNamespaceListings nl
+                    viewNamespaceListing viewConfig expandedNamespaceListings nl
 
                 SubDefinition dl ->
                     viewDefinitionListing dl
@@ -253,11 +252,11 @@ viewLoadedNamespaceListingContent expandedNamespaceListings content =
     div [] (List.map viewChild content)
 
 
-viewNamespaceListingContent : FQNSet -> WebData NamespaceListingContent -> Html Msg
-viewNamespaceListingContent expandedNamespaceListings content =
+viewNamespaceListingContent : ViewConfig -> FQNSet -> WebData NamespaceListingContent -> Html Msg
+viewNamespaceListingContent viewConfig expandedNamespaceListings content =
     case content of
         Success loadedContent ->
-            viewLoadedNamespaceListingContent expandedNamespaceListings loadedContent
+            viewLoadedNamespaceListingContent viewConfig expandedNamespaceListings loadedContent
 
         Failure err ->
             viewError err
@@ -269,14 +268,15 @@ viewNamespaceListingContent expandedNamespaceListings content =
             viewLoading
 
 
-viewNamespaceListing : FQNSet -> NamespaceListing -> Html Msg
-viewNamespaceListing expandedNamespaceListings (NamespaceListing _ name content) =
+viewNamespaceListing : ViewConfig -> FQNSet -> NamespaceListing -> Html Msg
+viewNamespaceListing viewConfig expandedNamespaceListings (NamespaceListing _ name content) =
     let
         ( isExpanded, namespaceContent ) =
             if FQNSet.member name expandedNamespaceListings then
                 ( True
                 , div [ class "namespace-content" ]
                     [ viewNamespaceListingContent
+                        viewConfig
                         expandedNamespaceListings
                         content
                     ]
@@ -286,21 +286,34 @@ viewNamespaceListing expandedNamespaceListings (NamespaceListing _ name content)
                 ( False, UI.nothing )
 
         changePerspectiveTo =
-            Button.icon (Out (ChangePerspectiveToNamespace name)) Icon.intoFolder
-                |> Button.stopPropagation
-                |> Button.subdued
-                |> Button.small
-                |> Button.view
+            if viewConfig.withPerspective then
+                Button.icon (Out (ChangePerspectiveToNamespace name)) Icon.intoFolder
+                    |> Button.stopPropagation
+                    |> Button.subdued
+                    |> Button.small
+                    |> Button.view
+
+            else
+                UI.nothing
 
         fullName =
             FQN.toString name
+
+        namespaceIcon =
+            div [ class "namespace-icon", classList [ ( "expanded", isExpanded ) ] ]
+                [ if isExpanded then
+                    Icon.view Icon.folderOpen
+
+                  else
+                    Icon.view Icon.folder
+                ]
     in
     div [ class "subtree" ]
         [ a
             [ class "node namespace"
             , onClick (ToggleExpandedNamespaceListing name)
             ]
-            [ Icon.caretRight |> Icon.withClassList [ ( "expanded", isExpanded ) ] |> Icon.view
+            [ namespaceIcon
             , viewListingLabel (unqualifiedName name)
             , Tooltip.tooltip (Tooltip.text ("Change perspective to " ++ fullName))
                 |> Tooltip.withArrow Tooltip.End
@@ -327,13 +340,19 @@ viewLoading =
         ]
 
 
-view : Model -> Html Msg
-view model =
+type alias ViewConfig =
+    { withPerspective : Bool
+    }
+
+
+view : ViewConfig -> Model -> Html Msg
+view viewConfig model =
     let
         listings =
             case model.rootNamespaceListing of
                 Success (NamespaceListing _ _ content) ->
                     viewNamespaceListingContent
+                        viewConfig
                         model.expandedNamespaceListings
                         content
 

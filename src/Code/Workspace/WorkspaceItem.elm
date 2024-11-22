@@ -1,8 +1,8 @@
 module Code.Workspace.WorkspaceItem exposing (..)
 
-import Code.Definition.AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorDetail)
+import Code.Definition.AbilityConstructor as AbilityConstructor exposing (AbilityConstructor(..), AbilityConstructorDetail)
 import Code.Definition.Category as Category exposing (Category)
-import Code.Definition.DataConstructor exposing (DataConstructor(..), DataConstructorDetail)
+import Code.Definition.DataConstructor as DataConstructor exposing (DataConstructor(..), DataConstructorDetail)
 import Code.Definition.Doc as Doc exposing (Doc, DocFoldToggles)
 import Code.Definition.Info as Info exposing (Info)
 import Code.Definition.Reference as Reference exposing (Reference)
@@ -14,7 +14,7 @@ import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ
 import Code.Source.SourceViewConfig as SourceViewConfig exposing (SourceViewConfig)
-import Code.Syntax.Linked exposing (LinkedWithTooltipConfig, linkedWithTooltipConfig)
+import Code.Syntax.SyntaxConfig as SyntaxConfig exposing (SyntaxConfig)
 import Code.Workspace.Zoom as Zoom exposing (Zoom(..))
 import Html exposing (Attribute, Html, div, h3, header, section, span, text)
 import Html.Attributes exposing (class, classList, id, title)
@@ -28,6 +28,7 @@ import UI
 import UI.ActionMenu as ActionMenu
 import UI.Button as Button
 import UI.Click as Click
+import UI.CopyOnClick as CopyOnClick
 import UI.Divider as Divider
 import UI.FoldToggle as FoldToggle
 import UI.Icon as Icon
@@ -416,8 +417,8 @@ viewInfoItem content =
     div [ class "workspace-item_info-item" ] content
 
 
-viewInfoItems : NamespaceActionMenu -> Reference -> Hash -> Info -> Html Msg
-viewInfoItems namespaceActionMenu ref hash_ info =
+viewInfoItems : NamespaceActionMenu -> Reference -> Hash -> Maybe String -> Info -> Html Msg
+viewInfoItems namespaceActionMenu ref hash_ rawSource info =
     let
         namespace =
             case info.namespace of
@@ -431,7 +432,7 @@ viewInfoItems namespaceActionMenu ref hash_ info =
                         [ ActionMenu.optionItem Icon.intoFolder ("Change perspective to " ++ ns) (Click.onClick (ChangePerspectiveToSubNamespace fqn)) ]
                         |> ActionMenu.fromButton (ToggleNamespaceActionMenu ref) ns
                         |> ActionMenu.withButtonIcon Icon.folderOutlined
-                        |> ActionMenu.withButtonColor Button.Subdued
+                        |> ActionMenu.withButtonColor Button.Outlined
                         |> ActionMenu.shouldBeOpen (isNamespaceActionMenuOpen namespaceActionMenu ref)
                         |> ActionMenu.view
 
@@ -459,20 +460,43 @@ viewInfoItems namespaceActionMenu ref hash_ info =
 
         hashInfoItem =
             Hash.view hash_
+
+        copySourceToClipboard =
+            case rawSource of
+                Just s ->
+                    div [ class "copy-code" ]
+                        [ Tooltip.tooltip (Tooltip.text "Copy full source")
+                            |> Tooltip.withArrow Tooltip.Middle
+                            |> Tooltip.view
+                                (CopyOnClick.view s
+                                    (div [ class "button small outlined content-icon" ]
+                                        [ Icon.view Icon.clipboard ]
+                                    )
+                                    (Icon.view Icon.checkmark)
+                                )
+                        ]
+
+                Nothing ->
+                    UI.nothing
     in
-    div [ class "workspace-item_info-items" ] [ hashInfoItem, otherNames, namespace ]
-
-
-viewInfo : NamespaceActionMenu -> Reference -> Hash -> Info -> Category -> Html Msg
-viewInfo namespaceActionMenu ref hash_ info category =
-    div [ class "workspace-item_info" ]
-        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
-        , h3 [ class "name" ] [ FQN.view info.name ]
-        , viewInfoItems namespaceActionMenu ref hash_ info
+    div [ class "workspace-item_info-items" ]
+        [ hashInfoItem
+        , otherNames
+        , namespace
+        , copySourceToClipboard
         ]
 
 
-viewDoc : LinkedWithTooltipConfig Msg -> Reference -> DocVisibility -> DocFoldToggles -> Doc -> Html Msg
+viewInfo : NamespaceActionMenu -> Reference -> Hash -> Maybe String -> Info -> Category -> Html Msg
+viewInfo namespaceActionMenu ref hash_ rawSource info category =
+    div [ class "workspace-item_info" ]
+        [ div [ class "category-icon" ] [ Icon.view (Category.icon category) ]
+        , h3 [ class "name" ] [ FQN.view info.name ]
+        , viewInfoItems namespaceActionMenu ref hash_ rawSource info
+        ]
+
+
+viewDoc : SyntaxConfig Msg -> Reference -> DocVisibility -> DocFoldToggles -> Doc -> Html Msg
 viewDoc syntaxConfig ref docVisibility docFoldToggles doc =
     let
         ( showFullDoc, shownInFull ) =
@@ -561,7 +585,7 @@ viewSource zoom onSourceToggleClick sourceConfig item =
                 |> viewToggableSource (FoldToggle.disabled |> FoldToggle.isClosed isBuiltin_)
 
 
-viewItem : LinkedWithTooltipConfig Msg -> NamespaceActionMenu -> Reference -> ItemData -> Bool -> Html Msg
+viewItem : SyntaxConfig Msg -> NamespaceActionMenu -> Reference -> ItemData -> Bool -> Html Msg
 viewItem syntaxConfig namespaceActionMenu ref data isFocused =
     let
         ( zoomClass, rowZoomToggle, sourceZoomToggle ) =
@@ -597,47 +621,47 @@ viewItem syntaxConfig namespaceActionMenu ref data isFocused =
                 :: MaybeE.unwrap [] (\i -> [ i ]) (viewBuiltin data.item)
                 ++ viewDoc_ doc
 
-        viewInfo_ hash_ info cat =
-            viewInfo namespaceActionMenu ref hash_ info cat
+        viewInfo_ hash_ rawSource info cat =
+            viewInfo namespaceActionMenu ref hash_ rawSource info cat
 
         foldRow =
             Just { zoom = data.zoom, toggle = rowZoomToggle }
     in
     case data.item of
-        TermItem (Term h category detail) ->
+        TermItem ((Term h category detail) as term) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Term category))
+                (viewInfo_ h (Term.rawSource term) detail.info (Category.Term category))
                 (viewContent detail.doc)
                 foldRow
 
-        TypeItem (Type h category detail) ->
+        TypeItem ((Type h category detail) as type_) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Type category))
+                (viewInfo_ h (Type.rawSource type_) detail.info (Category.Type category))
                 (viewContent detail.doc)
                 foldRow
 
-        DataConstructorItem (DataConstructor h detail) ->
+        DataConstructorItem ((DataConstructor h detail) as ctor) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Type Type.DataType))
+                (viewInfo_ h (DataConstructor.rawSource ctor) detail.info (Category.Type Type.DataType))
                 (viewContent Nothing)
                 foldRow
 
-        AbilityConstructorItem (AbilityConstructor h detail) ->
+        AbilityConstructorItem ((AbilityConstructor h detail) as ctor) ->
             viewClosableRow
                 ref
                 attrs
-                (viewInfo_ h detail.info (Category.Type Type.AbilityType))
+                (viewInfo_ h (AbilityConstructor.rawSource ctor) detail.info (Category.Type Type.AbilityType))
                 (viewContent Nothing)
                 foldRow
 
 
-viewPresentationItem : LinkedWithTooltipConfig Msg -> Reference -> ItemData -> Html Msg
+viewPresentationItem : SyntaxConfig Msg -> Reference -> ItemData -> Html Msg
 viewPresentationItem syntaxConfig ref data =
     case data.item of
         TermItem (Term _ category detail) ->
@@ -721,8 +745,8 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
 
         Success ref data ->
             let
-                linkedWithTooltipConfig_ =
-                    linkedWithTooltipConfig
+                syntaxConfig =
+                    SyntaxConfig.default
                         (OpenReference ref >> Click.onClick)
                         (DefinitionSummaryTooltip.tooltipConfig
                             DefinitionSummaryTooltipMsg
@@ -731,10 +755,10 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
             in
             case viewMode of
                 ViewMode.Regular ->
-                    viewItem linkedWithTooltipConfig_ namespaceActionMenu ref data isFocused
+                    viewItem syntaxConfig namespaceActionMenu ref data isFocused
 
                 ViewMode.Presentation ->
-                    viewPresentationItem linkedWithTooltipConfig_ ref data
+                    viewPresentationItem syntaxConfig ref data
 
 
 

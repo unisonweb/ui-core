@@ -6,6 +6,7 @@ module Code.Definition.AbilityConstructor exposing
     , AbilityConstructorSummary
     , decodeSignature
     , decodeSource
+    , rawSource
     )
 
 import Code.Definition.Info exposing (Info)
@@ -13,7 +14,7 @@ import Code.Definition.Term as Term exposing (TermSignature)
 import Code.Definition.Type as Type exposing (TypeSource)
 import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash exposing (Hash)
-import Code.Syntax exposing (Syntax)
+import Code.Syntax as Syntax exposing (Syntax)
 import Json.Decode as Decode
 
 
@@ -41,6 +42,20 @@ type alias AbilityConstructorSummary =
 
 type alias AbilityConstructorListing =
     AbilityConstructor FQN
+
+
+
+-- HELPERS
+
+
+rawSource : AbilityConstructorDetail -> Maybe String
+rawSource (AbilityConstructor _ { source }) =
+    case source of
+        Type.Source stx ->
+            Just (Syntax.toString stx)
+
+        Type.Builtin ->
+            Nothing
 
 
 

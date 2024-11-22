@@ -5,7 +5,7 @@ import Code.Definition.Doc as Doc exposing (DocFoldToggles)
 import Code.Definition.Readme as Readme exposing (Readme)
 import Code.Definition.Reference exposing (Reference)
 import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
-import Code.Syntax.Linked exposing (linkedWithTooltipConfig)
+import Code.Syntax.SyntaxConfig as SyntaxConfig
 import Html exposing (Html, p)
 import UI.Button as Button
 import UI.Card as Card exposing (Card)
@@ -71,7 +71,7 @@ asCard : Model -> Readme -> Card Msg
 asCard model readme =
     let
         syntaxConfig =
-            linkedWithTooltipConfig
+            SyntaxConfig.default
                 (OpenReference >> Click.onClick)
                 (DefinitionSummaryTooltip.tooltipConfig
                     DefinitionSummaryTooltipMsg

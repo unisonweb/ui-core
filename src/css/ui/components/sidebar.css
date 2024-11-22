@@ -7,7 +7,7 @@
   /* @color-todo @inverse */
   --color-sidebar-fg: var(--color-gray-lighten-50);
   --color-sidebar-fg-em: var(--color-gray-lighten-100);
-  --color-sidebar-bg: var(--color-gray-darken-25);
+  --color-sidebar-bg: var(--color-gray-darken-20);
   /* see color files for why this is needed */
   --color-sidebar-bg-transparent: var(--color-gray-darken-20-transparent);
   --color-sidebar-border: var(--color-gray-base);

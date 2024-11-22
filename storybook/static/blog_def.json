@@ -1,0 +1,2251 @@
+{
+  "missingDefinitions": [],
+  "termDefinitions": {},
+  "typeDefinitions": {
+    "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o": {
+      "bestTypeName": "Blog",
+      "defnTypeTag": "Data",
+      "typeDefinition": {
+        "contents": [
+          {
+            "annotation": {
+              "tag": "DataTypeKeyword"
+            },
+            "segment": "type"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "Blog",
+              "tag": "HashQualifier"
+            },
+            "segment": "Blog"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": "\n  = "
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": "{ "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "shareProjectRef"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#tnorf7rop3g22jhifa5f65emuksaeg5s1bt531m05c1ill1938kds5puul7itiqf2u8anq8nlb8h88p8rmst4p0cc5c2hatnd2tf30o",
+              "tag": "TypeReference"
+            },
+            "segment": "ProjectRef"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "blogTitle"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "description"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "postsByTime"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+              "tag": "TypeReference"
+            },
+            "segment": "BTree"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#0th5tp9f8pri1ttic6i59gpoqu6jbadm3vbgkc936ug58mp4qkqjak7bl69tfjbepvsd72sd0ql3eucph3qfmknue6dfj3m8fok8tt0",
+              "tag": "TypeReference"
+            },
+            "segment": "Instant"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+              "tag": "TypeReference"
+            },
+            "segment": "Slug"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "posts"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+              "tag": "TypeReference"
+            },
+            "segment": "BTree"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+              "tag": "TypeReference"
+            },
+            "segment": "Slug"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#aldkq0p32rjq6o2inj3ujgb8qhgikpjrtgf81r2vv7eph6u60fg9svq8oumnl6h788ge57poinqd1d3mfa2176g5u2vffvo1mfa1vr0",
+              "tag": "TypeReference"
+            },
+            "segment": "Post"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "htmlPosts"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+              "tag": "TypeReference"
+            },
+            "segment": "BTree"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+              "tag": "TypeReference"
+            },
+            "segment": "Slug"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#2ejnm7f8om1tldqtqhp8k410e1k9aphkcntgd1bntn8g6qdiibgo0fcjop41ohjfhcaq4565dt9pp47qj95l6i5rovhlhf9aivpbijg.1",
+              "tag": "TypeReference"
+            },
+            "segment": "Html"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "subscribers"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+              "tag": "TypeReference"
+            },
+            "segment": "BTree"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "cloudEnvironment"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#dp7o0tct532khak40vft0208t7h4lm98aa6iu63lcsfftrb9fc5tr5um68tmum680qjlmg9kvsq2b5vvo3caeur4k9eo2b71cm9sb38",
+              "tag": "TypeReference"
+            },
+            "segment": "Environment"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "serviceName"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+              "tag": "TypeReference"
+            },
+            "segment": "Slug"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "theme"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#p4s9rchnmgf5crpm91bos32nmro5eou7uij0s52n0u5s1ffrs58i34ltbug1sh8p2smbrvnl7i7tekqe8f8s734s21e28oik78f1fqo",
+              "tag": "TypeReference"
+            },
+            "segment": "BlogTheme"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "guid"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": ","
+          },
+          {
+            "annotation": null,
+            "segment": "\n      "
+          },
+          {
+            "annotation": {
+              "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+              "tag": "TypeReference"
+            },
+            "segment": "emailNotificationsConfig"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#nirp5os0q69o4e1u9p3t6mmq6l6otluefi3ksm7dhm0diidjvkkgl8o9bvnflbj0sanuvdusf34f1qrins3ktcaglpcqv9oums2slsg",
+              "tag": "TypeReference"
+            },
+            "segment": "Optional"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "#sb9aj8e425vg9crprhlsgujhn5aag8dftnoqf0bcqrug0k9632lu2p54siqsjvsofmevpsugotn6o6b8domb2he00jvc27qc42okmdo",
+              "tag": "TypeReference"
+            },
+            "segment": "EmailNotificationsConfig"
+          },
+          {
+            "annotation": {
+              "tag": "DelimiterChar"
+            },
+            "segment": " }"
+          }
+        ],
+        "tag": "UserObject"
+      },
+      "typeDocs": [
+        [
+          "Blog.doc",
+          "#6ero2s89knamatvqudcuth5l22mietqr2mgucsi5m256nnrqvu5h854836k5ccg0fvl12lk9oqnlvk5rudprj9rk9llr8vbs5dqeo38",
+          {
+            "contents": [
+              {
+                "contents": [
+                  {
+                    "contents": "A",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": {
+                      "contents": [
+                        {
+                          "annotation": {
+                            "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+                            "tag": "TypeReference"
+                          },
+                          "segment": "Blog"
+                        }
+                      ],
+                      "tag": "Link"
+                    },
+                    "tag": "Special"
+                  },
+                  {
+                    "contents": "is",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "fundamentally",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "a",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "collection",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "of",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "blog",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "posts,",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "along",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "with",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "some",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "associated",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "metadata",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "and",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "configuration.",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "It's",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "the",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "main",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "data",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "structure",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "that",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "powers",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "a",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "blog,",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "and",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "it's",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "the",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "thing",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "that",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "you'll",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "be",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "interacting",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "with",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "most",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "often",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "when",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "you're",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "working",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "with",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "this",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "library.",
+                    "tag": "Word"
+                  }
+                ],
+                "tag": "Paragraph"
+              },
+              {
+                "contents": [
+                  {
+                    "contents": "The",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": {
+                      "contents": [
+                        {
+                          "annotation": {
+                            "contents": "#5eijrbquid5egp1rovlp93vq6kpu9k4i9n27jqmeg3aekb1mh7tqv3dsmkq285jnus0bpj2tmkr5fimlfmh78boqdnm80lui74bi91o",
+                            "tag": "TypeReference"
+                          },
+                          "segment": "Blog"
+                        }
+                      ],
+                      "tag": "Link"
+                    },
+                    "tag": "Special"
+                  },
+                  {
+                    "contents": "type",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "is",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "a",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "record",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "type,",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "and",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "it",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "has",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "the",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "following",
+                    "tag": "Word"
+                  },
+                  {
+                    "contents": "fields:",
+                    "tag": "Word"
+                  }
+                ],
+                "tag": "Paragraph"
+              },
+              {
+                "contents": [
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#bccinsekemeth8tjbshelvd1032q0l73pgc3ftvfvn4oj7puuutrff436bn8pvh10dbkfut24d4lm9ckr3vbipbqd0v8iip3i8h3tig",
+                                "tag": "TermReference"
+                              },
+                              "segment": "shareProjectRef"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "reference",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "Unison",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "Share",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "project",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "hosts",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#ej86si0ur1lsjade71dojr25phk9bbom9rdks6dltolos5tjivakujcriqe02npba53n9gd7tkh8bmv08ttjb9t35lq2ch5heshqcs0",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Doc"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "for",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "posts.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "used",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "fetch",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "content",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "of",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "posts",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "when",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "they're",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "being",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "rendered.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#2d47t5d6u5n2ectctof0qcpglntd7cq9l5trl808uqdndrnhvd5ki2b00p97osdv1bpnradvclq3vn0l54rgg8d3rbq3n3eokl4tbsg",
+                                "tag": "TermReference"
+                              },
+                              "segment": "blogTitle"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "title",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "of",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#4js3so8ruvdkmtnjsgc5grjglj88b5k94mespsepl6ai9pnrk64sg813k60u5tmgtqrihdo9v9k4dks10hovo6upop568v4tkgjq7io",
+                                "tag": "TermReference"
+                              },
+                              "segment": "description"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "short",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "description",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "of",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#mtks0b8ij0vbhb3ionpihb6pdn82ghofgdo3s2inp8eptmml1u0gcege5pt2isja9kk1fc0bm360fk0cfn3idvat52q4jj643rk00v8",
+                                "tag": "TermReference"
+                              },
+                              "segment": "postsByTime"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "BTree"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "maps",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "from",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#0th5tp9f8pri1ttic6i59gpoqu6jbadm3vbgkc936ug58mp4qkqjak7bl69tfjbepvsd72sd0ql3eucph3qfmknue6dfj3m8fok8tt0",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Instant"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Slug"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "used",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "find",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "most",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "recent",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "posts.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#h529e34pdh7ul4fqg8kevlft86desrrqiahingrti7ufahcdhd88vmhrrcc8vjd49p0qq9ivm2eajqd4lgi90qane25g3ou5d6skclg",
+                                "tag": "TermReference"
+                              },
+                              "segment": "posts"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "main",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "collection",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "of",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "posts.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "It's",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "BTree"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "maps",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "from",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Slug"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#aldkq0p32rjq6o2inj3ujgb8qhgikpjrtgf81r2vv7eph6u60fg9svq8oumnl6h788ge57poinqd1d3mfa2176g5u2vffvo1mfa1vr0",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Post"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "The",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Slug"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "unique",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "identifier",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "for",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "post",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "and",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "also",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "URL",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "path",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "component",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "for",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "post.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#d2rt11v8vm6anbaaehjlcgkeiggk7dhdpev37gd9rf85vsd43jn56294h5nk11fnm6hbut0b6ct9037fpmvfdc54uedqt1rci1cku10",
+                                "tag": "TermReference"
+                              },
+                              "segment": "htmlPosts"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "BTree"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "maps",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "from",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Slug"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#2ejnm7f8om1tldqtqhp8k410e1k9aphkcntgd1bntn8g6qdiibgo0fcjop41ohjfhcaq4565dt9pp47qj95l6i5rovhlhf9aivpbijg.1",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Html"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "values.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "used",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "cache",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "rendered",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "HTML",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "for",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "posts,",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "so",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "we",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "don't",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "have",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "re-render",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "them",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "every",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "time",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "we",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "want",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "display",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "them.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#g18tvdjl741micuve8v96hllv0nicl5a71voi8jbovsv92pub9at9v8bj98rjkkbqt5p1stgjhii0oqjl8h2n7v3u6hgndmq6kui1b8",
+                                "tag": "TermReference"
+                              },
+                              "segment": "subscribers"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#omchgqo2nr441sv8olbiqpl998cjk3f09920r4gpahgn88rcafc6vr4n0v0l7sfiir1dc4c91nrrfgu9h8ac63i56i75c8kdv7malu8",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "BTree"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "maps",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "from",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "email",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "addresses",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "names.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "used",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "keep",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "track",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "of",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "email",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "subscribers",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#vl6rt5dngt414kcj1rfk0jvqeeo1v5kgo2kspklimsqreoo8sgqjd7dc5acbgqotk4kvc8k9rsavnln7m09g0hjbnmpr0ismdvigkho",
+                                "tag": "TermReference"
+                              },
+                              "segment": "cloudEnvironment"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "Unison",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "Cloud",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#dp7o0tct532khak40vft0208t7h4lm98aa6iu63lcsfftrb9fc5tr5um68tmum680qjlmg9kvsq2b5vvo3caeur4k9eo2b71cm9sb38",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Environment"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "runs",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "in.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "used",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "interact",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "with",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "cloud",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "services",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "depends",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "on.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#lhaj97al0gtg58voecoign6umj3a16kfsaerr301uv6iq8uhvbi3s7oef4li40dv1b7rubvamqogcudhcnmkdcd945lslvc298cjgb8",
+                                "tag": "TermReference"
+                              },
+                              "segment": "serviceName"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "name",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "of",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "service",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "as",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "contents": {
+                                "contents": [
+                                  {
+                                    "annotation": {
+                                      "contents": "#ups6rd2g854ro4d7setldug0t4p6m5r59brbrj1cksriorbjb8q2piu04c9ni1v7vq7ntg24otadnsm5dl711radhn1ukqisq8fnl78",
+                                      "tag": "TypeReference"
+                                    },
+                                    "segment": "Slug"
+                                  }
+                                ],
+                                "tag": "Link"
+                              },
+                              "tag": "Special"
+                            },
+                            {
+                              "contents": ".",
+                              "tag": "Word"
+                            }
+                          ],
+                          "tag": "Join"
+                        },
+                        "tag": "Group"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "used",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "identify",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "service",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "in",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "cloud",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "environment.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#pilbjob8glmtvv8t54bac2krs2dsi00m8f60ta26vvhh2qphnatr9jtl6cnq4gtiob72othakjvqpd2qk783i5ume752b1pc61lbgc0",
+                                "tag": "TermReference"
+                              },
+                              "segment": "Blog.theme"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#p4s9rchnmgf5crpm91bos32nmro5eou7uij0s52n0u5s1ffrs58i34ltbug1sh8p2smbrvnl7i7tekqe8f8s734s21e28oik78f1fqo",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "BlogTheme"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "that",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "uses",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "render",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "its",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "HTML.",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "This",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "includes",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "things",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "like",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "fonts,",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "colors,",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "and",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "other",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "styling",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "information.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#e2g0dj9o441j4aa9l580ellt6607s1k8boq415ss66t8h9rscl7aidc0rn3ekmrg752uuubsit07t209fdqqq70rbani0bod6sjqemo",
+                                "tag": "TermReference"
+                              },
+                              "segment": "Blog.guid"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "a",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "unique",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "identifier",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "for",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  },
+                  {
+                    "contents": [
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#6aeol6ip1cnfdv9gfj6o7m08m1alpo40mslkikv1iv9m6lq3l9tp9prfp04pmg8d7m0ci0h0liabsnrcpubmfofcq0c8k5tfl0gk4o8",
+                                "tag": "TermReference"
+                              },
+                              "segment": "emailNotificationsConfig"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "is",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#nirp5os0q69o4e1u9p3t6mmq6l6otluefi3ksm7dhm0diidjvkkgl8o9bvnflbj0sanuvdusf34f1qrins3ktcaglpcqv9oums2slsg",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "Optional"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": {
+                          "contents": [
+                            {
+                              "annotation": {
+                                "contents": "#sb9aj8e425vg9crprhlsgujhn5aag8dftnoqf0bcqrug0k9632lu2p54siqsjvsofmevpsugotn6o6b8domb2he00jvc27qc42okmdo",
+                                "tag": "TypeReference"
+                              },
+                              "segment": "EmailNotificationsConfig"
+                            }
+                          ],
+                          "tag": "Link"
+                        },
+                        "tag": "Special"
+                      },
+                      {
+                        "contents": "the",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "blog",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "uses",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "send",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "emails",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "to",
+                        "tag": "Word"
+                      },
+                      {
+                        "contents": "subscribers.",
+                        "tag": "Word"
+                      }
+                    ],
+                    "tag": "Paragraph"
+                  }
+                ],
+                "tag": "BulletedList"
+              }
+            ],
+            "tag": "UntitledSection"
+          }
+        ]
+      ],
+      "typeNames": ["Blog"]
+    }
+  }
+}

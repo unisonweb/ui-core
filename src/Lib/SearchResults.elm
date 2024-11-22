@@ -12,6 +12,7 @@ module Lib.SearchResults exposing
     , isEmpty
     , length
     , map
+    , mapMatches
     , mapMatchesToList
     , mapToList
     , matchesToList
@@ -77,7 +78,7 @@ getAt index results =
     results |> toList |> ListE.getAt index
 
 
-map : (Matches a -> Matches a) -> SearchResults a -> SearchResults a
+map : (Matches a -> Matches b) -> SearchResults a -> SearchResults b
 map f results =
     case results of
         Empty ->
@@ -85,6 +86,16 @@ map f results =
 
         SearchResults matches ->
             SearchResults (f matches)
+
+
+mapMatches : (a -> b) -> SearchResults a -> SearchResults b
+mapMatches f results =
+    case results of
+        Empty ->
+            Empty
+
+        SearchResults (Matches matches) ->
+            SearchResults (Matches (Zipper.map f matches))
 
 
 mapToList : (a -> Bool -> b) -> SearchResults a -> List b

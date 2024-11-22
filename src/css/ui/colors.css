@@ -19,9 +19,8 @@
 
   /* Grays */
   --color-gray-darken-30: #18181c;
-  --color-gray-darken-25: #22232a;
-  --color-gray-darken-20: #2d2e35;
-  --color-gray-darken-10: #41424b;
+  --color-gray-darken-20: #22232a;
+  --color-gray-darken-10: #2d2e35;
 
   --color-gray-base: #515258;
 
@@ -35,13 +34,17 @@
   --color-gray-lighten-100: #ffffff;
 
   /* Pinks */
+  --color-pink-0: #e51022;
+  --color-pink-0-25pct: rgba(229, 16, 34, 0.25);
   --color-pink-1: #ff4756;
+  --color-pink-1-25pct: rgba(255, 71, 86, 0.25);
   --color-pink-2: #ff6c78;
   --color-pink-3: #ff9ba3;
   --color-pink-4: #ffc1c6;
   --color-pink-5: #feeef0;
 
   /* Greens */
+  --color-green-0: #10733a;
   --color-green-1: #27ae60;
   --color-green-2: #52d188;
   --color-green-3: #88f3b5;
@@ -49,7 +52,10 @@
   --color-green-5: #e8f8ef;
 
   /* Blues */
+  --color-blue-0: #0b3880;
+  --color-blue-0-25pct: rgba(11, 56, 128, 0.25);
   --color-blue-1: #225ebe;
+  --color-blue-1-25pct: rgba(34, 94, 190, 0.25);
   --color-blue-2: #5695f4;
   --color-blue-2-25pct: rgba(85, 149, 255, 0.25);
   --color-blue-3: #9ec5ff;
@@ -68,10 +74,12 @@
   --color-orange-5: #fff7df;
 
   /* Purples */
+  /* TODO: SHIFT THESE, 1 should be 0, 2 should be 1 etc.. */
   --color-purple-1: #55377b;
   --color-purple-2: #734da3;
   --color-purple-3: #9a76c8;
   --color-purple-3-25pct: rgba(198, 168, 236, 0.25);
   --color-purple-4: #c6a8ec;
   --color-purple-5: #e2ccfd;
+  --color-purple-6: #f1e5ff;
 }

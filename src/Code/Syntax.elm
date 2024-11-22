@@ -7,12 +7,13 @@ module Code.Syntax exposing
     , fromList
     , numLines
     , reference
+    , toString
     , view
     )
 
 import Code.Definition.Reference as Reference exposing (Reference)
 import Code.HashQualified as HQ
-import Code.Syntax.Linked exposing (Linked)
+import Code.Syntax.SyntaxConfig exposing (SyntaxConfig)
 import Code.Syntax.SyntaxSegment as SyntaxSegment exposing (..)
 import Html exposing (Html, span)
 import Html.Attributes exposing (class)
@@ -99,16 +100,24 @@ foldl f init (Syntax segments) =
     NEL.foldl f init segments
 
 
+toString : Syntax -> String
+toString (Syntax segments) =
+    segments
+        |> NEL.map SyntaxSegment.toString
+        |> NEL.toList
+        |> String.concat
+
+
 
 -- VIEW
 
 
-view : Linked msg -> Syntax -> Html msg
-view linked (Syntax segments) =
+view : SyntaxConfig msg -> Syntax -> Html msg
+view syntaxConfig (Syntax segments) =
     let
         renderedSegments =
             segments
-                |> NEL.map (SyntaxSegment.view linked)
+                |> NEL.map (SyntaxSegment.view syntaxConfig)
                 |> NEL.toList
     in
     span [ class "syntax" ] renderedSegments

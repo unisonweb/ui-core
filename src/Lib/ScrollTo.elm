@@ -6,6 +6,11 @@ import Task
 
 scrollTo : msg -> String -> String -> Cmd msg
 scrollTo doneMsg containerId targetId =
+    scrollTo_ doneMsg containerId targetId 0
+
+
+scrollTo_ : msg -> String -> String -> Float -> Cmd msg
+scrollTo_ doneMsg containerId targetId marginTop =
     Task.sequence
         [ Dom.getElement targetId |> Task.map (.element >> .y)
         , Dom.getElement containerId |> Task.map (.element >> .y)
@@ -15,7 +20,7 @@ scrollTo doneMsg containerId targetId =
             (\ys ->
                 case ys of
                     elY :: viewportY :: viewportScrollTop :: [] ->
-                        Dom.setViewportOf containerId 0 (viewportScrollTop + (elY - viewportY))
+                        Dom.setViewportOf containerId 0 (viewportScrollTop + (elY - viewportY) - marginTop)
                             |> Task.onError (\_ -> Task.succeed ())
 
                     _ ->

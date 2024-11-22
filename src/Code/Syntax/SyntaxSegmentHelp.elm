@@ -95,7 +95,7 @@ typeParams =
 
 typeForall : Html msg
 typeForall =
-    help [ inlineCode "forall", text " describes a type that is universally quantified." ]
+    help [ inlineCode "∀", text " or ", inlineCode "forall", text " describes a type that is universally quantified." ]
 
 
 typeAscriptionColon : Html msg

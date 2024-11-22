@@ -10,7 +10,7 @@ import Code.Definition.Type as Type exposing (Type(..), TypeSummary, typeSourceS
 import Code.FullyQualifiedName as FQN
 import Code.Hash as Hash
 import Code.Syntax as Syntax
-import Code.Syntax.Linked exposing (Linked(..), TooltipConfig)
+import Code.Syntax.SyntaxConfig as SyntaxConfig exposing (TooltipConfig)
 import Code.Syntax.SyntaxSegment as SyntaxSegment
 import Dict exposing (Dict)
 import Html exposing (div, span, text)
@@ -205,19 +205,19 @@ viewSummary summary =
         viewSummary_ s =
             case s of
                 TermHover (Term _ _ { signature }) ->
-                    Syntax.view NotLinked (termSignatureSyntax signature)
+                    Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
 
                 TypeHover (Type h _ { fqn, source }) ->
                     source
                         |> viewTypeSourceSyntax h fqn
-                        |> Maybe.map (Syntax.view NotLinked)
+                        |> Maybe.map (Syntax.view SyntaxConfig.empty)
                         |> Maybe.withDefault (viewBuiltinType h fqn)
 
                 AbilityConstructorHover (AbilityConstructor _ { signature }) ->
-                    Syntax.view NotLinked (termSignatureSyntax signature)
+                    Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
 
                 DataConstructorHover (DataConstructor _ { signature }) ->
-                    Syntax.view NotLinked (termSignatureSyntax signature)
+                    Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
 
         loading =
             Tooltip.rich
