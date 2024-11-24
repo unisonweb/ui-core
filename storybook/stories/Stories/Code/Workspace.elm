@@ -1,22 +1,24 @@
 module Stories.Code.Workspace exposing (..)
 
 import Browser
+import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
 import Code.Definition.Reference as Reference
-import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName as FQN
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
-import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems as WorkspaceItems
-import Html exposing (Html)
-import Http
+import Html exposing (Html, div)
+import Html.Events exposing (onClick)
 import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.ViewMode
+import Url
+import Dict exposing (Dict)
 
 
 type alias Model =
@@ -35,54 +37,77 @@ main =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { workspaceItems = WorkspaceItems.empty
-      , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
-      , workspaceItemViewState = Code.Workspace.WorkspaceItem.viewState
-      , isMinimapToggled = False
-      }
-    , Cmd.batch
-        [ getSampleResponse 0 "/increment_term_def.json" "increment"
-        , getSampleResponse 1 "/nat_gt_term_def.json" "nat_gt"
-        , getSampleResponse 2 "/blog_def.json" "blog"
-        , getSampleResponse 3 "/base_readme.json" "base_readme"
-        , getSampleResponse 4 "/long.json" "assets.indexHtml"
-        , getSampleResponse 5 "/cloud_config_def.json" "Config"
-        ]
-    )
-
-
-getSampleResponse : Int -> String -> String -> Cmd Msg
-getSampleResponse index url termName =
     let
         reference =
-            termName
-                |> FQN.fromString
-                |> NameOnly
-                |> Reference.TypeReference
+            "increment"
+                |> Reference.fromString Reference.TermReference
 
-        decoder =
-            reference
-                |> decodeItem
+        model =
+            { workspaceItems = WorkspaceItems.empty
+            , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
+            , workspaceItemViewState = Code.Workspace.WorkspaceItem.viewState
+            , isMinimapToggled = False
+            , referenceMap = Dict.empty
+            }
+
+        openResult =
+            Workspace.open config model reference
     in
-    Http.get
-        { url = url
-        , expect = Http.expectJson (GotItem index reference) decoder
-        }
+    Tuple.mapSecond (Cmd.map WorkspaceMsg) openResult
 
 
 type Msg
     = WorkspaceMsg Workspace.Msg
-    | GotItem Int Reference.Reference (Result Http.Error Item)
+    | Open Reference.Reference
 
 
 codebaseHash : Endpoint
 codebaseHash =
-    GET { path = [ "list" ], queryParams = [] }
+    GET { path = [ "" ], queryParams = [] }
+
+
+refToEndpoint : Reference.Reference -> Endpoint
+refToEndpoint ref =
+    let
+        refStringToMockFileName : String -> String
+        refStringToMockFileName input =
+            case input of
+                "increment" ->
+                    "increment_term_def.json"
+
+                "Nat.gt" ->
+                    "/nat_gt_term_def.json"
+
+                "base.README" ->
+                    "/base_readme.json"
+
+                "blog" ->
+                     "/blog_def.json"
+
+                "assets.indexHtml" ->
+                    "/long.json"
+
+                "PositiveInt2" ->
+                    "/positive_int_2.json"
+
+                "Config" -> 
+                    "/cloud_config_def.json"
+
+                _ ->
+                    ""
+    in
+    GET
+        { path = [ refStringToMockFileName (Reference.toApiUrlString ref) ]
+        , queryParams = []
+        }
 
 
 api : HttpApi.HttpApi
 api =
-    { url = SameOrigin []
+    { url =
+        Url.fromString "http://localhost:6006"
+            |> Maybe.map CrossOrigin
+            |> Maybe.withDefault (SameOrigin [])
     , headers = []
     }
 
@@ -91,7 +116,20 @@ config : Config
 config =
     { operatingSystem = OperatingSystem.MacOS
     , perspective = Perspective.relativeRootPerspective
-    , toApiEndpoint = \_ -> codebaseHash
+    , toApiEndpoint =
+        \endpoint ->
+            case endpoint of
+                CodebaseApi.Find _ ->
+                    codebaseHash
+
+                CodebaseApi.Browse _ ->
+                    codebaseHash
+
+                CodebaseApi.Definition { ref } ->
+                    refToEndpoint ref
+
+                CodebaseApi.Summary _ ->
+                    codebaseHash
     , api = api
     }
 
@@ -106,27 +144,43 @@ update message model =
             in
             ( newModel, Cmd.map WorkspaceMsg cmd )
 
-        GotItem _ reference result ->
-            case result of
-                Err error ->
-                    ( model, Cmd.none )
-
-                Ok item ->
-                    let
-                        newWorkspaceItems =
-                            item
-                                |> fromItem reference
-                                |> WorkspaceItems.prependWithFocus model.workspaceItems
-
-                        newModel =
-                            { model | workspaceItems = newWorkspaceItems }
-                    in
-                    ( newModel, Cmd.none )
+        Open ref ->
+            let
+                openResult =
+                    Workspace.open config model ref
+            in
+            Tuple.mapSecond (Cmd.map WorkspaceMsg) openResult
 
 
 view : Model -> Html Msg
 view model =
-    Workspace.view
-        UI.ViewMode.Regular
-        model
-        |> Html.map WorkspaceMsg
+    div []
+        [ Workspace.view
+            UI.ViewMode.Regular
+            model
+            |> Html.map WorkspaceMsg
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "PositiveInt2"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "assets.indexHtml"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "base.README"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "blog"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "Nat.gt"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "Config"
+        ]
+
+
+sampleAddButton : (HashQualified -> Reference.Reference) -> String -> Html Msg
+sampleAddButton toRef name =
+    Html.button
+        [ onClick
+            (name
+                |> Reference.fromString toRef
+                |> Open
+            )
+        ]
+        [ Html.text ("Open " ++ name) ]

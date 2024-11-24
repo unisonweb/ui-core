@@ -1,8 +1,11 @@
 module Stories.Code.WorkspaceItem exposing (..)
 
 import Browser
+import Code.Definition.Reference as Reference
+import Code.FullyQualifiedName as FQN
+import Code.HashQualified exposing (HashQualified(..))
 import Code.Syntax exposing (..)
-import Code.Workspace.WorkspaceItem exposing (Item, Msg(..), WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, Msg(..), WorkspaceItem(..), decodeList, fromItem)
 import Code.Workspace.Zoom exposing (Zoom(..))
 import Dict
 import Helpers.ReferenceHelper exposing (sampleReference)
@@ -18,7 +21,7 @@ type alias Model =
 
 type Message
     = WorkspaceItemMsg Msg
-    | GotItem (Result Http.Error Item)
+    | GotItem (Result Http.Error (List ItemWithReferences))
 
 
 main : Program () Model Message
@@ -33,10 +36,17 @@ main =
 
 init : () -> ( Model, Cmd Message )
 init _ =
+    let
+        reference =
+            "increment"
+                |> FQN.fromString
+                |> NameOnly
+                |> Reference.TypeReference
+    in
     ( { workspaceItem = Nothing }
     , Http.get
         { url = "/increment_term_def.json"
-        , expect = Http.expectJson GotItem (decodeItem sampleReference)
+        , expect = Http.expectJson GotItem (decodeList reference)
         }
     )
 
@@ -53,14 +63,14 @@ update msg model =
 
                         Just item ->
                             case item of
-                                Success ref itemData ->
+                                Success refResponse itemData ->
                                     let
                                         updatedData =
                                             { itemData | zoom = zoom }
 
                                         updatedModel =
                                             { model
-                                                | workspaceItem = Just <| Success ref updatedData
+                                                | workspaceItem = Just <| Success refResponse updatedData
                                             }
                                     in
                                     ( updatedModel, Cmd.none )
@@ -74,11 +84,13 @@ update msg model =
         GotItem result ->
             case result of
                 Err error ->
-                        ( model, Cmd.none )
+                    ( model, Cmd.none )
 
-                Ok item ->
+                Ok items ->
                     ( { model
-                        | workspaceItem = Just (fromItem sampleReference item)
+                        | workspaceItem =
+                            List.head items
+                                |> Maybe.map (\item -> fromItem sampleReference item.item)
                       }
                     , Cmd.none
                     )
