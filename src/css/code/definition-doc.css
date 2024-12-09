@@ -125,6 +125,7 @@
   right: 0;
   display: none;
   background: var(--u-color_action);
+  border-radius: var(--border-radius-base);
 }
 
 .definition-doc .copyable-source:hover .copy-on-click {
