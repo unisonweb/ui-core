@@ -329,6 +329,7 @@
 
 .definition-doc aside:has(.doc_callout:only-child) {
   padding: 0;
+  background: none;
 }
 
 .definition-doc aside .doc_callout:last-child {
