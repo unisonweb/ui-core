@@ -8,10 +8,12 @@ import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
-import Code.Workspace.WorkspaceItem exposing (Item, WorkspaceItem(..), decodeItem, fromItem)
+import Code.Workspace.WorkspaceItem exposing (Item, ItemWithReferences, WorkspaceItem(..), decodeList, fromItem)
 import Code.Workspace.WorkspaceItems as WorkspaceItems
+import Dict exposing (Dict)
 import Html exposing (Html)
 import Http
+import Json.Decode as Decode
 import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
@@ -25,7 +27,7 @@ type alias Model =
 
 type Msg
     = WorkspaceMsg Workspace.Msg
-    | GotItem Int Reference.Reference (Result Http.Error Item)
+    | GotItem Int Reference.Reference (Result Http.Error (List Item))
 
 
 main : Program () Model Msg
@@ -44,10 +46,10 @@ init _ =
       , keyboardShortcut = KeyboardShortcut.init OperatingSystem.MacOS
       , workspaceItemViewState = Code.Workspace.WorkspaceItem.viewState
       , isMinimapToggled = False
+      , referenceMap = Dict.empty
       }
     , Cmd.batch
-        [ 
-        getSampleResponse 0 "/long.json" "assets.indexHtml"
+        [ getSampleResponse 0 "/long.json" "assets.indexHtml"
         , getSampleResponse 1 "/increment_term_def.json" "increment"
         , getSampleResponse 2 "/nat_gt_term_def.json" "nat_gt"
         , getSampleResponse 3 "/base_readme.json" "base_readme"
@@ -65,8 +67,9 @@ getSampleResponse index url termName =
                 |> Reference.TypeReference
 
         decoder =
-            reference
-                |> decodeItem
+            Decode.map
+                (\itemWithRefList -> List.map (\itemWithRef -> itemWithRef.item) itemWithRefList)
+                (decodeList reference)
     in
     Http.get
         { url = url
@@ -104,12 +107,17 @@ update message model =
         GotItem _ reference (Err error) ->
             ( model, Cmd.none )
 
-        GotItem _ reference (Ok item) ->
+        GotItem _ reference (Ok items) ->
             let
                 newWorkspaceItems =
-                    item
-                        |> fromItem reference
-                        |> WorkspaceItems.prependWithFocus model.workspaceItems
+                    List.head items
+                        |> Maybe.map
+                            (\item ->
+                                item
+                                    |> fromItem reference
+                                    |> WorkspaceItems.prependWithFocus model.workspaceItems
+                            )
+                        |> Maybe.withDefault model.workspaceItems
 
                 newModel =
                     { model | workspaceItems = newWorkspaceItems }

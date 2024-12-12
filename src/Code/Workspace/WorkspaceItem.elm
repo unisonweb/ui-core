@@ -41,7 +41,7 @@ import UI.ViewMode as ViewMode exposing (ViewMode)
 type WorkspaceItem
     = Loading Reference
     | Failure Reference Http.Error
-    | Success Reference ItemData
+    | Success Reference ItemData -- This Reference is based on API response (not request), to handle multiple-response case
 
 
 type DocVisibility
@@ -78,6 +78,13 @@ type Item
       -- rendered separate from TypeItem
     | DataConstructorItem DataConstructorDetail
     | AbilityConstructorItem AbilityConstructorDetail
+
+
+type alias ItemWithReferences =
+    { item : Item
+    , refRequest : Reference
+    , refResponse : Reference
+    }
 
 
 type NamespaceActionMenu
@@ -133,7 +140,7 @@ type Msg
 
 
 fromItem : Reference -> Item -> WorkspaceItem
-fromItem ref item =
+fromItem refResponse item =
     let
         zoom =
             -- Doc items always have docs
@@ -153,7 +160,7 @@ fromItem ref item =
             else
                 Unknown
     in
-    Success ref
+    Success refResponse
         { item = item
         , zoom = zoom
         , docFoldToggles = Doc.emptyDocFoldToggles
@@ -170,8 +177,8 @@ reference item =
         Failure r _ ->
             r
 
-        Success r _ ->
-            r
+        Success refResponse _ ->
+            refResponse
 
 
 {-| Convert the Reference of a WorkspaceItem to be HashOnly
@@ -191,8 +198,8 @@ toHashReference workspaceItem =
                     HQ.HashOnly h
     in
     case workspaceItem of
-        Success r d ->
-            Success (Reference.map (toHashOnly (itemHash d.item)) r) d
+        Success refResponse d ->
+            Success (Reference.map (toHashOnly (itemHash d.item)) refResponse) d
 
         -- Can't change references where we don't have hash information
         _ ->
@@ -832,25 +839,18 @@ decodeDocs fieldName =
         ]
 
 
-decodeTypeDetails :
-    Decode.Decoder
-        { category : TypeCategory
-        , name : FQN
-        , otherNames : NEL.Nonempty FQN
-        , source : TypeSource
-        , doc : Maybe Doc
-        }
+type alias RawTypeDetails =
+    { category : TypeCategory
+    , name : FQN
+    , otherNames : NEL.Nonempty FQN
+    , source : TypeSource
+    , doc : Maybe Doc
+    }
+
+
+decodeTypeDetails : Decode.Decoder RawTypeDetails
 decodeTypeDetails =
-    let
-        make cat name otherNames source doc =
-            { category = cat
-            , doc = doc
-            , name = name
-            , otherNames = otherNames
-            , source = source
-            }
-    in
-    Decode.map5 make
+    Decode.map5 RawTypeDetails
         (Type.decodeTypeCategory [ "defnTypeTag" ])
         (field "bestTypeName" FQN.decode)
         (field "typeNames" (Util.decodeNonEmptyList FQN.decode))
@@ -858,47 +858,60 @@ decodeTypeDetails =
         (decodeDocs "typeDocs")
 
 
-decodeTypes : Reference -> Decode.Decoder (List TypeDetailWithDoc)
-decodeTypes ref =
+makeTypeDetailWithDoc : Reference -> RawTypeDetails -> Hash -> TypeDetailWithDoc
+makeTypeDetailWithDoc ref d hash_ =
     let
+        info =
+            Info.makeInfo ref d.name d.otherNames
+
+        typeDetailFieldsWithDoc =
+            { doc = d.doc
+            , info = info
+            , source = d.source
+            }
+    in
+    Type hash_
+        d.category
+        typeDetailFieldsWithDoc
+
+
+decodeTypes : Decode.Decoder (List ( Reference, TypeDetailWithDoc ))
+decodeTypes =
+    let
+        makeType : ( String, RawTypeDetails ) -> Maybe ( Reference, TypeDetailWithDoc )
         makeType ( hash_, d ) =
+            let
+                -- make ref based on response
+                ref =
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TypeReference
+            in
             hash_
                 |> Hash.fromString
-                |> Maybe.map
-                    (\h ->
-                        Type h
-                            d.category
-                            { doc = d.doc
-                            , info = Info.makeInfo ref d.name d.otherNames
-                            , source = d.source
-                            }
-                    )
+                |> Maybe.map (makeTypeDetailWithDoc ref d)
+                |> Maybe.map (Tuple.pair ref)
 
+        buildTypes : List ( String, RawTypeDetails ) -> List ( Reference, TypeDetailWithDoc )
         buildTypes =
             List.map makeType >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTypeDetails |> Decode.map buildTypes
+    Decode.keyValuePairs decodeTypeDetails
+        |> Decode.map buildTypes
 
 
-decodeTermDetails :
-    Decode.Decoder
-        { category : TermCategory
-        , name : FQN
-        , otherNames : NEL.Nonempty FQN
-        , source : TermSource
-        , doc : Maybe Doc
-        }
-decodeTermDetails =
-    let
-        make cat name otherNames source doc =
-            { category = cat
-            , name = name
-            , otherNames = otherNames
-            , source = source
-            , doc = doc
-            }
-    in
-    Decode.map5 make
+type alias RawTermDetails =
+    { category : TermCategory
+    , name : FQN
+    , otherNames : NEL.Nonempty FQN
+    , source : TermSource
+    , doc : Maybe Doc
+    }
+
+
+decodeRawTermDetails : Decode.Decoder RawTermDetails
+decodeRawTermDetails =
+    Decode.map5 RawTermDetails
         (Term.decodeTermCategory [ "defnTermTag" ])
         (field "bestTermName" FQN.decode)
         (field "termNames" (Util.decodeNonEmptyList FQN.decode))
@@ -910,41 +923,80 @@ decodeTermDetails =
         (decodeDocs "termDocs")
 
 
-decodeTerms : Reference -> Decode.Decoder (List TermDetailWithDoc)
-decodeTerms ref =
+makeTermDetailWithDoc : Reference -> RawTermDetails -> Hash -> TermDetailWithDoc
+makeTermDetailWithDoc ref d hash_ =
     let
+        info =
+            Info.makeInfo ref d.name d.otherNames
+
+        termDetailFieldsWithDoc =
+            { doc = d.doc
+            , info = info
+            , source = d.source
+            }
+    in
+    Term hash_
+        d.category
+        termDetailFieldsWithDoc
+
+
+decodeTerms : Decode.Decoder (List ( Reference, TermDetailWithDoc ))
+decodeTerms =
+    let
+        makeTerm : ( String, RawTermDetails ) -> Maybe ( Reference, TermDetailWithDoc )
         makeTerm ( hash_, d ) =
+            let
+                -- make ref based on response
+                ref =
+                    d.otherNames
+                        |> NEL.head
+                        |> Reference.fromFQN Reference.TermReference
+            in
             hash_
                 |> Hash.fromString
-                |> Maybe.map
-                    (\h ->
-                        Term h
-                            d.category
-                            { doc = d.doc
-                            , info = Info.makeInfo ref d.name d.otherNames
-                            , source = d.source
-                            }
-                    )
+                |> Maybe.map (makeTermDetailWithDoc ref d)
+                |> Maybe.map (Tuple.pair ref)
 
+        buildTerms : List ( String, RawTermDetails ) -> List ( Reference, TermDetailWithDoc )
         buildTerms =
             List.map makeTerm >> MaybeE.values
     in
-    Decode.keyValuePairs decodeTermDetails |> Decode.map buildTerms
+    Decode.keyValuePairs decodeRawTermDetails
+        |> Decode.map buildTerms
 
 
-{-| The server returns a list, but we only query for a single WorkspaceItem at a time.
--}
-decodeList : Reference -> Decode.Decoder (List Item)
-decodeList ref =
-    Decode.map2 List.append
-        (Decode.map (List.map TermItem) (field "termDefinitions" (decodeTerms ref)))
-        (Decode.map (List.map TypeItem) (field "typeDefinitions" (decodeTypes ref)))
+
+-- `getDefinition` API could return more than 1 result, e.g. when the same name elements exist as `term` and `type` (though this is rare). To handle this, this `decodeList` decodes the response into a list of `ItemWithReferences`, which have decoded items and decoded references based on the API response.
 
 
-decodeItem : Reference -> Decode.Decoder Item
-decodeItem ref =
-    Decode.map List.head (decodeList ref)
-        |> Decode.andThen
-            (Maybe.map Decode.succeed
-                >> Maybe.withDefault (Decode.fail "Empty list")
-            )
+decodeList : Reference -> Decode.Decoder (List ItemWithReferences)
+decodeList refRequest =
+    let
+        termDefinitions =
+            field "termDefinitions" decodeTerms
+                |> Decode.map
+                    (List.map
+                        (\( decodedRef, term ) ->
+                            { item = TermItem term
+                            , refRequest = refRequest
+                            , refResponse = decodedRef
+                            }
+                        )
+                    )
+
+        typeDefinitions =
+            field "typeDefinitions" decodeTypes
+                |> Decode.map
+                    (List.map
+                        (\( decodedRef, typeDef ) ->
+                            { item = TypeItem typeDef
+                            , refRequest = refRequest
+                            , refResponse = decodedRef
+                            }
+                        )
+                    )
+    in
+    Decode.map2
+        List.append
+        termDefinitions
+        typeDefinitions
