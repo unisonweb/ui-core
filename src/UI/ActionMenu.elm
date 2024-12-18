@@ -74,7 +74,7 @@ type ActionItems msg
 
 type ActionMenuTrigger msg
     = ButtonTrigger { icon : Maybe (Icon msg), label : String, color : Button.Color }
-    | IconButtonTrigger (Icon msg)
+    | IconButtonTrigger { icon : Icon msg, color : Button.Color }
     | CustomTrigger { toHtml : Bool -> Html msg }
 
 
@@ -107,7 +107,7 @@ fromIconButton : msg -> Icon msg -> ActionItems msg -> ActionMenu msg
 fromIconButton toggleMsg icon actionItems =
     { toggleMsg = toggleMsg
     , state = Closed
-    , trigger = IconButtonTrigger icon
+    , trigger = IconButtonTrigger { icon = icon, color = Button.Default }
     , actionItems = actionItems
     , nudge = NoNudge
     , maxWidth = Nothing
@@ -186,10 +186,10 @@ withButtonIcon icon actionMenu_ =
             in
             { actionMenu_ | trigger = bt }
 
-        IconButtonTrigger _ ->
+        IconButtonTrigger i ->
             let
                 ibt =
-                    IconButtonTrigger icon
+                    IconButtonTrigger { i | icon = icon }
             in
             { actionMenu_ | trigger = ibt }
 
@@ -206,6 +206,13 @@ withButtonColor color actionMenu_ =
                     ButtonTrigger { b | color = color }
             in
             { actionMenu_ | trigger = bt }
+
+        IconButtonTrigger i ->
+            let
+                ibt =
+                    IconButtonTrigger { i | color = color }
+            in
+            { actionMenu_ | trigger = ibt }
 
         _ ->
             actionMenu_
@@ -368,11 +375,12 @@ view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
                     else
                         Button.view b_
 
-                IconButtonTrigger icon ->
+                IconButtonTrigger { icon, color } ->
                     let
                         b_ =
                             Button.icon toggleMsg icon
                                 |> Button.withIconAfterLabel (caret state)
+                                |> Button.withColor color
                                 |> Button.small
                     in
                     if isOpen then
