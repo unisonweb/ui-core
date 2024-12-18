@@ -1,6 +1,7 @@
 .action-menu {
   /* @color-todo @inverse */
   --c-color_action-menu_sheet: var(--color-gray-darken-30);
+  --c-color_action-menu_sheet_border: transparent;
   --c-color_action-menu_action-items_text: var(--color-gray-lighten-100);
   --c-color_action-menu_action-items_text_subdued: var(--color-gray-lighten-20);
   --c-color_action-menu_action-items_icon: var(--color-gray-lighten-20);
@@ -28,6 +29,7 @@
   animation: slide-down 0.2s var(--anim-elastic);
   z-index: var(--layer-popover);
   overflow: hidden;
+  border: 1px solid var(--c-color_action-menu_sheet_border);
 }
 
 .action-menu .action-menu_action-item {

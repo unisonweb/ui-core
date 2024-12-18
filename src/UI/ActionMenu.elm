@@ -307,7 +307,6 @@ viewSheet maxWidth (ActionItems items_) =
 
                                 DateTimeSubtext f z t ->
                                     div [ class "action-menu_action-item-option_subtext" ] [ DateTime.view f z t ]
-
                     in
                     Click.view
                         [ class "action-menu_action-item action-menu_action-item-option" ]
