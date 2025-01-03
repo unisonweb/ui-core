@@ -21,6 +21,7 @@
   --color-doc-focus-subtle-text: var(--u-color_text_very-subdued);
   --color-doc-focus-source-bg: var(--u-color_container_subdued_selected);
   --color-doc-focus-content-border: var(--u-color_border_subdued);
+  --c-width_doc_source: calc(var(--c-width_doc_inner-content) - 2rem);
 
   position: relative;
   display: flex;
@@ -62,7 +63,7 @@
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
-  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
+  max-width: var(--c-width_doc_source);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -156,7 +157,7 @@
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   white-space: nowrap;
-  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
+  max-width: var(--c-width_doc_source);
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
@@ -394,7 +395,7 @@
 }
 
 .definition-doc .embed-svg {
-  max-width: calc(var(--c-width_doc_inner-content) - 2rem);
+  max-width: var(--c-width_doc_source);
   border: 0;
 }
 
