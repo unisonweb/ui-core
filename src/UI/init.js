@@ -1,5 +1,8 @@
 import polyfill from '@oddbird/css-anchor-positioning/fn';
 
-if (!("anchorName" in document.documentElement.style)) {
-  polyfill();
+export function init() {
+  if (!("anchorName" in document.documentElement.style)) {
+    console.log("Adding Anchor Positioning polyfill");
+    polyfill();
+  }
 }
