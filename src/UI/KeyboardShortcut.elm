@@ -190,6 +190,28 @@ view model shortcut =
     viewBase content
 
 
+viewSimple : OperatingSystem -> KeyboardShortcut -> Html msg
+viewSimple os shortcut =
+    let
+        content =
+            case shortcut of
+                Sequence Nothing key ->
+                    [ viewKey os key False ]
+
+                Sequence (Just keyA) keyB ->
+                    [ viewKey os keyA False
+                    , viewThen
+                    , viewKey os keyB False
+                    ]
+
+                Chord mod key ->
+                    [ viewKey os mod False
+                    , viewKey os key False
+                    ]
+    in
+    viewBase content
+
+
 viewShortcuts : Model -> List KeyboardShortcut -> Html msg
 viewShortcuts model shortcuts =
     let
