@@ -117,16 +117,17 @@
 }
 
 .definition-doc .copyable-source {
-  position: relative;
+  anchor-name: --copyable-source;
 }
 
 .definition-doc .copyable-source .copy-on-click {
+  position-anchor: --copyable-source;
   position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
+  top: anchor(0%);
+  right: anchor(100%);
   background: var(--u-color_action);
   border-radius: var(--border-radius-base);
+  display: none;
 }
 
 .definition-doc .copyable-source:hover .copy-on-click {
