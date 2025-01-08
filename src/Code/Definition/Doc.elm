@@ -266,9 +266,11 @@ viewFolded attrs isFolded_ =
                 ]
 
         IsFolded { toggleFoldMsg, content, foldId, isFolded } ->
-            div (classList [ ( "folded", True ), ( "is-folded", isFolded ) ] :: attrs)
-                [ FoldToggle.foldToggle (toggleFoldMsg foldId) |> FoldToggle.isOpen (not isFolded) |> FoldToggle.view
-                , div [ class "folded-content" ] content
+            div [ class "copyable-source" ]
+                [ div (classList [ ( "folded", True ), ( "is-folded", isFolded ) ] :: attrs)
+                    [ FoldToggle.foldToggle (toggleFoldMsg foldId) |> FoldToggle.isOpen (not isFolded) |> FoldToggle.view
+                    , div [ class "folded-content" ] content
+                    ]
                 ]
 
 

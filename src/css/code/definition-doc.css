@@ -403,7 +403,6 @@
   margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
-  position: relative;
 }
 
 .definition-doc .folded .folded-content {
