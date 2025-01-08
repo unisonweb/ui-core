@@ -122,8 +122,8 @@
 
 .definition-doc .copy-on-click {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  top: 0.5rem;
+  right: 0.5rem;
   background: var(--u-color_action);
   border-radius: var(--border-radius-base);
   display: none;
