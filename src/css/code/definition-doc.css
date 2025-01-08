@@ -51,23 +51,19 @@
   white-space: pre-line;
 }
 
-.definition-doc .source {
-  position: relative;
-  max-width: var(--c-width_doc_source);
-}
-
-.definition-doc .source.code code,
-.definition-doc .sources .source code,
-.definition-doc .folded-sources .source code,
-.definition-doc .source.example code,
-.definition-doc .eval .source code,
-.definition-doc .source.signatures .signature code {
+.definition-doc .source.code,
+.definition-doc .sources .source,
+.definition-doc .folded-sources .source,
+.definition-doc .source.example,
+.definition-doc .eval .source,
+.definition-doc .source.signatures .signature {
   padding: 0.5rem 0.75rem;
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
+  max-width: var(--c-width_doc_source);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -120,6 +116,10 @@
   flex: 1;
 }
 
+.definition-doc .copyable-source {
+  position: relative;
+}
+
 .definition-doc .copy-on-click {
   position: absolute;
   top: 0.75rem;
@@ -129,11 +129,11 @@
   display: none;
 }
 
-.definition-doc .source:hover .copy-on-click {
+.definition-doc .copyable-source:hover .copy-on-click {
   display: block;
 }
 
-.definition-doc .source .copy-on-click .copy-on-click_success {
+.definition-doc .copy-on-click .copy-on-click_success {
   position: absolute;
   top: 0;
   right: 0;
@@ -403,6 +403,7 @@
   margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .definition-doc .folded .folded-content {

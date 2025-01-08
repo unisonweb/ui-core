@@ -390,6 +390,16 @@ toString sep doc =
             ""
 
 
+viewCopySyntaxButton : String -> Html msg
+viewCopySyntaxButton toCopy =
+    CopyOnClick.view
+        toCopy
+        (div [ class "button small outlined content-icon" ]
+            [ Icon.view Icon.clipboard ]
+        )
+        (Icon.view Icon.checkmark)
+
+
 view : SyntaxConfig msg -> (FoldId -> msg) -> DocFoldToggles -> Doc -> Html msg
 view syntaxConfig toggleFoldMsg docFoldToggles document =
     let
@@ -397,18 +407,13 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
             Source.viewTermSignature (SourceViewConfig.rich syntaxConfig)
 
         viewCopyable toCopy content =
-            div []
+            div [ class "copyable-source" ]
                 [ content
-                , CopyOnClick.view
-                    toCopy
-                    (div [ class "button small outlined content-icon" ]
-                        [ Icon.view Icon.clipboard ]
-                    )
-                    (Icon.view Icon.checkmark)
+                , viewCopySyntaxButton toCopy
                 ]
 
-        viewCopyableSyntax syntax =
-            viewCopyable (Syntax.toString syntax) (viewSyntax syntax)
+        viewCopyableSyntax syntax content =
+            viewCopyable (Syntax.toString syntax) content
 
         viewSyntax =
             Syntax.view syntaxConfig
@@ -644,7 +649,9 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                                 [ UI.codeBlock [] (viewSyntax summary) ]
 
                                             else
-                                                [ UI.codeBlock [] (viewCopyableSyntax details) ]
+                                                [ UI.codeBlock [] (viewSyntax details)
+                                                , viewCopySyntaxButton (Syntax.toString details)
+                                                ]
                                     in
                                     case source of
                                         Builtin summary ->
@@ -679,9 +686,11 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                 ]
 
                         ExampleBlock syntax ->
-                            div [ class "source rich example" ]
-                                [ UI.codeBlock [] (viewCopyableSyntax syntax)
-                                ]
+                            viewCopyableSyntax syntax
+                                (div [ class "source rich example" ]
+                                    [ UI.codeBlock [] (viewSyntax syntax)
+                                    ]
+                                )
 
                         Link syntax ->
                             UI.inlineCode [ class "rich source" ]
@@ -705,16 +714,18 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                 (viewSignature signature)
 
                         Eval source result ->
-                            div
-                                [ class "eval" ]
-                                [ div [ class "source rich" ]
-                                    [ UI.codeBlock [] (viewCopyableSyntax source)
+                            viewCopyableSyntax source
+                                (div
+                                    [ class "eval" ]
+                                    [ div [ class "source rich" ]
+                                        [ UI.codeBlock [] (viewSyntax source)
+                                        ]
+                                    , div [ class "result" ] [ div [ class "result-indicator" ] [ Icon.view Icon.arrowDown ] ]
+                                    , div [ class "source rich" ]
+                                        [ UI.codeBlock [] (viewSyntax result)
+                                        ]
                                     ]
-                                , div [ class "result" ] [ div [ class "result-indicator" ] [ Icon.view Icon.arrowDown ] ]
-                                , div [ class "source rich" ]
-                                    [ UI.codeBlock [] (viewSyntax result)
-                                    ]
-                                ]
+                                )
 
                         EvalInline source result ->
                             span [ class "source rich eval-inline" ]
@@ -727,9 +738,11 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                 ]
 
                         Embed syntax ->
-                            div [ class "source rich embed" ]
-                                [ UI.codeBlock [] (viewCopyableSyntax syntax)
-                                ]
+                            viewCopyableSyntax syntax
+                                (div [ class "source rich embed" ]
+                                    [ UI.codeBlock [] (viewSyntax syntax)
+                                    ]
+                                )
 
                         EmbedInline syntax ->
                             span [ class "source rich embed-inline" ]
