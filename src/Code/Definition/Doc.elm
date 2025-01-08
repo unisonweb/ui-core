@@ -397,9 +397,10 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
             Source.viewTermSignature (SourceViewConfig.rich syntaxConfig)
 
         viewCopyable toCopy content =
-            div [ class "copyable-source" ]
+            div []
                 [ content
-                , CopyOnClick.view toCopy
+                , CopyOnClick.view
+                    toCopy
                     (div [ class "button small outlined content-icon" ]
                         [ Icon.view Icon.clipboard ]
                     )

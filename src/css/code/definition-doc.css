@@ -51,19 +51,23 @@
   white-space: pre-line;
 }
 
-.definition-doc .source.code,
-.definition-doc .sources .source,
-.definition-doc .folded-sources .source,
-.definition-doc .source.example,
-.definition-doc .eval .source,
-.definition-doc .source.signatures .signature {
+.definition-doc .source {
+  position: relative;
+  max-width: var(--c-width_doc_source);
+}
+
+.definition-doc .source.code code,
+.definition-doc .sources .source code,
+.definition-doc .folded-sources .source code,
+.definition-doc .source.example code,
+.definition-doc .eval .source code,
+.definition-doc .source.signatures .signature code {
   padding: 0.5rem 0.75rem;
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
-  max-width: var(--c-width_doc_source);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -116,25 +120,20 @@
   flex: 1;
 }
 
-.definition-doc .copyable-source {
-  anchor-name: --copyable-source;
-}
-
-.definition-doc .copyable-source .copy-on-click {
-  position-anchor: --copyable-source;
+.definition-doc .copy-on-click {
   position: absolute;
-  top: anchor(0%);
-  right: anchor(100%);
+  top: 0.75rem;
+  right: 0.75rem;
   background: var(--u-color_action);
   border-radius: var(--border-radius-base);
   display: none;
 }
 
-.definition-doc .copyable-source:hover .copy-on-click {
+.definition-doc .source:hover .copy-on-click {
   display: block;
 }
 
-.definition-doc .copyable-source .copy-on-click .copy-on-click_success {
+.definition-doc .source .copy-on-click .copy-on-click_success {
   position: absolute;
   top: 0;
   right: 0;
@@ -147,7 +146,7 @@
   border-radius: var(--border-radius-base);
 }
 
-.definition-doc .copyable-source .copy-on-click .copy-on-click_success .icon {
+.definition-doc .source .copy-on-click .copy-on-click_success .icon {
   color: var(--u-color_positive_icon-on-action);
 }
 
