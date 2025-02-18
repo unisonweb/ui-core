@@ -23,7 +23,7 @@ class MermaidDiagram extends HTMLElement {
         securityLevel: "sandbox",
       });
 
-      const { svg } = await await mermaid.render(diagramId, diagram);
+      const { svg } = await mermaid.render(diagramId, diagram);
 
       this.innerHTML = svg;
       const iframe = this.querySelector("iframe");
