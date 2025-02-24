@@ -33,6 +33,6 @@
     "@oddbird/css-anchor-positioning": "^0.4.0",
     "date-fns": "^2.29.3",
     "katex": "^0.16.4",
-    "mermaid": "^10.6.1"
+    "mermaid": "^11.4.1"
   }
 }
