@@ -224,3 +224,18 @@
   padding-left: 0.75rem;
   margin-left: -0.75rem;
 }
+
+
+@media only screen and (--u-viewport_max-lg) {
+  .workspace-item .definition-doc-columns .icon-column {
+    display: none;
+  }
+}
+
+@media only screen and (--u-viewport_max-sm) {
+  .workspace-item .workspace-item_header .hash,
+  .workspace-item .workspace-item_header .action-menu,
+  .workspace-item .workspace-item_header .copy-code {
+    display: none;
+  }
+}
