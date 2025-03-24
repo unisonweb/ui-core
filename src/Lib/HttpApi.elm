@@ -137,7 +137,7 @@ type Endpoint
       -- `body` field.
     | PUT (EndpointConfig { body : Http.Body })
     | PATCH (EndpointConfig { body : Http.Body })
-    | DELETE (EndpointConfig {})
+    | DELETE (EndpointConfig { body : Http.Body })
 
 
 toUrl : ApiUrl -> Endpoint -> String
@@ -295,11 +295,11 @@ perform api (ApiRequest { endpoint, expect, headers, timeout }) =
                 , tracker = Nothing
                 }
 
-        DELETE _ ->
+        DELETE c ->
             request_
                 { method = "DELETE"
                 , headers = api.headers ++ headers
-                , body = Http.emptyBody
+                , body = c.body
                 , url = toUrl api.url endpoint
                 , expect = expect_
                 , timeout = timeout
@@ -379,14 +379,14 @@ toTask_ apiUrl decoder headers endpoint =
                 , body = c.body
                 }
 
-        DELETE _ ->
+        DELETE c ->
             task_
                 { headers = headers
                 , resolver = Http.stringResolver (httpJsonBodyResolver decoder)
                 , timeout = Just defaultTimeout
                 , url = toUrl apiUrl endpoint
                 , method = "DELETE"
-                , body = Http.emptyBody
+                , body = c.body
                 }
 
 
