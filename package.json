@@ -23,15 +23,14 @@
   "devDependencies": {
     "elm": "^0.19.1-5",
     "elm-format": "^0.8.7",
-    "elm-review": "^2.9.1",
-    "elm-test": "^0.19.1-revision12",
-    "elm-watch": "^1.0.2",
-    "glob": "^9.3.2",
-    "prettier": "^2.8.4"
+    "elm-review": "^2.13.2",
+    "elm-test": "^0.19.1-revision15",
+    "elm-watch": "^1.2.2",
+    "glob": "^11.0.1",
+    "prettier": "^3.5.3"
   },
   "dependencies": {
     "@oddbird/css-anchor-positioning": "^0.4.0",
-    "date-fns": "^2.29.3",
     "katex": "^0.16.4",
     "mermaid": "^11.4.1"
   }

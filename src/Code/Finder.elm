@@ -437,13 +437,13 @@ viewMarkedNaming matchedPositions namespace name =
             name
                 |> FQN.toString
                 |> String.toList
-                |> List.map (List.singleton >> String.fromList)
+                |> List.map String.fromChar
                 |> List.indexedMap (mark_ namespaceMod)
 
         markedNamespace =
             namespace
                 |> Maybe.map String.toList
-                |> Maybe.map (List.map (List.singleton >> String.fromList))
+                |> Maybe.map (List.map String.fromChar)
                 |> Maybe.map (List.indexedMap (mark_ 0))
                 |> Maybe.map (\ns -> span [ class "in" ] [ text "in" ] :: ns)
                 |> Maybe.withDefault []

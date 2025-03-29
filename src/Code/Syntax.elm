@@ -17,7 +17,7 @@ import Code.Syntax.SyntaxConfig exposing (SyntaxConfig)
 import Code.Syntax.SyntaxSegment as SyntaxSegment exposing (..)
 import Html exposing (Html, span)
 import Html.Attributes exposing (class)
-import Json.Decode as Decode exposing (andThen)
+import Json.Decode as Decode
 import Lib.Util as Util
 import List.Nonempty as NEL
 
@@ -134,4 +134,5 @@ decodeSingleton =
 
 decode : Decode.Decoder Syntax
 decode =
-    Util.decodeNonEmptyList SyntaxSegment.decode |> andThen (Syntax >> Decode.succeed)
+    Decode.map Syntax
+        (Util.decodeNonEmptyList SyntaxSegment.decode)

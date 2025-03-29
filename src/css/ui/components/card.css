@@ -47,10 +47,8 @@
 
 .card.contained-with-fade {
   padding: 4rem 0;
-  background: linear-gradient(
-        var(--color-card-bg),
-        var(--color-card-on-surface-bg)
-      )
+  background:
+    linear-gradient(var(--color-card-bg), var(--color-card-on-surface-bg))
       padding-box,
     linear-gradient(
         var(--color-card-border),

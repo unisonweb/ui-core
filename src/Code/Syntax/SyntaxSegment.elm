@@ -9,7 +9,7 @@ import Code.Syntax.SyntaxSegmentHelp as SyntaxSegmentHelp
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onMouseEnter, onMouseLeave)
-import Json.Decode as Decode exposing (andThen, at, field)
+import Json.Decode as Decode exposing (at, field)
 import Json.Decode.Extra exposing (when)
 import List.Nonempty as NEL
 import UI.Click as Click
@@ -686,7 +686,7 @@ decode_ { segmentField, annotationField } =
             , when decodeTag_ ((==) "TypeReference") decodeTypeReference
             , when decodeTag_ ((==) "Op") (decodeOp annotationField)
             , when decodeTag_ ((==) "HashQualifier") decodeHashQualifier
-            , decodeTag_ |> andThen (simpleSyntaxTypeFromString >> Decode.succeed)
+            , Decode.map simpleSyntaxTypeFromString decodeTag_
             ]
         )
         (field segmentField Decode.string)

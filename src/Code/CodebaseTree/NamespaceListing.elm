@@ -14,7 +14,7 @@ import Code.Definition.Term as Term
 import Code.Definition.Type as Type
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
-import Json.Decode as Decode exposing (andThen, at, field)
+import Json.Decode as Decode exposing (at, field)
 import Json.Decode.Extra exposing (when)
 import Lib.UnicodeSort as UnicodeSort
 import RemoteData exposing (RemoteData(..), WebData)
@@ -118,10 +118,7 @@ decode listingFqn =
         -- The main namespace being decoded has children, so we use Success for
         -- the RemoteData. There children of the children however are not yet
         -- fetched
-        (field "namespaceListingChildren" (decodeContent listingFqn)
-            |> andThen
-                (Success >> Decode.succeed)
-        )
+        (Decode.map Success (field "namespaceListingChildren" (decodeContent listingFqn)))
 
 
 
