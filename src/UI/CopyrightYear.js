@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 // Displays the copyright symbol and the current year.
 // example:
 //   <copyright-year></copyright-year>
@@ -15,8 +14,7 @@ class CopyrightYear extends HTMLElement {
 
   connectedCallback() {
     const d = new Date();
-    const formatted = format(d, "yyyy");
-    this.innerText = `© ${formatted}`;
+    this.innerText = `© ${d.getFullYear()}`;
     this.classList.add("copyright-year");
   }
 }

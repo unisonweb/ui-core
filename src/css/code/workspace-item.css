@@ -58,7 +58,8 @@
     --c-color_workspace-item_focus_header_bg
   );
 
-  box-shadow: 0 0 0 1px var(--color-workspace-item-focus-border),
+  box-shadow:
+    0 0 0 1px var(--color-workspace-item-focus-border),
     0 0 0 4px var(--color-blue-2-25pct);
 }
 
@@ -224,7 +225,6 @@
   padding-left: 0.75rem;
   margin-left: -0.75rem;
 }
-
 
 @media only screen and (--u-viewport_max-lg) {
   .workspace-item .definition-doc-columns .icon-column {

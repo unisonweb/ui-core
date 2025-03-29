@@ -134,7 +134,8 @@
     calc(
         calc(100vh - var(--c-spacing_finder_top)) -
           var(--c-height_finder_search-field)
-      ) - 2rem
+      ) -
+      2rem
   );
   overflow-y: auto;
   scrollbar-width: auto;
