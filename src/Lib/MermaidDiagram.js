@@ -17,7 +17,7 @@ class MermaidDiagram extends HTMLElement {
     const diagramId = "mermaid-diagram_" + Date.now().toString();
 
     try {
-      mermaid.mermaidAPI.initialize({
+      mermaid.initialize({
         theme: themeName,
         startOnLoad: false,
         securityLevel: "sandbox",
