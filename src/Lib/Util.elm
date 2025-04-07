@@ -2,6 +2,7 @@ module Lib.Util exposing (..)
 
 import Http
 import Json.Decode as Decode
+import Json.Decode.Extra exposing (when)
 import List.Nonempty as NEL
 import Process
 import Task
@@ -88,6 +89,16 @@ pipeIf f cond a =
 decodeTag : Decode.Decoder String
 decodeTag =
     Decode.field "tag" Decode.string
+
+
+whenTagIs : String -> Decode.Decoder String -> Decode.Decoder String
+whenTagIs val =
+    whenPathIs [ "tag" ] val
+
+
+whenPathIs : List String -> String -> Decode.Decoder String -> Decode.Decoder String
+whenPathIs path val =
+    when (Decode.at path Decode.string) ((==) val)
 
 
 decodeUrl : Decode.Decoder Url
