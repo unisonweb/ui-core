@@ -142,6 +142,7 @@
   place-items: center;
   height: 2.25rem;
   width: 1.75rem;
+  flex-shrink: 0;
 }
 
 /* TODO: style this like the design */
