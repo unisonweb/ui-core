@@ -27,19 +27,66 @@ type alias RadioField a msg =
 -- CREATE
 
 
+{-| Create a RadioField.
+
+Example:
+
+    field
+        "currency"
+        UpdateCurrency
+        (options
+            (option "USD" "United States Dollars" USD)
+            [ option "DKK" "Danish Kroner" DKK
+            , option "CAD" "Canadian Dollars" CAD
+            ]
+        )
+        USD
+
+-}
 field : String -> (a -> msg) -> Nonempty (RadioOption a) -> a -> RadioField a msg
 field =
     RadioField
 
 
+{-| Create an option for a RadioField
+
+Example:
+
+    option "USD" "United States Dollars" USD
+
+-}
 option : String -> String -> a -> RadioOption a
 option label helpText value =
     RadioOption label (Just helpText) value
 
 
+{-| Create an option for a RadioField without a help text (not usually recommended).
+
+Example:
+
+    option_ "USD" USD
+
+-}
 option_ : String -> a -> RadioOption a
 option_ label value =
     RadioOption label Nothing value
+
+
+{-| Options collection, easier to deal with than directly constructing a Nonempty List.
+
+Example:
+
+    options
+        (option "USD" "United States Dollars" USD)
+        [ option "DKK" "Danish Kroner" DKK
+        , option "CAD" "Canadian Dollars" CAD
+        ]
+
+-}
+options : RadioOption a -> List (RadioOption a) -> Nonempty (RadioOption a)
+options option__ options_ =
+    NEL.singleton option__
+        |> NEL.replaceTail options_
 
 
 
