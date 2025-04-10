@@ -15,10 +15,14 @@ type alias RadioOption a =
     }
 
 
+type alias RadioOptions a =
+    Nonempty (RadioOption a)
+
+
 type alias RadioField a msg =
     { name : String
     , onChange : a -> msg
-    , options : Nonempty (RadioOption a)
+    , options : RadioOptions a
     , selected : a
     }
 
@@ -43,7 +47,7 @@ Example:
         USD
 
 -}
-field : String -> (a -> msg) -> Nonempty (RadioOption a) -> a -> RadioField a msg
+field : String -> (a -> msg) -> RadioOptions a -> a -> RadioField a msg
 field =
     RadioField
 
@@ -72,7 +76,8 @@ option_ label value =
     RadioOption label Nothing value
 
 
-{-| Options collection, easier to deal with than directly constructing a Nonempty List.
+{-| Options collection helper. Makes it easier to deal with than directly
+constructing a Nonempty List.
 
 Example:
 
@@ -83,10 +88,85 @@ Example:
         ]
 
 -}
-options : RadioOption a -> List (RadioOption a) -> Nonempty (RadioOption a)
+options : RadioOption a -> List (RadioOption a) -> RadioOptions a
 options option__ options_ =
     NEL.singleton option__
         |> NEL.replaceTail options_
+
+
+{-| Options collection helper to create exactly 2 options.
+
+Example:
+
+    options2
+        (option "USD" "United States Dollars" USD)
+        (option "DKK" "Danish Kroner" DKK)
+
+-}
+options2 : RadioOption a -> RadioOption a -> RadioOptions a
+options2 option1 option2 =
+    options option1 [ option2 ]
+
+
+{-| Options collection helper to create exactly 3 options.
+
+Example:
+
+    options3
+        (option "USD" "United States Dollars" USD)
+        (option "DKK" "Danish Kroner" DKK)
+        (option "CAD" "Canadian Dollars" CAD)
+
+-}
+options3 : RadioOption a -> RadioOption a -> RadioOption a -> RadioOptions a
+options3 option1 option2 option3 =
+    options option1 [ option2, option3 ]
+
+
+{-| Options collection helper to create exactly 4 options.
+
+Example:
+
+    options4
+        (option "USD" "United States Dollars" USD)
+        (option "DKK" "Danish Kroner" DKK)
+        (option "CAD" "Canadian Dollars" CAD)
+        (option "AUD" "Australian Dollars" AUD)
+
+-}
+options4 :
+    RadioOption a
+    -> RadioOption a
+    -> RadioOption a
+    -> RadioOption a
+    -> RadioOptions a
+options4 option1 option2 option3 option4 =
+    options option1 [ option2, option3, option4 ]
+
+
+{-| Options collection helper to create exactly 5 options.
+
+Example:
+
+    options5
+        (option "USD" "United States Dollars" USD)
+        (option "DKK" "Danish Kroner" DKK)
+        (option "CAD" "Canadian Dollars" CAD)
+        (option "AUD" "Australian Dollars" AUD)
+        (option "SEK" "Swedish Kroner" SEK)
+
+Need more than 5? Look at the `options` function.
+
+-}
+options5 :
+    RadioOption a
+    -> RadioOption a
+    -> RadioOption a
+    -> RadioOption a
+    -> RadioOption a
+    -> RadioOptions a
+options5 option1 option2 option3 option4 option5 =
+    options option1 [ option2, option3, option4, option5 ]
 
 
 
