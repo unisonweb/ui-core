@@ -2,10 +2,7 @@ const postcssPresetEnv = require("postcss-preset-env");
 const UI_CORE_SRC = "../src";
 
 module.exports = {
-  stories: [
-    "../stories/**/*.stories.mdx",
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
+  stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(js|jsx|ts|tsx)"],
 
   addons: [
     "@storybook/addon-links",
@@ -46,6 +43,8 @@ module.exports = {
         },
       },
     },
+    "@storybook/addon-webpack5-compiler-babel",
+    "@chromatic-com/storybook"
   ],
 
   framework: {
@@ -55,7 +54,5 @@ module.exports = {
 
   staticDirs: ["../static"],
 
-  docs: {
-    autodocs: true,
-  },
+  docs: {},
 };
