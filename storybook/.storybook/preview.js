@@ -6,7 +6,6 @@ import "../../src/css/themes/unison-light.css";
 import "../stories/Helpers/style.css";
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
       color: /(background|color)$/i,
@@ -14,3 +13,4 @@ export const parameters = {
     },
   },
 };
+export const tags = ["autodocs"];
