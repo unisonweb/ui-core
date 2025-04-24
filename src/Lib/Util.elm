@@ -96,9 +96,14 @@ whenTagIs val =
     whenPathIs [ "tag" ] val
 
 
-whenPathIs : List String -> String -> Decode.Decoder String -> Decode.Decoder String
+whenPathIs : List String -> String -> Decode.Decoder a -> Decode.Decoder a
 whenPathIs path val =
     when (Decode.at path Decode.string) ((==) val)
+
+
+whenFieldIs : String -> String -> Decode.Decoder a -> Decode.Decoder a
+whenFieldIs fieldName val =
+    when (Decode.field fieldName Decode.string) ((==) val)
 
 
 decodeUrl : Decode.Decoder Url
