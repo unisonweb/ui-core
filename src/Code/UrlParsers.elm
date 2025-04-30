@@ -63,8 +63,8 @@ fqnEnd =
     Parser.symbol ";"
 
 
-userHandle : Parser UserHandle
-userHandle =
+userHandle_ : (String -> Maybe UserHandle) -> Parser UserHandle
+userHandle_ fromString =
     let
         parseMaybe mhandle =
             case mhandle of
@@ -76,8 +76,18 @@ userHandle =
     in
     Parser.chompUntilEndOr "/"
         |> Parser.getChompedString
-        |> Parser.map UserHandle.fromString
+        |> Parser.map fromString
         |> Parser.andThen parseMaybe
+
+
+userHandle : Parser UserHandle
+userHandle =
+    userHandle_ UserHandle.fromString
+
+
+unprefixedUserHandle : Parser UserHandle
+unprefixedUserHandle =
+    userHandle_ UserHandle.fromUnprefixedString
 
 
 version : Parser Version
