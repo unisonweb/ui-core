@@ -1,10 +1,11 @@
 module UI.Form.CheckboxField exposing (..)
 
-import Html exposing (Html, div, input, label, small, text)
-import Html.Attributes exposing (checked, class, type_)
+import Html exposing (Html, div, label, small, text)
+import Html.Attributes exposing (class)
 import Maybe.Extra as MaybeE
 import UI
 import UI.Click as Click
+import UI.Form.Checkbox as Checkbox
 
 
 type alias CheckboxField msg =
@@ -40,13 +41,7 @@ withHelpText helpText field_ =
 view : CheckboxField msg -> Html msg
 view checkboxField =
     Click.view [ class "form-field checkbox-field" ]
-        [ div [ class "checkbox-field_checkbox" ]
-            [ input
-                [ type_ "checkbox"
-                , checked checkboxField.checked
-                ]
-                []
-            ]
+        [ Checkbox.checkbox_ Nothing checkboxField.checked |> Checkbox.view
         , div
             [ class "label-and-help-text" ]
             [ label [ class "label" ] [ text checkboxField.label ]
