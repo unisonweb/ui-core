@@ -7,6 +7,8 @@
     "exposed-modules": [
         "UI.AppDocument",
         "UI.AppHeader",
+        "UI.Avatar",
+        "UI.AvatarStack",
         "UI.ExternalLinkIcon",
         "UI.Color",
         "UI.Sizing",
@@ -32,7 +34,6 @@
         "UI.PageHeader",
         "UI.PageContent",
         "UI.PageTitle",
-        "UI.Avatar",
         "UI.Click",
         "UI.Icon",
         "UI.KeyboardShortcut",
