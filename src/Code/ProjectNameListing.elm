@@ -4,7 +4,7 @@ import Code.Hashvatar as Hashvatar
 import Code.ProjectName as ProjectName exposing (ProjectName)
 import Code.ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, div)
-import Html.Attributes exposing (class, classList)
+import Html.Attributes exposing (class)
 import Lib.Aria exposing (ariaLabel)
 import Lib.UserHandle exposing (UserHandle)
 import UI.Click as Click exposing (Click)
@@ -14,6 +14,12 @@ type ProjectNameListingSize
     = Medium
     | Large
     | Huge
+
+
+type ProjectNameListingColor
+    = FullColor
+    | Subdued
+    | VerySubdued
 
 
 type ProjectNameListingClick msg
@@ -29,7 +35,7 @@ type alias ProjectNameListing msg =
     { projectName : ProjectName
     , click : ProjectNameListingClick msg
     , size : ProjectNameListingSize
-    , subdued : Bool
+    , color : ProjectNameListingColor
     }
 
 
@@ -39,7 +45,7 @@ type alias ProjectNameListing msg =
 
 projectNameListing : ProjectName -> ProjectNameListing msg
 projectNameListing projectName =
-    { projectName = projectName, click = NoClick, size = Medium, subdued = False }
+    { projectName = projectName, click = NoClick, size = Medium, color = FullColor }
 
 
 
@@ -82,7 +88,12 @@ huge p =
 
 subdued : ProjectNameListing msg -> ProjectNameListing msg
 subdued p =
-    { p | subdued = True }
+    { p | color = Subdued }
+
+
+verySubdued : ProjectNameListing msg -> ProjectNameListing msg
+verySubdued p =
+    { p | color = VerySubdued }
 
 
 
@@ -110,7 +121,7 @@ map f p =
     { projectName = p.projectName
     , click = mapClick f p.click
     , size = p.size
-    , subdued = p.subdued
+    , color = p.color
     }
 
 
@@ -161,18 +172,28 @@ viewSubdued { projectName, size, click } =
 view : ProjectNameListing msg -> Html msg
 view p =
     let
+        ( colorClass, hashvatar ) =
+            case p.color of
+                FullColor ->
+                    ( "project-name-listing_fullColor"
+                    , ProjectName.viewHashvatar p.projectName
+                    )
+
+                Subdued ->
+                    ( "project-name-listing_subdued"
+                    , ProjectName.viewHashvatar p.projectName
+                    )
+
+                VerySubdued ->
+                    ( "project-name-listing_very-subdued"
+                    , Hashvatar.empty
+                    )
+
         attrs =
             [ class "project-name-listing"
             , class (sizeClass p.size)
-            , classList [ ( "project-name-listing_subdued", p.subdued ) ]
+            , class colorClass
             ]
-
-        hashvatar =
-            if p.subdued then
-                Hashvatar.empty
-
-            else
-                ProjectName.viewHashvatar p.projectName
 
         ariaLabel_ =
             ariaLabel (ProjectName.toString p.projectName)
