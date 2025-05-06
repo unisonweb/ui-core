@@ -1,10 +1,15 @@
 .nudge {
   position: relative;
   display: inline-flex;
+  --c-color_nudge: var(--u-color_info_icon);
+}
+
+.nudge.nudge_emphasized {
+  --c-color_nudge: var(--u-color_info_icon_emphasized);
 }
 
 .nudge .nudge_circle {
-  background: var(--u-color_info_icon);
+  background: 
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 0.25rem;

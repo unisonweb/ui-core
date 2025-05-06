@@ -6,12 +6,18 @@ import UI
 import UI.Tooltip as Tooltip exposing (Tooltip)
 
 
+type NudgeEmphasis
+    = NormalEmphasis
+    | Emphasized
+
+
 type Nudge msg
     = NoNudge
     | Nudge
         { withTooltip : Maybe (Tooltip msg)
         , pulsate : Bool
         , withNumber : Maybe Int
+        , emphasis : NudgeEmphasis
         }
 
 
@@ -26,7 +32,12 @@ empty =
 
 nudge : Nudge msg
 nudge =
-    Nudge { withTooltip = Nothing, pulsate = False, withNumber = Nothing }
+    Nudge
+        { withTooltip = Nothing
+        , pulsate = False
+        , withNumber = Nothing
+        , emphasis = NormalEmphasis
+        }
 
 
 
@@ -42,6 +53,21 @@ withTooltip tooltip nudge_ =
 
         Nudge n ->
             Nudge { n | withTooltip = Just tooltip }
+
+
+withEmphasis : NudgeEmphasis -> Nudge msg -> Nudge msg
+withEmphasis emphasis nudge_ =
+    case nudge_ of
+        NoNudge ->
+            nudge_
+
+        Nudge n ->
+            Nudge { n | emphasis = emphasis }
+
+
+emphasized : Nudge msg -> Nudge msg
+emphasized nudge_ =
+    withEmphasis Emphasized nudge_
 
 
 pulsate : Nudge msg -> Nudge msg
@@ -81,6 +107,7 @@ map toMsg nudgeA =
                 { withTooltip = Maybe.map (Tooltip.map toMsg) n.withTooltip
                 , pulsate = n.pulsate
                 , withNumber = n.withNumber
+                , emphasis = n.emphasis
                 }
 
 
@@ -88,8 +115,8 @@ map toMsg nudgeA =
 -- VIEW
 
 
-viewNudgeDot : Bool -> Maybe Int -> Html msg
-viewNudgeDot pulsate_ withNumber_ =
+viewNudgeDot : NudgeEmphasis -> Bool -> Maybe Int -> Html msg
+viewNudgeDot emphasis pulsate_ withNumber_ =
     let
         ( num, hasNumber ) =
             withNumber_
@@ -102,6 +129,7 @@ viewNudgeDot pulsate_ withNumber_ =
         , classList
             [ ( "pulsate", pulsate_ )
             , ( "with-number", hasNumber )
+            , ( "nudge_emphasized", emphasis == Emphasized )
             ]
         ]
         [ div [ class "nudge_circle" ] [ num ]
@@ -117,7 +145,7 @@ view nudge_ =
         Nudge settings ->
             case settings.withTooltip of
                 Nothing ->
-                    viewNudgeDot settings.pulsate settings.withNumber
+                    viewNudgeDot settings.emphasis settings.pulsate settings.withNumber
 
                 Just tooltip ->
-                    Tooltip.view (viewNudgeDot settings.pulsate settings.withNumber) tooltip
+                    Tooltip.view (viewNudgeDot settings.emphasis settings.pulsate settings.withNumber) tooltip
