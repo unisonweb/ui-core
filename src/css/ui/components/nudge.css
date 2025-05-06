@@ -9,7 +9,7 @@
 }
 
 .nudge .nudge_circle {
-  background: 
+  background: var(--c-color_nudge);
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 0.25rem;
