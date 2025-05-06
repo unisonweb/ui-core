@@ -58,15 +58,19 @@ a.project-name-listing:hover {
 }
 
 .project-name-listing.project-name-listing_subdued {
-  --c-color_project-name_handle: var(--u-color_text_subdued);
-  --c-color_project-name_slug: var(--u-color_text_subdued);
+  & .project-name {
+    --c-color_project-name_handle: var(--u-color_text_subdued);
+    --c-color_project-name_slug: var(--u-color_text_subdued);
+  }
 }
 
 .project-name-listing.project-name-listing_very-subdued {
-  --c-color_project-name_handle: var(--u-color_text_subdued);
-  --c-color_project-name_slug: var(--u-color_text_subdued);
-
   & .hashvatar {
     opacity: 0.75;
+  }
+
+  & .project-name {
+    --c-color_project-name_handle: var(--u-color_text_subdued);
+    --c-color_project-name_slug: var(--u-color_text_subdued);
   }
 }
