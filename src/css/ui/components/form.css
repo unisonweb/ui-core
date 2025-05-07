@@ -179,15 +179,16 @@
   align-items: center;
   border-radius: var(--border-radius-base);
   transition: all 0.2s;
-  padding: 0 0.75rem 0.25rem 0.25rem;
 }
 
 .checkbox-field:has(.label-and-help-text) {
   align-items: flex-start;
+  padding: 0 0.75rem 0.25rem 0.25rem;
 }
 
 .checkbox-field:not(:has(.label-and-help-text)) {
   line-height: 1;
+  padding: 0.25rem 0.65rem 0.25rem 0.25rem;
 }
 
 .checkbox-field:hover {

@@ -2,8 +2,6 @@ module UI.Form.CheckboxField exposing (..)
 
 import Html exposing (Html, div, label, small, text)
 import Html.Attributes exposing (class)
-import Maybe.Extra as MaybeE
-import UI
 import UI.Click as Click
 import UI.Form.Checkbox as Checkbox
 
