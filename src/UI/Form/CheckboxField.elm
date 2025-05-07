@@ -40,12 +40,21 @@ withHelpText helpText field_ =
 
 view : CheckboxField msg -> Html msg
 view checkboxField =
+    let
+        labelAndHelpText =
+            case checkboxField.helpText of
+                Just ht ->
+                    div
+                        [ class "label-and-help-text" ]
+                        [ label [ class "label" ] [ text checkboxField.label ]
+                        , small [ class "help-text" ] [ text ht ]
+                        ]
+
+                Nothing ->
+                    label [ class "label" ] [ text checkboxField.label ]
+    in
     Click.view [ class "form-field checkbox-field" ]
         [ Checkbox.checkbox_ Nothing checkboxField.checked |> Checkbox.view
-        , div
-            [ class "label-and-help-text" ]
-            [ label [ class "label" ] [ text checkboxField.label ]
-            , MaybeE.unwrap UI.nothing (\ht -> small [ class "help-text" ] [ text ht ]) checkboxField.helpText
-            ]
+        , labelAndHelpText
         ]
         (Click.onClick checkboxField.onChange)
