@@ -186,7 +186,7 @@
   align-items: flex-start;
 }
 
-.checkbox-field:not:has(.label-and-help-text) {
+.checkbox-field:not(:has(.label-and-help-text)) {
   line-height: 1;
 }
 
