@@ -186,6 +186,10 @@
   align-items: flex-start;
 }
 
+.checkbox-field:not:has(.label-and-help-text) {
+  line-height: 1;
+}
+
 .checkbox-field:hover {
   background: var(--c-color_form-field_background_hovered);
 }
