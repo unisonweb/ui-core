@@ -168,3 +168,37 @@
   display: flex;
   align-items: center;
 }
+
+/* -- CheckboxField ----------------------------------------------------------- */
+
+.checkbox-field {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: flex-start;
+  max-width: 26rem;
+  border-radius: var(--border-radius-base);
+  transition: all 0.2s;
+  padding: 0 0.75rem 0.25rem 0.25rem;
+}
+
+.checkbox-field:hover {
+  background: var(--c-color_form-field_background_hovered);
+}
+
+.checkbox-field .label-and-help-text {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.375rem;
+}
+
+.checkbox-field .label-and-help-text .label {
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+}
+
+.checkbox-field .label-and-help-text .help-text {
+  display: flex;
+  align-items: center;
+}
