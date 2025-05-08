@@ -46,12 +46,12 @@ kind =
     Decode.field "tag" Decode.string
 
 
-whenTagIs : String -> Decode.Decoder String -> Decode.Decoder String
+whenTagIs : String -> Decode.Decoder a -> Decode.Decoder a
 whenTagIs val =
     whenPathIs [ "tag" ] val
 
 
-whenKindIs : String -> Decode.Decoder String -> Decode.Decoder String
+whenKindIs : String -> Decode.Decoder a -> Decode.Decoder a
 whenKindIs val =
     whenPathIs [ "kind" ] val
 
