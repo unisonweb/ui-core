@@ -2,7 +2,7 @@ module UI.KpiTag exposing (..)
 
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class, classList)
-import Lib.Util as Util
+import Lib.String.Helpers exposing (pluralize)
 import Maybe.Extra as MaybeE
 import UI
 import UI.Click as Click exposing (Click)
@@ -95,7 +95,7 @@ view { singularLabel, pluralLabel, kpi, icon, click, tooltip } =
                 p =
                     Maybe.withDefault (s ++ "s") pluralLabel
             in
-            Util.pluralize s p kpi
+            pluralize s p kpi
 
         label_ =
             span [ class "kpi-tag_label" ] [ text label ]

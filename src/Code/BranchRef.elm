@@ -2,8 +2,8 @@ module Code.BranchRef exposing (..)
 
 import Code.Version as Version exposing (Version)
 import Json.Decode as Decode
+import Lib.Decode.Helpers exposing (failInvalid)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
-import Lib.Util as Util
 import Regex
 import UI.Icon as Icon
 import UI.Tag as Tag exposing (Tag)
@@ -311,4 +311,4 @@ toTag branchRef_ =
 decode : Decode.Decoder BranchRef
 decode =
     Decode.map fromString Decode.string
-        |> Decode.andThen (Util.decodeFailInvalid "Invalid BranchRef")
+        |> Decode.andThen (failInvalid "Invalid BranchRef")

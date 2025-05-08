@@ -6,8 +6,8 @@ import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class, title)
 import Json.Decode as Decode
+import Lib.Decode.Helpers exposing (failInvalid)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
-import Lib.Util as Util
 import UI
 import UI.Click as Click exposing (Click)
 
@@ -199,4 +199,4 @@ view_ handleClick slugClick ((ProjectName handle_ slug_) as projectName_) =
 decode : Decode.Decoder ProjectName
 decode =
     Decode.map fromString Decode.string
-        |> Decode.andThen (Util.decodeFailInvalid "Invalid ProjectName")
+        |> Decode.andThen (failInvalid "Invalid ProjectName")

@@ -20,6 +20,7 @@ import Html exposing (Attribute, Html, div, h3, header, section, span, text)
 import Html.Attributes exposing (class, classList, id, title)
 import Http
 import Json.Decode as Decode exposing (field, index)
+import Lib.Decode.Helpers exposing (nonEmptyList)
 import Lib.Util as Util
 import List.Nonempty as NEL
 import Maybe.Extra as MaybeE
@@ -853,7 +854,7 @@ decodeTypeDetails =
     Decode.map5 RawTypeDetails
         (Type.decodeTypeCategory [ "defnTypeTag" ])
         (field "bestTypeName" FQN.decode)
-        (field "typeNames" (Util.decodeNonEmptyList FQN.decode))
+        (field "typeNames" (nonEmptyList FQN.decode))
         (Type.decodeTypeSource [ "typeDefinition", "tag" ] [ "typeDefinition", "contents" ])
         (decodeDocs "typeDocs")
 
@@ -914,7 +915,7 @@ decodeRawTermDetails =
     Decode.map5 RawTermDetails
         (Term.decodeTermCategory [ "defnTermTag" ])
         (field "bestTermName" FQN.decode)
-        (field "termNames" (Util.decodeNonEmptyList FQN.decode))
+        (field "termNames" (nonEmptyList FQN.decode))
         (Term.decodeTermSource
             [ "termDefinition", "tag" ]
             [ "signature" ]

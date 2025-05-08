@@ -27,7 +27,7 @@ module Code.Hash exposing
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode
-import Lib.Util as Util
+import Lib.Decode.Helpers exposing (failInvalid)
 import Regex
 import UI.Icon as Icon
 import Url exposing (percentDecode, percentEncode)
@@ -299,4 +299,4 @@ urlParser =
 decode : Decode.Decoder Hash
 decode =
     Decode.map fromString Decode.string
-        |> Decode.andThen (Util.decodeFailInvalid "Invalid Hash")
+        |> Decode.andThen (failInvalid "Invalid Hash")

@@ -77,6 +77,8 @@
         "Lib.Util",
         "Lib.Paginated",
         "Lib.OperatingSystem",
+        "Lib.String.Helpers",
+        "Lib.Decode.Helpers",
         "Lib.Search",
         "Lib.SearchResults",
         "Lib.TreePath",

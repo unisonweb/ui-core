@@ -31,6 +31,7 @@ module Code.Version exposing
 import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import Json.Decode as Decode
+import Lib.Decode.Helpers exposing (failInvalid)
 import Lib.Util as Util
 import Maybe.Extra as MaybeE
 
@@ -287,4 +288,4 @@ view v =
 decode : Decode.Decoder Version
 decode =
     Decode.map fromString Decode.string
-        |> Decode.andThen (Util.decodeFailInvalid "Invalid Version")
+        |> Decode.andThen (failInvalid "Invalid Version")

@@ -10,7 +10,7 @@ import Code.Hash as Hash
 import Code.HashQualified exposing (HashQualified(..))
 import Json.Decode as Decode exposing (at, field, string)
 import Json.Decode.Extra exposing (when)
-import Lib.Util exposing (decodeNonEmptyList, decodeTag)
+import Lib.Decode.Helpers exposing (nonEmptyList, tag)
 import List.Nonempty as NEL
 
 
@@ -248,8 +248,8 @@ decodeItem =
     Decode.oneOf
         [ when decodeConstructorSuffix ((==) "AbilityConstructor") (field "contents" decodeAbilityConstructorItem)
         , when decodeConstructorSuffix ((==) "DataConstructor") (field "contents" decodeDataConstructorItem)
-        , when decodeTag ((==) "FoundTermResult") (field "contents" decodeTermItem)
-        , when decodeTag ((==) "FoundTypeResult") (field "contents" decodeTypeItem)
+        , when tag ((==) "FoundTermResult") (field "contents" decodeTermItem)
+        , when tag ((==) "FoundTypeResult") (field "contents" decodeTypeItem)
         ]
 
 
@@ -262,7 +262,7 @@ decodeMatchSegments =
                 , when (field "tag" string) ((==) "Match") (Decode.map Match (field "contents" string))
                 ]
     in
-    at [ "result", "segments" ] (decodeNonEmptyList decodeMatchSegment)
+    at [ "result", "segments" ] (nonEmptyList decodeMatchSegment)
 
 
 decodeFinderMatch : Decode.Decoder FinderMatch
