@@ -3,6 +3,7 @@ module Lib.Util exposing (..)
 import Http
 import Json.Decode as Decode
 import Json.Decode.Extra exposing (when)
+import Json.Decode.Pipeline exposing (optionalAt)
 import List.Nonempty as NEL
 import Process
 import Task
@@ -41,6 +42,11 @@ possessive s =
 delayMsg : Float -> msg -> Cmd msg
 delayMsg delay msg =
     Task.perform (\_ -> msg) (Process.sleep delay)
+
+
+decodeMaybeAt : List String -> Decode.Decoder b -> Decode.Decoder (Maybe b -> c) -> Decode.Decoder c
+decodeMaybeAt path decode =
+    optionalAt path (Decode.map Just decode) Nothing
 
 
 decodeNonEmptyList : Decode.Decoder a -> Decode.Decoder (NEL.Nonempty a)
