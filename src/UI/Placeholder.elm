@@ -2,6 +2,7 @@ module UI.Placeholder exposing (..)
 
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
+import List.Extra as ListE
 
 
 
@@ -45,6 +46,40 @@ text =
 text_ : Size -> Size -> Intensity -> Placeholder
 text_ size length intensity =
     Text { size = size, length = length, intensity = intensity }
+
+
+texts : Int -> List Placeholder
+texts n =
+    let
+        lengths =
+            ListE.cycle n [ Large, Small, Medium, Tiny, Huge, Large, Medium, Small, Medium ]
+
+        alternateLength i placeholder_ =
+            placeholder_
+                |> withLength (Maybe.withDefault Medium (ListE.getAt i lengths))
+    in
+    List.repeat n text
+        |> List.indexedMap alternateLength
+
+
+texts3 : List Placeholder
+texts3 =
+    texts 3
+
+
+texts5 : List Placeholder
+texts5 =
+    texts 5
+
+
+texts8 : List Placeholder
+texts8 =
+    texts 8
+
+
+texts12 : List Placeholder
+texts12 =
+    texts 12
 
 
 
