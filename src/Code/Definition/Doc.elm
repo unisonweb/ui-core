@@ -591,8 +591,10 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                         level =
                             min 6 sectionLevel
 
+                        sectionSlug = title |> toString "-"
+
                         titleEl =
-                            Html.node ("h" ++ String.fromInt level) [] [ viewAtCurrentSectionLevel title ]
+                            Html.node ("h" ++ String.fromInt level) [ id sectionSlug ] [ viewAtCurrentSectionLevel title ]
                     in
                     section [] (titleEl :: List.map (viewSectionContent (view_ (sectionLevel + 1))) docs)
 
