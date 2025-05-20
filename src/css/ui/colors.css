@@ -51,6 +51,14 @@
   --color-green-4: #c6ffde;
   --color-green-5: #e8f8ef;
 
+  /* Teals */
+  --color-teal-0: #0b8076;
+  --color-teal-1: #22beb1;
+  --color-teal-2: #55f4e7;
+  --color-teal-3: #9efff7;
+  --color-teal-4: #9efff7;
+  --color-teal-5: #e7fffd;
+
   /* Blues */
   --color-blue-0: #0b3880;
   --color-blue-0-25pct: rgba(11, 56, 128, 0.25);
