@@ -13,6 +13,7 @@
   margin-bottom: 0.125rem;
   padding-right: 0.1875rem;
   height: 1.875rem;
+  line-height: 1;
 }
 
 .codebase-tree .error {
