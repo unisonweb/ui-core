@@ -110,7 +110,7 @@ view { url, text, size, fallbackIcon } =
     case ( url, text ) of
         ( Nothing, Just n ) ->
             div
-                [ class "avatar avatar_text"
+                [ class "avatar avatar_text avatar_blank"
                 , class sizeClass
                 ]
                 [ Html.text (String.left 1 n) ]

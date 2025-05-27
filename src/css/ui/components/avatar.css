@@ -1,5 +1,6 @@
 .avatar {
   --avatar_size: 1.5rem;
+  --avatar_text_size: 0.625rem;
   --color_avatar: var(--u-color_element_emphasized);
   --color_avatar_blank-icon: var(--u-color_icon_subdued);
   --color_avatar_text: var(--u-color_text);
@@ -21,21 +22,28 @@
 
 .avatar.medium {
   --avatar_size: 1.5rem;
+  --avatar_text_size: 0.875rem;
 }
 
 .avatar.large {
   --avatar_size: 2.625rem;
+  --avatar_text_size: 1rem;
 }
 
 .avatar.huge {
   --avatar_size: 4.5rem;
+  --avatar_text_size: 1.5rem;
 }
 
 .avatar.avatar_text {
-  font-size: 0.625rem;
+  font-size: var(--avatar_text_size);
   text-transform: uppercase;
   font-weight: bold;
   line-height: 1;
+}
+
+.avatar.avatar_blank {
+  background-color: var(--color_avatar);
 }
 
 .avatar.avatar_blank-icon {
