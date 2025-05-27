@@ -18,11 +18,12 @@
 
 .avatar.small {
   --avatar_size: 1.125rem;
+  --avatar_text_size: 0.675rem;
 }
 
 .avatar.medium {
   --avatar_size: 1.5rem;
-  --avatar_text_size: 0.875rem;
+  --avatar_text_size: 0.675rem;
 }
 
 .avatar.large {
