@@ -224,6 +224,10 @@
     position: relative;
   }
 
+  .page-header .page-header_navigation {
+    display: none;
+  }
+
   .page-header .page-header_right-side {
     position: absolute;
     top: 0.75rem;
