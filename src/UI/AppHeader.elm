@@ -1,9 +1,8 @@
 module UI.AppHeader exposing (..)
 
-import Html exposing (Html, a, header, section)
+import Html exposing (Html, a, div, header, section)
 import Html.Attributes exposing (class, id)
 import Html.Events exposing (onClick)
-import Maybe.Extra as MaybeE
 import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
@@ -15,10 +14,16 @@ type AppTitle msg
     = AppTitle (Click msg) (Html msg)
 
 
+type AppNav msg
+    = NoAppNav
+    | AppNav (Navigation msg)
+    | AppNavDesktopOnly (Navigation msg)
+
+
 type alias AppHeader msg =
     { menuToggle : Maybe msg
     , appTitle : AppTitle msg
-    , navigation : Maybe (Navigation msg)
+    , navigation : AppNav msg
     , leftSide : List (Html msg)
     , rightSide : List (Html msg)
     , viewMode : ViewMode
@@ -29,7 +34,7 @@ appHeader : AppTitle msg -> AppHeader msg
 appHeader appTitle =
     { menuToggle = Nothing
     , appTitle = appTitle
-    , navigation = Nothing
+    , navigation = NoAppNav
     , leftSide = []
     , rightSide = []
     , viewMode = ViewMode.Regular
@@ -38,7 +43,12 @@ appHeader appTitle =
 
 withNavigation : Navigation msg -> AppHeader msg -> AppHeader msg
 withNavigation navigation appHeader_ =
-    { appHeader_ | navigation = Just navigation }
+    { appHeader_ | navigation = AppNav navigation }
+
+
+withDesktopOnlyNavigation : Navigation msg -> AppHeader msg -> AppHeader msg
+withDesktopOnlyNavigation navigation appHeader_ =
+    { appHeader_ | navigation = AppNavDesktopOnly navigation }
 
 
 withViewMode : ViewMode -> AppHeader msg -> AppHeader msg
@@ -75,11 +85,24 @@ mapAppTitle f (AppTitle click content) =
     AppTitle (Click.map f click) (Html.map f content)
 
 
+mapAppNav : (a -> b) -> AppNav a -> AppNav b
+mapAppNav f nav =
+    case nav of
+        NoAppNav ->
+            NoAppNav
+
+        AppNav nav_ ->
+            AppNav (Navigation.map f nav_)
+
+        AppNavDesktopOnly nav_ ->
+            AppNavDesktopOnly (Navigation.map f nav_)
+
+
 map : (a -> b) -> AppHeader a -> AppHeader b
 map f appHeader_ =
     { menuToggle = Maybe.map f appHeader_.menuToggle
     , appTitle = mapAppTitle f appHeader_.appTitle
-    , navigation = Maybe.map (Navigation.map f) appHeader_.navigation
+    , navigation = mapAppNav f appHeader_.navigation
     , leftSide = List.map (Html.map f) appHeader_.leftSide
     , rightSide = List.map (Html.map f) appHeader_.rightSide
     , viewMode = appHeader_.viewMode
@@ -112,6 +135,17 @@ view appHeader_ =
                     a
                         [ class "menu-toggle", onClick toggle ]
                         [ Icon.view Icon.list ]
+
+        appNav =
+            case appHeader_.navigation of
+                NoAppNav ->
+                    UI.nothing
+
+                AppNav nav ->
+                    Navigation.view nav
+
+                AppNavDesktopOnly nav ->
+                    div [ class "min-sm" ] [ Navigation.view nav ]
     in
     view_
         appHeader_.viewMode
@@ -119,7 +153,7 @@ view appHeader_ =
             [ menuToggle
             , viewAppTitle appHeader_.appTitle
             ]
-        , MaybeE.unwrap UI.nothing Navigation.view appHeader_.navigation
+        , appNav
         , section [ class "left-side" ] appHeader_.leftSide
         , section [ class "right-side" ] appHeader_.rightSide
         ]
