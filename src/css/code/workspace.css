@@ -7,50 +7,11 @@
   background: var(--color-gray-lighten-60);
 }
 
-#workspace.view-mode_regular #workspace-content {
+#workspace #workspace-content {
   /*overflow-x: hidden;*/
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-#workspace.view-mode_presentation #workspace-content {
-  padding-top: 4rem;
-}
-
-#workspace.view-mode_presentation #workspace-content .definition-doc {
-  font-size: var(--font-size-base);
-}
-
-#workspace.view-mode_presentation
-  #workspace-content
-  .definition-doc
-  h1:first-child {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  font-weight: 900;
-  line-height: 1.2;
-}
-
-#workspace.view-mode_presentation #workspace-content .definition-doc h2 {
-  font-size: 1.5rem;
-}
-
-#workspace.view-mode_presentation
-  #workspace-content
-  .definition-doc
-  :is(h3, h4, h5) {
-  font-size: 1.25rem;
-}
-
-#workspace.view-mode_presentation #workspace-content .definition-doc aside {
-  font-size: var(--font-size-medium);
-}
-
-#workspace.view-mode_presentation #workspace-content .loading {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
 }
 
 #workspace .workspace-minimap {

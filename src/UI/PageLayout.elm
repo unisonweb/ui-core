@@ -54,7 +54,6 @@ type PageLayout msg
     | CenteredNarrowLayout (Layout {} msg)
     | TabbedLayout (Layout { pageTitle : PageTitle msg, tabList : TabList msg } msg)
     | EdgeToEdgeLayout (Layout {} msg)
-    | PresentationLayout (PageContent msg)
 
 
 heroLayout : PageHero msg -> PageContent msg -> PageFooter msg -> PageLayout msg
@@ -129,11 +128,6 @@ tabbedLayout pageTitle tabList content footer =
         }
 
 
-presentationLayout : PageContent msg -> PageLayout msg
-presentationLayout content =
-    PresentationLayout content
-
-
 
 -- TRANSFORM
 
@@ -166,9 +160,6 @@ withContent content pl =
         TabbedLayout l ->
             TabbedLayout (withContent_ l)
 
-        PresentationLayout _ ->
-            PresentationLayout content
-
 
 withBackgroundColor : BackgroundColor -> PageLayout msg -> PageLayout msg
 withBackgroundColor bg pl =
@@ -192,9 +183,6 @@ withBackgroundColor bg pl =
             EdgeToEdgeLayout { l | backgroundColor = bg }
 
         TabbedLayout _ ->
-            pl
-
-        PresentationLayout _ ->
             pl
 
 
@@ -280,9 +268,6 @@ map toMsg pageLayout =
                 , footer = mapPageFooter toMsg layout.footer
                 , backgroundColor = layout.backgroundColor
                 }
-
-        PresentationLayout content ->
-            PresentationLayout (PageContent.map toMsg content)
 
 
 mapPageFooter : (a -> msg) -> PageFooter a -> PageFooter msg
@@ -406,9 +391,4 @@ view page =
                         [ TabList.view tabList ]
                     ]
                 , PageContent.view_ (viewPageFooter footer) content
-                ]
-
-        PresentationLayout content ->
-            div [ class "page presentation-layout" ]
-                [ PageContent.view_ (viewPageFooter (PageFooter [])) content
                 ]

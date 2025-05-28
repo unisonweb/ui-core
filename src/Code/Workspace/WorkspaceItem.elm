@@ -7,7 +7,7 @@ import Code.Definition.Doc as Doc exposing (Doc, DocFoldToggles)
 import Code.Definition.Info as Info exposing (Info)
 import Code.Definition.Reference as Reference exposing (Reference)
 import Code.Definition.Source as Source
-import Code.Definition.Term as Term exposing (Term(..), TermCategory(..), TermDetail, TermSource)
+import Code.Definition.Term as Term exposing (Term(..), TermCategory, TermDetail, TermSource)
 import Code.Definition.Type as Type exposing (Type(..), TypeCategory, TypeDetail, TypeSource)
 import Code.DefinitionSummaryTooltip as DefinitionSummaryTooltip
 import Code.FullyQualifiedName as FQN exposing (FQN)
@@ -36,7 +36,6 @@ import UI.Icon as Icon
 import UI.Placeholder as Placeholder
 import UI.Tag as Tag
 import UI.Tooltip as Tooltip
-import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 type WorkspaceItem
@@ -662,68 +661,29 @@ viewItem syntaxConfig namespaceActionMenu ref data isFocused =
                 foldRow
 
 
-viewPresentationItem : SyntaxConfig Msg -> Reference -> ItemData -> Html Msg
-viewPresentationItem syntaxConfig ref data =
-    case data.item of
-        TermItem (Term _ category detail) ->
-            case category of
-                DocTerm ->
-                    detail.doc
-                        |> Maybe.map (Doc.view syntaxConfig (ToggleDocFold ref) data.docFoldToggles)
-                        |> Maybe.withDefault UI.nothing
-
-                _ ->
-                    UI.nothing
-
-        TypeItem _ ->
-            UI.nothing
-
-        DataConstructorItem _ ->
-            UI.nothing
-
-        AbilityConstructorItem _ ->
-            UI.nothing
-
-
-view : WorkspaceItemViewState -> ViewMode -> WorkspaceItem -> Bool -> Html Msg
-view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem isFocused =
+view : WorkspaceItemViewState -> WorkspaceItem -> Bool -> Html Msg
+view { definitionSummaryTooltip, namespaceActionMenu } workspaceItem isFocused =
     let
         attrs =
-            [ classList [ ( "focused", isFocused && ViewMode.isRegular viewMode ) ]
-            , class (ViewMode.toCssClass viewMode)
+            [ classList [ ( "focused", isFocused ) ]
             ]
     in
     case workspaceItem of
         Loading ref ->
-            case viewMode of
-                ViewMode.Regular ->
-                    viewRow ref
-                        attrs
-                        []
-                        (Placeholder.text
-                            |> Placeholder.withSize Placeholder.Large
-                            |> Placeholder.withLength Placeholder.Medium
-                            |> Placeholder.view
-                        )
-                        [ Placeholder.text
-                            |> Placeholder.withSize Placeholder.Large
-                            |> Placeholder.withLength Placeholder.Large
-                            |> Placeholder.withIntensity Placeholder.Subdued
-                            |> Placeholder.view
-                        ]
-
-                ViewMode.Presentation ->
-                    div [ class "workspace-item_loading" ]
-                        [ Placeholder.text
-                            |> Placeholder.withSize Placeholder.Large
-                            |> Placeholder.withLength Placeholder.Medium
-                            |> Placeholder.view
-                        , Placeholder.text
-                            |> Placeholder.withSize Placeholder.Large
-                            |> Placeholder.withLength Placeholder.Large
-                            |> Placeholder.withIntensity Placeholder.Subdued
-                            |> Placeholder.view
-                        ]
+            viewRow ref
+                attrs
+                []
+                (Placeholder.text
+                    |> Placeholder.withSize Placeholder.Large
+                    |> Placeholder.withLength Placeholder.Medium
+                    |> Placeholder.view
+                )
+                [ Placeholder.text
+                    |> Placeholder.withSize Placeholder.Large
+                    |> Placeholder.withLength Placeholder.Large
+                    |> Placeholder.withIntensity Placeholder.Subdued
+                    |> Placeholder.view
+                ]
 
         Failure ref err ->
             viewClosableRow
@@ -754,12 +714,7 @@ view { definitionSummaryTooltip, namespaceActionMenu } viewMode workspaceItem is
                             definitionSummaryTooltip
                         )
             in
-            case viewMode of
-                ViewMode.Regular ->
-                    viewItem syntaxConfig namespaceActionMenu ref data isFocused
-
-                ViewMode.Presentation ->
-                    viewPresentationItem syntaxConfig ref data
+            viewItem syntaxConfig namespaceActionMenu ref data isFocused
 
 
 

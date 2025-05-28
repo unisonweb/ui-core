@@ -7,7 +7,6 @@ import UI
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
 import UI.Navigation as Navigation exposing (Navigation)
-import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 type AppTitle msg
@@ -26,7 +25,6 @@ type alias AppHeader msg =
     , navigation : AppNav msg
     , leftSide : List (Html msg)
     , rightSide : List (Html msg)
-    , viewMode : ViewMode
     }
 
 
@@ -37,7 +35,6 @@ appHeader appTitle =
     , navigation = NoAppNav
     , leftSide = []
     , rightSide = []
-    , viewMode = ViewMode.Regular
     }
 
 
@@ -49,11 +46,6 @@ withNavigation navigation appHeader_ =
 withDesktopOnlyNavigation : Navigation msg -> AppHeader msg -> AppHeader msg
 withDesktopOnlyNavigation navigation appHeader_ =
     { appHeader_ | navigation = AppNavDesktopOnly navigation }
-
-
-withViewMode : ViewMode -> AppHeader msg -> AppHeader msg
-withViewMode viewMode appHeader_ =
-    { appHeader_ | viewMode = viewMode }
 
 
 withMenuToggle : msg -> AppHeader msg -> AppHeader msg
@@ -105,7 +97,6 @@ map f appHeader_ =
     , navigation = mapAppNav f appHeader_.navigation
     , leftSide = List.map (Html.map f) appHeader_.leftSide
     , rightSide = List.map (Html.map f) appHeader_.rightSide
-    , viewMode = appHeader_.viewMode
     }
 
 
@@ -116,11 +107,6 @@ map f appHeader_ =
 viewAppTitle : AppTitle msg -> Html msg
 viewAppTitle (AppTitle click content) =
     Click.view [ class "app-title" ] [ content ] click
-
-
-view_ : ViewMode -> List (Html msg) -> Html msg
-view_ viewMode content =
-    header [ id "app-header", class (ViewMode.toCssClass viewMode) ] content
 
 
 view : AppHeader msg -> Html msg
@@ -147,8 +133,7 @@ view appHeader_ =
                 AppNavDesktopOnly nav ->
                     div [ class "min-sm" ] [ Navigation.view nav ]
     in
-    view_
-        appHeader_.viewMode
+    header [ id "app-header" ]
         [ section [ class "toggle-and-title" ]
             [ menuToggle
             , viewAppTitle appHeader_.appTitle

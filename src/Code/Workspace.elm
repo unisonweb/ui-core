@@ -24,7 +24,7 @@ import Code.Workspace.WorkspaceItems as WorkspaceItems exposing (WorkspaceItems)
 import Code.Workspace.WorkspaceMinimap as WorkspaceMinimap
 import Dict exposing (Dict)
 import Html exposing (Html, article, div, section)
-import Html.Attributes exposing (class, id)
+import Html.Attributes exposing (id)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
 import Lib.ScrollTo as ScrollTo
@@ -33,7 +33,6 @@ import UI
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.KeyboardShortcut.Key exposing (Key(..))
 import UI.KeyboardShortcut.KeyboardEvent as KeyboardEvent exposing (KeyboardEvent)
-import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 
@@ -160,8 +159,8 @@ updateOneItem refRequest { item, refResponse } ( ( workspaceItems, referenceMap 
     )
 
 
-update : Config -> ViewMode -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
-update config viewMode msg ({ workspaceItems, referenceMap } as model) =
+update : Config -> Msg -> Model -> ( Model, Cmd Msg, OutMsg )
+update config msg ({ workspaceItems, referenceMap } as model) =
     case msg of
         NoOp ->
             ( model, Cmd.none, None )
@@ -224,7 +223,6 @@ update config viewMode msg ({ workspaceItems, referenceMap } as model) =
 
                 ( nextModel, cmd, out ) =
                     handleKeyboardShortcut
-                        viewMode
                         { model | keyboardShortcut = keyboardShortcut }
                         shortcut
             in
@@ -477,12 +475,8 @@ openDefinitionsFocusToOutMsg openDefs =
         |> Maybe.withDefault Emptied
 
 
-handleKeyboardShortcut :
-    ViewMode
-    -> Model
-    -> KeyboardShortcut
-    -> ( Model, Cmd Msg, OutMsg )
-handleKeyboardShortcut viewMode model shortcut =
+handleKeyboardShortcut : Model -> KeyboardShortcut -> ( Model, Cmd Msg, OutMsg )
+handleKeyboardShortcut model shortcut =
     let
         scrollToCmd =
             WorkspaceItems.focus
@@ -518,11 +512,11 @@ handleKeyboardShortcut viewMode model shortcut =
             in
             ( { model | workspaceItems = next }, scrollToCmd next, openDefinitionsFocusToOutMsg next )
     in
-    case ( viewMode, shortcut ) of
-        ( ViewMode.Regular, Chord Alt ArrowDown ) ->
+    case shortcut of
+        Chord Alt ArrowDown ->
             moveDown
 
-        ( ViewMode.Regular, Chord Alt ArrowUp ) ->
+        Chord Alt ArrowUp ->
             moveUp
 
         {- TODO: Support vim keys for moving. The reason this isn't straight
@@ -539,19 +533,19 @@ handleKeyboardShortcut viewMode model shortcut =
               Chord Alt (K _) ->
                   moveUp
         -}
-        ( ViewMode.Regular, Sequence _ ArrowDown ) ->
+        Sequence _ ArrowDown ->
             nextDefinition
 
-        ( ViewMode.Regular, Sequence _ (J _) ) ->
+        Sequence _ (J _) ->
             nextDefinition
 
-        ( ViewMode.Regular, Sequence _ ArrowUp ) ->
+        Sequence _ ArrowUp ->
             prevDefinitions
 
-        ( ViewMode.Regular, Sequence _ (K _) ) ->
+        Sequence _ (K _) ->
             prevDefinitions
 
-        ( ViewMode.Regular, Sequence _ Space ) ->
+        Sequence _ Space ->
             let
                 cycleZoom wItems ref =
                     WorkspaceItems.updateData WorkspaceItem.cycleZoom ref wItems
@@ -564,7 +558,7 @@ handleKeyboardShortcut viewMode model shortcut =
             in
             ( { model | workspaceItems = cycled }, Cmd.none, None )
 
-        ( ViewMode.Regular, Sequence _ (X _) ) ->
+        Sequence _ (X _) ->
             let
                 without =
                     model.workspaceItems
@@ -632,50 +626,41 @@ subscriptions _ =
 -- VIEW
 
 
-view : ViewMode -> Model -> Html Msg
-view viewMode model =
+view : Model -> Html Msg
+view model =
     case model.workspaceItems of
         WorkspaceItems.Empty ->
             -- TODO: Remove WorkspaceItems.Empty
             -- this state is now determined via Route
             div [] []
 
-        WorkspaceItems.WorkspaceItems { focus } ->
-            case viewMode of
-                ViewMode.Regular ->
-                    let
-                        minimap =
-                            if WorkspaceItems.length model.workspaceItems > 1 then
-                                model
-                                    |> toMinimap
-                                    |> WorkspaceMinimap.view
+        WorkspaceItems.WorkspaceItems _ ->
+            let
+                minimap =
+                    if WorkspaceItems.length model.workspaceItems > 1 then
+                        model
+                            |> toMinimap
+                            |> WorkspaceMinimap.view
 
-                            else
-                                UI.nothing
-                    in
-                    article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ minimap
-                        , section
-                            [ id "workspace-content" ]
-                            (viewWorkspaceItems model.workspaceItemViewState model.workspaceItems)
-                        ]
-
-                ViewMode.Presentation ->
-                    article [ id "workspace", class (ViewMode.toCssClass viewMode) ]
-                        [ section
-                            [ id "workspace-content" ]
-                            [ viewItem model.workspaceItemViewState ViewMode.Presentation focus True ]
-                        ]
+                    else
+                        UI.nothing
+            in
+            article [ id "workspace" ]
+                [ minimap
+                , section
+                    [ id "workspace-content" ]
+                    (viewWorkspaceItems model.workspaceItemViewState model.workspaceItems)
+                ]
 
 
-viewItem : WorkspaceItemViewState -> ViewMode -> WorkspaceItem -> Bool -> Html Msg
-viewItem viewState viewMode workspaceItem isFocused =
-    Html.map WorkspaceItemMsg (WorkspaceItem.view viewState viewMode workspaceItem isFocused)
+viewItem : WorkspaceItemViewState -> WorkspaceItem -> Bool -> Html Msg
+viewItem viewState workspaceItem isFocused =
+    Html.map WorkspaceItemMsg (WorkspaceItem.view viewState workspaceItem isFocused)
 
 
 viewWorkspaceItems : WorkspaceItemViewState -> WorkspaceItems -> List (Html Msg)
 viewWorkspaceItems viewState items =
-    WorkspaceItems.mapToList (viewItem viewState ViewMode.Regular) items
+    WorkspaceItems.mapToList (viewItem viewState) items
 
 
 toMinimap : Model -> WorkspaceMinimap.Minimap Msg

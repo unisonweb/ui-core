@@ -1,7 +1,7 @@
 /* -- Page Header ---------------------------------------------------------- */
 
 /* @color-todo @inverse */
-.page-header.view-mode_regular {
+.page-header {
   --u-color_interactive: var(--color-blue-3);
   --u-color_interactive_hovered: var(--color-blue-4);
   --u-color_interactive_pressed: var(--color-pink-4);
@@ -17,7 +17,7 @@
   --c-color_page-header_hover-nav-item: var(--color-gray-base);
 }
 
-.page-header.view-mode_regular .profile-snippet {
+.page-header .profile-snippet {
   --color_profile-snippet_text: var(--c-color_page-header_text);
   --color_profile-snippet_text_subdued: var(
     --c-color_page-header_text_very-subdued
@@ -25,11 +25,11 @@
 }
 
 /* @color-todo @inverse */
-.page-header.view-mode_regular .profile-snippet .avatar {
+.page-header .profile-snippet .avatar {
   --color_avatar: var(--color-gray-base);
 }
 
-.page-header.view-mode_regular .project-name {
+.page-header .project-name {
   --c-color_project-name_handle: var(--c-color_page-header_text_subdued);
   --c-color_project-name_separator: var(
     --c-color_page-header_text_very-subdued
@@ -37,14 +37,14 @@
   --c-color_project-name_slug: var(--c-color_page-header_text);
 }
 
-.page-header.view-mode_regular .project-name-listing {
+.page-header .project-name-listing {
   --c-color_project-name-listing_private-icon: var(--color-blue-3);
   --c-color_project-name-listing_private-icon_background: var(
     --color-blue-3-25pct
   );
 }
 
-.page-header.view-mode_regular .navigation {
+.page-header .navigation {
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_hovered: var(--color-transparent);
@@ -58,30 +58,6 @@
     background: var(--color-gray-darken-30);
     color: var(--color-gray-lighten-100);
   }
-}
-
-/* In Presentation Mode the header gets a light theme treatment and made semi
- * transparent */
-.page-header.view-mode_presentation {
-  --c-color_page-header_text: var(--u-color_text);
-  --c-color_page-header_bg: var(--u-color_background);
-  --c-color_page-header_text_very-subdued: var(--u-color_text_very-subdued);
-  --c-color_page-header_context-unison-share-text: var(--color-purple-4);
-  --c-color_page-header_context-unison-local-text: var(--color-pink-3);
-  --c-color_page-header_border: transparent;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
-
-.page-header.view-mode_presentation .navigation {
-  --u-color_c_navigation-item_selected: var(--color-gray-lighten-50);
-  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-20);
-  --u-color_c_navigation-item_hovered: var(--color-gray-lighten-40);
-  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-base);
-}
-
-.page-header.view-mode_presentation:hover {
-  opacity: 1;
 }
 
 .page-header {
@@ -99,9 +75,7 @@
   height: var(--c-height_page-header);
 }
 
-/* We only overwrite the button colors for Regular, since Presentation just
- * uses the default */
-.page-header.view-mode_regular .button {
+.page-header .button {
   /* @color-todo @inverse */
   --color-button-default-text: var(--color-gray-lighten-30);
   --color-button-default-icon: var(--color-gray-lighten-20);

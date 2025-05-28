@@ -8,7 +8,6 @@ import UI.Button as Button
 import UI.Click as Click exposing (Click)
 import UI.Icon as Icon
 import UI.Navigation as Nav exposing (Navigation)
-import UI.ViewMode as ViewMode exposing (ViewMode)
 
 
 type alias PageContext msg =
@@ -34,7 +33,6 @@ type alias PageHeader msg =
     { context : PageContext msg
     , navigation : PageHeaderNav msg
     , rightSide : List (Html msg)
-    , viewMode : ViewMode
     }
 
 
@@ -47,7 +45,6 @@ pageHeader ctx =
     { context = ctx
     , navigation = NoNav
     , rightSide = []
-    , viewMode = ViewMode.Regular
     }
 
 
@@ -70,11 +67,6 @@ empty =
 withNavigation : NavigationConfig msg -> PageHeader msg -> PageHeader msg
 withNavigation navigation pageHeader_ =
     { pageHeader_ | navigation = PageHeaderNav navigation }
-
-
-withViewMode : ViewMode -> PageHeader msg -> PageHeader msg
-withViewMode viewMode pageHeader_ =
-    { pageHeader_ | viewMode = viewMode }
 
 
 withRightSide : List (Html msg) -> PageHeader msg -> PageHeader msg
@@ -113,7 +105,6 @@ map toMsg headerA =
     { context = mapPageContext toMsg headerA.context
     , navigation = mapPageHeaderNav toMsg headerA.navigation
     , rightSide = List.map (Html.map toMsg) headerA.rightSide
-    , viewMode = headerA.viewMode
     }
 
 
@@ -212,7 +203,6 @@ view pageHeader_ =
     in
     header
         [ class "page-header"
-        , class (ViewMode.toCssClass pageHeader_.viewMode)
         ]
         [ viewPageContext pageHeader_.context
         , nav

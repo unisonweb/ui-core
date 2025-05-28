@@ -1,7 +1,7 @@
 /* -- App Header ---------------------------------------------------------- */
 
 /* @color-todo @inverse */
-#app-header.view-mode_regular {
+#app-header {
   --color-app-header-text: var(--color-gray-lighten-100);
   --color-app-header-bg: var(--color-gray-darken-10);
   --color-app-header-subtle-text: var(--color-gray-lighten-20);
@@ -12,7 +12,7 @@
   --color-app-header-border: transparent;
 }
 
-#app-header.view-mode_regular .navigation {
+#app-header .navigation {
   --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_hovered: var(--color-gray-base);
@@ -20,32 +20,6 @@
   --u-color_c_navigation-item: var(--color-transparent);
   --u-color_c_navigation-item_selected: var(--color-gray-darken-20);
   --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
-}
-
-/* In Presentation Mode the header gets a light theme treatment and made semi
- * transparent */
-#app-header.view-mode_presentation {
-  --color-app-header-text: var(--u-color_text);
-  --color-app-header-bg: var(--u-color_background);
-  --color-app-header-subtle-text: var(--u-color_text_very-subdued);
-  --color-app-header-subtle-text-em: var(--u-color_text_subdued);
-  --color-app-header-context-unison-share-text: var(--color-purple-4);
-  --color-app-header-context-unison-cloud-text: var(--color-blue-2);
-  --color-app-header-context-unison-local-text: var(--color-pink-3);
-  --color-app-header-border: transparent;
-  opacity: 0.5;
-  transition: opacity 0.2s;
-}
-
-#app-header.view-mode_presentation .navigation {
-  --u-color_c_navigation-item_selected: var(--color-gray-lighten-50);
-  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-20);
-  --u-color_c_navigation-item_hovered: var(--color-gray-lighten-40);
-  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-base);
-}
-
-#app-header.view-mode_presentation:hover {
-  opacity: 1;
 }
 
 #app-header {
@@ -63,7 +37,7 @@
 
 /* We only overwrite the button colors for Regular, since Presentation just
  * uses the default */
-#app-header.view-mode_regular .button {
+#app-header .button {
   /* @color-todo @inverse */
   --color-button-default-text: var(--color-gray-lighten-30);
   --color-button-default-icon: var(--color-gray-lighten-20);
