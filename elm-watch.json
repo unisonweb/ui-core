@@ -31,8 +31,7 @@
         "src/UI/StatusMessage.elm",
         "src/UI/Steps.elm",
         "src/UI/Toolbar.elm",
-        "src/UI/Tooltip.elm",
-        "src/UI/ViewMode.elm"
+        "src/UI/Tooltip.elm"
       ],
       "output": "build/ui.js"
     },

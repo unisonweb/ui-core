@@ -11,14 +11,13 @@ import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
 import Code.Workspace.WorkspaceItem exposing (WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems as WorkspaceItems
+import Dict exposing (Dict)
 import Html exposing (Html, div)
 import Html.Events exposing (onClick)
 import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
-import UI.ViewMode
 import Url
-import Dict exposing (Dict)
 
 
 type alias Model =
@@ -82,7 +81,7 @@ refToEndpoint ref =
                     "/base_readme.json"
 
                 "blog" ->
-                     "/blog_def.json"
+                    "/blog_def.json"
 
                 "assets.indexHtml" ->
                     "/long.json"
@@ -90,7 +89,7 @@ refToEndpoint ref =
                 "PositiveInt2" ->
                     "/positive_int_2.json"
 
-                "Config" -> 
+                "Config" ->
                     "/cloud_config_def.json"
 
                 _ ->
@@ -140,7 +139,7 @@ update message model =
         WorkspaceMsg wMsg ->
             let
                 ( newModel, cmd, _ ) =
-                    Workspace.update config UI.ViewMode.Regular wMsg model
+                    Workspace.update config wMsg model
             in
             ( newModel, Cmd.map WorkspaceMsg cmd )
 
@@ -155,10 +154,7 @@ update message model =
 view : Model -> Html Msg
 view model =
     div []
-        [ Workspace.view
-            UI.ViewMode.Regular
-            model
-            |> Html.map WorkspaceMsg
+        [ Workspace.view model |> Html.map WorkspaceMsg
         , Html.br [] []
         , sampleAddButton Reference.TermReference "PositiveInt2"
         , Html.br [] []

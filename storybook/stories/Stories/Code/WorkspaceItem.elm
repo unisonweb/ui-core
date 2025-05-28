@@ -11,7 +11,6 @@ import Dict
 import Helpers.ReferenceHelper exposing (sampleReference)
 import Html exposing (Html)
 import Http
-import UI.ViewMode
 
 
 type alias Model =
@@ -105,7 +104,6 @@ view model =
         Just item ->
             Code.Workspace.WorkspaceItem.view
                 Code.Workspace.WorkspaceItem.viewState
-                UI.ViewMode.Regular
                 item
                 True
                 |> Html.map WorkspaceItemMsg

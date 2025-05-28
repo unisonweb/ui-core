@@ -18,7 +18,6 @@ import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
 import Lib.OperatingSystem as OperatingSystem
 import UI.KeyboardShortcut as KeyboardShortcut exposing (KeyboardShortcut(..))
 import UI.PageContent as PageContent
-import UI.ViewMode
 
 
 type alias Model =
@@ -129,9 +128,7 @@ view : Model -> Html Msg
 view model =
     let
         workspaceView =
-            Workspace.view
-                UI.ViewMode.Regular
-                model
+            Workspace.view model
     in
     PageContent.view <|
         PageContent.oneColumn [ workspaceView |> Html.map WorkspaceMsg ]
