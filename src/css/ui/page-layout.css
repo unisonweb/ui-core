@@ -362,7 +362,7 @@
   .page.sidebar-left-content-layout.sidebar-toggled {
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
-    grid-template-areas: "page-content" "page-footer";
+    grid-template-areas: "main-sidebar" "page-content" "page-footer";
   }
 
   .page:not(.sidebar-toggled) #main-sidebar .sidebar_collapsed {
@@ -376,12 +376,9 @@
   }
 
   .page.sidebar-toggled #main-sidebar {
-    position: absolute;
     height: fit-content;
-    width: fit-content;
+    width: auto;
     padding: 0;
-    margin: 0.5rem;
-    border-radius: var(--border-radius-base);
   }
 
   .page.sidebar-toggled #main-sidebar .sidebar_expanded {
@@ -398,7 +395,7 @@
   .page.sidebar-left-content-layout {
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
-    grid-template-areas: "page-content" "page-footer";
+    grid-template-areas: "main-sidebar" "page-content" "page-footer";
   }
 
   .page #main-sidebar {
