@@ -167,20 +167,36 @@
 
 @media only screen and (--u-viewport_max-lg) {
   .page-header {
+    --c-height_page-header: 7rem;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
     padding: 0 1rem 0 0;
+  }
+
+  .page-header:has(.page-header_page-content_is-action) {
+    --c-height_page-header: 3.5rem;
+  }
+
+  .page-header:not(:has(.page-header_page-content-is-active)) .page-header_page-content,
+  .page-header:not(:has(.page-header_page-content-is-active)) .page-header_navigation,
+  .page-header:not(:has(.page-header_page-content-is-active)) .page-header_navigation .nav-item {
+    height: calc(var(--c-height_page-header) / 2);
   }
 
   .page-header .page-header_page-context,
   .page-header .navigation .nav-item {
     padding: 0 1rem;
   }
+
+  .page-header .page-header_right-side {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+  }
 }
 
 @media only screen and (--u-viewport_max-md) {
-  .page-header .profile-snippet .profile-snippet_name {
-    display: none;
-  }
-
   .page-header .profile-snippet .profile-snippet_handle {
     font-size: var(--c-size_profile-snippet_name);
     font-weight: bold;
@@ -190,21 +206,5 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-  }
-}
-
-@media only screen and (--u-viewport_max-lg) {
-  .page-header {
-    position: relative;
-  }
-
-  .page-header .page-header_navigation {
-    display: none;
-  }
-
-  .page-header .page-header_right-side {
-    position: absolute;
-    top: 0.75rem;
-    right: 1rem;
   }
 }
