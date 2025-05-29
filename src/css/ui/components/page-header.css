@@ -174,8 +174,12 @@
     padding: 0 1rem 0 0;
   }
 
-  .page-header:has(.page-header_page-content_is-action) {
+  .page-header:has(.page-header_page-content_is-active) {
     --c-height_page-header: 3.5rem;
+  }
+
+  .page-header:has(.page-header_page-content_is-active) .page-header {
+    display: none;
   }
 
   .page-header:not(:has(.page-header_page-content-is-active)) .page-header_page-content,
