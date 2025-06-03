@@ -4508,9 +4508,7 @@
         "tag": "UserObject"
       },
       "termDocs": [],
-      "termNames": [
-        "internal.notes.checkpointing"
-      ]
+      "termNames": ["internal.notes.checkpointing"]
     }
   },
   "typeDefinitions": {}
