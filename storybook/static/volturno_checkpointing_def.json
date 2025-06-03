@@ -1,0 +1,4517 @@
+{
+  "missingDefinitions": [],
+  "termDefinitions": {
+    "#c2pfv0kh7kmacuimvrdrm6qnb1rp1t4v772ipskqj4lqtpuff42a20s8aq64v44e6r1f24597nmokq8k231ndm0gcnhrf541u92gpoo": {
+      "bestTermName": "checkpointing",
+      "defnTermTag": "Plain",
+      "signature": [
+        {
+          "annotation": {
+            "contents": "##Text",
+            "tag": "TypeReference"
+          },
+          "segment": "Text"
+        }
+      ],
+      "termDefinition": {
+        "contents": [
+          {
+            "annotation": {
+              "contents": "internal.notes.checkpointing",
+              "tag": "HashQualifier"
+            },
+            "segment": "internal.notes.checkpointing"
+          },
+          {
+            "annotation": {
+              "tag": "TypeAscriptionColon"
+            },
+            "segment": " :"
+          },
+          {
+            "annotation": null,
+            "segment": " "
+          },
+          {
+            "annotation": {
+              "contents": "##Text",
+              "tag": "TypeReference"
+            },
+            "segment": "Text"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": {
+              "contents": "internal.notes.checkpointing",
+              "tag": "HashQualifier"
+            },
+            "segment": "internal.notes.checkpointing"
+          },
+          {
+            "annotation": {
+              "tag": "BindingEquals"
+            },
+            "segment": " ="
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "\"\"\""
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  Assume the reader knows about Flink's checkpointting algorithm."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  We have to model channels that can be blocked for each input to do alignment."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  Observations:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  - Every node, except for sources, could have multiple inputs, with the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    same KStreamId but different WorkerId, because they could be"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    downstream of a `partition`. `merge` nodes have different inputs"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    because they have multiple KStreamId incoming, and for each one they"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    could be coming from different WorkerId if `merge` is downstream of"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    a `partition`"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  - all nodes could have multiple outputs, since two operators can"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    transform to the same KStreamId. These outputs will have different"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    KStreamId, and in case of a `partition`, different WorkerId as well."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    Barriers have to be broadcast out to all."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  So messages have to also carry their source KStreamId and WorkerId,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  and blocking a given input happens by filtering out (but retaining)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  messages for that (KStreamId, WorkerId) pair."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  Detection of whether all barriers for a checkpoint version have been"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  received has to check whether a barrier has been received for all"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  relevant KStreamId (those that a node has as input). We also have to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  count the input WorkerId, and the condition for this logic sounds"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  trickier. It's going to be all WorkerIds for nodes downstream of a"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  `partition`, what about when one isn't downstream of a `partition`?"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  One solution would be for all node types to broadcast the marker to all"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  workers, or we could be a bit more surgical and avoid this extra"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  communication (and alignment delay) by tracking when a given node is"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  downstream of a partition/how many inputs it actually has."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  I could keep a Set (KStreamId, WorkerId), upon receiving each"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  barrier for a given checkpoint version, you add the sender details to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  that Set, and check its size, which is determined by two components:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "   - for a `merge` node, the first component of the size is the number"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "     of inputs, and 1 for `partition` and `loop`"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  - For all nodes, multiply the size by current number of workers if"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    that node is immediately downstream of a partition, or by 1"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    otherwise"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  source nodes are treated differently, you want a non-blocking poll"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  on the Channel before polling the source, if you get a barrier, you"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  can proceed with the checkpointting."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  On the output side:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  - emit a barrier for each of your downstream KStream"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  - for `partition` you want to emit it to each worker"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  - for other nodes, to your own worker only"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " I think I want to do the blocking/aligning inside channel directly,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " since it's going to be the same logic for all operators. The only"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " thing that needs to be abstracted out is the logic of when to unblock"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " since that depends on topology, I think a `numBlocked` and `unblock`"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " functions on Channel should be enough for that"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " Then inside runningStages I can compute a fanIn Map to deal with that."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Note: I have to figure out the implications of worker scaling to the fanIn calculation,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I might have to tag things with Views. Actually this shouldn't be a problem given that"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Channels don't survive a view change and there is no crosstalk among views"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "workers should be spawned at a specific epoch so that they all"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "resume consistently. we need to figure out what to do with an"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "incomplete checkpoint, it cannot be resumed since sending barriers"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "again will be buggy, we have to move to the next one. doable easily"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "because we write the whole state to S3 on each checkpoint, but if it"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "were more incremental this becomes more annoying."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "That means that I have to mark a checkpoint as in progress before"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "sending barriers."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Is it actually true that barriers cannot be retried?"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "yeah it messes up alignment: if a barrier from worker A is received"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "and a barrier from worker B is lost, and the coordinator retries, B"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "is received and unblocks, then A is received and waits forever."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Maybe it can be retried, but only when coming from a rebalance."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Just discarding it seems easier though."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I think I'm going to use polling like I do in supervisor, instead of"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "having a blocking queue. I'm also tempted to put checkpoint messages"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "in the same Ref, it's a bit of concurrency but nothing extreme."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "why polling: if the writers get interrupted after they write to us"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "but before they can notify, I'd have to poll to check anyway. Given"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "that polling is cheap as it's happening on a local ref, I'll just do"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "that."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Blobs.typed.read :  Database -> Key ->{Exception, Blobs} Optional (a, Metadata)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Blobs.typed.write : Database -> Key -> a ->{Exception, Blobs} ETag"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "type Blob.Key = Key Text"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "`typed.write database key value` stores the provided value at the specified Key. If a blob"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "already exists with the provided key, then its contents will be replaced."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": ".create will fail if the blob exists, can use that for idempotency"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "checkpoint structure S3"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "checkpoint structure Dynamo"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "checkpoint structure message"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Epoch (KStreamId, WorkerIndex) -> Map Any Any"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Epoch Loglet -> Offset"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "should I mix the checkpointting, and only put the maps on Blobs, and the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "pointers in Dynamo."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "then stages write directly to Dynamo"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "and sent to checkpoint managers acks only"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "so checkpoint manager is in charge of:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "- initiating checkpoints"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "- marking checkpoints as done"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "- telling workers which epoch they start at, although that needs"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  integration with view change"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "activation has to include the time to download the state, which"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "will make rebalance slower."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "We can think of caching into Scratch at some point maybe, and"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "eventually caching to local disk. That requires some stickyness of"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "locations to be valuable though."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Storage state for checkpointting."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " last completed checkpoint: Table () Epoch (maybe Cell, and include timestamp)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " last initiated checkpoint: Table () Epoch (maybe Cell)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " offsets: Table (Epoch, Loglet) Offset"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": " state: Table (Epoch, KStreamId, WorkerIndex) Key"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Blobs: Key (Map Any Any)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I think I can avoid the state table by making the Key a hash of"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "(Epoch, StreamId, WorkerIndex)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "message to send to checkpoint manager:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "is it enough to know all the state is saved, or do we need to know"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "all stages are done?"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I feel like the latter is a bit safer, so we can also detect when a"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "stage is getting stuck because e.g. a barrier got dropped."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "question: if a checkpoint  doesn't complete, should we rebalance?"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "for the case of workers getting stuck, maybe we should."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "then the message can be: (Epoch, KStreamId, WorkerIndex) I need to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "think about what to do with source stages that don't have any loglet"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "assigned to them. Maybe filter them out and have them do nothing."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "This requires the checkpoint manager to have access to the loglet"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "assignment instead of just the plan."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Alternatively they will have to be active just to do checkpointting,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "feels pointless, but also is it a big deal?"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I think I'll just ignore it for simplicity, but remember to change"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "channel.send to avoid sending anything on an empty batch"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "(done, useful for ops that can filter out as well)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "the supervisor needs access to the workers channels, and it might"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "not be the one that spawned them. They need to go in storage."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Maybe I should bite the bullet and split source channels from the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "rest, then only those go to storage (like in v1): Map Loglet"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "SimpleChannel."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "latest version:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  epoch: Cell Epoch"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  offsets: Table (Epoch, Loglet) Offset"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  views: Table View ("
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    Map WorkerId Thread,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    Remote.Ref (Map WorkerId time.Duration),"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    [Map KStreamId Channel] (but filter to source nodes only),"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "    Remote.Ref [(Epoch, KStreamId, WorkerIndex)]"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  ) <-- split in multiple slots now"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  statePointer: Epoch -> KStreamId -> WorkerIndex -> Key"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "two competing checkpoint managers can destroy consistency, maybe"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "another application for leases + fences (with epoch + leadership)."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Fencing doesn't seem immediately applicable since the start of the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "checkpointting process is an in-memory message."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Maybe I can try making the writes to storage idempotent to help."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I also should maybe add detection into Channel, when it receives old"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "epochs on some inputs as its waiting for new ones."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Maybe the fencing I do use should be on lastInitiatedCheckpoint and/or"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "lastCompletedCheckpoint"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "alternative: use transactions to initiate checkpointing, by putting the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "initial barriers in storage? this imposes a trivial limit to the number"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "of concurrent workers though: the transaction limit"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "state download:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "each node has the full topology, so the worker can just download all the state"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "pertinent to that worker, and the logic in compile can access the relevant pieces"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "checkpointing topology issues:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "1) Idle source nodes not propagating their barriers is an issue."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "  ^ done"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "2) Additionally, currently source nodes also redistribute work, just"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "like partition nodes do. This means that they would have to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "broadcast barriers, and also that downstream has to detect when they"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "are downstream of a source to change its fan-in."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Maybe I should just have source nodes be local, and require an"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "explicit partition to repartition things."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Pros: in the common case where all workers have active loglets,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "avoids network traffic."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Con: if workers have no active loglets, they'd require a `partition`"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "to be fully utilised."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "BigQ: is having source nodes be local even correct though? in"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "particular, will they have the right state on the node? I suspect"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "not, reasoning: a KLog can have a # of loglets which is different"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "from #workers in a KStreams. So a given key X could be hashed to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "e.g. Loglet 3 (assigned to Worker 3), and Worker 4. If source was"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "local then a record with key X will be processed on worker 3,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "whereas it should be processed on worker 4."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "^ done"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "3) the logic for computing fan-in on merge looks wrong, what if I'm"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "   merging heteregenous streams, like a partition and a loop? The"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "   fanIn would not be uniform in that case, and I'm treating it like"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "   it is currently."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "   ^done"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "The current design ensures no overlapping barriers can be present in"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "channels. the checkpoint manager only sends a new barrier is the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "previous checkpoint has completed. If the checkpoint times out,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "there's a rebalance, then the same barrier is sent."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I think the above might be buggy actually."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I'm not sure whether the idempotency of writing blobs is"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "necessary, nice-to-have, or actually buggy."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "It seems to solve the problem you'd have with alignment if there"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "were competing supervisor, but then it can have an issue with simple"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "pipelines if the same barrier is sent twice:e.g. two loops in"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "series, the first fails to write, the second writes successfully,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "barrier is resent, the first writes at a new state, the second gets"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "an incorrect cached write."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "[1, 2, 3] --> sum ----[1, 2, 3] --------> sum"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "                 \\__ fails to write 6      \\__ writes 6"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "[4,5] arrive at the source and barrier is resent:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "[1, 2, 3, 4, 5] --> sum ----------[1, 2, 3, 4, 5] ----> sum"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "                       \\__ writes 15                      \\__ writes 6, inconsistent"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "One: the current code assumes a barrier only gets resent after a"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "rebalance, but that's not true: if a new supervisor takes over right"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "when a checkpoint should have failed, the workers won't rebalance"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "but they will receive the new barrier. Could be solved with an in"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "memory watermark at the source which would trigger a rebalance."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "But even with that, idempotency is actually wrong even after a"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "rebalance, because it assumes on restart you will receive the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "barrier at the same exact point you did before, whereas the way the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "barrier is interleaved with the input messages is non-deterministic."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "^ KEY INSIGHT THAT BREAKS CURRENT ALGO."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "The reason you want idempotency is if you have two competing leaders"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "supervisors sending barriers that end up breaking monotonicity, but"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "the real property you want is actually: if a checkpoint did"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "complete, you want idempotency for that barrier, but if it didn't,"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "you want to override the loop states so that the barrier remains"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "consistent and you avoid the issue in the diagram above."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "This property doesn't seem implementable with the current code with"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "deterministic keys in S3, and even if we wrote random pointers in S3"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "and then used transactions to commit them to the checkpoint state in"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Storage, that might put a scale limit to what we can checkpoint that"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "seems undesirable. Worth considering though, maybe run some numbers"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "on the size of that."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Having fully monotonic barriers that always advance, even in the"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "case of uncertainty, seems better for this, but then we are back to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "dealing with competing supervisors potentially messing things up."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I definitely would have to remove idempotency from the writes to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "achieve that, and then basically need to analyse what actually"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "happen if two supervisors both send different barriers that get"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "intermixed at different sources, maybe all you see is a checkpoint"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "getting stuck, but we can already deal with that, plus in practice"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "renewing the lease when getting a new epoch will be enough."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Could also add watermarking if you get unlucky and like all sources"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "get epoch 5 and then they all get epoch 4, so the checkpoint isn't"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "stuck but it's incorrect."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Alternatively, I need to revisit a more complex consistent protocol"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "for sending barriers to sources."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Idea (still not fully working, but better):"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "you don't have idempotency, so partial runs of a previous checkpoint"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "can be completed later by essentially being overridden. However, you"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "add in-memory watermarks to avoid the same barrier getting sent by a"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "new supervisor taking over."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "But there is still an issue: a checkpoint completes, but before it"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "can be committed, a new supervisor takes over, happens to rebalance"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "(so no in-memory watermark), sends same barrier, the pipeline"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "partially overrides the checkpoint state, then old supervisor"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "commits partially messed up state, and if pipeline fails that"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "checkpoint will never be fixed. Adding a fence will probably fix"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "that though: if pipeline does not rebalance, then the watermarks"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "will work, if it does, then the fence will prevent the epoch from"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "being advanced."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "A solution that never sends the same epoch twice seems easier to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "prove correct though."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "I could then either just rely on leases to solve the competing supervisors"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "issue, or send barriers to sources with 2PC/Paxos-like"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "^"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Key to solve this problem: select one worker to be the checkpoint"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "manager!"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "This way the existing View mechanics guarantees consistency between"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "workers and a single checkpointManager, and I also don't have to"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "save the sources to storage!"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Since now I don't have to worry about multiple checkpoint manager, I"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "can use the straightforward error handling strategy of always"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "increasing the epoch on error (with a committed epoch for a"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "successful checkpoint)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "DONE"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "--"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Improvement for later: support having more than one in-flight checkpoint, and that"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "also enables trying a new checkpoint upon failure without rebalancing."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "Note that this cannot apply to the propagation part, the whole"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "correctness of it hinges on the fact that a new epoch isn't sent"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "unless either the previous one checkpoints, or there's a rebalance"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "(resetting the state of the channels)."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "However I might split:"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "1) checkpoint barriers have propagated (has to rebalance on failure)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "2) checkpoint didn't complete (can be retried at higher epoch"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "   provided the barriers did propagate)"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "or maybe I first send an unblock barrier, if that propagates"
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "correctly, I can try the next epoch. It not, rebalance."
+          },
+          {
+            "annotation": null,
+            "segment": "\n"
+          },
+          {
+            "annotation": null,
+            "segment": "  "
+          },
+          {
+            "annotation": {
+              "tag": "TextLiteral"
+            },
+            "segment": "\"\"\""
+          }
+        ],
+        "tag": "UserObject"
+      },
+      "termDocs": [],
+      "termNames": [
+        "internal.notes.checkpointing"
+      ]
+    }
+  },
+  "typeDefinitions": {}
+}

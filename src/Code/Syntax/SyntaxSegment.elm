@@ -271,6 +271,12 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
             else if isFQN then
                 view_ (viewFQN (FQN.fromString sText))
 
+            else if sType == TextLiteral then
+                -- Spaces matter in a text literal, so we don't try and trim it
+                -- (though this results in the front including some extra spaces
+                -- in the hover effect).
+                view_ (text sText)
+
             else if sText /= " " && (String.startsWith " " sText || String.endsWith " " sText) then
                 -- If the text is not the empty string and is either prefixed
                 -- or suffixed with a space, we want that to not be part of a
