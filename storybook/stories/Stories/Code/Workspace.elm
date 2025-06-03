@@ -83,6 +83,9 @@ refToEndpoint ref =
                 "blog" ->
                     "/blog_def.json"
 
+                "checkpointing" ->
+                    "/volturno_checkpointing_def.json"
+
                 "assets.indexHtml" ->
                     "/long.json"
 
@@ -161,6 +164,8 @@ view model =
         , sampleAddButton Reference.TermReference "assets.indexHtml"
         , Html.br [] []
         , sampleAddButton Reference.TermReference "base.README"
+        , Html.br [] []
+        , sampleAddButton Reference.TermReference "checkpointing"
         , Html.br [] []
         , sampleAddButton Reference.TermReference "blog"
         , Html.br [] []
