@@ -295,7 +295,7 @@
 
 .definition-doc aside {
   position: absolute;
-  right: -17rem;
+  right: -18rem;
   width: 15rem;
   font-size: var(--font-size-small);
   background: var(--color-doc-aside-bg);
@@ -566,6 +566,7 @@
 }
 
 @media only screen and (--u-viewport_max-lg) {
+  /*
   .definition-doc .source.code,
   .definition-doc .sources .source,
   .definition-doc .folded-sources .source,
@@ -577,6 +578,7 @@
     width: calc(100vw - 4rem);
     overflow: auto;
   }
+  */
 
   .definition-doc aside .source.code,
   .definition-doc aside .sources .source,
