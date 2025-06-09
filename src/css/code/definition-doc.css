@@ -63,7 +63,7 @@
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
-  max-width: var(--c-width_doc_source);
+  width: var(--c-width_doc_source);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -566,44 +566,8 @@
 }
 
 @media only screen and (--u-viewport_max-lg) {
-  .definition-doc .source.code,
-  .definition-doc .sources .source,
-  .definition-doc .folded-sources .source,
-  .definition-doc .source.example,
-  .definition-doc .eval .source,
-  .definition-doc .source.signatures .signature,
-  .definition-doc .mermaid-diagram,
-  .definition-doc .embed-svg {
-    width: calc(100vw - 4rem);
-    overflow: auto;
-  }
-
-  .definition-doc aside .source.code,
-  .definition-doc aside .sources .source,
-  .definition-doc aside .folded-sources .source,
-  .definition-doc aside .source.example,
-  .definition-doc aside .eval .source,
-  .definition-doc aside .source.signatures .signature {
-    max-width: none;
-    width: calc(100vw - 4rem);
-  }
-
-  .definition-doc .doc_callout .source.code,
-  .definition-doc .doc_callout .sources .source,
-  .definition-doc .doc_callout .folded-sources .source,
-  .definition-doc .doc_callout .source.example,
-  .definition-doc .doc_callout .eval .source,
-  .definition-doc .doc_callout .source.signatures .signature {
-    width: calc(100vw - 4rem);
-  }
-
-  .definition-doc .doc_callout .folded .source.code,
-  .definition-doc .doc_callout .folded .sources .source,
-  .definition-doc .doc_callout .folded .folded-sources .source,
-  .definition-doc .doc_callout .folded .source.example,
-  .definition-doc .doc_callout .folded .eval .source,
-  .definition-doc .doc_callout .folded .source.signatures .signature {
-    width: calc(100vw - 4rem);
+  .definition-doc {
+    --c-width_doc_source: calc(100vw - 5rem);
   }
 
   .definition-doc aside {
@@ -621,6 +585,10 @@
 }
 
 @media only screen and (--u-viewport_max-md) {
+  .definition-doc {
+    --c-width_doc_source: calc(100vw - 4rem);
+  }
+
   .definition-doc .doc_table {
     max-width: calc(100vw - 4rem);
   }

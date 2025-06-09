@@ -4,14 +4,13 @@ import Browser
 import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
 import Code.Definition.Reference as Reference
-import Code.FullyQualifiedName as FQN
 import Code.HashQualified exposing (HashQualified(..))
 import Code.Perspective as Perspective
 import Code.Syntax exposing (..)
 import Code.Workspace as Workspace
 import Code.Workspace.WorkspaceItem exposing (WorkspaceItem(..))
 import Code.Workspace.WorkspaceItems as WorkspaceItems
-import Dict exposing (Dict)
+import Dict
 import Html exposing (Html, div)
 import Html.Events exposing (onClick)
 import Lib.HttpApi as HttpApi exposing (ApiUrl(..), Endpoint(..))
@@ -38,7 +37,7 @@ init : () -> ( Model, Cmd Msg )
 init _ =
     let
         reference =
-            "increment"
+            "kestrel.README"
                 |> Reference.fromString Reference.TermReference
 
         model =
@@ -71,6 +70,9 @@ refToEndpoint ref =
         refStringToMockFileName : String -> String
         refStringToMockFileName input =
             case input of
+                "kestrel.README" ->
+                    "/kestrel_readme.json"
+
                 "increment" ->
                     "increment_term_def.json"
 
