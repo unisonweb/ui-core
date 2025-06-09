@@ -21,7 +21,7 @@
   --color-doc-focus-subtle-text: var(--u-color_text_very-subdued);
   --color-doc-focus-source-bg: var(--u-color_container_subdued_selected);
   --color-doc-focus-content-border: var(--u-color_border_subdued);
-  --c-width_doc_source: calc(var(--c-width_doc_inner-content) - 2rem);
+  --c-width_doc_inner-content: auto;
 
   position: relative;
   display: flex;
@@ -63,7 +63,7 @@
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
-  width: var(--c-width_doc_source);
+  width: var(--c-width_doc_inner-content);
 }
 
 /* We don't want margin on .eval .source since its 2 very close source blocks */
@@ -157,7 +157,7 @@
   background: var(--color-doc-source-bg);
   border-radius: var(--border-radius-base);
   white-space: nowrap;
-  max-width: var(--c-width_doc_source);
+  max-width: var(--c-width_doc_inner-content);
   scrollbar-width: auto;
   scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
   overflow: auto;
@@ -357,7 +357,7 @@
 
 .definition-doc .doc_callout.doc_callout-with-icon .doc_callout-content {
   padding-top: 1px;
-  width: 100%;
+  width: var(--c-width_doc_inner-content);
 }
 
 .definition-doc .doc_callout .doc_callout-icon {
@@ -378,7 +378,7 @@
 }
 
 .definition-doc .doc_table {
-  max-width: calc(var(--c-width_doc_outer, 100vw) - 4rem);
+  max-width: var(--c-width_doc_inner-content);
   overflow-x: auto;
 }
 
@@ -395,7 +395,7 @@
 }
 
 .definition-doc .embed-svg {
-  max-width: var(--c-width_doc_source);
+  max-width: var(--c-width_doc_inner-content);
   border: 0;
 }
 
@@ -565,11 +565,15 @@
   padding: 0.5rem 0.75rem;
 }
 
-@media only screen and (--u-viewport_max-lg) {
+/*
+@container doc-container {
   .definition-doc {
-    --c-width_doc_source: calc(100vw - 5rem);
+    --c-width_doc_inner-content: 100vci;
   }
+}
+*/
 
+@media only screen and (--u-viewport_max-lg) {
   .definition-doc aside {
     position: relative;
     right: auto;
@@ -578,18 +582,7 @@
   }
 
   .definition-doc .doc_table {
-    max-width: calc(var(--c-width_doc_outer, 100vw) - 1rem);
     scrollbar-width: auto;
     scrollbar-color: var(--u-color_scrollbar) var(--u-color_scrollbar-track);
-  }
-}
-
-@media only screen and (--u-viewport_max-md) {
-  .definition-doc {
-    --c-width_doc_source: calc(100vw - 4rem);
-  }
-
-  .definition-doc .doc_table {
-    max-width: calc(100vw - 4rem);
   }
 }
