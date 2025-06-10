@@ -13,9 +13,6 @@
   color: var(--color-card-text);
   border-radius: var(--border-radius-base);
   background: var(--color-card-bg);
-
-  container: card / inline-size;
-  width: auto;
 }
 
 .card.card_tight-padding {
