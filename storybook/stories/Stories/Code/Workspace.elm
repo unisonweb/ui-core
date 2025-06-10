@@ -37,7 +37,7 @@ init : () -> ( Model, Cmd Msg )
 init _ =
     let
         reference =
-            "kestrel.README"
+            "docExamples.README"
                 |> Reference.fromString Reference.TermReference
 
         model =
@@ -70,6 +70,9 @@ refToEndpoint ref =
         refStringToMockFileName : String -> String
         refStringToMockFileName input =
             case input of
+                "docExamples.README" ->
+                    "/doc-examples-readme.json"
+
                 "kestrel.README" ->
                     "/kestrel_readme.json"
 

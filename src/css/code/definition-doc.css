@@ -565,13 +565,11 @@
   padding: 0.5rem 0.75rem;
 }
 
-/*
 @container doc-container {
   .definition-doc {
     --c-width_doc_inner-content: 100vci;
   }
 }
-*/
 
 @media only screen and (--u-viewport_max-lg) {
   .definition-doc aside {
