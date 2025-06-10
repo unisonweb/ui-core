@@ -5284,9 +5284,7 @@
           }
         ]
       ],
-      "termNames": [
-        "README"
-      ]
+      "termNames": ["README"]
     }
   },
   "typeDefinitions": {}
