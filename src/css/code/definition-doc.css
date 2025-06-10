@@ -565,7 +565,7 @@
   padding: 0.5rem 0.75rem;
 }
 
-@container doc-container {
+@container doc-container (width > 1px) {
   .definition-doc {
     --c-width_doc_inner-content: 100vci;
   }
