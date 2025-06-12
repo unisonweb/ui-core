@@ -11,7 +11,8 @@ import UI.Click as Click exposing (Click)
 
 
 type ProjectNameListingSize
-    = Medium
+    = Small
+    | Medium
     | Large
     | Huge
 
@@ -69,6 +70,11 @@ withProjectClick click p =
 withSize : ProjectNameListingSize -> ProjectNameListing msg -> ProjectNameListing msg
 withSize size p =
     { p | size = size }
+
+
+small : ProjectNameListing msg -> ProjectNameListing msg
+small p =
+    withSize Small p
 
 
 medium : ProjectNameListing msg -> ProjectNameListing msg
@@ -132,6 +138,9 @@ map f p =
 sizeClass : ProjectNameListingSize -> String
 sizeClass size =
     case size of
+        Small ->
+            "project-name-listing-size_small"
+
         Medium ->
             "project-name-listing-size_medium"
 
