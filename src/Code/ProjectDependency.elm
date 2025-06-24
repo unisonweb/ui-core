@@ -1,12 +1,19 @@
 module Code.ProjectDependency exposing (ProjectDependency, fromString, toString, toTag)
 
+import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Code.Version as Version exposing (Version)
+import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Maybe.Extra as MaybeE
 import UI.Tag as Tag exposing (Tag)
 
 
+type DependencyName
+    = UserProject UserHandle ProjectSlug
+    | UnqualifiedDependency String
+
+
 type alias ProjectDependency =
-    { name : String, version : Maybe Version }
+    { name : DependencyName, version : Maybe Version }
 
 
 fromString : String -> ProjectDependency
@@ -18,7 +25,16 @@ fromString raw =
         ( name, version ) =
             case parts of
                 [ user, project, major, minor, patch ] ->
-                    ( "@" ++ user ++ "/" ++ project, Version.fromString (String.join "." [ major, minor, patch ]) )
+                    case ( UserHandle.fromString user, ProjectSlug.fromString project ) of
+                        ( Just user_, Just project_ ) ->
+                            ( UserProject user_ project_
+                            , Version.fromString (String.join "." [ major, minor, patch ])
+                            )
+
+                        _ ->
+                            ( UnqualifiedDependency ("@" ++ user ++ "/" ++ project)
+                            , Version.fromString (String.join "." [ major, minor, patch ])
+                            )
 
                 [ n, major, minor, patch ] ->
                     let
@@ -27,17 +43,26 @@ fromString raw =
                     in
                     case version_ of
                         Just v ->
-                            ( n, Just v )
+                            ( UnqualifiedDependency n, Just v )
 
                         -- It wasn't a version after all, so we give up trying to parse it
                         Nothing ->
-                            ( raw, Nothing )
+                            ( UnqualifiedDependency raw, Nothing )
 
                 [ user, project ] ->
-                    ( "@" ++ user ++ "/" ++ project, Nothing )
+                    case ( UserHandle.fromString user, ProjectSlug.fromString project ) of
+                        ( Just user_, Just project_ ) ->
+                            ( UserProject user_ project_
+                            , Nothing
+                            )
+
+                        _ ->
+                            ( UnqualifiedDependency ("@" ++ user ++ "/" ++ project)
+                            , Nothing
+                            )
 
                 [ n ] ->
-                    ( n, Nothing )
+                    ( UnqualifiedDependency n, Nothing )
 
                 _ ->
                     case List.reverse parts of
@@ -48,26 +73,41 @@ fromString raw =
                             in
                             case version_ of
                                 Just v ->
-                                    ( String.join "_" (List.reverse n), Just v )
+                                    ( UnqualifiedDependency (String.join "_" (List.reverse n)), Just v )
 
                                 -- It wasn't a version after all, so we give up trying to parse it
                                 Nothing ->
-                                    ( raw, Nothing )
+                                    ( UnqualifiedDependency raw, Nothing )
 
                         _ ->
-                            ( raw, Nothing )
+                            ( UnqualifiedDependency raw, Nothing )
     in
     ProjectDependency name version
 
 
+dependencyName : ProjectDependency -> String
+dependencyName { name } =
+    case name of
+        UserProject userHandle projectSlug ->
+            UserHandle.toString userHandle ++ "/" ++ ProjectSlug.toString projectSlug
+
+        UnqualifiedDependency n ->
+            n
+
+
 toString : ProjectDependency -> String
-toString { name, version } =
-    name ++ MaybeE.unwrap "" (\v -> " v" ++ Version.toString v) version
+toString projectDep =
+    let
+        name_ =
+            dependencyName projectDep
+    in
+    name_ ++ MaybeE.unwrap "" (\v -> " v" ++ Version.toString v) projectDep.version
 
 
 toTag : ProjectDependency -> Tag msg
-toTag { name, version } =
-    name
+toTag projectDep =
+    projectDep
+        |> dependencyName
         |> Tag.tag
         |> Tag.large
-        |> Tag.withRightText (MaybeE.unwrap "" (\v -> " v" ++ Version.toString v) version)
+        |> Tag.withRightText (MaybeE.unwrap "" (\v -> " v" ++ Version.toString v) projectDep.version)
