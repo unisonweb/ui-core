@@ -176,7 +176,7 @@
   }
 
   .page-header .page-header_page-context .project-name-listing,
-  .page-header .page-header_page-context { 
+  .page-header .navigation{ 
     height: calc(var(--c-height_page-header) / 2);
   }
 
