@@ -25,7 +25,7 @@ fromString raw =
         ( name, version ) =
             case parts of
                 [ user, project, major, minor, patch ] ->
-                    case ( UserHandle.fromString user, ProjectSlug.fromString project ) of
+                    case ( UserHandle.fromUnprefixedString user, ProjectSlug.fromString project ) of
                         ( Just user_, Just project_ ) ->
                             ( UserProject user_ project_
                             , Version.fromString (String.join "." [ major, minor, patch ])
@@ -50,7 +50,7 @@ fromString raw =
                             ( UnqualifiedDependency raw, Nothing )
 
                 [ user, project ] ->
-                    case ( UserHandle.fromString user, ProjectSlug.fromString project ) of
+                    case ( UserHandle.fromUnprefixedString user, ProjectSlug.fromString project ) of
                         ( Just user_, Just project_ ) ->
                             ( UserProject user_ project_
                             , Nothing
