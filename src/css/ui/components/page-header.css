@@ -176,8 +176,8 @@
   }
 
   .page-header .page-header_page-context .project-name-listing,
-  .page-header .navigation,
-  .page-header .navigation .nav-item { 
+  .page-header :not(.mobile-nav) .navigation,
+  .page-header :not(.mobile-nav) .navigation .nav-item { 
     height: calc(var(--c-height_page-header) / 2);
   }
 
