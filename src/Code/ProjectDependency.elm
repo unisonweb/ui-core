@@ -1,4 +1,4 @@
-module Code.ProjectDependency exposing (ProjectDependency, fromString, toString, toTag)
+module Code.ProjectDependency exposing (DependencyName(..), ProjectDependency, fromString, toString, toTag)
 
 import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Code.Version as Version exposing (Version)
