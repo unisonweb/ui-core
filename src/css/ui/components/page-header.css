@@ -134,6 +134,7 @@
 .page-header .mobile-nav .navigation {
   flex-direction: column;
   gap: 0.25rem;
+  height: fit-content;
 }
 
 .page-header .mobile-nav .navigation .nav-item {
