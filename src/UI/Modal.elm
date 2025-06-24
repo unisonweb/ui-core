@@ -8,6 +8,7 @@ module UI.Modal exposing
     , modal
     , modal_
     , view
+    , withAccept
     , withActions
     , withActionsIf
     , withAttributes
@@ -35,6 +36,7 @@ type Content msg
 type alias Modal msg =
     { id : String
     , closeMsg : Maybe msg
+    , acceptMsg : Maybe msg
     , attributes : List (Attribute msg)
     , header : Maybe (Html msg)
     , footer :
@@ -59,6 +61,7 @@ modal_ : String -> Content msg -> Modal msg
 modal_ id content_ =
     { id = id
     , closeMsg = Nothing
+    , acceptMsg = Nothing
     , attributes = []
     , header = Nothing
     , footer = { leftSide = [], actions = [] }
@@ -109,6 +112,7 @@ map : (a -> b) -> Modal a -> Modal b
 map f m =
     { id = m.id
     , closeMsg = Maybe.map f m.closeMsg
+    , acceptMsg = Maybe.map f m.acceptMsg
     , attributes = List.map (Attributes.map f) m.attributes
     , header = Maybe.map (Html.map f) m.header
     , footer =
@@ -127,6 +131,11 @@ map f m =
 withClose : msg -> Modal msg -> Modal msg
 withClose closeMsg modal__ =
     { modal__ | closeMsg = Just closeMsg }
+
+
+withAccept : msg -> Modal msg -> Modal msg
+withAccept acceptMsg modal__ =
+    { modal__ | acceptMsg = Just acceptMsg }
 
 
 withHeader : String -> Modal msg -> Modal msg
@@ -231,6 +240,7 @@ view modal__ =
     in
     view_
         modal__.closeMsg
+        modal__.acceptMsg
         (id modal__.id
             :: classList [ ( "modal_dim-overlay", modal__.dimOverlay ) ]
             :: modal__.attributes
@@ -242,8 +252,8 @@ view modal__ =
 -- INTERNALS
 
 
-view_ : Maybe msg -> List (Attribute msg) -> List (Html msg) -> Html msg
-view_ closeMsg attrs content_ =
+view_ : Maybe msg -> Maybe msg -> List (Attribute msg) -> List (Html msg) -> Html msg
+view_ closeMsg acceptMsg attrs content_ =
     let
         ( modalContent, onEsc ) =
             case closeMsg of
@@ -264,7 +274,7 @@ view_ closeMsg attrs content_ =
                     , Nothing
                     )
     in
-    modalOverlay onEsc modalContent
+    modalOverlay onEsc acceptMsg modalContent
 
 
 overlayId : String
