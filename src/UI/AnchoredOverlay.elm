@@ -138,6 +138,7 @@ view anchoredOverlay_ =
                     [ onClickOutside
                         anchoredOverlay_.closeSheetMsg
                         (modalOverlay (Just anchoredOverlay_.closeSheetMsg)
+                            Nothing
                             (div
                                 []
                                 [ anchor
