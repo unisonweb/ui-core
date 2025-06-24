@@ -42,6 +42,7 @@
   --c-color_project-name-listing_private-icon_background: var(
     --color-blue-3-25pct
   );
+  height: var(--c-height_page-header);
 }
 
 .page-header .navigation {
@@ -109,6 +110,7 @@
   flex-direction: row;
   gap: 0;
   align-items: center;
+  height: var(--c-height_page-header);
 }
 
 .page-header .navigation .nav-item {
@@ -138,7 +140,6 @@
   width: 100%;
   padding: 0.5rem;
   justify-content: flex-start;
-  height: 2rem;
   border-radius: var(--border-radius-base);
   white-space: nowrap;
 }
@@ -172,6 +173,11 @@
     align-items: flex-start;
     position: relative;
     padding: 0 1rem 0 0;
+  }
+
+  .page-header .page-header_page-context .project-name-listing,
+  .page-header .page-header_page-context { 
+    height: calc(var(--c-height_page-header) / 2);
   }
 
   .page-header .page-header_page-context,
