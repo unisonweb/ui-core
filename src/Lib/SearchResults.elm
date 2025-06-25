@@ -1,6 +1,7 @@
 module Lib.SearchResults exposing
     ( Matches
     , SearchResults(..)
+    , append
     , cycleNext
     , cyclePrev
     , empty
@@ -17,6 +18,7 @@ module Lib.SearchResults exposing
     , mapToList
     , matchesToList
     , next
+    , prepend
     , prev
     , toList
     , toMaybe
@@ -126,6 +128,32 @@ toList results =
 
         SearchResults matches ->
             matchesToList matches
+
+
+append : SearchResults a -> List a -> SearchResults a
+append results new =
+    case results of
+        Empty ->
+            fromList new
+
+        SearchResults old ->
+            old
+                |> matchesToList
+                |> (\old_ -> old_ ++ new)
+                |> fromList
+
+
+prepend : SearchResults a -> List a -> SearchResults a
+prepend results new =
+    case results of
+        Empty ->
+            fromList new
+
+        SearchResults old ->
+            old
+                |> matchesToList
+                |> (\old_ -> new ++ old_)
+                |> fromList
 
 
 next : SearchResults a -> SearchResults a
