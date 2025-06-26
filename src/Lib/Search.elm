@@ -4,6 +4,7 @@ module Lib.Search exposing
     , debounce
     , debounce_
     , empty
+    , fromList
     , fromResult
     , hasSubstantialQuery
     , isEmptyQuery
@@ -62,6 +63,11 @@ empty =
 search : String -> Search a
 search query_ =
     NotAsked query_
+
+
+fromList : String -> List a -> Search a
+fromList q matches =
+    Success q (SearchResults.fromList matches)
 
 
 

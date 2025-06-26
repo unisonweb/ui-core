@@ -5,6 +5,7 @@ module Lib.SearchResults exposing
     , cycleNext
     , cyclePrev
     , empty
+    , filterMatches
     , focus
     , focusOn
     , from
@@ -108,6 +109,24 @@ mapToList f results =
 
         SearchResults matches ->
             mapMatchesToList f matches
+
+
+filterMatches : (a -> Bool) -> SearchResults a -> SearchResults a
+filterMatches f results =
+    case results of
+        Empty ->
+            Empty
+
+        SearchResults (Matches matches) ->
+            SearchResults
+                (Matches
+                    (matches
+                        |> Zipper.toList
+                        |> List.filter f
+                        |> Zipper.fromList
+                        |> Maybe.withDefault matches
+                    )
+                )
 
 
 toMaybe : SearchResults a -> Maybe (Matches a)
