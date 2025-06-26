@@ -157,6 +157,29 @@ getAt =
 -- MAP
 
 
+uniqueMatchesBy : Test
+uniqueMatchesBy =
+    describe "SearchResults.uniqueMatchesBy"
+        [ test "Removes duplicates based on the function" <|
+            \_ ->
+                let
+                    result =
+                        SearchResults.from [ "a", "b" ] "b" [ "c", "a", "c" ]
+                            |> SearchResults.uniqueMatchesBy
+                                (\x -> x)
+                            |> SearchResults.toList
+
+                    expected =
+                        [ "a", "b", "c" ]
+                in
+                Expect.equal expected result
+        ]
+
+
+
+-- MAP
+
+
 mapToList : Test
 mapToList =
     describe "SearchResults.mapToList"

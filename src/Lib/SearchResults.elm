@@ -23,6 +23,7 @@ module Lib.SearchResults exposing
     , prev
     , toList
     , toMaybe
+    , uniqueMatchesBy
     )
 
 import List.Extra as ListE
@@ -109,6 +110,24 @@ mapToList f results =
 
         SearchResults matches ->
             mapMatchesToList f matches
+
+
+uniqueMatchesBy : (a -> b) -> SearchResults a -> SearchResults a
+uniqueMatchesBy f results =
+    case results of
+        Empty ->
+            Empty
+
+        SearchResults (Matches matches) ->
+            SearchResults
+                (Matches
+                    (matches
+                        |> Zipper.toList
+                        |> ListE.uniqueBy f
+                        |> Zipper.fromList
+                        |> Maybe.withDefault matches
+                    )
+                )
 
 
 filterMatches : (a -> Bool) -> SearchResults a -> SearchResults a
