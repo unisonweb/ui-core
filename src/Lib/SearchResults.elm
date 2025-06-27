@@ -21,6 +21,7 @@ module Lib.SearchResults exposing
     , next
     , prepend
     , prev
+    , take
     , toList
     , toMaybe
     , uniqueMatchesBy
@@ -100,6 +101,26 @@ mapMatches f results =
 
         SearchResults (Matches matches) ->
             SearchResults (Matches (Zipper.map f matches))
+
+
+{-| Limit the number of results
+-}
+take : Int -> SearchResults a -> SearchResults a
+take n results =
+    case results of
+        Empty ->
+            Empty
+
+        SearchResults (Matches matches) ->
+            SearchResults
+                (Matches
+                    (matches
+                        |> Zipper.toList
+                        |> List.take n
+                        |> Zipper.fromList
+                        |> Maybe.withDefault matches
+                    )
+                )
 
 
 mapToList : (a -> Bool -> b) -> SearchResults a -> List b
