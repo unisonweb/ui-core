@@ -2,6 +2,7 @@ module Code.Workspace exposing
     ( Model
     , Msg
     , OutMsg(..)
+    , currentlyOpenReferences
     , init
     , open
     , replaceWorkspaceItemReferencesWithHashOnly
@@ -573,6 +574,15 @@ handleKeyboardShortcut model shortcut =
 
         _ ->
             ( model, Cmd.none, None )
+
+
+
+-- HELPERS
+
+
+currentlyOpenReferences : Model -> List Reference
+currentlyOpenReferences model =
+    WorkspaceItems.references model.workspaceItems
 
 
 
