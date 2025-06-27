@@ -20,7 +20,7 @@ class ModalOverlay extends HTMLElement {
     // inside of a Modal, we'd want the AnchoredOverlay to be dismissed, not
     // the modal (unless no AnchoredOverlay is open)
     this.onKeydown = (ev) => {
-      // If the element isn't visible, there's no point in triggering the escape event.
+      // If the element isn't visible, there's no point in triggering the keyboard event.
       const style = window.getComputedStyle(this);
       if (style.display === "none" || this.offsetParent === null) {
         return;
@@ -33,7 +33,7 @@ class ModalOverlay extends HTMLElement {
         this.dispatchEvent(new CustomEvent("escape"));
       }
 
-      console.log(this);
+      debugger;
       console.log('---');
       console.log(this.events);
 
