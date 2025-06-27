@@ -33,6 +33,8 @@ class ModalOverlay extends HTMLElement {
         this.dispatchEvent(new CustomEvent("escape"));
       }
 
+      console.log(this.attributes, this.getAttribute("on"));
+
       if (ev.key === "Enter") {
         ev.preventDefault();
         ev.stopPropagation();
