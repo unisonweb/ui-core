@@ -328,7 +328,7 @@ viewNamespaceListing viewConfig openDefinitions expandedNamespaceListings (Names
         hasOpenDefinitions =
             openDefinitions
                 |> FQNSet.toList
-                |> List.any (\fqn -> FQN.isSuffixOf fqn name)
+                |> List.any (\fqn -> FQN.isSuffixOf fqn name && not (FQN.equals fqn name))
     in
     div [ class "subtree" ]
         [ a
