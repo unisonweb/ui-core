@@ -10,6 +10,7 @@ module Lib.Search exposing
     , isEmptyQuery
     , isEmptyResults
     , isSearching
+    , length
     , queriesEquals
     , query
     , queryEquals
@@ -187,6 +188,25 @@ query search_ =
 isEmptyQuery : Search a -> Bool
 isEmptyQuery =
     query >> String.isEmpty
+
+
+length : Search a -> Maybe Int
+length s =
+    case s of
+        NotAsked _ ->
+            Nothing
+
+        Searching _ (Just r) ->
+            Just (SearchResults.length r)
+
+        Searching _ Nothing ->
+            Nothing
+
+        Success _ r ->
+            Just (SearchResults.length r)
+
+        Failure _ _ ->
+            Nothing
 
 
 isEmptyResults : Search a -> Maybe Bool
