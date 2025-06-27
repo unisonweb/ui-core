@@ -284,6 +284,9 @@ snoc (FQN segments_) s =
 {-| This is passed through a string as a suffix name can include
 namespaces like List.map (where the FQN would be
 base.List.map)
+
+Check if the second FQN ends with the first FQN.
+
 -}
 isSuffixOf : FQN -> FQN -> Bool
 isSuffixOf suffixName fqn =
