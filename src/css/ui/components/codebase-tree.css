@@ -19,6 +19,7 @@
 .codebase-tree .namespace-tree .node.has-open-definitions,
 .codebase-tree .namespace-tree .node.is-open {
   font-weight: bold;
+  color: var(--color-sidebar-fg-em);
 }
 
 .codebase-tree .namespace-tree .subtree {
