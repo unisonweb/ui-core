@@ -205,16 +205,7 @@ viewListingRow clickMsg isOpen label_ category icon =
                     )
                 |> Maybe.withDefault (span [ containerClass ])
     in
-    -- TODO: Temporary work around to avoid the hidden catalog definition to
-    -- show up on Share while the catalog page is being worked on
-    if label_ == "_catalog" then
-        UI.nothing
-
-    else
-        container
-            [ Icon.view icon
-            , viewListingLabel label_
-            ]
+    container [ Icon.view icon, viewListingLabel label_ ]
 
 
 viewListingLabel : String -> Html msg
@@ -222,11 +213,20 @@ viewListingLabel label_ =
     label [ title label_ ] [ text label_ ]
 
 
-viewDefinitionListing : FQNSet -> DefinitionListing -> Html Msg
-viewDefinitionListing openDefinitions listing =
+viewDefinitionListing : FQNSet -> Maybe FQN -> DefinitionListing -> Html Msg
+viewDefinitionListing openDefinitions parentNamespace listing =
     let
         isOpen fqn =
-            FQNSet.member fqn openDefinitions
+            let
+                fullFqn =
+                    case parentNamespace of
+                        Just n ->
+                            FQN.append n fqn
+
+                        Nothing ->
+                            fqn
+            in
+            FQNSet.member fullFqn openDefinitions
 
         viewDefRow ref fqn =
             viewListingRow
@@ -251,26 +251,31 @@ viewDefinitionListing openDefinitions listing =
             viewListingRow Nothing False p "patch" Icon.patch
 
 
-viewLoadedNamespaceListingContent : ViewConfig -> FQNSet -> FQNSet -> NamespaceListingContent -> Html Msg
-viewLoadedNamespaceListingContent viewConfig openDefinitions expandedNamespaceListings content =
+viewLoadedNamespaceListingContent : ViewConfig -> FQNSet -> Maybe FQN -> FQNSet -> NamespaceListingContent -> Html Msg
+viewLoadedNamespaceListingContent viewConfig openDefinitions namespace expandedNamespaceListings content =
     let
         viewChild c =
             case c of
                 SubNamespace nl ->
-                    viewNamespaceListing viewConfig openDefinitions expandedNamespaceListings nl
+                    viewNamespaceListing
+                        viewConfig
+                        openDefinitions
+                        expandedNamespaceListings
+                        nl
 
                 SubDefinition dl ->
-                    viewDefinitionListing openDefinitions dl
+                    viewDefinitionListing openDefinitions namespace dl
     in
     div [] (List.map viewChild content)
 
 
-viewNamespaceListingContent : ViewConfig -> FQNSet -> FQNSet -> WebData NamespaceListingContent -> Html Msg
-viewNamespaceListingContent viewConfig openDefinitions expandedNamespaceListings content =
+viewNamespaceListingContent : ViewConfig -> FQNSet -> Maybe FQN -> FQNSet -> WebData NamespaceListingContent -> Html Msg
+viewNamespaceListingContent viewConfig openDefinitions namespace expandedNamespaceListings content =
     case content of
         Success loadedContent ->
             viewLoadedNamespaceListingContent viewConfig
                 openDefinitions
+                namespace
                 expandedNamespaceListings
                 loadedContent
 
@@ -294,6 +299,7 @@ viewNamespaceListing viewConfig openDefinitions expandedNamespaceListings (Names
                     [ viewNamespaceListingContent
                         viewConfig
                         openDefinitions
+                        (Just name)
                         expandedNamespaceListings
                         content
                     ]
@@ -375,6 +381,7 @@ view viewConfig openDefinitions model =
                     viewNamespaceListingContent
                         viewConfig
                         openDefinitions
+                        Nothing
                         model.expandedNamespaceListings
                         content
 
