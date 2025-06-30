@@ -21,6 +21,7 @@ import Html.Attributes exposing (class, classList, title)
 import Html.Events exposing (onClick)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
+import Lib.ProdDebug as ProdDebug
 import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
 import UI
@@ -235,7 +236,16 @@ viewDefinitionListing openDefinitions listing =
             viewDefRow (TypeReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
 
         TermListing _ fqn category ->
-            viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
+            let
+                a =
+                    "Term listing: " ++ FQN.toString fqn ++ "\n"
+
+                b =
+                    "OpenDefinitions" ++ (openDefinitions |> FQNSet.toList |> List.map FQN.toString |> String.join ", ")
+            in
+            ProdDebug.view (a ++ b)
+                [ viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
+                ]
 
         DataConstructorListing _ fqn ->
             viewDefRow (DataConstructorReference (NameOnly fqn)) fqn "constructor" Icon.dataConstructor
