@@ -21,7 +21,6 @@ import Html.Attributes exposing (class, classList, title)
 import Html.Events exposing (onClick)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
-import Lib.ProdDebug as ProdDebug
 import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
 import UI
@@ -214,14 +213,11 @@ viewListingLabel label_ =
     label [ title label_ ] [ text label_ ]
 
 
-viewDefinitionListing : FQNSet -> Maybe FQN -> DefinitionListing -> Html Msg
-viewDefinitionListing openDefinitions parentNamespace listing =
+viewDefinitionListing : FQNSet -> DefinitionListing -> Html Msg
+viewDefinitionListing openDefinitions listing =
     let
-        fullFqn fqn =
-            fqn
-
         isOpen fqn =
-            FQNSet.member (fullFqn fqn) openDefinitions
+            FQNSet.member fqn openDefinitions
 
         viewDefRow ref fqn =
             viewListingRow
@@ -234,9 +230,7 @@ viewDefinitionListing openDefinitions parentNamespace listing =
             viewDefRow (TypeReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
 
         TermListing _ fqn category ->
-            ProdDebug.view
-                (FQN.toString (fullFqn fqn))
-                [ viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category) ]
+            viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
 
         DataConstructorListing _ fqn ->
             viewDefRow (DataConstructorReference (NameOnly fqn)) fqn "constructor" Icon.dataConstructor
@@ -248,8 +242,8 @@ viewDefinitionListing openDefinitions parentNamespace listing =
             viewListingRow Nothing False p "patch" Icon.patch
 
 
-viewLoadedNamespaceListingContent : ViewConfig -> FQNSet -> Maybe FQN -> FQNSet -> NamespaceListingContent -> Html Msg
-viewLoadedNamespaceListingContent viewConfig openDefinitions namespace expandedNamespaceListings content =
+viewLoadedNamespaceListingContent : ViewConfig -> FQNSet -> FQNSet -> NamespaceListingContent -> Html Msg
+viewLoadedNamespaceListingContent viewConfig openDefinitions expandedNamespaceListings content =
     let
         viewChild c =
             case c of
@@ -261,18 +255,17 @@ viewLoadedNamespaceListingContent viewConfig openDefinitions namespace expandedN
                         nl
 
                 SubDefinition dl ->
-                    viewDefinitionListing openDefinitions namespace dl
+                    viewDefinitionListing openDefinitions dl
     in
     div [] (List.map viewChild content)
 
 
-viewNamespaceListingContent : ViewConfig -> FQNSet -> Maybe FQN -> FQNSet -> WebData NamespaceListingContent -> Html Msg
-viewNamespaceListingContent viewConfig openDefinitions namespace expandedNamespaceListings content =
+viewNamespaceListingContent : ViewConfig -> FQNSet -> FQNSet -> WebData NamespaceListingContent -> Html Msg
+viewNamespaceListingContent viewConfig openDefinitions expandedNamespaceListings content =
     case content of
         Success loadedContent ->
             viewLoadedNamespaceListingContent viewConfig
                 openDefinitions
-                namespace
                 expandedNamespaceListings
                 loadedContent
 
@@ -296,7 +289,6 @@ viewNamespaceListing viewConfig openDefinitions expandedNamespaceListings (Names
                     [ viewNamespaceListingContent
                         viewConfig
                         openDefinitions
-                        (Just name)
                         expandedNamespaceListings
                         content
                     ]
@@ -378,7 +370,6 @@ view viewConfig openDefinitions model =
                     viewNamespaceListingContent
                         viewConfig
                         openDefinitions
-                        Nothing
                         model.expandedNamespaceListings
                         content
 
