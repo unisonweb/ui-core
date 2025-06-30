@@ -12,6 +12,7 @@ module Code.FullyQualifiedName exposing
     , fromString
     , fromUrlList
     , fromUrlString
+    , isPrefixOf
     , isRoot
     , isSuffixOf
     , isValidSegmentChar
@@ -291,6 +292,11 @@ Check if the second FQN ends with the first FQN.
 isSuffixOf : FQN -> FQN -> Bool
 isSuffixOf suffixName fqn =
     String.endsWith (toString suffixName) (toString fqn)
+
+
+isPrefixOf : FQN -> FQN -> Bool
+isPrefixOf prefixName fqn =
+    String.startsWith (toString prefixName) (toString fqn)
 
 
 isRoot : FQN -> Bool

@@ -300,6 +300,36 @@ isSuffixOf =
         ]
 
 
+isPrefixOf : Test
+isPrefixOf =
+    describe "FullyQualifiedName.isPrefixOf"
+        [ test "Returns True when an FQN begin with the provided prefix" <|
+            \_ ->
+                let
+                    prefix =
+                        FQN.fromString "base.List"
+
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                FQN.isPrefixOf prefix fqn
+                    |> Expect.equal True
+                    |> Expect.onFail "is correctly a prefix of"
+        , test "Returns False when an FQN does begin with the provided prefix" <|
+            \_ ->
+                let
+                    prefix =
+                        FQN.fromString "base.Text"
+
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                FQN.isPrefixOf prefix fqn
+                    |> Expect.equal False
+                    |> Expect.onFail "is correctly *not* a prefix of"
+        ]
+
+
 namespaceOf : Test
 namespaceOf =
     describe "FullyQualifiedName.namespaceOf"
