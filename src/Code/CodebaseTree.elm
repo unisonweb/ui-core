@@ -217,7 +217,7 @@ viewDefinitionListing : FQNSet -> DefinitionListing -> Html Msg
 viewDefinitionListing openDefinitions listing =
     let
         isOpen fqn =
-            FQNSet.member fqn openDefinitions
+            FQNSet.isSuffixOfAny openDefinitions fqn
 
         viewDefRow ref fqn =
             viewListingRow

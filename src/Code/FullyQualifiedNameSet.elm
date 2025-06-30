@@ -6,6 +6,7 @@ module Code.FullyQualifiedNameSet exposing
     , fromReferenceList
     , insert
     , isPrefixOfAny
+    , isSuffixOfAny
     , member
     , remove
     , singleton
@@ -94,6 +95,17 @@ isPrefixOfAny (FQNSet set) prefixFqn =
         |> List.any
             (\item ->
                 FQN.isPrefixOf prefixFqn item && not (FQN.equals item prefixFqn)
+            )
+
+
+isSuffixOfAny : FQNSet -> FQN -> Bool
+isSuffixOfAny (FQNSet set) suffixFqn =
+    set
+        |> Set.toList
+        |> List.map FQN.fromString
+        |> List.any
+            (\item ->
+                FQN.isSuffixOf suffixFqn item && not (FQN.equals item suffixFqn)
             )
 
 
