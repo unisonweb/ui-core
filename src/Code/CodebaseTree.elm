@@ -21,6 +21,7 @@ import Html.Attributes exposing (class, classList, title)
 import Html.Events exposing (onClick)
 import Http
 import Lib.HttpApi as HttpApi exposing (ApiRequest)
+import Lib.ProdDebug as ProdDebug
 import Lib.Util as Util
 import RemoteData exposing (RemoteData(..), WebData)
 import UI
@@ -216,17 +217,16 @@ viewListingLabel label_ =
 viewDefinitionListing : FQNSet -> Maybe FQN -> DefinitionListing -> Html Msg
 viewDefinitionListing openDefinitions parentNamespace listing =
     let
-        isOpen fqn =
-            let
-                fullFqn =
-                    case parentNamespace of
-                        Just n ->
-                            FQN.append n fqn
+        fullFqn fqn =
+            case parentNamespace of
+                Just n ->
+                    FQN.append n fqn
 
-                        Nothing ->
-                            fqn
-            in
-            FQNSet.member fullFqn openDefinitions
+                Nothing ->
+                    fqn
+
+        isOpen fqn =
+            FQNSet.member (fullFqn fqn) openDefinitions
 
         viewDefRow ref fqn =
             viewListingRow
@@ -239,7 +239,9 @@ viewDefinitionListing openDefinitions parentNamespace listing =
             viewDefRow (TypeReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
 
         TermListing _ fqn category ->
-            viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)
+            ProdDebug.view
+                (FQN.toString (fullFqn fqn))
+                [ viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category) ]
 
         DataConstructorListing _ fqn ->
             viewDefRow (DataConstructorReference (NameOnly fqn)) fqn "constructor" Icon.dataConstructor
