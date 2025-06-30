@@ -10,7 +10,7 @@ import Code.CodebaseTree.NamespaceListing as NamespaceListing
         )
 import Code.Config exposing (Config)
 import Code.Definition.Category as Category
-import Code.Definition.Reference exposing (Reference(..))
+import Code.Definition.Reference as Reference exposing (Reference(..))
 import Code.FullyQualifiedName as FQN exposing (FQN, unqualifiedName)
 import Code.FullyQualifiedNameSet as FQNSet exposing (FQNSet)
 import Code.HashQualified exposing (HashQualified(..))
@@ -216,13 +216,18 @@ viewListingLabel label_ =
 viewDefinitionListing : FQNSet -> DefinitionListing -> Html Msg
 viewDefinitionListing openDefinitions listing =
     let
-        isOpen fqn =
-            FQNSet.isSuffixOfAny openDefinitions fqn
+        isOpen ref fqn =
+            FQNSet.member fqn openDefinitions
+                || (ref
+                        |> Reference.fqn
+                        |> Maybe.map (\refFqn -> FQNSet.member refFqn openDefinitions)
+                        |> Maybe.withDefault False
+                   )
 
         viewDefRow ref fqn =
             viewListingRow
                 (Just (Out (OpenDefinition ref)))
-                (isOpen fqn)
+                (isOpen ref fqn)
                 (unqualifiedName fqn)
     in
     case listing of
