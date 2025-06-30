@@ -38,7 +38,7 @@ allFqns info =
                 |> Maybe.map (\namespace -> FQN.extend namespace info.name)
                 |> Maybe.withDefault info.name
     in
-    reconstructed :: info.otherNames
+    ListE.uniqueBy FQN.toString (reconstructed :: info.otherNames)
 
 
 
