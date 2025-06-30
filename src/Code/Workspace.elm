@@ -2,6 +2,7 @@ module Code.Workspace exposing
     ( Model
     , Msg
     , OutMsg(..)
+    , currentlyOpenFqns
     , currentlyOpenReferences
     , init
     , open
@@ -583,6 +584,11 @@ handleKeyboardShortcut model shortcut =
 currentlyOpenReferences : Model -> List Reference
 currentlyOpenReferences model =
     WorkspaceItems.references model.workspaceItems
+
+
+currentlyOpenFqns : Model -> List FQN
+currentlyOpenFqns model =
+    WorkspaceItems.fqns model.workspaceItems
 
 
 

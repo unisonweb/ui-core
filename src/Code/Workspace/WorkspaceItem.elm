@@ -181,6 +181,30 @@ reference item =
             refResponse
 
 
+allFqns : WorkspaceItem -> List FQN
+allFqns workspaceItem =
+    case workspaceItem of
+        Loading r ->
+            MaybeE.values [ Reference.fqn r ]
+
+        Failure r _ ->
+            MaybeE.values [ Reference.fqn r ]
+
+        Success _ { item } ->
+            case item of
+                TermItem (Term _ _ { info }) ->
+                    Info.allFqns info
+
+                TypeItem (Type _ _ { info }) ->
+                    Info.allFqns info
+
+                AbilityConstructorItem (AbilityConstructor _ { info }) ->
+                    Info.allFqns info
+
+                DataConstructorItem (DataConstructor _ { info }) ->
+                    Info.allFqns info
+
+
 {-| Convert the Reference of a WorkspaceItem to be HashOnly
 -}
 toHashReference : WorkspaceItem -> WorkspaceItem

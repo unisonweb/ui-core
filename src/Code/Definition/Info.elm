@@ -22,12 +22,23 @@ type alias Info =
 
 
 makeInfo : Reference -> FQN -> NEL.Nonempty FQN -> Info
-makeInfo ref suffixName allFqns =
+makeInfo ref suffixName allFqns_ =
     let
         ( namespace, otherNames ) =
-            namespaceAndOtherNames ref suffixName allFqns
+            namespaceAndOtherNames ref suffixName allFqns_
     in
     Info suffixName namespace otherNames
+
+
+allFqns : Info -> List FQN
+allFqns info =
+    let
+        reconstructed =
+            info.namespace
+                |> Maybe.map (\namespace -> FQN.extend namespace info.name)
+                |> Maybe.withDefault info.name
+    in
+    reconstructed :: info.otherNames
 
 
 

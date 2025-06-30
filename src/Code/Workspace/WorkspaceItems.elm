@@ -18,6 +18,7 @@
 module Code.Workspace.WorkspaceItems exposing (..)
 
 import Code.Definition.Reference exposing (Reference)
+import Code.FullyQualifiedName exposing (FQN)
 import Code.Hash exposing (Hash)
 import Code.Workspace.WorkspaceItem as WorkspaceItem exposing (WorkspaceItem)
 import List
@@ -288,6 +289,11 @@ references items =
         |> List.map WorkspaceItem.reference
 
 
+fqns : WorkspaceItems -> List FQN
+fqns items =
+    concatMapToList (\i _ -> WorkspaceItem.allFqns i) items
+
+
 head : WorkspaceItems -> Maybe WorkspaceItem
 head items =
     items
@@ -523,6 +529,25 @@ mapToList f wItems =
                         |> List.map (\i -> f i False)
             in
             before ++ (f data.focus True :: after)
+
+
+concatMapToList : (WorkspaceItem -> Bool -> List a) -> WorkspaceItems -> List a
+concatMapToList f wItems =
+    case wItems of
+        Empty ->
+            []
+
+        WorkspaceItems data ->
+            let
+                before =
+                    data.before
+                        |> List.concatMap (\i -> f i False)
+
+                after =
+                    data.after
+                        |> List.concatMap (\i -> f i False)
+            in
+            before ++ f data.focus True ++ after
 
 
 {-| Converting the workspace items to a list, looses the focus indicator
