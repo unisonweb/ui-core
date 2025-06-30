@@ -218,12 +218,7 @@ viewDefinitionListing : FQNSet -> Maybe FQN -> DefinitionListing -> Html Msg
 viewDefinitionListing openDefinitions parentNamespace listing =
     let
         fullFqn fqn =
-            case parentNamespace of
-                Just n ->
-                    FQN.append n fqn
-
-                Nothing ->
-                    fqn
+            fqn
 
         isOpen fqn =
             FQNSet.member (fullFqn fqn) openDefinitions
