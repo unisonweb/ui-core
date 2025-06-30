@@ -16,8 +16,8 @@
   line-height: 1;
 }
 
-.codebase-tree .namespace-tree .node.has-open-definitions,
-.codebase-tree .namespace-tree .node.is-open {
+.codebase-tree .namespace-tree .node.has-open-definitions > .label,
+.codebase-tree .namespace-tree .node.is-open > .label {
   font-weight: bold;
   color: var(--color-sidebar-fg-em);
 }
