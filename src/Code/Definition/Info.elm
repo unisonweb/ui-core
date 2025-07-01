@@ -30,6 +30,10 @@ makeInfo ref suffixName allFqns_ =
     Info suffixName namespace otherNames
 
 
+
+-- Helpers
+
+
 allFqns : Info -> List FQN
 allFqns info =
     let
@@ -39,10 +43,6 @@ allFqns info =
                 |> Maybe.withDefault info.name
     in
     ListE.uniqueBy FQN.toString (reconstructed :: info.otherNames)
-
-
-
--- Helpers
 
 
 namespaceAndOtherNames : Reference -> FQN -> NEL.Nonempty FQN -> ( Maybe FQN, List FQN )
@@ -60,17 +60,21 @@ namespaceAndOtherNames requestedRef suffixName fqns =
                 |> NEL.filter (FQN.isSuffixOf suffixName) defaultFqn
                 |> shortest
 
-        fqnWithin =
+        ( namespace, fqnWithin ) =
             case Reference.fqn requestedRef of
                 Just requestedName ->
                     if FQN.isSuffixOf suffixName requestedName then
-                        requestedName
+                        let
+                            toTake =
+                                FQN.length requestedName - FQN.length suffixName
+                        in
+                        ( Just (FQN.take toTake requestedName), shortestSuffixMatching )
 
                     else
-                        shortestSuffixMatching
+                        ( FQN.namespace shortestSuffixMatching, shortestSuffixMatching )
 
                 Nothing ->
-                    shortestSuffixMatching
+                    ( FQN.namespace shortestSuffixMatching, shortestSuffixMatching )
 
         fqnsWithout =
             fqns
@@ -78,4 +82,4 @@ namespaceAndOtherNames requestedRef suffixName fqns =
                 |> ListE.filterNot (FQN.equals fqnWithin)
                 |> ListE.uniqueBy FQN.toString
     in
-    ( FQN.namespace fqnWithin, fqnsWithout )
+    ( namespace, fqnsWithout )

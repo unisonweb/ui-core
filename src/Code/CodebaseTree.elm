@@ -241,7 +241,7 @@ viewDefinitionListing openDefinitions listing =
                     "Term listing: " ++ FQN.toString fqn ++ "\n"
 
                 b =
-                    "OpenDefinitions" ++ (openDefinitions |> FQNSet.toList |> List.map FQN.toString |> String.join ", ")
+                    "OpenDefinitions: " ++ (openDefinitions |> FQNSet.toList |> List.map FQN.toString |> String.join ", ")
             in
             ProdDebug.view (a ++ b)
                 [ viewDefRow (TermReference (NameOnly fqn)) fqn (Category.name category) (Category.icon category)

@@ -17,6 +17,7 @@ module Code.FullyQualifiedName exposing
     , isSuffixOf
     , isValidSegmentChar
     , isValidUrlSegmentChar
+    , length
     , namespace
     , namespaceOf
     , numSegments
@@ -24,6 +25,7 @@ module Code.FullyQualifiedName exposing
     , segments
     , snoc
     , stripPrefix
+    , take
     , toApiUrlString
     , toQueryString
     , toQueryString_
@@ -183,6 +185,11 @@ numSegments (FQN segments_) =
     NEL.length segments_
 
 
+length : FQN -> Int
+length (FQN segments_) =
+    NEL.length segments_
+
+
 {-| Drops the last segment of the FQN, unless there's only 1
 -}
 dropLast : FQN -> FQN
@@ -192,6 +199,11 @@ dropLast (FQN segments_) =
             (NEL.head segments_)
             (Maybe.withDefault [] (ListE.init (NEL.tail segments_)))
         )
+
+
+take : Int -> FQN -> FQN
+take n (FQN segments_) =
+    FQN (NEL.take n segments_)
 
 
 fromParent : FQN -> String -> FQN
@@ -241,15 +253,10 @@ stripPrefix (FQN prefix) (FQN fqn_) =
 
         fqn__ =
             NEL.toList fqn_
-
-        potentialPrefix =
-            List.take (List.length prefix_) fqn__
     in
-    if prefix_ == potentialPrefix then
-        fromList (List.drop (List.length prefix_) fqn__)
-
-    else
-        fromList fqn__
+    ListE.stripPrefix prefix_ fqn__
+        |> Maybe.withDefault fqn__
+        |> fromList
 
 
 {-| Extend a FQN with another, removing exact overlaps in the right side list.
@@ -290,13 +297,13 @@ Check if the second FQN ends with the first FQN.
 
 -}
 isSuffixOf : FQN -> FQN -> Bool
-isSuffixOf suffixName fqn =
-    String.endsWith (toString suffixName) (toString fqn)
+isSuffixOf (FQN suffixName) (FQN fqn) =
+    ListE.isSuffixOf (NEL.toList suffixName) (NEL.toList fqn)
 
 
 isPrefixOf : FQN -> FQN -> Bool
-isPrefixOf prefixName fqn =
-    String.startsWith (toString prefixName) (toString fqn)
+isPrefixOf (FQN prefixName) (FQN fqn) =
+    ListE.isPrefixOf (NEL.toList prefixName) (NEL.toList fqn)
 
 
 isRoot : FQN -> Bool

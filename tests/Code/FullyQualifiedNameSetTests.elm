@@ -1,9 +1,8 @@
 module Code.FullyQualifiedNameSetTests exposing (..)
 
-import Code.FullyQualifiedName as FQN exposing (..)
-import Code.FullyQualifiedNameSet as FQNSet exposing (..)
+import Code.FullyQualifiedName as FQN
+import Code.FullyQualifiedNameSet as FQNSet
 import Expect
-import List.Nonempty as NEL
 import Test exposing (..)
 
 
