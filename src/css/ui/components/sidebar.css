@@ -123,6 +123,7 @@
   line-height: 1;
   margin-bottom: 1rem;
   padding: 0rem 1rem 0 1.5rem;
+  background: var(--color-sidebar-bg);
 }
 
 .sidebar .sidebar-section .sidebar-section_header.sidebar-section_header_sticky {
