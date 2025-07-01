@@ -67,8 +67,20 @@ namespaceAndOtherNames requestedRef suffixName fqns =
                         let
                             toTake =
                                 FQN.length requestedName - FQN.length suffixName
+
+                            namespace_ =
+                                FQN.take toTake requestedName
+
+                            namespace__ =
+                                if FQN.equals namespace_ requestedName then
+                                    Nothing
+
+                                else
+                                    Just namespace_
                         in
-                        ( Just (FQN.take toTake requestedName), shortestSuffixMatching )
+                        ( namespace__
+                        , shortestSuffixMatching
+                        )
 
                     else
                         ( FQN.namespace shortestSuffixMatching, shortestSuffixMatching )
