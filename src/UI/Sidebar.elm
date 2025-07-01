@@ -22,6 +22,7 @@ type alias SidebarSection msg =
     , titleButton : Maybe (Button msg)
     , content : List (Html msg)
     , scrollable : Bool
+    , stickyHeader : Bool
     }
 
 
@@ -139,6 +140,7 @@ mapSection toMsg sectionA =
     , titleButton = Maybe.map (Button.map toMsg) sectionA.titleButton
     , content = List.map (Html.map toMsg) sectionA.content
     , scrollable = sectionA.scrollable
+    , stickyHeader = sectionA.stickyHeader
     }
 
 
@@ -163,7 +165,12 @@ header content =
 
 section : String -> List (Html msg) -> SidebarSection msg
 section title content =
-    { title = title, titleButton = Nothing, content = content, scrollable = False }
+    { title = title
+    , titleButton = Nothing
+    , content = content
+    , scrollable = False
+    , stickyHeader = False
+    }
 
 
 sectionWithTitleButton : Button msg -> SidebarSection msg -> SidebarSection msg
@@ -174,6 +181,11 @@ sectionWithTitleButton button section_ =
 sectionWithScrollable : SidebarSection msg -> SidebarSection msg
 sectionWithScrollable section_ =
     { section_ | scrollable = True }
+
+
+sectionWithStickyHeader : SidebarSection msg -> SidebarSection msg
+sectionWithStickyHeader section_ =
+    { section_ | stickyHeader = True }
 
 
 menuItem : msg -> Icon msg -> String -> SidebarMenuItem msg
@@ -264,11 +276,13 @@ viewHeader (SidebarHeader items) =
 
 
 viewSection : SidebarSection msg -> Html msg
-viewSection { title, titleButton, content, scrollable } =
+viewSection { title, titleButton, content, scrollable, stickyHeader } =
     let
         sectionHeader =
             Html.header
-                [ class "sidebar-section_header" ]
+                [ class "sidebar-section_header"
+                , classList [ ( "sidebar-section_header_sticky", stickyHeader ) ]
+                ]
                 [ h3 [ class "sidebar-section_title" ] [ text title ]
                 , MaybeE.unwrap UI.nothing Button.view titleButton
                 ]
