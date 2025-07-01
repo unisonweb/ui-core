@@ -14,6 +14,7 @@ import Code.Definition.Term as Term
 import Code.Definition.Type as Type
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
+import Dict exposing (Dict)
 import Json.Decode as Decode exposing (at, field)
 import Json.Decode.Extra exposing (when)
 import Lib.UnicodeSort as UnicodeSort
@@ -35,6 +36,7 @@ type alias NamespaceListingContent =
 type NamespaceListingChild
     = SubNamespace NamespaceListing
     | SubDefinition DefinitionListing
+    | MergedNamespaceWithType NamespaceListing DefinitionListing
 
 
 type NamespaceListing
@@ -52,6 +54,9 @@ map f (NamespaceListing hash fqn content) =
                 SubNamespace nl ->
                     SubNamespace (map f nl)
 
+                MergedNamespaceWithType nl dl ->
+                    MergedNamespaceWithType (map f nl) dl
+
                 _ ->
                     c
     in
@@ -64,6 +69,9 @@ contentFetched (NamespaceListing _ fqn content) needleFqn =
         contentFetched_ child =
             case child of
                 SubNamespace nl ->
+                    contentFetched nl needleFqn
+
+                MergedNamespaceWithType nl _ ->
                     contentFetched nl needleFqn
 
                 _ ->
@@ -84,6 +92,9 @@ sortContent content =
                 SubNamespace (NamespaceListing _ fqn _) ->
                     String.toLower (FQN.toString fqn)
 
+                MergedNamespaceWithType (NamespaceListing _ fqn _) _ ->
+                    String.toLower (FQN.toString fqn)
+
                 SubDefinition (TypeListing _ fqn _) ->
                     String.toLower (FQN.toString fqn)
 
@@ -101,8 +112,103 @@ sortContent content =
 
         sorter a b =
             UnicodeSort.compareUnicode (toComparable a) (toComparable b)
+
+        mergedContent =
+            mergeNamespacesWithTypes content
     in
-    List.sortWith sorter content
+    List.sortWith sorter mergedContent
+
+
+mergeNamespacesWithTypes : NamespaceListingContent -> NamespaceListingContent
+mergeNamespacesWithTypes content =
+    let
+        -- Group items by their FQN
+        groupByFqn item acc =
+            let
+                fqn =
+                    case item of
+                        SubNamespace (NamespaceListing _ fqn_ _) ->
+                            Just fqn_
+
+                        SubDefinition (TypeListing _ fqn_ _) ->
+                            Just fqn_
+
+                        SubDefinition (TermListing _ fqn_ _) ->
+                            Just fqn_
+
+                        SubDefinition (DataConstructorListing _ fqn_) ->
+                            Just fqn_
+
+                        SubDefinition (AbilityConstructorListing _ fqn_) ->
+                            Just fqn_
+
+                        _ ->
+                            Nothing
+            in
+            case fqn of
+                Just fqn_ ->
+                    let
+                        fqnKey =
+                            FQN.toString fqn_
+
+                        existing =
+                            Dict.get fqnKey acc |> Maybe.withDefault []
+                    in
+                    Dict.insert fqnKey (item :: existing) acc
+
+                Nothing ->
+                    -- Items without FQN (like patches) go to a special key
+                    let
+                        existing =
+                            Dict.get "" acc |> Maybe.withDefault []
+                    in
+                    Dict.insert "" (item :: existing) acc
+
+        -- Convert groups back to NamespaceListingChild items, merging where appropriate
+        processGroup items =
+            let
+                ( namespaces, typeDefinitions, others ) =
+                    List.foldl
+                        (\item ( ns, types, other ) ->
+                            case item of
+                                SubNamespace nl ->
+                                    ( nl :: ns, types, other )
+
+                                SubDefinition ((TypeListing _ _ _) as tl) ->
+                                    ( ns, tl :: types, other )
+
+                                _ ->
+                                    ( ns, types, item :: other )
+                        )
+                        ( [], [], [] )
+                        items
+            in
+            case ( namespaces, typeDefinitions ) of
+                -- Both namespace and type definition exist with same name - merge them
+                ( ns :: _, tl :: _ ) ->
+                    [ MergedNamespaceWithType ns tl ]
+
+                -- Only namespace exists
+                ( ns :: _, [] ) ->
+                    [ SubNamespace ns ]
+
+                -- Only type definition exists
+                ( [], tl :: _ ) ->
+                    [ SubDefinition tl ]
+
+                -- No namespace or type definition (just other items)
+                ( [], [] ) ->
+                    others
+
+        grouped =
+            List.foldl groupByFqn Dict.empty content
+
+        merged =
+            grouped
+                |> Dict.values
+                |> List.concatMap processGroup
+    in
+    merged
 
 
 

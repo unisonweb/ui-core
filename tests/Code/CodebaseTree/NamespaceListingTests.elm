@@ -115,11 +115,13 @@ sortContent =
                         [ SubDefinition (TypeListing (Hash.unsafeFromString "#apple") (FQN.fromString "apple") (Type DataType))
                         , SubDefinition (TypeListing (Hash.unsafeFromString "#åleruse") (FQN.fromString "åleruse") (Type DataType))
                         , SubDefinition (TermListing (Hash.unsafeFromString "#bug") (FQN.fromString "bug") (Term PlainTerm))
-                        , SubDefinition (TypeListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") (Type DataType))
-                        , SubNamespace (NamespaceListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") NotAsked)
+                        , MergedNamespaceWithType 
+                            (NamespaceListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") NotAsked)
+                            (TypeListing (Hash.unsafeFromString "#Bytes") (FQN.fromString "Bytes") (Type DataType))
                         , SubDefinition (TermListing (Hash.unsafeFromString "#delay") (FQN.fromString "delay") (Term PlainTerm))
-                        , SubDefinition (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
-                        , SubNamespace (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
+                        , MergedNamespaceWithType 
+                            (NamespaceListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") NotAsked)
+                            (TypeListing (Hash.unsafeFromString "#IO") (FQN.fromString "IO") (Type DataType))
                         , SubDefinition (TermListing (Hash.unsafeFromString "#y") (FQN.fromString "y") (Term PlainTerm))
                         , SubDefinition (PatchListing "patch")
                         ]

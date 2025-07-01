@@ -261,6 +261,14 @@ viewLoadedNamespaceListingContent viewConfig openDefinitions expandedNamespaceLi
 
                 SubDefinition dl ->
                     viewDefinitionListing openDefinitions dl
+
+                MergedNamespaceWithType nl dl ->
+                    viewMergedNamespaceWithType
+                        viewConfig
+                        openDefinitions
+                        expandedNamespaceListings
+                        nl
+                        dl
     in
     div [] (List.map viewChild content)
 
@@ -282,6 +290,109 @@ viewNamespaceListingContent viewConfig openDefinitions expandedNamespaceListings
 
         Loading ->
             viewLoading
+
+
+viewMergedNamespaceWithType : ViewConfig -> FQNSet -> FQNSet -> NamespaceListing -> DefinitionListing -> Html Msg
+viewMergedNamespaceWithType viewConfig openDefinitions expandedNamespaceListings (NamespaceListing _ name content) typeListing =
+    let
+        ( isExpanded, namespaceContent ) =
+            if FQNSet.member name expandedNamespaceListings then
+                ( True
+                , div [ class "namespace-content" ]
+                    [ viewNamespaceListingContent
+                        viewConfig
+                        openDefinitions
+                        expandedNamespaceListings
+                        content
+                    ]
+                )
+
+            else
+                ( False, UI.nothing )
+
+        changePerspectiveTo =
+            if viewConfig.withPerspective then
+                Button.icon (Out (ChangePerspectiveToNamespace name)) Icon.intoFolder
+                    |> Button.stopPropagation
+                    |> Button.subdued
+                    |> Button.small
+                    |> Button.view
+
+            else
+                UI.nothing
+
+        fullName =
+            FQN.toString name
+
+        namespaceIcon =
+            div [ class "namespace-icon", classList [ ( "expanded", isExpanded ) ] ]
+                [ if isExpanded then
+                    Icon.view Icon.folderOpen
+
+                  else
+                    Icon.view Icon.folder
+                ]
+
+        hasOpenDefinitions =
+            FQNSet.isPrefixOfAny openDefinitions name
+
+        -- Create a reference for the type definition
+        typeRef =
+            case typeListing of
+                TypeListing _ fqn _ ->
+                    TypeReference (NameOnly fqn)
+
+                _ ->
+                    -- This shouldn't happen in practice since we only merge with TypeListing
+                    TypeReference (NameOnly name)
+
+        typeIcon =
+            case typeListing of
+                TypeListing _ _ category ->
+                    Category.icon category
+
+                _ ->
+                    Icon.type_
+
+        isTypeOpen =
+            case typeListing of
+                TypeListing _ fqn _ ->
+                    FQNSet.member fqn openDefinitions
+
+                _ ->
+                    False
+
+        typeLabel =
+            span [ class "type-indicator", title "Type definition" ] [ Icon.view typeIcon ]
+    in
+    div [ class "subtree" ]
+        [ a
+            [ class "node namespace merged-with-type"
+            , classList 
+                [ ( "has-open-definitions", hasOpenDefinitions )
+                , ( "type-open", isTypeOpen )
+                ]
+            , onClick (ToggleExpandedNamespaceListing name)
+            ]
+            [ namespaceIcon
+            , viewListingLabel (unqualifiedName name)
+            , typeLabel
+            , Tooltip.tooltip (Tooltip.text ("Change perspective to " ++ fullName))
+                |> Tooltip.withArrow Tooltip.End
+                |> Tooltip.view changePerspectiveTo
+            ]
+        , div [ class "type-definition-row" ]
+            [ a
+                [ class "node type merged"
+                , classList [ ( "is-open", isTypeOpen ) ]
+                , onClick (Out (OpenDefinition typeRef))
+                ]
+                [ Icon.view typeIcon
+                , viewListingLabel ("type " ++ unqualifiedName name)
+                ]
+            ]
+        , namespaceContent
+        ]
 
 
 viewNamespaceListing : ViewConfig -> FQNSet -> FQNSet -> NamespaceListing -> Html Msg
