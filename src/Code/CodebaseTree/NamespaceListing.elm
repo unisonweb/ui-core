@@ -15,7 +15,7 @@ import Code.Definition.Type as Type
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
 import Json.Decode as Decode exposing (at, field)
-import Json.Decode.Extra exposing (when)
+import Lib.Decode.Helpers exposing (whenPathIs, whenTagIs)
 import Lib.UnicodeSort as UnicodeSort
 import RemoteData exposing (RemoteData(..), WebData)
 
@@ -147,9 +147,6 @@ decodeSubNamespace parentFqn =
 decodeContent : Maybe FQN -> Decode.Decoder NamespaceListingContent
 decodeContent parentFqn =
     let
-        decodeTag =
-            field "tag" Decode.string
-
         decodeFqn =
             decodeFromParent parentFqn
 
@@ -162,9 +159,6 @@ decodeContent parentFqn =
 
             else
                 "Term"
-
-        decodeConstructorSuffix =
-            Decode.map termTypeByHash (at [ "contents", "termHash" ] Hash.decode)
 
         decodeAbilityConstructorListing =
             Decode.map SubDefinition
@@ -201,12 +195,12 @@ decodeContent parentFqn =
 
         decodeChild =
             Decode.oneOf
-                [ when decodeTag ((==) "Subnamespace") (field "contents" (decodeSubNamespace parentFqn))
-                , when decodeConstructorSuffix ((==) "DataConstructor") (field "contents" decodeDataConstructorListing)
-                , when decodeConstructorSuffix ((==) "AbilityConstructor") (field "contents" decodeAbilityConstructorListing)
-                , when decodeTag ((==) "TypeObject") (field "contents" decodeTypeListing)
-                , when decodeTag ((==) "TermObject") (field "contents" decodeTermListing)
-                , when decodeTag ((==) "PatchObject") (field "contents" decodePatchListing)
+                [ whenTagIs "Subnamespace" (field "contents" (decodeSubNamespace parentFqn))
+                , whenPathIs [ "contents", "termTag" ] "DataConstructor" (field "contents" decodeDataConstructorListing)
+                , whenPathIs [ "contents", "termTag" ] "AbilityConstructor" (field "contents" decodeAbilityConstructorListing)
+                , whenTagIs "TypeObject" (field "contents" decodeTypeListing)
+                , whenTagIs "TermObject" (field "contents" decodeTermListing)
+                , whenTagIs "PatchObject" (field "contents" decodePatchListing)
                 ]
     in
     Decode.list decodeChild |> Decode.map sortContent

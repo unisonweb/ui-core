@@ -126,7 +126,9 @@
   background: var(--color-sidebar-bg);
 }
 
-.sidebar .sidebar-section .sidebar-section_header.sidebar-section_header_sticky {
+.sidebar
+  .sidebar-section
+  .sidebar-section_header.sidebar-section_header_sticky {
   position: sticky;
   top: 0;
   z-index: 1;
