@@ -14,7 +14,7 @@ import Code.Definition.Term as Term
 import Code.Definition.Type as Type
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Hash as Hash exposing (Hash)
-import Json.Decode as Decode exposing (at, field)
+import Json.Decode as Decode exposing (field)
 import Lib.Decode.Helpers exposing (whenPathIs, whenTagIs)
 import Lib.UnicodeSort as UnicodeSort
 import RemoteData exposing (RemoteData(..), WebData)
@@ -149,16 +149,6 @@ decodeContent parentFqn =
     let
         decodeFqn =
             decodeFromParent parentFqn
-
-        termTypeByHash hash =
-            if Hash.isAbilityConstructorHash hash then
-                "AbilityConstructor"
-
-            else if Hash.isDataConstructorHash hash then
-                "DataConstructor"
-
-            else
-                "Term"
 
         decodeAbilityConstructorListing =
             Decode.map SubDefinition
