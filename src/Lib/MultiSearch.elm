@@ -16,6 +16,7 @@ module Lib.MultiSearch exposing
     , empty
     , fromList
     , fromResult
+    , fromResult_
     , hasSubstantialQuery
     , isEmptyQuery
     , isEmptyResults
