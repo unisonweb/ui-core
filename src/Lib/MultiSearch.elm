@@ -189,6 +189,11 @@ searchResults search_ =
 
 fromResult : String -> HttpResult (List a) -> MultiSearch a -> MultiSearch a
 fromResult key result search_ =
+    fromResult_ compare key result search_
+
+
+fromResult_ : (String -> String -> Order) -> String -> HttpResult (List a) -> MultiSearch a -> MultiSearch a
+fromResult_ sorter key result search_ =
     case ( result, search_ ) of
         ( Ok r, Searching searching_ ) ->
             let
@@ -199,6 +204,7 @@ fromResult key result search_ =
                 finishedRequests =
                     requests_
                         |> Dict.toList
+                        |> List.sortWith (\( ka, _ ) ( kb, _ ) -> sorter ka kb)
                         |> List.map (Tuple.second >> RemoteData.toMaybe)
                         |> MaybeE.orList
             in
