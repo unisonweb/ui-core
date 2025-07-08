@@ -226,7 +226,7 @@ fromResult_ sorter key result search_ =
                         |> Dict.toList
                         |> List.sortWith (\( ka, _ ) ( kb, _ ) -> sorter ka kb)
                         |> List.map (Tuple.second >> RemoteData.toMaybe)
-                        |> MaybeE.orList
+                        |> MaybeE.combine
             in
             case finishedRequests of
                 Just items ->

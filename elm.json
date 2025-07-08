@@ -79,6 +79,7 @@
         "Lib.OperatingSystem",
         "Lib.String.Helpers",
         "Lib.Decode.Helpers",
+        "Lib.MultiSearch",
         "Lib.Search",
         "Lib.SearchResults",
         "Lib.TreePath",
