@@ -22,6 +22,7 @@ module Lib.MultiSearch exposing
     , isEmptyResults
     , isSearching
     , length
+    , mapSearchResults
     , multiSearch
     , queriesEquals
     , query
@@ -186,6 +187,24 @@ searchResults search_ =
 
         _ ->
             Nothing
+
+
+mapSearchResults : (SearchResults a -> SearchResults a) -> MultiSearch a -> MultiSearch a
+mapSearchResults f search_ =
+    case search_ of
+        Searching searching_ ->
+            case searching_.previous of
+                Just results ->
+                    Searching { searching_ | previous = Just (f results) }
+
+                Nothing ->
+                    search_
+
+        Success q r ->
+            Success q (f r)
+
+        _ ->
+            search_
 
 
 fromResult : String -> HttpResult (List a) -> MultiSearch a -> MultiSearch a
