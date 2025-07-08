@@ -221,12 +221,14 @@ fromResult_ sorter key result search_ =
                     searching_.requests
                         |> Dict.insert key (RemoteData.Success r)
 
+                finishedRequests : Maybe (List a)
                 finishedRequests =
                     requests_
                         |> Dict.toList
                         |> List.sortWith (\( ka, _ ) ( kb, _ ) -> sorter ka kb)
                         |> List.map (Tuple.second >> RemoteData.toMaybe)
                         |> MaybeE.combine
+                        |> Maybe.map List.concat
             in
             case finishedRequests of
                 Just items ->
