@@ -2,10 +2,10 @@
 
 /* @color-todo @inverse */
 #app-header {
-  --color-app-header-text: var(--color-gray-lighten-100);
-  --color-app-header-bg: var(--color-gray-darken-10);
-  --color-app-header-subtle-text: var(--color-gray-lighten-20);
-  --color-app-header-subtle-text-em: var(--color-gray-lighten-50);
+  --color-app-header-text: var(--color-gray-10);
+  --color-app-header-bg: var(--color-gray-2);
+  --color-app-header-subtle-text: var(--color-gray-4);
+  --color-app-header-subtle-text-em: var(--color-gray-8);
   --color-app-header-context-unison-share-text: var(--color-purple-4);
   --color-app-header-context-unison-cloud-text: var(--color-blue-3);
   --color-app-header-context-unison-local-text: var(--color-pink-3);
@@ -13,13 +13,13 @@
 }
 
 #app-header .navigation {
-  --u-color_c_text-on-navigation-item: var(--color-gray-lighten-60);
+  --u-color_c_text-on-navigation-item: var(--color-gray-9);
   --u-color_c_navigation-item: var(--color-transparent);
-  --u-color_c_navigation-item_hovered: var(--color-gray-base);
-  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-lighten-60);
+  --u-color_c_navigation-item_hovered: var(--color-gray-3);
+  --u-color_c_text-on-navigation-item_hovered: var(--color-gray-9);
   --u-color_c_navigation-item: var(--color-transparent);
-  --u-color_c_navigation-item_selected: var(--color-gray-darken-20);
-  --u-color_c_text-on-navigation-item_selected: var(--color-gray-lighten-60);
+  --u-color_c_navigation-item_selected: var(--color-gray-1);
+  --u-color_c_text-on-navigation-item_selected: var(--color-gray-9);
 }
 
 #app-header {
@@ -39,14 +39,14 @@
  * uses the default */
 #app-header .button {
   /* @color-todo @inverse */
-  --color-button-default-text: var(--color-gray-lighten-30);
-  --color-button-default-icon: var(--color-gray-lighten-20);
-  --color-button-default-icon-only: var(--color-gray-lighten-30);
-  --color-button-default-bg: var(--color-gray-base);
-  --color-button-default-hover-text: var(--color-gray-lighten-50);
-  --color-button-default-hover-icon: var(--color-gray-lighten-30);
-  --color-button-default-hover-icon-only: var(--color-gray-lighten-50);
-  --color-button-default-hover-bg: var(--color-gray-base);
+  --color-button-default-text: var(--color-gray-5);
+  --color-button-default-icon: var(--color-gray-4);
+  --color-button-default-icon-only: var(--color-gray-5);
+  --color-button-default-bg: var(--color-gray-3);
+  --color-button-default-hover-text: var(--color-gray-8);
+  --color-button-default-hover-icon: var(--color-gray-5);
+  --color-button-default-hover-icon-only: var(--color-gray-8);
+  --color-button-default-hover-bg: var(--color-gray-3);
 }
 
 #app-header .toggle-and-title {

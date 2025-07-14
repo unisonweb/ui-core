@@ -5,35 +5,35 @@
   --c-width_sidebar_fallback: 17rem;
 
   /* @color-todo @inverse */
-  --color-sidebar-fg: var(--color-gray-lighten-40);
-  --color-sidebar-fg-em: var(--color-gray-lighten-100);
-  --color-sidebar-bg: var(--color-gray-darken-20);
+  --color-sidebar-fg: var(--color-gray-6);
+  --color-sidebar-fg-em: var(--color-gray-10);
+  --color-sidebar-bg: var(--color-gray-1);
   /* see color files for why this is needed */
-  --color-sidebar-bg-transparent: var(--color-gray-darken-20-transparent);
-  --color-sidebar-border: var(--color-gray-base);
-  --color-sidebar-subtle-fg: var(--color-gray-lighten-20);
-  --color-sidebar-subtle-fg-em: var(--color-gray-lighten-30);
+  --color-sidebar-bg-transparent: var(--color-gray-1-transparent);
+  --color-sidebar-border: var(--color-gray-3);
+  --color-sidebar-subtle-fg: var(--color-gray-4);
+  --color-sidebar-subtle-fg-em: var(--color-gray-5);
   --color-sidebar-subtle-bg: var(--color-transparent);
-  --color-sidebar-focus-fg: var(--color-gray-lighten-60);
-  --color-sidebar-focus-bg: var(--color-gray-darken-10);
-  --color-sidebar-button-default-text: var(--color-gray-lighten-30);
-  --color-sidebar-button-default-icon: var(--color-gray-lighten-20);
-  --color-sidebar-button-default-icon-only: var(--color-gray-lighten-30);
-  --color-sidebar-button-default-bg: var(--color-gray-base);
-  --color-sidebar-button-default-hover-text: var(--color-gray-lighten-50);
-  --color-sidebar-button-default-hover-icon: var(--color-gray-lighten-30);
-  --color-sidebar-button-default-hover-icon-only: var(--color-gray-lighten-50);
-  --color-sidebar-button-default-hover-bg: var(--color-gray-base);
-  --color-sidebar-divider: var(--color-gray-darken-10);
+  --color-sidebar-focus-fg: var(--color-gray-9);
+  --color-sidebar-focus-bg: var(--color-gray-2);
+  --color-sidebar-button-default-text: var(--color-gray-5);
+  --color-sidebar-button-default-icon: var(--color-gray-4);
+  --color-sidebar-button-default-icon-only: var(--color-gray-5);
+  --color-sidebar-button-default-bg: var(--color-gray-3);
+  --color-sidebar-button-default-hover-text: var(--color-gray-8);
+  --color-sidebar-button-default-hover-icon: var(--color-gray-5);
+  --color-sidebar-button-default-hover-icon-only: var(--color-gray-8);
+  --color-sidebar-button-default-hover-bg: var(--color-gray-3);
+  --color-sidebar-divider: var(--color-gray-2);
 
-  --color-sidebar-tooltip-fg: var(--color-gray-lighten-60);
-  --color-sidebar-tooltip-bg: var(--color-gray-darken-10);
-  --color-sidebar-tooltip-border: var(--color-gray-base);
+  --color-sidebar-tooltip-fg: var(--color-gray-9);
+  --color-sidebar-tooltip-bg: var(--color-gray-2);
+  --color-sidebar-tooltip-border: var(--color-gray-3);
 
-  --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-lighten-30);
-  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-darken-10);
-  --color-sidebar-keyboard-shortcut-key-border: var(--color-gray-lighten-20);
-  --color-sidebar-keyboard-shortcut-key-shadow: var(--color-gray-base);
+  --color-sidebar-keyboard-shortcut-key-text: var(--color-gray-5);
+  --color-sidebar-keyboard-shortcut-key-bg: var(--color-gray-2);
+  --color-sidebar-keyboard-shortcut-key-border: var(--color-gray-4);
+  --color-sidebar-keyboard-shortcut-key-shadow: var(--color-gray-3);
 
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@
 
 .sidebar .loading-placeholder {
   /* @color-todo improve... */
-  background: var(--color-gray-darken-10);
+  background: var(--color-gray-2);
   opacity: 1.5;
 }
 
