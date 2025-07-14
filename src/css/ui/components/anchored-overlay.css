@@ -43,8 +43,8 @@
 }
 
 .anchored-overlay .status-indicator {
-  --c-color_status-indicator_working: var(--color-purple-1);
-  --c-color_status-indicator_icon-on-working: var(--color-purple-4);
+  --c-color_status-indicator_working: var(--color-purple-0);
+  --c-color_status-indicator_icon-on-working: var(--color-purple-3);
 }
 
 .anchored-overlay_sheet {

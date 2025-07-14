@@ -135,22 +135,21 @@
   --color-orange-5: rgba(var(--color-orange-5_), 1);
 
   /* Purple base colors */
-  /* TODO: SHIFT THESE, 1 should be 0, 2 should be 1 etc.. */
-  --color-purple-1_: 85, 55, 123;
-  --color-purple-2_: 115, 77, 163;
-  --color-purple-3_: 154, 118, 200;
-  --color-purple-4_: 198, 168, 236;
-  --color-purple-5_: 226, 204, 253;
-  --color-purple-6_: 241, 229, 255;
+  --color-purple-0_: 85, 55, 123;
+  --color-purple-1_: 115, 77, 163;
+  --color-purple-2_: 154, 118, 200;
+  --color-purple-3_: 198, 168, 236;
+  --color-purple-4_: 226, 204, 253;
+  --color-purple-5_: 241, 229, 255;
 
   /* Purple variations */
-  --color-purple-3-25pct: rgba(var(--color-purple-4_), 0.25);
+  --color-purple-2-25pct: rgba(var(--color-purple-3_), 0.25);
 
   /* Purples */
+  --color-purple-0: rgba(var(--color-purple-0_), 1);
   --color-purple-1: rgba(var(--color-purple-1_), 1);
   --color-purple-2: rgba(var(--color-purple-2_), 1);
   --color-purple-3: rgba(var(--color-purple-3_), 1);
   --color-purple-4: rgba(var(--color-purple-4_), 1);
   --color-purple-5: rgba(var(--color-purple-5_), 1);
-  --color-purple-6: rgba(var(--color-purple-6_), 1);
 }

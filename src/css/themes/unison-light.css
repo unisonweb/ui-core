@@ -147,9 +147,9 @@
   --u-color_positive_text-on-element_subdued: var(--u-color_text);
   --u-color_positive_icon-on-element_subdued: var(--color-green-1);
 
-  --u-color_working_element: var(--color-purple-5);
-  --u-color_working_text-on-element: var(--color-purple-2);
-  --u-color_working_icon-on-element: var(--color-purple-2);
+  --u-color_working_element: var(--color-purple-4);
+  --u-color_working_text-on-element: var(--color-purple-1);
+  --u-color_working_icon-on-element: var(--color-purple-1);
   --u-color_working_element_subdued: var(--color-gray-9);
   --u-color_working_text-on-element_subdued: var(--u-color_text);
 
@@ -159,7 +159,7 @@
   --color-icon-type: var(--color-orange-1);
   --color-icon-data-constructor: var(--color-orange-1);
   --color-icon-test: var(--color-teal-1);
-  --color-icon-term: var(--color-purple-3);
+  --color-icon-term: var(--color-purple-2);
   --color-icon-ability: var(--color-pink-1);
   --color-icon-ability-constructor: var(--color-pink-1);
   --color-icon-doc: var(--color-orange-2);
@@ -170,8 +170,8 @@
   --color-syntax-subtle-em: var(--color-gray-3);
   --color-syntax-keyword: var(--color-pink-2);
   --color-syntax-operator: var(--color-gray-5);
-  --color-syntax-term: var(--color-purple-2);
-  --color-syntax-term-namespace: var(--color-purple-3);
+  --color-syntax-term: var(--color-purple-1);
+  --color-syntax-term-namespace: var(--color-purple-2);
   --color-syntax-ability: var(--color-pink-1);
   --color-syntax-type: var(--color-blue-1);
   --color-syntax-type-namespace: var(--color-blue-2);

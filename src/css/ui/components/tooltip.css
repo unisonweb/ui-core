@@ -28,8 +28,8 @@ positioned absolute within the overflow container.
   --color-tooltip-syntax-subtle-em: var(--color-gray-5);
   --color-tooltip-syntax-keyword: var(--color-pink-3);
   --color-tooltip-syntax-operator: var(--color-gray-4);
-  --color-tooltip-syntax-term: var(--color-purple-3);
-  --color-tooltip-syntax-term-namespace: var(--color-purple-4);
+  --color-tooltip-syntax-term: var(--color-purple-2);
+  --color-tooltip-syntax-term-namespace: var(--color-purple-3);
   --color-tooltip-syntax-ability: var(--color-pink-2);
   --color-tooltip-syntax-type: var(--color-blue-2);
   --color-tooltip-syntax-type-namespace: var(--color-blue-3);
