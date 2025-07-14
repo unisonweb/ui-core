@@ -13,3 +13,56 @@
 .padded {
   padding: 2rem;
 }
+
+.colors h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.color-section {
+  margin-bottom: 3rem;
+}
+
+.color-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+}
+
+.color-swatch {
+  border: 1px solid var(--u-color_border);
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+}
+
+.color-preview {
+  height: 8rem;
+  border-bottom: 1px solid var(--u-color_border);
+}
+
+.color-info {
+  padding: 1rem;
+}
+
+.color-name {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.color-value-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.color-value {
+  font-size: var(--font-size-small);
+  color: var(--color-gray-4);
+  font-family: var(--font-monospace);
+}

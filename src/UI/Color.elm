@@ -1,6 +1,3 @@
-{- TODO: Autogenerate from a JSON file -}
-
-
 module UI.Color exposing (..)
 
 import Color as C
@@ -24,6 +21,34 @@ type Color
 toCssString : Color -> String
 toCssString (Color color) =
     C.toCssString color
+
+
+toRgbaString : Color -> String
+toRgbaString color =
+    toRgbaString_ 1.0 color
+
+
+toRgbaString_ : Float -> Color -> String
+toRgbaString_ alpha (Color color) =
+    let
+        rgb =
+            C.toRgba color
+
+        r =
+            String.fromInt (round (rgb.red * 255))
+
+        g =
+            String.fromInt (round (rgb.green * 255))
+
+        b =
+            String.fromInt (round (rgb.blue * 255))
+    in
+    "rgba(" ++ r ++ ", " ++ g ++ ", " ++ b ++ ", " ++ String.fromFloat alpha ++ ")"
+
+
+
+-- toHextString : Color -> String
+-- toHextString (Color color) =
 
 
 harmonizesWith : Color -> List Color
@@ -266,8 +291,6 @@ gray9 =
 gray10 : Color
 gray10 =
     Color (C.rgb255 255 255 255)
-
-
 
 
 
