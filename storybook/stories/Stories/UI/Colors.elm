@@ -1,7 +1,6 @@
 module Stories.UI.Colors exposing (main)
 
 import Browser
-import Color as C
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import UI.Color as Color
@@ -29,6 +28,7 @@ view =
             [ colorSection "Grays" Color.grays
             , colorSection "Pinks" Color.pinks
             , colorSection "Greens" Color.greens
+            , colorSection "Teals" Color.teals
             , colorSection "Blues" Color.blues
             , colorSection "Oranges" Color.oranges
             , colorSection "Purples" Color.purples

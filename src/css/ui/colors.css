@@ -83,7 +83,7 @@
   --color-teal-1_: 34, 190, 177;
   --color-teal-2_: 85, 244, 231;
   --color-teal-3_: 158, 255, 247;
-  --color-teal-4_: 158, 255, 247;
+  --color-teal-4_: 203, 255, 251;
   --color-teal-5_: 231, 255, 253;
 
   /* Teals */
@@ -97,7 +97,7 @@
   /* Blue base colors */
   --color-blue-0_: 11, 56, 128;
   --color-blue-1_: 34, 94, 190;
-  --color-blue-2_: 86, 149, 244;
+  --color-blue-2_: 85, 149, 244;
   --color-blue-3_: 158, 197, 255;
   --color-blue-4_: 203, 224, 255;
   --color-blue-5_: 236, 242, 250;
@@ -136,7 +136,7 @@
 
   /* Purple base colors */
   --color-purple-0_: 85, 55, 123;
-  --color-purple-1_: 115, 77, 163;
+  --color-purple-1_: 115, 77, 162;
   --color-purple-2_: 154, 118, 200;
   --color-purple-3_: 198, 168, 236;
   --color-purple-4_: 226, 204, 253;

@@ -89,12 +89,12 @@ fromColor_ full =
 
 colors : List Color
 colors =
-    grays ++ pinks ++ greens ++ blues ++ oranges ++ purples
+    grays ++ pinks ++ greens ++ blues ++ teals ++ oranges ++ purples
 
 
 nonGrays : List Color
 nonGrays =
-    pinks ++ greens ++ blues ++ oranges ++ purples
+    pinks ++ greens ++ blues ++ teals ++ oranges ++ purples
 
 
 dark : List Color
@@ -211,6 +211,11 @@ isPurple color =
 isBlue : Color -> Bool
 isBlue color =
     List.member color blues
+
+
+isTeam : Color -> Bool
+isTeam color =
+    List.member color teals
 
 
 isGreen : Color -> Bool
@@ -343,7 +348,7 @@ greens =
 
 green0 : Color
 green0 =
-    Color (C.rgb255 16 116 58)
+    Color (C.rgb255 16 115 58)
 
 
 green1 : Color
@@ -393,7 +398,7 @@ blue1 =
 
 blue2 : Color
 blue2 =
-    Color (C.rgb255 86 149 244)
+    Color (C.rgb255 85 149 244)
 
 
 blue3 : Color
@@ -409,6 +414,45 @@ blue4 =
 blue5 : Color
 blue5 =
     Color (C.rgb255 236 242 250)
+
+
+
+-- Teals
+
+
+teals : List Color
+teals =
+    [ teal0, teal1, teal2, teal3, teal4, teal5 ]
+
+
+teal0 : Color
+teal0 =
+    Color (C.rgb255 11 128 118)
+
+
+teal1 : Color
+teal1 =
+    Color (C.rgb255 34 190 177)
+
+
+teal2 : Color
+teal2 =
+    Color (C.rgb255 85 244 231)
+
+
+teal3 : Color
+teal3 =
+    Color (C.rgb255 158 255 247)
+
+
+teal4 : Color
+teal4 =
+    Color (C.rgb255 203 255 251)
+
+
+teal5 : Color
+teal5 =
+    Color (C.rgb255 231 255 253)
 
 
 
@@ -466,7 +510,7 @@ purple0 =
 
 purple1 : Color
 purple1 =
-    Color (C.rgb255 115 77 163)
+    Color (C.rgb255 115 77 162)
 
 
 purple2 : Color
