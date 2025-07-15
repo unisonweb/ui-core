@@ -2,31 +2,31 @@
 
 .workspace-item {
   /* @color-todo */
-  --color-workspace-item-fg: var(--color-gray-0);
-  --color-workspace-item-bg: var(--color-gray-10);
-  --color-workspace-item-bg-faded: var(--color-gray-10-50pct);
+  --color-workspace-item-fg: var(--color-gray-darken-30);
+  --color-workspace-item-bg: var(--color-gray-lighten-100);
+  --color-workspace-item-bg-faded: var(--color-gray-lighten-100-50pct);
 
-  --color-workspace-item-info-item-fg: var(--color-gray-5);
-  --color-workspace-item-info-item-icon-fg: var(--color-gray-5);
+  --color-workspace-item-info-item-fg: var(--color-gray-lighten-30);
+  --color-workspace-item-info-item-icon-fg: var(--color-gray-lighten-30);
   --color-workspace-item-info-item-bg: var(--color-transparent);
-  --color-workspace-item-info-item-hover-fg: var(--color-gray-0);
-  --color-workspace-item-info-item-hover-icon-fg: var(--color-gray-3);
-  --color-workspace-item-info-item-hover-bg: var(--color-gray-8);
+  --color-workspace-item-info-item-hover-fg: var(--color-gray-darken-30);
+  --color-workspace-item-info-item-hover-icon-fg: var(--color-gray-base);
+  --color-workspace-item-info-item-hover-bg: var(--color-gray-lighten-50);
 
   --color-workspace-item-source-bg: var(--color-transparent);
-  --color-workspace-item-subtle-fg: var(--color-gray-5);
+  --color-workspace-item-subtle-fg: var(--color-gray-lighten-30);
 
   --c-color_workspace-item_border: var(--u-color_border_subdued);
   --c-color_workspace-item_header_border: var(--u-color_border_subdued);
   --c-color_workspace-item_header_bg: var(--color-workspace-item-bg);
 
-  --color-workspace-item-focus-fg: var(--color-gray-0);
-  --color-workspace-item-focus-subtle-fg: var(--color-gray-5);
+  --color-workspace-item-focus-fg: var(--color-gray-darken-30);
+  --color-workspace-item-focus-subtle-fg: var(--color-gray-lighten-30);
   --color-workspace-item-focus-source-bg: var(--color-transparent);
-  --color-workspace-item-focus-bg: var(--color-gray-10);
-  --color-workspace-item-focus-bg-faded: var(--color-gray-10-50pct);
+  --color-workspace-item-focus-bg: var(--color-gray-lighten-100);
+  --color-workspace-item-focus-bg-faded: var(--color-gray-lighten-100-50pct);
   --color-workspace-item-focus-border: var(--u-color_focus-border);
-  --c-color_workspace-item_focus_header_bg: var(--color-gray-9);
+  --c-color_workspace-item_focus_header_bg: var(--color-gray-lighten-60);
 
   position: relative;
   color: var(--color-workspace-item-fg);
