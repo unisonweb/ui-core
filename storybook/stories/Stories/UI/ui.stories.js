@@ -17,6 +17,7 @@ import Tooltip from "./Tooltip.elm";
 import Placeholder from "./Placeholder.elm";
 import StatusBanner from "./StatusBanner.elm";
 import TextField from "./Form/TextField.elm";
+import Colors from "./Colors.elm";
 
 export const banner = () => {
   return initElmStory(Banner.Elm.Stories.UI.Banner);
@@ -76,4 +77,8 @@ export const statusBanner = () => {
 
 export const textField = () => {
   return initElmStory(TextField.Elm.Stories.UI.Form.TextField);
+};
+
+export const colors = () => {
+  return initElmStory(Colors.Elm.Stories.UI.Colors);
 };

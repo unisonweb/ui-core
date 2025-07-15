@@ -1,6 +1,3 @@
-{- TODO: Autogenerate from a JSON file -}
-
-
 module UI.Color exposing (..)
 
 import Color as C
@@ -24,6 +21,34 @@ type Color
 toCssString : Color -> String
 toCssString (Color color) =
     C.toCssString color
+
+
+toRgbaString : Color -> String
+toRgbaString color =
+    toRgbaString_ 1.0 color
+
+
+toRgbaString_ : Float -> Color -> String
+toRgbaString_ alpha (Color color) =
+    let
+        rgb =
+            C.toRgba color
+
+        r =
+            String.fromInt (round (rgb.red * 255))
+
+        g =
+            String.fromInt (round (rgb.green * 255))
+
+        b =
+            String.fromInt (round (rgb.blue * 255))
+    in
+    "rgba(" ++ r ++ ", " ++ g ++ ", " ++ b ++ ", " ++ String.fromFloat alpha ++ ")"
+
+
+
+-- toHextString : Color -> String
+-- toHextString (Color color) =
 
 
 harmonizesWith : Color -> List Color
@@ -55,7 +80,7 @@ fromColor_ full =
     differences
         |> List.head
         |> Maybe.map Tuple.second
-        |> Maybe.withDefault grayBase
+        |> Maybe.withDefault gray4
 
 
 
@@ -64,12 +89,12 @@ fromColor_ full =
 
 colors : List Color
 colors =
-    grays ++ pinks ++ greens ++ blues ++ oranges ++ purples
+    grays ++ pinks ++ greens ++ blues ++ teals ++ oranges ++ purples
 
 
 nonGrays : List Color
 nonGrays =
-    pinks ++ greens ++ blues ++ oranges ++ purples
+    pinks ++ greens ++ blues ++ teals ++ oranges ++ purples
 
 
 dark : List Color
@@ -188,6 +213,11 @@ isBlue color =
     List.member color blues
 
 
+isTeam : Color -> Bool
+isTeam color =
+    List.member color teals
+
+
 isGreen : Color -> Bool
 isGreen color =
     List.member color greens
@@ -199,84 +229,72 @@ isGreen color =
 
 grays : List Color
 grays =
-    [ grayDarken30
-    , grayDarken25
-    , grayDarken20
-    , grayDarken10
-    , grayBase
-    , grayLighten20
-    , grayLighten30
-    , grayLighten40
-    , grayLighten45
-    , grayLighten50
-    , grayLighten55
-    , grayLighten60
-    , grayLighten100
+    [ gray0
+    , gray1
+    , gray2
+    , gray3
+    , gray4
+    , gray5
+    , gray6
+    , gray7
+    , gray8
+    , gray9
+    , gray10
     ]
 
 
-grayDarken30 : Color
-grayDarken30 =
+gray0 : Color
+gray0 =
     Color (C.rgb255 24 24 28)
 
 
-grayDarken25 : Color
-grayDarken25 =
+gray1 : Color
+gray1 =
     Color (C.rgb255 34 35 42)
 
 
-grayDarken20 : Color
-grayDarken20 =
+gray2 : Color
+gray2 =
     Color (C.rgb255 45 46 53)
 
 
-grayDarken10 : Color
-grayDarken10 =
-    Color (C.rgb255 65 66 75)
-
-
-grayBase : Color
-grayBase =
+gray3 : Color
+gray3 =
     Color (C.rgb255 81 82 88)
 
 
-grayLighten20 : Color
-grayLighten20 =
+gray4 : Color
+gray4 =
     Color (C.rgb255 129 130 134)
 
 
-grayLighten30 : Color
-grayLighten30 =
+gray5 : Color
+gray5 =
     Color (C.rgb255 189 191 198)
 
 
-grayLighten40 : Color
-grayLighten40 =
+gray6 : Color
+gray6 =
     Color (C.rgb255 209 213 220)
 
 
-grayLighten45 : Color
-grayLighten45 =
+gray7 : Color
+gray7 =
     Color (C.rgb255 217 224 231)
 
 
-grayLighten50 : Color
-grayLighten50 =
+gray8 : Color
+gray8 =
     Color (C.rgb255 228 234 243)
 
 
-grayLighten55 : Color
-grayLighten55 =
-    Color (C.rgb255 241 243 245)
-
-
-grayLighten60 : Color
-grayLighten60 =
+gray9 : Color
+gray9 =
     Color (C.rgb255 250 250 251)
 
 
-grayLighten100 : Color
-grayLighten100 =
+gray10 : Color
+gray10 =
     Color (C.rgb255 255 255 255)
 
 
@@ -330,7 +348,7 @@ greens =
 
 green0 : Color
 green0 =
-    Color (C.rgb255 16 116 58)
+    Color (C.rgb255 16 115 58)
 
 
 green1 : Color
@@ -365,7 +383,7 @@ green5 =
 
 blues : List Color
 blues =
-    [ blue0, blue2, blue3, blue4, blue5 ]
+    [ blue0, blue1, blue2, blue3, blue4, blue5 ]
 
 
 blue0 : Color
@@ -380,7 +398,7 @@ blue1 =
 
 blue2 : Color
 blue2 =
-    Color (C.rgb255 86 149 244)
+    Color (C.rgb255 85 149 244)
 
 
 blue3 : Color
@@ -396,6 +414,45 @@ blue4 =
 blue5 : Color
 blue5 =
     Color (C.rgb255 236 242 250)
+
+
+
+-- Teals
+
+
+teals : List Color
+teals =
+    [ teal0, teal1, teal2, teal3, teal4, teal5 ]
+
+
+teal0 : Color
+teal0 =
+    Color (C.rgb255 11 128 118)
+
+
+teal1 : Color
+teal1 =
+    Color (C.rgb255 34 190 177)
+
+
+teal2 : Color
+teal2 =
+    Color (C.rgb255 85 244 231)
+
+
+teal3 : Color
+teal3 =
+    Color (C.rgb255 158 255 247)
+
+
+teal4 : Color
+teal4 =
+    Color (C.rgb255 203 255 251)
+
+
+teal5 : Color
+teal5 =
+    Color (C.rgb255 231 255 253)
 
 
 
@@ -439,39 +496,38 @@ orange5 =
 
 
 -- Purples
--- TODO: SHIFT THESE, 1 should be 0, 2 should be 1 etc..
 
 
 purples : List Color
 purples =
-    [ purple1, purple2, purple3, purple4, purple5, purple6 ]
+    [ purple0, purple1, purple2, purple3, purple4, purple5 ]
+
+
+purple0 : Color
+purple0 =
+    Color (C.rgb255 85 55 123)
 
 
 purple1 : Color
 purple1 =
-    Color (C.rgb255 85 55 123)
+    Color (C.rgb255 115 77 162)
 
 
 purple2 : Color
 purple2 =
-    Color (C.rgb255 115 77 163)
+    Color (C.rgb255 154 118 200)
 
 
 purple3 : Color
 purple3 =
-    Color (C.rgb255 154 118 200)
+    Color (C.rgb255 198 168 236)
 
 
 purple4 : Color
 purple4 =
-    Color (C.rgb255 198 168 236)
+    Color (C.rgb255 226 204 253)
 
 
 purple5 : Color
 purple5 =
-    Color (C.rgb255 226 204 253)
-
-
-purple6 : Color
-purple6 =
     Color (C.rgb255 241 229 255)
