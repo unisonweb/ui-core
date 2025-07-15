@@ -32,11 +32,11 @@ type alias HexGrid =
 
 empty : HexGrid
 empty =
-    { background = Color.gray2
-    , tendrils = Color.gray4
-    , cell1 = Color.gray5
-    , cell2 = Color.gray5
-    , cell3 = Color.gray5
+    { background = Color.grayDarken20
+    , tendrils = Color.grayBase
+    , cell1 = Color.grayLighten30
+    , cell2 = Color.grayLighten30
+    , cell3 = Color.grayLighten30
     }
 
 

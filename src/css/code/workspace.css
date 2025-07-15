@@ -4,7 +4,7 @@
 #workspace {
   display: flex;
   flex-direction: column;
-  background: var(--color-gray-9);
+  background: var(--color-gray-lighten-60);
 }
 
 #workspace #workspace-content {

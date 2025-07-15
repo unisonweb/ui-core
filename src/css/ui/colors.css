@@ -4,152 +4,90 @@
    * on rgba fixes this and makes it convienient to use
    * everywhere.
    * https://stackoverflow.com/a/56548711
+   *
+   * TODO: Just use RGB instead of HEX
+   * https://stackoverflow.com/a/41265350
    */
   --color-transparent: rgba(255, 255, 255, 0);
-
-  /* Gray base colors */
-  --color-gray-0_: 24, 24, 28;
-  --color-gray-1_: 34, 35, 42;
-  --color-gray-2_: 45, 46, 53;
-  --color-gray-3_: 81, 82, 88;
-  --color-gray-4_: 129, 130, 134;
-  --color-gray-5_: 189, 191, 198;
-  --color-gray-6_: 209, 213, 220;
-  --color-gray-7_: 217, 224, 231;
-  --color-gray-8_: 228, 234, 243;
-  --color-gray-9_: 250, 250, 251;
-  --color-gray-10_: 255, 255, 255;
-
-  /* Gray variations */
-  --color-gray-0-20pct: rgba(var(--color-gray-0_), 0.2);
-  --color-gray-0-50pct: rgba(var(--color-gray-0_), 0.5);
-  --color-gray-1-transparent: rgba(var(--color-gray-1_), 0);
-  --color-gray-2-transparent: rgba(var(--color-gray-2_), 0);
-  --color-gray-10-50pct: rgba(var(--color-gray-10_), 0.5);
-  --color-gray-9-50pct: rgba(var(--color-gray-9_), 0.5);
-  --color-gray-9-25pct: rgba(var(--color-gray-9_), 0.25);
+  --color-gray-darken-30-20pct: rgba(24, 24, 28, 0.2);
+  --color-gray-darken-30-50pct: rgba(24, 24, 28, 0.5);
+  --color-gray-darken-20-transparent: rgba(45, 46, 53, 0);
+  --color-gray-darken-10-transparent: rgba(65, 66, 75, 0);
+  --color-gray-lighten-100-50pct: rgba(255, 255, 255, 0.5);
+  --color-gray-lighten-60-50pct: rgba(250, 250, 251, 0.5);
+  --color-gray-lighten-60-25pct: rgba(250, 250, 251, 0.25);
 
   /* Grays */
-  --color-gray-0: rgba(var(--color-gray-0_), 1);
-  --color-gray-1: rgba(var(--color-gray-1_), 1);
-  --color-gray-2: rgba(var(--color-gray-2_), 1);
-  --color-gray-3: rgba(var(--color-gray-3_), 1);
-  --color-gray-4: rgba(var(--color-gray-4_), 1);
-  --color-gray-5: rgba(var(--color-gray-5_), 1);
-  --color-gray-6: rgba(var(--color-gray-6_), 1);
-  --color-gray-7: rgba(var(--color-gray-7_), 1);
-  --color-gray-8: rgba(var(--color-gray-8_), 1);
-  --color-gray-9: rgba(var(--color-gray-9_), 1);
-  --color-gray-10: rgba(var(--color-gray-10_), 1);
+  --color-gray-darken-30: #18181c;
+  --color-gray-darken-20: #22232a;
+  --color-gray-darken-10: #2d2e35;
 
-  /* Pink base colors */
-  --color-pink-0_: 229, 16, 34;
-  --color-pink-1_: 255, 71, 86;
-  --color-pink-2_: 255, 108, 120;
-  --color-pink-3_: 255, 155, 163;
-  --color-pink-4_: 255, 193, 198;
-  --color-pink-5_: 254, 238, 240;
+  --color-gray-base: #515258;
 
-  /* Pink variations */
-  --color-pink-0-25pct: rgba(var(--color-pink-0_), 0.25);
-  --color-pink-1-25pct: rgba(var(--color-pink-1_), 0.25);
+  --color-gray-lighten-20: #818286;
+  --color-gray-lighten-30: #bdbfc6;
+  --color-gray-lighten-40: #d1d5dc;
+  --color-gray-lighten-45: #d9e0e7;
+  --color-gray-lighten-50: #e4eaf3;
+  --color-gray-lighten-55: #f1f3f5;
+  --color-gray-lighten-60: #fafafb;
+  --color-gray-lighten-100: #ffffff;
 
   /* Pinks */
-  --color-pink-0: rgba(var(--color-pink-0_), 1);
-  --color-pink-1: rgba(var(--color-pink-1_), 1);
-  --color-pink-2: rgba(var(--color-pink-2_), 1);
-  --color-pink-3: rgba(var(--color-pink-3_), 1);
-  --color-pink-4: rgba(var(--color-pink-4_), 1);
-  --color-pink-5: rgba(var(--color-pink-5_), 1);
-
-  /* Green base colors */
-  --color-green-0_: 16, 115, 58;
-  --color-green-1_: 39, 174, 96;
-  --color-green-2_: 82, 209, 136;
-  --color-green-3_: 136, 243, 181;
-  --color-green-4_: 198, 255, 222;
-  --color-green-5_: 232, 248, 239;
+  --color-pink-0: #e51022;
+  --color-pink-0-25pct: rgba(229, 16, 34, 0.25);
+  --color-pink-1: #ff4756;
+  --color-pink-1-25pct: rgba(255, 71, 86, 0.25);
+  --color-pink-2: #ff6c78;
+  --color-pink-3: #ff9ba3;
+  --color-pink-4: #ffc1c6;
+  --color-pink-5: #feeef0;
 
   /* Greens */
-  --color-green-0: rgba(var(--color-green-0_), 1);
-  --color-green-1: rgba(var(--color-green-1_), 1);
-  --color-green-2: rgba(var(--color-green-2_), 1);
-  --color-green-3: rgba(var(--color-green-3_), 1);
-  --color-green-4: rgba(var(--color-green-4_), 1);
-  --color-green-5: rgba(var(--color-green-5_), 1);
-
-  /* Teal base colors */
-  --color-teal-0_: 11, 128, 118;
-  --color-teal-1_: 34, 190, 177;
-  --color-teal-2_: 85, 244, 231;
-  --color-teal-3_: 158, 255, 247;
-  --color-teal-4_: 203, 255, 251;
-  --color-teal-5_: 231, 255, 253;
+  --color-green-0: #10733a;
+  --color-green-1: #27ae60;
+  --color-green-2: #52d188;
+  --color-green-3: #88f3b5;
+  --color-green-4: #c6ffde;
+  --color-green-5: #e8f8ef;
 
   /* Teals */
-  --color-teal-0: rgba(var(--color-teal-0_), 1);
-  --color-teal-1: rgba(var(--color-teal-1_), 1);
-  --color-teal-2: rgba(var(--color-teal-2_), 1);
-  --color-teal-3: rgba(var(--color-teal-3_), 1);
-  --color-teal-4: rgba(var(--color-teal-4_), 1);
-  --color-teal-5: rgba(var(--color-teal-5_), 1);
-
-  /* Blue base colors */
-  --color-blue-0_: 11, 56, 128;
-  --color-blue-1_: 34, 94, 190;
-  --color-blue-2_: 85, 149, 244;
-  --color-blue-3_: 158, 197, 255;
-  --color-blue-4_: 203, 224, 255;
-  --color-blue-5_: 236, 242, 250;
-
-  /* Blue variations */
-  --color-blue-0-25pct: rgba(var(--color-blue-0_), 0.25);
-  --color-blue-1-25pct: rgba(var(--color-blue-1_), 0.25);
-  --color-blue-2-25pct: rgba(var(--color-blue-2_), 0.25);
-  --color-blue-3-25pct: rgba(var(--color-blue-3_), 0.25);
-  --color-blue-4-25pct: rgba(var(--color-blue-4_), 0.25);
-  --color-blue-5-25pct: rgba(var(--color-blue-5_), 0.25);
+  --color-teal-0: #0b8076;
+  --color-teal-1: #22beb1;
+  --color-teal-2: #55f4e7;
+  --color-teal-3: #9efff7;
+  --color-teal-4: #9efff7;
+  --color-teal-5: #e7fffd;
 
   /* Blues */
-  --color-blue-0: rgba(var(--color-blue-0_), 1);
-  --color-blue-1: rgba(var(--color-blue-1_), 1);
-  --color-blue-2: rgba(var(--color-blue-2_), 1);
-  --color-blue-3: rgba(var(--color-blue-3_), 1);
-  --color-blue-4: rgba(var(--color-blue-4_), 1);
-  --color-blue-5: rgba(var(--color-blue-5_), 1);
-
-  /* Orange base colors */
-  --color-orange-0_: 184, 113, 32;
-  --color-orange-1_: 255, 136, 0;
-  --color-orange-2_: 255, 196, 31;
-  --color-orange-3_: 255, 224, 139;
-  --color-orange-4_: 255, 238, 190;
-  --color-orange-5_: 255, 247, 223;
+  --color-blue-0: #0b3880;
+  --color-blue-0-25pct: rgba(11, 56, 128, 0.25);
+  --color-blue-1: #225ebe;
+  --color-blue-1-25pct: rgba(34, 94, 190, 0.25);
+  --color-blue-2: #5695f4;
+  --color-blue-2-25pct: rgba(85, 149, 255, 0.25);
+  --color-blue-3: #9ec5ff;
+  --color-blue-3-25pct: rgba(158, 197, 255, 0.25);
+  --color-blue-4: #cbe0ff;
+  --color-blue-4-25pct: rgba(203, 224, 255, 0.25);
+  --color-blue-5: #ecf2fa;
+  --color-blue-5-25pct: rgba(236, 242, 250, 0.25);
 
   /* Oranges */
-  --color-orange-0: rgba(var(--color-orange-0_), 1);
-  --color-orange-1: rgba(var(--color-orange-1_), 1);
-  --color-orange-2: rgba(var(--color-orange-2_), 1);
-  --color-orange-3: rgba(var(--color-orange-3_), 1);
-  --color-orange-4: rgba(var(--color-orange-4_), 1);
-  --color-orange-5: rgba(var(--color-orange-5_), 1);
-
-  /* Purple base colors */
-  --color-purple-0_: 85, 55, 123;
-  --color-purple-1_: 115, 77, 162;
-  --color-purple-2_: 154, 118, 200;
-  --color-purple-3_: 198, 168, 236;
-  --color-purple-4_: 226, 204, 253;
-  --color-purple-5_: 241, 229, 255;
-
-  /* Purple variations */
-  --color-purple-2-25pct: rgba(var(--color-purple-3_), 0.25);
+  --color-orange-0: #b87120;
+  --color-orange-1: #ff8800;
+  --color-orange-2: #ffc41f;
+  --color-orange-3: #ffe08b;
+  --color-orange-4: #ffeebe;
+  --color-orange-5: #fff7df;
 
   /* Purples */
-  --color-purple-0: rgba(var(--color-purple-0_), 1);
-  --color-purple-1: rgba(var(--color-purple-1_), 1);
-  --color-purple-2: rgba(var(--color-purple-2_), 1);
-  --color-purple-3: rgba(var(--color-purple-3_), 1);
-  --color-purple-4: rgba(var(--color-purple-4_), 1);
-  --color-purple-5: rgba(var(--color-purple-5_), 1);
+  /* TODO: SHIFT THESE, 1 should be 0, 2 should be 1 etc.. */
+  --color-purple-1: #55377b;
+  --color-purple-2: #734da3;
+  --color-purple-3: #9a76c8;
+  --color-purple-3-25pct: rgba(198, 168, 236, 0.25);
+  --color-purple-4: #c6a8ec;
+  --color-purple-5: #e2ccfd;
+  --color-purple-6: #f1e5ff;
 }

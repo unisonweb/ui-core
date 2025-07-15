@@ -75,19 +75,19 @@
 
   /* @color-todo */
   /* @decorative */
-  --color-button-decorative-blue-text: var(--color-gray-9);
+  --color-button-decorative-blue-text: var(--color-gray-lighten-60);
   --color-button-decorative-blue-bg: var(--color-blue-2);
   --color-button-decorative-blue-icon: var(--color-blue-3);
-  --color-button-decorative-blue-icon-only: var(--color-gray-9);
-  --color-button-decorative-blue-hover-text: var(--color-gray-9);
+  --color-button-decorative-blue-icon-only: var(--color-gray-lighten-60);
+  --color-button-decorative-blue-hover-text: var(--color-gray-lighten-60);
   --color-button-decorative-blue-hover-bg: var(--color-blue-1);
 
-  --color-button-decorative-purple-text: var(--color-purple-0);
-  --color-button-decorative-purple-icon: var(--color-purple-1);
-  --color-button-decorative-purple-icon-only: var(--color-purple-0);
-  --color-button-decorative-purple-bg: var(--color-purple-3);
-  --color-button-decorative-purple-hover-text: var(--color-purple-1);
-  --color-button-decorative-purple-hover-bg: var(--color-purple-3);
+  --color-button-decorative-purple-text: var(--color-purple-1);
+  --color-button-decorative-purple-icon: var(--color-purple-2);
+  --color-button-decorative-purple-icon-only: var(--color-purple-1);
+  --color-button-decorative-purple-bg: var(--color-purple-4);
+  --color-button-decorative-purple-hover-text: var(--color-purple-2);
+  --color-button-decorative-purple-hover-bg: var(--color-purple-4);
 
   display: inline-flex;
   font-family: var(--font-sans-serif);
