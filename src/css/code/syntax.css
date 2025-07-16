@@ -67,7 +67,7 @@ code a:active .tooltip-trigger.tooltip_show .tooltip {
   padding: 0 0.25rem;
   border-radius: var(--border-radius-base);
   line-height: 1.4;
-  background: var(--color-gray-darken-10);
+  background: var(--color-gray-2);
 }
 
 .tooltip-trigger:has(> .syntax-help) .tooltip-bubble {

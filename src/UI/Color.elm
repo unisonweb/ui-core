@@ -55,7 +55,7 @@ fromColor_ full =
     differences
         |> List.head
         |> Maybe.map Tuple.second
-        |> Maybe.withDefault grayBase
+        |> Maybe.withDefault gray3
 
 
 
@@ -199,84 +199,78 @@ isGreen color =
 
 grays : List Color
 grays =
-    [ grayDarken30
-    , grayDarken25
-    , grayDarken20
-    , grayDarken10
-    , grayBase
-    , grayLighten20
-    , grayLighten30
-    , grayLighten40
-    , grayLighten45
-    , grayLighten50
-    , grayLighten55
-    , grayLighten60
-    , grayLighten100
+    [ gray0
+    , gray1
+    , gray2
+    , gray3
+    , gray4
+    , gray5
+    , gray6
+    , gray7
+    , gray8
+    , gray9
+    , gray10
+    , gray11
     ]
 
 
-grayDarken30 : Color
-grayDarken30 =
+gray0 : Color
+gray0 =
     Color (C.rgb255 24 24 28)
 
 
-grayDarken25 : Color
-grayDarken25 =
-    Color (C.rgb255 34 35 42)
-
-
-grayDarken20 : Color
-grayDarken20 =
+gray1 : Color
+gray1 =
     Color (C.rgb255 45 46 53)
 
 
-grayDarken10 : Color
-grayDarken10 =
+gray2 : Color
+gray2 =
     Color (C.rgb255 65 66 75)
 
 
-grayBase : Color
-grayBase =
+gray3 : Color
+gray3 =
     Color (C.rgb255 81 82 88)
 
 
-grayLighten20 : Color
-grayLighten20 =
+gray4 : Color
+gray4 =
     Color (C.rgb255 129 130 134)
 
 
-grayLighten30 : Color
-grayLighten30 =
+gray5 : Color
+gray5 =
     Color (C.rgb255 189 191 198)
 
 
-grayLighten40 : Color
-grayLighten40 =
+gray6 : Color
+gray6 =
     Color (C.rgb255 209 213 220)
 
 
-grayLighten45 : Color
-grayLighten45 =
+gray7 : Color
+gray7 =
     Color (C.rgb255 217 224 231)
 
 
-grayLighten50 : Color
-grayLighten50 =
+gray8 : Color
+gray8 =
     Color (C.rgb255 228 234 243)
 
 
-grayLighten55 : Color
-grayLighten55 =
+gray9 : Color
+gray9 =
     Color (C.rgb255 241 243 245)
 
 
-grayLighten60 : Color
-grayLighten60 =
+gray10 : Color
+gray10 =
     Color (C.rgb255 250 250 251)
 
 
-grayLighten100 : Color
-grayLighten100 =
+gray11 : Color
+gray11 =
     Color (C.rgb255 255 255 255)
 
 

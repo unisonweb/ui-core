@@ -6,7 +6,7 @@
   --color-copy-field-focus-outline: var(--u-color_focus-outline);
   --color-copy-field-prefix: var(--u-color_text_subdued);
   --color-copy-field-button-border: var(--u-color_border);
-  --color-copy-field-button-hover-border: var(--color-gray-lighten-30);
+  --color-copy-field-button-hover-border: var(--color-gray-5);
 
   position: relative;
   display: flex;
