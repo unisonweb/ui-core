@@ -2,12 +2,12 @@
 .anchored-overlay {
   position: relative;
 
-  --u-color_text: var(--color-gray-lighten-100);
-  --u-color_text_subdued: var(--color-gray-lighten-30);
-  --u-color_text_very-subdued: var(--color-gray-lighten-20);
+  --u-color_text: var(--color-gray-11);
+  --u-color_text_subdued: var(--color-gray-5);
+  --u-color_text_very-subdued: var(--color-gray-4);
 
-  --c-color_anchored-overlay_sheet_bg: var(--color-gray-darken-30);
-  --c-color_anchored-overlay_sheet_border: var(--color-gray-darken-10);
+  --c-color_anchored-overlay_sheet_bg: var(--color-gray-0);
+  --c-color_anchored-overlay_sheet_border: var(--color-gray-2);
   --c-color_anchored-overlay_sheet_text_subdued: var(--u-color_text_subdued);
   --c-color_anchored-overlay_sheet_text_very-subdued: var(
     --u-color_text_very-subdued
@@ -19,27 +19,27 @@
 .anchored-overlay .form-field {
   --u-color_caret: var(--color-blue-5);
 
-  --c-color_form-field_text: var(--color-gray-lighten-100);
-  --c-color_form-field_text_subdued: var(--color-gray-lighten-20);
-  --c-color_form-field_border: var(--color-gray-base);
+  --c-color_form-field_text: var(--color-gray-11);
+  --c-color_form-field_text_subdued: var(--color-gray-4);
+  --c-color_form-field_border: var(--color-gray-3);
   --c-color_form-field_border_hovered: var(--u-color_border_hovered);
   --c-color_form-field_focus-border: var(--u-color_focus-border);
   --c-color_form-field_focus-outline: var(--u-color_focus-outline);
-  --c-color_form-field_icon_subdued: var(--color-gray-lighten-20);
-  --c-color_form-field_clear: var(--color-gray-lighten-20);
-  --c-color_form-field_clear_hovered: var(--color-gray-lighten-100);
-  --c-color_form-field_background: var(--color-gray-darken-20);
-  --c-color_form-field_background_hovered: var(--color-gray-darken-10);
+  --c-color_form-field_icon_subdued: var(--color-gray-4);
+  --c-color_form-field_clear: var(--color-gray-4);
+  --c-color_form-field_clear_hovered: var(--color-gray-11);
+  --c-color_form-field_background: var(--color-gray-1);
+  --c-color_form-field_background_hovered: var(--color-gray-2);
 }
 
 /* @color-todo @inverse */
 .anchored-overlay .tag {
-  --c-color_tag_bg: var(--color-gray-darken-20);
-  --c-color_tag_text: var(--color-gray-lighten-100);
-  --c-color_tag_text_subdued: var(--color-gray-lighten-20);
-  --c-color_tag_icon: var(--color-gray-lighten-40);
-  --c-color_tag_icon_hovered: var(--color-gray-lighten-100);
-  --c-color_tag_icon_subdued: var(--color-gray-lighten-30);
+  --c-color_tag_bg: var(--color-gray-1);
+  --c-color_tag_text: var(--color-gray-11);
+  --c-color_tag_text_subdued: var(--color-gray-4);
+  --c-color_tag_icon: var(--color-gray-6);
+  --c-color_tag_icon_hovered: var(--color-gray-11);
+  --c-color_tag_icon_subdued: var(--color-gray-5);
 }
 
 .anchored-overlay .status-indicator {

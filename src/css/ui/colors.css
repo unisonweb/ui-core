@@ -9,29 +9,29 @@
    * https://stackoverflow.com/a/41265350
    */
   --color-transparent: rgba(255, 255, 255, 0);
-  --color-gray-darken-30-20pct: rgba(24, 24, 28, 0.2);
-  --color-gray-darken-30-50pct: rgba(24, 24, 28, 0.5);
-  --color-gray-darken-20-transparent: rgba(45, 46, 53, 0);
-  --color-gray-darken-10-transparent: rgba(65, 66, 75, 0);
-  --color-gray-lighten-100-50pct: rgba(255, 255, 255, 0.5);
-  --color-gray-lighten-60-50pct: rgba(250, 250, 251, 0.5);
-  --color-gray-lighten-60-25pct: rgba(250, 250, 251, 0.25);
+  --color-gray-0-20pct: rgba(24, 24, 28, 0.2);
+  --color-gray-0-50pct: rgba(24, 24, 28, 0.5);
+  --color-gray-1-transparent: rgba(45, 46, 53, 0);
+  --color-gray-2-transparent: rgba(65, 66, 75, 0);
+  --color-gray-11-50pct: rgba(255, 255, 255, 0.5);
+  --color-gray-10-50pct: rgba(250, 250, 251, 0.5);
+  --color-gray-10-25pct: rgba(250, 250, 251, 0.25);
 
   /* Grays */
-  --color-gray-darken-30: #18181c;
-  --color-gray-darken-20: #22232a;
-  --color-gray-darken-10: #2d2e35;
+  --color-gray-0: #18181c;
+  --color-gray-1: #22232a;
+  --color-gray-2: #2d2e35;
 
-  --color-gray-base: #515258;
+  --color-gray-3: #515258;
 
-  --color-gray-lighten-20: #818286;
-  --color-gray-lighten-30: #bdbfc6;
-  --color-gray-lighten-40: #d1d5dc;
-  --color-gray-lighten-45: #d9e0e7;
-  --color-gray-lighten-50: #e4eaf3;
-  --color-gray-lighten-55: #f1f3f5;
-  --color-gray-lighten-60: #fafafb;
-  --color-gray-lighten-100: #ffffff;
+  --color-gray-4: #818286;
+  --color-gray-5: #bdbfc6;
+  --color-gray-6: #d1d5dc;
+  --color-gray-7: #d9e0e7;
+  --color-gray-8: #e4eaf3;
+  --color-gray-9: #f1f3f5;
+  --color-gray-10: #fafafb;
+  --color-gray-11: #ffffff;
 
   /* Pinks */
   --color-pink-0: #e51022;

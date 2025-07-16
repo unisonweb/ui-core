@@ -16,11 +16,11 @@
 
 .option-badge {
   /* @color-todo @inverse */
-  --color-option-badge-text: var(--color-gray-lighten-40);
-  --color-option-badge-subtle-text: var(--color-gray-lighten-20);
-  --color-option-badge-icon: var(--color-gray-lighten-30);
-  --color-option-badge-hover-icon: var(--color-gray-lighten-100);
-  --color-option-badge-bg: var(--color-gray-darken-30);
+  --color-option-badge-text: var(--color-gray-6);
+  --color-option-badge-subtle-text: var(--color-gray-4);
+  --color-option-badge-icon: var(--color-gray-5);
+  --color-option-badge-hover-icon: var(--color-gray-11);
+  --color-option-badge-bg: var(--color-gray-0);
   --color-option-badge-border: var(--color-transparent);
 
   padding: 0 0.75rem;
