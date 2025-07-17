@@ -219,7 +219,9 @@ fromResult_ sorter key result search_ =
             let
                 requests_ =
                     searching_.requests
-                        |> Dict.update key (always (Just (RemoteData.Success r)))
+                        |> Debug.log "Requests before"
+                        |> Dict.insert key (RemoteData.Success r)
+                        |> Debug.log "Requests after"
 
                 finishedRequests : Maybe (List a)
                 finishedRequests =
