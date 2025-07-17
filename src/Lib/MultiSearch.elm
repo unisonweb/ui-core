@@ -304,8 +304,11 @@ length s =
             Nothing
 
         Searching s_ ->
-            s_.previous
-                |> Maybe.map SearchResults.length
+            s_.requests
+                |> Dict.toList
+                |> List.map (Tuple.second >> RemoteData.map List.length >> RemoteData.withDefault 0)
+                |> List.sum
+                |> Just
 
         Success _ r ->
             Just (SearchResults.length r)
