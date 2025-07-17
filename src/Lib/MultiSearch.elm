@@ -217,6 +217,9 @@ fromResult_ sorter key result search_ =
     case ( result, search_ ) of
         ( Ok r, Searching searching_ ) ->
             let
+                x =
+                    Debug.log "Result" (List.length r)
+
                 requests_ =
                     searching_.requests
                         |> Debug.log "Requests before"
