@@ -304,10 +304,16 @@ length s =
             Nothing
 
         Searching s_ ->
+            let
+                sum list acc =
+                    list
+                        |> RemoteData.map List.length
+                        |> RemoteData.withDefault 0
+                        |> (+) acc
+            in
             s_.requests
-                |> Dict.toList
-                |> List.map (Tuple.second >> RemoteData.map List.length >> RemoteData.withDefault 0)
-                |> List.sum
+                |> Dict.values
+                |> List.foldl sum 0
                 |> Just
 
         Success _ r ->
