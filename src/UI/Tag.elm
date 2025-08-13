@@ -26,6 +26,7 @@ type alias Tag msg =
     , text : String
     , rightText : Maybe String
     , action : TagAction msg
+    , className : Maybe String
     , size : TagSize
     }
 
@@ -42,6 +43,7 @@ tag text_ =
     , rightText = Nothing
     , action = NoAction
     , size = Medium
+    , className = Nothing
     }
 
 
@@ -52,6 +54,11 @@ tag text_ =
 withIcon : Icon msg -> Tag msg -> Tag msg
 withIcon icon t =
     { t | icon = Just icon }
+
+
+withClassName : String -> Tag msg -> Tag msg
+withClassName className t =
+    { t | className = Just className }
 
 
 withClick : Click msg -> Tag msg -> Tag msg
@@ -120,6 +127,7 @@ map toMsg t =
     , leftText = t.leftText
     , text = t.text
     , rightText = t.rightText
+    , className = t.className
     , action = mapAction toMsg t.action
     , size = t.size
     }
@@ -164,6 +172,10 @@ view t =
 
         attrs =
             [ class "tag", sizeClass ]
+                ++ (t.className
+                        |> Maybe.map (\cn -> [ class cn ])
+                        |> Maybe.withDefault []
+                   )
 
         content =
             MaybeE.values [ icon, Just tagText ]
