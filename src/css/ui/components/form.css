@@ -183,7 +183,7 @@
 
 .checkbox-field:has(.label-and-help-text) {
   align-items: flex-start;
-  padding: 0 0.75rem 0.25rem 0.25rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
 }
 
 .checkbox-field:not(:has(.label-and-help-text)) {
@@ -198,7 +198,7 @@
 .checkbox-field .label-and-help-text {
   display: flex;
   flex-direction: column;
-  margin-top: 0.375rem;
+  margin-top: -0.125rem;
 }
 
 .checkbox-field .label-and-help-text .label {
