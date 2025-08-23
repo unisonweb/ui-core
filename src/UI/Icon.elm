@@ -2,7 +2,7 @@ module UI.Icon exposing (..)
 
 import Html exposing (Html, span)
 import Html.Attributes exposing (class, classList)
-import Svg exposing (Svg, circle, path, rect, svg)
+import Svg exposing (Svg, circle, g, path, rect, svg)
 import Svg.Attributes as Attrs
     exposing
         ( cx
@@ -267,20 +267,22 @@ keyboard : Icon msg
 keyboard =
     Icon "keyboard"
         []
-        [ rect [ stroke "currentColor", Attrs.x "0.5", y "2.5", width "13", height "8", rx "1.5" ] []
-        , rect [ fill "currentColor", Attrs.x "2", y "6", width "2", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "5", y "6", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "7", y "6", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "9", y "6", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "11", y "6", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "2", y "8", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "4", y "8", width "5", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "10", y "8", width "2", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "2", y "4", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "4", y "4", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "6", y "4", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "8", y "4", width "1", height "1" ] []
-        , rect [ fill "currentColor", Attrs.x "10", y "4", width "2", height "1" ] []
+        [ g [ fill "transparent" ]
+            [ rect [ stroke "currentColor", Attrs.x "0.5", y "2.5", width "13", height "8", rx "1.5" ] []
+            , rect [ fill "currentColor", Attrs.x "2", y "6", width "2", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "5", y "6", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "7", y "6", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "9", y "6", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "11", y "6", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "2", y "8", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "4", y "8", width "5", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "10", y "8", width "2", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "2", y "4", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "4", y "4", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "6", y "4", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "8", y "4", width "1", height "1" ] []
+            , rect [ fill "currentColor", Attrs.x "10", y "4", width "2", height "1" ] []
+            ]
         ]
 
 
