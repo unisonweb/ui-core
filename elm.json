@@ -5,10 +5,12 @@
     "license": "MIT",
     "version": "1.0.0",
     "exposed-modules": [
+        "SplitPane.SplitPane",
         "UI.AppDocument",
         "UI.AppHeader",
         "UI.Avatar",
         "UI.AvatarStack",
+        "UI.ContextualTag",
         "UI.ExternalLinkIcon",
         "UI.Color",
         "UI.Sizing",
