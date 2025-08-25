@@ -343,7 +343,7 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                                 ( attrs, content_ ) =
                                     toAttrsAndContent c
                             in
-                            Click.view attrs content_ (toClick r)
+                            Click.view attrs content_ (toClick r |> Click.stopPropagation)
                     in
                     content f
 
