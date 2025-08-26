@@ -1,13 +1,16 @@
 .placeholder.placeholder_intensity_subdued {
   opacity: 0.3;
+  animation: placeholder-loading_subdued 1s linear infinite alternate;
 }
 
 .placeholder.placeholder_intensity_normal {
   opacity: 0.6;
+  animation: placeholder-loading_normal 1s linear infinite alternate;
 }
 
 .placeholder.placeholder_intensity_emphasized {
   opacity: 1;
+  animation: placeholder-loading_emphasized 1s linear infinite alternate;
 }
 
 /* -- Placeholder.Text ------------------------------------------------ */
@@ -67,4 +70,31 @@
 }
 .placeholder.placeholder_text.placeholder_length_huge {
   --c-length_placeholder_text: var(--c-length_placeholder_text_huge);
+}
+
+@keyframes placeholder-loading_subdued {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes placeholder-loading_normal {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes placeholder-loading_emphasized {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
