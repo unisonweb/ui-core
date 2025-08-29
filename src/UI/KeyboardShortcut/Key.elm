@@ -111,8 +111,15 @@ type Key
     | Multiply
     | Plus
     | Minus
+    | Underscore
     | ForwardSlash
+    | BackSlash
+    | Pipe
     | QuestionMark
+    | LeftSquareBracket
+    | RightSquareBracket
+    | LeftCurlyBracket
+    | RightCurlyBracket
     | Raw String
 
 
@@ -506,8 +513,29 @@ fromString str =
         "-" ->
             Minus
 
+        "_" ->
+            Underscore
+
         "/" ->
             ForwardSlash
+
+        "\\" ->
+            BackSlash
+
+        "|" ->
+            Pipe
+
+        "[" ->
+            LeftSquareBracket
+
+        "]" ->
+            RightSquareBracket
+
+        "{" ->
+            LeftCurlyBracket
+
+        "}" ->
+            RightCurlyBracket
 
         "?" ->
             QuestionMark
@@ -756,8 +784,29 @@ view os key =
         Minus ->
             "-"
 
+        Underscore ->
+            "_"
+
         ForwardSlash ->
             "/"
+
+        BackSlash ->
+            "\\"
+
+        Pipe ->
+            "|"
+
+        LeftSquareBracket ->
+            "["
+
+        RightSquareBracket ->
+            "]"
+
+        LeftCurlyBracket ->
+            "{"
+
+        RightCurlyBracket ->
+            "}"
 
         QuestionMark ->
             "?"
