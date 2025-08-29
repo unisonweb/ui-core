@@ -21,7 +21,10 @@ module UI.KeyboardShortcut.Key exposing
     , decode
     , fromString
     , isModifier
+    , letter
+    , lower
     , toNumber
+    , upper
     , view
     )
 
@@ -111,6 +114,21 @@ type Key
     | ForwardSlash
     | QuestionMark
     | Raw String
+
+
+letter : (LetterCase -> Key) -> Key
+letter k =
+    k Lower
+
+
+lower : (LetterCase -> Key) -> Key
+lower k =
+    letter k
+
+
+upper : (LetterCase -> Key) -> Key
+upper k =
+    k Upper
 
 
 
