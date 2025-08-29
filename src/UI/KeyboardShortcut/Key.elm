@@ -523,7 +523,7 @@ fromString str =
 view : OperatingSystem -> Key -> String
 view os key =
     let
-        letter l casing =
+        letter_ l casing =
             case casing of
                 Lower ->
                     String.toLower l
@@ -533,82 +533,82 @@ view os key =
     in
     case key of
         A casing ->
-            letter "a" casing
+            letter_ "a" casing
 
         B casing ->
-            letter "b" casing
+            letter_ "b" casing
 
         C casing ->
-            letter "c" casing
+            letter_ "c" casing
 
         D casing ->
-            letter "d" casing
+            letter_ "d" casing
 
         E casing ->
-            letter "e" casing
+            letter_ "e" casing
 
         F casing ->
-            letter "f" casing
+            letter_ "f" casing
 
         G casing ->
-            letter "g" casing
+            letter_ "g" casing
 
         H casing ->
-            letter "h" casing
+            letter_ "h" casing
 
         I casing ->
-            letter "i" casing
+            letter_ "i" casing
 
         J casing ->
-            letter "j" casing
+            letter_ "j" casing
 
         K casing ->
-            letter "k" casing
+            letter_ "k" casing
 
         L casing ->
-            letter "l" casing
+            letter_ "l" casing
 
         M casing ->
-            letter "m" casing
+            letter_ "m" casing
 
         N casing ->
-            letter "n" casing
+            letter_ "n" casing
 
         O casing ->
-            letter "o" casing
+            letter_ "o" casing
 
         P casing ->
-            letter "p" casing
+            letter_ "p" casing
 
         Q casing ->
-            letter "q" casing
+            letter_ "q" casing
 
         R casing ->
-            letter "r" casing
+            letter_ "r" casing
 
         S casing ->
-            letter "s" casing
+            letter_ "s" casing
 
         T casing ->
-            letter "t" casing
+            letter_ "t" casing
 
         U casing ->
-            letter "u" casing
+            letter_ "u" casing
 
         V casing ->
-            letter "v" casing
+            letter_ "v" casing
 
         W casing ->
-            letter "w" casing
+            letter_ "w" casing
 
         X casing ->
-            letter "x" casing
+            letter_ "x" casing
 
         Y casing ->
-            letter "y" casing
+            letter_ "y" casing
 
         Z casing ->
-            letter "z" casing
+            letter_ "z" casing
 
         Semicolon ->
             ";"
