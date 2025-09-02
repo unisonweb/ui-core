@@ -22,6 +22,7 @@ module Code.Hash exposing
     , urlParser
     , urlPrefix
     , view
+    , viewFull
     )
 
 import Html exposing (Html, span, text)
@@ -284,6 +285,14 @@ view hash_ =
     span [ class "hash" ]
         [ Icon.view Icon.hash
         , text (toUnprefixedShortString hash_)
+        ]
+
+
+viewFull : Hash -> Html msg
+viewFull hash_ =
+    span [ class "hash" ]
+        [ Icon.view Icon.hash
+        , text (toUnprefixedString hash_)
         ]
 
 
