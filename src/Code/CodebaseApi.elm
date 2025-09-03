@@ -32,6 +32,8 @@ type CodebaseEndpoint
         }
     | Browse { perspective : Perspective, ref : Maybe NamespaceRef }
     | Definition { perspective : Perspective, ref : Reference }
+    | Dependents { ref : Reference }
+    | Dependencies { ref : Reference }
     | Summary { perspective : Perspective, ref : Reference }
 
 
