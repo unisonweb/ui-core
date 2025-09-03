@@ -100,6 +100,11 @@
   --u-color_element_emphasized_hovered: var(--color-gray-8);
   --u-color_element_emphasized_selected: var(--color-gray-8);
 
+  --u-color_element_decorative-purple: var(--color-purple-5);
+  --u-color_border-on-element-decorative-purple: var(--color-purple-4);
+  --u-color_text-on-element-decorative-purple: var(--color-purple-1);
+  --u-color_icon-on-element-decorative-purple: var(--color-purple-3);
+
   --u-color_search-highlight_text: var(--color-blue-2);
   --u-color_search-highlight_background: var(--color-transparent);
 
