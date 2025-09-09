@@ -2,9 +2,12 @@ module UI.ActionMenu exposing
     ( ActionItem
     , ActionItems
     , ActionMenu
+    , ActionMenuSheetDirection(..)
     , Subtext(..)
     , close
     , dividerItem
+    , extendingLeft
+    , extendingRight
     , fromButton
     , fromCustom
     , fromIconButton
@@ -22,6 +25,7 @@ module UI.ActionMenu exposing
     , withButtonIcon
     , withMaxWidth
     , withNudge
+    , withSheetDirection
     )
 
 import Html exposing (Html, div, label, text)
@@ -78,6 +82,11 @@ type ActionMenuTrigger msg
     | CustomTrigger { toHtml : Bool -> Html msg }
 
 
+type ActionMenuSheetDirection
+    = ExtendingLeft
+    | ExtendingRight
+
+
 type alias ActionMenu msg =
     { toggleMsg : msg
     , state : OpenState
@@ -85,6 +94,7 @@ type alias ActionMenu msg =
     , actionItems : ActionItems msg
     , nudge : Nudge msg
     , maxWidth : Maybe Rem
+    , sheetDirection : ActionMenuSheetDirection
     }
 
 
@@ -100,6 +110,7 @@ fromButton toggleMsg buttonLabel actionItems =
     , actionItems = actionItems
     , nudge = NoNudge
     , maxWidth = Nothing
+    , sheetDirection = ExtendingLeft
     }
 
 
@@ -111,6 +122,7 @@ fromIconButton toggleMsg icon actionItems =
     , actionItems = actionItems
     , nudge = NoNudge
     , maxWidth = Nothing
+    , sheetDirection = ExtendingLeft
     }
 
 
@@ -121,6 +133,7 @@ fromCustom toggleMsg toHtml actionItems =
     , trigger = CustomTrigger { toHtml = toHtml }
     , actionItems = actionItems
     , nudge = NoNudge
+    , sheetDirection = ExtendingLeft
     , maxWidth = Nothing
     }
 
@@ -239,6 +252,21 @@ withMaxWidth maxWidth actionMenu_ =
     { actionMenu_ | maxWidth = Just maxWidth }
 
 
+withSheetDirection : ActionMenuSheetDirection -> ActionMenu msg -> ActionMenu msg
+withSheetDirection sheetDirection actionMenu_ =
+    { actionMenu_ | sheetDirection = sheetDirection }
+
+
+extendingLeft : ActionMenu msg -> ActionMenu msg
+extendingLeft actionMenu_ =
+    withSheetDirection ExtendingLeft actionMenu_
+
+
+extendingRight : ActionMenu msg -> ActionMenu msg
+extendingRight actionMenu_ =
+    withSheetDirection ExtendingLeft actionMenu_
+
+
 shouldBeOpen : Bool -> ActionMenu msg -> ActionMenu msg
 shouldBeOpen shouldBeOpen_ menu =
     if shouldBeOpen_ then
@@ -291,14 +319,22 @@ buttonWithIcon icon button =
             button
 
 
-viewSheet : Maybe Rem -> ActionItems msg -> Html msg
-viewSheet maxWidth (ActionItems items_) =
+viewSheet : ActionMenuSheetDirection -> Maybe Rem -> ActionItems msg -> Html msg
+viewSheet sheetDirection maxWidth (ActionItems items_) =
     let
         maxWidthStyle =
             maxWidth
                 |> Maybe.map (\(Rem mw) -> style "max-width" (String.fromFloat mw ++ "rem"))
                 |> Maybe.map List.singleton
                 |> Maybe.withDefault []
+
+        sheetDirectionClassName =
+            case sheetDirection of
+                ExtendingLeft ->
+                    "extending-left"
+
+                ExtendingRight ->
+                    "extending-right"
 
         viewItem i =
             case i of
@@ -348,11 +384,16 @@ viewSheet maxWidth (ActionItems items_) =
                 Title t ->
                     div [ class "action-menu_action-item action-menu_action-item-title" ] [ text t ]
     in
-    div (class "action-menu_sheet" :: maxWidthStyle) (items_ |> Nonempty.toList |> List.map viewItem)
+    div
+        (class
+            ("action-menu_sheet " ++ sheetDirectionClassName)
+            :: maxWidthStyle
+        )
+        (items_ |> Nonempty.toList |> List.map viewItem)
 
 
 view : ActionMenu msg -> Html msg
-view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
+view { toggleMsg, nudge, state, trigger, actionItems, maxWidth, sheetDirection } =
     let
         ( menu, isOpen ) =
             case state of
@@ -360,7 +401,7 @@ view { toggleMsg, nudge, state, trigger, actionItems, maxWidth } =
                     ( UI.nothing, False )
 
                 Open ->
-                    ( viewSheet maxWidth actionItems, True )
+                    ( viewSheet sheetDirection maxWidth actionItems, True )
 
         trigger_ =
             case trigger of

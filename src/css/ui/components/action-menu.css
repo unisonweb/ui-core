@@ -18,7 +18,6 @@
 
 .action-menu .action-menu_sheet {
   position: absolute;
-  right: 0;
   margin-top: 0.25rem;
   border-radius: var(--border-radius-base);
   background: var(--c-color_action-menu_sheet);
@@ -30,6 +29,14 @@
   z-index: var(--layer-popover);
   overflow: hidden;
   border: 1px solid var(--c-color_action-menu_sheet_border);
+}
+
+.action-menu .action-menu_sheet.extending-left {
+  right: 0;
+}
+
+.action-menu .action-menu_sheet.extending-right {
+  left: 0;
 }
 
 .action-menu .action-menu_action-item {
