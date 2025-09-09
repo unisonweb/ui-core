@@ -264,7 +264,7 @@ extendingLeft actionMenu_ =
 
 extendingRight : ActionMenu msg -> ActionMenu msg
 extendingRight actionMenu_ =
-    withSheetDirection ExtendingLeft actionMenu_
+    withSheetDirection ExtendingRight actionMenu_
 
 
 shouldBeOpen : Bool -> ActionMenu msg -> ActionMenu msg
