@@ -1,8 +1,9 @@
 module Code.Definition.Reference exposing (..)
 
-import Code.FullyQualifiedName exposing (FQN)
-import Code.Hash exposing (Hash)
+import Code.FullyQualifiedName as FQN exposing (FQN)
+import Code.Hash as Hash exposing (Hash)
 import Code.HashQualified as HQ exposing (HashQualified)
+import List.Nonempty as NEL
 import UI.Icon as Icon exposing (Icon)
 import Url.Parser
 
@@ -199,3 +200,33 @@ map f ref =
 
         DataConstructorReference hq ->
             DataConstructorReference (f hq)
+
+
+toUrlPath : Reference -> List String
+toUrlPath ref =
+    let
+        hqToPath hq =
+            case hq of
+                HQ.NameOnly fqn_ ->
+                    fqn_ |> FQN.toUrlSegments |> NEL.toList
+
+                HQ.HashOnly h ->
+                    [ Hash.toUrlString h ]
+
+                HQ.HashQualified _ h ->
+                    -- TODO: Currently not supported, since we favor the hash
+                    -- because HashQualified url parsing is broken
+                    [ Hash.toUrlString h ]
+    in
+    case ref of
+        TypeReference hq ->
+            "types" :: hqToPath hq
+
+        TermReference hq ->
+            "terms" :: hqToPath hq
+
+        AbilityConstructorReference hq ->
+            "ability-constructors" :: hqToPath hq
+
+        DataConstructorReference hq ->
+            "data-constructors" :: hqToPath hq
