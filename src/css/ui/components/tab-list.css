@@ -22,12 +22,17 @@
   line-height: 1;
   font-size: var(--font-size-medium);
   display: flex;
+  gap: 0.5rem;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   color: var(--c-color_tabs_text);
   -webkit-user-select: none;
   user-select: none;
+
+  & .count {
+    font-family: var(--font-monospace);
+  }
 }
 
 .tab-list .tab.tab_selected {
