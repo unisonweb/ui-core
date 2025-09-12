@@ -1,4 +1,4 @@
-module Code.DefinitionSummaryTooltip exposing (Model, Msg, init, tooltipConfig, update)
+module Code.DefinitionSummaryTooltip exposing (DefinitionSummary(..), Model, Msg, init, tooltipConfig, update, view, viewSummary)
 
 import Code.CodebaseApi as CodebaseApi
 import Code.Config exposing (Config)
