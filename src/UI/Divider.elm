@@ -30,6 +30,11 @@ divider =
     { onSurface = Light, size = Normal, margin = True }
 
 
+simple : Divider
+simple =
+    { onSurface = Light, size = Small, margin = False }
+
+
 
 -- MODIFY
 
@@ -71,6 +76,11 @@ withoutMargin d =
 
 
 -- VIEW
+
+
+viewSimple : Html msg
+viewSimple =
+    view simple
 
 
 view : Divider -> Html msg
