@@ -7,6 +7,19 @@ import List.Nonempty as NEL
 import Url exposing (Url)
 
 
+listWithoutFailures : Decode.Decoder a -> Decode.Decoder (List a)
+listWithoutFailures decodeA =
+    let
+        decodeMaybeA =
+            Decode.oneOf
+                [ decodeA |> Decode.map Just
+                , Decode.succeed Nothing
+                ]
+    in
+    Decode.list decodeMaybeA
+        |> Decode.map (List.filterMap identity)
+
+
 maybeAt : List String -> Decode.Decoder b -> Decode.Decoder (Maybe b -> c) -> Decode.Decoder c
 maybeAt path decode =
     optionalAt path (Decode.map Just decode) Nothing
