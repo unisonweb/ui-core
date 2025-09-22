@@ -27,8 +27,6 @@
   align-items: center;
   gap: 0.5rem;
   transition: background 0.2s;
-
-  container-name: profile-snippet;
 }
 
 .profile-snippet .profile-snippet_text {
@@ -79,16 +77,4 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-}
-
-@container profile-snippet (max-width: 300px) {
-  .profile-snippet_text {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0rem;
-
-    & .profile-snippet_handle {
-      --c-size_profile-snippet_handle: var(--font-size-extra-small);
-    }
-  }
 }
