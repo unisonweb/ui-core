@@ -5,6 +5,7 @@ module Code.Syntax exposing
     , decodeSingleton
     , foldl
     , fromList
+    , fromNEL
     , numLines
     , reference
     , toString
@@ -32,6 +33,11 @@ type Syntax
 
 
 -- HELPERS
+
+
+fromNEL : NEL.Nonempty SyntaxSegment -> Syntax
+fromNEL segments =
+    Syntax segments
 
 
 fromList : List SyntaxSegment -> Maybe Syntax
