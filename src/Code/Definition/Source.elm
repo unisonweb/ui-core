@@ -16,7 +16,7 @@ import Code.Definition.Type as Type exposing (TypeSource)
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Source.SourceViewConfig as SourceViewConfig exposing (SourceViewConfig)
 import Code.Syntax as Syntax
-import Html exposing (Html, span, text)
+import Html exposing (Html, pre, span, text)
 import Html.Attributes exposing (class)
 import UI
 
@@ -119,11 +119,25 @@ viewNamedTermSignature viewConfig termName signature =
 
 viewNamedTermSignature_ : SourceViewConfig msg -> FQN -> TermSignature -> Html msg
 viewNamedTermSignature_ viewConfig termName (TermSignature syntax) =
-    span
+    let
+        name =
+            FQN.toString termName
+
+        rawLength =
+            String.length (name ++ " : " ++ Syntax.toString syntax)
+
+        syntax_ =
+            if rawLength > 80 then
+                span [] [ text "\n\t", viewSyntax viewConfig syntax ]
+
+            else
+                viewSyntax viewConfig syntax
+    in
+    pre
         []
-        [ span [ class "hash-qualifier" ] [ text (FQN.toString termName) ]
+        [ span [ class "hash-qualifier" ] [ text name ]
         , span [ class "type-ascription-colon" ] [ text " : " ]
-        , viewSyntax viewConfig syntax
+        , syntax_
         ]
 
 
