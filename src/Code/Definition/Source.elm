@@ -128,13 +128,13 @@ viewNamedTermSignature_ viewConfig termName (TermSignature syntax) =
 
         syntax_ =
             if rawLength > 80 then
-                div [] [ viewSyntax viewConfig syntax ]
+                div [ class "large-signature" ] [ viewSyntax viewConfig syntax ]
 
             else
                 viewSyntax viewConfig syntax
     in
-    pre
-        []
+    div
+        [ class "term-signature" ]
         [ span [ class "hash-qualifier" ] [ text name ]
         , span [ class "type-ascription-colon" ] [ text " : " ]
         , syntax_
