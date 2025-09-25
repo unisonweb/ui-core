@@ -16,7 +16,7 @@ import Code.Definition.Type as Type exposing (TypeSource)
 import Code.FullyQualifiedName as FQN exposing (FQN)
 import Code.Source.SourceViewConfig as SourceViewConfig exposing (SourceViewConfig)
 import Code.Syntax as Syntax
-import Html exposing (Html, div, pre, span, text)
+import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class)
 import UI
 
