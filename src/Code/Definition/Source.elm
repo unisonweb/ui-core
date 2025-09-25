@@ -128,7 +128,7 @@ viewNamedTermSignature_ viewConfig termName (TermSignature syntax) =
 
         syntax_ =
             if rawLength > 80 then
-                span [] [ text "\n\t", viewSyntax viewConfig syntax ]
+                span [] [ text "\n  ", viewSyntax viewConfig syntax ]
 
             else
                 viewSyntax viewConfig syntax
