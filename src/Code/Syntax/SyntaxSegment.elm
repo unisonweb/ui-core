@@ -79,6 +79,20 @@ toString (SyntaxSegment _ seg) =
 
 
 
+-- HELPERS
+
+
+isNewline : SyntaxSegment -> Bool
+isNewline seg =
+    case seg of
+        SyntaxSegment Blank s ->
+            s == "\n"
+
+        _ ->
+            False
+
+
+
 -- VIEW
 
 
