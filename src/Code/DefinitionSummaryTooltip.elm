@@ -204,8 +204,8 @@ viewSummary summary =
 
         viewSummary_ s =
             case s of
-                TermHover (Term _ _ { fqn, signature }) ->
-                    [ FQN.view fqn
+                TermHover (Term _ _ { namespace, name, signature }) ->
+                    [ text (Maybe.withDefault "" namespace ++ FQN.toString name)
                     , Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
                     ]
 
