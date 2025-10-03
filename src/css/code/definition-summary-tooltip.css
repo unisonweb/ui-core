@@ -1,7 +1,6 @@
 .definition-summary-tooltip {
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
 
   & .fully-qualified-name {
     --u-color_text: var(--color-gray-5);
