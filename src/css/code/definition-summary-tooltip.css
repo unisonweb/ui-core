@@ -4,7 +4,7 @@
   gap: 0.125rem;
 
   & .fully-qualified-name {
-    --u-color_text: var(--color-gray-11);
+    --u-color_text: var(--color-gray-5);
     font-size: var(--font-size-extra-small);
     font-weight: normal;
   }
