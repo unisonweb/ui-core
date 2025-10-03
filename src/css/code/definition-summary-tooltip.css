@@ -1,0 +1,12 @@
+.definition-summary-tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  & .fully-qualified-name {
+    font-size: var(--font-size-extra-small);
+    & .segment {
+      color: white;
+    }
+  }
+}

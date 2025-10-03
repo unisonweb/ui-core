@@ -241,7 +241,7 @@ viewSummary summary =
         Success sum ->
             Just
                 (Tooltip.rich
-                    (div [ class "monochrome" ]
+                    (div [ class "definition-summary-tooltip monochrome" ]
                         (viewSummary_ sum)
                     )
                 )
