@@ -204,23 +204,22 @@ viewSummary summary =
 
         viewSummary_ s =
             case s of
-                TermHover (Term _ _ { namespace, name, signature }) ->
-                    [ text (Maybe.withDefault "" namespace ++ FQN.toString name)
-                    , Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
+                TermHover (Term _ _ { signature }) ->
+                    [ Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
                     ]
 
-                TypeHover (Type h _ { fqn, source }) ->
+                TypeHover (Type h _ { name, source }) ->
                     [ source
-                        |> viewTypeSourceSyntax h fqn
+                        |> viewTypeSourceSyntax h name
                         |> Maybe.map (Syntax.view SyntaxConfig.empty)
-                        |> Maybe.withDefault (viewBuiltinType h fqn)
+                        |> Maybe.withDefault (viewBuiltinType h name)
                     ]
 
-                AbilityConstructorHover (AbilityConstructor _ { fqn, signature }) ->
-                    [ FQN.view fqn, Syntax.view SyntaxConfig.empty (termSignatureSyntax signature) ]
+                AbilityConstructorHover (AbilityConstructor _ { signature }) ->
+                    [ Syntax.view SyntaxConfig.empty (termSignatureSyntax signature) ]
 
-                DataConstructorHover (DataConstructor _ { fqn, signature }) ->
-                    [ FQN.view fqn, Syntax.view SyntaxConfig.empty (termSignatureSyntax signature) ]
+                DataConstructorHover (DataConstructor _ { signature }) ->
+                    [ Syntax.view SyntaxConfig.empty (termSignatureSyntax signature) ]
 
         loading =
             Tooltip.rich
