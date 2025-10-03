@@ -204,20 +204,23 @@ viewSummary summary =
 
         viewSummary_ s =
             case s of
-                TermHover (Term _ _ { signature }) ->
-                    Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
+                TermHover (Term _ _ { fqn, signature }) ->
+                    [ FQN.view fqn
+                    , Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
+                    ]
 
                 TypeHover (Type h _ { fqn, source }) ->
-                    source
+                    [ source
                         |> viewTypeSourceSyntax h fqn
                         |> Maybe.map (Syntax.view SyntaxConfig.empty)
                         |> Maybe.withDefault (viewBuiltinType h fqn)
+                    ]
 
-                AbilityConstructorHover (AbilityConstructor _ { signature }) ->
-                    Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
+                AbilityConstructorHover (AbilityConstructor _ { fqn, signature }) ->
+                    [ FQN.view fqn, Syntax.view SyntaxConfig.empty (termSignatureSyntax signature) ]
 
-                DataConstructorHover (DataConstructor _ { signature }) ->
-                    Syntax.view SyntaxConfig.empty (termSignatureSyntax signature)
+                DataConstructorHover (DataConstructor _ { fqn, signature }) ->
+                    [ FQN.view fqn, Syntax.view SyntaxConfig.empty (termSignatureSyntax signature) ]
 
         loading =
             Tooltip.rich
@@ -236,7 +239,12 @@ viewSummary summary =
             Just loading
 
         Success sum ->
-            Just (Tooltip.rich (div [ class "monochrome" ] [ viewSummary_ sum ]))
+            Just
+                (Tooltip.rich
+                    (div [ class "monochrome" ]
+                        (viewSummary_ sum)
+                    )
+                )
 
         Failure _ ->
             Nothing
