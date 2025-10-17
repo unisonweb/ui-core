@@ -314,7 +314,7 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                             ( start, middle ++ s, end )
 
                     viewText ( start, middle, end ) =
-                        span [] [ text start, view_ (text middle), text end ]
+                        view_ (text (start ++ middle ++ end))
                 in
                 sText
                     |> String.toList
