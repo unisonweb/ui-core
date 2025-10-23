@@ -7,6 +7,7 @@ module Code.ProjectDependency exposing
     , toString
     , toTag
     , viewLibraryBadge
+    , viewLibraryBadge_
     )
 
 import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
@@ -167,7 +168,25 @@ toTag projectDep =
 
 viewLibraryBadge : ProjectDependency -> Html msg
 viewLibraryBadge dep =
-    ContextualTag.contextualTag Icon.book (toString dep)
+    viewLibraryBadge_ { withVersion = True } dep
+
+
+type alias BadgeConfig =
+    { withVersion : Bool
+    }
+
+
+viewLibraryBadge_ : BadgeConfig -> ProjectDependency -> Html msg
+viewLibraryBadge_ cfg dep =
+    let
+        label =
+            if cfg.withVersion then
+                toString dep
+
+            else
+                dependencyName dep
+    in
+    ContextualTag.contextualTag Icon.book label
         |> ContextualTag.decorativePurple
         |> ContextualTag.withTooltipText "Library dependency"
         |> ContextualTag.view
