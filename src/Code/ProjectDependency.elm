@@ -1,9 +1,21 @@
-module Code.ProjectDependency exposing (DependencyName(..), ProjectDependency, equals, fromString, same, toString, toTag)
+module Code.ProjectDependency exposing
+    ( DependencyName(..)
+    , ProjectDependency
+    , equals
+    , fromString
+    , same
+    , toString
+    , toTag
+    , viewLibraryBadge
+    )
 
 import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Code.Version as Version exposing (Version)
+import Html exposing (Html)
 import Lib.UserHandle as UserHandle exposing (UserHandle)
 import Maybe.Extra as MaybeE
+import UI.ContextualTag as ContextualTag
+import UI.Icon as Icon
 import UI.Tag as Tag exposing (Tag)
 
 
@@ -151,3 +163,11 @@ toTag projectDep =
         |> Tag.tag
         |> Tag.large
         |> Tag.withRightText (MaybeE.unwrap "" (\v -> " v" ++ Version.toString v) projectDep.version)
+
+
+viewLibraryBadge : ProjectDependency -> Html msg
+viewLibraryBadge dep =
+    ContextualTag.contextualTag Icon.book (toString dep)
+        |> ContextualTag.decorativePurple
+        |> ContextualTag.withTooltipText "Library dependency"
+        |> ContextualTag.view
