@@ -1,4 +1,4 @@
-module Code.ProjectDependency exposing (DependencyName(..), ProjectDependency, fromString, toString, toTag)
+module Code.ProjectDependency exposing (DependencyName(..), ProjectDependency, equals, fromString, same, toString, toTag)
 
 import Code.ProjectSlug as ProjectSlug exposing (ProjectSlug)
 import Code.Version as Version exposing (Version)
@@ -83,6 +83,46 @@ fromString raw =
                             ( UnqualifiedDependency raw, Nothing )
     in
     ProjectDependency name version
+
+
+equals : ProjectDependency -> ProjectDependency -> Bool
+equals a b =
+    case ( a.name, b.name ) of
+        ( UserProject handleA slugA, UserProject handleB slugB ) ->
+            if UserHandle.equals handleA handleB && ProjectSlug.equals slugA slugB then
+                case ( a.version, b.version ) of
+                    ( Just vA, Just vB ) ->
+                        Version.equals vA vB
+
+                    ( Nothing, Nothing ) ->
+                        True
+
+                    _ ->
+                        False
+
+            else
+                False
+
+        ( UnqualifiedDependency nameA, UnqualifiedDependency nameB ) ->
+            nameA == nameB
+
+        _ ->
+            False
+
+
+{-| Similar to equals, but less strong. Versions are allowed to be different.
+-}
+same : ProjectDependency -> ProjectDependency -> Bool
+same a b =
+    case ( a.name, b.name ) of
+        ( UserProject handleA slugA, UserProject handleB slugB ) ->
+            UserHandle.equals handleA handleB && ProjectSlug.equals slugA slugB
+
+        ( UnqualifiedDependency nameA, UnqualifiedDependency nameB ) ->
+            nameA == nameB
+
+        _ ->
+            False
 
 
 dependencyName : ProjectDependency -> String
