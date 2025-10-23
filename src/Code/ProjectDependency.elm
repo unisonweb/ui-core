@@ -168,11 +168,12 @@ toTag projectDep =
 
 viewLibraryBadge : ProjectDependency -> Html msg
 viewLibraryBadge dep =
-    viewLibraryBadge_ { withVersion = True } dep
+    viewLibraryBadge_ { withVersion = True, withTooltip = False } dep
 
 
 type alias BadgeConfig =
     { withVersion : Bool
+    , withTooltip : Bool
     }
 
 
@@ -185,8 +186,15 @@ viewLibraryBadge_ cfg dep =
 
             else
                 dependencyName dep
+
+        withTooltip b =
+            if cfg.withTooltip then
+                ContextualTag.withTooltipText "Library dependency" b
+
+            else
+                b
     in
     ContextualTag.contextualTag Icon.book label
         |> ContextualTag.decorativePurple
-        |> ContextualTag.withTooltipText "Library dependency"
+        |> withTooltip
         |> ContextualTag.view
