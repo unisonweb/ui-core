@@ -54,6 +54,11 @@ withDependencyTooltip tooltipConfig cfg =
     { cfg | dependencyTooltip = Just tooltipConfig }
 
 
+withoutDependencyTooltip : SyntaxConfig msg -> SyntaxConfig msg
+withoutDependencyTooltip cfg =
+    { cfg | dependencyTooltip = Nothing }
+
+
 withSyntaxHelp : SyntaxConfig msg -> SyntaxConfig msg
 withSyntaxHelp cfg =
     { cfg | showSyntaxHelpTooltip = True }
