@@ -68,6 +68,7 @@ import Json.Decode as Decode exposing (bool, field, index, int, string)
 import Json.Decode.Extra as DecodeE exposing (when)
 import Lib.EmbedKatex as EmbedKatex
 import Lib.EmbedSvg as EmbedSvg
+import Lib.EmbedVegaLite as EmbedVegaLite
 import Lib.MermaidDiagram as MermaidDiagram
 import Lib.TreePath as TreePath exposing (TreePath)
 import Maybe.Extra as MaybeE
@@ -198,6 +199,7 @@ type
     | FrontMatter (Dict String (List String))
     | LaTeXInline String
     | Svg String
+    | VegaLite String
 
 
 
@@ -448,6 +450,10 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                         "latex" ->
                             EmbedKatex.katex (toString "" code)
                                 |> EmbedKatex.view
+
+                        "vega-lite" ->
+                            EmbedVegaLite.vegaLite (toString "" code)
+                                |> EmbedVegaLite.view
 
                         "mermaid" ->
                             MermaidDiagram.mermaid (toString "" code)
@@ -789,6 +795,9 @@ view syntaxConfig toggleFoldMsg docFoldToggles document =
                                 |> EmbedKatex.katex
                                 |> EmbedKatex.asInline
                                 |> EmbedKatex.view
+
+                        VegaLite markup ->
+                            markup |> EmbedVegaLite.vegaLite |> EmbedVegaLite.view
 
                         Svg svg ->
                             svg |> EmbedSvg.svg |> EmbedSvg.view
