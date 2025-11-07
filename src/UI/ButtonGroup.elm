@@ -56,5 +56,14 @@ add_ buttons group =
 
 view : ButtonGroup msg -> Html msg
 view group =
-    div [ class "button-group" ]
+    let
+        directionClass =
+            case group.direction of
+                Horizontal ->
+                    "button-group_horizontal"
+
+                Vertical ->
+                    "button-group_vertical"
+    in
+    div [ class ("button-group " ++ directionClass) ]
         (List.map Button.view group.buttons)
