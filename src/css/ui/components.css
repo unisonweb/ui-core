@@ -3,6 +3,7 @@
 @import "./components/by-at.css";
 @import "./components/text.css";
 @import "./components/button.css";
+@import "./components/button-group.css";
 @import "./components/tooltip.css";
 @import "./components/fold-toggle.css";
 @import "./components/card.css";

@@ -1,0 +1,40 @@
+.button-group {
+  display: flex;
+  gap: 1px;
+
+  &.button-group_horizontal {
+    flex-direction: row;
+
+    .button {
+      border-radius: 0;
+    }
+
+    .button:first-child {
+      border-top-left-radius: var(--border-radius-base);
+      border-bottom-left-radius: var(--border-radius-base);
+    }
+
+    .button:last-child {
+      border-top-right-radius: var(--border-radius-base);
+      border-bottom-right-radius: var(--border-radius-base);
+    }
+  }
+
+  &.button-group_vertical {
+    flex-direction: column;
+
+    .button {
+      border-radius: 0;
+    }
+
+    .button:first-child {
+      border-top-left-radius: var(--border-radius-base);
+      border-top-right-radius: var(--border-radius-base);
+    }
+
+    .button:last-child {
+      border-bottom-left-radius: var(--border-radius-base);
+      border-bottom-right-radius: var(--border-radius-base);
+    }
+  }
+}
