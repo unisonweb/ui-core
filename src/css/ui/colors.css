@@ -19,7 +19,8 @@
   --color-gray-10-25pct: rgba(250, 250, 251, 0.25);
 
   /* Grays */
-  --color-gray-0: #18181c;
+  --color-gray-0_: 24, 24, 28;
+  --color-gray-0: rgba(var(--color-gray-0_, 1));
   --color-gray-1: #22232a;
   --color-gray-2: #2d2e35;
 

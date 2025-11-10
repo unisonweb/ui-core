@@ -23,6 +23,7 @@
         "UI.Toolbar",
         "UI.TabList",
         "UI.Button",
+        "UI.ButtonGroup",
         "UI.Modal",
         "UI.Tooltip",
         "UI.Placeholder",

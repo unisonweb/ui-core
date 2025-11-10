@@ -71,7 +71,7 @@
   --u-color_icon-on-action-emphasized_hovered: var(--color-gray-5);
 
   --u-color_action_outlined: var(--color-transparent);
-  --u-color_border-on-action-outlined: var(--color-gray-7);
+  --u-color_border-on-action-outlined: rgba(var(--color-gray-0_), 0.15);
   --u-color_text-on-action-outlined: var(--color-gray-0);
   --u-color_icon-on-action-outlined: var(--color-gray-4);
   --u-color_action_outlined_hovered: var(--color-transparent);
