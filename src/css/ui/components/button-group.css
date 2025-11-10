@@ -9,12 +9,13 @@
       border-radius: 0;
     }
 
-    .button:first-child {
+    :not(.copy-on-click) .button:first-child {
       border-top-left-radius: var(--border-radius-base);
       border-bottom-left-radius: var(--border-radius-base);
     }
 
-    .button:last-child {
+    .button:last-child,
+    .copy-on-click .button {
       border-top-right-radius: var(--border-radius-base);
       border-bottom-right-radius: var(--border-radius-base);
     }
