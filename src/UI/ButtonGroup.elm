@@ -71,6 +71,16 @@ view group =
 
                 Vertical ->
                     "button-group_vertical"
+
+        copy =
+            case group.withCopyButton of
+                Just text ->
+                    [ CopyOnClick.copyButton text ]
+
+                Nothing ->
+                    []
     in
-    div [ class ("button-group " ++ directionClass) ]
-        (List.map Button.view group.buttons)
+    div
+        [ class ("button-group " ++ directionClass)
+        ]
+        (List.map Button.view group.buttons ++ copy)
