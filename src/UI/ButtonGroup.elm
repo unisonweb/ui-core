@@ -3,6 +3,7 @@ module UI.ButtonGroup exposing (..)
 import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import UI.Button as Button exposing (Button)
+import UI.CopyOnClick as CopyOnClick
 
 
 type Direction
@@ -13,17 +14,18 @@ type Direction
 type alias ButtonGroup msg =
     { buttons : List (Button msg)
     , direction : Direction
+    , withCopyButton : Maybe String
     }
 
 
 empty : ButtonGroup msg
 empty =
-    { buttons = [], direction = Horizontal }
+    { buttons = [], direction = Horizontal, withCopyButton = Nothing }
 
 
 buttonGroup : List (Button msg) -> ButtonGroup msg
 buttonGroup buttons =
-    { buttons = buttons, direction = Horizontal }
+    { buttons = buttons, direction = Horizontal, withCopyButton = Nothing }
 
 
 
@@ -48,6 +50,11 @@ add button group =
 add_ : List (Button msg) -> ButtonGroup msg -> ButtonGroup msg
 add_ buttons group =
     { group | buttons = group.buttons ++ buttons }
+
+
+withCopyButton : String -> ButtonGroup msg -> ButtonGroup msg
+withCopyButton textToCopy group =
+    { group | withCopyButton = Just textToCopy }
 
 
 
