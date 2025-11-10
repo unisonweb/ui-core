@@ -157,6 +157,7 @@
   --u-color_working_icon-on-element: var(--color-purple-2);
   --u-color_working_element_subdued: var(--color-gray-10);
   --u-color_working_text-on-element_subdued: var(--u-color_text);
+  --u-color_working_border: var(--color-purple-2);
 
   /* Syntax */
   --color-syntax-plain: var(--u-color_text);
