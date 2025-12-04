@@ -2,11 +2,13 @@ module UI.DateTime exposing
     ( DateTime
     , DateTimeFormat(..)
     , decode
+    , duration
     , fromISO8601
     , fromPosix
     , isAfter
     , isBefore
     , isSameDay
+    , millisDiff
     , millisSinceEpoch
     , secondsSinceEpoch
     , toISO8601
@@ -182,6 +184,55 @@ toString format zone (DateTime p) =
 
         DistanceFrom (DateTime from) ->
             DateFormat.Relative.relativeTime from p
+
+
+{-| the diff between a and b in milliseconds
+-}
+millisDiff : DateTime -> DateTime -> Int
+millisDiff a b =
+    let
+        a_ =
+            millisSinceEpoch a
+
+        b_ =
+            millisSinceEpoch b
+    in
+    b_ - a_
+
+
+type alias Duration =
+    { hours : Int
+    , minutes : Int
+    , seconds : Int
+    }
+
+
+{-| the duration between a and b in an hours, minutes, and seconds
+-}
+duration : DateTime -> DateTime -> Duration
+duration start end =
+    let
+        diff =
+            millisDiff start end
+
+        -- Convert to seconds
+        totalSeconds =
+            diff // 1000
+
+        -- Calculate hours, minutes, seconds
+        hours =
+            totalSeconds // 3600
+
+        minutes =
+            modBy 3600 totalSeconds // 60
+
+        seconds =
+            modBy 60 totalSeconds
+    in
+    { hours = hours
+    , minutes = minutes
+    , seconds = seconds
+    }
 
 
 view : DateTimeFormat -> Time.Zone -> DateTime -> Html msg

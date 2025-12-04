@@ -56,3 +56,20 @@ toString =
                     |> Maybe.map (DateTime.toString TimeWithSeconds12Hour Time.utc)
                     |> Expect.equal (Just "3:00:00 pm")
         ]
+
+
+duration : Test
+duration =
+    describe "DateTime.duration"
+        [ test "returns a duration between 2 datetimes in hours, minutes, and seconds" <|
+            \_ ->
+                let
+                    a =
+                        DateTime.fromISO8601 "2023-08-15T15:00:00.998Z"
+
+                    b =
+                        DateTime.fromISO8601 "2023-08-15T18:23:12.998Z"
+                in
+                Maybe.map2 DateTime.duration a b
+                    |> Expect.equal (Just { hours = 3, minutes = 23, seconds = 12 })
+        ]
