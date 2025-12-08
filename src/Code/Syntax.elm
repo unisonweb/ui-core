@@ -68,7 +68,7 @@ reference (SyntaxSegment syntaxType _) =
         TypeReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.TypeReference (HQ.HashQualified n hash))
+                    Just (Reference.TypeReference (HQ.NameOnly n))
 
                 Nothing ->
                     Just (Reference.TypeReference (HQ.HashOnly hash))
@@ -76,7 +76,7 @@ reference (SyntaxSegment syntaxType _) =
         TermReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.TermReference (HQ.HashQualified n hash))
+                    Just (Reference.TermReference (HQ.NameOnly n))
 
                 Nothing ->
                     Just (Reference.TermReference (HQ.HashOnly hash))
@@ -84,7 +84,7 @@ reference (SyntaxSegment syntaxType _) =
         AbilityConstructorReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.AbilityConstructorReference (HQ.HashQualified n hash))
+                    Just (Reference.AbilityConstructorReference (HQ.NameOnly n))
 
                 Nothing ->
                     Just (Reference.AbilityConstructorReference (HQ.HashOnly hash))
@@ -92,7 +92,7 @@ reference (SyntaxSegment syntaxType _) =
         DataConstructorReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.DataConstructorReference (HQ.HashQualified n hash))
+                    Just (Reference.DataConstructorReference (HQ.NameOnly n))
 
                 Nothing ->
                     Just (Reference.DataConstructorReference (HQ.HashOnly hash))

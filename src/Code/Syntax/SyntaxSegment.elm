@@ -226,7 +226,7 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                 TypeReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.TypeReference (HQ.HashQualified n hash))
+                            Just (Reference.TypeReference (HQ.NameOnly n))
 
                         Nothing ->
                             Just (Reference.TypeReference (HQ.HashOnly hash))
@@ -234,7 +234,7 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                 TermReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.TermReference (HQ.HashQualified n hash))
+                            Just (Reference.TermReference (HQ.NameOnly n))
 
                         Nothing ->
                             Just (Reference.TermReference (HQ.HashOnly hash))
@@ -242,7 +242,7 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                 AbilityConstructorReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.AbilityConstructorReference (HQ.HashQualified n hash))
+                            Just (Reference.AbilityConstructorReference (HQ.NameOnly n))
 
                         Nothing ->
                             Just (Reference.AbilityConstructorReference (HQ.HashOnly hash))
@@ -250,7 +250,7 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                 DataConstructorReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.DataConstructorReference (HQ.HashQualified n hash))
+                            Just (Reference.DataConstructorReference (HQ.NameOnly n))
 
                         Nothing ->
                             Just (Reference.DataConstructorReference (HQ.HashOnly hash))
