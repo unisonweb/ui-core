@@ -65,37 +65,37 @@ numLines (Syntax segments) =
 reference : SyntaxSegment -> Maybe Reference
 reference (SyntaxSegment syntaxType _) =
     case syntaxType of
-        TypeReference h fqn ->
+        TypeReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.TypeReference (HQ.HashQualified n h))
+                    Just (Reference.TypeReference (HQ.HashQualified n hash))
 
                 Nothing ->
-                    Just (Reference.TypeReference (HQ.HashOnly h))
+                    Just (Reference.TypeReference (HQ.HashOnly hash))
 
-        TermReference h fqn ->
+        TermReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.TermReference (HQ.HashQualified n h))
+                    Just (Reference.TermReference (HQ.HashQualified n hash))
 
                 Nothing ->
-                    Just (Reference.TermReference (HQ.HashOnly h))
+                    Just (Reference.TermReference (HQ.HashOnly hash))
 
-        AbilityConstructorReference h fqn ->
+        AbilityConstructorReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.AbilityConstructorReference (HQ.HashQualified n h))
+                    Just (Reference.AbilityConstructorReference (HQ.HashQualified n hash))
 
                 Nothing ->
-                    Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+                    Just (Reference.AbilityConstructorReference (HQ.HashOnly hash))
 
-        DataConstructorReference h fqn ->
+        DataConstructorReference { hash, fqn } ->
             case fqn of
                 Just n ->
-                    Just (Reference.DataConstructorReference (HQ.HashQualified n h))
+                    Just (Reference.DataConstructorReference (HQ.HashQualified n hash))
 
                 Nothing ->
-                    Just (Reference.DataConstructorReference (HQ.HashOnly h))
+                    Just (Reference.DataConstructorReference (HQ.HashOnly hash))
 
         _ ->
             Nothing

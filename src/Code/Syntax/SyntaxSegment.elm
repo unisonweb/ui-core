@@ -26,6 +26,13 @@ type SeqOp
     | Concat
 
 
+type alias DefinitionReference =
+    { hash : Hash
+    , displayName : Maybe FQN
+    , fqn : Maybe FQN
+    }
+
+
 type SyntaxType
     = NumericLiteral
     | TextLiteral
@@ -34,12 +41,12 @@ type SyntaxType
     | BooleanLiteral
     | Blank
     | Var
-    | TypeReference Hash (Maybe FQN)
-    | TermReference Hash (Maybe FQN)
+    | TypeReference DefinitionReference
+    | TermReference DefinitionReference
       -- +:|:+|++
     | Op SeqOp
-    | DataConstructorReference Hash (Maybe FQN)
-    | AbilityConstructorReference Hash (Maybe FQN)
+    | DataConstructorReference DefinitionReference
+    | AbilityConstructorReference DefinitionReference
     | AbilityBraces
       -- let|handle|in|where|match|with|cases|->|if|then|else|and|or
     | ControlKeyword
@@ -120,16 +127,16 @@ syntaxTypeToClassName sType =
         Var ->
             "var"
 
-        TypeReference _ _ ->
+        TypeReference _ ->
             "type-reference"
 
-        TermReference _ _ ->
+        TermReference _ ->
             "term-reference"
 
-        DataConstructorReference _ _ ->
+        DataConstructorReference _ ->
             "data-constructor-reference"
 
-        AbilityConstructorReference _ _ ->
+        AbilityConstructorReference _ ->
             "ability-constructor-reference"
 
         Op seqOp ->
@@ -216,37 +223,37 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
     let
         ref =
             case sType of
-                TypeReference h fqn ->
+                TypeReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.TypeReference (HQ.HashQualified n h))
+                            Just (Reference.TypeReference (HQ.HashQualified n hash))
 
                         Nothing ->
-                            Just (Reference.TypeReference (HQ.HashOnly h))
+                            Just (Reference.TypeReference (HQ.HashOnly hash))
 
-                TermReference h fqn ->
+                TermReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.TermReference (HQ.HashQualified n h))
+                            Just (Reference.TermReference (HQ.HashQualified n hash))
 
                         Nothing ->
-                            Just (Reference.TermReference (HQ.HashOnly h))
+                            Just (Reference.TermReference (HQ.HashOnly hash))
 
-                AbilityConstructorReference h fqn ->
+                AbilityConstructorReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.AbilityConstructorReference (HQ.HashQualified n h))
+                            Just (Reference.AbilityConstructorReference (HQ.HashQualified n hash))
 
                         Nothing ->
-                            Just (Reference.AbilityConstructorReference (HQ.HashOnly h))
+                            Just (Reference.AbilityConstructorReference (HQ.HashOnly hash))
 
-                DataConstructorReference h fqn ->
+                DataConstructorReference { fqn, hash } ->
                     case fqn of
                         Just n ->
-                            Just (Reference.DataConstructorReference (HQ.HashQualified n h))
+                            Just (Reference.DataConstructorReference (HQ.HashQualified n hash))
 
                         Nothing ->
-                            Just (Reference.DataConstructorReference (HQ.HashOnly h))
+                            Just (Reference.DataConstructorReference (HQ.HashOnly hash))
 
                 _ ->
                     Nothing
@@ -257,19 +264,19 @@ view syntaxConfig ((SyntaxSegment sType sText) as segment) =
                     String.contains "." sText
             in
             case sType of
-                TypeReference _ _ ->
+                TypeReference _ ->
                     isFQN_
 
-                TermReference _ _ ->
+                TermReference _ ->
                     isFQN_
 
                 HashQualifier _ ->
                     isFQN_
 
-                DataConstructorReference _ _ ->
+                DataConstructorReference _ ->
                     isFQN_
 
-                AbilityConstructorReference _ _ ->
+                AbilityConstructorReference _ ->
                     isFQN_
 
                 _ ->
@@ -674,25 +681,30 @@ decodeTag annotationField =
 decode_ : { segmentField : String, annotationField : String } -> Decode.Decoder SyntaxSegment
 decode_ { segmentField, annotationField } =
     let
-        hashToReference hash fqn =
+        hashToReference hash displayName fqn =
             if Hash.isDataConstructorHash hash then
-                DataConstructorReference hash fqn
+                DataConstructorReference { hash = hash, fqn = fqn, displayName = displayName }
 
             else if Hash.isAbilityConstructorHash hash then
-                AbilityConstructorReference hash fqn
+                AbilityConstructorReference { hash = hash, fqn = fqn, displayName = displayName }
 
             else
-                TermReference hash fqn
+                TermReference { hash = hash, fqn = fqn, displayName = displayName }
+
+        toTypeReference hash displayName fqn =
+            TypeReference { hash = hash, fqn = fqn, displayName = displayName }
 
         decodeReference =
-            Decode.map2 hashToReference
+            Decode.map3 hashToReference
                 (at [ annotationField, "contents" ] Hash.decode)
                 (Decode.maybe (field "segment" FQN.decode))
+                (Decode.maybe (at [ annotationField, "fqn" ] FQN.decode))
 
         decodeTypeReference =
-            Decode.map2 TypeReference
+            Decode.map3 toTypeReference
                 (at [ annotationField, "contents" ] Hash.decode)
                 (Decode.maybe (field "segment" FQN.decode))
+                (Decode.maybe (at [ annotationField, "fqn" ] FQN.decode))
 
         decodeHashQualifier =
             Decode.map HashQualifier (at [ annotationField, "contents" ] Decode.string)
