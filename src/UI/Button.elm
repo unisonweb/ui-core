@@ -31,6 +31,9 @@ module UI.Button exposing
     , stopPropagation
     , subdued
     , view
+    , when
+    , whenElse
+    , whenNot
     , withClick
     , withColor
     , withIconAfterLabel
@@ -390,6 +393,30 @@ positive =
 withColor : Color -> Button clickMsg -> Button clickMsg
 withColor color_ button__ =
     { button__ | color = color_ }
+
+
+when : Bool -> (Button msg -> Button msg) -> Button msg -> Button msg
+when condition f btn =
+    whenElse condition f identity btn
+
+
+whenElse :
+    Bool
+    -> (Button msg -> Button msg)
+    -> (Button msg -> Button msg)
+    -> Button msg
+    -> Button msg
+whenElse condition f g btn =
+    if condition then
+        f btn
+
+    else
+        g btn
+
+
+whenNot : Bool -> (Button msg -> Button msg) -> Button msg -> Button msg
+whenNot condition f btn =
+    when (not condition) f btn
 
 
 
