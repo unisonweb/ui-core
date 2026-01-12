@@ -1,7 +1,8 @@
 module UI.ContextualTag exposing (..)
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class)
+import UI
 import UI.Icon as Icon exposing (Icon)
 import UI.Tooltip as Tooltip
 
@@ -15,6 +16,7 @@ type TagColor
 type alias ContextualTag msg =
     { icon : Icon msg
     , label : Html msg
+    , secondaryLabel : Maybe (Html msg)
     , color : TagColor
     , tooltipText : Maybe String
     }
@@ -26,13 +28,14 @@ type alias ContextualTag msg =
 
 contextualTag : Icon msg -> String -> ContextualTag msg
 contextualTag icon label =
-    contextualTag_ icon (text label)
+    contextualTag_ icon (text label) Nothing
 
 
-contextualTag_ : Icon msg -> Html msg -> ContextualTag msg
-contextualTag_ icon label =
+contextualTag_ : Icon msg -> Html msg -> Maybe (Html msg) -> ContextualTag msg
+contextualTag_ icon label secondaryLabel =
     { icon = icon
     , label = label
+    , secondaryLabel = secondaryLabel
     , color = Subdued
     , tooltipText = Nothing
     }
@@ -83,7 +86,12 @@ view tag =
         tag_ =
             div
                 [ class "contextual-tag", class color ]
-                [ Icon.view tag.icon, tag.label ]
+                [ Icon.view tag.icon
+                , span [ class "contextual-tag_label" ] [ tag.label ]
+                , tag.secondaryLabel
+                    |> Maybe.map (\l -> span [ class "contextual-tag_secondary-label" ] [ l ])
+                    |> Maybe.withDefault UI.nothing
+                ]
     in
     case tag.tooltipText of
         Just t ->
