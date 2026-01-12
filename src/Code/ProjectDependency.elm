@@ -35,7 +35,7 @@ fromString raw =
         parts =
             String.split "_" raw
 
-        ( name, version ) =
+        ( name, version_ ) =
             case parts of
                 [ user, project, major, minor, patch ] ->
                     case ( UserHandle.fromUnprefixedString user, ProjectSlug.fromString project ) of
@@ -51,10 +51,10 @@ fromString raw =
 
                 [ n, major, minor, patch ] ->
                     let
-                        version_ =
+                        version__ =
                             Version.fromString (String.join "." [ major, minor, patch ])
                     in
-                    case version_ of
+                    case version__ of
                         Just v ->
                             ( UnqualifiedDependency n, Just v )
 
@@ -81,10 +81,10 @@ fromString raw =
                     case List.reverse parts of
                         patch :: minor :: major :: n ->
                             let
-                                version_ =
+                                version__ =
                                     Version.fromString (String.join "." [ major, minor, patch ])
                             in
-                            case version_ of
+                            case version__ of
                                 Just v ->
                                     ( UnqualifiedDependency (String.join "_" (List.reverse n)), Just v )
 
@@ -95,7 +95,7 @@ fromString raw =
                         _ ->
                             ( UnqualifiedDependency raw, Nothing )
     in
-    ProjectDependency name version
+    ProjectDependency name version_
 
 
 equals : ProjectDependency -> ProjectDependency -> Bool
@@ -148,6 +148,24 @@ dependencyName { name } =
             n
 
 
+version : ProjectDependency -> Maybe Version
+version dep =
+    dep.version
+
+
+hasVersion : ProjectDependency -> Bool
+hasVersion dep =
+    MaybeE.isJust dep.version
+
+
+toVersionString : ProjectDependency -> String
+toVersionString dep =
+    dep
+        |> version
+        |> Maybe.map (\v -> "v" ++ Version.toString v)
+        |> Maybe.withDefault ""
+
+
 toString : ProjectDependency -> String
 toString projectDep =
     let
@@ -179,22 +197,12 @@ type alias BadgeConfig =
 
 viewLibraryBadge_ : BadgeConfig -> ProjectDependency -> Html msg
 viewLibraryBadge_ cfg dep =
-    let
-        label =
-            if cfg.withVersion then
-                toString dep
-
-            else
-                dependencyName dep
-
-        withTooltip b =
-            if cfg.withTooltip then
-                ContextualTag.withTooltipText "Library dependency" b
-
-            else
-                b
-    in
-    ContextualTag.contextualTag Icon.book label
+    ContextualTag.contextualTag Icon.book (dependencyName dep)
         |> ContextualTag.decorativePurple
-        |> withTooltip
+        |> ContextualTag.when
+            cfg.withTooltip
+            (ContextualTag.withTooltipText "Library dependency")
+        |> ContextualTag.when
+            (cfg.withVersion && hasVersion dep)
+            (ContextualTag.withSecondaryLabel (toVersionString dep))
         |> ContextualTag.view

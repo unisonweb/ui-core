@@ -65,6 +65,40 @@ withTooltipText text tag =
     { tag | tooltipText = Just text }
 
 
+withSecondaryLabel : String -> ContextualTag msg -> ContextualTag msg
+withSecondaryLabel secondaryLabel tag =
+    withSecondaryLabel_ (text secondaryLabel) tag
+
+
+withSecondaryLabel_ : Html msg -> ContextualTag msg -> ContextualTag msg
+withSecondaryLabel_ secondaryLabel tag =
+    { tag | secondaryLabel = Just secondaryLabel }
+
+
+when : Bool -> (ContextualTag msg -> ContextualTag msg) -> ContextualTag msg -> ContextualTag msg
+when condition f tag =
+    whenElse condition f identity tag
+
+
+whenElse :
+    Bool
+    -> (ContextualTag msg -> ContextualTag msg)
+    -> (ContextualTag msg -> ContextualTag msg)
+    -> ContextualTag msg
+    -> ContextualTag msg
+whenElse condition f g tag =
+    if condition then
+        f tag
+
+    else
+        g tag
+
+
+whenNot : Bool -> (ContextualTag msg -> ContextualTag msg) -> ContextualTag msg -> ContextualTag msg
+whenNot condition f tag =
+    when (not condition) f tag
+
+
 
 -- VIEW
 
