@@ -34,6 +34,7 @@ module UI.Button exposing
     , when
     , whenElse
     , whenNot
+    , withClassName
     , withClick
     , withColor
     , withIconAfterLabel
@@ -63,6 +64,7 @@ type alias Button msg =
     , color : Color
     , size : Size
     , isActive : Bool
+    , className : String
     }
 
 
@@ -96,6 +98,7 @@ map toMsg buttonA =
     , color = buttonA.color
     , size = buttonA.size
     , isActive = False
+    , className = buttonA.className
     }
 
 
@@ -111,6 +114,7 @@ button_ click label =
     , color = Default
     , size = Medium
     , isActive = False
+    , className = ""
     }
 
 
@@ -126,6 +130,7 @@ icon_ click icon__ =
     , color = Default
     , size = Medium
     , isActive = False
+    , className = ""
     }
 
 
@@ -141,6 +146,7 @@ iconThenLabel_ click icon__ label =
     , color = Default
     , size = Medium
     , isActive = False
+    , className = ""
     }
 
 
@@ -156,6 +162,7 @@ labelThenIcon_ click label icon__ =
     , color = Default
     , size = Medium
     , isActive = False
+    , className = ""
     }
 
 
@@ -171,6 +178,7 @@ iconThenLabelThenIcon_ click iconBefore label iconAfter =
     , color = Default
     , size = Medium
     , isActive = False
+    , className = ""
     }
 
 
@@ -193,7 +201,7 @@ preventDefault button__ =
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, color, click, size, isActive } =
+view { content, color, click, size, isActive, className } =
     let
         ( contentType, content_ ) =
             case content of
@@ -217,6 +225,7 @@ view { content, color, click, size, isActive } =
             , class (colorToClassName color)
             , class (sizeToClassName size)
             , class contentType
+            , class className
             , classList [ ( "button_active", isActive ) ]
             ]
     in
@@ -343,6 +352,11 @@ notActive button__ =
 withClick : Click msg -> Button msg -> Button msg
 withClick click button__ =
     { button__ | click = click }
+
+
+withClassName : String -> Button msg -> Button msg
+withClassName className button__ =
+    { button__ | className = className }
 
 
 disabled : Button msg -> Button msg
