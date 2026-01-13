@@ -7,7 +7,7 @@ import Task
 scrollToBottom : msg -> String -> Cmd msg
 scrollToBottom doneMsg containerId =
     Dom.getElement containerId
-        |> Task.map (.element >> .height)
+        |> Task.map (.scene >> .height)
         |> Task.andThen
             (\height ->
                 Dom.setViewportOf containerId 0 height
