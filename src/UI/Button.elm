@@ -37,6 +37,7 @@ module UI.Button exposing
     , withClassName
     , withClick
     , withColor
+    , withDomId
     , withIconAfterLabel
     , withIconBeforeLabel
     , withIconsBeforeAndAfterLabel
@@ -45,7 +46,7 @@ module UI.Button exposing
     )
 
 import Html exposing (Html, a, text)
-import Html.Attributes exposing (class, classList)
+import Html.Attributes exposing (class, classList, id)
 import UI.Click as Click exposing (Click(..))
 import UI.Icon as I
 
@@ -65,6 +66,7 @@ type alias Button msg =
     , size : Size
     , isActive : Bool
     , className : String
+    , domId : Maybe String
     }
 
 
@@ -99,6 +101,7 @@ map toMsg buttonA =
     , size = buttonA.size
     , isActive = False
     , className = buttonA.className
+    , domId = Nothing
     }
 
 
@@ -115,6 +118,7 @@ button_ click label =
     , size = Medium
     , isActive = False
     , className = ""
+    , domId = Nothing
     }
 
 
@@ -131,6 +135,7 @@ icon_ click icon__ =
     , size = Medium
     , isActive = False
     , className = ""
+    , domId = Nothing
     }
 
 
@@ -147,6 +152,7 @@ iconThenLabel_ click icon__ label =
     , size = Medium
     , isActive = False
     , className = ""
+    , domId = Nothing
     }
 
 
@@ -163,6 +169,7 @@ labelThenIcon_ click label icon__ =
     , size = Medium
     , isActive = False
     , className = ""
+    , domId = Nothing
     }
 
 
@@ -179,6 +186,7 @@ iconThenLabelThenIcon_ click iconBefore label iconAfter =
     , size = Medium
     , isActive = False
     , className = ""
+    , domId = Nothing
     }
 
 
@@ -201,8 +209,16 @@ preventDefault button__ =
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, color, click, size, isActive, className } =
+view { content, color, click, size, isActive, className, domId } =
     let
+        domIdAttr =
+            case domId of
+                Just domId_ ->
+                    [ id domId_ ]
+
+                Nothing ->
+                    []
+
         ( contentType, content_ ) =
             case content of
                 Icon i ->
@@ -228,6 +244,7 @@ view { content, color, click, size, isActive, className } =
             , class className
             , classList [ ( "button_active", isActive ) ]
             ]
+                ++ domIdAttr
     in
     case click of
         OnClick _ _ ->
@@ -357,6 +374,11 @@ withClick click button__ =
 withClassName : String -> Button msg -> Button msg
 withClassName className button__ =
     { button__ | className = className }
+
+
+withDomId : String -> Button msg -> Button msg
+withDomId domId button__ =
+    { button__ | domId = Just domId }
 
 
 disabled : Button msg -> Button msg
