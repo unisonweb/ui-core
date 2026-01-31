@@ -74,6 +74,11 @@ whenPathIs path val =
     when (Decode.at path Decode.string) ((==) val)
 
 
+whenTypeIs : String -> Decode.Decoder a -> Decode.Decoder a
+whenTypeIs val =
+    whenFieldIs "type" val
+
+
 whenFieldIs : String -> String -> Decode.Decoder a -> Decode.Decoder a
 whenFieldIs fieldName val =
     when (Decode.field fieldName Decode.string) ((==) val)
