@@ -16,7 +16,8 @@ import Html.Attributes
         , type_
         , value
         )
-import Html.Events exposing (onInput)
+import Html.Events exposing (keyCode, on, onInput)
+import Json.Decode as Json
 import Maybe.Extra as MaybeE
 import UI
 import UI.Click as Click
@@ -39,6 +40,7 @@ type Validity
 
 type alias TextField msg =
     { onInput : String -> msg
+    , onKeydown : Maybe (Int -> msg)
     , icon : TextFieldIcon msg
     , label : Maybe String
     , placeholder : Maybe String
@@ -71,6 +73,7 @@ fieldWithoutLabel onInput placeholder value =
 field_ : (String -> msg) -> Maybe String -> Maybe String -> String -> TextField msg
 field_ onInput label placeholder value =
     { onInput = onInput
+    , onKeydown = Nothing
     , icon = NoIcon
     , label = label
     , placeholder = placeholder
@@ -210,6 +213,7 @@ mapIcon f i =
 map : (msgA -> msgB) -> TextField msgA -> TextField msgB
 map f t =
     { onInput = t.onInput >> f
+    , onKeydown = Maybe.map (\toMsg -> toMsg >> f) t.onKeydown
     , icon = mapIcon f t.icon
     , label = t.label
     , placeholder = t.placeholder
@@ -237,6 +241,7 @@ view textField =
             , Maybe.map maxlength textField.maxlength
             , Maybe.map minlength textField.minlength
             , Maybe.map id textField.id
+            , Maybe.map (\toMsg -> on "keydown" (Json.map toMsg keyCode)) textField.onKeydown
             , Just (class "text-field-input")
             , Just (onInput textField.onInput)
             , Just (autofocus textField.autofocus)
