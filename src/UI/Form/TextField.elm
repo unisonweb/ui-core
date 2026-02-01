@@ -98,6 +98,11 @@ withPlaceholder placeholder textField =
     { textField | placeholder = Just placeholder }
 
 
+withKeydown : (Int -> msg) -> TextField msg -> TextField msg
+withKeydown keydownMsg textField =
+    { textField | onKeydown = Just keydownMsg }
+
+
 withHelpText : String -> TextField msg -> TextField msg
 withHelpText helpText textField =
     { textField | helpText = Just helpText }
