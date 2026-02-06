@@ -35,6 +35,7 @@ module Code.FullyQualifiedName exposing
     , stripPrefix
     , take
     , toApiUrlString
+    , toDefinitionDoc
     , toQueryString
     , toQueryString_
     , toString
@@ -352,6 +353,15 @@ isSuffixOf (FQN suffixName) (FQN fqn) =
 isDefinitionDoc : FQN -> Bool
 isDefinitionDoc fqn =
     isSuffixOf (singleton "doc") fqn
+
+
+toDefinitionDoc : FQN -> FQN
+toDefinitionDoc fqn =
+    if isDefinitionDoc fqn then
+        fqn
+
+    else
+        snoc fqn "doc"
 
 
 isDefinitionDocOf : FQN -> FQN -> Bool

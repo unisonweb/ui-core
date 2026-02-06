@@ -430,6 +430,26 @@ isDefinitionDoc =
         ]
 
 
+toDefinitionDoc : Test
+toDefinitionDoc =
+    describe "FullyQualifiedName.toDefinitionDoc"
+        [ test "ensures the FQN ends in .doc" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal "base.List.map.doc" (FQN.toString (FQN.toDefinitionDoc fqn))
+        , test "if it already ends in .doc, don't add it twice" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map.doc"
+                in
+                Expect.equal "base.List.map.doc" (FQN.toString (FQN.toDefinitionDoc fqn))
+        ]
+
+
 isDefinitionDocOf : Test
 isDefinitionDocOf =
     describe "FullyQualifiedName.isDefinitionDocOf"
