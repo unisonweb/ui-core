@@ -330,6 +330,62 @@ isPrefixOf =
         ]
 
 
+isDefinitionDoc : Test
+isDefinitionDoc =
+    describe "FullyQualifiedName.isDefinitionDoc"
+        [ test "is True with an FQN ending in .doc" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map.doc"
+                in
+                Expect.equal True (FQN.isDefinitionDoc fqn)
+        , test "is False with an FQN that doesn't end in .doc" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal False (FQN.isDefinitionDoc fqn)
+        ]
+
+
+isDefinitionDocOf : Test
+isDefinitionDocOf =
+    describe "FullyQualifiedName.isDefinitionDocOf"
+        [ test "is True when the FQN is the same and ending in .doc " <|
+            \_ ->
+                let
+                    term =
+                        FQN.fromString "base.List.map"
+
+                    doc =
+                        FQN.fromString "base.List.map.doc"
+                in
+                Expect.equal True (FQN.isDefinitionDocOf doc term)
+        , test "is False when the FQN is not the same even if ending in .doc " <|
+            \_ ->
+                let
+                    term =
+                        FQN.fromString "base.List.filter"
+
+                    doc =
+                        FQN.fromString "base.List.map.doc"
+                in
+                Expect.equal False (FQN.isDefinitionDocOf doc term)
+        , test "is False when the presumed doc doesn't end in a doc" <|
+            \_ ->
+                let
+                    term =
+                        FQN.fromString "base.List.map"
+
+                    doc =
+                        FQN.fromString "base.List.map.test"
+                in
+                Expect.equal False (FQN.isDefinitionDocOf doc term)
+        ]
+
+
 namespaceOf : Test
 namespaceOf =
     describe "FullyQualifiedName.namespaceOf"

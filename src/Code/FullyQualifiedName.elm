@@ -12,6 +12,8 @@ module Code.FullyQualifiedName exposing
     , fromString
     , fromUrlList
     , fromUrlString
+    , isDefinitionDoc
+    , isDefinitionDocOf
     , isPrefixOf
     , isRoot
     , isSuffixOf
@@ -23,6 +25,7 @@ module Code.FullyQualifiedName exposing
     , numSegments
     , root
     , segments
+    , singleton
     , snoc
     , stripPrefix
     , take
@@ -100,6 +103,11 @@ fromList segments_ =
         |> NEL.fromList
         |> Maybe.withDefault (NEL.singleton ".")
         |> FQN
+
+
+singleton : String -> FQN
+singleton segment =
+    fromList [ segment ]
 
 
 fromUrlString : String -> FQN
@@ -299,6 +307,16 @@ Check if the second FQN ends with the first FQN.
 isSuffixOf : FQN -> FQN -> Bool
 isSuffixOf (FQN suffixName) (FQN fqn) =
     ListE.isSuffixOf (NEL.toList suffixName) (NEL.toList fqn)
+
+
+isDefinitionDoc : FQN -> Bool
+isDefinitionDoc fqn =
+    isSuffixOf (singleton "doc") fqn
+
+
+isDefinitionDocOf : FQN -> FQN -> Bool
+isDefinitionDocOf docFqn defFqn =
+    isDefinitionDoc docFqn && equals docFqn (snoc defFqn "doc")
 
 
 isPrefixOf : FQN -> FQN -> Bool
