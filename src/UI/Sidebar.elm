@@ -20,6 +20,7 @@ type SidebarHeader msg
 type alias SidebarSection msg =
     { title : String
     , titleButton : Maybe (Button msg)
+    , titleButtonTooltip : Maybe (Tooltip.Tooltip msg)
     , content : List (Html msg)
     , scrollable : Bool
     , stickyHeader : Bool
@@ -138,6 +139,7 @@ mapSection : (a -> msg) -> SidebarSection a -> SidebarSection msg
 mapSection toMsg sectionA =
     { title = sectionA.title
     , titleButton = Maybe.map (Button.map toMsg) sectionA.titleButton
+    , titleButtonTooltip = Maybe.map (Tooltip.map toMsg) sectionA.titleButtonTooltip
     , content = List.map (Html.map toMsg) sectionA.content
     , scrollable = sectionA.scrollable
     , stickyHeader = sectionA.stickyHeader
@@ -167,6 +169,7 @@ section : String -> List (Html msg) -> SidebarSection msg
 section title content =
     { title = title
     , titleButton = Nothing
+    , titleButtonTooltip = Nothing
     , content = content
     , scrollable = False
     , stickyHeader = False
@@ -176,6 +179,11 @@ section title content =
 sectionWithTitleButton : Button msg -> SidebarSection msg -> SidebarSection msg
 sectionWithTitleButton button section_ =
     { section_ | titleButton = Just button }
+
+
+sectionWithTitleButtonTooltip : Tooltip.Tooltip msg -> SidebarSection msg -> SidebarSection msg
+sectionWithTitleButtonTooltip tooltip section_ =
+    { section_ | titleButtonTooltip = Just tooltip }
 
 
 sectionWithScrollable : SidebarSection msg -> SidebarSection msg
