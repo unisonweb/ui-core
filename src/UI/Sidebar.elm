@@ -284,15 +284,26 @@ viewHeader (SidebarHeader items) =
 
 
 viewSection : SidebarSection msg -> Html msg
-viewSection { title, titleButton, content, scrollable, stickyHeader } =
+viewSection { title, titleButton, titleButtonTooltip, content, scrollable, stickyHeader } =
     let
+        titleButton_ =
+            case ( titleButton, titleButtonTooltip ) of
+                ( Just button, Just tooltip ) ->
+                    Tooltip.view (Button.view button) tooltip
+
+                ( Just button, Nothing ) ->
+                    Button.view button
+
+                ( Nothing, _ ) ->
+                    UI.nothing
+
         sectionHeader =
             Html.header
                 [ class "sidebar-section_header"
                 , classList [ ( "sidebar-section_header_sticky", stickyHeader ) ]
                 ]
                 [ h3 [ class "sidebar-section_title" ] [ text title ]
-                , MaybeE.unwrap UI.nothing Button.view titleButton
+                , titleButton_
                 ]
     in
     Html.section
