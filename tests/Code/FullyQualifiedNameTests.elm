@@ -52,6 +52,86 @@ dropLast =
         ]
 
 
+last : Test
+last =
+    describe "FullyQualifiedName.last"
+        [ test "returns the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal (Just "map") (FQN.last fqn)
+        , test "returns nothing when its the root" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString ""
+                in
+                Expect.equal Nothing (FQN.last fqn)
+        ]
+
+
+endsWith : Test
+endsWith =
+    describe "FullyQualifiedName.endsWith"
+        [ test "returns True if it matches the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal True (FQN.endsWith "map" fqn)
+        , test "returns False if it doesn't match the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal False (FQN.endsWith "filter" fqn)
+        ]
+
+
+first : Test
+first =
+    describe "FullyQualifiedName.first"
+        [ test "returns the first segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal (Just "base") (FQN.first fqn)
+        , test "returns nothing when its the root" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString ""
+                in
+                Expect.equal Nothing (FQN.first fqn)
+        ]
+
+
+startsWith : Test
+startsWith =
+    describe "FullyQualifiedName.startsWith"
+        [ test "returns True if it matches the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "base.List.map"
+                in
+                Expect.equal True (FQN.startsWith "base" fqn)
+        , test "returns False if it doesn't match the last segment" <|
+            \_ ->
+                let
+                    fqn =
+                        FQN.fromString "data.List.map"
+                in
+                Expect.equal False (FQN.startsWith "base" fqn)
+        ]
+
+
 append : Test
 append =
     describe "FullyQualifiedName.append"

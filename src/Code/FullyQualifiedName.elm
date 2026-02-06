@@ -5,13 +5,16 @@ module Code.FullyQualifiedName exposing
     , decode
     , decodeFromParent
     , dropLast
+    , endsWith
     , equals
     , extend
+    , first
     , fromList
     , fromParent
     , fromString
     , fromUrlList
     , fromUrlString
+    , head
     , isDefinitionDoc
     , isDefinitionDocOf
     , isPrefixOf
@@ -19,6 +22,7 @@ module Code.FullyQualifiedName exposing
     , isSuffixOf
     , isValidSegmentChar
     , isValidUrlSegmentChar
+    , last
     , length
     , namespace
     , namespaceOf
@@ -27,6 +31,7 @@ module Code.FullyQualifiedName exposing
     , segments
     , singleton
     , snoc
+    , startsWith
     , stripPrefix
     , take
     , toApiUrlString
@@ -207,6 +212,41 @@ dropLast (FQN segments_) =
             (NEL.head segments_)
             (Maybe.withDefault [] (ListE.init (NEL.tail segments_)))
         )
+
+
+last : FQN -> Maybe String
+last ((FQN segments_) as fqn) =
+    if isRoot fqn then
+        Nothing
+
+    else
+        Just (NEL.last segments_)
+
+
+endsWith : String -> FQN -> Bool
+endsWith end fqn =
+    last fqn == Just end
+
+
+first : FQN -> Maybe String
+first ((FQN segments_) as fqn) =
+    if isRoot fqn then
+        Nothing
+
+    else
+        Just (NEL.head segments_)
+
+
+{-| alias for `first`
+-}
+head : FQN -> Maybe String
+head =
+    first
+
+
+startsWith : String -> FQN -> Bool
+startsWith start fqn =
+    first fqn == Just start
 
 
 take : Int -> FQN -> FQN
