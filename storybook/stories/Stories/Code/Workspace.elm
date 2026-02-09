@@ -137,6 +137,12 @@ config =
 
                 CodebaseApi.Summary _ ->
                     codebaseHash
+
+                CodebaseApi.Dependencies _ ->
+                    codebaseHash
+
+                CodebaseApi.Dependents _ ->
+                    codebaseHash
     , api = api
     }
 
