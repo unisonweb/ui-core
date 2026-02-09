@@ -33,5 +33,8 @@
     "@oddbird/css-anchor-positioning": "^0.4.0",
     "katex": "^0.16.4",
     "mermaid": "^11.12.2"
+  },
+  "overrides": {
+    "lodash-es": "4.17.23"
   }
 }
