@@ -2,12 +2,11 @@ module UI.Form.SearchSelect exposing (..)
 
 import Html exposing (Html, div, node, text)
 import Html.Attributes exposing (class)
-import Html.Events exposing (onInput)
+import Html.Events
 import Json.Decode as Json
 import Lib.Search as Search exposing (Search)
 import Lib.SearchResults as SearchResults
 import UI
-import UI.Click as Click
 import UI.Form.TextField as TextField
 import UI.Icon as Icon
 import UI.KeyboardShortcut.Key as Key
@@ -154,9 +153,8 @@ viewDefaultEmptyState =
     div [ class "search-select_sheet_empty-state" ] [ text "No matching results." ]
 
 
-type alias Events a msg =
-    { matchClickMsg : a -> msg
-    , inputMsg : String -> msg
+type alias Events msg =
+    { inputMsg : String -> msg
     , clearMsg : msg
     , keyMsg :
         Json.Decoder
@@ -167,7 +165,7 @@ type alias Events a msg =
     }
 
 
-toEvents : SearchSelect a msg -> Events a msg
+toEvents : SearchSelect a msg -> Events msg
 toEvents select =
     let
         keyMsg =
@@ -205,8 +203,7 @@ toEvents select =
             in
             Json.andThen handle KeyboardEvent.decodeKey
     in
-    { matchClickMsg = select.selectMatchMsg
-    , inputMsg =
+    { inputMsg =
         \value ->
             select.search
                 |> Search.withQuery value

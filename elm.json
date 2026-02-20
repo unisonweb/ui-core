@@ -32,6 +32,7 @@
         "UI.FoldToggle",
         "UI.Form.CheckboxField",
         "UI.Form.TextField",
+        "UI.Form.SearchSelect",
         "UI.Form.RadioField",
         "UI.PageLayout",
         "UI.PageHeader",
