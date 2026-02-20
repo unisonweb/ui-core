@@ -20,7 +20,6 @@ type alias SearchSelect a msg =
     , placeholder : Maybe String
     , emptyState : Maybe (Html msg)
     , autofocus : Bool
-    , value : String
     }
 
 
@@ -28,24 +27,23 @@ type alias SearchSelect a msg =
 -- CREATE
 
 
-empty : (Search a -> msg) -> (a -> msg) -> String -> SearchSelect a msg
-empty updateSearchMsg selectMatchMsg value =
-    searchSelect_ Search.empty updateSearchMsg selectMatchMsg Nothing value
+empty : (Search a -> msg) -> (a -> msg) -> SearchSelect a msg
+empty updateSearchMsg selectMatchMsg =
+    searchSelect_ Search.empty updateSearchMsg selectMatchMsg Nothing
 
 
-searchSelect : Search a -> (Search a -> msg) -> (a -> msg) -> String -> SearchSelect a msg
-searchSelect search onInput selectMatchMsg value =
-    searchSelect_ search onInput selectMatchMsg Nothing value
+searchSelect : Search a -> (Search a -> msg) -> (a -> msg) -> SearchSelect a msg
+searchSelect search onInput selectMatchMsg =
+    searchSelect_ search onInput selectMatchMsg Nothing
 
 
-searchSelect_ : Search a -> (Search a -> msg) -> (a -> msg) -> Maybe String -> String -> SearchSelect a msg
-searchSelect_ search updateSearchMsg selectMatchMsg placeholder value =
+searchSelect_ : Search a -> (Search a -> msg) -> (a -> msg) -> Maybe String -> SearchSelect a msg
+searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
     { search = search
     , updateSearchMsg = updateSearchMsg
     , selectMatchMsg = selectMatchMsg
     , placeholder = placeholder
     , autofocus = False
-    , value = value
     , emptyState = Nothing
     }
 
@@ -119,7 +117,6 @@ map f s =
     , selectMatchMsg = s.selectMatchMsg >> f
     , placeholder = s.placeholder
     , autofocus = False
-    , value = s.value
     , emptyState = Nothing
     }
 

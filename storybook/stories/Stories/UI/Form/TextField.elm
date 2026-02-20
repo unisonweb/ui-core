@@ -4,7 +4,6 @@ import Browser
 import Helpers.Layout exposing (columns)
 import Html exposing (Html)
 import UI.Form.TextField as TextField
-import UI.Icon as I
 
 
 type alias Model =
