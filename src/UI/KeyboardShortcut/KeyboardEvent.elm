@@ -40,8 +40,10 @@
 module UI.KeyboardShortcut.KeyboardEvent exposing
     ( KeyboardEvent
     , KeyboardEventType(..)
+    , KeyboardListener
     , attach
     , decode
+    , decodeKey
     , decodeToMsg
     , isHoldingModifier
     , modifiersHeld
@@ -166,7 +168,8 @@ attach listener =
             , preventDefault = listener.preventDefault event
             }
     in
-    Html.Events.custom (keyboardEventTypeToEventString listener.keyboardEventType)
+    Html.Events.custom
+        (keyboardEventTypeToEventString listener.keyboardEventType)
         (Decode.map toEventConfig decode)
 
 
@@ -195,6 +198,11 @@ subscribe eventType toMsg =
 
 
 -- DECODE
+
+
+decodeKey : Decoder Key
+decodeKey =
+    field "key" Key.decode
 
 
 decode : Decoder KeyboardEvent

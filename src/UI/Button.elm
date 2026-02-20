@@ -33,6 +33,7 @@ module UI.Button exposing
     , view
     , when
     , whenElse
+    , whenMaybe
     , whenNot
     , withClassName
     , withClick
@@ -453,6 +454,16 @@ whenElse condition f g btn =
 whenNot : Bool -> (Button msg -> Button msg) -> Button msg -> Button msg
 whenNot condition f btn =
     when (not condition) f btn
+
+
+whenMaybe : Maybe a -> (a -> Button msg -> Button msg) -> Button msg -> Button msg
+whenMaybe maybe f btn =
+    case maybe of
+        Just a ->
+            f a btn
+
+        Nothing ->
+            btn
 
 
 

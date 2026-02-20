@@ -198,6 +198,40 @@ withId id_ tf =
     { tf | id = Just id_ }
 
 
+when : Bool -> (TextField msg -> TextField msg) -> TextField msg -> TextField msg
+when condition f tf =
+    whenElse condition f identity tf
+
+
+whenMaybe : Maybe a -> (a -> TextField msg -> TextField msg) -> TextField msg -> TextField msg
+whenMaybe maybe f tf =
+    case maybe of
+        Just a ->
+            f a tf
+
+        Nothing ->
+            tf
+
+
+whenElse :
+    Bool
+    -> (TextField msg -> TextField msg)
+    -> (TextField msg -> TextField msg)
+    -> TextField msg
+    -> TextField msg
+whenElse condition f g tf =
+    if condition then
+        f tf
+
+    else
+        g tf
+
+
+whenNot : Bool -> (TextField msg -> TextField msg) -> TextField msg -> TextField msg
+whenNot condition f tf =
+    when (not condition) f tf
+
+
 
 -- MAP
 

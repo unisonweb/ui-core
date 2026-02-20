@@ -9,6 +9,7 @@ module Lib.Search exposing
     , hasSubstantialQuery
     , isEmptyQuery
     , isEmptyResults
+    , isNotAsked
     , isSearching
     , length
     , queriesEquals
@@ -183,6 +184,16 @@ query search_ =
 
         Failure q _ ->
             q
+
+
+isNotAsked : Search a -> Bool
+isNotAsked s =
+    case s of
+        NotAsked _ ->
+            True
+
+        _ ->
+            False
 
 
 isEmptyQuery : Search a -> Bool
