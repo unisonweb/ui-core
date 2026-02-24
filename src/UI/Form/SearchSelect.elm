@@ -236,7 +236,7 @@ view viewMatch select =
             viewSheet viewMatch emptyState select.search
     in
     node "search"
-        [ Html.Events.custom "keydown" events.keyMsg ]
+        [ class "search-select", Html.Events.custom "keydown" events.keyMsg ]
         [ textField
         , searchSheet
         ]

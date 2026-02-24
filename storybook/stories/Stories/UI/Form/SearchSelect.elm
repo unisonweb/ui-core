@@ -3,7 +3,7 @@ module Stories.UI.Form.SearchSelect exposing (..)
 import Browser
 import Helpers.Layout exposing (rows)
 import Html exposing (Html, div, text)
-import Html.Attributes exposing (class, style)
+import Html.Attributes exposing (class, classList, style)
 import Html.Events exposing (onClick)
 import Lib.Search as Search exposing (Search)
 import UI.Form.SearchSelect as SearchSelect
@@ -142,15 +142,7 @@ viewMatch : (String -> Msg) -> String -> Bool -> Html Msg
 viewMatch selectMsg item isFocused =
     div
         [ class "search-select_match"
-        , style "padding" "0.5rem 0.75rem"
-        , style "cursor" "pointer"
-        , style "background"
-            (if isFocused then
-                "var(--u-color_element_hovered, #f0f0f0)"
-
-             else
-                "transparent"
-            )
+        , classList [ ( "is-focused", isFocused ) ]
         , onClick (selectMsg item)
         ]
         [ text item ]

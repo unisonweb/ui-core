@@ -1,0 +1,45 @@
+/* SearchSelect: a text field with a dropdown sheet of search results */
+
+.search-select {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .search-select_sheet {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0.25rem;
+    background: var(--u-color_background);
+    border: 1px solid var(--u-color_border);
+    border-radius: var(--border-radius-base);
+    border-color: var(--u-color_focus-border);
+    box-shadow: 0 0 0 2px var(--u-color_focus-outline);
+    z-index: var(--layer-popover);
+    overflow: hidden;
+    animation: slide-down 0.15s var(--anim-elastic);
+  }
+
+  .search-select_sheet_empty-state {
+    padding: 0.75rem;
+    font-size: var(--font-size-medium);
+    color: var(--u-color_text_subdued);
+    text-align: center;
+  }
+
+  .search-select_sheet .search-select_match {
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    font-size: var(--font-size-medium);
+    background: transparent;
+  }
+
+  .search-select_sheet .search-select_match:hover {
+    background: var(--u-color_element_hovered);
+  }
+
+  .search-select_sheet .search-select_match.is-focused {
+    background: var(--u-color_element_selected);
+  }
+}
