@@ -77,7 +77,7 @@ when condition f select =
     whenElse condition f identity select
 
 
-whenMaybe : Maybe a -> (a -> SearchSelect a msg -> SearchSelect a msg) -> SearchSelect a msg -> SearchSelect a msg
+whenMaybe : Maybe m -> (m -> SearchSelect a msg -> SearchSelect a msg) -> SearchSelect a msg -> SearchSelect a msg
 whenMaybe maybe f select =
     case maybe of
         Just a ->
