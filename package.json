@@ -23,7 +23,7 @@
   "devDependencies": {
     "elm": "^0.19.1-5",
     "elm-format": "^0.8.7",
-    "elm-review": "^2.13.2",
+    "elm-review": "^2.13.5",
     "elm-test": "^0.19.1-revision15",
     "elm-watch": "^1.2.2",
     "glob": "^11.1.0",
