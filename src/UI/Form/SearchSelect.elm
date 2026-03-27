@@ -20,6 +20,7 @@ type alias SearchSelect a msg =
     , placeholder : Maybe String
     , emptyState : Maybe (Html msg)
     , autofocus : Bool
+    , tokenCompletion : Maybe (Search String)
     }
 
 
@@ -45,6 +46,7 @@ searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
     , placeholder = placeholder
     , autofocus = False
     , emptyState = Nothing
+    , tokenCompletion = Nothing
     }
 
 
@@ -70,6 +72,11 @@ withPlaceholder placeholder select =
 withAutofocus : SearchSelect a msg -> SearchSelect a msg
 withAutofocus select =
     { select | autofocus = True }
+
+
+withTokenCompletion : Search String -> SearchSelect a msg -> SearchSelect a msg
+withTokenCompletion tokenCompletion select =
+    { select | tokenCompletion = Just tokenCompletion }
 
 
 when : Bool -> (SearchSelect a msg -> SearchSelect a msg) -> SearchSelect a msg -> SearchSelect a msg
@@ -118,6 +125,7 @@ map f s =
     , placeholder = s.placeholder
     , autofocus = False
     , emptyState = Nothing
+    , tokenCompletion = s.tokenCompletion
     }
 
 
@@ -219,6 +227,10 @@ view viewMatch select =
         events =
             toEvents select
 
+        ghostText_ =
+            select.tokenCompletion
+                |> Maybe.andThen Search.searchResultsFocus
+
         textField =
             TextField.field_ events.inputMsg
                 Nothing
@@ -227,6 +239,7 @@ view viewMatch select =
                 |> TextField.withIconOrWorking Icon.search (Search.isSearching select.search)
                 |> TextField.withClear events.clearMsg
                 |> TextField.when select.autofocus TextField.withAutofocus
+                |> TextField.whenMaybe ghostText_ TextField.withGhostText
                 |> TextField.view
 
         emptyState =
@@ -237,6 +250,8 @@ view viewMatch select =
     in
     node "search"
         [ class "search-select", Html.Events.custom "keydown" events.keyMsg ]
-        [ textField
-        , searchSheet
+        [ div [ class "search-select_inner" ]
+            [ textField
+            , searchSheet
+            ]
         ]

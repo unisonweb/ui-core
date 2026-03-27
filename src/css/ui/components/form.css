@@ -12,6 +12,10 @@
   --c-color_form-field_clear_hovered: var(--u-color_icon_hovered);
   --c-color_form-field_background: var(--u-color_element);
   --c-color_form-field_background_hovered: var(--u-color_element_hovered);
+  --c-font-size_form-field_text: var(--font-size-medium);
+  --c-padding-y_form-field_text: 0.5rem;
+  --c-padding-x_form-field_text: 0.75rem;
+  --c-padding-x_form-field_text_with-icon: 2.125rem;
 }
 
 .form-field .label,
@@ -39,8 +43,8 @@
 .text-field textarea {
   border: 1px solid var(--c-color_form-field_border);
   border-radius: var(--border-radius-base);
-  padding: 0.5rem 0.75rem;
-  font-size: var(--font-size-medium);
+  padding: var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text);
+  font-size: var(--c-font-size_form-field_text);
   background-color: var(--c-color_form-field_background);
   color: var(--c-color_form-field_text);
 }
@@ -87,7 +91,7 @@
 
 .text-field .text-field_input.text-field_with-icon input[type="text"],
 .text-field .text-field_input.text-field_with-icon textarea {
-  padding-left: 2.125rem;
+  padding-left: var(--c-padding-x_form-field_text_with-icon);
 }
 
 .text-field input[type="text"] {
@@ -113,6 +117,35 @@
 .text-field.text-field_is-invalid .help-text {
   color: var(--u-color_critical_text);
   font-weight: bold;
+}
+
+.text-field .text-field_ghost {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text);
+  font-size: var(--c-font-size_form-field_text);
+  color: var(--c-color_form-field_text_subdued);
+  white-space: pre;
+  overflow: hidden;
+  /* to match the 1px border on the input */
+  border: 1px solid transparent;
+}
+
+.text-field .text-field_input.text-field_with-icon .text-field_ghost {
+  padding-left: var(--c-padding-x_form-field_text_with-icon);
+}
+
+.text-field .text-field_input.text-field_with-ghost input[type="text"],
+.text-field .text-field_input.text-field_with-ghost textarea {
+  position: relative;
+  z-index: 2;
+  background: transparent;
 }
 
 /* -- RadioField ----------------------------------------------------------- */

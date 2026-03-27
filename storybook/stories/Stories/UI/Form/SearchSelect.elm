@@ -13,12 +13,17 @@ type alias Model =
     { fruitSearch : Search String
     , selectedFruit : Maybe String
     , colorSearch : Search String
+    , fruitWithCompletionSearch : Search String
+    , fruitTokenCompletion : Search String
+    , selectedFruitWithCompletion : Maybe String
     }
 
 
 type Msg
     = UpdateFruitSearch (Search String)
     | SelectFruit String
+    | UpdateFruitWithCompletionSearch (Search String)
+    | SelectFruitWithCompletion String
 
 
 fruits : List String
@@ -92,10 +97,12 @@ main =
     Browser.element
         { init =
             always
-                ( { fruitSearch =
-                        Search.empty
+                ( { fruitSearch = Search.empty
                   , selectedFruit = Nothing
                   , colorSearch = Search.empty
+                  , fruitWithCompletionSearch = Search.empty
+                  , fruitTokenCompletion = Search.empty
+                  , selectedFruitWithCompletion = Nothing
                   }
                 , Cmd.none
                 )
@@ -137,6 +144,50 @@ update msg model =
         SelectFruit fruit ->
             ( { model | selectedFruit = Just fruit, fruitSearch = Search.empty }, Cmd.none )
 
+        UpdateFruitWithCompletionSearch search ->
+            let
+                q =
+                    Search.query search
+
+                newSearch =
+                    if String.isEmpty q then
+                        Search.empty
+
+                    else
+                        case search of
+                            Search.Success _ _ ->
+                                search
+
+                            _ ->
+                                Search.fromList q (filterItems fruits q)
+
+                tokenCompletion =
+                    if String.isEmpty q then
+                        Search.empty
+
+                    else
+                        fruits
+                            |> List.filter (String.toLower >> String.startsWith (String.toLower q))
+                            |> List.head
+                            |> Maybe.map (\match -> Search.fromList q [ match ])
+                            |> Maybe.withDefault Search.empty
+            in
+            ( { model
+                | fruitWithCompletionSearch = newSearch
+                , fruitTokenCompletion = tokenCompletion
+              }
+            , Cmd.none
+            )
+
+        SelectFruitWithCompletion fruit ->
+            ( { model
+                | selectedFruitWithCompletion = Just fruit
+                , fruitWithCompletionSearch = Search.empty
+                , fruitTokenCompletion = Search.empty
+              }
+            , Cmd.none
+            )
+
 
 viewMatch : (String -> Msg) -> String -> Bool -> Html Msg
 viewMatch selectMsg item isFocused =
@@ -148,6 +199,15 @@ viewMatch selectMsg item isFocused =
         [ text item ]
 
 
+selectedLabel : Maybe String -> Html Msg
+selectedLabel selected =
+    div
+        [ style "font-size" "var(--font-size-medium)"
+        , style "color" "var(--u-color_text_subdued)"
+        ]
+        [ text ("Selected: " ++ Maybe.withDefault "No selection" selected) ]
+
+
 view : Model -> Html Msg
 view model =
     let
@@ -155,6 +215,12 @@ view model =
             SearchSelect.searchSelect model.fruitSearch UpdateFruitSearch SelectFruit
                 |> SearchSelect.withPlaceholder "Search fruits..."
                 |> SearchSelect.view (viewMatch SelectFruit)
+
+        fruitSelectWithCompletion =
+            SearchSelect.searchSelect model.fruitWithCompletionSearch UpdateFruitWithCompletionSearch SelectFruitWithCompletion
+                |> SearchSelect.withPlaceholder "Search fruits..."
+                |> SearchSelect.withTokenCompletion model.fruitTokenCompletion
+                |> SearchSelect.view (viewMatch SelectFruitWithCompletion)
     in
     rows
         [ style "gap" "2rem", style "padding" "1.5rem" ]
@@ -164,11 +230,14 @@ view model =
             , style "gap" "0.5rem"
             ]
             [ fruitSelect
-            , div
-                [ style "font-size" "var(--font-size-medium)"
-                , style "color" "var(--u-color_text_subdued)"
-                ]
-                [ text ("Selected: " ++ Maybe.withDefault "No selection" model.selectedFruit)
-                ]
+            , selectedLabel model.selectedFruit
+            ]
+        , div
+            [ style "display" "flex"
+            , style "flex-direction" "column"
+            , style "gap" "0.5rem"
+            ]
+            [ fruitSelectWithCompletion
+            , selectedLabel model.selectedFruitWithCompletion
             ]
         ]

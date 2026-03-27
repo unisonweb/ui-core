@@ -1,6 +1,6 @@
 module UI.Form.TextField exposing (..)
 
-import Html exposing (Html, div, input, label, small, text, textarea)
+import Html exposing (Html, div, input, label, small, span, text, textarea)
 import Html.Attributes
     exposing
         ( autocomplete
@@ -53,6 +53,7 @@ type alias TextField msg =
     , validity : Validity
     , clearMsg : Maybe msg
     , id : Maybe String
+    , ghostText : Maybe String
     }
 
 
@@ -86,6 +87,7 @@ field_ onInput label placeholder value =
     , validity = None
     , clearMsg = Nothing
     , id = Nothing
+    , ghostText = Nothing
     }
 
 
@@ -198,6 +200,11 @@ withId id_ tf =
     { tf | id = Just id_ }
 
 
+withGhostText : String -> TextField msg -> TextField msg
+withGhostText ghost tf =
+    { tf | ghostText = Just ghost }
+
+
 when : Bool -> (TextField msg -> TextField msg) -> TextField msg -> TextField msg
 when condition f tf =
     whenElse condition f identity tf
@@ -265,6 +272,7 @@ map f t =
     , validity = t.validity
     , clearMsg = Maybe.map f t.clearMsg
     , id = t.id
+    , ghostText = t.ghostText
     }
 
 
@@ -310,16 +318,38 @@ view textField =
                 Nothing ->
                     UI.nothing
 
-        input_ =
+        ghost_ =
+            case textField.ghostText of
+                Nothing ->
+                    UI.nothing
+
+                Just ghostValue ->
+                    let
+                        adjustedGhost =
+                            textField.value ++ String.dropLeft (String.length textField.value) ghostValue
+                    in
+                    div [ class "text-field_ghost" ] [ text adjustedGhost ]
+
+        ( iconEl, hasIcon ) =
             case textField.icon of
                 NoIcon ->
-                    div [ class "text-field_input " ] [ input__, clear ]
+                    ( UI.nothing, False )
 
                 TextFieldIcon i ->
-                    div [ class "text-field_input text-field_with-icon" ] [ div [ class "text-field_icon" ] [ Icon.view i ], input__, clear ]
+                    ( div [ class "text-field_icon" ] [ Icon.view i ], True )
 
                 TextFieldStatusIndicator i ->
-                    div [ class "text-field_input text-field_with-icon" ] [ StatusIndicator.view i, input__, clear ]
+                    ( StatusIndicator.view i, True )
+
+        input_ =
+            div
+                [ class "text-field_input"
+                , classList
+                    [ ( "text-field_with-icon", hasIcon )
+                    , ( "text-field_with-ghost", textField.ghostText /= Nothing )
+                    ]
+                ]
+                [ iconEl, ghost_, input__, clear ]
 
         label_ =
             textField.label
