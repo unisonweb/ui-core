@@ -14,7 +14,7 @@ type alias Model =
     , selectedFruit : Maybe String
     , colorSearch : Search String
     , fruitWithCompletionSearch : Search String
-    , fruitTokenCompletion : Search String
+    , fruitQueryCompletion : Search String
     , selectedFruitWithCompletion : Maybe String
     }
 
@@ -101,7 +101,7 @@ main =
                   , selectedFruit = Nothing
                   , colorSearch = Search.empty
                   , fruitWithCompletionSearch = Search.empty
-                  , fruitTokenCompletion = Search.empty
+                  , fruitQueryCompletion = Search.empty
                   , selectedFruitWithCompletion = Nothing
                   }
                 , Cmd.none
@@ -174,7 +174,7 @@ update msg model =
             in
             ( { model
                 | fruitWithCompletionSearch = newSearch
-                , fruitTokenCompletion = queryCompletion
+                , fruitQueryCompletion = queryCompletion
               }
             , Cmd.none
             )
@@ -183,7 +183,7 @@ update msg model =
             ( { model
                 | selectedFruitWithCompletion = Just fruit
                 , fruitWithCompletionSearch = Search.empty
-                , fruitTokenCompletion = Search.empty
+                , fruitQueryCompletion = Search.empty
               }
             , Cmd.none
             )
@@ -219,7 +219,7 @@ view model =
         fruitSelectWithCompletion =
             SearchSelect.searchSelect model.fruitWithCompletionSearch UpdateFruitWithCompletionSearch SelectFruitWithCompletion
                 |> SearchSelect.withPlaceholder "Search fruits..."
-                |> SearchSelect.withTokenCompletion model.fruitTokenCompletion
+                |> SearchSelect.withQueryCompletion model.fruitQueryCompletion
                 |> SearchSelect.view (viewMatch SelectFruitWithCompletion)
     in
     rows

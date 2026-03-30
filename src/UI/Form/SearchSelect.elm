@@ -74,8 +74,8 @@ withAutofocus select =
     { select | autofocus = True }
 
 
-withTokenCompletion : Search String -> SearchSelect a msg -> SearchSelect a msg
-withTokenCompletion queryCompletion select =
+withQueryCompletion : Search String -> SearchSelect a msg -> SearchSelect a msg
+withQueryCompletion queryCompletion select =
     { select | queryCompletion = Just queryCompletion }
 
 
