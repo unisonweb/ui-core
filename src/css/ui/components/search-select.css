@@ -27,6 +27,7 @@
   }
 
   .search-select_sheet {
+    display: none;
     background: var(--u-color_background);
     border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
     border-top: 1px solid var(--u-color_border);
@@ -35,7 +36,11 @@
     animation: slide-down 0.15s var(--anim-elastic);
   }
 
-  &:has(.search-select_sheet) .text-field input {
+  &:focus-within .search-select_sheet {
+    display: block;
+  }
+
+  &:focus-within:has(.search-select_sheet) .text-field input {
     border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
   }
 
