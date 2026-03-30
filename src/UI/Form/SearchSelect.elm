@@ -123,6 +123,13 @@ whenNot condition f select =
 -- MAP
 
 
+mapQueryCompletion : (msgA -> msgB) -> QueryCompletion msgA -> QueryCompletion msgB
+mapQueryCompletion f comp =
+    { search = comp.search
+    , acceptMsg = comp.acceptMsg >> f
+    }
+
+
 map : (msgA -> msgB) -> SearchSelect a msgA -> SearchSelect a msgB
 map f s =
     { search = s.search
@@ -131,7 +138,8 @@ map f s =
     , placeholder = s.placeholder
     , autofocus = False
     , emptyState = Nothing
-    , queryCompletion = Maybe.map (\qc -> { qc | acceptMsg = qc.acceptMsg >> f }) s.queryCompletion
+    , queryCompletion =
+        Maybe.map (mapQueryCompletion f) s.queryCompletion
     }
 
 

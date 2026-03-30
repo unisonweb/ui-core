@@ -1,6 +1,6 @@
 module UI.Form.TextField exposing (..)
 
-import Html exposing (Html, div, input, label, small, span, text, textarea)
+import Html exposing (Html, div, input, label, small, text, textarea)
 import Html.Attributes
     exposing
         ( autocomplete
