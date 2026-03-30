@@ -208,7 +208,7 @@ toEvents select =
                                 Just { search, acceptMsg } ->
                                     Json.succeed
                                         { message = acceptMsg (Search.query search)
-                                        , preventDefault = False
+                                        , preventDefault = True
                                         , stopPropagation = False
                                         }
 
