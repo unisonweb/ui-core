@@ -13,6 +13,12 @@ import UI.KeyboardShortcut.Key as Key
 import UI.KeyboardShortcut.KeyboardEvent as KeyboardEvent
 
 
+type alias QueryCompletion msg =
+    { search : Search String
+    , acceptMsg : String -> msg
+    }
+
+
 type alias SearchSelect a msg =
     { search : Search a
     , updateSearchMsg : Search a -> msg
@@ -20,7 +26,7 @@ type alias SearchSelect a msg =
     , placeholder : Maybe String
     , emptyState : Maybe (Html msg)
     , autofocus : Bool
-    , queryCompletion : Maybe (Search String)
+    , queryCompletion : Maybe (QueryCompletion msg)
     }
 
 
@@ -74,7 +80,7 @@ withAutofocus select =
     { select | autofocus = True }
 
 
-withQueryCompletion : Search String -> SearchSelect a msg -> SearchSelect a msg
+withQueryCompletion : QueryCompletion msg -> SearchSelect a msg -> SearchSelect a msg
 withQueryCompletion queryCompletion select =
     { select | queryCompletion = Just queryCompletion }
 
@@ -125,7 +131,7 @@ map f s =
     , placeholder = s.placeholder
     , autofocus = False
     , emptyState = Nothing
-    , queryCompletion = s.queryCompletion
+    , queryCompletion = Maybe.map (\qc -> { qc | acceptMsg = qc.acceptMsg >> f }) s.queryCompletion
     }
 
 
@@ -189,6 +195,18 @@ toEvents select =
                                 Nothing ->
                                     Json.fail "No search result focus"
 
+                        Key.Tab ->
+                            case select.queryCompletion of
+                                Just { search, acceptMsg } ->
+                                    Json.succeed
+                                        { message = acceptMsg (Search.query search)
+                                        , preventDefault = False
+                                        , stopPropagation = False
+                                        }
+
+                                Nothing ->
+                                    Json.fail "No query completion configuration"
+
                         Key.ArrowUp ->
                             Json.succeed
                                 { message = select.updateSearchMsg (Search.searchResultsCyclePrev select.search)
@@ -229,7 +247,7 @@ view viewMatch select =
 
         ghostText_ =
             select.queryCompletion
-                |> Maybe.andThen Search.searchResultsFocus
+                |> Maybe.andThen (\qc -> Search.searchResultsFocus qc.search)
 
         textField =
             TextField.field_ events.inputMsg

@@ -23,6 +23,7 @@ type Msg
     = UpdateFruitSearch (Search String)
     | SelectFruit String
     | UpdateFruitWithCompletionSearch (Search String)
+    | AcceptFruitCompletion String
     | SelectFruitWithCompletion String
 
 
@@ -179,6 +180,9 @@ update msg model =
             , Cmd.none
             )
 
+        AcceptFruitCompletion query ->
+            update (UpdateFruitWithCompletionSearch (Search.withQuery query model.fruitWithCompletionSearch)) model
+
         SelectFruitWithCompletion fruit ->
             ( { model
                 | selectedFruitWithCompletion = Just fruit
@@ -219,7 +223,7 @@ view model =
         fruitSelectWithCompletion =
             SearchSelect.searchSelect model.fruitWithCompletionSearch UpdateFruitWithCompletionSearch SelectFruitWithCompletion
                 |> SearchSelect.withPlaceholder "Search fruits..."
-                |> SearchSelect.withQueryCompletion model.fruitQueryCompletion
+                |> SearchSelect.withQueryCompletion { search = model.fruitQueryCompletion, acceptMsg = AcceptFruitCompletion }
                 |> SearchSelect.view (viewMatch SelectFruitWithCompletion)
     in
     rows
