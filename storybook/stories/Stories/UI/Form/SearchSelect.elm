@@ -161,7 +161,7 @@ update msg model =
                             _ ->
                                 Search.fromList q (filterItems fruits q)
 
-                tokenCompletion =
+                queryCompletion =
                     if String.isEmpty q then
                         Search.empty
 
@@ -174,7 +174,7 @@ update msg model =
             in
             ( { model
                 | fruitWithCompletionSearch = newSearch
-                , fruitTokenCompletion = tokenCompletion
+                , fruitTokenCompletion = queryCompletion
               }
             , Cmd.none
             )

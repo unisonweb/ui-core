@@ -20,7 +20,7 @@ type alias SearchSelect a msg =
     , placeholder : Maybe String
     , emptyState : Maybe (Html msg)
     , autofocus : Bool
-    , tokenCompletion : Maybe (Search String)
+    , queryCompletion : Maybe (Search String)
     }
 
 
@@ -46,7 +46,7 @@ searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
     , placeholder = placeholder
     , autofocus = False
     , emptyState = Nothing
-    , tokenCompletion = Nothing
+    , queryCompletion = Nothing
     }
 
 
@@ -75,8 +75,8 @@ withAutofocus select =
 
 
 withTokenCompletion : Search String -> SearchSelect a msg -> SearchSelect a msg
-withTokenCompletion tokenCompletion select =
-    { select | tokenCompletion = Just tokenCompletion }
+withTokenCompletion queryCompletion select =
+    { select | queryCompletion = Just queryCompletion }
 
 
 when : Bool -> (SearchSelect a msg -> SearchSelect a msg) -> SearchSelect a msg -> SearchSelect a msg
@@ -125,7 +125,7 @@ map f s =
     , placeholder = s.placeholder
     , autofocus = False
     , emptyState = Nothing
-    , tokenCompletion = s.tokenCompletion
+    , queryCompletion = s.queryCompletion
     }
 
 
@@ -228,7 +228,7 @@ view viewMatch select =
             toEvents select
 
         ghostText_ =
-            select.tokenCompletion
+            select.queryCompletion
                 |> Maybe.andThen Search.searchResultsFocus
 
         textField =
