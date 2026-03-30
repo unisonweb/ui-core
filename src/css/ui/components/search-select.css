@@ -14,6 +14,7 @@
     right: 0;
     border-radius: var(--border-radius-base);
     border: 1px solid var(--u-color_border);
+    background: var(--u-color_background);
 
     &:hover {
       border-color: var(--u-color_border_hovered);
