@@ -41,7 +41,7 @@ type alias NumberField msg =
     , onKeydown : Maybe (Int -> msg)
     , icon : NumberFieldIcon msg
     , label : Maybe String
-    , placeholder : Maybe Int
+    , placeholder : Maybe String
     , helpText : Maybe String
     , maxlength : Maybe Int
     , minlength : Maybe Int
@@ -62,12 +62,12 @@ field onInput label =
     field_ onInput (Just label) Nothing Nothing
 
 
-fieldWithoutLabel : (Maybe Int -> msg) -> Int -> NumberField msg
+fieldWithoutLabel : (Maybe Int -> msg) -> String -> NumberField msg
 fieldWithoutLabel onInput placeholder =
     field_ onInput Nothing (Just placeholder) Nothing
 
 
-field_ : (Maybe Int -> msg) -> Maybe String -> Maybe Int -> Maybe Int -> NumberField msg
+field_ : (Maybe Int -> msg) -> Maybe String -> Maybe String -> Maybe Int -> NumberField msg
 field_ onInput label placeholder value =
     { onInput = onInput
     , onKeydown = Nothing
@@ -89,7 +89,7 @@ field_ onInput label placeholder value =
 -- MODIFY
 
 
-withPlaceholder : Int -> NumberField msg -> NumberField msg
+withPlaceholder : String -> NumberField msg -> NumberField msg
 withPlaceholder placeholder numberField =
     { numberField | placeholder = Just placeholder }
 
@@ -262,7 +262,7 @@ view : NumberField msg -> Html msg
 view numberField =
     let
         attrs =
-            [ Maybe.map (String.fromInt >> placeholder) numberField.placeholder
+            [ Maybe.map placeholder numberField.placeholder
             , Maybe.map maxlength numberField.maxlength
             , Maybe.map minlength numberField.minlength
             , Maybe.map id numberField.id
