@@ -148,6 +148,86 @@
   background: transparent;
 }
 
+/* -- TextField ------------------------------------------------------------ */
+
+.number-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.number-field input[type="number"] {
+  border: 1px solid var(--c-color_form-field_border);
+  border-radius: var(--border-radius-base);
+  padding: var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text);
+  font-size: var(--c-font-size_form-field_text);
+  background-color: var(--c-color_form-field_background);
+  color: var(--c-color_form-field_text);
+}
+
+.number-field .number-field_input {
+  position: relative;
+}
+
+.number-field .number-field_input.number-field_with-icon .status-indicator {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.number-field
+  .number-field_input.number-field_with-icon
+  .number-field_icon
+  .icon {
+  position: absolute;
+  top: 0.6875rem;
+  left: 0.75rem;
+  font-size: var(--font-size-medium);
+  color: var(--c-color_form-field_icon_subdued);
+  transition: none;
+}
+
+.number-field .number-field_input .number-field_clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  place-items: center;
+  place-content: center;
+  width: 1.875rem;
+  height: 2.25rem;
+  font-size: var(--font-size-medium);
+  color: var(--c-color_form-field_clear);
+}
+.number-field .number-field_input .number-field_clear:hover .icon {
+  color: var(--c-color_form-field_clear_hovered);
+}
+
+.number-field .number-field_input input[type="number"] {
+  width: 100%;
+}
+
+.number-field .number-field_input.number-field_with-icon input[type="number"] {
+}
+
+.number-field input[type="number"] {
+  height: 2.25rem;
+}
+
+.number-field input[type="number"]:hover {
+  border-color: var(--c-color_form-field_border_hovered);
+}
+
+.number-field input[type="number"]:focus {
+  outline: none;
+  border-color: var(--c-color_form-field_focus-border);
+  box-shadow: 0 0 0 2px var(--c-color_form-field_focus-outline);
+}
+
+.number-field.number-field_is-invalid .help-text {
+  color: var(--u-color_critical_text);
+  font-weight: bold;
+}
+
 /* -- RadioField ----------------------------------------------------------- */
 
 .radio-field {
