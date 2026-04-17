@@ -27,7 +27,8 @@ type SheetPosition
 type alias SearchSelect a msg =
     { search : Search a
     , updateSearchMsg : Search a -> msg
-    , selectMatchMsg : a -> msg
+    , selectMatchMsg : a -> Search a -> msg
+    , matchToQuery : Maybe (a -> String)
     , placeholder : Maybe String
     , emptyState : Maybe (Html msg)
     , autofocus : Bool
@@ -41,21 +42,22 @@ type alias SearchSelect a msg =
 -- CREATE
 
 
-empty : (Search a -> msg) -> (a -> msg) -> SearchSelect a msg
+empty : (Search a -> msg) -> (a -> Search a -> msg) -> SearchSelect a msg
 empty updateSearchMsg selectMatchMsg =
     searchSelect_ Search.empty updateSearchMsg selectMatchMsg Nothing
 
 
-searchSelect : Search a -> (Search a -> msg) -> (a -> msg) -> SearchSelect a msg
+searchSelect : Search a -> (Search a -> msg) -> (a -> Search a -> msg) -> SearchSelect a msg
 searchSelect search onInput selectMatchMsg =
     searchSelect_ search onInput selectMatchMsg Nothing
 
 
-searchSelect_ : Search a -> (Search a -> msg) -> (a -> msg) -> Maybe String -> SearchSelect a msg
+searchSelect_ : Search a -> (Search a -> msg) -> (a -> Search a -> msg) -> Maybe String -> SearchSelect a msg
 searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
     { search = search
     , updateSearchMsg = updateSearchMsg
     , selectMatchMsg = selectMatchMsg
+    , matchToQuery = Nothing
     , placeholder = placeholder
     , autofocus = False
     , emptyState = Nothing
@@ -102,6 +104,16 @@ withSheetAbove select =
 withMaxResults : Int -> SearchSelect a msg -> SearchSelect a msg
 withMaxResults n select =
     { select | maxResults = Just n }
+
+
+withMatchToQuery : (a -> String) -> SearchSelect a msg -> SearchSelect a msg
+withMatchToQuery toString select =
+    { select | matchToQuery = Just toString }
+
+
+withMatchAsQuery : SearchSelect String msg -> SearchSelect String msg
+withMatchAsQuery =
+    withMatchToQuery identity
 
 
 when : Bool -> (SearchSelect a msg -> SearchSelect a msg) -> SearchSelect a msg -> SearchSelect a msg
@@ -153,7 +165,8 @@ map : (msgA -> msgB) -> SearchSelect a msgA -> SearchSelect a msgB
 map f s =
     { search = s.search
     , updateSearchMsg = s.updateSearchMsg >> f
-    , selectMatchMsg = s.selectMatchMsg >> f
+    , selectMatchMsg = \a search -> s.selectMatchMsg a search |> f
+    , matchToQuery = s.matchToQuery
     , placeholder = s.placeholder
     , autofocus = False
     , emptyState = Nothing
@@ -236,6 +249,14 @@ toEvents select =
                 Nothing ->
                     select.search
 
+        postSelectionSearch a =
+            case select.matchToQuery of
+                Just toString ->
+                    Search.withQuery (toString a) Search.empty
+
+                Nothing ->
+                    Search.empty
+
         keyMsg =
             let
                 handle key =
@@ -244,7 +265,7 @@ toEvents select =
                             case Search.searchResultsFocus searchForCycling of
                                 Just a ->
                                     Json.succeed
-                                        { message = select.selectMatchMsg a
+                                        { message = select.selectMatchMsg a (postSelectionSearch a)
                                         , preventDefault = False
                                         , stopPropagation = False
                                         }
@@ -350,7 +371,18 @@ view viewMatch select =
                     ( "search-select sheet-below", [ textField, searchSheet ] )
     in
     node "search"
-        [ class positionClass, Html.Events.custom "keydown" events.keyMsg ]
+        [ class positionClass
+        , Html.Events.custom "keydown" events.keyMsg
+        , Html.Events.preventDefaultOn "mousedown"
+            (Json.map
+                (\tagName ->
+                    ( select.updateSearchMsg select.search
+                    , String.toUpper tagName /= "INPUT"
+                    )
+                )
+                (Json.at [ "target", "tagName" ] Json.string)
+            )
+        ]
         [ div [ class "search-select_inner" ]
             innerChildren
         ]

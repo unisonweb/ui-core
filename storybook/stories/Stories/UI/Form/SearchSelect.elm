@@ -25,14 +25,14 @@ type alias Model =
 
 type Msg
     = UpdateFruitSearch (Search String)
-    | SelectFruit String
+    | SelectFruit String (Search String)
     | UpdateFruitWithCompletionSearch (Search String)
     | AcceptFruitCompletion String
-    | SelectFruitWithCompletion String
+    | SelectFruitWithCompletion String (Search String)
     | UpdateFruitAboveSearch (Search String)
-    | SelectFruitAbove String
+    | SelectFruitAbove String (Search String)
     | UpdateFruitLimitedSearch (Search String)
-    | SelectFruitLimited String
+    | SelectFruitLimited String (Search String)
 
 
 fruits : List String
@@ -154,8 +154,8 @@ update msg model =
             in
             ( { model | fruitSearch = newSearch }, Cmd.none )
 
-        SelectFruit fruit ->
-            ( { model | selectedFruit = Just fruit, fruitSearch = Search.empty }, Cmd.none )
+        SelectFruit fruit newSearch ->
+            ( { model | selectedFruit = Just fruit, fruitSearch = newSearch }, Cmd.none )
 
         UpdateFruitWithCompletionSearch search ->
             let
@@ -195,10 +195,10 @@ update msg model =
         AcceptFruitCompletion query ->
             update (UpdateFruitWithCompletionSearch (Search.withQuery query model.fruitWithCompletionSearch)) model
 
-        SelectFruitWithCompletion fruit ->
+        SelectFruitWithCompletion fruit newSearch ->
             ( { model
                 | selectedFruitWithCompletion = Just fruit
-                , fruitWithCompletionSearch = Search.empty
+                , fruitWithCompletionSearch = newSearch
                 , fruitQueryCompletion = Search.empty
               }
             , Cmd.none
@@ -223,8 +223,8 @@ update msg model =
             in
             ( { model | fruitAboveSearch = newSearch }, Cmd.none )
 
-        SelectFruitAbove fruit ->
-            ( { model | selectedFruitAbove = Just fruit, fruitAboveSearch = Search.empty }, Cmd.none )
+        SelectFruitAbove fruit newSearch ->
+            ( { model | selectedFruitAbove = Just fruit, fruitAboveSearch = newSearch }, Cmd.none )
 
         UpdateFruitLimitedSearch search ->
             let
@@ -245,16 +245,16 @@ update msg model =
             in
             ( { model | fruitLimitedSearch = newSearch }, Cmd.none )
 
-        SelectFruitLimited fruit ->
-            ( { model | selectedFruitLimited = Just fruit, fruitLimitedSearch = Search.empty }, Cmd.none )
+        SelectFruitLimited fruit newSearch ->
+            ( { model | selectedFruitLimited = Just fruit, fruitLimitedSearch = newSearch }, Cmd.none )
 
 
-viewMatch : (String -> Msg) -> String -> Bool -> Html Msg
+viewMatch : (String -> Search String -> Msg) -> String -> Bool -> Html Msg
 viewMatch selectMsg item isFocused =
     div
         [ class "search-select_match"
         , classList [ ( "is-focused", isFocused ) ]
-        , onClick (selectMsg item)
+        , onClick (selectMsg item (Search.withQuery item Search.empty))
         ]
         [ text item ]
 
@@ -296,24 +296,28 @@ view model =
         fruitSelect =
             SearchSelect.searchSelect model.fruitSearch UpdateFruitSearch SelectFruit
                 |> SearchSelect.withPlaceholder "Search fruits..."
+                |> SearchSelect.withMatchAsQuery
                 |> SearchSelect.view (viewMatch SelectFruit)
 
         fruitSelectWithCompletion =
             SearchSelect.searchSelect model.fruitWithCompletionSearch UpdateFruitWithCompletionSearch SelectFruitWithCompletion
                 |> SearchSelect.withPlaceholder "Search fruits..."
                 |> SearchSelect.withQueryCompletion { search = model.fruitQueryCompletion, acceptMsg = AcceptFruitCompletion }
+                |> SearchSelect.withMatchAsQuery
                 |> SearchSelect.view (viewMatch SelectFruitWithCompletion)
 
         fruitSelectAbove =
             SearchSelect.searchSelect model.fruitAboveSearch UpdateFruitAboveSearch SelectFruitAbove
                 |> SearchSelect.withPlaceholder "Search fruits..."
                 |> SearchSelect.withSheetAbove
+                |> SearchSelect.withMatchAsQuery
                 |> SearchSelect.view (viewMatch SelectFruitAbove)
 
         fruitSelectLimited =
             SearchSelect.searchSelect model.fruitLimitedSearch UpdateFruitLimitedSearch SelectFruitLimited
                 |> SearchSelect.withPlaceholder "Search fruits..."
                 |> SearchSelect.withMaxResults 5
+                |> SearchSelect.withMatchAsQuery
                 |> SearchSelect.view (viewMatch SelectFruitLimited)
     in
     rows

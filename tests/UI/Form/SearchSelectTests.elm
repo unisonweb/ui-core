@@ -13,7 +13,8 @@ import UI.Form.SearchSelect as SearchSelect exposing (SearchSelect)
 
 type Msg
     = UpdateSearch (Search String)
-    | SelectItem String
+    | SelectItem String (Search String)
+    | Ignore
 
 
 searchSelectBelow : Search String -> SearchSelect String Msg
