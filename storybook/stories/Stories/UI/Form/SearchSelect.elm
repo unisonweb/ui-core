@@ -16,6 +16,10 @@ type alias Model =
     , fruitWithCompletionSearch : Search String
     , fruitQueryCompletion : Search String
     , selectedFruitWithCompletion : Maybe String
+    , fruitAboveSearch : Search String
+    , selectedFruitAbove : Maybe String
+    , fruitLimitedSearch : Search String
+    , selectedFruitLimited : Maybe String
     }
 
 
@@ -25,6 +29,10 @@ type Msg
     | UpdateFruitWithCompletionSearch (Search String)
     | AcceptFruitCompletion String
     | SelectFruitWithCompletion String
+    | UpdateFruitAboveSearch (Search String)
+    | SelectFruitAbove String
+    | UpdateFruitLimitedSearch (Search String)
+    | SelectFruitLimited String
 
 
 fruits : List String
@@ -104,6 +112,10 @@ main =
                   , fruitWithCompletionSearch = Search.empty
                   , fruitQueryCompletion = Search.empty
                   , selectedFruitWithCompletion = Nothing
+                  , fruitAboveSearch = Search.empty
+                  , selectedFruitAbove = Nothing
+                  , fruitLimitedSearch = Search.empty
+                  , selectedFruitLimited = Nothing
                   }
                 , Cmd.none
                 )
@@ -192,6 +204,50 @@ update msg model =
             , Cmd.none
             )
 
+        UpdateFruitAboveSearch search ->
+            let
+                q =
+                    Search.query search
+
+                newSearch =
+                    if String.isEmpty q then
+                        Search.empty
+
+                    else
+                        case search of
+                            Search.Success _ _ ->
+                                search
+
+                            _ ->
+                                Search.fromList q (filterItems fruits q)
+            in
+            ( { model | fruitAboveSearch = newSearch }, Cmd.none )
+
+        SelectFruitAbove fruit ->
+            ( { model | selectedFruitAbove = Just fruit, fruitAboveSearch = Search.empty }, Cmd.none )
+
+        UpdateFruitLimitedSearch search ->
+            let
+                q =
+                    Search.query search
+
+                newSearch =
+                    if String.isEmpty q then
+                        Search.empty
+
+                    else
+                        case search of
+                            Search.Success _ _ ->
+                                search
+
+                            _ ->
+                                Search.fromList q (filterItems fruits q)
+            in
+            ( { model | fruitLimitedSearch = newSearch }, Cmd.none )
+
+        SelectFruitLimited fruit ->
+            ( { model | selectedFruitLimited = Just fruit, fruitLimitedSearch = Search.empty }, Cmd.none )
+
 
 viewMatch : (String -> Msg) -> String -> Bool -> Html Msg
 viewMatch selectMsg item isFocused =
@@ -212,6 +268,28 @@ selectedLabel selected =
         [ text ("Selected: " ++ Maybe.withDefault "No selection" selected) ]
 
 
+exampleLabel : String -> Html Msg
+exampleLabel label =
+    div
+        [ style "font-size" "var(--font-size-small)"
+        , style "font-weight" "500"
+        , style "color" "var(--u-color_text_subdued)"
+        , style "text-transform" "uppercase"
+        , style "letter-spacing" "0.05em"
+        ]
+        [ text label ]
+
+
+example : String -> List (Html Msg) -> Html Msg
+example label children =
+    div
+        [ style "display" "flex"
+        , style "flex-direction" "column"
+        , style "gap" "0.5rem"
+        ]
+        (exampleLabel label :: children)
+
+
 view : Model -> Html Msg
 view model =
     let
@@ -225,23 +303,35 @@ view model =
                 |> SearchSelect.withPlaceholder "Search fruits..."
                 |> SearchSelect.withQueryCompletion { search = model.fruitQueryCompletion, acceptMsg = AcceptFruitCompletion }
                 |> SearchSelect.view (viewMatch SelectFruitWithCompletion)
+
+        fruitSelectAbove =
+            SearchSelect.searchSelect model.fruitAboveSearch UpdateFruitAboveSearch SelectFruitAbove
+                |> SearchSelect.withPlaceholder "Search fruits..."
+                |> SearchSelect.withSheetAbove
+                |> SearchSelect.view (viewMatch SelectFruitAbove)
+
+        fruitSelectLimited =
+            SearchSelect.searchSelect model.fruitLimitedSearch UpdateFruitLimitedSearch SelectFruitLimited
+                |> SearchSelect.withPlaceholder "Search fruits..."
+                |> SearchSelect.withMaxResults 5
+                |> SearchSelect.view (viewMatch SelectFruitLimited)
     in
     rows
-        [ style "gap" "2rem", style "padding" "1.5rem" ]
-        [ div
-            [ style "display" "flex"
-            , style "flex-direction" "column"
-            , style "gap" "0.5rem"
-            ]
+        [ style "gap" "2rem", style "padding" "1.5rem", style "padding-top" "8rem", style "flex-wrap" "wrap" ]
+        [ example "Default"
             [ fruitSelect
             , selectedLabel model.selectedFruit
             ]
-        , div
-            [ style "display" "flex"
-            , style "flex-direction" "column"
-            , style "gap" "0.5rem"
-            ]
+        , example "Query completion"
             [ fruitSelectWithCompletion
             , selectedLabel model.selectedFruitWithCompletion
+            ]
+        , example "Sheet above"
+            [ fruitSelectAbove
+            , selectedLabel model.selectedFruitAbove
+            ]
+        , example "Max results (5)"
+            [ fruitSelectLimited
+            , selectedLabel model.selectedFruitLimited
             ]
         ]

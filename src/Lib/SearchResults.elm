@@ -103,7 +103,8 @@ mapMatches f results =
             SearchResults (Matches (Zipper.map f matches))
 
 
-{-| Limit the number of results
+{-| Limit the number of results, preserving the focused item when it falls
+within the limit. If the focus is beyond the limit, focus resets to the first.
 -}
 take : Int -> SearchResults a -> SearchResults a
 take n results =
@@ -112,15 +113,27 @@ take n results =
             Empty
 
         SearchResults (Matches matches) ->
-            SearchResults
-                (Matches
-                    (matches
-                        |> Zipper.toList
-                        |> List.take n
-                        |> Zipper.fromList
-                        |> Maybe.withDefault matches
-                    )
-                )
+            let
+                before =
+                    Zipper.before matches
+
+                focusIndex =
+                    List.length before
+            in
+            if focusIndex < n then
+                let
+                    limitedAfter =
+                        List.take (n - focusIndex - 1) (Zipper.after matches)
+                in
+                SearchResults (Matches (Zipper.from before (Zipper.current matches) limitedAfter))
+
+            else
+                matches
+                    |> Zipper.toList
+                    |> List.take n
+                    |> Zipper.fromList
+                    |> Maybe.map (Matches >> SearchResults)
+                    |> Maybe.withDefault Empty
 
 
 mapToList : (a -> Bool -> b) -> SearchResults a -> List b

@@ -25,6 +25,7 @@ module Lib.Search exposing
     , searchResultsFocus
     , searchResultsNext
     , searchResultsPrev
+    , searchResultsTake
     , toFailure
     , toSearching
     , toSuccess
@@ -284,6 +285,16 @@ searchResultsNext s =
     case s of
         Success q r ->
             Success q (SearchResults.next r)
+
+        _ ->
+            s
+
+
+searchResultsTake : Int -> Search a -> Search a
+searchResultsTake n s =
+    case s of
+        Success q r ->
+            Success q (SearchResults.take n r)
 
         _ ->
             s

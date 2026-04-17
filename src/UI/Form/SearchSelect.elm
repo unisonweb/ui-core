@@ -19,6 +19,11 @@ type alias QueryCompletion msg =
     }
 
 
+type SheetPosition
+    = Above
+    | Below
+
+
 type alias SearchSelect a msg =
     { search : Search a
     , updateSearchMsg : Search a -> msg
@@ -27,6 +32,8 @@ type alias SearchSelect a msg =
     , emptyState : Maybe (Html msg)
     , autofocus : Bool
     , queryCompletion : Maybe (QueryCompletion msg)
+    , sheetPosition : SheetPosition
+    , maxResults : Maybe Int
     }
 
 
@@ -53,6 +60,8 @@ searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
     , autofocus = False
     , emptyState = Nothing
     , queryCompletion = Nothing
+    , sheetPosition = Below
+    , maxResults = Nothing
     }
 
 
@@ -83,6 +92,16 @@ withAutofocus select =
 withQueryCompletion : QueryCompletion msg -> SearchSelect a msg -> SearchSelect a msg
 withQueryCompletion queryCompletion select =
     { select | queryCompletion = Just queryCompletion }
+
+
+withSheetAbove : SearchSelect a msg -> SearchSelect a msg
+withSheetAbove select =
+    { select | sheetPosition = Above }
+
+
+withMaxResults : Int -> SearchSelect a msg -> SearchSelect a msg
+withMaxResults n select =
+    { select | maxResults = Just n }
 
 
 when : Bool -> (SearchSelect a msg -> SearchSelect a msg) -> SearchSelect a msg -> SearchSelect a msg
@@ -140,6 +159,8 @@ map f s =
     , emptyState = Nothing
     , queryCompletion =
         Maybe.map (mapQueryCompletion f) s.queryCompletion
+    , sheetPosition = s.sheetPosition
+    , maxResults = s.maxResults
     }
 
 
@@ -147,16 +168,36 @@ map f s =
 -- VIEW
 
 
-viewSheet : (a -> Bool -> Html msg) -> Html msg -> Search a -> Html msg
-viewSheet viewMatch emptyState search =
+viewSheet : SheetPosition -> Maybe Int -> (a -> Bool -> Html msg) -> Html msg -> Search a -> Html msg
+viewSheet position maxResults viewMatch emptyState search =
     let
         viewSheet_ r =
-            if SearchResults.isEmpty r then
+            let
+                limited =
+                    case maxResults of
+                        Just n ->
+                            SearchResults.take n r
+
+                        Nothing ->
+                            r
+            in
+            if SearchResults.isEmpty limited then
                 div [ class "search-select_sheet" ] [ emptyState ]
 
             else
-                div [ class "search-select_sheet" ]
-                    (SearchResults.mapToList viewMatch r)
+                let
+                    matches =
+                        SearchResults.mapToList viewMatch limited
+
+                    orderedMatches =
+                        case position of
+                            Above ->
+                                List.reverse matches
+
+                            Below ->
+                                matches
+                in
+                div [ class "search-select_sheet" ] orderedMatches
     in
     if Search.isNotAsked search then
         UI.nothing
@@ -187,12 +228,20 @@ type alias Events msg =
 toEvents : SearchSelect a msg -> Events msg
 toEvents select =
     let
+        searchForCycling =
+            case select.maxResults of
+                Just n ->
+                    Search.searchResultsTake n select.search
+
+                Nothing ->
+                    select.search
+
         keyMsg =
             let
                 handle key =
                     case key of
                         Key.Enter ->
-                            case Search.searchResultsFocus select.search of
+                            case Search.searchResultsFocus searchForCycling of
                                 Just a ->
                                     Json.succeed
                                         { message = select.selectMatchMsg a
@@ -216,15 +265,33 @@ toEvents select =
                                     Json.fail "No query completion configuration"
 
                         Key.ArrowUp ->
+                            let
+                                cycled =
+                                    case select.sheetPosition of
+                                        Above ->
+                                            Search.searchResultsCycleNext searchForCycling
+
+                                        Below ->
+                                            Search.searchResultsCyclePrev searchForCycling
+                            in
                             Json.succeed
-                                { message = select.updateSearchMsg (Search.searchResultsCyclePrev select.search)
+                                { message = select.updateSearchMsg cycled
                                 , preventDefault = False
                                 , stopPropagation = False
                                 }
 
                         Key.ArrowDown ->
+                            let
+                                cycled =
+                                    case select.sheetPosition of
+                                        Above ->
+                                            Search.searchResultsCyclePrev searchForCycling
+
+                                        Below ->
+                                            Search.searchResultsCycleNext searchForCycling
+                            in
                             Json.succeed
-                                { message = select.updateSearchMsg (Search.searchResultsCycleNext select.search)
+                                { message = select.updateSearchMsg cycled
                                 , preventDefault = False
                                 , stopPropagation = False
                                 }
@@ -272,12 +339,18 @@ view viewMatch select =
             Maybe.withDefault viewDefaultEmptyState select.emptyState
 
         searchSheet =
-            viewSheet viewMatch emptyState select.search
+            viewSheet select.sheetPosition select.maxResults viewMatch emptyState select.search
+
+        ( positionClass, innerChildren ) =
+            case select.sheetPosition of
+                Above ->
+                    ( "search-select sheet-above", [ searchSheet, textField ] )
+
+                Below ->
+                    ( "search-select sheet-below", [ textField, searchSheet ] )
     in
     node "search"
-        [ class "search-select", Html.Events.custom "keydown" events.keyMsg ]
+        [ class positionClass, Html.Events.custom "keydown" events.keyMsg ]
         [ div [ class "search-select_inner" ]
-            [ textField
-            , searchSheet
-            ]
+            innerChildren
         ]

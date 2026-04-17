@@ -195,3 +195,39 @@ mapToList =
                 in
                 Expect.equal expected result
         ]
+
+
+take : Test
+take =
+    describe "SearchResults.take"
+        [ test "limits results to n items" <|
+            \_ ->
+                SearchResults.fromList [ "a", "b", "c", "d", "e" ]
+                    |> SearchResults.take 3
+                    |> SearchResults.toList
+                    |> Expect.equal [ "a", "b", "c" ]
+        , test "preserves focus when focus is within the limit" <|
+            \_ ->
+                SearchResults.from [ "a" ] "b" [ "c", "d", "e" ]
+                    |> SearchResults.take 3
+                    |> SearchResults.focus
+                    |> Expect.equal (Just "b")
+        , test "trims items after focus to stay within limit" <|
+            \_ ->
+                SearchResults.from [ "a" ] "b" [ "c", "d", "e" ]
+                    |> SearchResults.take 3
+                    |> SearchResults.toList
+                    |> Expect.equal [ "a", "b", "c" ]
+        , test "resets focus to first when focus is beyond the limit" <|
+            \_ ->
+                SearchResults.from [ "a", "b", "c" ] "d" [ "e" ]
+                    |> SearchResults.take 3
+                    |> SearchResults.focus
+                    |> Expect.equal (Just "a")
+        , test "returns all results when limit exceeds count" <|
+            \_ ->
+                SearchResults.fromList [ "a", "b", "c" ]
+                    |> SearchResults.take 10
+                    |> SearchResults.toList
+                    |> Expect.equal [ "a", "b", "c" ]
+        ]
