@@ -297,7 +297,7 @@ toEvents select =
                             in
                             Json.succeed
                                 { message = select.updateSearchMsg cycled
-                                , preventDefault = False
+                                , preventDefault = True
                                 , stopPropagation = False
                                 }
 
@@ -313,7 +313,7 @@ toEvents select =
                             in
                             Json.succeed
                                 { message = select.updateSearchMsg cycled
-                                , preventDefault = False
+                                , preventDefault = True
                                 , stopPropagation = False
                                 }
 
