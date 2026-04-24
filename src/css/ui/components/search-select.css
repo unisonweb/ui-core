@@ -1,7 +1,7 @@
 /* SearchSelect: a text field with a dropdown sheet of search results */
 
 .search-select {
-  --c-search-select_sheet_max-height: 5rem;
+  --c-search-select_sheet_max-height: 15rem;
 
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@
     display: none;
     background: var(--u-color_background);
     z-index: var(--layer-popover);
-    overflow: hidden;
+    overflow: auto;
     max-height: var(--c-search-select_sheet_max-height);
   }
 
