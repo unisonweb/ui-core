@@ -1,6 +1,8 @@
 /* SearchSelect: a text field with a dropdown sheet of search results */
 
 .search-select {
+  --c-search-select_sheet_max-height: 5rem;
+
   display: flex;
   flex-direction: column;
   position: relative;
@@ -30,6 +32,7 @@
     background: var(--u-color_background);
     z-index: var(--layer-popover);
     overflow: hidden;
+    max-height: var(--c-search-select_sheet_max-height);
   }
 
   &:focus-within .search-select_sheet {
