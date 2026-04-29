@@ -12,6 +12,12 @@ fromString name =
         "patch" ->
             Just Icon.patch
 
+        "curveArrowRight" ->
+            Just Icon.curveArrowRight
+
+        "curveArrowLeft" ->
+            Just Icon.curveArrowLeft
+
         "dataConstructor" ->
             Just Icon.dataConstructor
 
@@ -431,6 +437,15 @@ fromString name =
 
         "historyNode" ->
             Just Icon.historyNode
+
+        "truck" ->
+            Just Icon.truck
+
+        "box" ->
+            Just Icon.box
+
+        "gift" ->
+            Just Icon.gift
 
         _ ->
             kebabToCamel name
