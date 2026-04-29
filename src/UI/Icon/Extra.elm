@@ -441,8 +441,8 @@ fromString name =
         "truck" ->
             Just Icon.truck
 
-        "box" ->
-            Just Icon.box
+        "deliveryBox" ->
+            Just Icon.deliverybox
 
         "gift" ->
             Just Icon.gift
