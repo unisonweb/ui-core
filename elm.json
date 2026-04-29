@@ -41,6 +41,7 @@
         "UI.PageTitle",
         "UI.Click",
         "UI.Icon",
+        "UI.Icon.Extra",
         "UI.KeyboardShortcut",
         "UI.KeyboardShortcut.Key",
         "UI.KeyboardShortcut.KeyboardEvent",
