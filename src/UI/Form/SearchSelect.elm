@@ -212,15 +212,13 @@ viewSheet position maxResults viewMatch emptyState search =
                 in
                 div [ class "search-select_sheet" ] orderedMatches
     in
-    {-
-       if Search.isNotAsked search then
-           UI.nothing
+    if Search.isNotAsked search then
+        UI.nothing
 
-       else
-    -}
-    Search.searchResults search
-        |> Maybe.map viewSheet_
-        |> Maybe.withDefault UI.nothing
+    else
+        Search.searchResults search
+            |> Maybe.map viewSheet_
+            |> Maybe.withDefault UI.nothing
 
 
 viewDefaultEmptyState : Html msg
