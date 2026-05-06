@@ -35,6 +35,7 @@ type alias SearchSelect a msg =
     , queryCompletion : Maybe (QueryCompletion msg)
     , sheetPosition : SheetPosition
     , maxResults : Maybe Int
+    , classNames : List String
     }
 
 
@@ -64,6 +65,7 @@ searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
     , queryCompletion = Nothing
     , sheetPosition = Below
     , maxResults = Nothing
+    , classNames = []
     }
 
 
@@ -74,6 +76,16 @@ searchSelect_ search updateSearchMsg selectMatchMsg placeholder =
 withSearch : Search a -> SearchSelect a msg -> SearchSelect a msg
 withSearch s select =
     { select | search = s }
+
+
+withClassNames : List String -> SearchSelect a msg -> SearchSelect a msg
+withClassNames classNames select =
+    { select | classNames = classNames }
+
+
+withClassName : String -> SearchSelect a msg -> SearchSelect a msg
+withClassName className select =
+    { select | classNames = className :: select.classNames }
 
 
 withEmptyState : Html msg -> SearchSelect a msg -> SearchSelect a msg
@@ -174,6 +186,7 @@ map f s =
         Maybe.map (mapQueryCompletion f) s.queryCompletion
     , sheetPosition = s.sheetPosition
     , maxResults = s.maxResults
+    , classNames = s.classNames
     }
 
 
@@ -362,16 +375,22 @@ view viewMatch select =
         searchSheet =
             viewSheet select.sheetPosition select.maxResults viewMatch emptyState select.search
 
-        ( positionClass, innerChildren ) =
+        classes_ c =
+            "search-select"
+                :: c
+                :: select.classNames
+                |> String.join " "
+
+        ( classes, innerChildren ) =
             case select.sheetPosition of
                 Above ->
-                    ( "search-select sheet-above", [ searchSheet, textField ] )
+                    ( classes_ "sheet-above", [ searchSheet, textField ] )
 
                 Below ->
-                    ( "search-select sheet-below", [ textField, searchSheet ] )
+                    ( classes_ "sheet-below", [ textField, searchSheet ] )
     in
     node "search"
-        [ class positionClass
+        [ class classes
         , Html.Events.custom "keydown" events.keyMsg
         , Html.Events.preventDefaultOn "mousedown"
             (Json.map
