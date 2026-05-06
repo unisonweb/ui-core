@@ -11,6 +11,7 @@
   --c-search-select_match: transparent;
   --c-search-select_match_hovered: var(--u-color_element_hovered);
   --c-search-select_match_selected: var(--u-color_element_selected);
+  --c-search-select_match_text: var(--u-color_text);
 
   --c-search-select_field_height: 2.25rem;
   --c-search-select_font-size: var(--font-size-medium);
@@ -87,7 +88,8 @@
     padding: var(--c-search-select_match_padding);
     cursor: pointer;
     font-size: var(--c-search-select_match_font-size);
-    background: transparent;
+    color: var(--c-search-select_match_text);
+    background: var(--c-search-select_match);
   }
 
   .search-select_sheet .search-select_match:hover {
