@@ -2,6 +2,16 @@
 
 .search-select {
   --c-search-select_sheet_max-height: 15rem;
+  --c-search-select_background: var(--u-color_background);
+  --c-search-select_border: var(--u-color_border);
+  --c-search-select_border_hovered: var(--u-color_border_hovered);
+  --c-search-select_focus-border: var(--u-color_focus-border);
+  --c-search-select_focus-outline: var(--u-color_focus-outline);
+  --c-search-select_text: var(--u-color_text);
+  --c-search-select_text_subdued: var(--u-color_text_subdued);
+  --c-search-select_match: transparent;
+  --c-search-select_match_hovered: var(--u-color_element_hovered);
+  --c-search-select_match_selected: var(--u-color_element_selected);
 
   display: flex;
   flex-direction: column;
@@ -14,22 +24,22 @@
     left: 0;
     right: 0;
     border-radius: var(--border-radius-base);
-    border: 1px solid var(--u-color_border);
-    background: var(--u-color_background);
+    border: 1px solid var(--c-search-select_border);
+    background: var(--c-search-select_background);
 
     &:hover {
-      border-color: var(--u-color_border_hovered);
+      border-color: var(--c-search-select_border_hovered);
     }
 
     &:focus-within {
-      border-color: var(--u-color_focus-border);
-      box-shadow: 0 0 0 2px var(--u-color_focus-outline);
+      border-color: var(--c-search-select_focus-border);
+      box-shadow: 0 0 0 2px var(--c-search-select_focus-outline);
     }
   }
 
   .search-select_sheet {
     display: none;
-    background: var(--u-color_background);
+    background: var(--c-search-select_background);
     z-index: var(--layer-popover);
     overflow: auto;
     max-height: var(--c-search-select_sheet_max-height);
@@ -56,7 +66,7 @@
   .search-select_sheet_empty-state {
     padding: 0.75rem;
     font-size: var(--font-size-medium);
-    color: var(--u-color_text_subdued);
+    color: var(--c-search-select_text_subdued);
     text-align: center;
   }
 
@@ -68,11 +78,11 @@
   }
 
   .search-select_sheet .search-select_match:hover {
-    background: var(--u-color_element_hovered);
+    background: var(--search-select_match_hovered);
   }
 
   .search-select_sheet .search-select_match.is-focused {
-    background: var(--u-color_element_selected);
+    background: var(--search-select_match_selected);
   }
 
   &.sheet-below {
@@ -82,7 +92,7 @@
 
     .search-select_sheet {
       border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
-      border-top: 1px solid var(--u-color_border);
+      border-top: 1px solid var(--c-search-select_border);
       animation: slide-down 0.15s var(--anim-elastic);
     }
 
@@ -98,7 +108,7 @@
 
     .search-select_sheet {
       border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
-      border-bottom: 1px solid var(--u-color_border);
+      border-bottom: 1px solid var(--c-search-select_border);
       animation: slide-up 0.15s var(--anim-elastic);
     }
 
