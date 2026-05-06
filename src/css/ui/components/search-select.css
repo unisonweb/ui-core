@@ -1,7 +1,6 @@
 /* SearchSelect: a text field with a dropdown sheet of search results */
 
 .search-select {
-  --c-search-select_sheet_max-height: 15rem;
   --c-search-select_background: var(--u-color_background);
   --c-search-select_border: var(--u-color_border);
   --c-search-select_border_hovered: var(--u-color_border_hovered);
@@ -13,17 +12,30 @@
   --c-search-select_match_hovered: var(--u-color_element_hovered);
   --c-search-select_match_selected: var(--u-color_element_selected);
 
+  --c-search-select_field_height: 2.25rem;
+  --c-search-select_font-size: var(--font-size-medium);
+  --c-search-select_field_border-radius: var(--border-radius-base);
+
+  --c-search-select_sheet_max-height: 15rem;
+  --c-search-select_sheet_border-radius: var(--border-radius-base);
+
+  --c-search-select_empty-state_padding: 0.75rem;
+  --c-search-select_empty-state_font-size: var(--font-size-medium);
+
+  --c-search-select_match_font-size: var(--font-size-medium);
+  --c-search-select_match_padding: 0.5rem 0.75rem;
+
   display: flex;
   flex-direction: column;
   position: relative;
   width: 20rem;
-  height: 2.25rem;
+  height: var(--c-search-select_field_height);
 
   .search-select_inner {
     position: absolute;
     left: 0;
     right: 0;
-    border-radius: var(--border-radius-base);
+    border-radius: var(--c-search-select_field_border-radius);
     border: 1px solid var(--c-search-select_border);
     background: var(--c-search-select_background);
 
@@ -51,6 +63,7 @@
 
   .text-field input {
     border-color: transparent;
+    font-size: var(--c-search-select_field_font-size);
   }
 
   .text-field input:hover {
@@ -64,25 +77,25 @@
   }
 
   .search-select_sheet_empty-state {
-    padding: 0.75rem;
-    font-size: var(--font-size-medium);
+    padding: var(--c-search-select_empty-state_padding);
+    font-size: var(--c-search-select_empty-state_font-size);
     color: var(--c-search-select_text_subdued);
     text-align: center;
   }
 
   .search-select_sheet .search-select_match {
-    padding: 0.5rem 0.75rem;
+    padding: var(--c-search-select_match_padding);
     cursor: pointer;
-    font-size: var(--font-size-medium);
+    font-size: var(--c-search-select_match_font-size);
     background: transparent;
   }
 
   .search-select_sheet .search-select_match:hover {
-    background: var(--search-select_match_hovered);
+    background: var(--c-search-select_match_hovered);
   }
 
   .search-select_sheet .search-select_match.is-focused {
-    background: var(--search-select_match_selected);
+    background: var(--c-search-select_match_selected);
   }
 
   &.sheet-below {
@@ -91,13 +104,15 @@
     }
 
     .search-select_sheet {
-      border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
+      border-radius: 0 0 var(--c-search-select_sheet_border-radius)
+        var(--c-search-select_sheet_border-radius);
       border-top: 1px solid var(--c-search-select_border);
       animation: slide-down 0.15s var(--anim-elastic);
     }
 
     &:focus-within:has(.search-select_sheet) .text-field input {
-      border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
+      border-radius: var(--c-search-select_field_border-radius)
+        var(--c-search-select_field_border-radius) 0 0;
     }
   }
 
@@ -107,13 +122,15 @@
     }
 
     .search-select_sheet {
-      border-radius: var(--border-radius-base) var(--border-radius-base) 0 0;
+      border-radius: var(--c-search-select_sheet_border-radius)
+        var(--c-search-select_sheet_border-radius) 0 0;
       border-bottom: 1px solid var(--c-search-select_border);
       animation: slide-up 0.15s var(--anim-elastic);
     }
 
     &:focus-within:has(.search-select_sheet) .text-field input {
-      border-radius: 0 0 var(--border-radius-base) var(--border-radius-base);
+      border-radius: 0 0 var(--c-search-select_field_border-radius)
+        var(--c-search-select_field_border-radius);
     }
   }
 }
