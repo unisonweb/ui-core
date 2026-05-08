@@ -33,6 +33,11 @@
   --c-size_status-indicator_icon: 0.875rem;
 }
 
+.status-indicator.status-indicator_medium {
+  --c-size_status-indicator: 2rem;
+  --c-size_status-indicator_icon: 1.5rem;
+}
+
 .status-indicator.status-indicator_large {
   --c-size_status-indicator: 4rem;
   --c-size_status-indicator_icon: 2rem;

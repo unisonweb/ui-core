@@ -14,6 +14,7 @@ type Indicator
 
 type Size
     = Regular
+    | Medium
     | Large
 
 
@@ -61,6 +62,11 @@ large statusIndicator =
     withSize Large statusIndicator
 
 
+medium : StatusIndicator -> StatusIndicator
+medium statusIndicator =
+    withSize Medium statusIndicator
+
+
 regular : StatusIndicator -> StatusIndicator
 regular statusIndicator =
     withSize Regular statusIndicator
@@ -91,6 +97,9 @@ view { indicator, size } =
             case size of
                 Regular ->
                     "status-indicator_regular"
+
+                Medium ->
+                    "status-indicator_medium"
 
                 Large ->
                     "status-indicator_large"
