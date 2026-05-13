@@ -135,6 +135,10 @@
   overflow: hidden;
   /* to match the 1px border on the input */
   border: 1px solid transparent;
+
+  .text-field_ghost_typed {
+    color: transparent;
+  }
 }
 
 .text-field .text-field_input.text-field_with-icon .text-field_ghost {

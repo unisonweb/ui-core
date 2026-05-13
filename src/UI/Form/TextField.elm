@@ -1,6 +1,6 @@
 module UI.Form.TextField exposing (..)
 
-import Html exposing (Html, div, input, label, small, text, textarea)
+import Html exposing (Html, div, input, label, small, span, text, textarea)
 import Html.Attributes
     exposing
         ( autocomplete
@@ -325,10 +325,13 @@ view textField =
 
                 Just ghostValue ->
                     let
-                        adjustedGhost =
-                            textField.value ++ String.dropLeft (String.length textField.value) ghostValue
+                        suggested =
+                            String.dropLeft (String.length textField.value) ghostValue
                     in
-                    div [ class "text-field_ghost" ] [ text adjustedGhost ]
+                    div [ class "text-field_ghost" ]
+                        [ span [ class "text-field_ghost_typed" ] [ text textField.value ]
+                        , span [ class "text-field_ghost_suggested" ] [ text suggested ]
+                        ]
 
         ( iconEl, hasIcon ) =
             case textField.icon of
