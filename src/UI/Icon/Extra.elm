@@ -483,6 +483,9 @@ fromString name =
         "plane" ->
             Just Icon.plane
 
+        "arrowLeftRight" ->
+            Just Icon.arrowLeftRight
+
         _ ->
             kebabToCamel name
                 |> Maybe.andThen fromString
