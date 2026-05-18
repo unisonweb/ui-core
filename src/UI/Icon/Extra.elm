@@ -447,6 +447,42 @@ fromString name =
         "gift" ->
             Just Icon.gift
 
+        "shield" ->
+            Just Icon.shield
+
+        "headphones" ->
+            Just Icon.headphones
+
+        "seat" ->
+            Just Icon.seat
+
+        "seats" ->
+            Just Icon.seats
+
+        "accessibility" ->
+            Just Icon.accessibility
+
+        "documentLines" ->
+            Just Icon.documentLines
+
+        "building" ->
+            Just Icon.building
+
+        "deskClock" ->
+            Just Icon.deskClock
+
+        "alarmClock" ->
+            Just Icon.alarmClock
+
+        "luggage" ->
+            Just Icon.luggage
+
+        "briefcase" ->
+            Just Icon.briefcase
+
+        "plane" ->
+            Just Icon.plane
+
         _ ->
             kebabToCamel name
                 |> Maybe.andThen fromString
