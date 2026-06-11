@@ -3,6 +3,7 @@ module UI.DateTime exposing
     , DateTimeFormat(..)
     , decode
     , duration
+    , encode
     , fromISO8601
     , fromPosix
     , isAfter
@@ -24,6 +25,7 @@ import Html exposing (Html, span, text)
 import Html.Attributes exposing (class)
 import Iso8601
 import Json.Decode as Decode
+import Json.Encode as Encode
 import Time exposing (Posix)
 import UI.Tooltip as Tooltip
 
@@ -78,11 +80,6 @@ millisSinceEpoch (DateTime p) =
 secondsSinceEpoch : DateTime -> Int
 secondsSinceEpoch d =
     millisSinceEpoch d // 1000
-
-
-decode : Decode.Decoder DateTime
-decode =
-    Decode.map DateTime Iso8601.decoder
 
 
 fromISO8601 : String -> Maybe DateTime
@@ -233,6 +230,28 @@ duration start end =
     , minutes = minutes
     , seconds = seconds
     }
+
+
+
+-- ENCODE
+
+
+encode : DateTime -> Encode.Value
+encode d =
+    Encode.string (toISO8601 d)
+
+
+
+-- DECODE
+
+
+decode : Decode.Decoder DateTime
+decode =
+    Decode.map DateTime Iso8601.decoder
+
+
+
+-- VIEW
 
 
 view : DateTimeFormat -> Time.Zone -> DateTime -> Html msg
