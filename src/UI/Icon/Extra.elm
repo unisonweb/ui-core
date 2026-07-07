@@ -489,6 +489,9 @@ fromString name =
         "arrowLeftRight" ->
             Just Icon.arrowLeftRight
 
+        "endConversation" ->
+            Just Icon.endConversation
+
         _ ->
             kebabToCamel name
                 |> Maybe.andThen fromString
