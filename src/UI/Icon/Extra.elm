@@ -42,6 +42,9 @@ fromString name =
         "search" ->
             Just Icon.search
 
+        "swatchbook" ->
+            Just Icon.swatchbook
+
         "caretDown" ->
             Just Icon.caretDown
 
