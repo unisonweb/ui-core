@@ -36,6 +36,7 @@ type DateTime
 
 type DateTimeFormat
     = ShortDate
+    | ShortDateAndTime
     | LongDate
     | DistanceFrom DateTime
     | TimeWithSeconds24Hour
@@ -147,6 +148,22 @@ toString format zone (DateTime p) =
                 , DateFormat.dayOfMonthNumber
                 , DateFormat.text ", "
                 , DateFormat.yearNumber
+                ]
+                zone
+                p
+
+        ShortDateAndTime ->
+            DateFormat.format
+                [ DateFormat.monthNameAbbreviated
+                , DateFormat.text " "
+                , DateFormat.dayOfMonthNumber
+                , DateFormat.text ", "
+                , DateFormat.yearNumber
+                , DateFormat.text ", "
+                , DateFormat.hourNumber
+                , DateFormat.text ":"
+                , DateFormat.minuteFixed
+                , DateFormat.amPmLowercase
                 ]
                 zone
                 p
