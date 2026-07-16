@@ -157,7 +157,7 @@ toString format zone (DateTime p) =
                 [ DateFormat.monthNameAbbreviated
                 , DateFormat.text " "
                 , DateFormat.dayOfMonthNumber
-                , DateFormat.text ", "
+                , DateFormat.text " "
                 , DateFormat.yearNumber
                 , DateFormat.text ", "
                 , DateFormat.hourNumber
