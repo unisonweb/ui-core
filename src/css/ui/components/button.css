@@ -399,6 +399,31 @@ a.button:hover {
   pointer-events: none;
 }
 
+/* -- Shape -------------------------------------------------------------------- */
+
+.button.shape-square {
+  border-radius: var(--border-radius-base);
+}
+
+/* corner-shape isn't supported everywhere; unsupporting browsers fall back
+   to a plain rounded square at a more modest radius. */
+.button.shape-squircle {
+  border-radius: calc(2 * var(--border-radius-base));
+}
+
+@supports (corner-shape: squircle) {
+  .button.shape-squircle {
+    border-radius: calc(4 * var(--border-radius-base));
+    corner-shape: squircle;
+  }
+}
+
+/* A radius larger than half the button's height clamps to a full pill;
+   on square, icon-only buttons that same clamp yields a perfect circle. */
+.button.shape-pill {
+  border-radius: 9999px;
+}
+
 /* -- Loading ---------------------------------------------------------------- */
 
 .button.button_loading {

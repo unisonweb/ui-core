@@ -32,6 +32,13 @@ elements =
     , B.button UserClicked "Loading" |> B.emphasized |> B.loading
     , B.button UserClicked "Loading" |> B.outlined |> B.loading
     , B.icon UserClicked I.unisonMark |> B.loading
+    , B.button UserClicked "Pill" |> B.pill
+    , B.button UserClicked "Pill" |> B.emphasized |> B.pill
+    , B.icon UserClicked I.unisonMark |> B.pill
+    , B.icon UserClicked I.unisonMark |> B.pill |> B.loading
+    , B.button UserClicked "Squircle" |> B.squircle
+    , B.button UserClicked "Squircle" |> B.emphasized |> B.squircle
+    , B.icon UserClicked I.unisonMark |> B.squircle
     ]
 
 

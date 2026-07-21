@@ -1,6 +1,7 @@
 module UI.Button exposing
     ( Button
     , Color(..)
+    , Shape(..)
     , Size(..)
     , active
     , button
@@ -27,9 +28,12 @@ module UI.Button exposing
     , notActive
     , notLoading
     , outlined
+    , pill
     , positive
     , preventDefault
     , small
+    , square
+    , squircle
     , stopPropagation
     , subdued
     , view
@@ -46,6 +50,7 @@ module UI.Button exposing
     , withIconsBeforeAndAfterLabel
     , withIsActive
     , withIsLoading
+    , withShape
     , withSize
     )
 
@@ -70,6 +75,7 @@ type alias Button msg =
     , size : Size
     , isActive : Bool
     , isLoading : Bool
+    , shape : Shape
     , className : String
     , domId : Maybe String
     }
@@ -106,6 +112,7 @@ map toMsg buttonA =
     , size = buttonA.size
     , isActive = False
     , isLoading = buttonA.isLoading
+    , shape = buttonA.shape
     , className = buttonA.className
     , domId = Nothing
     }
@@ -124,6 +131,7 @@ button_ click label =
     , size = Medium
     , isActive = False
     , isLoading = False
+    , shape = Square
     , className = ""
     , domId = Nothing
     }
@@ -142,6 +150,7 @@ icon_ click icon__ =
     , size = Medium
     , isActive = False
     , isLoading = False
+    , shape = Square
     , className = ""
     , domId = Nothing
     }
@@ -160,6 +169,7 @@ iconThenLabel_ click icon__ label =
     , size = Medium
     , isActive = False
     , isLoading = False
+    , shape = Square
     , className = ""
     , domId = Nothing
     }
@@ -178,6 +188,7 @@ labelThenIcon_ click label icon__ =
     , size = Medium
     , isActive = False
     , isLoading = False
+    , shape = Square
     , className = ""
     , domId = Nothing
     }
@@ -196,6 +207,7 @@ iconThenLabelThenIcon_ click iconBefore label iconAfter =
     , size = Medium
     , isActive = False
     , isLoading = False
+    , shape = Square
     , className = ""
     , domId = Nothing
     }
@@ -220,7 +232,7 @@ preventDefault button__ =
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, color, click, size, isActive, isLoading, className, domId } =
+view { content, color, click, size, isActive, isLoading, shape, className, domId } =
     let
         domIdAttr =
             case domId of
@@ -258,6 +270,7 @@ view { content, color, click, size, isActive, isLoading, className, domId } =
             [ class "button"
             , class (colorToClassName color)
             , class (sizeToClassName size)
+            , class (shapeToClassName shape)
             , class contentType
             , class className
             , classList
@@ -542,6 +555,36 @@ withSize size button__ =
 
 
 
+-- SHAPES
+
+
+type Shape
+    = Square
+    | Squircle
+    | Pill
+
+
+square : Button clickMsg -> Button clickMsg
+square =
+    withShape Square
+
+
+squircle : Button clickMsg -> Button clickMsg
+squircle =
+    withShape Squircle
+
+
+pill : Button clickMsg -> Button clickMsg
+pill =
+    withShape Pill
+
+
+withShape : Shape -> Button clickMsg -> Button clickMsg
+withShape shape button__ =
+    { button__ | shape = shape }
+
+
+
 -- COMMON INSTANCES
 
 
@@ -594,3 +637,16 @@ colorToClassName color =
 
         Positive ->
             "positive"
+
+
+shapeToClassName : Shape -> String
+shapeToClassName shape =
+    case shape of
+        Square ->
+            "shape-square"
+
+        Squircle ->
+            "shape-squircle"
+
+        Pill ->
+            "shape-pill"
