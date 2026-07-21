@@ -398,3 +398,101 @@ a.button:hover {
   opacity: 0.25;
   pointer-events: none;
 }
+
+/* -- Loading ---------------------------------------------------------------- */
+
+.button.button_loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.button_content {
+  display: inline-flex;
+  align-items: inherit;
+  justify-content: inherit;
+  gap: inherit;
+}
+
+.button.button_loading .button_content {
+  opacity: 0;
+}
+
+.button_loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  background-color: inherit;
+}
+
+.button_loading-indicator {
+  --c-size_button-loading-indicator: 0.625rem;
+
+  position: relative;
+  width: 75%;
+  height: var(--c-size_button-loading-indicator);
+}
+
+.button.small .button_loading-indicator {
+  --c-size_button-loading-indicator: 0.5rem;
+}
+
+.button.large .button_loading-indicator {
+  --c-size_button-loading-indicator: 0.75rem;
+}
+
+.button.content-icon .button_loading-indicator {
+  width: var(--c-size_button-loading-indicator);
+}
+
+.button_loading-indicator_track {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--c-size_button-loading-indicator);
+  background: currentColor;
+  opacity: 0.25;
+}
+
+.button.content-icon .button_loading-indicator_track {
+  display: none;
+}
+
+.button_loading-indicator_ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--c-size_button-loading-indicator);
+  height: var(--c-size_button-loading-indicator);
+  border-radius: 50%;
+  background: currentColor;
+  animation: button-loading-indicator_roll 2.4s cubic-bezier(0.76, 0, 0.24, 1)
+    infinite;
+}
+
+.button.content-icon .button_loading-indicator_ball {
+  left: 50%;
+  transform: translateX(-50%);
+  animation: button-loading-indicator_pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes button-loading-indicator_roll {
+  0%,
+  100% {
+    left: 0;
+  }
+  50% {
+    left: calc(100% - var(--c-size_button-loading-indicator));
+  }
+}
+
+@keyframes button-loading-indicator_pulse {
+  0%,
+  100% {
+    transform: translateX(-50%) scale3D(1, 1, 1);
+  }
+  50% {
+    transform: translateX(-50%) scale3D(1.5, 1.5, 1.5);
+  }
+}

@@ -28,6 +28,10 @@ elements =
     , B.iconThenLabel UserClicked I.unisonMark "Icon then Label"
     , B.labelThenIcon UserClicked "Label then Icon" I.unisonMark
     , B.iconThenLabelThenIcon UserClicked I.unisonMark "Icon then Label then Icon" I.caretDown
+    , B.button UserClicked "Loading" |> B.loading
+    , B.button UserClicked "Loading" |> B.emphasized |> B.loading
+    , B.button UserClicked "Loading" |> B.outlined |> B.loading
+    , B.icon UserClicked I.unisonMark |> B.loading
     ]
 
 

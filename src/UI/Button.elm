@@ -21,9 +21,11 @@ module UI.Button exposing
     , labelThenIcon
     , labelThenIcon_
     , large
+    , loading
     , map
     , medium
     , notActive
+    , notLoading
     , outlined
     , positive
     , preventDefault
@@ -43,10 +45,11 @@ module UI.Button exposing
     , withIconBeforeLabel
     , withIconsBeforeAndAfterLabel
     , withIsActive
+    , withIsLoading
     , withSize
     )
 
-import Html exposing (Html, a, text)
+import Html exposing (Html, a, div, text)
 import Html.Attributes exposing (class, classList, id)
 import UI.Click as Click exposing (Click(..))
 import UI.Icon as I
@@ -66,6 +69,7 @@ type alias Button msg =
     , color : Color
     , size : Size
     , isActive : Bool
+    , isLoading : Bool
     , className : String
     , domId : Maybe String
     }
@@ -101,6 +105,7 @@ map toMsg buttonA =
     , color = buttonA.color
     , size = buttonA.size
     , isActive = False
+    , isLoading = buttonA.isLoading
     , className = buttonA.className
     , domId = Nothing
     }
@@ -118,6 +123,7 @@ button_ click label =
     , color = Default
     , size = Medium
     , isActive = False
+    , isLoading = False
     , className = ""
     , domId = Nothing
     }
@@ -135,6 +141,7 @@ icon_ click icon__ =
     , color = Default
     , size = Medium
     , isActive = False
+    , isLoading = False
     , className = ""
     , domId = Nothing
     }
@@ -152,6 +159,7 @@ iconThenLabel_ click icon__ label =
     , color = Default
     , size = Medium
     , isActive = False
+    , isLoading = False
     , className = ""
     , domId = Nothing
     }
@@ -169,6 +177,7 @@ labelThenIcon_ click label icon__ =
     , color = Default
     , size = Medium
     , isActive = False
+    , isLoading = False
     , className = ""
     , domId = Nothing
     }
@@ -186,6 +195,7 @@ iconThenLabelThenIcon_ click iconBefore label iconAfter =
     , color = Default
     , size = Medium
     , isActive = False
+    , isLoading = False
     , className = ""
     , domId = Nothing
     }
@@ -210,7 +220,7 @@ preventDefault button__ =
 
 
 view : Button clickMsg -> Html clickMsg
-view { content, color, click, size, isActive, className, domId } =
+view { content, color, click, size, isActive, isLoading, className, domId } =
     let
         domIdAttr =
             case domId of
@@ -220,7 +230,7 @@ view { content, color, click, size, isActive, className, domId } =
                 Nothing ->
                     []
 
-        ( contentType, content_ ) =
+        ( contentType, content__ ) =
             case content of
                 Icon i ->
                     ( "content-icon", [ I.view i ] )
@@ -237,13 +247,23 @@ view { content, color, click, size, isActive, className, domId } =
                 Label l ->
                     ( "content-label", [ text l ] )
 
+        content_ =
+            if isLoading then
+                [ Html.span [ class "button_content" ] content__, loadingIndicator ]
+
+            else
+                content__
+
         attrs =
             [ class "button"
             , class (colorToClassName color)
             , class (sizeToClassName size)
             , class contentType
             , class className
-            , classList [ ( "button_active", isActive ) ]
+            , classList
+                [ ( "button_active", isActive )
+                , ( "button_loading", isLoading )
+                ]
             ]
                 ++ domIdAttr
     in
@@ -259,6 +279,16 @@ view { content, color, click, size, isActive, className, domId } =
 
         Disabled ->
             Html.button (class "disabled" :: attrs) content_
+
+
+loadingIndicator : Html msg
+loadingIndicator =
+    div [ class "button_loading-overlay" ]
+        [ div [ class "button_loading-indicator" ]
+            [ div [ class "button_loading-indicator_track" ] []
+            , div [ class "button_loading-indicator_ball" ] []
+            ]
+        ]
 
 
 
@@ -365,6 +395,21 @@ active button__ =
 notActive : Button clickMsg -> Button clickMsg
 notActive button__ =
     withIsActive False button__
+
+
+withIsLoading : Bool -> Button clickMsg -> Button clickMsg
+withIsLoading isLoading button__ =
+    { button__ | isLoading = isLoading }
+
+
+loading : Button clickMsg -> Button clickMsg
+loading button__ =
+    withIsLoading True button__
+
+
+notLoading : Button clickMsg -> Button clickMsg
+notLoading button__ =
+    withIsLoading False button__
 
 
 withClick : Click msg -> Button msg -> Button msg
