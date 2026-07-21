@@ -279,16 +279,25 @@ view { content, color, click, size, isActive, isLoading, shape, className, domId
                 ]
             ]
                 ++ domIdAttr
+
+        clickAttrs =
+            if isLoading then
+                []
+
+            else
+                Click.attrs click
     in
     case click of
         OnClick _ _ ->
-            Html.button (Click.attrs click ++ attrs) content_
+            Html.button
+                (clickAttrs ++ attrs ++ [ Html.Attributes.disabled isLoading ])
+                content_
 
         ExternalHref _ _ ->
-            a (attrs ++ Click.attrs click) content_
+            a (attrs ++ clickAttrs) content_
 
         Href _ ->
-            a (attrs ++ Click.attrs click) content_
+            a (attrs ++ clickAttrs) content_
 
         Disabled ->
             Html.button (class "disabled" :: attrs) content_
