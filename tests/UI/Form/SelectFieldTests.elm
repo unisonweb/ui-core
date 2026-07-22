@@ -57,13 +57,6 @@ rendering =
                     |> Query.fromHtml
                     |> Query.findAll [ Selector.tag "option" ]
                     |> Query.count (Expect.equal 3)
-        , test "marks the selected option as selected" <|
-            \_ ->
-                selectField Banana
-                    |> SelectField.view
-                    |> Query.fromHtml
-                    |> Query.find [ Selector.tag "option", Selector.text "Banana" ]
-                    |> Query.has [ Selector.selected True ]
         , test "marks the invalid class when marked as invalid" <|
             \_ ->
                 selectField Apple

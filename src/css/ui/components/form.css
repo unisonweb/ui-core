@@ -348,7 +348,8 @@
   height: 2.25rem;
   border: 1px solid var(--c-color_form-field_border);
   border-radius: var(--border-radius-base);
-  padding: var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text_with-icon)
+  padding: var(--c-padding-y_form-field_text)
+    var(--c-padding-x_form-field_text_with-icon)
     var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text);
   font-size: var(--c-font-size_form-field_text);
   background-color: var(--c-color_form-field_background);
