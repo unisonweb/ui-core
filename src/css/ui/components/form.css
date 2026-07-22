@@ -358,7 +358,7 @@
 }
 
 .select-field select:hover {
-  border-color: var(--c-color_form-field_border_hovered);
+  border-color: var(--c-color_form-field_focus-border);
 }
 
 .select-field select:focus {
@@ -372,13 +372,19 @@
   opacity: 0.6;
 }
 
-.select-field .select-field_icon .icon {
+.select-field .select-field_icon {
   position: absolute;
-  top: 0.6875rem;
+  top: 0;
   right: 0.75rem;
-  font-size: var(--font-size-medium);
-  color: var(--c-color_form-field_icon_subdued);
+  height: 100%;
+  display: flex;
+  align-items: center;
   pointer-events: none;
+}
+
+.select-field .select-field_icon .icon {
+  font-size: var(--font-size-medium);
+  color: var(--u-color_icon);
 }
 
 .select-field.select-field_is-invalid .help-text {
