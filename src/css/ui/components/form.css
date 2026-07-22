@@ -358,7 +358,7 @@
 }
 
 .select-field select:hover {
-  border-color: var(--c-color_form-field_focus-border);
+  border-color: var(--c-color_form-field_border_hovered);
 }
 
 .select-field select:focus {
