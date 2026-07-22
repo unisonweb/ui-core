@@ -35,6 +35,7 @@
         "UI.Form.NumberField",
         "UI.Form.SearchSelect",
         "UI.Form.RadioField",
+        "UI.Form.SelectField",
         "UI.PageLayout",
         "UI.PageHeader",
         "UI.PageContent",

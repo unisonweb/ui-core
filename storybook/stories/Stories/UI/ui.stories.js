@@ -18,6 +18,7 @@ import Placeholder from "./Placeholder.elm";
 import StatusBanner from "./StatusBanner.elm";
 import TextField from "./Form/TextField.elm";
 import SearchSelect from "./Form/SearchSelect.elm";
+import SelectField from "./Form/SelectField.elm";
 
 export const banner = () => {
   return initElmStory(Banner.Elm.Stories.UI.Banner);
@@ -81,4 +82,8 @@ export const textField = () => {
 
 export const searchSelect = () => {
   return initElmStory(SearchSelect.Elm.Stories.UI.Form.SearchSelect);
+};
+
+export const selectField = () => {
+  return initElmStory(SelectField.Elm.Stories.UI.Form.SelectField);
 };

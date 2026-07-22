@@ -329,3 +329,58 @@
   display: flex;
   align-items: center;
 }
+
+/* -- SelectField ------------------------------------------------------------ */
+
+.select-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.select-field .select-field_input {
+  position: relative;
+}
+
+.select-field select {
+  appearance: none;
+  width: 100%;
+  height: 2.25rem;
+  border: 1px solid var(--c-color_form-field_border);
+  border-radius: var(--border-radius-base);
+  padding: var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text_with-icon)
+    var(--c-padding-y_form-field_text) var(--c-padding-x_form-field_text);
+  font-size: var(--c-font-size_form-field_text);
+  background-color: var(--c-color_form-field_background);
+  color: var(--c-color_form-field_text);
+  cursor: pointer;
+}
+
+.select-field select:hover {
+  border-color: var(--c-color_form-field_border_hovered);
+}
+
+.select-field select:focus {
+  outline: none;
+  border-color: var(--c-color_form-field_focus-border);
+  box-shadow: 0 0 0 2px var(--c-color_form-field_focus-outline);
+}
+
+.select-field select:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.select-field .select-field_icon .icon {
+  position: absolute;
+  top: 0.6875rem;
+  right: 0.75rem;
+  font-size: var(--font-size-medium);
+  color: var(--c-color_form-field_icon_subdued);
+  pointer-events: none;
+}
+
+.select-field.select-field_is-invalid .help-text {
+  color: var(--u-color_critical_text);
+  font-weight: bold;
+}
