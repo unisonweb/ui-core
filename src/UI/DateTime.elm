@@ -41,6 +41,8 @@ type DateTimeFormat
     | DistanceFrom DateTime
     | TimeWithSeconds24Hour
     | TimeWithSeconds12Hour
+    | HoursMins24Hour
+    | HoursMins12Hour Bool
     | FullDateTime
 
 
@@ -138,6 +140,36 @@ toString format zone (DateTime p) =
                 , DateFormat.text " "
                 , DateFormat.amPmLowercase
                 ]
+                zone
+                p
+
+        HoursMins24Hour ->
+            DateFormat.format
+                [ DateFormat.hourMilitaryFixed
+                , DateFormat.text ":"
+                , DateFormat.minuteFixed
+                ]
+                zone
+                p
+
+        HoursMins12Hour withAmPm ->
+            let
+                amPm =
+                    if withAmPm then
+                        [ DateFormat.text " "
+                        , DateFormat.amPmLowercase
+                        ]
+
+                    else
+                        []
+            in
+            DateFormat.format
+                ([ DateFormat.hourNumber
+                 , DateFormat.text ":"
+                 , DateFormat.minuteFixed
+                 ]
+                    ++ amPm
+                )
                 zone
                 p
 
