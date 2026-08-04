@@ -137,7 +137,6 @@ toString format zone (DateTime p) =
                 , DateFormat.minuteFixed
                 , DateFormat.text ":"
                 , DateFormat.secondFixed
-                , DateFormat.text " "
                 , DateFormat.amPmLowercase
                 ]
                 zone
@@ -156,9 +155,7 @@ toString format zone (DateTime p) =
             let
                 amPm =
                     if withAmPm then
-                        [ DateFormat.text " "
-                        , DateFormat.amPmLowercase
-                        ]
+                        [ DateFormat.amPmLowercase ]
 
                     else
                         []
