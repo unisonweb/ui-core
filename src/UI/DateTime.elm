@@ -12,7 +12,6 @@ module UI.DateTime exposing
     , millisDiff
     , millisSinceEpoch
     , secondsSinceEpoch
-    , toDayRangeString
     , toISO8601
     , toPosix
     , toString
@@ -46,6 +45,15 @@ type DateTimeFormat
     | HoursMins12Hour Bool
     | FullDateTime
     | ShortWeekdayAndDate
+      {- Formats the date passed to `toString`/`view` as the start of a range
+         ending at the given `DateTime`. `showYear` controls whether the year is
+         included when start and end fall in the same year. When `False`, the
+         year is generally omitted, unless that shared year is later than the
+         year of the given "now" `DateTime`, in which case it's included on
+         both. When start and end fall in different years, the year is always
+         included on both, regardless of `showYear`.
+      -}
+    | DayRange DateTime Bool DateTime
 
 
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
@@ -243,6 +251,62 @@ toString format zone (DateTime p) =
         DistanceFrom (DateTime from) ->
             DateFormat.Relative.relativeTime from p
 
+        DayRange (DateTime endPosix) showYear (DateTime nowPosix) ->
+            let
+                monthDay d =
+                    DateFormat.format
+                        [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber ]
+                        zone
+                        d
+
+                monthDayYear d =
+                    DateFormat.format
+                        [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber, DateFormat.text ", ", DateFormat.yearNumber ]
+                        zone
+                        d
+
+                year d =
+                    DateFormat.format [ DateFormat.yearNumber ] zone d
+
+                sameYear =
+                    Time.toYear zone p == Time.toYear zone endPosix
+
+                sameMonth =
+                    sameYear && Time.toMonth zone p == Time.toMonth zone endPosix
+
+                sameDay =
+                    sameMonth && Time.toDay zone p == Time.toDay zone endPosix
+
+                isFutureYear =
+                    sameYear && Time.toYear zone p > Time.toYear zone nowPosix
+
+                includeYear =
+                    showYear || isFutureYear
+            in
+            if sameDay then
+                if includeYear then
+                    monthDayYear p
+
+                else
+                    monthDay p
+
+            else if sameMonth then
+                if includeYear then
+                    monthDay p ++ "–" ++ String.fromInt (Time.toDay zone endPosix) ++ ", " ++ year endPosix
+
+                else
+                    monthDay p ++ "–" ++ String.fromInt (Time.toDay zone endPosix)
+
+            else if sameYear then
+                if includeYear then
+                    monthDay p ++ "–" ++ monthDay endPosix ++ ", " ++ year endPosix
+
+                else
+                    monthDay p ++ "–" ++ monthDay endPosix
+
+            else
+                monthDayYear p ++ "–" ++ monthDayYear endPosix
+
 
 {-| the diff between a and b in milliseconds
 -}
@@ -291,77 +355,6 @@ duration start end =
     , minutes = minutes
     , seconds = seconds
     }
-
-
-{-| `showYear` controls whether the year is included when `start` and `end`
-fall in the same year. When `False`, the year is generally omitted, unless
-that shared year is later than the year of `now`, in which case it's included
-on both. When `start` and `end` fall in different years, the year is always
-included on both, regardless of `showYear`.
--}
-toDayRangeString : Time.Zone -> DateTime -> Bool -> DateTime -> DateTime -> String
-toDayRangeString zone now showYear start end =
-    let
-        monthDay p =
-            DateFormat.format
-                [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber ]
-                zone
-                p
-
-        monthDayYear p =
-            DateFormat.format
-                [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber, DateFormat.text ", ", DateFormat.yearNumber ]
-                zone
-                p
-
-        year p =
-            DateFormat.format [ DateFormat.yearNumber ] zone p
-
-        startPosix =
-            toPosix start
-
-        endPosix =
-            toPosix end
-
-        sameYear =
-            Time.toYear zone startPosix == Time.toYear zone endPosix
-
-        sameMonth =
-            sameYear && Time.toMonth zone startPosix == Time.toMonth zone endPosix
-
-        sameDay =
-            sameMonth && Time.toDay zone startPosix == Time.toDay zone endPosix
-
-        isFutureYear =
-            sameYear && Time.toYear zone startPosix > Time.toYear zone (toPosix now)
-
-        includeYear =
-            showYear || isFutureYear
-    in
-    if sameDay then
-        if includeYear then
-            monthDayYear startPosix
-
-        else
-            monthDay startPosix
-
-    else if sameMonth then
-        if includeYear then
-            monthDay startPosix ++ "–" ++ String.fromInt (Time.toDay zone endPosix) ++ ", " ++ year endPosix
-
-        else
-            monthDay startPosix ++ "–" ++ String.fromInt (Time.toDay zone endPosix)
-
-    else if sameYear then
-        if includeYear then
-            monthDay startPosix ++ "–" ++ monthDay endPosix ++ ", " ++ year endPosix
-
-        else
-            monthDay startPosix ++ "–" ++ monthDay endPosix
-
-    else
-        monthDayYear startPosix ++ "–" ++ monthDayYear endPosix
-
 
 
 -- ENCODE
