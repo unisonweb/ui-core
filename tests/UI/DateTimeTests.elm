@@ -73,3 +73,53 @@ duration =
                 Maybe.map2 DateTime.duration a b
                     |> Expect.equal (Just { hours = 3, minutes = 23, seconds = 12 })
         ]
+
+
+toDayRangeString : Test
+toDayRangeString =
+    describe "DateTime.toDayRangeString"
+        [ test "same month and year" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
+                in
+                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                    |> Expect.equal (Just "Aug 15–20, 2023")
+        , test "same year, different month" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-09-20T15:00:00.998Z"
+                in
+                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                    |> Expect.equal (Just "Aug 15–Sep 20, 2023")
+        , test "different year" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-12-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2024-01-05T15:00:00.998Z"
+                in
+                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                    |> Expect.equal (Just "Dec 15, 2023–Jan 5, 2024")
+        , test "same start and end date" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T09:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
+                in
+                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                    |> Expect.equal (Just "Aug 15, 2023")
+        ]

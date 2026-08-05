@@ -12,6 +12,7 @@ module UI.DateTime exposing
     , millisDiff
     , millisSinceEpoch
     , secondsSinceEpoch
+    , toDayRangeString
     , toISO8601
     , toPosix
     , toString
@@ -276,6 +277,52 @@ duration start end =
     , minutes = minutes
     , seconds = seconds
     }
+
+
+toDayRangeString : Time.Zone -> DateTime -> DateTime -> String
+toDayRangeString zone start end =
+    let
+        monthDay p =
+            DateFormat.format
+                [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber ]
+                zone
+                p
+
+        monthDayYear p =
+            DateFormat.format
+                [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber, DateFormat.text ", ", DateFormat.yearNumber ]
+                zone
+                p
+
+        year p =
+            DateFormat.format [ DateFormat.yearNumber ] zone p
+
+        startPosix =
+            toPosix start
+
+        endPosix =
+            toPosix end
+
+        sameYear =
+            Time.toYear zone startPosix == Time.toYear zone endPosix
+
+        sameMonth =
+            sameYear && Time.toMonth zone startPosix == Time.toMonth zone endPosix
+
+        sameDay =
+            sameMonth && Time.toDay zone startPosix == Time.toDay zone endPosix
+    in
+    if sameDay then
+        monthDayYear startPosix
+
+    else if sameMonth then
+        monthDay startPosix ++ "–" ++ String.fromInt (Time.toDay zone endPosix) ++ ", " ++ year endPosix
+
+    else if sameYear then
+        monthDay startPosix ++ "–" ++ monthDay endPosix ++ ", " ++ year endPosix
+
+    else
+        monthDayYear startPosix ++ "–" ++ monthDayYear endPosix
 
 
 
