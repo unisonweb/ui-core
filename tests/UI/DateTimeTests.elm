@@ -83,8 +83,15 @@ duration =
 
 toDayRangeString : Test
 toDayRangeString =
+    let
+        now =
+            DateTime.fromISO8601 "2023-01-01T00:00:00.000Z"
+
+        pastNow =
+            DateTime.fromISO8601 "2022-01-01T00:00:00.000Z"
+    in
     describe "DateTime.toDayRangeString"
-        [ test "same month and year" <|
+        [ test "same month and year, showYear True" <|
             \_ ->
                 let
                     start =
@@ -93,9 +100,9 @@ toDayRangeString =
                     end =
                         DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
                 in
-                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n True s e) now start end
                     |> Expect.equal (Just "Aug 15–20, 2023")
-        , test "same year, different month" <|
+        , test "same year, different month, showYear True" <|
             \_ ->
                 let
                     start =
@@ -104,9 +111,9 @@ toDayRangeString =
                     end =
                         DateTime.fromISO8601 "2023-09-20T15:00:00.998Z"
                 in
-                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n True s e) now start end
                     |> Expect.equal (Just "Aug 15–Sep 20, 2023")
-        , test "different year" <|
+        , test "different year, showYear True" <|
             \_ ->
                 let
                     start =
@@ -115,9 +122,9 @@ toDayRangeString =
                     end =
                         DateTime.fromISO8601 "2024-01-05T15:00:00.998Z"
                 in
-                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n True s e) now start end
                     |> Expect.equal (Just "Dec 15, 2023–Jan 5, 2024")
-        , test "same start and end date" <|
+        , test "same start and end date, showYear True" <|
             \_ ->
                 let
                     start =
@@ -126,6 +133,72 @@ toDayRangeString =
                     end =
                         DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
                 in
-                Maybe.map2 (DateTime.toDayRangeString Time.utc) start end
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n True s e) now start end
+                    |> Expect.equal (Just "Aug 15, 2023")
+        , test "same month and year, showYear False, not a future year" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
+                in
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n False s e) now start end
+                    |> Expect.equal (Just "Aug 15–20")
+        , test "same year, different month, showYear False, not a future year" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-09-20T15:00:00.998Z"
+                in
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n False s e) now start end
+                    |> Expect.equal (Just "Aug 15–Sep 20")
+        , test "same start and end date, showYear False, not a future year" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T09:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
+                in
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n False s e) now start end
+                    |> Expect.equal (Just "Aug 15")
+        , test "different year, showYear False still shows year on both" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-12-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2024-01-05T15:00:00.998Z"
+                in
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n False s e) now start end
+                    |> Expect.equal (Just "Dec 15, 2023–Jan 5, 2024")
+        , test "same year, showYear False, but year is in the future compared to now" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T15:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
+                in
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n False s e) pastNow start end
+                    |> Expect.equal (Just "Aug 15–20, 2023")
+        , test "same start and end date, showYear False, but year is in the future compared to now" <|
+            \_ ->
+                let
+                    start =
+                        DateTime.fromISO8601 "2023-08-15T09:00:00.998Z"
+
+                    end =
+                        DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
+                in
+                Maybe.map3 (\n s e -> DateTime.toDayRangeString Time.utc n False s e) pastNow start end
                     |> Expect.equal (Just "Aug 15, 2023")
         ]

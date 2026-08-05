@@ -293,8 +293,14 @@ duration start end =
     }
 
 
-toDayRangeString : Time.Zone -> DateTime -> DateTime -> String
-toDayRangeString zone start end =
+{-| `showYear` controls whether the year is included when `start` and `end`
+fall in the same year. When `False`, the year is generally omitted, unless
+that shared year is later than the year of `now`, in which case it's included
+on both. When `start` and `end` fall in different years, the year is always
+included on both, regardless of `showYear`.
+-}
+toDayRangeString : Time.Zone -> DateTime -> Bool -> DateTime -> DateTime -> String
+toDayRangeString zone now showYear start end =
     let
         monthDay p =
             DateFormat.format
@@ -325,15 +331,33 @@ toDayRangeString zone start end =
 
         sameDay =
             sameMonth && Time.toDay zone startPosix == Time.toDay zone endPosix
+
+        isFutureYear =
+            sameYear && Time.toYear zone startPosix > Time.toYear zone (toPosix now)
+
+        includeYear =
+            showYear || isFutureYear
     in
     if sameDay then
-        monthDayYear startPosix
+        if includeYear then
+            monthDayYear startPosix
+
+        else
+            monthDay startPosix
 
     else if sameMonth then
-        monthDay startPosix ++ "–" ++ String.fromInt (Time.toDay zone endPosix) ++ ", " ++ year endPosix
+        if includeYear then
+            monthDay startPosix ++ "–" ++ String.fromInt (Time.toDay zone endPosix) ++ ", " ++ year endPosix
+
+        else
+            monthDay startPosix ++ "–" ++ String.fromInt (Time.toDay zone endPosix)
 
     else if sameYear then
-        monthDay startPosix ++ "–" ++ monthDay endPosix ++ ", " ++ year endPosix
+        if includeYear then
+            monthDay startPosix ++ "–" ++ monthDay endPosix ++ ", " ++ year endPosix
+
+        else
+            monthDay startPosix ++ "–" ++ monthDay endPosix
 
     else
         monthDayYear startPosix ++ "–" ++ monthDayYear endPosix
