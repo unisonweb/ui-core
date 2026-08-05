@@ -55,6 +55,12 @@ toString =
                     |> DateTime.fromISO8601
                     |> Maybe.map (DateTime.toString TimeWithSeconds12Hour Time.utc)
                     |> Expect.equal (Just "3:00:00pm")
+        , test "with format ShortWeekdayAndDate" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString ShortWeekdayAndDate Time.utc)
+                    |> Expect.equal (Just "Tue, Aug 15, 2023")
         ]
 
 

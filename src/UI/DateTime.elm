@@ -45,6 +45,7 @@ type DateTimeFormat
     | HoursMins24Hour
     | HoursMins12Hour Bool
     | FullDateTime
+    | ShortWeekdayAndDate
 
 
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
@@ -222,6 +223,19 @@ toString format zone (DateTime p) =
                 , DateFormat.minuteFixed
                 , DateFormat.text ":"
                 , DateFormat.secondFixed
+                ]
+                zone
+                p
+
+        ShortWeekdayAndDate ->
+            DateFormat.format
+                [ DateFormat.dayOfWeekNameAbbreviated
+                , DateFormat.text ", "
+                , DateFormat.monthNameAbbreviated
+                , DateFormat.text " "
+                , DateFormat.dayOfMonthNumber
+                , DateFormat.text ", "
+                , DateFormat.yearNumber
                 ]
                 zone
                 p
