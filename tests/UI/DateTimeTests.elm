@@ -31,60 +31,40 @@ toString =
                     |> DateTime.fromISO8601
                     |> Maybe.map (DateTime.toString FullDateTime Time.utc)
                     |> Expect.equal (Just "Aug 15, 2023 - 15:00:00")
-        , test "with format ShortDate" <|
+        ]
+
+
+timeStamp : Test
+timeStamp =
+    describe "DateTime.toString with format TimeStamp"
+        [ test "default: 12 hour, no seconds" <|
             \_ ->
                 "2023-08-15T15:00:00.998Z"
                     |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString ShortDate Time.utc)
-                    |> Expect.equal (Just "Aug 15, 2023")
-        , test "with format LongDate" <|
+                    |> Maybe.map (DateTime.toString DateTime.timeStamp Time.utc)
+                    |> Expect.equal (Just "3:00pm")
+        , test "with24HourClock True, no seconds" <|
             \_ ->
                 "2023-08-15T15:00:00.998Z"
                     |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString LongDate Time.utc)
-                    |> Expect.equal (Just "August 15, 2023")
-        , test "with format TimeWithSeconds24Hour" <|
+                    |> Maybe.map (DateTime.toString (DateTime.timeStamp |> DateTime.with24HourClock True) Time.utc)
+                    |> Expect.equal (Just "15:00")
+        , test "12 hour, withSeconds True" <|
             \_ ->
                 "2023-08-15T15:00:00.998Z"
                     |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString TimeWithSeconds24Hour Time.utc)
-                    |> Expect.equal (Just "15:00:00")
-        , test "with format TimeWithSeconds12Hour" <|
-            \_ ->
-                "2023-08-15T15:00:00.998Z"
-                    |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString TimeWithSeconds12Hour Time.utc)
+                    |> Maybe.map (DateTime.toString (DateTime.timeStamp |> DateTime.withSeconds True) Time.utc)
                     |> Expect.equal (Just "3:00:00pm")
-        , test "with format ShortWeekdayAndDate, hideCurrentYear False" <|
+        , test "with24HourClock True, withSeconds True" <|
             \_ ->
-                let
-                    now =
-                        DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
-                in
                 "2023-08-15T15:00:00.998Z"
                     |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString (ShortWeekdayAndDate False now) Time.utc)
-                    |> Expect.equal (Just "Tue, Aug 15, 2023")
-        , test "with format ShortWeekdayAndDate, hideCurrentYear True, same year as now" <|
-            \_ ->
-                let
-                    now =
-                        DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
-                in
-                "2023-08-15T15:00:00.998Z"
-                    |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString (ShortWeekdayAndDate True now) Time.utc)
-                    |> Expect.equal (Just "Tue, Aug 15")
-        , test "with format ShortWeekdayAndDate, hideCurrentYear True, different year than now" <|
-            \_ ->
-                let
-                    now =
-                        DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
-                in
-                "2022-08-15T15:00:00.998Z"
-                    |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString (ShortWeekdayAndDate True now) Time.utc)
-                    |> Expect.equal (Just "Mon, Aug 15, 2022")
+                    |> Maybe.map
+                        (DateTime.toString
+                            (DateTime.timeStamp |> DateTime.with24HourClock True |> DateTime.withSeconds True)
+                            Time.utc
+                        )
+                    |> Expect.equal (Just "15:00:00")
         ]
 
 
@@ -105,31 +85,88 @@ duration =
         ]
 
 
-shortDateHideCurrentYear : Test
-shortDateHideCurrentYear =
+shortDate : Test
+shortDate =
     let
         now =
-            DateTime.fromISO8601 "2023-01-01T00:00:00.000Z"
+            DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
 
-        toShortDateHideCurrentYearString n d =
-            Maybe.map2
-                (\n_ d_ -> DateTime.toString (ShortDateHideCurrentYear n_) Time.utc d_)
-                n
-                d
+        toShortDateString buildFormat d =
+            d
+                |> DateTime.fromISO8601
+                |> Maybe.map (DateTime.toString (buildFormat now) Time.utc)
     in
-    describe "DateTime.toString with format ShortDateHideCurrentYear"
-        [ test "same year as now, omits year" <|
+    describe "DateTime.toString with format ShortDate"
+        [ test "same year as now, hides year by default" <|
             \_ ->
                 "2023-08-15T15:00:00.998Z"
-                    |> DateTime.fromISO8601
-                    |> toShortDateHideCurrentYearString now
+                    |> toShortDateString DateTime.shortDate
                     |> Expect.equal (Just "Aug 15")
-        , test "different year than now, includes year" <|
+        , test "different year than now, includes year by default" <|
             \_ ->
                 "2022-08-15T15:00:00.998Z"
-                    |> DateTime.fromISO8601
-                    |> toShortDateHideCurrentYearString now
+                    |> toShortDateString DateTime.shortDate
                     |> Expect.equal (Just "Aug 15, 2022")
+        , test "withHideCurrentYear False always shows the year" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> toShortDateString (\n -> DateTime.shortDate n |> DateTime.withHideCurrentYear False)
+                    |> Expect.equal (Just "Aug 15, 2023")
+        , test "withWeekday True, same year as now" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> toShortDateString (\n -> DateTime.shortDate n |> DateTime.withWeekday True)
+                    |> Expect.equal (Just "Tue, Aug 15")
+        , test "withWeekday True, withHideCurrentYear False" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> toShortDateString
+                        (\n ->
+                            DateTime.shortDate n
+                                |> DateTime.withWeekday True
+                                |> DateTime.withHideCurrentYear False
+                        )
+                    |> Expect.equal (Just "Tue, Aug 15, 2023")
+        , test "withWeekday True, different year than now" <|
+            \_ ->
+                "2022-08-15T15:00:00.998Z"
+                    |> toShortDateString (\n -> DateTime.shortDate n |> DateTime.withWeekday True)
+                    |> Expect.equal (Just "Mon, Aug 15, 2022")
+        , test "withTime True" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> toShortDateString (\n -> DateTime.shortDate n |> DateTime.withTime True)
+                    |> Expect.equal (Just "Aug 15, 3:00pm")
+        ]
+
+
+longDate : Test
+longDate =
+    let
+        now =
+            DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
+
+        toLongDateString buildFormat d =
+            d
+                |> DateTime.fromISO8601
+                |> Maybe.map (DateTime.toString (buildFormat now) Time.utc)
+    in
+    describe "DateTime.toString with format LongDate"
+        [ test "shows the year by default" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> toLongDateString DateTime.longDate
+                    |> Expect.equal (Just "August 15, 2023")
+        , test "withHideCurrentYear True, same year as now" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> toLongDateString (\n -> DateTime.longDate n |> DateTime.withHideCurrentYear True)
+                    |> Expect.equal (Just "August 15")
+        , test "withHideCurrentYear True, different year than now" <|
+            \_ ->
+                "2022-08-15T15:00:00.998Z"
+                    |> toLongDateString (\n -> DateTime.longDate n |> DateTime.withHideCurrentYear True)
+                    |> Expect.equal (Just "August 15, 2022")
         ]
 
 
@@ -142,15 +179,20 @@ dayRange =
         pastNow =
             DateTime.fromISO8601 "2022-01-01T00:00:00.000Z"
 
-        toDayRangeString n showYear s e =
+        toDayRangeString n hideCurrentYear s e =
             Maybe.map3
-                (\n_ s_ e_ -> DateTime.toString (DayRange e_ showYear n_) Time.utc s_)
+                (\n_ s_ e_ ->
+                    DateTime.toString
+                        (DateTime.dayRange e_ n_ |> DateTime.withHideCurrentYear hideCurrentYear)
+                        Time.utc
+                        s_
+                )
                 n
                 s
                 e
     in
     describe "DateTime.toString with format DayRange"
-        [ test "same month and year, showYear True" <|
+        [ test "same month and year, withHideCurrentYear False" <|
             \_ ->
                 let
                     start =
@@ -159,9 +201,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
                 in
-                toDayRangeString now True start end
+                toDayRangeString now False start end
                     |> Expect.equal (Just "Aug 15–20, 2023")
-        , test "same year, different month, showYear True" <|
+        , test "same year, different month, withHideCurrentYear False" <|
             \_ ->
                 let
                     start =
@@ -170,9 +212,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-09-20T15:00:00.998Z"
                 in
-                toDayRangeString now True start end
+                toDayRangeString now False start end
                     |> Expect.equal (Just "Aug 15–Sep 20, 2023")
-        , test "different year, showYear True" <|
+        , test "different year, withHideCurrentYear False" <|
             \_ ->
                 let
                     start =
@@ -181,9 +223,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2024-01-05T15:00:00.998Z"
                 in
-                toDayRangeString now True start end
+                toDayRangeString now False start end
                     |> Expect.equal (Just "Dec 15, 2023–Jan 5, 2024")
-        , test "same start and end date, showYear True" <|
+        , test "same start and end date, withHideCurrentYear False" <|
             \_ ->
                 let
                     start =
@@ -192,9 +234,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
                 in
-                toDayRangeString now True start end
+                toDayRangeString now False start end
                     |> Expect.equal (Just "Aug 15, 2023")
-        , test "same month and year, showYear False, not a future year" <|
+        , test "same month and year, withHideCurrentYear True (default), not a future year" <|
             \_ ->
                 let
                     start =
@@ -203,9 +245,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
                 in
-                toDayRangeString now False start end
+                toDayRangeString now True start end
                     |> Expect.equal (Just "Aug 15–20")
-        , test "same year, different month, showYear False, not a future year" <|
+        , test "same year, different month, withHideCurrentYear True (default), not a future year" <|
             \_ ->
                 let
                     start =
@@ -214,9 +256,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-09-20T15:00:00.998Z"
                 in
-                toDayRangeString now False start end
+                toDayRangeString now True start end
                     |> Expect.equal (Just "Aug 15–Sep 20")
-        , test "same start and end date, showYear False, not a future year" <|
+        , test "same start and end date, withHideCurrentYear True (default), not a future year" <|
             \_ ->
                 let
                     start =
@@ -225,9 +267,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
                 in
-                toDayRangeString now False start end
+                toDayRangeString now True start end
                     |> Expect.equal (Just "Aug 15")
-        , test "different year, showYear False still shows year on both" <|
+        , test "different year, withHideCurrentYear True still shows year on both" <|
             \_ ->
                 let
                     start =
@@ -236,9 +278,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2024-01-05T15:00:00.998Z"
                 in
-                toDayRangeString now False start end
+                toDayRangeString now True start end
                     |> Expect.equal (Just "Dec 15, 2023–Jan 5, 2024")
-        , test "same year, showYear False, but year is in the future compared to now" <|
+        , test "same year, withHideCurrentYear True, but year is in the future compared to now" <|
             \_ ->
                 let
                     start =
@@ -247,9 +289,9 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-08-20T15:00:00.998Z"
                 in
-                toDayRangeString pastNow False start end
+                toDayRangeString pastNow True start end
                     |> Expect.equal (Just "Aug 15–20, 2023")
-        , test "same start and end date, showYear False, but year is in the future compared to now" <|
+        , test "same start and end date, withHideCurrentYear True, but year is in the future compared to now" <|
             \_ ->
                 let
                     start =
@@ -258,6 +300,6 @@ dayRange =
                     end =
                         DateTime.fromISO8601 "2023-08-15T18:00:00.998Z"
                 in
-                toDayRangeString pastNow False start end
+                toDayRangeString pastNow True start end
                     |> Expect.equal (Just "Aug 15, 2023")
         ]

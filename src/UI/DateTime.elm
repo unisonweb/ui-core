@@ -3,20 +3,29 @@ module UI.DateTime exposing
     , DateTimeFormat(..)
     , decode
     , duration
+    , dayRange
     , encode
     , fromISO8601
     , fromPosix
     , isAfter
     , isBefore
     , isSameDay
+    , longDate
     , millisDiff
     , millisSinceEpoch
     , secondsSinceEpoch
+    , shortDate
+    , timeStamp
     , toISO8601
     , toPosix
     , toString
     , unsafeFromISO8601
     , view
+    , with24HourClock
+    , withHideCurrentYear
+    , withSeconds
+    , withTime
+    , withWeekday
     )
 
 import DateFormat
@@ -35,34 +44,106 @@ type DateTime
 
 
 type DateTimeFormat
-    = ShortDate
-    | ShortDateAndTime
-    | LongDate
-    | DistanceFrom DateTime
-    | TimeWithSeconds24Hour
-    | TimeWithSeconds12Hour
-    | HoursMins24Hour
-    | HoursMins12Hour Bool
-    | FullDateTime
+    {- `hideCurrentYear` controls whether the year is omitted when it matches
+       the year of `now`. `weekday` prepends an abbreviated weekday name.
+       `time` appends the time of day. Build with `shortDate` and customize
+       with `withWeekday`/`withTime`/`withHideCurrentYear`.
+    -}
+    = ShortDate { now : DateTime, weekday : Bool, hideCurrentYear : Bool, time : Bool }
       {- `hideCurrentYear` controls whether the year is omitted when it
-         matches the year of the given "now" `DateTime`. When `False`, the
-         year is always included.
+         matches the year of `now`. Build with `longDate` and customize with
+         `withHideCurrentYear`.
       -}
-    | ShortWeekdayAndDate Bool DateTime
-      {- Formats like `ShortDate`, but omits the year when it matches the
-         year of the given "now" `DateTime`. When the year differs, it's
-         included.
+    | LongDate { now : DateTime, hideCurrentYear : Bool }
+    | DistanceFrom DateTime
+      {- Build with `timeStamp` and customize with `with24HourClock`/`withSeconds`.
       -}
-    | ShortDateHideCurrentYear DateTime
+    | TimeStamp { hours24 : Bool, seconds : Bool }
+    | FullDateTime
       {- Formats the date passed to `toString`/`view` as the start of a range
-         ending at the given `DateTime`. `showYear` controls whether the year is
-         included when start and end fall in the same year. When `False`, the
-         year is generally omitted, unless that shared year is later than the
-         year of the given "now" `DateTime`, in which case it's included on
-         both. When start and end fall in different years, the year is always
-         included on both, regardless of `showYear`.
+         ending at `end`. `hideCurrentYear` controls whether the year is
+         omitted when start and end fall in the same year as `now`. When
+         start and end fall in different years, the year is always included
+         on both, regardless of `hideCurrentYear`. Build with `dayRange` and
+         customize with `withHideCurrentYear`.
       -}
-    | DayRange DateTime Bool DateTime
+    | DayRange { end : DateTime, now : DateTime, hideCurrentYear : Bool }
+
+
+shortDate : DateTime -> DateTimeFormat
+shortDate now =
+    ShortDate { now = now, weekday = False, hideCurrentYear = True, time = False }
+
+
+longDate : DateTime -> DateTimeFormat
+longDate now =
+    LongDate { now = now, hideCurrentYear = False }
+
+
+dayRange : DateTime -> DateTime -> DateTimeFormat
+dayRange end now =
+    DayRange { end = end, now = now, hideCurrentYear = True }
+
+
+timeStamp : DateTimeFormat
+timeStamp =
+    TimeStamp { hours24 = False, seconds = False }
+
+
+withWeekday : Bool -> DateTimeFormat -> DateTimeFormat
+withWeekday weekday format =
+    case format of
+        ShortDate opts ->
+            ShortDate { opts | weekday = weekday }
+
+        _ ->
+            format
+
+
+withTime : Bool -> DateTimeFormat -> DateTimeFormat
+withTime time format =
+    case format of
+        ShortDate opts ->
+            ShortDate { opts | time = time }
+
+        _ ->
+            format
+
+
+withHideCurrentYear : Bool -> DateTimeFormat -> DateTimeFormat
+withHideCurrentYear hideCurrentYear format =
+    case format of
+        ShortDate opts ->
+            ShortDate { opts | hideCurrentYear = hideCurrentYear }
+
+        LongDate opts ->
+            LongDate { opts | hideCurrentYear = hideCurrentYear }
+
+        DayRange opts ->
+            DayRange { opts | hideCurrentYear = hideCurrentYear }
+
+        _ ->
+            format
+
+
+with24HourClock : Bool -> DateTimeFormat -> DateTimeFormat
+with24HourClock hours24 format =
+    case format of
+        TimeStamp opts ->
+            TimeStamp { opts | hours24 = hours24 }
+
+        _ ->
+            format
+
+
+withSeconds : Bool -> DateTimeFormat -> DateTimeFormat
+withSeconds seconds format =
+    case format of
+        TimeStamp opts ->
+            TimeStamp { opts | seconds = seconds }
+
+        _ ->
+            format
 
 
 isSameDay : Time.Zone -> DateTime -> DateTime -> Bool
@@ -138,92 +219,97 @@ that
 toString : DateTimeFormat -> Time.Zone -> DateTime -> String
 toString format zone (DateTime p) =
     case format of
-        TimeWithSeconds24Hour ->
-            DateFormat.format
-                [ DateFormat.hourMilitaryFixed
-                , DateFormat.text ":"
-                , DateFormat.minuteFixed
-                , DateFormat.text ":"
-                , DateFormat.secondFixed
-                ]
-                zone
-                p
-
-        TimeWithSeconds12Hour ->
-            DateFormat.format
-                [ DateFormat.hourNumber
-                , DateFormat.text ":"
-                , DateFormat.minuteFixed
-                , DateFormat.text ":"
-                , DateFormat.secondFixed
-                , DateFormat.amPmLowercase
-                ]
-                zone
-                p
-
-        HoursMins24Hour ->
-            DateFormat.format
-                [ DateFormat.hourMilitaryFixed
-                , DateFormat.text ":"
-                , DateFormat.minuteFixed
-                ]
-                zone
-                p
-
-        HoursMins12Hour withAmPm ->
+        TimeStamp { hours24, seconds } ->
             let
-                amPm =
-                    if withAmPm then
+                hour =
+                    if hours24 then
+                        DateFormat.hourMilitaryFixed
+
+                    else
+                        DateFormat.hourNumber
+
+                secondsPart =
+                    if seconds then
+                        [ DateFormat.text ":", DateFormat.secondFixed ]
+
+                    else
+                        []
+
+                amPmPart =
+                    if hours24 then
+                        []
+
+                    else
                         [ DateFormat.amPmLowercase ]
+            in
+            DateFormat.format
+                ([ hour, DateFormat.text ":", DateFormat.minuteFixed ]
+                    ++ secondsPart
+                    ++ amPmPart
+                )
+                zone
+                p
+
+        ShortDate { now, weekday, hideCurrentYear, time } ->
+            let
+                (DateTime nowPosix) =
+                    now
+
+                hideYear =
+                    hideCurrentYear && Time.toYear zone p == Time.toYear zone nowPosix
+
+                weekdayPart =
+                    if weekday then
+                        [ DateFormat.dayOfWeekNameAbbreviated, DateFormat.text ", " ]
+
+                    else
+                        []
+
+                yearPart =
+                    if hideYear then
+                        []
+
+                    else
+                        [ DateFormat.text ", ", DateFormat.yearNumber ]
+
+                timePart =
+                    if time then
+                        [ DateFormat.text ", "
+                        , DateFormat.hourNumber
+                        , DateFormat.text ":"
+                        , DateFormat.minuteFixed
+                        , DateFormat.amPmLowercase
+                        ]
 
                     else
                         []
             in
             DateFormat.format
-                ([ DateFormat.hourNumber
-                 , DateFormat.text ":"
-                 , DateFormat.minuteFixed
-                 ]
-                    ++ amPm
+                (weekdayPart
+                    ++ [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber ]
+                    ++ yearPart
+                    ++ timePart
                 )
                 zone
                 p
 
-        ShortDate ->
-            DateFormat.format
-                [ DateFormat.monthNameAbbreviated
-                , DateFormat.text " "
-                , DateFormat.dayOfMonthNumber
-                , DateFormat.text ", "
-                , DateFormat.yearNumber
-                ]
-                zone
-                p
+        LongDate { now, hideCurrentYear } ->
+            let
+                (DateTime nowPosix) =
+                    now
 
-        ShortDateAndTime ->
-            DateFormat.format
-                [ DateFormat.monthNameAbbreviated
-                , DateFormat.text " "
-                , DateFormat.dayOfMonthNumber
-                , DateFormat.text " "
-                , DateFormat.yearNumber
-                , DateFormat.text ", "
-                , DateFormat.hourNumber
-                , DateFormat.text ":"
-                , DateFormat.minuteFixed
-                , DateFormat.amPmLowercase
-                ]
-                zone
-                p
+                hideYear =
+                    hideCurrentYear && Time.toYear zone p == Time.toYear zone nowPosix
 
-        LongDate ->
+                yearPart =
+                    if hideYear then
+                        []
+
+                    else
+                        [ DateFormat.text ", ", DateFormat.yearNumber ]
+            in
             DateFormat.format
-                [ DateFormat.monthNameFull
-                , DateFormat.text " "
-                , DateFormat.dayOfMonthNumber
-                , DateFormat.text ", "
-                , DateFormat.yearNumber
-                ]
+                ([ DateFormat.monthNameFull, DateFormat.text " ", DateFormat.dayOfMonthNumber ] ++ yearPart)
                 zone
                 p
 
@@ -244,57 +330,17 @@ toString format zone (DateTime p) =
                 zone
                 p
 
-        ShortWeekdayAndDate hideCurrentYear (DateTime nowPosix) ->
-            if hideCurrentYear && Time.toYear zone p == Time.toYear zone nowPosix then
-                DateFormat.format
-                    [ DateFormat.dayOfWeekNameAbbreviated
-                    , DateFormat.text ", "
-                    , DateFormat.monthNameAbbreviated
-                    , DateFormat.text " "
-                    , DateFormat.dayOfMonthNumber
-                    ]
-                    zone
-                    p
-
-            else
-                DateFormat.format
-                    [ DateFormat.dayOfWeekNameAbbreviated
-                    , DateFormat.text ", "
-                    , DateFormat.monthNameAbbreviated
-                    , DateFormat.text " "
-                    , DateFormat.dayOfMonthNumber
-                    , DateFormat.text ", "
-                    , DateFormat.yearNumber
-                    ]
-                    zone
-                    p
-
-        ShortDateHideCurrentYear (DateTime nowPosix) ->
-            if Time.toYear zone p == Time.toYear zone nowPosix then
-                DateFormat.format
-                    [ DateFormat.monthNameAbbreviated
-                    , DateFormat.text " "
-                    , DateFormat.dayOfMonthNumber
-                    ]
-                    zone
-                    p
-
-            else
-                DateFormat.format
-                    [ DateFormat.monthNameAbbreviated
-                    , DateFormat.text " "
-                    , DateFormat.dayOfMonthNumber
-                    , DateFormat.text ", "
-                    , DateFormat.yearNumber
-                    ]
-                    zone
-                    p
-
         DistanceFrom (DateTime from) ->
             DateFormat.Relative.relativeTime from p
 
-        DayRange (DateTime endPosix) showYear (DateTime nowPosix) ->
+        DayRange { end, now, hideCurrentYear } ->
             let
+                (DateTime endPosix) =
+                    end
+
+                (DateTime nowPosix) =
+                    now
+
                 monthDay d =
                     DateFormat.format
                         [ DateFormat.monthNameAbbreviated, DateFormat.text " ", DateFormat.dayOfMonthNumber ]
@@ -323,7 +369,7 @@ toString format zone (DateTime p) =
                     sameYear && Time.toYear zone p > Time.toYear zone nowPosix
 
                 includeYear =
-                    showYear || isFutureYear
+                    not hideCurrentYear || isFutureYear
             in
             if sameDay then
                 if includeYear then
