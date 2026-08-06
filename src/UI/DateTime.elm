@@ -45,6 +45,11 @@ type DateTimeFormat
     | HoursMins12Hour Bool
     | FullDateTime
     | ShortWeekdayAndDate
+      {- Formats like `ShortDate`, but omits the year when it matches the
+         year of the given "now" `DateTime`. When the year differs, it's
+         included.
+      -}
+    | ShortDateHideCurrentYear DateTime
       {- Formats the date passed to `toString`/`view` as the start of a range
          ending at the given `DateTime`. `showYear` controls whether the year is
          included when start and end fall in the same year. When `False`, the
@@ -247,6 +252,27 @@ toString format zone (DateTime p) =
                 ]
                 zone
                 p
+
+        ShortDateHideCurrentYear (DateTime nowPosix) ->
+            if Time.toYear zone p == Time.toYear zone nowPosix then
+                DateFormat.format
+                    [ DateFormat.monthNameAbbreviated
+                    , DateFormat.text " "
+                    , DateFormat.dayOfMonthNumber
+                    ]
+                    zone
+                    p
+
+            else
+                DateFormat.format
+                    [ DateFormat.monthNameAbbreviated
+                    , DateFormat.text " "
+                    , DateFormat.dayOfMonthNumber
+                    , DateFormat.text ", "
+                    , DateFormat.yearNumber
+                    ]
+                    zone
+                    p
 
         DistanceFrom (DateTime from) ->
             DateFormat.Relative.relativeTime from p

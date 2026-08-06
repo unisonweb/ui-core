@@ -81,6 +81,34 @@ duration =
         ]
 
 
+shortDateHideCurrentYear : Test
+shortDateHideCurrentYear =
+    let
+        now =
+            DateTime.fromISO8601 "2023-01-01T00:00:00.000Z"
+
+        toShortDateHideCurrentYearString n d =
+            Maybe.map2
+                (\n_ d_ -> DateTime.toString (ShortDateHideCurrentYear n_) Time.utc d_)
+                n
+                d
+    in
+    describe "DateTime.toString with format ShortDateHideCurrentYear"
+        [ test "same year as now, omits year" <|
+            \_ ->
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> toShortDateHideCurrentYearString now
+                    |> Expect.equal (Just "Aug 15")
+        , test "different year than now, includes year" <|
+            \_ ->
+                "2022-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> toShortDateHideCurrentYearString now
+                    |> Expect.equal (Just "Aug 15, 2022")
+        ]
+
+
 dayRange : Test
 dayRange =
     let
