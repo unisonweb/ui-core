@@ -55,12 +55,36 @@ toString =
                     |> DateTime.fromISO8601
                     |> Maybe.map (DateTime.toString TimeWithSeconds12Hour Time.utc)
                     |> Expect.equal (Just "3:00:00pm")
-        , test "with format ShortWeekdayAndDate" <|
+        , test "with format ShortWeekdayAndDate, hideCurrentYear False" <|
             \_ ->
+                let
+                    now =
+                        DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
+                in
                 "2023-08-15T15:00:00.998Z"
                     |> DateTime.fromISO8601
-                    |> Maybe.map (DateTime.toString ShortWeekdayAndDate Time.utc)
+                    |> Maybe.map (DateTime.toString (ShortWeekdayAndDate False now) Time.utc)
                     |> Expect.equal (Just "Tue, Aug 15, 2023")
+        , test "with format ShortWeekdayAndDate, hideCurrentYear True, same year as now" <|
+            \_ ->
+                let
+                    now =
+                        DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
+                in
+                "2023-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString (ShortWeekdayAndDate True now) Time.utc)
+                    |> Expect.equal (Just "Tue, Aug 15")
+        , test "with format ShortWeekdayAndDate, hideCurrentYear True, different year than now" <|
+            \_ ->
+                let
+                    now =
+                        DateTime.unsafeFromISO8601 "2023-01-01T00:00:00.000Z"
+                in
+                "2022-08-15T15:00:00.998Z"
+                    |> DateTime.fromISO8601
+                    |> Maybe.map (DateTime.toString (ShortWeekdayAndDate True now) Time.utc)
+                    |> Expect.equal (Just "Mon, Aug 15, 2022")
         ]
 
 

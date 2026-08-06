@@ -44,7 +44,11 @@ type DateTimeFormat
     | HoursMins24Hour
     | HoursMins12Hour Bool
     | FullDateTime
-    | ShortWeekdayAndDate
+      {- `hideCurrentYear` controls whether the year is omitted when it
+         matches the year of the given "now" `DateTime`. When `False`, the
+         year is always included.
+      -}
+    | ShortWeekdayAndDate Bool DateTime
       {- Formats like `ShortDate`, but omits the year when it matches the
          year of the given "now" `DateTime`. When the year differs, it's
          included.
@@ -240,18 +244,30 @@ toString format zone (DateTime p) =
                 zone
                 p
 
-        ShortWeekdayAndDate ->
-            DateFormat.format
-                [ DateFormat.dayOfWeekNameAbbreviated
-                , DateFormat.text ", "
-                , DateFormat.monthNameAbbreviated
-                , DateFormat.text " "
-                , DateFormat.dayOfMonthNumber
-                , DateFormat.text ", "
-                , DateFormat.yearNumber
-                ]
-                zone
-                p
+        ShortWeekdayAndDate hideCurrentYear (DateTime nowPosix) ->
+            if hideCurrentYear && Time.toYear zone p == Time.toYear zone nowPosix then
+                DateFormat.format
+                    [ DateFormat.dayOfWeekNameAbbreviated
+                    , DateFormat.text ", "
+                    , DateFormat.monthNameAbbreviated
+                    , DateFormat.text " "
+                    , DateFormat.dayOfMonthNumber
+                    ]
+                    zone
+                    p
+
+            else
+                DateFormat.format
+                    [ DateFormat.dayOfWeekNameAbbreviated
+                    , DateFormat.text ", "
+                    , DateFormat.monthNameAbbreviated
+                    , DateFormat.text " "
+                    , DateFormat.dayOfMonthNumber
+                    , DateFormat.text ", "
+                    , DateFormat.yearNumber
+                    ]
+                    zone
+                    p
 
         ShortDateHideCurrentYear (DateTime nowPosix) ->
             if Time.toYear zone p == Time.toYear zone nowPosix then
