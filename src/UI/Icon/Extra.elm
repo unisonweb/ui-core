@@ -492,6 +492,12 @@ fromString name =
         "endConversation" ->
             Just Icon.endConversation
 
+        "playCircle" ->
+            Just Icon.playCircle
+
+        "play" ->
+            Just Icon.play
+
         _ ->
             kebabToCamel name
                 |> Maybe.andThen fromString

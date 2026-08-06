@@ -183,4 +183,6 @@ view =
         , iconEntry "dependents" I.dependents
         , iconEntry "dependencies" I.dependencies
         , iconEntry "historyNode" I.historyNode
+        , iconEntry "playCircle" I.playCircle
+        , iconEntry "play" I.play
         ]
