@@ -54,6 +54,7 @@ type alias TextField msg =
     , clearMsg : Maybe msg
     , id : Maybe String
     , ghostText : Maybe String
+    , type_ : String
     }
 
 
@@ -88,6 +89,7 @@ field_ onInput label placeholder value =
     , clearMsg = Nothing
     , id = Nothing
     , ghostText = Nothing
+    , type_ = "text"
     }
 
 
@@ -205,6 +207,11 @@ withGhostText ghost tf =
     { tf | ghostText = Just ghost }
 
 
+withType : String -> TextField msg -> TextField msg
+withType type__ tf =
+    { tf | type_ = type__ }
+
+
 when : Bool -> (TextField msg -> TextField msg) -> TextField msg -> TextField msg
 when condition f tf =
     whenElse condition f identity tf
@@ -273,6 +280,7 @@ map f t =
     , clearMsg = Maybe.map f t.clearMsg
     , id = t.id
     , ghostText = t.ghostText
+    , type_ = t.type_
     }
 
 
@@ -302,7 +310,7 @@ view textField =
                 textarea (value textField.value :: rows textField.rows :: attrs) []
 
             else
-                input (value textField.value :: type_ "text" :: attrs) []
+                input (value textField.value :: type_ textField.type_ :: attrs) []
 
         clear =
             case textField.clearMsg of

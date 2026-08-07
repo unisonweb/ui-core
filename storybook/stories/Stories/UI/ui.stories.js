@@ -17,6 +17,7 @@ import Tooltip from "./Tooltip.elm";
 import Placeholder from "./Placeholder.elm";
 import StatusBanner from "./StatusBanner.elm";
 import TextField from "./Form/TextField.elm";
+import EmailField from "./Form/EmailField.elm";
 import SearchSelect from "./Form/SearchSelect.elm";
 import SelectField from "./Form/SelectField.elm";
 
@@ -78,6 +79,10 @@ export const statusBanner = () => {
 
 export const textField = () => {
   return initElmStory(TextField.Elm.Stories.UI.Form.TextField);
+};
+
+export const emailField = () => {
+  return initElmStory(EmailField.Elm.Stories.UI.Form.EmailField);
 };
 
 export const searchSelect = () => {
