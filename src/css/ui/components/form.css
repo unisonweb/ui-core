@@ -85,6 +85,8 @@
 }
 
 .text-field .text-field_input input[type="text"],
+.text-field .text-field_input input[type="email"],
+.number-field .number-field_input input[type="number"],
 .text-field .text-field_input textarea {
   width: 100%;
 }
@@ -204,10 +206,6 @@
 }
 .number-field .number-field_input .number-field_clear:hover .icon {
   color: var(--c-color_form-field_clear_hovered);
-}
-
-.number-field .number-field_input input[type="number"] {
-  width: 100%;
 }
 
 .number-field .number-field_input.number-field_with-icon input[type="number"] {
