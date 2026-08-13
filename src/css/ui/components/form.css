@@ -105,11 +105,13 @@
 }
 
 .text-field input[type="text"]:hover,
+.text-field input[type="email"]:hover,
 .text-field textarea:hover {
   border-color: var(--c-color_form-field_border_hovered);
 }
 
 .text-field input[type="text"]:focus,
+.text-field input[type="email"]:focus,
 .text-field textarea:focus {
   outline: none;
   border-color: var(--c-color_form-field_focus-border);
