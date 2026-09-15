@@ -29,7 +29,7 @@
             "mgold/elm-nonempty-list": "4.2.0",
             "noahzgordon/elm-color-extra": "1.0.2",
             "rtfeldman/elm-iso8601-date-strings": "1.1.4",
-            "ryannhg/date-format": "2.3.0",
+            "ryan-haskell/date-format": "1.0.0",
             "stoeffel/set-extra": "1.2.3",
             "wernerdegroot/listzipper": "4.0.0"
         },
