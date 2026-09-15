@@ -279,7 +279,7 @@ positioned absolute within the overflow container.
 /* -- Trigger / Showing -----------------------------------------------------*/
 
 .tooltip-trigger {
-  display: inline-flex;
+  display: inline-block;
 }
 
 .tooltip-trigger.tooltip_show > .tooltip,
