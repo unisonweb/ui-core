@@ -46,3 +46,50 @@ scrollTo_ doneMsg containerId targetId marginTop =
                         Task.succeed ()
             )
         |> Task.attempt (always doneMsg)
+
+
+{-| Scroll the container just enough to bring the target fully into view,
+keeping `padding` px of space to the container edge. Does nothing when the
+target is already fully visible.
+-}
+scrollIntoView : msg -> String -> String -> Float -> Cmd msg
+scrollIntoView doneMsg containerId targetId padding =
+    Task.map3
+        (\target container viewport ->
+            let
+                -- target position relative to the visible top of the container
+                top =
+                    target.element.y - container.element.y
+
+                bottom =
+                    top + target.element.height
+
+                visibleHeight =
+                    viewport.viewport.height
+
+                scrollTop =
+                    viewport.viewport.y
+            in
+            if top < padding then
+                Just (scrollTop + top - padding)
+
+            else if bottom > visibleHeight - padding then
+                Just (scrollTop + bottom - visibleHeight + padding)
+
+            else
+                Nothing
+        )
+        (Dom.getElement targetId)
+        (Dom.getElement containerId)
+        (Dom.getViewportOf containerId)
+        |> Task.andThen
+            (\newScrollTop ->
+                case newScrollTop of
+                    Just y ->
+                        Dom.setViewportOf containerId 0 (max 0 y)
+
+                    Nothing ->
+                        Task.succeed ()
+            )
+        |> Task.onError (\_ -> Task.succeed ())
+        |> Task.attempt (always doneMsg)

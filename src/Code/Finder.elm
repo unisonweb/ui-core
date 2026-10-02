@@ -397,7 +397,8 @@ scrollToMatch ref =
         targetId =
             "match-" ++ Reference.toString ref
     in
-    ScrollTo.scrollTo NoOp "finder-results" targetId
+    -- 12px matches the 0.75rem padding of the results container
+    ScrollTo.scrollIntoView NoOp "finder-results" targetId 12
 
 
 
